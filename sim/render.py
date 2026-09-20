@@ -11,6 +11,9 @@ C'est l'outil des « rendus de contrôle » exigés par CLAUDE.md.
 Aucune dépendance d'image : le PNG est écrit avec la stdlib.
 La taille maximale est bornée par offwidth/offheight dans la
 section <visual><global> du modèle.
+
+Mesure du 2026-09-20 (WSL2, llvmpipe) : ~1,2 s par image 1280x720,
+ombres et reflets compris. Voir journal/2026-09-20.md.
 """
 import os
 
@@ -48,18 +51,38 @@ def write_png(path: str, pixels: bytes, width: int, height: int) -> None:
 def main() -> None:
     if len(sys.argv) not in (3, 5):
         sys.exit("usage : render.py <modele.xml> <sortie.png> [largeur hauteur]")
+    output = sys.argv[2]
     width, height = (
         (int(sys.argv[3]), int(sys.argv[4])) if len(sys.argv) == 5 else (1280, 720)
     )
-    model = mujoco.MjModel.from_xml_path(sys.argv[1])
+
+    try:
+        model = mujoco.MjModel.from_xml_path(sys.argv[1])
+    except ValueError as err:
+        sys.exit(f"modèle illisible : {err}")
+
+    # `exports/` est ignoré par Git (règle 4) : sur un clone frais le dossier
+    # n'existe pas. Sans ce mkdir l'échec ne survient qu'après le rendu, et il
+    # est alors noyé sous les erreurs de libération du contexte EGL.
+    parent = os.path.dirname(os.path.abspath(output))
+    os.makedirs(parent, exist_ok=True)
+
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)  # met à jour les positions sans avancer le temps
-    renderer = mujoco.Renderer(model, height=height, width=width)
-    renderer.update_scene(data)
-    image = renderer.render()  # numpy (hauteur, largeur, 3), RGB
-    write_png(sys.argv[2], image.tobytes(), width, height)
-    renderer.close()
-    print(f"écrit : {sys.argv[2]} ({width}x{height})")
+    try:
+        renderer = mujoco.Renderer(model, height=height, width=width)
+    except ValueError as err:
+        sys.exit(f"taille de rendu refusée : {err}")
+    try:
+        renderer.update_scene(data)
+        image = renderer.render()  # numpy (hauteur, largeur, 3), RGB
+    finally:
+        # Libéré avant l'écriture : une erreur de fichier reste ainsi lisible
+        # au lieu d'être masquée par le destructeur du contexte EGL.
+        renderer.close()
+
+    write_png(output, image.tobytes(), width, height)
+    print(f"écrit : {output} ({width}x{height})")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,16 @@
 # Phase 1 — simulation seulement. Ni torch ni jax avant décision.
-# NB : les binaires officiels MuJoCo exigent AVX (voir journal 2026-09-20).
+#
+# Environnement de référence (mesuré le 2026-09-20, voir journal) :
+#   Ubuntu 26.04.1 LTS « Resolute Raccoon » sous WSL2 (noyau 6.18.33.2)
+#   Python 3.14.4 — venv à la racine, `.venv/` (ignoré par Git)
+#   CPU AMD Ryzen 7 4700U, 8 cœurs exposés, AVX + AVX2 présents
+#
+# Les binaires officiels MuJoCo exigent AVX. C'était le blocage sous
+# VirtualBox (AVX masqué par l'hyperviseur) ; WSL2 expose le jeu complet.
+
 mujoco==3.13.0
+
+# Tiré automatiquement par mujoco — versions résolues dans cet
+# environnement, notées pour pouvoir le reconstruire à l'identique :
+#   absl-py==2.5.0  etils==1.14.0  fsspec==2026.9.0  glfw==2.10.2
+#   numpy==2.5.3  PyOpenGL==3.1.10  typing_extensions==4.16.0  zipp==4.1.0
