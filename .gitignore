@@ -1,0 +1,11 @@
+# Généré — jamais versionné (règle 4 de CLAUDE.md)
+exports/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Éditeurs
+*.swp
+.DS_Store

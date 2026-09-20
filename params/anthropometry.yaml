@@ -1,0 +1,50 @@
+# Source de vérité dimensionnelle du projet YXOR.
+# Changer H et régénérer suffit à produire une autre taille de robot.
+#
+# Les ratios sont ceux de Drillis & Contini, standards en biomécanique,
+# exprimés en fraction de la taille totale H.
+
+H: 0.56                  # mètres — palier P1
+
+paliers:
+  P1: 0.56
+  P2: 0.90
+  P3: 1.70
+
+ratios:
+  # Membre inférieur
+  hauteur_hanche: 0.530
+  cuisse: 0.245
+  tibia: 0.246
+  pied_longueur: 0.152
+  pied_largeur: 0.055
+  cheville_hauteur: 0.039
+
+  # Tronc
+  largeur_epaules: 0.259
+  largeur_bassin: 0.191
+  tronc_hauteur: 0.288
+
+  # Membre supérieur
+  bras: 0.186
+  avant_bras: 0.146
+  main_longueur: 0.108
+
+  # Tête
+  tete_hauteur: 0.130
+  cou_hauteur: 0.052
+
+# Masses en fraction de la masse totale — utilisées pour les inerties
+# tant que les pièces réelles ne sont pas modélisées.
+masses:
+  cuisse: 0.100
+  tibia: 0.047
+  pied: 0.014
+  tronc: 0.497
+  bras: 0.028
+  avant_bras: 0.016
+  tete: 0.081
+
+# Rappel : entre deux paliers de rapport k, la masse varie en k^3 et le couple
+# articulaire requis en k^4. Ces ratios mettent les pièces à l'échelle, pas les
+# actionneurs. Voir decisions/0002.

@@ -1,0 +1,37 @@
+# Cotes FIXES. Ne suivent jamais H : une vis M3 reste une vis M3 que le robot
+# mesure 56 cm ou 1,70 m. Toutes les valeurs sont en millimètres.
+
+vis:
+  M2:  { diametre: 2.0, passage: 2.4, tete_diametre: 3.8, insert_diametre: 3.2, insert_profondeur: 4.0 }
+  M3:  { diametre: 3.0, passage: 3.4, tete_diametre: 5.5, insert_diametre: 4.6, insert_profondeur: 5.7 }
+  M4:  { diametre: 4.0, passage: 4.5, tete_diametre: 7.0, insert_diametre: 5.6, insert_profondeur: 8.1 }
+
+roulements:
+  MR85:  { interieur: 5,  exterieur: 8,  largeur: 2.5 }
+  "623": { interieur: 3,  exterieur: 10, largeur: 4 }
+  "688": { interieur: 8,  exterieur: 16, largeur: 5 }
+
+# Jeu à prévoir au montage selon le procédé.
+tolerances:
+  impression_3d:
+    jeu_glissant: 0.20
+    jeu_serre: 0.05
+    logement_roulement: 0.00     # à ajuster après essai sur l'imprimante réelle
+  decoupe_jet_eau:
+    profil: 0.10
+    # Un alésage de roulement n'est jamais obtenu par découpe : le jet est
+    # conique. Prévoir un palier rapporté ou une reprise à l'alésoir.
+
+epaisseurs:
+  paroi_minimale_impression: 1.6
+  tole_alu_P2: 3.0
+  contreplaque_P1: 3.0
+  carton_plume_maquette: 5.0
+
+# Actionneurs — à compléter une fois le modèle retenu et mesuré.
+# Ne rien inventer ici : les cotes viennent de la fiche constructeur.
+actionneurs:
+  P1:
+    modele: null                 # TODO phase 5
+    couple_nominal_Nm: null
+    entraxe_fixation: null

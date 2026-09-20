@@ -1,0 +1,48 @@
+# Nomenclature des articulations. Ces noms font foi partout : CAO, URDF, code
+# de contrôle. Aucune variante locale, aucun renommage silencieux.
+#
+# axe    : axe de rotation dans le repère du parent
+# min/max: butées en degrés
+#
+# Les butées sont à extraire de l'URDF ToddlerBot en phase 1, PAS à inventer.
+# Une butée fausse produit une marche qui fonctionne en simulation et casse le
+# robot réel.
+
+convention:
+  unites_angles: degres
+  repere: "x avant, y gauche, z haut"
+  suffixes: [_left, _right]
+
+jambes:          # 6 DDL par jambe
+  - { nom: hip_yaw,     axe: z, min: null, max: null }
+  - { nom: hip_roll,    axe: x, min: null, max: null }
+  - { nom: hip_pitch,   axe: y, min: null, max: null }
+  - { nom: knee,        axe: y, min: null, max: null }
+  - { nom: ankle_pitch, axe: y, min: null, max: null }
+  - { nom: ankle_roll,  axe: x, min: null, max: null }
+
+bras:            # 7 DDL par bras
+  - { nom: shoulder_pitch, axe: y, min: null, max: null }
+  - { nom: shoulder_roll,  axe: x, min: null, max: null }
+  - { nom: shoulder_yaw,   axe: z, min: null, max: null }
+  - { nom: elbow,          axe: y, min: null, max: null }
+  - { nom: wrist_yaw,      axe: z, min: null, max: null }
+  - { nom: wrist_pitch,    axe: y, min: null, max: null }
+  - { nom: wrist_roll,     axe: x, min: null, max: null }
+
+taille:          # 2 DDL
+  - { nom: waist_yaw,   axe: z, min: null, max: null }
+  - { nom: waist_roll,  axe: x, min: null, max: null }
+
+nuque:           # 2 DDL
+  - { nom: neck_yaw,   axe: z, min: null, max: null }
+  - { nom: neck_pitch, axe: y, min: null, max: null }
+
+# Total : 6×2 + 7×2 + 2 + 2 = 30 DDL actifs.
+
+particularites:
+  knee: >
+    Liaison parallèle déportant le moteur vers la hanche, pour réduire
+    l'inertie du segment tibia. À reprendre tel quel de ToddlerBot.
+  neck_pitch: >
+    Liaison parallèle également, pour compacité.
