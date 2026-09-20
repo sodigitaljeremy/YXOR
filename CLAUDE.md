@@ -38,11 +38,32 @@ correcte sans qu'elle ait été régénérée et regardée.
 
 ## Environnement
 
-- PC portable **sans carte graphique**, dans une machine virtuelle VirtualBox.
-  L'accélération 3D y est limitée : prévoir un rendu hors écran si la fenêtre
-  de simulation ne fonctionne pas.
+- PC portable **sans carte graphique**, sous **WSL2** (Ubuntu 26.04). WSLg
+  ouvre bien une fenêtre, mais n'expose aucun GPU : le rendu est logiciel
+  (llvmpipe). Prévoir un rendu hors écran pour tout ce qui est répétitif.
 - Entraînement par renforcement : jamais en local, toujours sur GPU distant.
 - VPS Hetzner : régénération et publication seulement, pas de calcul.
+
+### Deux interpréteurs Python — ne jamais les confondre
+
+Voir `decisions/0002-pin-toddlerbot.md`.
+
+| | Code YXOR | Pile ToddlerBot |
+| --- | --- | --- |
+| Venv | `~/yxor/.venv/` | `~/upstream/toddlerbot/.venv/` |
+| Python | 3.14.4 | 3.12.14 (fourni par uv) |
+| MuJoCo | 3.13.0 | 3.3.4 |
+
+- Tout ce qui est dans ce dépôt (`sim/view.py`, `sim/render.py`, les scripts
+  de pièces) se lance avec `.venv/bin/python`, **jamais** avec le venv amont.
+- ToddlerBot exige Python ≤ 3.12 : ses versions épinglées (`numpy==1.26.4`,
+  `jaxlib==0.4.28`, `torch==2.3.1`) n'ont pas de roue pour 3.14. Ce n'est pas
+  contournable sans maintenir un fork.
+- Se tromper de venv donne soit un `ImportError`, soit — plus vicieux — une
+  version de MuJoCo différente de celle sur laquelle les mesures ont été
+  prises. En cas de doute : `python -c "import mujoco; print(mujoco.__version__)"`.
+- Le code amont vit dans `~/upstream/`, **hors du dépôt**. Rien de ce qui s'y
+  trouve ne doit être copié ou commité ici.
 
 ## Ce qu'il ne faut pas faire
 
