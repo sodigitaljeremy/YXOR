@@ -72,3 +72,68 @@ footer{color:var(--doux);font-size:12.5px;border-top:1px solid var(--bord);
 .alerte{background:#7f1d1d;border:1px solid #b91c1c;color:#fee2e2;padding:14px 18px;
   border-radius:10px;margin:0 0 22px;font-size:14.5px;line-height:1.5}
 .alerte code{background:rgba(0,0,0,.28);padding:1px 6px;border-radius:5px}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Refonte « catalogue technique » — fiche 0019
+   Aucune couleur décorative : toute couleur porte un sens.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Chiffres tabulaires PARTOUT. Dans un tableau de cotes, des chiffres
+   qui ne s'alignent pas empêchent de comparer deux valeurs d'un regard. */
+table, .spec, .num, .specs { font-variant-numeric: tabular-nums }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+       font-size: .92em; background: rgba(255,255,255,.05);
+       padding: 1px 5px; border-radius: 4px }
+
+/* Bandeau de spécifications, en tête de pièce */
+.specs{display:flex;flex-wrap:wrap;gap:10px 22px;padding:12px 16px;
+  background:var(--carte);border:1px solid var(--bord);border-radius:10px;
+  font-size:14px;margin-bottom:20px}
+.specs b{font-size:15px}
+.v{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11.5px;
+  font-weight:700;letter-spacing:.02em}
+.v.ok{background:rgba(63,185,80,.16);color:var(--o-propre)}
+.v.no{background:rgba(248,81,73,.16);color:var(--o-manque)}
+
+/* Schéma coté : le dessin suit la couleur du texte, donc le thème */
+.svgbox{background:#12151b;border:1px solid var(--bord);border-radius:8px;
+  padding:14px;color:var(--texte);margin-bottom:14px}
+.svgbox svg{display:block;margin:0 auto}
+table.schema td.lettre{font-weight:800;text-align:center;width:2.2em;
+  color:var(--accent)}
+
+/* ── Les trois rangs ──────────────────────────────────────────────────
+   Un RAIL par groupe plutôt qu'une pastille par ligne : dix-sept
+   pastilles font du bruit, trois rails font une structure. */
+.rang{border:1px solid var(--bord);border-left:4px solid var(--o-ambigu);
+  border-radius:0 10px 10px 0;background:var(--carte);margin-bottom:10px}
+.rang>summary{cursor:pointer;padding:12px 16px;display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:10px;list-style:none}
+.rang>summary::-webkit-details-marker{display:none}
+.rang>summary::before{content:"▸";color:var(--doux);font-size:12px;
+  transition:none;margin-right:2px}
+.rang[open]>summary::before{content:"▾"}
+.rnum{font-weight:800;font-size:12px;color:var(--doux)}
+.rtitre{font-weight:700;font-size:15px}
+.rcpt{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;
+  background:rgba(255,255,255,.06);color:var(--doux)}
+.rdesc{color:var(--doux);font-size:12.5px;flex:1 1 220px}
+.rang table{margin:0 0 6px}
+.rang .vide{color:var(--doux);font-size:13px;padding:0 16px 14px;margin:0}
+/* Le rail du rang 1 reste VISIBLE même à zéro : un rang vert vide se lit
+   « rien à traiter », et c'est l'information qu'on veut voir en premier. */
+.rang.r1{border-left-color:var(--o-manque)}
+.rang.r1 .rcpt{background:rgba(248,81,73,.16);color:var(--o-manque)}
+/* Rang 1 à zéro : le rail RESTE, et passe au vert. C'est la première
+   chose à voir sur la page — « rien à traiter » est une information. */
+.rang.r1.quitte{border-left-color:var(--o-propre)}
+.rang.r1.quitte .rcpt{background:rgba(63,185,80,.16);color:var(--o-propre)}
+.rang.r1.quitte .vide{color:var(--o-propre);font-weight:600}
+.rang.r2{border-left-color:var(--o-amont)}
+.rang.r3{border-left-color:var(--o-litterature)}
+
+.cpt{font-size:13px;font-weight:700;color:var(--doux);
+  background:rgba(255,255,255,.06);padding:2px 10px;border-radius:99px;
+  margin-left:8px;vertical-align:middle}
+.ok-bloc{border-left:4px solid var(--o-propre);background:rgba(63,185,80,.08);
+  padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0}

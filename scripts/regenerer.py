@@ -38,6 +38,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+from plan_decoupe import ordonner_cotes, svg_schema, polylignes_depuis_face  # noqa: E402
+
 REPO = Path(__file__).resolve().parents[1]
 PARTS = REPO / "parts"
 WEB = REPO / "web"
@@ -65,6 +68,45 @@ FORMATS = [("dxf", "DXF", "découpe 2D"), ("step", "STEP", "échange CAO"),
            ("stl", "STL", "affichage 3D"), ("pdf", "PDF", "plan A4 à imprimer")]
 
 INDET = '<span class="ind">non déterminé</span>'
+
+# ── Hiérarchie du tableau d'origines ──────────────────────────────────
+# Pas l'ordre des étiquettes : l'ACTION que chacune appelle. On balaie
+# pour savoir quoi faire, pas pour lire une taxonomie.
+RANGS_COTES = [
+    (1, "À traiter", "r1",
+     "un défaut, ou une valeur encore absente"),
+    (2, "Emprunté", "r2",
+     "vient de ToddlerBot — porte le risque de licence"),
+    (3, "Établi", "r3",
+     "sourcé : rien à en faire"),
+]
+
+# Ce qu'exige chaque niveau. DESSINER et COUPER PROPREMENT ne demandent
+# pas les mêmes valeurs — un DXF dessinable mais non coupable a l'air
+# complet, et c'est précisément le piège.
+CLES_DESSIN = ("epaisseur", "rayon_interieur_min")
+CLES_COUPE = ("saignee", "voile_min")
+
+
+def rang_cote(c) -> int:
+    o = c.get("origine") or "non_qualifie"
+    if o in ("non_qualifie", "ambigu"):
+        return 1
+    if o == "mesure" and not c.get("source"):
+        return 1
+    if o == "amont":
+        return 2
+    return 3
+
+
+def etat_procede(p: dict) -> dict:
+    """Deux niveaux, jamais un voyant unique."""
+    md = [k for k in CLES_DESSIN if p.get(k) is None]
+    mc = [k for k in CLES_COUPE if p.get(k) is None]
+    if p.get("machine") is None:
+        mc.insert(0, "machine")
+    return dict(dessinable=not md, coupable=not (md or mc),
+                manque_dessin=md, manque_coupe=md + mc)
 
 
 def e(x) -> str:
@@ -113,6 +155,7 @@ def lire_releves() -> list[dict]:
             print(f"  ⚠ {f.name} sans bloc `piece:` — ignoré")
             continue
         p["cotes"] = d.get("cotes") or []
+        p["_schema"] = ordonner_cotes(d.get("cotes_schema") or [])
         p["fichiers"] = {}
         base = p.get("base_fichier", p["nom"])
         for ext, _, _ in FORMATS:
@@ -143,7 +186,8 @@ def bandeau() -> str:
 
 
 def page(titre, corps, fil=None, cls="") -> str:
-    nav = ('<nav><a href="/">Pièces</a><a href="/tracabilite/">Traçabilité</a></nav>')
+    nav = ('<nav><a href="/">Pièces</a><a href="/etat/">État du projet</a>'
+           '<a href="/tracabilite/">Traçabilité</a></nav>')
     return f"""<!doctype html><html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(titre)} — YXOR</title><link rel="stylesheet" href="/assets/style.css">
@@ -160,6 +204,32 @@ def badge(origine) -> str:
     lib, _ = LIB_ORIGINE.get(origine, (origine, ""))
     cls = origine if origine in ORIGINES else "manque"
     return f'<span class="badge b-{cls}">{e(lib)}</span>'
+
+
+def table_schema(cotes_schema, cotes_origine) -> str:
+    """Tableau lettré, dans l'ordre de lecture du schéma.
+
+    Chaque lettre du dessin est une ligne du tableau : c'est le lien
+    direct entre la forme et la valeur, sans légende ni renvoi.
+    """
+    if not cotes_schema:
+        return ""
+    # La pièce DÉCLARE la clé de chaque cote : on ne devine rien d'après le
+    # libellé. Une clé absente du relevé s'affiche comme un manque visible.
+    par_cle = {str(c.get("cle", "")): c for c in cotes_origine}
+    lignes = []
+    for c in cotes_schema:
+        src = par_cle.get(str(c.get("cle", "")))
+        o, cle = (src or {}).get("origine"), c.get("cle", "")
+        lignes.append(
+            f'<tr><td class="lettre">{e(c["lettre"])}</td>'
+            f'<td>{e(c.get("libelle", ""))}<br><span class="src">'
+            f'<code>{e(cle)}</code></span></td>'
+            f'<td class="num">{val(c.get("valeur"), " mm")}</td>'
+            f'<td>{badge(o) if o else badge("non_qualifie")}</td></tr>')
+    return ('<table class="schema"><thead><tr><th></th><th>Cote</th>'
+            "<th>Valeur</th><th>Origine</th></tr></thead><tbody>"
+            + "".join(lignes) + "</tbody></table>")
 
 
 def table_cotes(cotes) -> str:
@@ -186,56 +256,96 @@ def legende() -> str:
     return f'<div class="grille" style="gap:7px;margin-top:14px">{items}</div>'
 
 
+def bloc_rangs(cotes) -> str:
+    """Trois rangs, rails colorés, compte dans le titre.
+
+    Un rang VIDE reste affiché avec « 0 cote ». Un rang absent se lirait
+    « sans objet » ; un rang à zéro se lit « rien à traiter » — et c'est
+    l'information qu'on veut voir en premier.
+    """
+    out = []
+    for num, titre, cls, desc in RANGS_COTES:
+        sel = [c for c in cotes if rang_cote(c) == num]
+        n = len(sel)
+        # Le rang 1 à zéro n'est pas un vide : c'est un RÉSULTAT. Il garde
+        # son rail, qui passe au vert, et le dit en toutes lettres. Un rang
+        # qui s'effacerait en devenant vide effacerait la bonne nouvelle.
+        quitte = num == 1 and not sel
+        corps = table_cotes(sel) if sel else (
+            '<p class="vide">Rien à traiter : aucune cote en défaut, '
+            "aucune valeur absente.</p>" if quitte else
+            '<p class="vide">Rien dans ce rang.</p>')
+        ouvert = " open" if (num <= 2 or not sel) else ""
+        out.append(
+            f'<details class="rang {cls}{" quitte" if quitte else ""}"{ouvert}>'
+            f'<summary>'
+            f'<span class="rnum">{num}</span>'
+            f"<span class=\"rtitre\">{e(titre)}</span>"
+            f'<span class="rcpt">{n} cote{"s" if n > 1 else ""}</span>'
+            f'<span class="rdesc">{e(desc)}</span>'
+            f"</summary>{corps}</details>")
+    return "".join(out)
+
+
 def page_piece(p) -> str:
     dl = "".join(
         f'<a href="/fichiers/{e(f.name)}" download>{e(lib)}'
         f'<span class="fmt">{e(desc)}</span></a>'
         for ext, lib, desc in FORMATS if (f := p["fichiers"].get(ext)))
-    compte = {}
-    for c in p["cotes"]:
-        o = c.get("origine") or "non_qualifie"
-        compte[o] = compte.get(o, 0) + 1
-    resume = " ".join(f"{badge(o)}&nbsp;{n}" for o, n in
-                      sorted(compte.items(), key=lambda kv: -kv[1]))
-    amont = compte.get("amont", 0)
+    amont = sum(1 for c in p["cotes"] if c.get("origine") == "amont")
     note = (f'<div class="note"><b>{amont} cote(s) d\'origine amont.</b> '
             "Elles viennent de ToddlerBot, dont la mécanique est publiée en licence "
-            "non commerciale. Inventaire, pas avis juridique — voir la fiche 0010.</div>"
+            "non commerciale. Inventaire, pas avis juridique — fiche 0010.</div>"
             if amont else "")
+    ep = etat_procede(p.get("_procede") or {})
+    voyant = (f'<span class="v {"ok" if ep["dessinable"] else "no"}">'
+              f'{"dessinable" if ep["dessinable"] else "non dessinable"}</span> '
+              f'<span class="v {"ok" if ep["coupable"] else "no"}">'
+              f'{"coupable" if ep["coupable"] else "non coupable"}</span>')
     return page(p.get("titre") or p["nom"], f"""
-<h2>D'où vient chaque cote</h2>
-<p class="sous">C'est le sujet de cette page. La géométrie vient après.</p>
-<div class="rep" style="margin:10px 0 14px">{resume}</div>
-{note}
-<div class="carte">{table_cotes(p["cotes"])}{legende()}</div>
+<div class="specs">
+  <span><b>{val(p.get('materiau'))}</b> {val(p.get('epaisseur_mm'),' mm')}</span>
+  <span>{val(p.get('machine'))}</span>
+  <span>{val(p.get('longueur_mm'))} × {val(p.get('largeur_mm'))} mm</span>
+  <span>{voyant}</span>
+</div>
 
-<div class="grille g2" style="margin-top:26px">
+<div class="grille g2">
+  <div class="carte">
+    <h2 style="margin-top:0">Schéma coté</h2>
+    <div class="svgbox">{svg_schema(p["_contours"], p["_schema"])}</div>
+    {table_schema(p["_schema"], p["cotes"])}
+  </div>
   <div class="carte">
     <h2 style="margin-top:0">Géométrie</h2>
     <canvas id="vue"></canvas>
     <div class="msg" id="msg">Chargement…</div>
-    <p class="src">Glisser pour tourner, molette pour zoomer.
-    Le STL est ce que le navigateur affiche ; le STEP reste l'échange.</p>
-  </div>
-  <div class="carte">
-    <h2 style="margin-top:0">Fabrication</h2>
-    <table><tbody>
-      <tr><th>Hors-tout</th><td class="num">{val(p.get('longueur_mm'),' mm')} ×
-          {val(p.get('largeur_mm'),' mm')} × {val(p.get('epaisseur_mm'),' mm')}</td></tr>
-      <tr><th>Volume</th><td class="num">{val(p.get('volume_mm3'),' mm³')}</td></tr>
-      <tr><th>Matériau</th><td class="num">{val(p.get('materiau'))}</td></tr>
-      <tr><th>Machine</th><td class="num">{val(p.get('machine'))}</td></tr>
-      <tr><th>Lieu</th><td class="num">{val(p.get('lieu'))}</td></tr>
-      <tr><th>Rayon intérieur min.</th><td class="num">{val(p.get('rayon_interieur_min_mm'),' mm')}</td></tr>
-      <tr><th>Saignée</th><td class="num">{val(p.get('saignee_mm'),' mm')}</td></tr>
-      <tr><th>Voile minimal</th><td class="num">{val(p.get('voile_min_mm'),' mm')}</td></tr>
-      <tr><th>Fixation</th><td class="num">{val(p.get('fixation'))}</td></tr>
-      <tr><th>Palier</th><td class="num">{val(p.get('palier'))}</td></tr>
-    </tbody></table>
-    <h2>Téléchargements</h2><div class="dl">{dl or '<p class="src">Aucun fichier.</p>'}</div>
-    <p style="margin-top:14px"><a href="/atelier/{e(p['nom'])}/">Vue atelier →</a></p>
+    <p class="src">Glisser pour tourner, molette pour zoomer. Le STL est ce que
+    le navigateur affiche ; le STEP reste l'échange.</p>
+    <h2>Téléchargements</h2><div class="dl">{dl or '<p class="src">Aucun.</p>'}</div>
+    <p style="margin-top:12px"><a href="/atelier/{e(p['nom'])}/">Fiche atelier →</a></p>
   </div>
 </div>
+
+<h2>D'où vient chaque cote</h2>
+<p class="sous">Rangées par ce qu'elles appellent à faire, non par étiquette.</p>
+{note}
+{bloc_rangs(p["cotes"])}
+{legende()}
+
+<h2>Fabrication</h2>
+<div class="carte"><table><tbody>
+  <tr><th>Matériau</th><td class="num">{val(p.get('materiau'))}</td></tr>
+  <tr><th>Machine</th><td class="num">{val(p.get('machine'))}</td></tr>
+  <tr><th>Lieu</th><td class="num">{val(p.get('lieu'))}</td></tr>
+  <tr><th>Saignée</th><td class="num">{val(p.get('saignee_mm'),' mm')}</td></tr>
+  <tr><th>Voile minimal</th><td class="num">{val(p.get('voile_min_mm'),' mm')}</td></tr>
+  <tr><th>Fixation</th><td class="num">{val(p.get('fixation'))}</td></tr>
+  <tr><th>Anisotrope</th><td class="num">{'oui' if p.get('anisotrope') else 'non'}</td></tr>
+  <tr><th>Cannelures</th><td class="num">{val(p.get('orientation_cannelures_deg'),'°')}</td></tr>
+  <tr><th>Palier</th><td class="num">{val(p.get('palier'))}</td></tr>
+  <tr><th>Volume</th><td class="num">{val(p.get('volume_mm3'),' mm³')}</td></tr>
+</tbody></table></div>
 <script src="/assets/viewer.js"></script>
 <script>visualiseurSTL(document.getElementById('vue'),
   {json.dumps('/fichiers/' + p["fichiers"]["stl"].name) if 'stl' in p["fichiers"] else 'null'},
@@ -245,28 +355,44 @@ def page_piece(p) -> str:
 
 def page_atelier(p) -> str:
     dxf = p["fichiers"].get("dxf")
-    manques = [lib for lib, v in
-               [("la saignée", p.get("saignee_mm")), ("le voile minimal", p.get("voile_min_mm")),
-                ("la machine", p.get("machine"))] if v in (None, "", "non déterminé")]
-    att = (f'<div class="att"><b>À déterminer avant de couper :</b> {e(", ".join(manques))}. '
-           "Ces valeurs ne sont pas connues — elles ne sont pas « sans objet », "
-           "elles sont à mesurer.</div>" if manques else "")
+    ep = etat_procede(p.get("_procede") or {})
+    # La distinction dessinable / coupable doit être ICI aussi : c'est la
+    # page que l'opérateur ouvre, et c'est là que la confondre coûterait
+    # une pièce ratée.
+    if ep["coupable"]:
+        verdict = ('<div class="ok-bloc"><b>Prêt à couper.</b> '
+                   "Toutes les valeurs du procédé sont renseignées.</div>")
+    else:
+        manque = ", ".join(e(m.replace("_", " ")) for m in ep["manque_coupe"])
+        verdict = (f'<div class="att"><b>NE PAS COUPER ENCORE.</b><br>'
+                   f"Le dessin est juste, mais il manque : <b>{manque}</b>.<br>"
+                   "Ces valeurs ne sont pas « sans objet » : elles sont à mesurer. "
+                   "Un fichier dessinable n\'est pas un fichier coupable.</div>")
+    # Le verdict passe EN TÊTE : il doit être lu avant les cotes, pas après.
     return page(p.get("titre") or p["nom"], f"""
+{verdict}
 <div class="bloc">
   <p class="lbl">Matière</p><p class="spec"><b>{val(p.get('materiau'))}</b></p>
   <p class="lbl">Épaisseur</p><p class="spec"><b>{val(p.get('epaisseur_mm'),' mm')}</b></p>
+  <p class="lbl">Outil</p><p class="spec">{val(p.get('machine'))}</p>
 </div>
 <div class="bloc">
   <p class="lbl">Dimensions hors-tout</p>
   <p class="spec"><b>{val(p.get('longueur_mm'))} × {val(p.get('largeur_mm'))}</b> mm</p>
   <p class="lbl">Rayon minimal dans les angles rentrants</p>
   <p class="spec"><b>{val(p.get('rayon_interieur_min_mm'),' mm')}</b></p>
-  <p class="lbl" style="margin-top:14px">Aucun angle vif rentrant. Contour fermé, échelle 1:1.</p>
+  <p class="lbl" style="margin-top:14px">Aucun angle vif rentrant.
+  Contour fermé, échelle 1:1.</p>
 </div>
-{att}
+{'<div class="bloc"><p class="lbl">Sens des cannelures</p><p class="spec"><b>'
+ + val(p.get('orientation_cannelures_deg'),'°') +
+ '</b> par rapport à la longueur</p><p class="lbl">Matière ORIENTÉE : la flèche '
+ 'du plan A4 doit être alignée avant de couper.</p></div>'
+ if p.get('anisotrope') else ''}
 {f'<a class="gros" href="/fichiers/{e(dxf.name)}" download>Télécharger le DXF</a>' if dxf
   else '<div class="att">Pas de DXF disponible.</div>'}
-<div class="bloc"><p class="lbl">Fixation prévue</p><p class="spec">{val(p.get('fixation'))}</p></div>
+<div class="bloc"><p class="lbl">Fixation prévue</p>
+<p class="spec">{val(p.get('fixation'))}</p></div>
 <p style="margin-top:20px"><a href="/piece/{e(p['nom'])}/">← Fiche complète</a></p>
 """, fil="Fiche atelier — découpe", cls="atelier")
 
@@ -288,9 +414,11 @@ const q=document.getElementById('q'), li=[...document.querySelectorAll('#liste l
 q.addEventListener('input',()=>{{const v=q.value.trim().toLowerCase();
   li.forEach(x=>x.hidden = v && !(x.dataset.t||'').includes(v));}});
 </script>
-<h2>Traçabilité</h2>
-<p class="sous">{audit['total']} valeurs inventoriées dans le dépôt.</p>
-<a href="/tracabilite/">Voir le détail →</a>""")
+<h2>Où en est le projet</h2>
+<p class="sous">{audit['total']} valeurs inventoriées, dont
+{audit['origines'].get('amont', 0)} d'origine amont.</p>
+<p><a href="/etat/">État du projet — ce qu'il reste à faire →</a></p>
+<p><a href="/tracabilite/">Traçabilité des cotes →</a></p>""")
 
 
 def page_tracabilite(audit) -> str:
@@ -315,6 +443,81 @@ nature — ce qui le détermine. Cet inventaire ne dit pas ce qu'il faut en conc
 <div class="carte"><table><tbody>{nat}</tbody></table></div>
 <div class="note">Les cotes d'origine <b>amont</b> viennent de ToddlerBot, dont la mécanique
 est publiée en licence non commerciale. Leur inventaire est un fait, pas un avis juridique.</div>""")
+
+
+def page_etat(pieces, audit, hw, an, jo) -> str:
+    # Tout est DÉRIVÉ : les null de hardware.yaml, les verifie:false de
+    # anthropometry.yaml, les confiance de joints.yaml. Rien n'est saisi,
+    # donc rien ne peut se désynchroniser.
+    lignes = []
+    for nom, pr in hw["procedes"].items():
+        st = etat_procede(pr)
+        manque = ", ".join(e(m.replace("_", " ")) for m in st["manque_coupe"]) or "—"
+        lignes.append(
+            f"<tr><td><code>{e(nom)}</code></td>"
+            f'<td class="num">{val(pr.get("materiau"))}</td>'
+            f'<td class="num"><span class="v {"ok" if st["dessinable"] else "no"}">'
+            f'{"oui" if st["dessinable"] else "non"}</span></td>'
+            f'<td class="num"><span class="v {"ok" if st["coupable"] else "no"}">'
+            f'{"oui" if st["coupable"] else "non"}</span></td>'
+            f'<td class="src">{manque}</td></tr>')
+
+    amesurer = []
+    for fam in ("procedes", "materiaux"):
+        for nom, d in hw[fam].items():
+            for k, v in d.items():
+                if v is None and not str(k).startswith(("source", "note", "axe", "mesure")):
+                    amesurer.append((f"{fam}.{nom}", k))
+    grp = {}
+    for cle, k in amesurer:
+        grp.setdefault(k, []).append(cle)
+    lm = "".join(f"<tr><td><code>{e(k)}</code></td><td class='num'>{len(v)}</td>"
+                 f"<td class='src'>{e(', '.join(v))}</td></tr>"
+                 for k, v in sorted(grp.items(), key=lambda kv: -len(kv[1])))
+
+    nv = [k for k, v in an["ratios"].items()
+          if isinstance(v, dict) and v.get("verifie") is False]
+    conf = {}
+    for g in ("jambes", "bras", "taille", "nuque"):
+        for j in jo.get(g, []):
+            c = (j.get("materiel") or {}).get("confiance", "?")
+            conf[c] = conf.get(c, 0) + 1
+    lc = "".join(f"<tr><td>{badge('propre' if k=='documentee' else 'ambigu')} "
+                 f"<code>{e(k)}</code></td><td class='num'>{v}</td></tr>"
+                 for k, v in sorted(conf.items(), key=lambda kv: -kv[1]))
+
+    return page("État du projet", f"""
+<p class="sous">Entièrement dérivé du dépôt : aucune de ces lignes n'est saisie.</p>
+
+<h2>Ce que je peux faire aujourd'hui</h2>
+<p class="sous">Dessiner et couper proprement n'exigent pas les mêmes valeurs.
+Un fichier dessinable mais non coupable a l'air complet : c'est le piège.</p>
+<div class="carte"><table><thead><tr><th>Procédé</th><th>Matériau</th>
+<th>Dessiner</th><th>Couper</th><th>Manque pour couper</th></tr></thead>
+<tbody>{"".join(lignes)}</tbody></table></div>
+
+<h2>À mesurer <span class="cpt">{len(amesurer)} valeurs</span></h2>
+<div class="carte"><table><thead><tr><th>Clé</th><th>Nombre</th>
+<th>Où</th></tr></thead><tbody>{lm}</tbody></table></div>
+
+<h2>Non vérifié <span class="cpt">{len(nv)} sur {len(an['ratios'])}</span></h2>
+<div class="carte"><p class="src">Ratios de <code>anthropometry.yaml</code> dont
+l'attribution est établie mais <b>dont les valeurs n'ont pas pu être confrontées
+à la source</b> : la figure 4.1 de Winter est un graphique, aucun de ces nombres
+n'apparaît dans le texte.</p>
+<p class="src"><code>{e(', '.join(nv))}</code></p></div>
+
+<h2>Confiance sur le matériel amont</h2>
+<div class="carte"><table><tbody>{lc}</tbody></table>
+<p class="src" style="margin-top:10px">Le MJCF <b>représente</b>, il ne
+<b>décrit</b> pas. Une confiance déduite du modèle n'est pas une source
+matérielle.</p></div>
+
+<h2>Traçabilité</h2>
+<div class="carte"><p class="src">{audit['total']} valeurs inventoriées,
+dont <b>{audit['origines'].get('amont', 0)}</b> d'origine amont.
+<a href="/tracabilite/">Détail →</a></p></div>
+""")
 
 
 def lancer_audit() -> dict:
@@ -374,6 +577,22 @@ def main(argv=None) -> int:
     print(f"   {audit['total']} valeurs — " +
           ", ".join(f"{k} {v}" for k, v in sorted(audit["origines"].items(), key=lambda x: -x[1])))
 
+    # contours et procédé : lus une fois, pour le schéma et les voyants
+    hw = yaml.safe_load((REPO / "params/hardware.yaml").read_text("utf-8"))
+    an = yaml.safe_load((REPO / "params/anthropometry.yaml").read_text("utf-8"))
+    jo = yaml.safe_load((REPO / "params/joints.yaml").read_text("utf-8"))
+    import build123d as _bd
+    for p in pieces:
+        p["_procede"] = hw["procedes"].get(p.get("procede"), {})
+        p["_contours"] = []
+        st = p["fichiers"].get("step")
+        if st:
+            try:
+                f = _bd.import_step(str(st)).faces().sort_by(_bd.Axis.Z)[0]
+                p["_contours"] = polylignes_depuis_face(f)
+            except Exception as err:
+                print(f"   ⚠ contours illisibles pour {p['nom']} : {err}")
+
     print("\n4. Construction du site")
     if SITE.exists():
         shutil.rmtree(SITE)
@@ -392,12 +611,15 @@ def main(argv=None) -> int:
             (d / "index.html").write_text(gab(p), encoding="utf-8")
 
     (SITE / "index.html").write_text(page_index(pieces, audit), encoding="utf-8")
+    (SITE / "etat").mkdir()
+    (SITE / "etat" / "index.html").write_text(page_etat(pieces, audit, hw, an, jo),
+                                              encoding="utf-8")
     (SITE / "tracabilite").mkdir()
     (SITE / "tracabilite" / "index.html").write_text(page_tracabilite(audit), encoding="utf-8")
     (SITE / "data" / "pieces.json").write_text(json.dumps(
         [{k: (str(v) if isinstance(v, Path) else
               {kk: str(vv) for kk, vv in v.items()} if k == "fichiers" else v)
-          for k, v in p.items()} for p in pieces],
+          for k, v in p.items() if not k.startswith("_")} for p in pieces],
         ensure_ascii=False, indent=2), encoding="utf-8")
     (SITE / "data" / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2),
                                               encoding="utf-8")

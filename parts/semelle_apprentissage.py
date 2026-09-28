@@ -43,6 +43,18 @@ sys.path.insert(0, str(REPO / "scripts"))
 from plan_decoupe import ecrire_plan_a4, polylignes_depuis_face  # noqa: E402
 
 NOM = "semelle_apprentissage"
+
+# Placements des lignes de repère du schéma. Ce ne sont PAS des cotes de
+# la pièce : ils positionnent des annotations sur un dessin. Déclarés
+# comme tels pour que l'audit ne les compte pas comme des cotes muettes.
+COS45 = 0.7071          # non-cote: cos 45°, point de tangence sur un congé
+AXE = 0.0               # non-cote: axe de symétrie longitudinal
+REP_CONGE_X = 0.06      # non-cote: décalage du repère, en fraction de la longueur
+REP_CONGE_Y = 0.20      # non-cote: décalage du repère, en fraction de la largeur
+REP_RINT_X = 0.24       # non-cote: abscisse du repère de rayon intérieur
+REP_RINT_DX = 0.05      # non-cote: décalage du repère de rayon intérieur
+REP_RINT_DY = 0.26      # non-cote: décalage du repère de rayon intérieur
+REP_RINT_MARGE = 0.2    # non-cote: écart au bord pour poser le repère
 SORTIE = REPO / "exports" / "parts"
 
 
@@ -237,6 +249,49 @@ def main(argv=None) -> int:
         fleche=fleche)
     print(f"\n  plan A4 : {larg:.2f} x {haut:.2f} mm sur 210 x 297")
 
+    # --- cotes du schéma : la pièce déclare, le générateur dessine ---
+    # Le `rang` fixe l'ordre de LECTURE, pas l'ordre du fichier : hors-tout
+    # d'abord, puis les cotes dérivées, puis celles du procédé. Les lettres
+    # sont attribuées par le générateur, une règle pour toutes les pièces.
+    L2, W2 = d["L"] / 2, d["W"] / 2
+    Wc2 = d["largeur_creux"] / 2
+    rc = d["r_ext"]
+    # Chaque cote du schéma DÉCLARE la clé du relevé qui la gouverne. Sans
+    # elle, le site devrait rapprocher le dessin du registre en devinant
+    # d'après le libellé — un lien qui casse sans rien dire le jour où un
+    # libellé change. Quand deux clés concourent (la largeur au creux vient
+    # de la largeur ET du resserrement), on déclare celle qui répond à
+    # « pourquoi ce nombre-là » : le choix, pas la grandeur qu'il module.
+    kp = f"procedes.{a.procede}"
+    schema = [
+        ("hors_tout", "longueur", d["L"], "ratios.pied_longueur",
+         {"type": "cote_h", "x1": -L2, "x2": L2}),
+        ("hors_tout", "largeur", d["W"], "ratios.pied_largeur",
+         {"type": "cote_v", "y1": -W2, "y2": W2}),
+        ("derivee", "largeur au creux", d["largeur_creux"], "ratio_resserrement",
+         {"type": "cote_v_int", "x": AXE, "y1": -Wc2, "y2": Wc2}),
+        ("derivee", "congé extérieur", rc, "ratio_coins",
+         {"type": "rayon", "x": round(L2 - rc + rc * COS45, 4),
+          "y": round(W2 - rc + rc * COS45, 4),
+          "dx": round(d["L"] * REP_CONGE_X, 4),
+          "dy": round(d["W"] * REP_CONGE_Y, 4)}),
+        ("procede", "rayon intérieur minimal", d["r_int"],
+         f"{kp}.rayon_interieur_min",
+         {"type": "rayon", "x": round(-d["L"] * REP_RINT_X, 4),
+          "y": round(-W2 + REP_RINT_MARGE, 4),
+          "dx": round(-d["L"] * REP_RINT_DX, 4),
+          "dy": round(-d["W"] * REP_RINT_DY, 4)}),
+        ("procede", "épaisseur", d["ep"], f"{kp}.epaisseur", {"type": "note"}),
+    ]
+    # Garde-fou : une clé déclarée qui n'existe pas dans le relevé est un
+    # défaut, pas un tiret à afficher.
+    connues = {r["cle"] for r in c.releve}
+    for _, lib, _, cle, _ in schema:
+        if cle not in connues:
+            raise SystemExit(f"schéma : la cote « {lib} » déclare la clé "
+                             f"« {cle} », absente du relevé. Clés relevées : "
+                             + ", ".join(sorted(connues)))
+
     # --- relevé, lu par scripts/audit_origines.py ET scripts/regenerer.py ---
     # La pièce publie ses propres métadonnées : elle seule les connaît.
     # L'application ne fait que les lire — elle ne crée aucune donnée.
@@ -268,7 +323,14 @@ def main(argv=None) -> int:
               "    Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.",
               "    C'est le prototype de la méthode : un modèle, un paramètre",
               "    d'épaisseur, un DXF par couple machine-matériau.",
-              "", "cotes:"]
+              "", "cotes_schema:"]
+    for rang, lib, valeur, cle, trace in schema:
+        lignes += [f"  - rang: {rang}",
+                   f"    libelle: \"{lib}\"",
+                   f"    cle: {cle}",
+                   f"    valeur: {valeur}",
+                   f"    trace: {{{', '.join(f'{k}: {v}' for k, v in trace.items())}}}"]
+    lignes += ["", "cotes:"]
     for r in c.releve:
         lignes += [f"  - cle: {r['cle']}",
                    f"    valeur: {r['valeur']}",

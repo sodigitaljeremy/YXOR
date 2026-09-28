@@ -1,6 +1,12 @@
 # Généré — jamais versionné (règle 4 de CLAUDE.md)
 exports/
 
+# Le site est une PROJECTION du dépôt, pas une source (fiche 0018 §2) :
+# il est construit dans l'étage 1 du Dockerfile et n'entre jamais dans
+# Git. Il y était entré par erreur avec le commit c078b8e, avec un STEP,
+# un STL, un DXF et un PDF — exactement ce que la règle 4 interdit.
+site/
+
 # Python
 __pycache__/
 *.pyc

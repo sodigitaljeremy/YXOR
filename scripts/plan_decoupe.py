@@ -163,3 +163,138 @@ def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0, fleche=None
     Path(chemin).parent.mkdir(parents=True, exist_ok=True)
     Path(chemin).write_bytes(bytes(out))
     return larg, haut
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  SCHÉMA COTÉ EN SVG — même source de contours que le plan A4
+# ═══════════════════════════════════════════════════════════════════════
+#
+#  Le geste emprunté à McMaster-Carr : le dessin porte des lettres, le
+#  tableau porte les mêmes. Le lien entre la forme et la valeur est
+#  immédiat, sans légende ni renvoi.
+#
+#  Le LETTRAGE n'est pas l'ordre du fichier : un mécanicien lit du
+#  général au particulier. L'ordre est donc hors-tout, puis cotes
+#  dérivées, puis cotes de procédé — c'est `ordonner_cotes` qui le fixe,
+#  une fois pour toutes les pièces à venir.
+
+RANGS = ("hors_tout", "derivee", "procede")
+
+
+def ordonner_cotes(cotes: list[dict]) -> list[dict]:
+    """Trie par rang de lecture et attribue les lettres A, B, C…"""
+    rang_de = {r: i for i, r in enumerate(RANGS)}
+    tri = sorted(cotes, key=lambda c: (rang_de.get(c.get("rang"), 99),
+                                       cotes.index(c)))
+    for i, c in enumerate(tri):
+        c["lettre"] = chr(ord("A") + i) if i < 26 else f"A{i}"
+    return tri
+
+
+def _fmt(v) -> str:
+    return f"{v:.2f}".rstrip("0").rstrip(".").replace(".", ",")
+
+
+def svg_schema(contours, cotes, largeur_px=560) -> str:
+    """Schéma coté, en SVG inline. Unités du dessin : millimètres.
+
+    L'axe Y du SVG descend, celui de la pièce monte : les ordonnées sont
+    donc niées. On ne passe pas par un `scale(1,-1)`, qui retournerait
+    aussi les textes.
+    """
+    xs = [p[0] for c in contours for p in c]
+    ys = [p[1] for c in contours for p in c]
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    L, H = x1 - x0, y1 - y0
+    ech = max(L, H)
+    tp = ech * 0.030                          # taille de texte
+    tr = ech * 0.0045                         # épaisseur de trait
+    # Une cote qui ne se trace pas (l'épaisseur, par exemple : elle est
+    # perpendiculaire à la feuille) devient une NOTE sous le dessin. Le bas
+    # de la vue est agrandi d'autant, sinon la note sort du cadre.
+    notes = [c for c in cotes if (c.get("trace") or {}).get("type") == "note"]
+    mg = ech * 0.09                           # marges gauche et haut
+    md = ech * 0.13                           # marge droite
+    mb = md + len(notes) * tp * 1.55          # marge basse, notes comprises
+    vb = (x0 - mg, -(y1 + mg), L + mg + md, H + mg + mb)
+
+    o = [f'<svg viewBox="{vb[0]:.3f} {vb[1]:.3f} {vb[2]:.3f} {vb[3]:.3f}" '
+         f'width="100%" style="max-width:{largeur_px}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" '
+         f'aria-label="schéma coté de la pièce">',
+         f'<g fill="none" stroke="currentColor" stroke-width="{tr*2:.4f}" '
+         f'stroke-linejoin="round" stroke-linecap="round">']
+    for c in contours:
+        d = "M " + " L ".join(f"{x:.3f} {-y:.3f}" for x, y in c) + " Z"
+        o.append(f'<path d="{d}"/>')
+    o.append("</g>")
+
+    o.append(f'<g stroke="currentColor" stroke-width="{tr:.4f}" fill="none" '
+             f'opacity="0.62">')
+    lignes_txt = []
+
+    def fleche(x, y, dx, dy):
+        import math
+        a = math.atan2(dy, dx)
+        s = ech * 0.014
+        for d in (2.6, -2.6):
+            o.append(f'<path d="M {x:.3f} {-y:.3f} L '
+                     f'{x - s*math.cos(a+d):.3f} {-(y - s*math.sin(a+d)):.3f}"/>')
+
+    def etiquette(x, y, lettre, valeur, ancre="middle"):
+        lignes_txt.append(
+            f'<circle cx="{x:.3f}" cy="{-y:.3f}" r="{tp*0.62:.3f}" '
+            f'fill="currentColor" opacity="0.14" stroke="none"/>'
+            f'<text x="{x:.3f}" y="{-y + tp*0.34:.3f}" text-anchor="middle" '
+            f'font-size="{tp*0.78:.3f}" font-weight="700" '
+            f'fill="currentColor" stroke="none">{lettre}</text>'
+            f'<text x="{x:.3f}" y="{-y - tp*0.95:.3f}" text-anchor="{ancre}" '
+            f'font-size="{tp*0.74:.3f}" fill="currentColor" opacity="0.72" '
+            f'stroke="none">{valeur}</text>')
+
+    for c in cotes:
+        t = c.get("trace") or {}
+        typ, lettre = t.get("type"), c["lettre"]
+        val = f"{_fmt(c['valeur'])}"
+        if typ == "cote_h":
+            a, b = t["x1"], t["x2"]
+            yl = y0 - md * 0.58
+            for x in (a, b):
+                o.append(f'<path d="M {x:.3f} {-y0:.3f} L {x:.3f} {-(yl - ech*0.012):.3f}"/>')
+            o.append(f'<path d="M {a:.3f} {-yl:.3f} L {b:.3f} {-yl:.3f}"/>')
+            fleche(a, yl, 1, 0); fleche(b, yl, -1, 0)
+            etiquette((a + b) / 2, yl, lettre, val)
+        elif typ == "cote_v":
+            a, b = t["y1"], t["y2"]
+            xl = x1 + md * 0.55
+            for y in (a, b):
+                o.append(f'<path d="M {x1:.3f} {-y:.3f} L {xl + ech*0.012:.3f} {-y:.3f}"/>')
+            o.append(f'<path d="M {xl:.3f} {-a:.3f} L {xl:.3f} {-b:.3f}"/>')
+            fleche(xl, a, 0, 1); fleche(xl, b, 0, -1)
+            etiquette(xl, (a + b) / 2, lettre, val)
+        elif typ == "cote_v_int":
+            x, a, b = t["x"], t["y1"], t["y2"]
+            o.append(f'<path d="M {x:.3f} {-a:.3f} L {x:.3f} {-b:.3f}"/>')
+            fleche(x, a, 0, 1); fleche(x, b, 0, -1)
+            etiquette(x, (a + b) / 2, lettre, val)
+        elif typ == "rayon":
+            px, py = t["x"], t["y"]
+            lx, ly = px + t.get("dx", ech * 0.10), py + t.get("dy", ech * 0.10)
+            o.append(f'<path d="M {px:.3f} {-py:.3f} L {lx:.3f} {-ly:.3f}"/>')
+            etiquette(lx, ly, lettre, "R " + val)
+    for i, c in enumerate(notes):
+        yn = y0 - md - tp * (1.0 + i * 1.55)
+        lignes_txt.append(
+            f'<circle cx="{x0 + tp*0.62:.3f}" cy="{-yn:.3f}" r="{tp*0.62:.3f}" '
+            f'fill="currentColor" opacity="0.14" stroke="none"/>'
+            f'<text x="{x0 + tp*0.62:.3f}" y="{-yn + tp*0.34:.3f}" '
+            f'text-anchor="middle" font-size="{tp*0.78:.3f}" font-weight="700" '
+            f'fill="currentColor" stroke="none">{c["lettre"]}</text>'
+            f'<text x="{x0 + tp*1.55:.3f}" y="{-yn + tp*0.30:.3f}" '
+            f'font-size="{tp*0.74:.3f}" fill="currentColor" opacity="0.72" '
+            f'stroke="none">{c["libelle"]} {_fmt(c["valeur"])} '
+            f'(hors du plan de la vue)</text>')
+    o.append("</g>")
+    o.append("".join(lignes_txt))
+    o.append("</svg>")
+    return "".join(o)

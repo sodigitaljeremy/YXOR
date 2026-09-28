@@ -1,7 +1,11 @@
 # 0019 — Interface : le site devient un catalogue technique
 
 Date : 2026-09-28
-Statut : **proposée** — en attente de validation, rien n'est codé
+Statut : **acceptée** le 2026-09-28 — codée le jour même.
+Trois précisions ajoutées à la validation : lettrage par rang de
+lecture, verdict dessinable/coupable porté aussi par la fiche
+atelier, rail du rang 1 conservé à zéro. Le raisonnement ci-dessous
+n'est pas réécrit (règle 5).
 
 ## Référence : McMaster-Carr
 

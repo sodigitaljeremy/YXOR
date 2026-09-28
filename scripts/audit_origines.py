@@ -149,7 +149,11 @@ class RelevesPieces(Source):
         for f in sorted(PARTS.glob("*.origines.yaml")):
             plat = dict(lire_yaml_plat(f))
             for chemin, valeur in plat.items():
-                if not chemin.endswith(".valeur"):
+                # Ne lire QUE le bloc `cotes:`. Le bloc `cotes_schema:`
+                # déclare des cotes de DESSIN — lettre, tracé, valeur — et
+                # non des cotes d'origine : ses `valeur` ressortaient
+                # « non qualifiées » et gonflaient le compte de 13.
+                if not chemin.startswith("cotes[") or not chemin.endswith(".valeur"):
                     continue
                 base = chemin[: -len(".valeur")]
                 out.append(dict(

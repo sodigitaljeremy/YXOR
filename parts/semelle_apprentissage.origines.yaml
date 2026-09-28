@@ -26,6 +26,38 @@ piece:
     C'est le prototype de la méthode : un modèle, un paramètre
     d'épaisseur, un DXF par couple machine-matériau.
 
+cotes_schema:
+  - rang: hors_tout
+    libelle: "longueur"
+    cle: ratios.pied_longueur
+    valeur: 136.8
+    trace: {type: cote_h, x1: -68.4, x2: 68.4}
+  - rang: hors_tout
+    libelle: "largeur"
+    cle: ratios.pied_largeur
+    valeur: 49.5
+    trace: {type: cote_v, y1: -24.75, y2: 24.75}
+  - rang: derivee
+    libelle: "largeur au creux"
+    cle: ratio_resserrement
+    valeur: 34.65
+    trace: {type: cote_v_int, x: 0.0, y1: -17.325, y2: 17.325}
+  - rang: derivee
+    libelle: "congé extérieur"
+    cle: ratio_coins
+    valeur: 12.375
+    trace: {type: rayon, x: 64.7754, y: 21.1254, dx: 8.208, dy: 9.9}
+  - rang: procede
+    libelle: "rayon intérieur minimal"
+    cle: procedes.cutter_carton.rayon_interieur_min
+    valeur: 2.5
+    trace: {type: rayon, x: -32.832, y: -24.55, dx: -6.84, dy: -12.87}
+  - rang: procede
+    libelle: "épaisseur"
+    cle: procedes.cutter_carton.epaisseur
+    valeur: 5.0
+    trace: {type: note}
+
 cotes:
   - cle: paliers.P2
     valeur: 0.9
