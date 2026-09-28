@@ -47,7 +47,7 @@ PARAMS = REPO / "params"
 PARTS = REPO / "parts"
 DECLARATION = PARAMS / "origines.yaml"
 
-ORIGINES = ("propre", "catalogue", "amont", "mesure", "ambigu")
+ORIGINES = ("propre", "catalogue", "litterature", "amont", "mesure", "ambigu")
 NON_QUALIFIE = "non_qualifie"
 
 

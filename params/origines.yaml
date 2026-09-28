@@ -37,36 +37,36 @@ fichiers:
         source: "choix de projet, ne vient pas de ToddlerBot"
 
       - motif: "ratios.*"
-        origine: ambigu
+        origine: litterature
         source: "Drillis & Contini, ratios anthropométriques (biomécanique)"
         note: >
-          NON AMONT — antérieur de plusieurs décennies à ToddlerBot, donc
-          sans risque de licence amont. Marqué `ambigu` parce que la
-          taxonomie n'a pas de valeur pour la littérature scientifique
-          (fiche 0010 §3a). Citation complète à compléter.
+          Fiche 0011. Antérieur de plusieurs décennies à ToddlerBot :
+          aucun risque de licence amont. CITATION COMPLÈTE À FOURNIR
+          (année, revue, table) — une cote `litterature` sans citation
+          exploitable est un défaut.
 
       - motif: "masses.*"
-        origine: ambigu
+        origine: litterature
         source: "fractions de masse segmentaire, même source que les ratios"
-        note: "même lacune de taxonomie que ratios.*"
+        note: "même source que ratios.* — citation à fournir"
 
   # ═══════════════════════════════════════════════════════════════════════
   hardware.yaml:
     regles:
       - motif: "vis.*.diametre"
-        origine: ambigu
+        origine: litterature
         source: "diamètre nominal ISO métrique"
         note: >
-          NON AMONT. Marqué `ambigu` : une norme n'est pas une fiche
-          constructeur (fiche 0010 §3b). Référence de norme à citer.
+          Fiche 0011 : une norme est du savoir public que personne ne
+          possède. RÉFÉRENCE DE NORME À CITER.
       - motif: "vis.*.passage"
-        origine: ambigu
+        origine: litterature
         source: "trou de passage, série normalisée"
-        note: "même lacune que vis.*.diametre"
+        note: "norme à citer, comme vis.*.diametre"
       - motif: "vis.*.tete_diametre"
-        origine: ambigu
+        origine: litterature
         source: "diamètre de tête, vis à six pans creux"
-        note: "même lacune ; norme à citer (ISO 4762 probable, NON VÉRIFIÉ)"
+        note: "norme à citer (ISO 4762 probable, NON VÉRIFIÉ)"
 
       - motif: "vis.*.insert_*"
         origine: catalogue

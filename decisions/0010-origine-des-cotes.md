@@ -2,6 +2,7 @@
 
 Date : 2026-09-28
 Statut : acceptée
+Amendée par : `0011-origine-litterature.md` — cinquième origine `litterature`, et filiation de H consignée.
 
 ## Contexte
 

@@ -2,6 +2,7 @@
 
 Date : 2026-09-28
 Statut : acceptée
+Amendée par : `0011-origine-litterature.md` — l'emprunt dimensionnel (H) est adossé au même palier P1 que l'emprunt topologique traité ici.
 
 ## Contexte
 
