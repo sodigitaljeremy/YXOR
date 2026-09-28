@@ -169,7 +169,19 @@ class LitterauxPieces(Source):
     nombres qui ressemblent à des cotes sont signalés.
     """
     nom = "parts/ (littéraux)"
+    # ⚠ N'exempter QUE des entiers. `2.0 in {0,1,2,3,-1}` vaut True en
+    # Python — 2.0 == 2 — si bien qu'un flottant comme 2.0, qui peut
+    # parfaitement être une cote en millimètres, se faisait exempter en
+    # silence. Un flottant est toujours inventorié.
     IGNORES = {0, 1, 2, 3, -1}
+    # Un littéral qui n'est PAS une cote doit le DIRE, avec sa raison.
+    # Marqueur : `# non-cote: <raison>` en fin de ligne. Il n'exempte pas
+    # en silence — la ligne est inventoriée comme non-cote déclarée, donc
+    # visible dans l'audit. Un blanc-seing muet serait pire que le défaut
+    # qu'il masque.
+    # Accepté en fin de ligne OU sur la ligne juste au-dessus : une
+    # expression longue reste lisible sans commentaire à rallonge.
+    MARQUEUR = re.compile(r"#\s*non-cote\s*:\s*(.+?)\s*$")
 
     def disponible(self) -> bool:
         return PARTS.is_dir() and any(PARTS.rglob("*.py"))
@@ -177,9 +189,23 @@ class LitterauxPieces(Source):
     def cotes(self) -> list[dict]:
         out = []
         for f in sorted(PARTS.rglob("*.py")):
+            texte = f.read_text(encoding="utf-8")
+            lignes = texte.splitlines()
             try:
-                arbre = ast.parse(f.read_text(encoding="utf-8"))
-            except SyntaxError:
+                arbre = ast.parse(texte)
+            except SyntaxError as err:
+                # ⚠ NE JAMAIS IGNORER EN SILENCE. Un fichier de pièce qui
+                # ne s'analyse plus voyait ses littéraux DISPARAÎTRE de
+                # l'inventaire : le total baissait et `--strict` passait,
+                # sur un fichier cassé. C'est l'inverse de ce que l'audit
+                # doit faire. Une erreur d'analyse est un défaut, pas un
+                # motif d'exclusion.
+                out.append(dict(
+                    fichier=str(f.relative_to(REPO)),
+                    chemin=f"ligne {err.lineno}", valeur="—",
+                    origine=NON_QUALIFIE, nature=None, motif=None, source=None,
+                    note=f"FICHIER NON ANALYSABLE : {err.msg}. "
+                         f"Ses cotes sont invisibles pour l'audit."))
                 continue
             # Positions syntaxiques qui ne peuvent PAS porter une cote :
             #   round(x, 4)      -> précision d'arrondi
@@ -201,9 +227,23 @@ class LitterauxPieces(Source):
                         exempts.add(id(cmp_))
             for n in ast.walk(arbre):
                 if isinstance(n, ast.Constant) and isinstance(n.value, (int, float)):
-                    if isinstance(n.value, bool) or n.value in self.IGNORES:
+                    if isinstance(n.value, bool):
+                        continue
+                    if isinstance(n.value, int) and n.value in self.IGNORES:
                         continue
                     if id(n) in exempts:
+                        continue
+                    voisines = [lignes[i] for i in (n.lineno - 1, n.lineno - 2)
+                                if 0 <= i < len(lignes)]
+                    m = next((mm for l in voisines
+                              if (mm := self.MARQUEUR.search(l))), None)
+                    if m:
+                        out.append(dict(
+                            fichier=str(f.relative_to(REPO)),
+                            chemin=f"ligne {n.lineno}", valeur=repr(n.value),
+                            origine="propre", nature="sans_objet", motif=None,
+                            source=f"non-cote déclarée : {m.group(1)}",
+                            note=None))
                         continue
                     out.append(dict(
                         fichier=str(f.relative_to(REPO)),

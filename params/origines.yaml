@@ -70,6 +70,16 @@ fichiers:
   # ═══════════════════════════════════════════════════════════════════════
   hardware.yaml:
     regles:
+      - motif: "procede_defaut"
+        origine: propre
+        nature: sans_objet
+        source: "choix de projet — quel couple machine-matériau les pièces emploient"
+        note: >
+          Ce n'est pas une cote mais un SÉLECTEUR : il nomme un procédé,
+          il ne mesure rien. Déplacé du code vers les données le
+          2026-09-28 pour qu'un changement de matériau reste une
+          modification de donnée.
+
       # --- procédés : réécrits le 2026-09-28, fiches 0014 et 0015 ---
       - motif: "procedes.**"
         origine: mesure

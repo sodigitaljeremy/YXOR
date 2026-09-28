@@ -67,7 +67,7 @@ class Cotes:
     def echelle(self, cle_ratio: str, H_m: float) -> float:
         """Cote d'échelle : H x ratio. Règle 1. En millimètres."""
         r = self.anthro["ratios"][cle_ratio]
-        v = round(H_m * 1000.0 * r["valeur"], 4)
+        v = round(H_m * 1000.0 * r["valeur"], 4)  # non-cote: conversion mètre -> millimètre
         return self._note(f"ratios.{cle_ratio}", v, "litterature", "echelle",
                           f"{r['source']} (x H)")
 
@@ -103,12 +103,14 @@ def construire(c: Cotes, palier: str, resserrement: float, proc: str,
     ratio = c.choix("ratio_resserrement", resserrement,
                     "choix de projet — aucune source anthropométrique")
 
+    # non-cote: le 2 répartit le resserrement également sur les deux flancs
     profondeur = round((W - W * ratio) / 2.0, 4)      # par côté
     re_ = c.choix("ratio_etendue_creux", ratio_etendue,
                   "choix de projet — aucune source anthropométrique")
     etendue = round(L * re_, 4)                        # longueur du creux
     # rayon du cercle qui creuse le flanc : segment circulaire de corde
     # `etendue` et de flèche `profondeur`
+    # non-cote: constantes de la formule du rayon d'un segment circulaire
     R = round((etendue ** 2 / 4.0 + profondeur ** 2) / (2.0 * profondeur), 4)
     if R < r_int:
         raise ValueError(f"le creux a un rayon de {R} mm, sous le minimum "
@@ -120,6 +122,7 @@ def construire(c: Cotes, palier: str, resserrement: float, proc: str,
             bd.fillet(esq.vertices(), radius=r_ext)     # congés convexes
             # les deux creux de flanc, qui créent les angles RENTRANTS
             for signe in (1, -1):
+                # non-cote: demi-largeur, le flanc est à W/2 de l'axe
                 with bd.Locations((0, signe * (W / 2.0 - profondeur + R))):
                     bd.Circle(R, mode=bd.Mode.SUBTRACT)
             # aucun angle vif rentrant : congés au minimum du procédé
