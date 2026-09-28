@@ -1,88 +1,593 @@
-# Nomenclature des articulations. Ces noms font foi partout : CAO, URDF, code
-# de contrôle. Aucune variante locale, aucun renommage silencieux.
+# Nomenclature des articulations. `nom` fait foi partout : CAO, URDF, code de
+# contrôle. Aucune variante locale, aucun renommage silencieux (règle 3).
 #
-# STATUT (fiche 0005, 2026-09-28) : ce fichier décrit la TOPOLOGIE TODDLERBOT
-# ADOPTÉE EN P1, et NON l'anatomie cible de YXOR. Réévaluable en P2, et à ce
-# moment seulement.
+# STATUT (fiche 0005) : TOPOLOGIE TODDLERBOT ADOPTÉE EN P1, et non l'anatomie
+# cible de YXOR. Réévaluable en P2, et à ce moment seulement.
 #
-# BUTÉES (chantier 2, 2026-09-28) : extraites du modèle amont, jamais saisies
-# à la main. Source : params/upstream_joints.generated.yaml, section
-# `articulations`, commit amont e337f3b177b4b53abff70b31d1695a7b66cc6d2e.
+# ── CINQ IDENTITÉS, VOLONTAIREMENT SÉPARÉES (fiche 0007) ──────────────────
 #
-# ⚠ Elles proviennent des ARTICULATIONS, pas des ACTIONNEURS. Là où une
-#   liaison parallèle sépare les deux, l'écart est massif : le moteur de
-#   roulis de taille tourne de ±269°, l'articulation ne fait que ±30°.
-#   Régénérer et revérifier avec :
-#       .venv/bin/python scripts/import_upstream_limits.py --check
+#   fonction      CE QUE l'articulation fait. Anatomique, stable.
+#   articulation  OÙ le mouvement se produit : axe, sens, butées.
+#   actionnement  COMMENT il est produit : moteurs, transmission, rapport.
+#   modele        CE QUE LA SIMULATION REPRÉSENTE — elle peut simplifier.
+#   materiel      LE MATÉRIEL RÉEL. Jamais sans `source` NI `version`.
 #
-# axe   : axe de rotation, repère x avant / y gauche / z haut.
-# sens  : +1 si une valeur positive tourne autour de l'axe positif, -1 sinon.
-#         Un sens inverse retourne le mouvement : ce n'est pas cosmétique.
-#         Valeurs données pour le CÔTÉ GAUCHE (voir `symetrie`).
-# min/max : butées en degrés.
+# ⚠ `version` est OBLIGATOIRE dans tout bloc `materiel`.
+#   UNE AFFIRMATION SANS VERSION EST UNE AFFIRMATION PÉRIMABLE.
+#   Cas d'école, le genou : « liaison parallèle déportant le moteur vers la
+#   hanche » était VRAIE pour ToddlerBot 1.0 et FAUSSE pour la 2.0, qui a
+#   supprimé les bielles. Sans champ `version`, rien ne signalait que
+#   l'affirmation avait cessé d'être vraie.
+#
+# `confiance` — quatre valeurs, et quatre seulement :
+#   documentee        une source amont citée l'affirme explicitement
+#   deduite_du_modele seul le MJCF l'atteste. Il REPRÉSENTE, il ne DÉCRIT pas.
+#   releve_onshape    relevé ponctuel daté (fiche 0007). Jamais en masse.
+#   inconnue          aucune source. `source: null` obligatoire.
+#
+# ── RECOUPEMENT ───────────────────────────────────────────────────────────
+#
+# Là où une transmission a un rapport constant, les butées se vérifient par
+# un SECOND chemin, indépendant de leur extraction : course du moteur ×
+# rapport de réduction. Deux méthodes qui convergent valent mieux qu'une
+# source. Le bloc `recoupement` consigne ce calcul là où il existe, et dit
+# pourquoi il ne s'applique pas ailleurs.
+#
+# Butées extraites de params/upstream_joints.generated.yaml (commit amont
+# e337f3b177b4b53abff70b31d1695a7b66cc6d2e), section `articulations` — jamais des `actionneurs`.
+# Régénérer et revérifier :
+#     .venv/bin/python scripts/import_upstream_limits.py --check
 
 convention:
   unites_angles: degres
   repere: "x avant, y gauche, z haut"
   suffixes: [_left, _right]
+  version_materiel_de_reference: "ToddlerBot 2.0.0"   # CHANGELOG amont, 2025-08-25
 
 symetrie:
-  # Vérifié sur le modèle amont : les 13 paires gauche/droite sont exactement
-  # images l'une de l'autre. C'est ce qui autorise UN SEUL jeu de butées ici.
-  # Le contrôle est rejoué par scripts/import_upstream_limits.py, qui refuse
-  # d'écrire s'il casse.
-  #
-  # Un axe de rotation est un vecteur AXIAL : sous une réflexion sagittale il
-  # devient (-wx, +wy, -wz), et non (wx, -wy, wz). Comparer les butées sans
-  # ce signe fait conclure à tort à une asymétrie.
+  # Les 13 paires gauche/droite sont exactement images l'une de l'autre :
+  # c'est ce qui autorise UN SEUL jeu de butées ici. Un axe de rotation est
+  # un vecteur AXIAL, il devient (-x, +y, -z) sous réflexion sagittale ;
+  # comparer les butées sans ce signe fait conclure à tort à une asymétrie.
   plan: sagittal
-  regle_axe: "axe_droit = (-x, +y, -z) de l'axe gauche"
-  regle_butees: "si l'axe droit est l'opposé du miroir, butées = [-max_g, -min_g]"
+  regle_axe: "axe_droit = (-x, +y, -z) de laxe gauche"
+  regle_butees: "si laxe droit est lopposé du miroir, butées = [-max_g, -min_g]"
+  verifie_par: scripts/import_upstream_limits.py
   verifie_le: 2026-09-28
 
 jambes:          # 6 DDL par jambe
-  - { nom: hip_yaw    , axe: z, sens: -1, min:   -90.0, max:    90.0 }
-  - { nom: hip_roll   , axe: x, sens: +1, min:   -45.0, max:    90.0 }
-  - { nom: hip_pitch  , axe: y, sens: +1, min:  -135.0, max:   105.0 }
-  - { nom: knee       , axe: y, sens: -1, min:  -120.0, max:     0.0 }
-  - { nom: ankle_pitch, axe: y, sens: +1, min:  -105.0, max:    55.0 }
-  - { nom: ankle_roll , axe: x, sens: +1, min:   -70.0, max:    70.0 }
+  - nom: hip_yaw
+    fonction: >
+      Rotation de la jambe autour de son axe vertical : oriente le pied vers l'intérieur ou l'extérieur.
+    articulation:
+      axe: z
+      sens: -1
+      min: -90.0
+      max: 90.0
+      source: upstream_joints.generated.yaml#articulations/left_hip_yaw_driven
+    actionnement:
+      moteurs: [left_hip_yaw_drive]
+      transmission: engrenage
+      rapport: 0.85714286
+      source: upstream_joints.generated.yaml#actionneurs/left_hip_yaw_drive
+    recoupement:
+      methode: "course moteur × rapport"
+      course_moteur: [-105.0, 105.0]
+      butees_predites: [-90.0, 90.0]
+      butees_extraites: [-90.0, 90.0]
+      resultat: converge
+    modele:
+      representation: equality/joint
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: engrenage
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: "corroboration partielle : amont CHANGELOG.md 2.0.0, section Pelvis — « Optional metal bevel gears ». Confirme un engrenage conique au bassin, SANS nommer cette articulation."
+  - nom: hip_roll
+    fonction: >
+      Écartement de la jambe sur le côté, et retour vers l'axe du corps.
+    articulation:
+      axe: x
+      sens: +1
+      min: -45.0
+      max: 90.0
+      source: upstream_joints.generated.yaml#articulations/left_hip_roll
+    actionnement:
+      moteurs: [left_hip_roll]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_hip_roll
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: hip_pitch
+    fonction: >
+      Balancement de la jambe vers l'avant et vers l'arrière — le moteur du pas.
+    articulation:
+      axe: y
+      sens: +1
+      min: -135.0
+      max: 105.0
+      source: upstream_joints.generated.yaml#articulations/left_hip_pitch
+    actionnement:
+      moteurs: [left_hip_pitch]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_hip_pitch
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: knee
+    fonction: >
+      Flexion et extension de la jambe entre cuisse et tibia.
+    articulation:
+      axe: y
+      sens: -1
+      min: -120.0
+      max: 0.0
+      source: upstream_joints.generated.yaml#articulations/left_knee
+    actionnement:
+      moteurs: [left_knee]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_knee
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: documentee
+      source: "amont CHANGELOG.md 2.0.0, section Leg — « Simplified knee design (removed parallel links) »"
+      note: >
+        La 1.0 utilisait des bielles parallèles ; la 2.0 les a supprimées. La note antérieure de ce fichier décrivait la 1.0 : vraie alors, fausse aujourd'hui.
+  - nom: ankle_pitch
+    fonction: >
+      Bascule du pied vers le haut ou vers le bas ; règle l'attaque du pas.
+    articulation:
+      axe: y
+      sens: +1
+      min: -105.0
+      max: 55.0
+      source: upstream_joints.generated.yaml#articulations/left_ankle_pitch
+    actionnement:
+      moteurs: [left_ankle_pitch]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_ankle_pitch
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: ankle_roll
+    fonction: >
+      Bascule latérale du pied ; encaisse les défauts de planéité du sol.
+    articulation:
+      axe: x
+      sens: +1
+      min: -70.0
+      max: 70.0
+      source: upstream_joints.generated.yaml#articulations/left_ankle_roll
+    actionnement:
+      moteurs: [left_ankle_roll]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_ankle_roll
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
 
 bras:          # 7 DDL par bras
-  - { nom: shoulder_pitch, axe: y, sens: +1, min:  -270.0, max:   270.0 }
-  - { nom: shoulder_roll , axe: x, sens: +1, min:   -25.0, max:    90.0 }
-  - { nom: shoulder_yaw  , axe: z, sens: -1, min:  -180.0, max:   180.0 }
-  - { nom: elbow_roll    , axe: x, sens: +1, min:  -130.0, max:   110.0 }
-  - { nom: elbow_yaw     , axe: z, sens: -1, min:  -180.0, max:   180.0 }
-  - { nom: wrist_pitch   , axe: y, sens: -1, min:  -120.0, max:   120.0 }
-  - { nom: wrist_roll    , axe: x, sens: -1, min:   -90.0, max:    90.0 }
+  - nom: shoulder_pitch
+    fonction: >
+      Élévation du bras vers l'avant et vers l'arrière.
+    articulation:
+      axe: y
+      sens: +1
+      min: -270.0
+      max: 270.0
+      source: upstream_joints.generated.yaml#articulations/left_shoulder_pitch
+    actionnement:
+      moteurs: [left_shoulder_pitch]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_shoulder_pitch
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: shoulder_roll
+    fonction: >
+      Écartement du bras sur le côté.
+    articulation:
+      axe: x
+      sens: +1
+      min: -25.0
+      max: 90.0
+      source: upstream_joints.generated.yaml#articulations/left_shoulder_roll
+    actionnement:
+      moteurs: [left_shoulder_roll]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_shoulder_roll
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: shoulder_yaw
+    fonction: >
+      Rotation du bras autour de son axe long, en amont du coude.
+    articulation:
+      axe: z
+      sens: -1
+      min: -180.0
+      max: 180.0
+      source: upstream_joints.generated.yaml#articulations/left_shoulder_yaw_driven
+    actionnement:
+      moteurs: [left_shoulder_yaw_drive]
+      transmission: engrenage
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_shoulder_yaw_drive
+    recoupement:
+      methode: "course moteur × rapport"
+      course_moteur: [-180.0, 180.0]
+      butees_predites: [-180.0, 180.0]
+      butees_extraites: [-180.0, 180.0]
+      resultat: converge
+    modele:
+      representation: equality/joint
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: engrenage
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: "corroboration partielle : amont CHANGELOG.md 2.0.0, section Arm — « Reduced gear transmission friction ». Confirme des engrenages au bras, SANS nommer cette articulation."
+  - nom: elbow_roll
+    fonction: >
+      Flexion de l'avant-bras. Attention : bras le long du corps, elle est LATÉRALE, pas vers l'avant (voir particularites).
+    articulation:
+      axe: x
+      sens: +1
+      min: -130.0
+      max: 110.0
+      source: upstream_joints.generated.yaml#articulations/left_elbow_roll
+    actionnement:
+      moteurs: [left_elbow_roll]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_elbow_roll
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: elbow_yaw
+    fonction: >
+      Rotation de l'avant-bras autour de son axe long — l'équivalent de tourner la paume.
+    articulation:
+      axe: z
+      sens: -1
+      min: -180.0
+      max: 180.0
+      source: upstream_joints.generated.yaml#articulations/left_elbow_yaw_driven
+    actionnement:
+      moteurs: [left_elbow_yaw_drive]
+      transmission: engrenage
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_elbow_yaw_drive
+    recoupement:
+      methode: "course moteur × rapport"
+      course_moteur: [-180.0, 180.0]
+      butees_predites: [-180.0, 180.0]
+      butees_extraites: [-180.0, 180.0]
+      resultat: converge
+    modele:
+      representation: equality/joint
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: engrenage
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: "corroboration partielle : amont CHANGELOG.md 2.0.0, section Arm — « Reduced gear transmission friction ». Confirme des engrenages au bras, SANS nommer cette articulation."
+  - nom: wrist_pitch
+    fonction: >
+      Bascule de la main vers le haut ou vers le bas.
+    articulation:
+      axe: y
+      sens: -1
+      min: -120.0
+      max: 120.0
+      source: upstream_joints.generated.yaml#articulations/left_wrist_pitch_driven
+    actionnement:
+      moteurs: [left_wrist_pitch_drive]
+      transmission: engrenage
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_wrist_pitch_drive
+    recoupement:
+      methode: "course moteur × rapport"
+      course_moteur: [-120.0, 120.0]
+      butees_predites: [-120.0, 120.0]
+      butees_extraites: [-120.0, 120.0]
+      resultat: converge
+    modele:
+      representation: equality/joint
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: engrenage
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: "corroboration partielle : amont CHANGELOG.md 2.0.0, section Arm — « Reduced gear transmission friction ». Confirme des engrenages au bras, SANS nommer cette articulation."
+  - nom: wrist_roll
+    fonction: >
+      Rotation de la main autour de son axe.
+    articulation:
+      axe: x
+      sens: -1
+      min: -90.0
+      max: 90.0
+      source: upstream_joints.generated.yaml#articulations/left_wrist_roll
+    actionnement:
+      moteurs: [left_wrist_roll]
+      transmission: directe
+      rapport: 1.0
+      source: upstream_joints.generated.yaml#actionneurs/left_wrist_roll
+    recoupement:
+      methode: null
+      resultat: sans_objet   # moteur et articulation confondus
+    modele:
+      representation: articulation_directe
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: directe
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
 
 taille:          # 2 DDL
-  - { nom: waist_yaw , axe: z, sens: +1, min:   -90.0, max:    90.0 }
-  - { nom: waist_roll, axe: x, sens: +1, min:   -30.0, max:    30.0 }
+  - nom: waist_yaw
+    fonction: >
+      Rotation du torse sur le bassin ; oriente le buste sans déplacer les pieds.
+    articulation:
+      axe: z
+      sens: +1
+      min: -90.0
+      max: 90.0
+      source: upstream_joints.generated.yaml#articulations/waist_yaw
+    actionnement:
+      moteurs: [waist_act_1, waist_act_2]
+      transmission: differentiel
+      rapport: null
+      source: upstream_joints.generated.yaml#actionneurs/waist_act_1
+    recoupement:
+      methode: "course moteur × coefficients du différentiel"
+      resultat: non_applicable
+      motif: >
+        La course des deux moteurs autoriserait bien plus que la butée
+        déclarée. C'est l'ARTICULATION qui borne, pas la transmission :
+        la limite est une butée mécanique propre, à localiser en CAO.
+    modele:
+      representation: tendon/fixed
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: differentiel
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: waist_roll
+    fonction: >
+      Inclinaison latérale du torse sur le bassin.
+    articulation:
+      axe: x
+      sens: +1
+      min: -30.0
+      max: 30.0
+      source: upstream_joints.generated.yaml#articulations/waist_roll
+    actionnement:
+      moteurs: [waist_act_1, waist_act_2]
+      transmission: differentiel
+      rapport: null
+      source: upstream_joints.generated.yaml#actionneurs/waist_act_1
+    recoupement:
+      methode: "course moteur × coefficients du différentiel"
+      resultat: non_applicable
+      motif: >
+        La course des deux moteurs autoriserait bien plus que la butée
+        déclarée. C'est l'ARTICULATION qui borne, pas la transmission :
+        la limite est une butée mécanique propre, à localiser en CAO.
+    modele:
+      representation: tendon/fixed
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: differentiel
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
 
 nuque:          # 2 DDL
-  - { nom: neck_yaw  , axe: z, sens: +1, min:  -150.0, max:   150.0 }
-  - { nom: neck_pitch, axe: y, sens: +1, min:   -35.0, max:    80.0 }
+  - nom: neck_yaw
+    fonction: >
+      Rotation de la tête, gauche-droite.
+    articulation:
+      axe: z
+      sens: +1
+      min: -150.0
+      max: 150.0
+      source: upstream_joints.generated.yaml#articulations/neck_yaw_driven
+    actionnement:
+      moteurs: [neck_yaw_drive]
+      transmission: engrenage
+      rapport: 0.90909091
+      source: upstream_joints.generated.yaml#actionneurs/neck_yaw_drive
+    recoupement:
+      methode: "course moteur × rapport"
+      course_moteur: [-165.0, 165.0]
+      butees_predites: [-150.0, 150.0]
+      butees_extraites: [-150.0, 150.0]
+      resultat: converge
+    modele:
+      representation: equality/joint
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: engrenage
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
+  - nom: neck_pitch
+    fonction: >
+      Bascule de la tête, haut-bas.
+    articulation:
+      axe: y
+      sens: +1
+      min: -35.0
+      max: 80.0
+      source: upstream_joints.generated.yaml#articulations/neck_pitch
+    actionnement:
+      moteurs: [neck_pitch_act]
+      transmission: bielle_quatre_barres
+      rapport: null
+      source: upstream_joints.generated.yaml#actionneurs/neck_pitch_act
+    recoupement:
+      methode: null
+      resultat: non_demontre
+      motif: >
+        Course moteur [-35.0, 80.0] identique à la butée de
+        l'articulation, mais une bielle à quatre barres n'a pas de rapport
+        constant : cette égalité n'est pas une démonstration.
+    modele:
+      representation: equality/connect
+      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
+    materiel:
+      transmission: bielle_quatre_barres
+      version: "ToddlerBot 2.0.0"
+      confiance: deduite_du_modele
+      source: null
+      note: >
+        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
+        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
+        Onshape ponctuellement (fiche 0007) et consigner la date.
 
 # Total : 6×2 + 7×2 + 2 + 2 = 30 DDL actifs.
 
 particularites:
   elbow_roll: >
-    Malgré le nom, ce n'est pas un coude humain : bras le long du corps, il
-    écarte l'avant-bras LATÉRALEMENT, pas vers l'avant. Rotation autour de x
-    (roulis), vérifiée sur le modèle, par le calcul — la coordonnée x de la
-    main reste constante sur toute la course — et à l'image. Le lacet
-    d'épaule situé au-dessus oriente le plan de flexion ; le coude n'en a
-    pas de fixe dans le repère du robot.
+    Malgré le nom, ce n'est pas un coude humain. Bras le long du corps, il
+    écarte l'avant-bras LATÉRALEMENT, pas vers l'avant : rotation autour de x.
+    Vérifié par trois voies concordantes — le modèle, le calcul (la coordonnée
+    x de la main reste constante sur toute la course) et l'image. Le lacet
+    d'épaule situé au-dessus oriente le plan de flexion ; le coude n'en a pas
+    de fixe dans le repère du robot.
   elbow_yaw: >
-    Portait le nom wrist_yaw avant la fiche 0005. L'axe z était juste, c'est
+    Nommée wrist_yaw avant la fiche 0005. L'axe z était juste, c'est
     l'emplacement qui était faux : ce lacet est au coude, pas au poignet.
   knee: >
-    Le MJCF amont modélise le genou en actionnement DIRECT. La note
-    antérieure décrivant une liaison parallèle déportant le moteur vers la
-    hanche ne provient pas du modèle et n'est pas sourcée à ce jour : elle a
-    été retirée en attendant vérification côté documentation matérielle.
+    Actionnement DIRECT depuis ToddlerBot 2.0, qui a supprimé les bielles
+    parallèles de la 1.0. Butée haute à 0° : c'est une butée mécanique réelle,
+    utilisée comme référence de calibration par la doc amont
+    (docs/tools/01_zero_point_calibration.rst).
   neck_pitch: >
-    Liaison parallèle, confirmée par le modèle : moteur neck_pitch_act,
-    articulation neck_pitch, bielles neck_pitch_front et neck_pitch_back.
+    Bielle à quatre barres : moteur neck_pitch_act, articulation neck_pitch,
+    bielles neck_pitch_front et neck_pitch_back, fermées par quatre contraintes
+    de site dans le MJCF.
+  waist_yaw / waist_roll: >
+    Différentiel : deux moteurs tournant tous deux autour de z. Leur SOMME
+    produit le lacet, leur DIFFÉRENCE le roulis. Aucun des deux moteurs ne
+    correspond à un degré de liberté anatomique.
