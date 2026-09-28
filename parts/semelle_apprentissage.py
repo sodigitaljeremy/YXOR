@@ -137,16 +137,33 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--palier", default="P2", choices=["P1", "P2", "P3"])
     ap.add_argument("--resserrement", type=float, default=0.70)
-    ap.add_argument("--procede", default="cutter_carton")
+    defaut = yaml.safe_load((REPO / "params/hardware.yaml").read_text("utf-8")
+                            ).get("procede_defaut", "cutter_carton")
+    ap.add_argument("--procede", default=defaut,
+                    help=f"couple machine-matériau ; défaut lu dans hardware.yaml "
+                         f"(actuellement {defaut})")
     ap.add_argument("--coins", type=float, default=0.25,
                     help="congé des coins, en fraction de la largeur")
     ap.add_argument("--etendue", type=float, default=0.50,
                     help="longueur du creux, en fraction de la longueur")
+    ap.add_argument("--cannelures", type=float, default=0.0,
+                    help="angle des cannelures par rapport à la LONGUEUR de la pièce, "
+                         "en degrés. 0 = le long de la pièce (recommandé). "
+                         "Sans effet si le matériau est isotrope.")
     a = ap.parse_args(argv)
 
     c = Cotes()
-    piece, d = construire(c, a.palier, a.resserrement, a.procede,
-                          a.coins, a.etendue)
+    try:
+        piece, d = construire(c, a.palier, a.resserrement, a.procede,
+                              a.coins, a.etendue)
+    except ValueError as err:
+        # Message net plutôt qu'une trace : ce n'est pas un bug, c'est le
+        # garde-fou de la fiche 0015 qui refuse une cote non mesurée.
+        print(f"\n  ARRÊT — {err}\n")
+        print(f"  Le procédé « {a.procede} » n'a pas toutes ses cotes.")
+        print("  Renseignez-les dans params/hardware.yaml après mesure,")
+        print("  puis relancez. Voir le protocole au journal du 2026-09-28.")
+        return 2
     SORTIE.mkdir(parents=True, exist_ok=True)
     base = f"{NOM}_{a.palier}_{a.procede}"
 
@@ -189,6 +206,18 @@ def main(argv=None) -> int:
     # --- plan A4 ---
     contours = polylignes_depuis_face(face)
     stamp = datetime.date.today().isoformat()
+    mat = c.hw["materiaux"].get(c.hw["procedes"][a.procede]["materiau"], {})
+    anisotrope = bool(mat.get("anisotrope"))
+    fleche = None
+    if anisotrope:
+        # Sans flèche sur le plan, déclarer un sens de fibre ne sert à
+        # rien : au moment de scotcher la feuille sur la matière, rien ne
+        # dit comment l'orienter. Deux pièces du même DXF à 90° l'une de
+        # l'autre ne sont pas la même pièce.
+        c.choix("orientation_cannelures_deg", a.cannelures,
+                "angle des cannelures par rapport à la longueur de la pièce")
+        fleche = (a.cannelures,
+                  f"SENS DES CANNELURES ({a.cannelures:.0f} deg) — aligner avant de couper")
     larg, haut = ecrire_plan_a4(
         contours, SORTIE / f"{base}_planA4.pdf",
         f"YXOR — semelle d'apprentissage",
@@ -198,7 +227,11 @@ def main(argv=None) -> int:
          f"resserrement {d['ratio']:.2f} -> {d['largeur_creux']:.2f} mm au creux",
          f"Rayon interieur minimal {d['r_int']:.1f} mm    "
          f"conges exterieurs {d['r_ext']:.2f} mm",
-         f"Genere le {stamp} — ne pas coter sur ce plan, il fait foi par sa geometrie"])
+         (f"Materiau ANISOTROPE : orienter la feuille selon la fleche ci-dessous."
+          if anisotrope else
+          "Materiau isotrope : l'orientation de la feuille est indifferente."),
+         f"Genere le {stamp} — ne pas coter sur ce plan, il fait foi par sa geometrie"],
+        fleche=fleche)
     print(f"\n  plan A4 : {larg:.2f} x {haut:.2f} mm sur 210 x 297")
 
     # --- relevé, lu par scripts/audit_origines.py ET scripts/regenerer.py ---
@@ -222,6 +255,9 @@ def main(argv=None) -> int:
               f"  saignee_mm: {proc['saignee'] if proc['saignee'] is not None else 'null'}",
               f"  voile_min_mm: {proc['voile_min'] if proc['voile_min'] is not None else 'null'}",
               f"  fixation: \"{proc['fixation']}\"",
+              f"  anisotrope: {'true' if anisotrope else 'false'}",
+              (f"  orientation_cannelures_deg: {a.cannelures}" if anisotrope
+               else "  orientation_cannelures_deg: null"),
               f"  longueur_mm: {d['L']}",
               f"  largeur_mm: {d['W']}",
               f"  volume_mm3: {round(piece.volume, 1)}",

@@ -72,8 +72,13 @@ def polylignes_depuis_face(face, tol_corde: float = 0.05) -> list[list[tuple]]:
     return contours
 
 
-def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0):
-    """Écrit le plan A4. `contours` en mm, origine quelconque : recentré."""
+def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0, fleche=None):
+    """Écrit le plan A4. `contours` en mm, origine quelconque : recentré.
+
+    `fleche` = (angle_deg, texte) pour un matériau ANISOTROPE. Sans elle,
+    déclarer un sens de fibre dans un relevé ne sert à rien : au moment
+    de poser le plan sur la matière, personne ne sait comment l'orienter.
+    """
     xs = [p[0] for c in contours for p in c]
     ys = [p[1] for c in contours for p in c]
     larg, haut = max(xs) - min(xs), max(ys) - min(ys)
@@ -85,6 +90,10 @@ def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0):
     dy = A4_H - marge - 52 - haut - min(ys)
 
     ops: list[str] = []
+    def txt(x, y, s, taille=9):
+        ops.append("BT /F1 %.1f Tf %.4f %.4f Td (%s) Tj ET"
+                   % (taille, x * MM, y * MM, _echap(s)))
+
     ops.append("1 J 1 j")                      # bouts et raccords arrondis
     ops.append("0 0 0 RG 0.6 w")               # trait de coupe : noir, 0,6 pt
     for c in contours:
@@ -92,6 +101,24 @@ def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0):
         for x, y in c[1:]:
             ops.append(f"{(x+dx)*MM:.4f} {(y+dy)*MM:.4f} l")
         ops.append("h S")
+
+    # ── flèche de sens de matière, si le matériau est orienté ──────────
+    if fleche:
+        import math as _m
+        ang, texte = fleche
+        yf = dy + min(ys) - 16.0
+        xc, lf = A4_L / 2, 34.0
+        ca, sa = _m.cos(_m.radians(ang)), _m.sin(_m.radians(ang))
+        x1, y1 = xc - lf / 2 * ca, yf - lf / 2 * sa
+        x2, y2 = xc + lf / 2 * ca, yf + lf / 2 * sa
+        ops.append("1.1 w")
+        ops.append(f"{x1*MM:.4f} {y1*MM:.4f} m {x2*MM:.4f} {y2*MM:.4f} l S")
+        for d in (150, -150):                       # les deux barbes
+            bx = x2 + 6.0 * _m.cos(_m.radians(ang + d))
+            by = y2 + 6.0 * _m.sin(_m.radians(ang + d))
+            ops.append(f"{x2*MM:.4f} {y2*MM:.4f} m {bx*MM:.4f} {by*MM:.4f} l S")
+        ops.append("0.6 w")
+        txt(xc - lf / 2, yf - 9.5, texte, 9)
 
     # ── réglet de contrôle : 100 mm exactement, gradué tous les 10 mm ──
     y0 = marge + 24
@@ -102,10 +129,6 @@ def ecrire_plan_a4(contours, chemin, titre, lignes_info, marge=15.0):
         h = 4.0 if i % 5 == 0 else 2.0
         x = x0 + i * 10.0
         ops.append(f"{x*MM:.4f} {y0*MM:.4f} m {x*MM:.4f} {(y0+h)*MM:.4f} l S")
-
-    def txt(x, y, s, taille=9):
-        ops.append("BT /F1 %.1f Tf %.4f %.4f Td (%s) Tj ET"
-                   % (taille, x * MM, y * MM, _echap(s)))
 
     txt(marge, A4_H - marge - 6, titre, 14)
     y = A4_H - marge - 20

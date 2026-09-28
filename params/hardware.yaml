@@ -17,6 +17,11 @@
 #  PROCÉDÉS — par couple MACHINE × MATÉRIAU, jamais par procédé générique
 #  Nature `procede` (fiche 0013). Ces valeurs ne dérivent pas de H.
 # ═════════════════════════════════════════════════════════════════════════
+# Procédé employé par défaut quand une pièce n'en impose pas. Le changer
+# est une modification de DONNÉE, pas de code : bascule de matériau sans
+# toucher à une ligne de Python.
+procede_defaut: cutter_carton
+
 procedes:
 
   cutter_carton:
@@ -32,6 +37,24 @@ procedes:
     note: >
       Le plus contraignant des trois, donc celui qui fixe le dessin.
       C'est aussi le seul qui permette d'itérer dans la journée.
+
+  cutter_carton_ondule:
+    machine: "cutter à main"
+    lieu: "sur place"
+    materiau: carton_ondule
+    epaisseur: null          # à MESURER — varie selon simple ou double cannelure
+    saignee: null            # à MESURER
+    rayon_interieur_min: null # = 0,5 x epaisseur, donc inconnu tant qu'elle l'est
+    voile_min: null          # à MESURER — un voile étroit s'effondre entre deux cannelures
+    fixation: "vis traversante + rondelles larges des deux côtés"
+    source_saignee: null
+    note: >
+      Carton de colis récupéré. DISTINCT du carton-plume : celui-ci est
+      une mousse prise entre deux papiers, isotrope dans son plan ; le
+      carton ondulé est une cannelure ORIENTÉE, donc anisotrope. Les deux
+      ne se coupent pas pareil et ne plient pas pareil.
+      Le rayon intérieur minimal reste null tant que l'épaisseur l'est :
+      il en dérive.
 
   laser_contreplaque:
     machine: "laser de fablab"
@@ -65,11 +88,36 @@ procedes:
 # ═════════════════════════════════════════════════════════════════════════
 materiaux:
   carton_plume:
+    anisotrope: false            # mousse : isotrope dans le plan
     epaisseur_nominale: 5.0
     epaisseur_mesuree: null      # protocole du journal 2026-09-28
     masse_surfacique: null       # mg/mm2 — LA grandeur à mesurer
     densite: null
     source: null
+  carton_ondule:
+    epaisseur_nominale: null     # dépend de la cannelure : à mesurer
+    epaisseur_mesuree: null
+    masse_surfacique: null       # mg/mm2 — LA grandeur à mesurer
+    densite: null
+    source: null
+    # ── ANISOTROPIE ────────────────────────────────────────────────────
+    anisotrope: true
+    axe_reference: "sens des cannelures"
+    note_anisotropie: >
+      Une cannelure est une suite d'arches collées entre deux papiers.
+      Elle donne au panneau une direction FORTE (le long des arches) et
+      une direction FAIBLE (en travers, où les arches s'écrasent et
+      plient). Deux pièces découpées du MÊME DXF mais à 90° l'une de
+      l'autre ne sont pas la même pièce.
+      Conséquence : toute pièce en carton ondulé doit déclarer
+      l'orientation de ses cannelures, et le plan de découpe doit la
+      porter — sinon la déclaration reste théorique au moment de couper.
+    mesure_epaisseur: >
+      Les becs d'un pied à coulisse ÉCRASENT les cannelures, et
+      l'écrasement est IRRÉVERSIBLE : le point mesuré est perdu. Mesurer
+      une pile de 10 feuilles sous pression légère et diviser, en
+      changeant d'endroit à chaque relevé.
+
   contreplaque:
     epaisseur_nominale: 3.0
     epaisseur_mesuree: null

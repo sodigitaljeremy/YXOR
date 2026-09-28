@@ -16,6 +16,8 @@ piece:
   saignee_mm: null
   voile_min_mm: null
   fixation: "vis traversante + rondelles larges des deux côtés"
+  anisotrope: false
+  orientation_cannelures_deg: null
   longueur_mm: 136.8
   largeur_mm: 49.5
   volume_mm3: 29782.8
