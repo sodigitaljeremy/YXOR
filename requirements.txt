@@ -51,3 +51,14 @@ build123d==0.13.0
 #   threejs-materials==1.2.4    traitlets==5.16.1           trianglesolver==1.2
 #   typing-inspect==0.9.0       urllib3==2.8.0              wcwidth==0.9.1
 #   webcolors==24.8.0           wrapt==2.5.0
+
+# ─────────────────────────────────────────────────────────────────────────
+# Outillage — audit d'origine des cotes. Voir decisions/0010.
+#
+# Un premier jet de scripts/audit_origines.py lisait les YAML avec un
+# analyseur maison. Il perdait l'imbrication des listes et découpait mal les
+# blocs `>` : des cotes amont ressortaient « non qualifiées » sans que rien
+# ne le signale. Dépendance assumée plutôt qu'un analyseur approximatif.
+# Licence MIT.
+
+PyYAML==6.0.3
