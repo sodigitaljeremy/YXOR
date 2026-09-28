@@ -241,14 +241,17 @@ def svg_schema(contours, cotes, largeur_px=560) -> str:
             o.append(f'<path d="M {x:.3f} {-y:.3f} L '
                      f'{x - s*math.cos(a+d):.3f} {-(y - s*math.sin(a+d)):.3f}"/>')
 
-    def etiquette(x, y, lettre, valeur, ancre="middle"):
+    def etiquette(x, y, lettre, valeur, ancre="middle", dessous=False):
+        # Un renvoi qui descend emmène son texte vers le BAS : posé au-dessus,
+        # il retomberait sur la ligne de cote hors-tout, qui passe juste là.
+        dy_txt = tp * 0.95 if not dessous else -tp * 1.15
         lignes_txt.append(
             f'<circle cx="{x:.3f}" cy="{-y:.3f}" r="{tp*0.62:.3f}" '
             f'fill="currentColor" opacity="0.14" stroke="none"/>'
             f'<text x="{x:.3f}" y="{-y + tp*0.34:.3f}" text-anchor="middle" '
             f'font-size="{tp*0.78:.3f}" font-weight="700" '
             f'fill="currentColor" stroke="none">{lettre}</text>'
-            f'<text x="{x:.3f}" y="{-y - tp*0.95:.3f}" text-anchor="{ancre}" '
+            f'<text x="{x:.3f}" y="{-y - dy_txt:.3f}" text-anchor="{ancre}" '
             f'font-size="{tp*0.74:.3f}" fill="currentColor" opacity="0.72" '
             f'stroke="none">{valeur}</text>')
 
@@ -281,7 +284,8 @@ def svg_schema(contours, cotes, largeur_px=560) -> str:
             px, py = t["x"], t["y"]
             lx, ly = px + t.get("dx", ech * 0.10), py + t.get("dy", ech * 0.10)
             o.append(f'<path d="M {px:.3f} {-py:.3f} L {lx:.3f} {-ly:.3f}"/>')
-            etiquette(lx, ly, lettre, "R " + val)
+            etiquette(lx, ly, lettre, "R " + val,
+                      dessous=t.get("dy", 0) < 0)
     for i, c in enumerate(notes):
         yn = y0 - md - tp * (1.0 + i * 1.55)
         lignes_txt.append(
