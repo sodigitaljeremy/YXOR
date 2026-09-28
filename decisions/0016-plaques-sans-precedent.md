@@ -3,6 +3,7 @@
 Date : 2026-09-28
 Statut : acceptée
 Amende : `0015-architecture-plaques-entretoises.md`
+Amendée par : `0017-mevita-decoupe-metal.md` — le constat « aucun précédent » est FAUX : MEVITA, MEVIUS et MEVIUS2 construisent en tôle métallique découpée.
 
 > **Note de procédure.** La règle 5 interdit de réécrire une fiche après
 > coup. La 0015 n'est pas modifiée : elle reçoit un renvoi vers
