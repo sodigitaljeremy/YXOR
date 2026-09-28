@@ -21,6 +21,36 @@
 FROM python:3.14-slim AS constructeur
 WORKDIR /src
 
+# ── DÉPENDANCES SYSTÈME — la neuvième défaillance silencieuse ──────────
+#
+#  python:3.14-slim n'embarque aucune bibliothèque graphique. OCCT s'y
+#  lie POURTANT, même pour du calcul sans affichage : le module Python
+#  OCP charge l'ensemble des bibliothèques OCCT, dont libTKOpenGl et
+#  libTKService, au seul import.
+#
+#  D'où, à l'étage constructeur :
+#      ImportError: libGL.so.1: cannot open shared object file
+#
+#  Le jeu minimal a été établi en LISANT les entrées NEEDED des ELF de
+#  cadquery-ocp-novtk, pas en essayant des paquets au hasard :
+#
+#      libGL.so.1     <- libTKOpenGl          -> libgl1
+#      libX11.so.6    <- libTKOpenGl, libTKService -> libx11-6
+#      libexpat.so.1  <- libTKService, libfontconfig -> libexpat1
+#
+#  Trois paquets, et rien de plus. Pas de mesa-utils, pas de xvfb, pas
+#  d'environnement graphique : rien de tout cela n'est nécessaire pour
+#  que l'éditeur de liens trouve ses symboles.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libgl1 libx11-6 libexpat1 \
+ && rm -rf /var/lib/apt/lists/*
+
+# L'environnement de l'image n'est pas celui du poste de travail : on
+# fixe l'encodage plutôt que d'en hériter. Le projet écrit du français.
+ENV PYTHONIOENCODING=utf-8 \
+    LANG=C.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1
+
 # Les dépendances d'abord : cette couche est mise en cache tant que
 # requirements.txt ne change pas. C'est ce qui rend les redéploiements
 # rapides malgré les 750 Mo.

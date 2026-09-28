@@ -124,6 +124,24 @@ def lire_releves() -> list[dict]:
 
 
 # ────────────────────────────────────────────────────────────── gabarits
+ECHECS: list[str] = []      # rempli avant la construction du site
+
+
+def bandeau() -> str:
+    """Si l'on publie malgré un échec, la page doit le CRIER.
+
+    Un site amputé qui se tait ment par omission. Celui-ci nomme ce qui
+    manque, sur chaque page, en rouge, avant tout autre contenu.
+    """
+    if not ECHECS:
+        return ""
+    lst = ", ".join(f"<code>{e(x)}</code>" for x in ECHECS)
+    return (f'<div class="alerte"><b>SITE INCOMPLET — {len(ECHECS)} pièce(s) '
+            f"n'ont pas pu être produites :</b> {lst}. "
+            "Elles ne figurent nulle part sur ce site. Les autres pages sont à jour, "
+            "mais <b>cet inventaire n'est pas complet</b>.</div>")
+
+
 def page(titre, corps, fil=None, cls="") -> str:
     nav = ('<nav><a href="/">Pièces</a><a href="/tracabilite/">Traçabilité</a></nav>')
     return f"""<!doctype html><html lang="fr"><head>
@@ -131,7 +149,7 @@ def page(titre, corps, fil=None, cls="") -> str:
 <title>{e(titre)} — YXOR</title><link rel="stylesheet" href="/assets/style.css">
 </head><body><header><div class="wrap">
 <h1>{e(titre)}</h1><p class="sous">{fil or 'YXOR — robot humanoïde bipède paramétrique'}</p>
-{nav}</div></header><div class="wrap {cls}">{corps}
+{nav}</div></header><div class="wrap {cls}">{bandeau()}{corps}
 <footer>Site engendré depuis le dépôt YXOR le {datetime.date.today().isoformat()}.
 Il ne contient aucune donnée propre : chaque valeur vient d'un fichier du dépôt.
 Régénérer&nbsp;: <code>python scripts/regenerer.py</code></footer>
@@ -320,6 +338,9 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--site-seulement", action="store_true",
                     help="ne pas réexécuter les pièces")
+    ap.add_argument("--tolerer-echecs", action="store_true",
+                    help="publier malgré une pièce en échec ; chaque page portera "
+                         "alors un bandeau rouge nommant ce qui manque")
     a = ap.parse_args(argv)
 
     t0 = datetime.datetime.now()
@@ -329,6 +350,20 @@ def main(argv=None) -> int:
         echecs = executer_pieces()
     else:
         print("1. Pièces non réexécutées (--site-seulement)")
+
+    # ── ÉCHEC DUR PAR DÉFAUT, et voici pourquoi ──────────────────────
+    # Une construction Docker qui échoue ne met pas le site hors ligne :
+    # Coolify laisse tourner le conteneur précédent. Échouer dur ne coûte
+    # donc AUCUNE disponibilité — et évite de remplacer un site juste par
+    # un site amputé qui se tait. C'est le contraire d'un compromis.
+    # `--tolerer-echecs` publie quand même, mais alors chaque page crie
+    # ce qui manque : on ne publie jamais une omission silencieuse.
+    if echecs and not a.tolerer_echecs:
+        print(f"\n✗ ARRÊT : {len(echecs)} pièce(s) en échec — {', '.join(echecs)}")
+        print("  Le site n'est PAS reconstruit. Le déploiement précédent reste en ligne.")
+        print("  Pour publier malgré tout : --tolerer-echecs (bandeau rouge sur chaque page).")
+        return 1
+    ECHECS[:] = echecs
 
     print("\n2. Lecture des relevés")
     pieces = lire_releves()
@@ -373,8 +408,9 @@ def main(argv=None) -> int:
     print(f"   {n_f} fichiers, {taille/1024:.0f} ko")
     print(f"\nTerminé en {dt:.1f} s.")
     if echecs:
-        print(f"⚠ pièces en échec : {', '.join(echecs)}")
-        return 1
+        print(f"⚠ publié MALGRÉ {len(echecs)} échec(s) : {', '.join(echecs)}")
+        print("  Chaque page porte un bandeau rouge les nommant.")
+        return 0
     return 0
 
 

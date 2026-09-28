@@ -68,3 +68,7 @@ footer{color:var(--doux);font-size:12.5px;border-top:1px solid var(--bord);
 .atelier .gros:hover{text-decoration:none;background:#2563eb}
 .atelier .att{border-left:4px solid var(--o-manque);background:rgba(248,81,73,.08);
   padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+
+.alerte{background:#7f1d1d;border:1px solid #b91c1c;color:#fee2e2;padding:14px 18px;
+  border-radius:10px;margin:0 0 22px;font-size:14.5px;line-height:1.5}
+.alerte code{background:rgba(0,0,0,.28);padding:1px 6px;border-radius:5px}
