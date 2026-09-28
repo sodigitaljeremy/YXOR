@@ -1,6 +1,12 @@
 # Nomenclature des articulations. Ces noms font foi partout : CAO, URDF, code
 # de contrôle. Aucune variante locale, aucun renommage silencieux.
 #
+# STATUT (fiche 0005, 2026-09-28) : ce fichier décrit la TOPOLOGIE TODDLERBOT
+# ADOPTÉE EN P1, et NON l'anatomie cible de YXOR. Réévaluable en P2, et à ce
+# moment seulement. Conséquence déjà actée : le degré de liberté en lacet du
+# bras est porté par le coude (elbow_yaw), pas par le poignet (wrist_yaw) —
+# le renommage effectif reste à faire par réconciliation avec le modèle amont.
+#
 # axe    : axe de rotation dans le repère du parent
 # min/max: butées en degrés
 #
