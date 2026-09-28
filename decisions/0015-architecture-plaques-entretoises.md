@@ -3,6 +3,7 @@
 Date : 2026-09-28
 Statut : acceptée
 Découle de : `0014-pas-d-imprimante-3d.md`
+Amendée par : `0016-plaques-sans-precedent.md` — aucun projet open source accessible ne suit cette voie ; Solo, Bolt et Upkie sont imprimés en 3D.
 
 ## Contrainte posée
 

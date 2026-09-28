@@ -70,6 +70,32 @@ fichiers:
   # ═══════════════════════════════════════════════════════════════════════
   hardware.yaml:
     regles:
+      # --- procédés : réécrits le 2026-09-28, fiches 0014 et 0015 ---
+      - motif: "procedes.**"
+        origine: mesure
+        nature: procede
+        source: null
+        note: >
+          À MESURER sur pièce d'essai, couple machine-matériau par couple
+          machine-matériau. Les valeurs à `null` sont des trous déclarés,
+          pas des oublis : une saignée supposée fausse toutes les cotes
+          d'assemblage.
+
+      - motif: "materiaux.*.epaisseur_nominale"
+        origine: catalogue
+        nature: procede
+        source: null
+        note: "épaisseur annoncée du stock ; l'épaisseur RÉELLE est à mesurer"
+      - motif: "materiaux.**"
+        origine: mesure
+        nature: procede
+        source: null
+        note: >
+          Protocole au journal du 2026-09-28. `masse_surfacique` est la
+          grandeur à privilégier : elle contourne la dispersion de
+          l'épaisseur, qui domine l'erreur.
+
+      # --- quincaillerie : inchangée ---
       - motif: "vis.*.diametre"
         origine: litterature
         nature: interface
@@ -88,15 +114,6 @@ fichiers:
         source: "diamètre de tête, vis à six pans creux"
         note: "norme à citer (ISO 4762 probable, NON VÉRIFIÉ)"
 
-      - motif: "vis.*.insert_*"
-        origine: catalogue
-        nature: interface
-        source: null
-        note: >
-          DÉFAUT : origine `catalogue` déclarée mais AUCUNE référence
-          constructeur citée. Les inserts à chaud sont propres à un
-          fabricant. À compléter avant toute pièce en comportant.
-
       - motif: "roulements.**"
         origine: catalogue
         nature: interface
@@ -105,31 +122,13 @@ fichiers:
           La désignation vaut référence, mais aucun constructeur n'est
           cité. Cotes à confirmer sur fiche technique avant usage.
 
-      - motif: "tolerances.**"
-        origine: ambigu
-        nature: procede
-        source: null
-        note: >
-          Valeurs d'usage, ni dérivées ni relevées. Le fichier l'admet
-          lui-même : « à ajuster après essai sur l'imprimante réelle ».
-          Deviendront `mesure` après essais.
-
-      - motif: "epaisseurs.*"
-        origine: ambigu
-        nature: procede
-        source: null
-        note: >
-          Épaisseurs de stock. À requalifier `catalogue` avec le
-          fournisseur, ou `mesure` après relevé au pied à coulisse.
-
       - motif: "actionneurs.**"
         origine: catalogue
         nature: interface
         source: null
         note: >
-          Toutes valeurs à `null` aujourd'hui. Le fichier prescrit déjà :
-          « ne rien inventer ici : les cotes viennent de la fiche
-          constructeur ».
+          Toutes valeurs à `null`. Le fichier prescrit : « ne rien
+          inventer ici : les cotes viennent de la fiche constructeur ».
 
   # ═══════════════════════════════════════════════════════════════════════
   joints.yaml:

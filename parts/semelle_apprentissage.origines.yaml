@@ -1,0 +1,45 @@
+# Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.
+# Pièce : semelle_apprentissage   palier P2   procédé cutter_carton
+# Généré le 2026-09-28 par parts/semelle_apprentissage.py
+
+cotes:
+  - cle: paliers.P2
+    valeur: 0.9
+    origine: propre
+    nature: echelle
+    source: "choix de projet (fiche 0011)"
+  - cle: ratios.pied_longueur
+    valeur: 136.8
+    origine: litterature
+    nature: echelle
+    source: "D&C fig. 4.1 (x H)"
+  - cle: ratios.pied_largeur
+    valeur: 49.5
+    origine: litterature
+    nature: echelle
+    source: "D&C fig. 4.1 (x H)"
+  - cle: procedes.cutter_carton.epaisseur
+    valeur: 5.0
+    origine: mesure
+    nature: procede
+    source: "hardware.yaml, procédé cutter_carton"
+  - cle: procedes.cutter_carton.rayon_interieur_min
+    valeur: 2.5
+    origine: mesure
+    nature: procede
+    source: "hardware.yaml, procédé cutter_carton"
+  - cle: ratio_coins
+    valeur: 0.25
+    origine: propre
+    nature: echelle
+    source: "choix libre : aucune règle ne contraint un congé convexe"
+  - cle: ratio_resserrement
+    valeur: 0.7
+    origine: propre
+    nature: echelle
+    source: "choix de projet — aucune source anthropométrique"
+  - cle: ratio_etendue_creux
+    valeur: 0.5
+    origine: propre
+    nature: echelle
+    source: "choix de projet — aucune source anthropométrique"

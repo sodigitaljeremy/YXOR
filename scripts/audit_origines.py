@@ -156,6 +156,7 @@ class RelevesPieces(Source):
                     fichier=f"parts/{f.name}", chemin=base, valeur=valeur,
                     origine=plat.get(f"{base}.origine", NON_QUALIFIE),
                     source=plat.get(f"{base}.source"),
+                    nature=plat.get(f"{base}.nature"),
                     note=plat.get(f"{base}.note"), motif=None))
         return out
 
@@ -180,15 +181,36 @@ class LitterauxPieces(Source):
                 arbre = ast.parse(f.read_text(encoding="utf-8"))
             except SyntaxError:
                 continue
+            # Positions syntaxiques qui ne peuvent PAS porter une cote :
+            #   round(x, 4)      -> précision d'arrondi
+            #   a < 1e-6         -> seuil de comparaison
+            #   default=0.25     -> valeur par défaut, déclarée et visible
+            # Filtrer sur la POSITION, jamais sur la valeur : filtrer sur la
+            # valeur reviendrait à décider qu'un nombre « a l'air » d'une cote.
+            exempts = set()
+            for n in ast.walk(arbre):
+                if isinstance(n, ast.Call):
+                    fonc = n.func
+                    if isinstance(fonc, ast.Name) and fonc.id == "round" and len(n.args) > 1:
+                        exempts.add(id(n.args[1]))
+                    for kw in n.keywords:
+                        if kw.arg == "default":
+                            exempts.add(id(kw.value))
+                if isinstance(n, ast.Compare):
+                    for cmp_ in [n.left, *n.comparators]:
+                        exempts.add(id(cmp_))
             for n in ast.walk(arbre):
                 if isinstance(n, ast.Constant) and isinstance(n.value, (int, float)):
                     if isinstance(n.value, bool) or n.value in self.IGNORES:
+                        continue
+                    if id(n) in exempts:
                         continue
                     out.append(dict(
                         fichier=str(f.relative_to(REPO)),
                         chemin=f"ligne {n.lineno}", valeur=repr(n.value),
                         origine=NON_QUALIFIE, motif=None,
                         source=None,
+                        nature=None,
                         note="littéral numérique nu : viole la règle 1 et n'a aucune origine"))
         return out
 

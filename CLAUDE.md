@@ -32,13 +32,40 @@ correcte sans qu'elle ait été régénérée et regardée.
 
 ## Contraintes de fabrication à respecter dès la conception
 
-- Pièce imprimée : tient dans 256 × 256 mm.
+**Procédé unique : la découpe 2D.** Il n'y a pas d'imprimante 3D
+(fiche 0014). Architecture en plaques et entretoises (fiche 0015).
+
+- **Toute pièce est plate**, d'épaisseur constante, issue d'un profil
+  découpé. Un volume s'obtient par empilement de plaques et entretoises,
+  jamais par une pièce massive.
 - Pièce découpée : contour fermé, millimètres, échelle 1:1, rayon intérieur
   minimum 0,5 × épaisseur, aucun angle vif rentrant.
 - Aucun logement de roulement obtenu directement par découpe : prévoir un
   palier rapporté ou un alésage repris.
-- Filetage dans le plastique : insert à chaud, jamais taraudage direct.
-- Assemblage démontable, aucun collage structurel.
+- Assemblage démontable, aucun collage structurel. Pas de filetage dans le
+  matériau : **vis traversante et écrou**.
+- **Concevoir au plus contraignant**, c'est-à-dire au carton. Les trois
+  procédés accessibles sont le cutter (carton), le laser de fablab
+  (contreplaqué) et la découpe métal (aluminium). Un dessin qui ne passe
+  pas en carton interdit l'itération rapide, qui est le principal acquis
+  de cette architecture.
+- **L'épaisseur et la saignée sont des paramètres, jamais des constantes.**
+  Un même modèle génère un DXF par couple machine-matériau. La saignée se
+  mesure sur une pièce d'essai, elle ne se suppose pas.
+
+### Contraintes retirées le 2026-09-28, et pourquoi
+
+Conservées ici : une contrainte caduque effacée en silence est une
+information perdue, et rien ne signalerait son retour si une imprimante
+était acquise.
+
+- ~~« Pièce imprimée : tient dans 256 × 256 mm »~~ — c'était le volume
+  d'une machine qui n'existe pas. **À rétablir telle quelle** si une
+  imprimante est acquise, en vérifiant le volume réel de la machine.
+- ~~« Filetage dans le plastique : insert à chaud, jamais taraudage
+  direct »~~ — un insert à chaud se pose dans du thermoplastique imprimé.
+  Ni le contreplaqué, ni le carton, ni l'aluminium n'en acceptent. Reste
+  vraie pour toute pièce imprimée future.
 
 ## Environnement
 

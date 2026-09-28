@@ -1,37 +1,149 @@
 # Cotes FIXES. Ne suivent jamais H : une vis M3 reste une vis M3 que le robot
-# mesure 56 cm ou 1,70 m. Toutes les valeurs sont en millimètres.
+# mesure 56 cm ou 1,70 m (règle 2). Toutes les valeurs sont en millimètres.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  HIÉRARCHIE INVERSÉE LE 2026-09-28 (fiches 0014 et 0015)
+# ─────────────────────────────────────────────────────────────────────────
+#  Jusqu'à cette date le fichier supposait l'IMPRESSION 3D comme procédé
+#  principal et la découpe comme appoint. Il n'y a pas d'imprimante.
+#  C'est l'inverse : la DÉCOUPE 2D est le procédé, l'impression une
+#  possibilité future.
+#
+#  Rien n'a été effacé : ce qui devient caduc est conservé plus bas, en
+#  commentaire, avec son motif. Une valeur retirée en silence est une
+#  information perdue, et rien ne signalerait qu'elle redevient valable.
 
+# ═════════════════════════════════════════════════════════════════════════
+#  PROCÉDÉS — par couple MACHINE × MATÉRIAU, jamais par procédé générique
+#  Nature `procede` (fiche 0013). Ces valeurs ne dérivent pas de H.
+# ═════════════════════════════════════════════════════════════════════════
+procedes:
+
+  cutter_carton:
+    machine: "cutter à main"
+    lieu: "sur place"
+    materiau: carton_plume
+    epaisseur: 5.0
+    saignee: null            # à MESURER — la lame écarte plutôt qu'elle n'enlève
+    rayon_interieur_min: 2.5 # = 0,5 x epaisseur (CLAUDE.md)
+    voile_min: null          # à MESURER — le carton se déchire, valeur à établir
+    fixation: "vis traversante + rondelles larges des deux côtés"
+    source_saignee: null
+    note: >
+      Le plus contraignant des trois, donc celui qui fixe le dessin.
+      C'est aussi le seul qui permette d'itérer dans la journée.
+
+  laser_contreplaque:
+    machine: "laser de fablab"
+    lieu: "fablab"
+    materiau: contreplaque
+    epaisseur: 3.0
+    saignee: null            # à MESURER — ordre de grandeur attendu 0,1 à 0,3
+    rayon_interieur_min: 1.5
+    voile_min: null
+    fixation: "vis traversante + écrou"
+    source_saignee: null
+
+  decoupe_metal:
+    machine: null            # jet d'eau ? laser ? plasma ? À ÉTABLIR
+    lieu: "chez le cousin"
+    materiau: aluminium
+    epaisseur: 3.0
+    saignee: null            # à MESURER — varie de 0,2 à 1,5 selon le moyen
+    rayon_interieur_min: null # dépend du moyen, donc inconnu tant qu'il l'est
+    voile_min: null
+    fixation: "vis traversante + écrou, taraudage possible"
+    source_saignee: null
+    note: >
+      Le moyen exact n'est pas connu. Tant qu'il ne l'est pas, aucune
+      pièce destinée à ce procédé ne peut être finalisée.
+
+# ═════════════════════════════════════════════════════════════════════════
+#  MATÉRIAUX — liés au PROCÉDÉ, plus au palier de taille
+#  L'ancienne association materiau/palier supposait que le gros des pièces
+#  serait imprimé et que ceux-ci ne serviraient qu'aux renforts.
+# ═════════════════════════════════════════════════════════════════════════
+materiaux:
+  carton_plume:
+    epaisseur_nominale: 5.0
+    epaisseur_mesuree: null      # protocole du journal 2026-09-28
+    masse_surfacique: null       # mg/mm2 — LA grandeur à mesurer
+    densite: null
+    source: null
+  contreplaque:
+    epaisseur_nominale: 3.0
+    epaisseur_mesuree: null
+    masse_surfacique: null
+    densite: null
+    source: null
+  aluminium:
+    epaisseur_nominale: 3.0
+    epaisseur_mesuree: null
+    masse_surfacique: null
+    densite: null
+    source: null
+
+# ═════════════════════════════════════════════════════════════════════════
+#  QUINCAILLERIE — inchangée, nature `interface` (règle 2)
+# ═════════════════════════════════════════════════════════════════════════
 vis:
-  M2:  { diametre: 2.0, passage: 2.4, tete_diametre: 3.8, insert_diametre: 3.2, insert_profondeur: 4.0 }
-  M3:  { diametre: 3.0, passage: 3.4, tete_diametre: 5.5, insert_diametre: 4.6, insert_profondeur: 5.7 }
-  M4:  { diametre: 4.0, passage: 4.5, tete_diametre: 7.0, insert_diametre: 5.6, insert_profondeur: 8.1 }
+  M2:  { diametre: 2.0, passage: 2.4, tete_diametre: 3.8 }
+  M3:  { diametre: 3.0, passage: 3.4, tete_diametre: 5.5 }
+  M4:  { diametre: 4.0, passage: 4.5, tete_diametre: 7.0 }
 
 roulements:
   MR85:  { interieur: 5,  exterieur: 8,  largeur: 2.5 }
   "623": { interieur: 3,  exterieur: 10, largeur: 4 }
   "688": { interieur: 8,  exterieur: 16, largeur: 5 }
 
-# Jeu à prévoir au montage selon le procédé.
-tolerances:
-  impression_3d:
-    jeu_glissant: 0.20
-    jeu_serre: 0.05
-    logement_roulement: 0.00     # à ajuster après essai sur l'imprimante réelle
-  decoupe_jet_eau:
-    profil: 0.10
-    # Un alésage de roulement n'est jamais obtenu par découpe : le jet est
-    # conique. Prévoir un palier rapporté ou une reprise à l'alésoir.
-
-epaisseurs:
-  paroi_minimale_impression: 1.6
-  tole_alu_P2: 3.0
-  contreplaque_P1: 3.0
-  carton_plume_maquette: 5.0
-
 # Actionneurs — à compléter une fois le modèle retenu et mesuré.
 # Ne rien inventer ici : les cotes viennent de la fiche constructeur.
 actionneurs:
   P1:
-    modele: null                 # TODO phase 5
+    modele: null                 # TODO
     couple_nominal_Nm: null
     entraxe_fixation: null
+
+# ═════════════════════════════════════════════════════════════════════════
+#  CADUC AU 2026-09-28 — conservé, jamais effacé (fiche 0014)
+#  Redevient valable le jour où une imprimante 3D est acquise ET vérifiée.
+# ═════════════════════════════════════════════════════════════════════════
+#
+#  vis:
+#    M2:  { insert_diametre: 3.2, insert_profondeur: 4.0 }
+#    M3:  { insert_diametre: 4.6, insert_profondeur: 5.7 }
+#    M4:  { insert_diametre: 5.6, insert_profondeur: 8.1 }
+#        MOTIF : cotes de logement d'insert à chaud. Un insert à chaud se
+#        pose dans du thermoplastique imprimé. Ni le contreplaqué, ni le
+#        carton, ni l'aluminium n'en acceptent.
+#        RÉSERVE : ces valeurs n'ont jamais eu de référence constructeur
+#        (audit du 2026-09-28). À resourcer avant tout usage.
+#
+#  tolerances:
+#    impression_3d:
+#      jeu_glissant: 0.20
+#      jeu_serre: 0.05
+#      logement_roulement: 0.00
+#        MOTIF : jeux propres au retrait d'une pièce imprimée au
+#        refroidissement. Sans objet pour une pièce découpée, dont le jeu
+#        dépend de la saignée.
+#
+#  epaisseurs:
+#    paroi_minimale_impression: 1.6
+#        MOTIF : épaisseur minimale d'une paroi imprimée, fonction du
+#        diamètre de buse. Sans objet : il n'y a pas de buse.
+#
+#  epaisseurs:
+#    tole_alu_P2: 3.0
+#    contreplaque_P1: 3.0
+#    carton_plume_maquette: 5.0
+#        MOTIF : valeurs conservées mais DÉPLACÉES sous `materiaux`, et
+#        dissociées du palier de taille. Le matériau dépend du procédé
+#        accessible, pas de la taille du robot.
+#
+#  tolerances:
+#    decoupe_jet_eau:
+#      profil: 0.10
+#        MOTIF : conservée mais DÉPLACÉE sous `procedes.decoupe_metal`, et
+#        remise à `null` — rien ne dit que le moyen du cousin soit un jet
+#        d'eau. La valeur 0,10 n'était sourcée nulle part.
