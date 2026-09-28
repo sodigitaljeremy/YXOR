@@ -1,0 +1,522 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║  FICHIER GÉNÉRÉ — NE PAS ÉDITER À LA MAIN                        ║
+# ╚══════════════════════════════════════════════════════════════════╝
+#
+# Commit amont : e337f3b177b4b53abff70b31d1695a7b66cc6d2e
+# Épinglé par  : decisions/0002-pin-toddlerbot.md
+# Modèle       : toddlerbot/descriptions/toddlerbot_2xc/scene.xml
+# Extrait le   : 2026-09-28 13:04:24 +0200
+# Par          : scripts/import_upstream_limits.py (MuJoCo 3.13.0)
+#
+# Commité par exception au principe de la règle 4, parce qu'il dérive
+# d'un dépôt externe et ne serait pas régénérable si celui-ci
+# disparaissait — voir decisions/0006-fichier-genere-commite.md.
+#
+# ── Deux sections, et il ne faut surtout pas les confondre ──────────
+#
+# actionneurs  : les 30 MOTEURS. C'est ce que la commande pilote.
+# articulations: les 30 DEGRÉS DE LIBERTÉ du squelette. C'est ce que
+#                params/joints.yaml décrit.
+#
+# Quand l'actionnement est direct, les deux coïncident. Quand il passe
+# par une liaison parallèle, ils DIFFÈRENT — et les butées aussi :
+# le moteur de taille tourne de ±268°, le torse ne pivote que de ±90°.
+# Remplir joints.yaml depuis la section `actionneurs` donnerait donc
+# des butées fausses d'un facteur 3. Utiliser `articulations`.
+#
+# bielles      : pièces internes des liaisons parallèles. Ni moteurs
+#                ni degrés de liberté anatomiques. Listées pour
+#                l'exhaustivité, à ignorer pour la nomenclature.
+#
+# axe_corps : axe de rotation dans le repère du CORPS porteur (donnée
+#             brute du MJCF, non interprétée).
+# axe_monde : le même axe dans le repère du MONDE, à la pose par
+#             défaut. C'est celui-ci qui dit autour de quel axe
+#             PHYSIQUE l'articulation tourne.
+#             Repère : x avant, y gauche, z haut.
+#             Un signe négatif inverse le sens positif, pas l'axe.
+# min/max   : butées en degrés, telles qu'écrites dans le modèle.
+#
+# 30 actionneurs, 30 articulations, 2 bielles.
+
+source:
+  depot: https://github.com/hshi74/toddlerbot
+  commit: e337f3b177b4b53abff70b31d1695a7b66cc6d2e
+  robot: toddlerbot_2xc
+
+actionneurs:
+  # --- jambes ---
+  - nom: left_hip_pitch
+    transmission: direct
+    corps: left_hip_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -135.0000
+    max: +105.0000
+  - nom: left_hip_roll
+    transmission: direct
+    corps: left_hip_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -45.0000
+    max: +90.0000
+  - nom: left_hip_yaw_drive
+    transmission: parallele
+    corps: left_hip_yaw_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -105.0000
+    max: +105.0000
+  - nom: left_knee
+    transmission: direct
+    corps: left_knee_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -120.0000
+    max: +0.0000
+  - nom: left_ankle_roll
+    transmission: direct
+    corps: left_ankle_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -70.0000
+    max: +70.0000
+  - nom: left_ankle_pitch
+    transmission: direct
+    corps: left_ankle_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -105.0000
+    max: +55.0000
+  - nom: right_hip_pitch
+    transmission: direct
+    corps: right_hip_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -105.0000
+    max: +135.0000
+  - nom: right_hip_roll
+    transmission: direct
+    corps: right_hip_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -45.0000
+    max: +90.0000
+  - nom: right_hip_yaw_drive
+    transmission: parallele
+    corps: right_hip_yaw_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -105.0000
+    max: +105.0000
+  - nom: right_knee
+    transmission: direct
+    corps: right_knee_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: +0.0000
+    max: +120.0000
+  - nom: right_ankle_roll
+    transmission: direct
+    corps: right_ankle_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -70.0000
+    max: +70.0000
+  - nom: right_ankle_pitch
+    transmission: direct
+    corps: right_ankle_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -55.0000
+    max: +105.0000
+  # --- bras ---
+  - nom: left_shoulder_pitch
+    transmission: direct
+    corps: left_shoulder_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -270.0000
+    max: +270.0000
+  - nom: left_shoulder_roll
+    transmission: direct
+    corps: left_shoulder_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -25.0000
+    max: +90.0000
+  - nom: left_shoulder_yaw_drive
+    transmission: parallele
+    corps: left_shoulder_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: left_elbow_roll
+    transmission: direct
+    corps: left_elbow_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -130.0000
+    max: +110.0000
+  - nom: left_elbow_yaw_drive
+    transmission: parallele
+    corps: left_elbow_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: left_wrist_pitch_drive
+    transmission: parallele
+    corps: left_wrist_gear_drive
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -120.0000
+    max: +120.0000
+  - nom: left_wrist_roll
+    transmission: direct
+    corps: left_hand
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -90.0000
+    max: +90.0000
+  - nom: right_shoulder_pitch
+    transmission: direct
+    corps: right_shoulder_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -270.0000
+    max: +270.0000
+  - nom: right_shoulder_roll
+    transmission: direct
+    corps: right_shoulder_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -25.0000
+    max: +90.0000
+  - nom: right_shoulder_yaw_drive
+    transmission: parallele
+    corps: right_shoulder_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: right_elbow_roll
+    transmission: direct
+    corps: right_elbow_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -130.0000
+    max: +110.0000
+  - nom: right_elbow_yaw_drive
+    transmission: parallele
+    corps: right_elbow_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: right_wrist_pitch_drive
+    transmission: parallele
+    corps: right_wrist_gear_drive
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -120.0000
+    max: +120.0000
+  - nom: right_wrist_roll
+    transmission: direct
+    corps: right_hand
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -90.0000
+    max: +90.0000
+  # --- taille ---
+  - nom: waist_act_1
+    transmission: parallele
+    corps: waist_gear_drive
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -268.0000
+    max: +268.0000
+  - nom: waist_act_2
+    transmission: parallele
+    corps: waist_gear_drive_2
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -269.2236
+    max: +266.7764
+  # --- nuque ---
+  - nom: neck_yaw_drive
+    transmission: parallele
+    corps: neck_yaw_gear_drive
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -165.0000
+    max: +165.0000
+  - nom: neck_pitch_act
+    transmission: parallele
+    corps: neck_pitch_plate
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -35.0000
+    max: +80.0000
+
+articulations:
+  # --- jambes ---
+  - nom: left_hip_pitch
+    transmission: direct
+    actionne_par: [left_hip_pitch]
+    corps: left_hip_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -135.0000
+    max: +105.0000
+  - nom: left_hip_roll
+    transmission: direct
+    actionne_par: [left_hip_roll]
+    corps: left_hip_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -45.0000
+    max: +90.0000
+  - nom: left_knee
+    transmission: direct
+    actionne_par: [left_knee]
+    corps: left_knee_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -120.0000
+    max: +0.0000
+  - nom: left_ankle_roll
+    transmission: direct
+    actionne_par: [left_ankle_roll]
+    corps: left_ankle_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -70.0000
+    max: +70.0000
+  - nom: left_ankle_pitch
+    transmission: direct
+    actionne_par: [left_ankle_pitch]
+    corps: left_ankle_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -105.0000
+    max: +55.0000
+  - nom: right_hip_pitch
+    transmission: direct
+    actionne_par: [right_hip_pitch]
+    corps: right_hip_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -105.0000
+    max: +135.0000
+  - nom: right_hip_roll
+    transmission: direct
+    actionne_par: [right_hip_roll]
+    corps: right_hip_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -45.0000
+    max: +90.0000
+  - nom: right_knee
+    transmission: direct
+    actionne_par: [right_knee]
+    corps: right_knee_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: +0.0000
+    max: +120.0000
+  - nom: right_ankle_roll
+    transmission: direct
+    actionne_par: [right_ankle_roll]
+    corps: right_ankle_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -70.0000
+    max: +70.0000
+  - nom: right_ankle_pitch
+    transmission: direct
+    actionne_par: [right_ankle_pitch]
+    corps: right_ankle_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -55.0000
+    max: +105.0000
+  - nom: left_hip_yaw_driven
+    transmission: parallele
+    actionne_par: [left_hip_yaw_drive]
+    corps: left_hip_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -90.0000
+    max: +90.0000
+  - nom: right_hip_yaw_driven
+    transmission: parallele
+    actionne_par: [right_hip_yaw_drive]
+    corps: right_hip_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -90.0000
+    max: +90.0000
+  # --- bras ---
+  - nom: left_shoulder_pitch
+    transmission: direct
+    actionne_par: [left_shoulder_pitch]
+    corps: left_shoulder_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -270.0000
+    max: +270.0000
+  - nom: left_shoulder_roll
+    transmission: direct
+    actionne_par: [left_shoulder_roll]
+    corps: left_shoulder_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -25.0000
+    max: +90.0000
+  - nom: left_elbow_roll
+    transmission: direct
+    actionne_par: [left_elbow_roll]
+    corps: left_elbow_roll_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -130.0000
+    max: +110.0000
+  - nom: left_wrist_roll
+    transmission: direct
+    actionne_par: [left_wrist_roll]
+    corps: left_hand
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -90.0000
+    max: +90.0000
+  - nom: right_shoulder_pitch
+    transmission: direct
+    actionne_par: [right_shoulder_pitch]
+    corps: right_shoulder_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -270.0000
+    max: +270.0000
+  - nom: right_shoulder_roll
+    transmission: direct
+    actionne_par: [right_shoulder_roll]
+    corps: right_shoulder_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -25.0000
+    max: +90.0000
+  - nom: right_elbow_roll
+    transmission: direct
+    actionne_par: [right_elbow_roll]
+    corps: right_elbow_roll_link
+    axe_corps: [-1.000000, +0.000000, +0.000000]
+    axe_monde: [-1.000000, +0.000000, +0.000000]
+    min: -130.0000
+    max: +110.0000
+  - nom: right_wrist_roll
+    transmission: direct
+    actionne_par: [right_wrist_roll]
+    corps: right_hand
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -90.0000
+    max: +90.0000
+  - nom: left_shoulder_yaw_driven
+    transmission: parallele
+    actionne_par: [left_shoulder_yaw_drive]
+    corps: left_shoulder_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: left_elbow_yaw_driven
+    transmission: parallele
+    actionne_par: [left_elbow_yaw_drive]
+    corps: left_elbow_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: left_wrist_pitch_driven
+    transmission: parallele
+    actionne_par: [left_wrist_pitch_drive]
+    corps: left_wrist_pitch_link
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -120.0000
+    max: +120.0000
+  - nom: right_shoulder_yaw_driven
+    transmission: parallele
+    actionne_par: [right_shoulder_yaw_drive]
+    corps: right_shoulder_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: right_elbow_yaw_driven
+    transmission: parallele
+    actionne_par: [right_elbow_yaw_drive]
+    corps: right_elbow_yaw_link
+    axe_corps: [+0.000000, +0.000000, -1.000000]
+    axe_monde: [+0.000000, +0.000000, -1.000000]
+    min: -180.0000
+    max: +180.0000
+  - nom: right_wrist_pitch_driven
+    transmission: parallele
+    actionne_par: [right_wrist_pitch_drive]
+    corps: right_wrist_pitch_link
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -120.0000
+    max: +120.0000
+  # --- taille ---
+  - nom: waist_yaw
+    transmission: parallele
+    actionne_par: [waist_act_1, waist_act_2]
+    corps: waist_gears
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -90.0000
+    max: +90.0000
+  - nom: waist_roll
+    transmission: parallele
+    actionne_par: [waist_act_1, waist_act_2]
+    corps: pelvis_link
+    axe_corps: [+1.000000, +0.000000, +0.000000]
+    axe_monde: [+1.000000, +0.000000, +0.000000]
+    min: -30.0000
+    max: +30.0000
+  # --- nuque ---
+  - nom: neck_yaw_driven
+    transmission: parallele
+    actionne_par: [neck_yaw_drive]
+    corps: neck_yaw_link
+    axe_corps: [+0.000000, +0.000000, +1.000000]
+    axe_monde: [+0.000000, +0.000000, +1.000000]
+    min: -150.0000
+    max: +150.0000
+  - nom: neck_pitch
+    transmission: parallele
+    actionne_par: [neck_pitch_act]
+    corps: head
+    axe_corps: [+0.000000, +1.000000, +0.000000]
+    axe_monde: [+0.000000, +1.000000, +0.000000]
+    min: -35.0000
+    max: +80.0000
+
+bielles:
+  # --- nuque ---
+  - nom: neck_pitch_front
+    corps: neck_rod
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -1059.3350
+    max: +380.6650
+  - nom: neck_pitch_back
+    corps: neck_rod_2
+    axe_corps: [+0.000000, -1.000000, +0.000000]
+    axe_monde: [+0.000000, -1.000000, +0.000000]
+    min: -699.3763
+    max: +740.6237
