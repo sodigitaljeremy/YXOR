@@ -48,6 +48,7 @@ PARTS = REPO / "parts"
 DECLARATION = PARAMS / "origines.yaml"
 
 ORIGINES = ("propre", "catalogue", "litterature", "amont", "mesure", "ambigu")
+NATURES = ("echelle", "tenue", "interface", "procede")   # fiche 0013
 NON_QUALIFIE = "non_qualifie"
 
 
@@ -128,6 +129,7 @@ class ParamsYaml(Source):
                     origine=(trouve or {}).get("origine") or NON_QUALIFIE,
                     source=(trouve or {}).get("source"),
                     note=(trouve or {}).get("note"),
+                    nature=(trouve or {}).get("nature"),
                     motif=(trouve or {}).get("motif")))
         return out
 
@@ -233,6 +235,25 @@ def main(argv=None) -> int:
             print(f"  {o:<{largeur}}  {n:4d}  {barre}{marque}")
     if inactives:
         print(f"\n  sources inactives (pas encore de données) : {', '.join(inactives)}")
+
+    par_nature: dict[str, int] = {}
+    for c in cotes:
+        n = c.get("nature") or "NON DÉCLARÉE"
+        par_nature[n] = par_nature.get(n, 0) + 1
+    print("\n" + "─" * 78)
+    print(" NATURE — ce qui détermine la cote, donc quelle règle s'applique")
+    print("─" * 78)
+    REGLE = {"echelle": "règle 1 : dérive de H",
+             "tenue": "note de calcul obligatoire",
+             "interface": "règle 2 : ne suit jamais H",
+             "procede": "contraintes de fabrication",
+             "sans_objet": "pas une cote — nomenclature, prose, empreintes"}
+    for n in list(NATURES) + ["sans_objet"]:
+        if n in par_nature:
+            print(f"  {n:14s} {par_nature[n]:5d}   {REGLE.get(n,'')}")
+    manquant = [c for c in cotes if c.get("nature") is None]
+    if manquant:
+        print(f"  {'NON DÉCLARÉE':14s} {len(manquant):5d}   <-- défaut : nature à déclarer")
 
     amont = [c for c in cotes if c["origine"] == "amont"]
     print("\n" + "─" * 78)

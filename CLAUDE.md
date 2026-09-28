@@ -9,6 +9,10 @@ passage, sans les supposer acquises.
 1. **Aucune cote en dur.** Toute dimension structurelle dérive de `H` et d'un
    ratio défini dans `params/anthropometry.yaml`. Une valeur en millimètres
    écrite directement dans le code d'une pièce est un bug.
+   **Restreinte aux cotes de nature `echelle`** (fiche 0013) : une épaisseur de
+   paroi, un diamètre d'axe ou une nervure ne dérivent PAS de `H` mais d'une
+   charge, d'un matériau et d'un procédé. Les y faire dériver linéairement
+   sous-dimensionnerait les grandes tailles sans qu'aucune erreur n'apparaisse.
 2. **Sauf la quincaillerie.** Les cotes liées aux vis, roulements, inserts et
    servomoteurs sont fixes et viennent de `params/hardware.yaml`. Elles ne
    suivent jamais `H`.

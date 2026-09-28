@@ -1,50 +1,132 @@
 # Source de vérité dimensionnelle du projet YXOR.
 # Changer H et régénérer suffit à produire une autre taille de robot.
 #
-# Les ratios sont ceux de Drillis & Contini, standards en biomécanique,
-# exprimés en fraction de la taille totale H.
+# ─────────────────────────────────────────────────────────────────────────
+#  HISTORIQUE — à lire avant de faire confiance à ce fichier
+# ─────────────────────────────────────────────────────────────────────────
+#  Ces valeurs ont d'abord été ÉCRITES DE MÉMOIRE PAR UN MODÈLE DE LANGAGE
+#  le 2026-09-20, sans confrontation à la source. Elles ont été vérifiées
+#  le 2026-09-28 contre Winter, « Biomechanics and Motor Control of Human
+#  Movement », chapitre 4. Voir decisions/0012 et le journal du jour.
+#
+#  L'attribution d'origine était FAUSSE : le fichier annonçait
+#  « Drillis & Contini » pour tout. C'est vrai des longueurs, faux des
+#  masses, qui sont de Dempster.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  DEUX FAMILLES, DEUX SOURCES — elles ne se recouvrent pas
+# ─────────────────────────────────────────────────────────────────────────
+#  ratios.*  longueurs, en fraction de H
+#            Drillis & Contini (1966), via Winter figure 4.1.
+#            ⚠ VALEURS NON VÉRIFIÉES : la figure 4.1 est un GRAPHIQUE,
+#              aucun de ces nombres n'apparaît dans le texte du document.
+#              La source primaire (Office of Vocational Rehabilitation,
+#              New York) n'est pas accessible. L'attribution est établie,
+#              les valeurs ne le sont pas. Chaque ligne porte `verifie`.
+#
+#  NB : `verifie` est un BOOLÉEN YAML (true/false), pas `oui`/`non` —
+#  ces derniers seraient lus comme des CHAÎNES, et la chaîne "non" est
+#  VRAIE en Python. Un test naïf aurait conclu l'inverse.
+#
+#  masses.*  fractions de la masse totale du corps
+#            Dempster (1955), via Winter tableau 4.1, code `M`
+#            (Dempster via Miller & Nelson). VALEURS VÉRIFIÉES.
+#
+#  Origine au sens de la fiche 0010 : `litterature` pour les deux familles.
+#  Nature au sens de la fiche 0013 : `echelle` — la règle 1 s'y applique.
 
 H: 0.56                  # mètres — palier P1
+                         # ⚠ ORIGINE AMONT : c'est la taille publiée de
+                         # ToddlerBot (fiches 0001 et 0011). Toute la chaîne
+                         # dérivée en hérite. Passer en P2 rompt la filiation.
 
 paliers:
-  P1: 0.56
-  P2: 0.90
-  P3: 1.70
+  P1: 0.56               # amont — identique à H
+  P2: 0.90               # propre — choix de projet
+  P3: 1.70               # propre — choix de projet
 
+# ═════════════════════════════════════════════════════════════════════════
+#  LONGUEURS — Drillis & Contini (1966), via Winter fig. 4.1
+#  `verifie: false` partout : voir l'avertissement en tête.
+# ═════════════════════════════════════════════════════════════════════════
 ratios:
-  # Membre inférieur
-  hauteur_hanche: 0.530
-  cuisse: 0.245
-  tibia: 0.246
-  pied_longueur: 0.152
-  pied_largeur: 0.055
-  cheville_hauteur: 0.039
 
-  # Tronc
-  largeur_epaules: 0.259
-  largeur_bassin: 0.191
-  tronc_hauteur: 0.288
+  # ── Membre inférieur ──
+  hauteur_hanche:   { valeur: 0.530, source: "D&C fig. 4.1", verifie: false }
+  cuisse:           { valeur: 0.245, source: "D&C fig. 4.1", verifie: false }
+  tibia:            { valeur: 0.246, source: "D&C fig. 4.1", verifie: false }
+  pied_longueur:    { valeur: 0.152, source: "D&C fig. 4.1", verifie: false }
+  pied_largeur:     { valeur: 0.055, source: "D&C fig. 4.1", verifie: false }
+  cheville_hauteur: { valeur: 0.039, source: "D&C fig. 4.1", verifie: false }
 
-  # Membre supérieur
-  bras: 0.186
-  avant_bras: 0.146
-  main_longueur: 0.108
+  # ── Tronc ──
+  largeur_epaules:  { valeur: 0.259, source: "D&C fig. 4.1", verifie: false }
+  largeur_bassin:   { valeur: 0.191, source: "D&C fig. 4.1", verifie: false }
+  tronc_hauteur:
+    valeur: 0.288
+    source: "DÉRIVÉE — non publiée sous cette forme"
+    calcul: "0.818 (hauteur d'épaule) - 0.530 (hauteur de hanche)"
+    verifie: false
+    note: >
+      Cohérente avec la figure 4.1, mais personne ne l'a jamais mesurée
+      comme telle. C'est une soustraction, pas un relevé.
 
-  # Tête
-  tete_hauteur: 0.130
-  cou_hauteur: 0.052
+  # ── Membre supérieur ──
+  bras:             { valeur: 0.186, source: "D&C fig. 4.1", verifie: false }
+  avant_bras:       { valeur: 0.146, source: "D&C fig. 4.1", verifie: false }
+  main_longueur:    { valeur: 0.108, source: "D&C fig. 4.1", verifie: false }
 
-# Masses en fraction de la masse totale — utilisées pour les inerties
-# tant que les pièces réelles ne sont pas modélisées.
+  # ── Tête ──
+  tete_hauteur:     { valeur: 0.130, source: "D&C fig. 4.1", verifie: false }
+  cou_hauteur:
+    valeur: 0.052
+    source: "DÉRIVÉE — non publiée sous cette forme"
+    calcul: "1 - 0.130 (hauteur de tête) - 0.818 (hauteur d'épaule)"
+    verifie: false
+    note: >
+      Même remarque que tronc_hauteur : obtenue par soustraction.
+
+# ═════════════════════════════════════════════════════════════════════════
+#  MASSES — Dempster (1955), via Winter tab. 4.1, code M
+#  Fractions de la masse TOTALE du corps. Toutes vérifiées le 2026-09-28.
+# ═════════════════════════════════════════════════════════════════════════
 masses:
-  cuisse: 0.100
-  tibia: 0.047
-  pied: 0.014
-  tronc: 0.497
-  bras: 0.028
-  avant_bras: 0.016
-  tete: 0.081
+
+  main:         { valeur: 0.006,  source: "Winter tab. 4.1 — Hand",      verifie: true }
+  avant_bras:   { valeur: 0.016,  source: "Winter tab. 4.1 — Forearm",   verifie: true }
+  bras:         { valeur: 0.028,  source: "Winter tab. 4.1 — Upper arm", verifie: true }
+  pied:         { valeur: 0.0145, source: "Winter tab. 4.1 — Foot",      verifie: true }
+  tibia:        { valeur: 0.0465, source: "Winter tab. 4.1 — Leg",       verifie: true }
+  cuisse:       { valeur: 0.100,  source: "Winter tab. 4.1 — Thigh",     verifie: true }
+  tronc:        { valeur: 0.497,  source: "Winter tab. 4.1 — Trunk",     verifie: true }
+
+  tete_et_cou:
+    valeur: 0.081
+    source: "Winter tab. 4.1 — Head AND neck"
+    verifie: true
+    note: >
+      Nommée `tete` jusqu'au 2026-09-28, ce qui était FAUX : la ligne de
+      Winter couvre la tête ET le cou. L'employer pour la tête seule
+      surestime son inertie. Dempster ne donne pas le partage entre les
+      deux : le scinder exigerait d'inventer une valeur.
+      Aucune contradiction avec ratios.cou_hauteur — celle-ci est une
+      LONGUEUR, celle-là une MASSE. Aucune relation ne les lie.
+
+# ─────────────────────────────────────────────────────────────────────────
+#  CONTRÔLE DE COHÉRENCE — doit valoir exactement 1
+# ─────────────────────────────────────────────────────────────────────────
+#    2 x (main + avant_bras + bras + pied + tibia + cuisse)
+#      + tronc + tete_et_cou
+#  = 2 x (0.006 + 0.016 + 0.028 + 0.0145 + 0.0465 + 0.100)
+#      + 0.497 + 0.081
+#  = 2 x 0.2110 + 0.578
+#  = 1.000000                                    vérifié le 2026-09-28
+#
+#  Avant correction la somme faisait 0.988 : il manquait exactement deux
+#  mains à 0.006. C'est ce qui a permis d'établir que la série était bien
+#  celle de Dempster, complète, moins les mains.
+#  Toute modification future qui romprait cette égalité est un défaut.
 
 # Rappel : entre deux paliers de rapport k, la masse varie en k^3 et le couple
 # articulaire requis en k^4. Ces ratios mettent les pièces à l'échelle, pas les
-# actionneurs. Voir decisions/0002.
+# actionneurs — et ils ne dimensionnent AUCUNE cote de tenue (fiche 0013).

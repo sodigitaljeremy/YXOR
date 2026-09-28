@@ -4,7 +4,18 @@
 # ressort en `non_qualifie` dans scripts/audit_origines.py : la dérive est
 # détectée, jamais silencieuse.
 #
-# Origines : propre | catalogue | amont | mesure | ambigu
+# DEUX AXES, indépendants (fiches 0010, 0011, 0013) :
+#
+#   origine — D'OÙ VIENT le nombre
+#             propre | catalogue | litterature | amont | mesure | ambigu
+#
+#   nature  — CE QUI LE DÉTERMINE, donc quelle règle s'applique
+#             echelle   -> règle 1 (dérive de H)   | tenue     -> note de calcul
+#             interface -> règle 2 (quincaillerie) | procede   -> fabrication
+#             sans_objet -> la valeur n'est pas une cote
+#
+# Confondre les deux était la faille : une cote peut être `litterature`
+# d'origine et `echelle` de nature.
 #
 # `motif` : chemin de clé, `*` joker sur un segment, `**` sur plusieurs.
 # L'ordre compte : le PREMIER motif qui correspond gagne. Les motifs les
@@ -17,6 +28,7 @@ fichiers:
     regles:
       - motif: "H"
         origine: amont
+        nature: echelle
         source: >
           Taille hors-tout publiée de ToddlerBot (fiche 0001 : « ToddlerBot
           (Stanford). 0,56 m »), reprise comme palier P1.
@@ -27,17 +39,21 @@ fichiers:
 
       - motif: "paliers.P1"
         origine: amont
+        nature: echelle
         source: "identique à H"
 
       - motif: "paliers.P2"
         origine: propre
+        nature: echelle
         source: "choix de projet, ne vient pas de ToddlerBot"
       - motif: "paliers.P3"
         origine: propre
+        nature: echelle
         source: "choix de projet, ne vient pas de ToddlerBot"
 
-      - motif: "ratios.*"
+      - motif: "ratios.**"
         origine: litterature
+        nature: echelle
         source: "Drillis & Contini, ratios anthropométriques (biomécanique)"
         note: >
           Fiche 0011. Antérieur de plusieurs décennies à ToddlerBot :
@@ -45,8 +61,9 @@ fichiers:
           (année, revue, table) — une cote `litterature` sans citation
           exploitable est un défaut.
 
-      - motif: "masses.*"
+      - motif: "masses.**"
         origine: litterature
+        nature: echelle
         source: "fractions de masse segmentaire, même source que les ratios"
         note: "même source que ratios.* — citation à fournir"
 
@@ -55,21 +72,25 @@ fichiers:
     regles:
       - motif: "vis.*.diametre"
         origine: litterature
+        nature: interface
         source: "diamètre nominal ISO métrique"
         note: >
           Fiche 0011 : une norme est du savoir public que personne ne
           possède. RÉFÉRENCE DE NORME À CITER.
       - motif: "vis.*.passage"
         origine: litterature
+        nature: interface
         source: "trou de passage, série normalisée"
         note: "norme à citer, comme vis.*.diametre"
       - motif: "vis.*.tete_diametre"
         origine: litterature
+        nature: interface
         source: "diamètre de tête, vis à six pans creux"
         note: "norme à citer (ISO 4762 probable, NON VÉRIFIÉ)"
 
       - motif: "vis.*.insert_*"
         origine: catalogue
+        nature: interface
         source: null
         note: >
           DÉFAUT : origine `catalogue` déclarée mais AUCUNE référence
@@ -78,6 +99,7 @@ fichiers:
 
       - motif: "roulements.**"
         origine: catalogue
+        nature: interface
         source: "désignation normalisée du roulement (MR85, 623, 688)"
         note: >
           La désignation vaut référence, mais aucun constructeur n'est
@@ -85,6 +107,7 @@ fichiers:
 
       - motif: "tolerances.**"
         origine: ambigu
+        nature: procede
         source: null
         note: >
           Valeurs d'usage, ni dérivées ni relevées. Le fichier l'admet
@@ -93,6 +116,7 @@ fichiers:
 
       - motif: "epaisseurs.*"
         origine: ambigu
+        nature: procede
         source: null
         note: >
           Épaisseurs de stock. À requalifier `catalogue` avec le
@@ -100,6 +124,7 @@ fichiers:
 
       - motif: "actionneurs.**"
         origine: catalogue
+        nature: interface
         source: null
         note: >
           Toutes valeurs à `null` aujourd'hui. Le fichier prescrit déjà :
@@ -111,41 +136,51 @@ fichiers:
     regles:
       - motif: "**.fonction"
         origine: propre
+        nature: sans_objet
         source: "description rédigée pour YXOR"
         note: "prose, pas une cote — sans portée dimensionnelle"
 
       - motif: "convention.**"
         origine: propre
+        nature: sans_objet
         source: "conventions de repère et d'unités propres au projet"
       - motif: "symetrie.**"
         origine: amont
+        nature: sans_objet
         source: >
           Propriété de symétrie constatée sur le modèle amont et vérifiée
           par scripts/import_upstream_limits.py.
 
       - motif: "**.articulation.**"
         origine: amont
+        nature: interface
         source: "params/upstream_joints.generated.yaml, section articulations"
         note: "axes, sens ET BUTÉES — entièrement extraits du modèle amont"
       - motif: "**.actionnement.**"
         origine: amont
+        nature: interface
         source: "params/upstream_joints.generated.yaml, section actionneurs"
       - motif: "**.recoupement.**"
         origine: amont
+        nature: interface
         source: "rapports de transmission lus dans le MJCF amont"
       - motif: "**.modele.**"
         origine: amont
+        nature: interface
         source: "MJCF amont au commit épinglé"
       - motif: "**.materiel.**"
         origine: amont
+        nature: interface
         source: "documentation matérielle amont, ou déduction du modèle amont"
       - motif: "**.nom"
         origine: amont
+        nature: sans_objet
         source: >
           Nomenclature adoptée de ToddlerBot par la fiche 0005 (topologie
           P1). Ce ne sont pas des cotes, mais l'origine est amont.
       - motif: "particularites.**"
         origine: amont
+        nature: sans_objet
         source: "constats établis sur le modèle et la documentation amont"
 
   # ═══════════════════════════════════════════════════════════════════════
@@ -153,6 +188,7 @@ fichiers:
     regles:
       - motif: "**"
         origine: amont
+        nature: interface
         source: >
           Fichier généré par extraction du MJCF amont au commit
           e337f3b177b4b53abff70b31d1695a7b66cc6d2e. Amont par construction,
@@ -163,6 +199,7 @@ fichiers:
     regles:
       - motif: "**"
         origine: amont
+        nature: interface
         source: "empreintes et identifiants des poids ToddlerBot (fiche 0003)"
         note: >
           Ce ne sont pas des cotes mécaniques : aucune portée
