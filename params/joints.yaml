@@ -3,52 +3,86 @@
 #
 # STATUT (fiche 0005, 2026-09-28) : ce fichier décrit la TOPOLOGIE TODDLERBOT
 # ADOPTÉE EN P1, et NON l'anatomie cible de YXOR. Réévaluable en P2, et à ce
-# moment seulement. Conséquence déjà actée : le degré de liberté en lacet du
-# bras est porté par le coude (elbow_yaw), pas par le poignet (wrist_yaw) —
-# le renommage effectif reste à faire par réconciliation avec le modèle amont.
+# moment seulement.
 #
-# axe    : axe de rotation dans le repère du parent
-# min/max: butées en degrés
+# BUTÉES (chantier 2, 2026-09-28) : extraites du modèle amont, jamais saisies
+# à la main. Source : params/upstream_joints.generated.yaml, section
+# `articulations`, commit amont e337f3b177b4b53abff70b31d1695a7b66cc6d2e.
 #
-# Les butées sont à extraire de l'URDF ToddlerBot en phase 1, PAS à inventer.
-# Une butée fausse produit une marche qui fonctionne en simulation et casse le
-# robot réel.
+# ⚠ Elles proviennent des ARTICULATIONS, pas des ACTIONNEURS. Là où une
+#   liaison parallèle sépare les deux, l'écart est massif : le moteur de
+#   roulis de taille tourne de ±269°, l'articulation ne fait que ±30°.
+#   Régénérer et revérifier avec :
+#       .venv/bin/python scripts/import_upstream_limits.py --check
+#
+# axe   : axe de rotation, repère x avant / y gauche / z haut.
+# sens  : +1 si une valeur positive tourne autour de l'axe positif, -1 sinon.
+#         Un sens inverse retourne le mouvement : ce n'est pas cosmétique.
+#         Valeurs données pour le CÔTÉ GAUCHE (voir `symetrie`).
+# min/max : butées en degrés.
 
 convention:
   unites_angles: degres
   repere: "x avant, y gauche, z haut"
   suffixes: [_left, _right]
 
-jambes:          # 6 DDL par jambe
-  - { nom: hip_yaw,     axe: z, min: null, max: null }
-  - { nom: hip_roll,    axe: x, min: null, max: null }
-  - { nom: hip_pitch,   axe: y, min: null, max: null }
-  - { nom: knee,        axe: y, min: null, max: null }
-  - { nom: ankle_pitch, axe: y, min: null, max: null }
-  - { nom: ankle_roll,  axe: x, min: null, max: null }
+symetrie:
+  # Vérifié sur le modèle amont : les 13 paires gauche/droite sont exactement
+  # images l'une de l'autre. C'est ce qui autorise UN SEUL jeu de butées ici.
+  # Le contrôle est rejoué par scripts/import_upstream_limits.py, qui refuse
+  # d'écrire s'il casse.
+  #
+  # Un axe de rotation est un vecteur AXIAL : sous une réflexion sagittale il
+  # devient (-wx, +wy, -wz), et non (wx, -wy, wz). Comparer les butées sans
+  # ce signe fait conclure à tort à une asymétrie.
+  plan: sagittal
+  regle_axe: "axe_droit = (-x, +y, -z) de l'axe gauche"
+  regle_butees: "si l'axe droit est l'opposé du miroir, butées = [-max_g, -min_g]"
+  verifie_le: 2026-09-28
 
-bras:            # 7 DDL par bras
-  - { nom: shoulder_pitch, axe: y, min: null, max: null }
-  - { nom: shoulder_roll,  axe: x, min: null, max: null }
-  - { nom: shoulder_yaw,   axe: z, min: null, max: null }
-  - { nom: elbow,          axe: y, min: null, max: null }
-  - { nom: wrist_yaw,      axe: z, min: null, max: null }
-  - { nom: wrist_pitch,    axe: y, min: null, max: null }
-  - { nom: wrist_roll,     axe: x, min: null, max: null }
+jambes:          # 6 DDL par jambe
+  - { nom: hip_yaw    , axe: z, sens: -1, min:   -90.0, max:    90.0 }
+  - { nom: hip_roll   , axe: x, sens: +1, min:   -45.0, max:    90.0 }
+  - { nom: hip_pitch  , axe: y, sens: +1, min:  -135.0, max:   105.0 }
+  - { nom: knee       , axe: y, sens: -1, min:  -120.0, max:     0.0 }
+  - { nom: ankle_pitch, axe: y, sens: +1, min:  -105.0, max:    55.0 }
+  - { nom: ankle_roll , axe: x, sens: +1, min:   -70.0, max:    70.0 }
+
+bras:          # 7 DDL par bras
+  - { nom: shoulder_pitch, axe: y, sens: +1, min:  -270.0, max:   270.0 }
+  - { nom: shoulder_roll , axe: x, sens: +1, min:   -25.0, max:    90.0 }
+  - { nom: shoulder_yaw  , axe: z, sens: -1, min:  -180.0, max:   180.0 }
+  - { nom: elbow_roll    , axe: x, sens: +1, min:  -130.0, max:   110.0 }
+  - { nom: elbow_yaw     , axe: z, sens: -1, min:  -180.0, max:   180.0 }
+  - { nom: wrist_pitch   , axe: y, sens: -1, min:  -120.0, max:   120.0 }
+  - { nom: wrist_roll    , axe: x, sens: -1, min:   -90.0, max:    90.0 }
 
 taille:          # 2 DDL
-  - { nom: waist_yaw,   axe: z, min: null, max: null }
-  - { nom: waist_roll,  axe: x, min: null, max: null }
+  - { nom: waist_yaw , axe: z, sens: +1, min:   -90.0, max:    90.0 }
+  - { nom: waist_roll, axe: x, sens: +1, min:   -30.0, max:    30.0 }
 
-nuque:           # 2 DDL
-  - { nom: neck_yaw,   axe: z, min: null, max: null }
-  - { nom: neck_pitch, axe: y, min: null, max: null }
+nuque:          # 2 DDL
+  - { nom: neck_yaw  , axe: z, sens: +1, min:  -150.0, max:   150.0 }
+  - { nom: neck_pitch, axe: y, sens: +1, min:   -35.0, max:    80.0 }
 
 # Total : 6×2 + 7×2 + 2 + 2 = 30 DDL actifs.
 
 particularites:
+  elbow_roll: >
+    Malgré le nom, ce n'est pas un coude humain : bras le long du corps, il
+    écarte l'avant-bras LATÉRALEMENT, pas vers l'avant. Rotation autour de x
+    (roulis), vérifiée sur le modèle, par le calcul — la coordonnée x de la
+    main reste constante sur toute la course — et à l'image. Le lacet
+    d'épaule situé au-dessus oriente le plan de flexion ; le coude n'en a
+    pas de fixe dans le repère du robot.
+  elbow_yaw: >
+    Portait le nom wrist_yaw avant la fiche 0005. L'axe z était juste, c'est
+    l'emplacement qui était faux : ce lacet est au coude, pas au poignet.
   knee: >
-    Liaison parallèle déportant le moteur vers la hanche, pour réduire
-    l'inertie du segment tibia. À reprendre tel quel de ToddlerBot.
+    Le MJCF amont modélise le genou en actionnement DIRECT. La note
+    antérieure décrivant une liaison parallèle déportant le moteur vers la
+    hanche ne provient pas du modèle et n'est pas sourcée à ce jour : elle a
+    été retirée en attendant vérification côté documentation matérielle.
   neck_pitch: >
-    Liaison parallèle également, pour compacité.
+    Liaison parallèle, confirmée par le modèle : moteur neck_pitch_act,
+    articulation neck_pitch, bielles neck_pitch_front et neck_pitch_back.
