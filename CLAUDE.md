@@ -54,8 +54,11 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 | Python | 3.14.4 | 3.12.14 (fourni par uv) |
 | MuJoCo | 3.13.0 | 3.3.4 |
 
-- Tout ce qui est dans ce dépôt (`sim/view.py`, `sim/render.py`, les scripts
-  de pièces) se lance avec `.venv/bin/python`, **jamais** avec le venv amont.
+- Tout ce qui est dans ce dépôt se lance avec `.venv/bin/python` — **sauf
+  `sim/upstream/`**, seul répertoire qui s'exécute avec le venv amont parce
+  qu'il importe `toddlerbot` (fiche 0004). L'inverse est interdit dans les
+  deux sens, et les deux sens sont vérifiés à l'exécution : `sim/upstream/`
+  refuse de démarrer sous le mauvais interpréteur.
 - ToddlerBot exige Python ≤ 3.12 : ses versions épinglées (`numpy==1.26.4`,
   `jaxlib==0.4.28`, `torch==2.3.1`) n'ont pas de roue pour 3.14. Ce n'est pas
   contournable sans maintenir un fork.
