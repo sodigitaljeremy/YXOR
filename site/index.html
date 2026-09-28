@@ -1,0 +1,25 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pièces — YXOR</title><link rel="stylesheet" href="/assets/style.css">
+</head><body><header><div class="wrap">
+<h1>Pièces</h1><p class="sous">YXOR — robot humanoïde bipède paramétrique</p>
+<nav><a href="/">Pièces</a><a href="/tracabilite/">Traçabilité</a></nav></div></header><div class="wrap ">
+<p class="sous">1 pièce engendrée depuis le dépôt.</p>
+<input type="search" id="q" placeholder="Filtrer…" autocomplete="off">
+<ul class="pieces" id="liste"><li data-t="semelle d&#x27;apprentissage semelle_apprentissage carton_plume">
+      <div class="t"><a href="/piece/semelle_apprentissage/">Semelle d&#x27;apprentissage</a></div>
+      <div class="m">carton_plume · 5.0 mm ·
+        136.8 × 49.5 mm ·
+        <a href="/atelier/semelle_apprentissage/">vue atelier</a></div></li></ul>
+<script>
+const q=document.getElementById('q'), li=[...document.querySelectorAll('#liste li')];
+q.addEventListener('input',()=>{const v=q.value.trim().toLowerCase();
+  li.forEach(x=>x.hidden = v && !(x.dataset.t||'').includes(v));});
+</script>
+<h2>Traçabilité</h2>
+<p class="sous">1291 valeurs inventoriées dans le dépôt.</p>
+<a href="/tracabilite/">Voir le détail →</a>
+<footer>Site engendré depuis le dépôt YXOR le 2026-09-28.
+Il ne contient aucune donnée propre : chaque valeur vient d'un fichier du dépôt.
+Régénérer&nbsp;: <code>python scripts/regenerer.py</code></footer>
+</div></body></html>

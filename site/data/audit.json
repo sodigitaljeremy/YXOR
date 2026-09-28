@@ -1,0 +1,18 @@
+{
+  "total": 1291,
+  "origines": {
+    "amont": 1121,
+    "propre": 28,
+    "litterature": 82,
+    "mesure": 43,
+    "catalogue": 15,
+    "non_qualifie": 2
+  },
+  "natures": {
+    "echelle": 81,
+    "interface": 1113,
+    "procede": 46,
+    "sans_objet": 49,
+    "non déclarée": 2
+  }
+}

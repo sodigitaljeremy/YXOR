@@ -1,0 +1,70 @@
+/* Feuille de style — le cœur de la page pièce est la TRAÇABILITÉ.
+   La 3D est un panneau ; le tableau des cotes est le sujet. */
+:root{
+  --fond:#0f1115; --carte:#171a21; --bord:#262b35; --texte:#e6e8ec;
+  --doux:#9aa3b2; --accent:#7aa2f7;
+  --o-propre:#3fb950; --o-litterature:#58a6ff; --o-catalogue:#bc8cff;
+  --o-amont:#f0883e; --o-mesure:#39c5cf; --o-ambigu:#8b949e; --o-manque:#f85149;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--texte);
+  font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px 64px}
+header{border-bottom:1px solid var(--bord);margin-bottom:28px}
+header .wrap{padding-top:22px;padding-bottom:18px}
+h1{font-size:26px;margin:0 0 6px} h2{font-size:19px;margin:34px 0 12px}
+.sous{color:var(--doux);font-size:14px;margin:0}
+nav a{margin-right:18px;font-size:14px}
+.carte{background:var(--carte);border:1px solid var(--bord);border-radius:10px;padding:18px}
+.grille{display:grid;gap:16px}
+@media(min-width:860px){.g2{grid-template-columns:1fr 1fr}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bord);vertical-align:top}
+th{color:var(--doux);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11.5px;
+  font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.b-propre{background:rgba(63,185,80,.16);color:var(--o-propre)}
+.b-litterature{background:rgba(88,166,255,.16);color:var(--o-litterature)}
+.b-catalogue{background:rgba(188,140,255,.16);color:var(--o-catalogue)}
+.b-amont{background:rgba(240,136,62,.18);color:var(--o-amont)}
+.b-mesure{background:rgba(57,197,207,.16);color:var(--o-mesure)}
+.b-ambigu{background:rgba(139,148,158,.18);color:var(--o-ambigu)}
+.b-manque{background:rgba(248,81,73,.18);color:var(--o-manque)}
+.nat{color:var(--doux);font-size:12px}
+.src{color:var(--doux);font-size:12.5px;line-height:1.45}
+.ind{color:var(--o-manque);font-weight:700}
+canvas{width:100%;height:380px;display:block;border-radius:8px;background:#14161b;
+  touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}
+.msg{color:var(--doux);font-size:13px;padding:8px 0;min-height:20px}
+.dl a{display:inline-block;margin:0 10px 10px 0;padding:9px 15px;border:1px solid var(--bord);
+  border-radius:8px;background:#1d222b;font-size:14px}
+.dl a:hover{border-color:var(--accent);text-decoration:none}
+.dl .fmt{color:var(--doux);font-size:12px;margin-left:6px}
+ul.pieces{list-style:none;padding:0;margin:0}
+ul.pieces li{border:1px solid var(--bord);border-radius:10px;padding:14px 16px;
+  margin-bottom:10px;background:var(--carte)}
+ul.pieces .t{font-size:16px;font-weight:650}
+ul.pieces .m{color:var(--doux);font-size:13px;margin-top:3px}
+input[type=search]{width:100%;padding:11px 14px;border-radius:9px;border:1px solid var(--bord);
+  background:#12151b;color:var(--texte);font-size:15px;margin-bottom:16px}
+.rep{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.barre{height:9px;border-radius:5px;overflow:hidden;display:flex;margin:12px 0 6px;
+  border:1px solid var(--bord)}
+.note{border-left:3px solid var(--o-amont);padding:10px 14px;background:rgba(240,136,62,.07);
+  border-radius:0 8px 8px 0;font-size:13.5px;color:var(--doux);margin:14px 0}
+footer{color:var(--doux);font-size:12.5px;border-top:1px solid var(--bord);
+  margin-top:44px;padding-top:16px}
+/* ── vue atelier : lisible sur téléphone, sans jargon ── */
+.atelier{max-width:640px}
+.atelier h1{font-size:30px} .atelier .spec{font-size:20px;margin:0 0 4px}
+.atelier .spec b{font-size:30px} .atelier .lbl{color:var(--doux);font-size:14px}
+.atelier .bloc{border:1px solid var(--bord);border-radius:12px;padding:18px;margin-bottom:14px;
+  background:var(--carte)}
+.atelier .gros{display:block;margin:18px 0;padding:18px;border-radius:12px;
+  background:#1d4ed8;color:#fff;text-align:center;font-size:19px;font-weight:700}
+.atelier .gros:hover{text-decoration:none;background:#2563eb}
+.atelier .att{border-left:4px solid var(--o-manque);background:rgba(248,81,73,.08);
+  padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0}

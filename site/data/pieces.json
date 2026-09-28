@@ -1,0 +1,85 @@
+[
+  {
+    "nom": "semelle_apprentissage",
+    "titre": "Semelle d'apprentissage",
+    "base_fichier": "semelle_apprentissage_P2_cutter_carton",
+    "palier": "P2",
+    "procede": "cutter_carton",
+    "machine": "cutter à main",
+    "lieu": "sur place",
+    "materiau": "carton_plume",
+    "epaisseur_mm": 5.0,
+    "rayon_interieur_min_mm": 2.5,
+    "saignee_mm": null,
+    "voile_min_mm": null,
+    "fixation": "vis traversante + rondelles larges des deux côtés",
+    "longueur_mm": 136.8,
+    "largeur_mm": 49.5,
+    "volume_mm3": 29782.8,
+    "role": "Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien. C'est le prototype de la méthode : un modèle, un paramètre d'épaisseur, un DXF par couple machine-matériau.\n",
+    "cotes": [
+      {
+        "cle": "paliers.P2",
+        "valeur": 0.9,
+        "origine": "propre",
+        "nature": "echelle",
+        "source": "choix de projet (fiche 0011)"
+      },
+      {
+        "cle": "ratios.pied_longueur",
+        "valeur": 136.8,
+        "origine": "litterature",
+        "nature": "echelle",
+        "source": "D&C fig. 4.1 (x H)"
+      },
+      {
+        "cle": "ratios.pied_largeur",
+        "valeur": 49.5,
+        "origine": "litterature",
+        "nature": "echelle",
+        "source": "D&C fig. 4.1 (x H)"
+      },
+      {
+        "cle": "procedes.cutter_carton.epaisseur",
+        "valeur": 5.0,
+        "origine": "mesure",
+        "nature": "procede",
+        "source": "hardware.yaml, procédé cutter_carton"
+      },
+      {
+        "cle": "procedes.cutter_carton.rayon_interieur_min",
+        "valeur": 2.5,
+        "origine": "mesure",
+        "nature": "procede",
+        "source": "hardware.yaml, procédé cutter_carton"
+      },
+      {
+        "cle": "ratio_coins",
+        "valeur": 0.25,
+        "origine": "propre",
+        "nature": "echelle",
+        "source": "choix libre : aucune règle ne contraint un congé convexe"
+      },
+      {
+        "cle": "ratio_resserrement",
+        "valeur": 0.7,
+        "origine": "propre",
+        "nature": "echelle",
+        "source": "choix de projet — aucune source anthropométrique"
+      },
+      {
+        "cle": "ratio_etendue_creux",
+        "valeur": 0.5,
+        "origine": "propre",
+        "nature": "echelle",
+        "source": "choix de projet — aucune source anthropométrique"
+      }
+    ],
+    "fichiers": {
+      "dxf": "/home/jeremy/yxor/exports/parts/semelle_apprentissage_P2_cutter_carton.dxf",
+      "step": "/home/jeremy/yxor/exports/parts/semelle_apprentissage_P2_cutter_carton.step",
+      "stl": "/home/jeremy/yxor/exports/parts/semelle_apprentissage_P2_cutter_carton.stl",
+      "pdf": "/home/jeremy/yxor/exports/parts/semelle_apprentissage_P2_cutter_carton_planA4.pdf"
+    }
+  }
+]

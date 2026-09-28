@@ -1,7 +1,8 @@
 # 0018 — Application web : un site statique engendré par le dépôt
 
 Date : 2026-09-28
-Statut : **proposée** — en attente de validation, rien n'est codé
+Statut : **acceptée** — validée le 2026-09-28, mise en œuvre le jour même.
+Seule la ligne de statut est modifiée ; le raisonnement n'est pas réécrit (règle 5).
 
 ## Contexte
 

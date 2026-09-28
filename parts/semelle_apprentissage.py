@@ -201,10 +201,35 @@ def main(argv=None) -> int:
          f"Genere le {stamp} — ne pas coter sur ce plan, il fait foi par sa geometrie"])
     print(f"\n  plan A4 : {larg:.2f} x {haut:.2f} mm sur 210 x 297")
 
-    # --- relevé d'origines, lu par scripts/audit_origines.py ---
+    # --- relevé, lu par scripts/audit_origines.py ET scripts/regenerer.py ---
+    # La pièce publie ses propres métadonnées : elle seule les connaît.
+    # L'application ne fait que les lire — elle ne crée aucune donnée.
+    proc = c.hw["procedes"][a.procede]
     lignes = ["# Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.",
               f"# Pièce : {NOM}   palier {a.palier}   procédé {a.procede}",
-              f"# Généré le {stamp} par parts/{NOM}.py", "", "cotes:"]
+              f"# Généré le {stamp} par parts/{NOM}.py", "",
+              "piece:",
+              f"  nom: {NOM}",
+              f"  titre: \"Semelle d'apprentissage\"",
+              f"  base_fichier: {base}",
+              f"  palier: {a.palier}",
+              f"  procede: {a.procede}",
+              f"  machine: \"{proc['machine'] or 'non déterminé'}\"",
+              f"  lieu: \"{proc['lieu'] or 'non déterminé'}\"",
+              f"  materiau: {proc['materiau']}",
+              f"  epaisseur_mm: {d['ep']}",
+              f"  rayon_interieur_min_mm: {d['r_int']}",
+              f"  saignee_mm: {proc['saignee'] if proc['saignee'] is not None else 'null'}",
+              f"  voile_min_mm: {proc['voile_min'] if proc['voile_min'] is not None else 'null'}",
+              f"  fixation: \"{proc['fixation']}\"",
+              f"  longueur_mm: {d['L']}",
+              f"  largeur_mm: {d['W']}",
+              f"  volume_mm3: {round(piece.volume, 1)}",
+              f"  role: >",
+              "    Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.",
+              "    C'est le prototype de la méthode : un modèle, un paramètre",
+              "    d'épaisseur, un DXF par couple machine-matériau.",
+              "", "cotes:"]
     for r in c.releve:
         lignes += [f"  - cle: {r['cle']}",
                    f"    valeur: {r['valeur']}",

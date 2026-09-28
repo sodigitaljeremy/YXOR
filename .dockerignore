@@ -1,0 +1,9 @@
+# Sans ce fichier, le contexte de construction embarquerait le venv du
+# projet — 972 Mo envoyés au démon Docker pour rien, à chaque construction.
+.venv/
+.git/
+exports/
+site/
+__pycache__/
+**/__pycache__/
+*.pyc

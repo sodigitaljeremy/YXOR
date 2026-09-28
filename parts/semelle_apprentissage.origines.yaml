@@ -2,6 +2,28 @@
 # Pièce : semelle_apprentissage   palier P2   procédé cutter_carton
 # Généré le 2026-09-28 par parts/semelle_apprentissage.py
 
+piece:
+  nom: semelle_apprentissage
+  titre: "Semelle d'apprentissage"
+  base_fichier: semelle_apprentissage_P2_cutter_carton
+  palier: P2
+  procede: cutter_carton
+  machine: "cutter à main"
+  lieu: "sur place"
+  materiau: carton_plume
+  epaisseur_mm: 5.0
+  rayon_interieur_min_mm: 2.5
+  saignee_mm: null
+  voile_min_mm: null
+  fixation: "vis traversante + rondelles larges des deux côtés"
+  longueur_mm: 136.8
+  largeur_mm: 49.5
+  volume_mm3: 29782.8
+  role: >
+    Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.
+    C'est le prototype de la méthode : un modèle, un paramètre
+    d'épaisseur, un DXF par couple machine-matériau.
+
 cotes:
   - cle: paliers.P2
     valeur: 0.9
