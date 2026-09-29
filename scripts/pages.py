@@ -56,6 +56,28 @@ def commit() -> str:
 
 COMMIT = commit()
 
+# ── VERSIONNER LES URL D'ACTIFS ──────────────────────────────────────
+#
+#  nginx sert /assets/ et /fichiers/ avec `expires 7d`. Sur une URL FIXE,
+#  cela veut dire qu'un navigateur garde la feuille de style une semaine
+#  — même après un déploiement réussi.
+#
+#  Constaté le 2026-09-29 : le HTML était frais (aucun cache sur /), le
+#  CSS datait d'avant 11 h 13, donc d'avant les règles `.repli` et
+#  `.pliable`. Résultat : les DEUX s'affichaient, puisque aucune des deux
+#  règles n'existait dans la feuille servie. Le site paraissait « non
+#  responsive » alors que sa feuille était juste.
+#
+#  Et le même cache couvrait /fichiers/ — LE PLAN A4 DE DÉCOUPE. Un plan
+#  périmé pouvait être téléchargé une semaine après sa correction.
+#
+#  L'empreinte du contenu dans l'URL règle les deux : elle change dès que
+#  le site change, donc le navigateur redemande. C'est le motif standard,
+#  et il permet de GARDER le cache long, qui est utile.
+def v(url: str) -> str:
+    """Ajoute l'empreinte du site à une URL d'actif."""
+    return f"{url}?v={COMMIT}"
+
 ORIGINES = ["propre", "litterature", "catalogue", "mesure", "amont", "ambigu"]
 LIB_ORIGINE = {
     "propre": ("propre", "dérivée de H et d'un ratio du projet"),
@@ -218,7 +240,7 @@ def page(titre, corps, fil=None, cls="") -> str:
            '<a href="/tracabilite/">Traçabilité</a></nav>')
     return f"""<!doctype html><html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{e(titre)} — YXOR</title><link rel="stylesheet" href="/assets/style.css">
+<title>{e(titre)} — YXOR</title><link rel="stylesheet" href="/assets/style.css?v={COMMIT}">
 </head><body><header><div class="wrap">
 <h1>{e(titre)}</h1><p class="sous">{fil or 'YXOR — robot humanoïde bipède paramétrique'}</p>
 {nav}</div></header><div class="wrap {cls}">{bandeau()}{corps}
@@ -356,7 +378,7 @@ calculé ici n'est envoyé, ni stocké : recharger la page rend les valeurs du
 dépôt. Pour figer une valeur, il faut modifier le dépôt et régénérer.</p>
 <div class="carte" id="sim"><p class="src">Simulation indisponible :
 JavaScript est désactivé. Les valeurs ci-dessus restent celles du dépôt.</p></div>
-<script src="/assets/simulateur.js"></script>
+<script src="/assets/simulateur.js?v={COMMIT}"></script>
 <script>simulateur({json.dumps(sim, ensure_ascii=False).replace("</", "<\\/")},
   {{hote: document.getElementById('sim')}});</script>""")
 def schema_ou_rien(p) -> str:
@@ -377,7 +399,7 @@ def schema_ou_rien(p) -> str:
 
 def page_piece(p) -> str:
     dl = "".join(
-        f'<a href="/fichiers/{e(f.name)}" download>{e(lib)}'
+        f'<a href="/fichiers/{e(f.name)}?v={COMMIT}" download>{e(lib)}'
         f'<span class="fmt">{e(desc)}</span></a>'
         for ext, lib, desc in FORMATS if (f := p["fichiers"].get(ext)))
     amont = sum(1 for c in p["cotes"] if c.get("origine") == "amont")
@@ -405,7 +427,7 @@ def page_piece(p) -> str:
     <div class="svgbox">{schema_ou_rien(p)}</div>
     <p class="zoomaide">Pincer pour agrandir, glisser pour déplacer.
     C'est un dessin technique : il doit pouvoir être lu de près.</p>
-    <script src="/assets/zoom.js"></script>
+    <script src="/assets/zoom.js?v={COMMIT}"></script>
     {table_schema(p["_schema"], p["cotes"])}
   </div>
   <div class="carte">
@@ -443,9 +465,9 @@ def page_piece(p) -> str:
   <dt>Palier</dt><dd class="txt">{val(p.get('palier'))}</dd>
   <dt>Volume</dt><dd class="num">{val(p.get('volume_mm3'),' mm³')}</dd>
 </dl>
-<script src="/assets/viewer.js"></script>
+<script src="/assets/viewer.js?v={COMMIT}"></script>
 <script>visualiseurSTL(document.getElementById('vue'),
-  {json.dumps('/fichiers/' + p["fichiers"]["stl"].name) if 'stl' in p["fichiers"] else 'null'},
+  {json.dumps('/fichiers/' + p["fichiers"]["stl"].name + '?v=' + COMMIT) if 'stl' in p["fichiers"] else 'null'},
   m => document.getElementById('msg').textContent = m || '');</script>
 """, fil=e(ecourter(p.get("role", ""))))
 def page_atelier(p) -> str:
@@ -506,7 +528,7 @@ def page_atelier(p) -> str:
  '</b> par rapport à la longueur</p><p class="lbl">Matière ORIENTÉE : la flèche '
  'du plan A4 doit être alignée avant de couper.</p></div>'
  if p.get('anisotrope') else ''}
-{f'<a class="gros" href="/fichiers/{e(dxf.name)}" download>Télécharger le DXF</a>' if dxf
+{f'<a class="gros" href="/fichiers/{e(dxf.name)}?v={COMMIT}" download>Télécharger le DXF</a>' if dxf
   else '<div class="att">Pas de DXF disponible.</div>'}
 <div class="bloc"><p class="lbl">Fixation prévue</p>
 <p class="spec">{val(p.get('fixation'))}</p></div>

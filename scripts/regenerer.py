@@ -199,6 +199,62 @@ def lancer_audit() -> dict:
 BALISES_VIDES = {"meta", "link", "br", "hr", "img", "input", "source"}
 
 
+def controler_css() -> list[str]:
+    """Une feuille de style cassée ne lève AUCUNE erreur.
+
+    Le navigateur abandonne silencieusement la règle fautive — ou tout ce
+    qui suit, selon la faute — et la page s'affiche, simplement fausse.
+    Même motif que les six faux verts : un système qui échoue en silence.
+
+    Trois fautes détectées, et ce sont celles qui coupent la suite :
+
+      1. accolades déséquilibrées — un `{` non fermé avale tout le reste ;
+      2. profondeur > 1 hors `@media` — une règle imbriquée par accident,
+         qui s'équilibre pourtant et passe un simple comptage ;
+      3. commentaire non fermé — `/*` sans `*/` mange la fin du fichier.
+
+    Ce contrôle n'est PAS un validateur CSS : il ne juge ni les
+    propriétés ni les valeurs. Il vérifie que le fichier est
+    STRUCTURELLEMENT analysable jusqu'au bout — c'est-à-dire que la
+    dernière règle a autant de chances de s'appliquer que la première.
+    """
+    f = WEB / "style.css"
+    if not f.exists():
+        return ["web/style.css est absent"]
+    brut = f.read_text(encoding="utf-8")
+    if brut.count("/*") != brut.count("*/"):
+        return [f"style.css : {brut.count('/*')} commentaires ouverts pour "
+                f"{brut.count('*/')} fermés — tout ce qui suit le dernier "
+                f"`/*` non fermé est ignoré"]
+    sans = re.sub(r"/\*.*?\*/", "", brut, flags=re.S)
+    if sans.count("{") != sans.count("}"):
+        return [f"style.css : {sans.count('{')} accolades ouvrantes pour "
+                f"{sans.count('}')} fermantes"]
+    fautes, prof = [], 0
+    dans_media = False
+    for i, l in enumerate(sans.splitlines(), 1):
+        if "@media" in l or "@supports" in l:
+            dans_media = True
+        for c in l:
+            if c == "{":
+                prof += 1
+            elif c == "}":
+                prof -= 1
+                if prof < 0:
+                    fautes.append(f"style.css ligne {i} : accolade fermante "
+                                  f"en trop")
+                    prof = 0
+                if prof == 0:
+                    dans_media = False
+        if prof > 1 and not dans_media:
+            fautes.append(f"style.css ligne {i} : règle imbriquée dans une "
+                          f"autre hors @media — profondeur {prof}")
+    if prof != 0:
+        fautes.append(f"style.css : {prof} bloc(s) jamais fermé(s) — le "
+                      f"reste de la feuille est ignoré par le navigateur")
+    return fautes
+
+
 def controler_html() -> list[str]:
     """Vérifie que les balises se referment, et dans l'ordre.
 
@@ -341,6 +397,18 @@ def main(argv=None) -> int:
     if controle_regles.main() != 0:
         return 1
     index_fiches.main()
+
+    mauvais_css = controler_css()
+    if mauvais_css:
+        print("\n✗ FEUILLE DE STYLE INANALYSABLE :")
+        for m in mauvais_css:
+            print(f"   {m}")
+        print("  Un CSS cassé ne lève aucune erreur : la page s'affiche,")
+        print("  simplement fausse.")
+        return 1
+    n_regles = len(re.findall(r"\{", re.sub(r"/\*.*?\*/", "",
+                   (WEB / "style.css").read_text(encoding="utf-8"), flags=re.S)))
+    print(f"   feuille de style : {n_regles} règles, structure analysable")
 
     mal = controler_html()
     if mal:
