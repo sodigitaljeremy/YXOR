@@ -1,0 +1,13 @@
+# Dépendances de DÉVELOPPEMENT SEULEMENT.
+#
+# ⚠ N'ENTRE PAS dans le Dockerfile. L'étage constructeur installe
+#   `requirements.txt` et rien d'autre. Chromium pèse ~150 Mo : il n'a
+#   aucune raison d'être dans une image qui produit des DXF.
+#
+#     .venv/bin/pip install -r requirements-dev.txt
+#     .venv/bin/python -m playwright install chromium
+#
+# Sert à `scripts/verifier_pages.py` : mesurer les pages pour de bon,
+# plutôt que de les estimer. Deux jours durant, l'audit mobile a reposé
+# sur un modèle calculé — et ce modèle était faux au moins une fois.
+playwright==1.58.0
