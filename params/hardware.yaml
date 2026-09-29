@@ -117,24 +117,28 @@ materiaux:
     source: null
 
   carton_ondule:
-    # ⚠ `densite` SUSPENDUE le 2026-09-30 : profil de cannelure non
-    #   confirmé, et l'épaisseur dont elle dérive est douteuse.
-    #   Voir matieres.carton_ondule_simple et la fiche 0043.
-    mesures_suspendues: true
+    # SUSPENSION LEVÉE le 2026-09-30 : profil confirmé à la tranche,
+    # double cannelure. Les mesures appartiennent désormais à
+    # `matieres.carton_ondule_double`. Voir la fiche 0043 § Résolution.
+    #
+    # ⚠ `densite` reste ici pour ce commit, et n'y a pas sa place : deux
+    #   profils n'ont pas la même densité apparente. Descendue à la
+    #   matière au commit suivant.
     anisotrope: true
     axe_reference: "sens des cannelures"
     # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
     # (fiche 0020). 0,6349 / 3,5 = 0,1814 mg/mm³ = 181 kg/m³.
     # ⚠ ±14,5 %, hérité surtout de l'ÉPAISSEUR (14,3 %) et non plus de
     # la masse (2,5 %) : peser mieux n'améliorera plus cette valeur.
-    densite: 0.1855          # mg/mm³ — ⚠ SUSPENDUE. BORNE HAUTE : si le
-                             # carton est comprimé, l'épaisseur est
-                             # sous-estimée et la densité surestimée.
+    densite: 0.1855          # mg/mm³ — BORNE HAUTE : si le carton est
+                             # comprimé, l'épaisseur est sous-estimée et
+                             # la densité surestimée. ±14,5 %.
     source: >
       Relevé le 2026-09-30 sur un panneau de 220 x 140 mm pesant 20 g,
-      épaisseur 3,5 mm à la règle. Carton de récupération, PROFIL DE
-      CANNELURE NON CONFIRMÉ. Une première pesée sur la semelle coupée
-      (4 g / 6 300,49 mm²) donnait une valeur concordante.
+      épaisseur 3,5 mm à la règle. Carton de récupération en DOUBLE
+      cannelure, profil confirmé à la tranche le même jour. Une première
+      pesée sur la semelle coupée (4 g / 6 300,49 mm²) donnait une
+      valeur concordante.
     note_anisotropie: >
       Une cannelure est une suite d'arches collées entre deux papiers.
       Elle donne au panneau une direction FORTE (le long des arches) et
@@ -177,66 +181,62 @@ matieres:
   carton_ondule_simple:
     materiau: carton_ondule
     forme: plaque
+    # AUCUNE MESURE. Les valeurs relevées le 2026-09-30 appartenaient à
+    # `carton_ondule_double` : le carton mesuré était une double
+    # cannelure, confirmé à la tranche le jour même. Elles ont été
+    # déplacées, pas copiées — une simple cannelure reste à mesurer.
+    epaisseur: null
+    epaisseur_mesuree: null
+    masse_surfacique: null
+    note: >
+      Matière conservée bien qu'elle n'ait jamais été mesurée : une
+      simple cannelure est bien une matière du projet, distincte de la
+      double (fiche 0043 §1). Son absence de valeurs est un trou
+      déclaré, pas un oubli.
+
+  carton_ondule_double:
+    materiau: carton_ondule
+    forme: plaque
     # ══════════════════════════════════════════════════════════════
-    #  ⚠ MESURES SUSPENDUES LE 2026-09-30 — NE PAS S'EN SERVIR
+    #  MESURES DU 2026-09-30 — SUSPENSION LEVÉE LE 2026-09-30
     # ══════════════════════════════════════════════════════════════
-    #  Les trois valeurs ci-dessous sont RELEVÉES et CONSERVÉES, mais
-    #  elles ne font pas foi. Deux motifs, de poids inégal :
+    #  Ces valeurs ont été relevées le 2026-09-30 et inscrites d'abord
+    #  sous `carton_ondule_simple`, puis SUSPENDUES le même jour : le
+    #  profil de cannelure n'était pas confirmé, et rien dans le dépôt
+    #  ne pouvait dire ce qui avait été sur l'établi (fiche 0043 §3).
     #
-    #  1. PROFIL NON CONFIRMÉ — décisif. Le carton mesuré est peut-être
-    #     en DOUBLE cannelure. Ces valeurs porteraient alors le nom
-    #     d'une matière qu'on n'a pas eue en main. Rien dans le dépôt ne
-    #     pouvait le signaler : il ne sait pas ce qui était sur
-    #     l'établi (fiche 0043 §3).
+    #  LEVÉE le 2026-09-30, sur observation directe de la tranche par
+    #  Jeremy : DEUX rangées d'arches séparées par un papier
+    #  intermédiaire, trois papiers plats au total. Photo IMG_6597,
+    #  hors dépôt. C'est un constat binaire, visible à l'œil, qui ne
+    #  dépend d'aucune fourchette de grammage — le dépôt n'en possède
+    #  aucune et n'en inscrira pas (fiche 0028).
     #
-    #  2. Masse près de la résolution de la balance — vrai de la
-    #     PREMIÈRE pesée (4 g au gramme, soit 12,5 %), beaucoup moins de
-    #     celle retenue (20 g, soit 2,5 %). Je le consigne tel quel :
-    #     inscrire un motif inexact serait la faute même que ce bloc
-    #     existe pour éviter.
+    #  LE COUPLE EXACT N'EST PAS IDENTIFIÉ. E+E, E+B ou autre : rien ne
+    #  permet de trancher, et rien n'est inscrit à ce sujet.
     #
-    #  Ce qui ne dépend d'AUCUN des deux : la masse surfacique. Ni le
-    #  profil ni l'écrasement ne changent la masse ou l'aire. C'est la
-    #  seule des trois qui survivra à la confirmation, quelle qu'elle
-    #  soit.
-    #
-    #  Reprise : voir la fin du journal du 2026-09-30.
+    #  CE QUE LA LEVÉE NE LÈVE PAS :
+    #    - l'incertitude de ±14,3 % sur l'épaisseur, mesurée à la règle
+    #      sur une matière compressible ;
+    #    - le caractère de BORNE HAUTE de la densité : la zone mesurée a
+    #      pu être empilée, donc comprimée. L'écrasement ne change ni la
+    #      masse ni l'aire, donc pas la masse surfacique — mais il réduit
+    #      l'épaisseur, donc il gonfle la densité.
     # ══════════════════════════════════════════════════════════════
-    mesures_suspendues: true   # profil de cannelure non confirmé
-    epaisseur: 3.5           # mm — ⚠ SUSPENDUE. Mince pour une double :
-                             # zone peut-être empilée, donc comprimée.
+    epaisseur: 3.5           # mm — ±0,5 (14,3 %). À REMESURER sans
+                             # contact, sur zone jamais empilée.
     epaisseur_mesuree: 3.5   # mm, à la RÈGLE, en plusieurs endroits.
                              # Pas au pied à coulisse : ses becs écrasent
                              # les cannelures, et l'écrasement est
                              # irréversible (protocole du 2026-09-28).
-    masse_surfacique: 0.6494 # mg/mm² = 649 g/m². ⚠ SUSPENDUE PAR LE NOM,
-                             # pas par la mesure. Panneau de 20 g sur
-                             # 220 x 140 mm. ±2,5 % — voir mesures.yaml.
-                             # La première pesée (635 g/m² ±12,5 %) tenait :
-                             # 649 tombe dans son intervalle 556-714.
-    # ⚠⚠ PROFIL DE CANNELURE NON CONFIRMÉ, 2026-09-30
-    #
-    #  Cette matière s'appelle `carton_ondule_simple`, mais le carton
-    #  mesuré est peut-être en DOUBLE cannelure. Les mesures ci-dessus
-    #  sont donc portées par un nom qui n'est pas vérifié.
-    #
-    #  Deux indices, qui tirent en sens CONTRAIRE :
-    #    - 649 g/m² est ÉLEVÉ pour une simple cannelure : deux couches
-    #      d'arches et trois papiers l'expliqueraient mieux ;
-    #    - 3,5 mm est MINCE pour une double, qui fait couramment le
-    #      double de cette épaisseur.
-    #
-    #  Ils ne s'excluent pas : une double cannelure ÉCRASÉE satisfait
-    #  les deux à la fois. L'écrasement ne change ni la masse ni l'aire,
-    #  donc pas la masse surfacique — mais il réduit l'épaisseur, donc
-    #  il GONFLE la densité calculée.
-    #
-    #  Tant que le profil n'est pas confirmé, `densite` est une borne
-    #  HAUTE. Rien n'est renommé : voir la fiche 0043.
-    note: >
-      Carton de colis récupéré. DISTINCT du carton-plume : celui-ci est
-      une mousse prise entre deux papiers, isotrope dans son plan ; le
-      carton ondulé est une cannelure ORIENTÉE, donc anisotrope.
+    masse_surfacique: 0.6494 # mg/mm² = 649 g/m², ±2,5 %.
+                             # Panneau de 20 g sur 220 x 140 mm.
+                             # La première pesée (635 g/m² ±12,5 %, sur la
+                             # semelle coupée) tenait : 649 tombe dans son
+                             # intervalle 556-714. Deux mesures
+                             # indépendantes concordantes.
+    densite: null            # DÉPLACÉE ICI au commit suivant — voir la
+                             # note de `materiaux.carton_ondule`.
 
   contreplaque_3:
     materiau: contreplaque
@@ -279,10 +279,13 @@ reglages:
     fixation: "vis traversante + rondelles larges des deux côtés"
     source_saignee: null
 
-  - id: cutter_cartonondule
+  # Renommé le 2026-09-30 : la matière effectivement coupée était une
+  # DOUBLE cannelure. L'ancien id `cutter_cartonondule` désignait une
+  # matière qu'on n'avait pas eue en main.
+  - id: cutter_cartonondule_double
     machine: cutter_main
     procede: messerschneiden
-    matiere: carton_ondule_simple
+    matiere: carton_ondule_double
     valide: true
     # ── MESURÉ LE 2026-09-30 ────────────────────────────────────────
     # La fiche 0026 PRÉDISAIT cette valeur : le Messerschneiden est une
@@ -295,7 +298,11 @@ reglages:
       Relevé sur la semelle d'apprentissage, 2026-09-30. Lame fine de
       cutter, 1 passe sauf les angles à 2. Superposition de la pièce
       coupée sur le plan papier : coïncide.
-    rayon_interieur_min: 1.75 # = 0,5 x 3,5 mm (CLAUDE.md)
+    rayon_interieur_min: 1.75 # = 0,5 x 3,5 mm (CLAUDE.md). ⚠ Hérite de
+                              # l'incertitude de l'épaisseur : ±14,3 %.
+                              # Et ne dit que ce que la MATIÈRE supporte,
+                              # pas ce que le GESTE permet (fiche 0042) :
+                              # R 2,5 a déjà été difficile à la main.
     voile_min: null          # toujours à mesurer : aucune bande étroite
                              # sur cette pièce, elle ne s'interface avec rien
     fixation: "vis traversante + rondelles larges des deux côtés"
@@ -383,7 +390,7 @@ actionneurs:
 #        partageaient une seule ligne.
 #        CORRESPONDANCE avec la nouvelle structure :
 #          cutter_carton        -> reglages.cutter_cartonplume_5
-#          cutter_carton_ondule -> reglages.cutter_cartonondule
+#          cutter_carton_ondule -> reglages.cutter_cartonondule_double
 #          laser_contreplaque   -> reglages.laser_contreplaque_3
 #          decoupe_metal        -> reglages.cousin_alu_3
 #

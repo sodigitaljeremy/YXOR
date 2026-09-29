@@ -99,7 +99,9 @@ carton ondulé simple cannelure de 3,5 mm. **La pièce superposée au plan
 papier coïncide** : aucun écart mesurable, une passe par trait sauf les
 angles à deux.
 
-`reglages.cutter_cartonondule.saignee` porte désormais **0,0 mm**.
+`reglages.cutter_cartonondule_double.saignee` porte désormais **0,0 mm**.
+(Identifiant renommé le 2026-09-30 : la matière coupée était une double
+cannelure, confirmée à la tranche.)
 
 ### Ce que ce résultat vaut, et ce qu'il ne vaut pas
 

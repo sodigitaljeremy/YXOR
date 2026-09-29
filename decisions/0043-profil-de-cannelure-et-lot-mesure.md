@@ -1,10 +1,40 @@
 # 0043 — Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main
 
 Date : 2026-09-30
-Espèce : proposition
-État : proposée
-Statut : **proposée** — instruction. **Rien n'est renommé, rien n'est
-construit**, en attendant la confirmation du profil.
+Espèce : close
+État : appliquée
+Statut : **appliquée** le 2026-09-30 — profil confirmé à la tranche, matière dédoublée, suspension levée.
+
+## RÉSOLUTION — 2026-09-30
+
+**Le profil est confirmé : DOUBLE cannelure.** Observation directe de la
+tranche par Jeremy — **deux rangées d'arches séparées par un papier
+intermédiaire, trois papiers plats au total**. Photo IMG_6597, hors
+dépôt.
+
+C'est exactement le constat que cette fiche appelait de ses vœux :
+**binaire, visible à l'œil, et indépendant de toute fourchette de
+grammage** que le dépôt ne possède pas et n'inscrira pas (fiche 0028).
+
+**Le couple exact n'est pas identifié** — E+E, E+B ou autre. Rien ne
+permet de trancher, et rien n'est inscrit à ce sujet.
+
+### Ce que cela résout, et ce que cela ne résout pas
+
+| | |
+| --- | --- |
+| **résolu** | l'identité de la matière. `carton_ondule_double` créée, les mesures y sont déplacées, la suspension est levée |
+| **résolu** | l'anomalie des 649 g/m² : élevé pour une simple, cohérent pour une double |
+| **NON résolu** | l'épaisseur de 3,5 mm reste mince pour une double. La zone mesurée a pu être empilée, donc comprimée |
+| **NON résolu** | la densité reste une **borne haute** : l'écrasement réduit l'épaisseur, donc gonfle la densité |
+
+### Ce que l'épisode a coûté et rapporté
+
+**Coût** : une journée de valeurs inscrites sous un nom faux.
+
+**Rapport** : la correction a été possible **parce que l'objet existait
+encore et qu'on pouvait le regarder**. C'est la chance de ce cas, pas une
+propriété du dépôt — et c'est précisément l'argument du §3 ci-dessous.
 
 ## 1 — Simple et double : deux matières, et votre avis tient
 

@@ -144,17 +144,18 @@ fichiers:
         nature: sans_objet
         source: "vocabulaire de classement, ne dimensionne rien"
 
-      # Drapeau de SUSPENSION : ni une cote, ni une mesure. Il dit que
-      # les valeurs voisines ne font pas foi. Le laisser au fourre-tout
-      # `matieres.**` le faisait passer pour une mesure de procédé —
-      # un booléen d'état classé comme une cote de fabrication.
-      - motif: "**.mesures_suspendues"
-        origine: propre
-        nature: sans_objet
-        source: >
-          drapeau posé à la main quand l'objet mesuré n'est pas identifié
-          (fiche 0043). Ce n'est pas une cote : c'est un avertissement
-          sur les cotes voisines.
+      # ── RETIRÉ le 2026-09-30 ────────────────────────────────────────
+      # Un motif `**.mesures_suspendues` a existé une journée, le temps
+      # d'une suspension. La suspension levée, le champ a disparu et le
+      # motif ne correspondait plus à rien — donc MORT, et le contrôle
+      # des règles l'a dit.
+      #
+      # Il n'est pas conservé « au cas où » : une règle qui ne
+      # correspond à rien est un garde-fou qu'on croit avoir. Le jour où
+      # un champ `mesures_suspendues` réapparaîtra, l'audit le signalera
+      # `non_qualifie` et forcera à réécrire le motif sciemment. C'est
+      # l'audit qui fait son travail, pas une friction à éviter.
+      # Mécanisme décrit dans la fiche 0043.
 
       # MATIÈRES — ce qu'on achète : matériau x forme x épaisseur
       - motif: "matieres.*.materiau"

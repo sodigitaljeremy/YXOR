@@ -20,18 +20,23 @@
 #  s'additionnent en quadrature :
 #      σ_rel(a/b) = racine( σ_rel(a)² + σ_rel(b)² )
 
-# ⚠ TROIS MESURES SUSPENDUES LE 2026-09-30 (`suspendue: true`).
+# SUSPENSION LEVÉE LE 2026-09-30 — l'histoire est conservée.
 #
-#   Elles ont bien eu lieu et ne sont pas effacées. Ce qui est douteux
-#   n'est pas l'acte de mesure, c'est L'OBJET MESURÉ : le carton est
-#   peut-être en double cannelure, donc `alimente:` pointe peut-être
-#   vers la mauvaise matière.
+#   Trois mesures ont été suspendues le 2026-09-30 : l'acte de mesure
+#   n'était pas en cause, c'était L'OBJET MESURÉ qui n'était pas
+#   identifié. `alimente:` pointait vers `carton_ondule_simple`, et le
+#   carton était peut-être une double.
 #
-#   C'est exactement la limite relevée par la fiche 0043 §3 : une mesure
-#   porte la matière SUPPOSÉE, et rien ne peut vérifier la supposition.
+#   Il l'était. Profil confirmé à la tranche par Jeremy le même jour :
+#   deux rangées d'arches, un papier intermédiaire, trois papiers plats.
+#   Photo IMG_6597, hors dépôt. `alimente:` pointe désormais vers
+#   `carton_ondule_double`.
 #
-#   Une mesure suspendue ne nourrit plus rien tant que l'objet n'est pas
-#   identifié. Elle reprendra sa place dès que le profil sera vu.
+#   CE QUE CET ÉPISODE A MONTRÉ, et que la fiche 0043 §3 a consigné :
+#   une mesure porte la matière SUPPOSÉE, et rien dans le dépôt ne peut
+#   vérifier la supposition. Ici la correction a été possible parce que
+#   l'objet existait encore et qu'on pouvait le regarder. Ce ne sera pas
+#   toujours le cas.
 
 mesures:
 
@@ -56,7 +61,6 @@ mesures:
       concordantes valent mieux qu'une mesure précise seule.
 
   panneau_masse_2026_09_30:
-    suspendue: true
     grandeur: "masse d'un panneau de carton ondulé, zone plate non écrasée"
     valeur: 20.0
     unite: g
@@ -65,7 +69,7 @@ mesures:
     instrument: "balance de cuisine, affichage au gramme"
     n: 1
     date: 2026-09-30
-    alimente: [matieres.carton_ondule_simple.masse_surfacique]
+    alimente: [matieres.carton_ondule_double.masse_surfacique]
     note: >
       Panneau de 220 x 140 mm, relevé à la règle.
       ⚠ UNITÉ CORRIGÉE À LA LECTURE : le relevé disait « 22 x 14 mm ».
@@ -75,7 +79,6 @@ mesures:
       mais la correction est consignée plutôt que faite en silence.
 
   panneau_dimensions_2026_09_30:
-    suspendue: true
     grandeur: "dimensions du panneau pesé"
     valeur: 30800.0
     unite: mm2
@@ -84,14 +87,13 @@ mesures:
     instrument: "règle graduée, demi-graduation sur chaque côté"
     n: 1
     date: 2026-09-30
-    alimente: [matieres.carton_ondule_simple.masse_surfacique]
+    alimente: [matieres.carton_ondule_double.masse_surfacique]
     note: >
       220 x 140 mm, ±0,5 mm par côté. L'aire porte 0,42 % d'incertitude
       relative — négligeable devant les 2,5 % de la masse.
 
-  carton_ondule_epaisseur_2026_09_30:
-    suspendue: true
-    grandeur: "épaisseur du carton ondulé simple cannelure"
+  carton_ondule_double_epaisseur_2026_09_30:
+    grandeur: "épaisseur du carton ondulé DOUBLE cannelure"
     valeur: 3.5
     unite: mm
     incertitude: 0.5
@@ -99,7 +101,7 @@ mesures:
     instrument: "règle graduée"
     n: 1
     date: 2026-09-30
-    alimente: [matieres.carton_ondule_simple.epaisseur_mesuree]
+    alimente: [matieres.carton_ondule_double.epaisseur_mesuree]
     note: >
       Relevée EN PLUSIEURS ENDROITS, mais sans moyenne consignée : n=1 est
       donc prudent. Pas au pied à coulisse — ses becs écrasent les
@@ -116,7 +118,7 @@ mesures:
     instrument: "superposition de la pièce coupée sur le plan papier"
     n: 1
     date: 2026-09-30
-    alimente: [reglages.cutter_cartonondule.saignee]
+    alimente: [reglages.cutter_cartonondule_double.saignee]
     note: >
       Il ne s'agit pas d'un zéro mesuré mais d'un écart INDÉTECTABLE par
       le moyen employé. La fiche 0026 le prédisait : le Messerschneiden
