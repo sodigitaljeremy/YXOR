@@ -195,7 +195,34 @@ def _fmt(v) -> str:
     return f"{v:.2f}".rstrip("0").rstrip(".").replace(".", ",")
 
 
-def svg_schema(contours, cotes, largeur_px=560) -> str:
+# Les repères d'annotation ne sont plus des NOMBRES publiés par la pièce,
+# mais des FORMES LINÉAIRES sur ses cotes : x = somme(coefficient x cote).
+# Toutes le sont, sans exception — un repère est toujours « une fraction de
+# la longueur » ou « la demi-largeur moins une marge ».
+#
+# Motif : ces repères étaient recopiés en dur dans web/simulateur.js. Les
+# publier en coefficients supprime la recopie au lieu de la surveiller :
+# les deux dessinateurs évaluent la MÊME déclaration.
+BASES_TRACE = ("L", "W", "r_ext", "r_int", "ep", "largeur_creux", "un")
+
+
+def evaluer_trace(trace: dict, cotes: dict) -> dict:
+    """Remplace chaque forme linéaire par sa valeur, pour ces cotes-ci."""
+    base = dict(cotes)
+    base["un"] = 1.0
+    out = {}
+    for cle, v in trace.items():
+        if not isinstance(v, dict):
+            out[cle] = v                      # `type`, et tout scalaire
+            continue
+        inconnues = set(v) - set(BASES_TRACE)
+        if inconnues:
+            raise ValueError(f"repère « {cle} » : base inconnue {inconnues}")
+        out[cle] = round(sum(base[b] * c for b, c in v.items()), 4)
+    return out
+
+
+def svg_schema(contours, cotes, largeur_px=560, valeurs=None) -> str:
     """Schéma coté, en SVG inline. Unités du dessin : millimètres.
 
     L'axe Y du SVG descend, celui de la pièce monte : les ordonnées sont
@@ -257,6 +284,8 @@ def svg_schema(contours, cotes, largeur_px=560) -> str:
 
     for c in cotes:
         t = c.get("trace") or {}
+        if valeurs:
+            t = evaluer_trace(t, valeurs)
         typ, lettre = t.get("type"), c["lettre"]
         val = f"{_fmt(c['valeur'])}"
         if typ == "cote_h":

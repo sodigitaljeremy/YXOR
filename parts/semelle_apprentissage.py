@@ -50,6 +50,8 @@ NOM = "semelle_apprentissage"
 # la pièce : ils positionnent des annotations sur un dessin. Déclarés
 # comme tels pour que l'audit ne les compte pas comme des cotes muettes.
 COS45 = 0.7071          # non-cote: cos 45°, point de tangence sur un congé
+DEMI = 0.5              # non-cote: coefficient d'une demi-cote, pour poser
+                        # un repère de part et d'autre de l'axe de symétrie
 AXE = 0.0               # non-cote: axe de symétrie longitudinal
 REP_CONGE_X = 0.06      # non-cote: décalage du repère, en fraction de la longueur
 REP_CONGE_Y = 0.20      # non-cote: décalage du repère, en fraction de la largeur
@@ -288,8 +290,6 @@ def main(argv=None) -> int:
     # Le `rang` fixe l'ordre de LECTURE, pas l'ordre du fichier : hors-tout
     # d'abord, puis les cotes dérivées, puis celles du procédé. Les lettres
     # sont attribuées par le générateur, une règle pour toutes les pièces.
-    L2, W2 = d["L"] / 2, d["W"] / 2
-    Wc2 = d["largeur_creux"] / 2
     rc = d["r_ext"]
     # Chaque cote du schéma DÉCLARE la clé du relevé qui la gouverne. Sans
     # elle, le site devrait rapprocher le dessin du registre en devinant
@@ -298,25 +298,28 @@ def main(argv=None) -> int:
     # de la largeur ET du resserrement), on déclare celle qui répond à
     # « pourquoi ce nombre-là » : le choix, pas la grandeur qu'il module.
     kp = f"procedes.{a.procede}"
+    # Les repères sont publiés en COEFFICIENTS sur les cotes, jamais en
+    # millimètres : c'est ce qui permet au navigateur de les replacer
+    # quand H change, sans recopier une seule de nos constantes.
     schema = [
-        ("hors_tout", "longueur", d["L"], "ratios.pied_longueur",
-         {"type": "cote_h", "x1": -L2, "x2": L2}),
-        ("hors_tout", "largeur", d["W"], "ratios.pied_largeur",
-         {"type": "cote_v", "y1": -W2, "y2": W2}),
-        ("derivee", "largeur au creux", d["largeur_creux"], "ratio_resserrement",
-         {"type": "cote_v_int", "x": AXE, "y1": -Wc2, "y2": Wc2}),
-        ("derivee", "congé extérieur", rc, "ratio_coins",
-         {"type": "rayon", "x": round(L2 - rc + rc * COS45, 4),
-          "y": round(W2 - rc + rc * COS45, 4),
-          "dx": round(d["L"] * REP_CONGE_X, 4),
-          "dy": round(d["W"] * REP_CONGE_Y, 4)}),
-        ("procede", "rayon intérieur minimal", d["r_int"],
+        ("hors_tout", "longueur", "L", "ratios.pied_longueur",
+         {"type": "cote_h", "x1": {"L": -DEMI}, "x2": {"L": DEMI}}),
+        ("hors_tout", "largeur", "W", "ratios.pied_largeur",
+         {"type": "cote_v", "y1": {"W": -DEMI}, "y2": {"W": DEMI}}),
+        ("derivee", "largeur au creux", "largeur_creux", "ratio_resserrement",
+         {"type": "cote_v_int", "x": {"un": AXE},
+          "y1": {"largeur_creux": -DEMI}, "y2": {"largeur_creux": DEMI}}),
+        ("derivee", "congé extérieur", "r_ext", "ratio_coins",
+         # le point de tangence d'un congé à 45° : L/2 - rc + rc.cos45
+         {"type": "rayon", "x": {"L": DEMI, "r_ext": COS45 - 1},
+          "y": {"W": DEMI, "r_ext": COS45 - 1},
+          "dx": {"L": REP_CONGE_X}, "dy": {"W": REP_CONGE_Y}}),
+        ("procede", "rayon intérieur minimal", "r_int",
          f"{kp}.rayon_interieur_min",
-         {"type": "rayon", "x": round(-d["L"] * REP_RINT_X, 4),
-          "y": round(-W2 + REP_RINT_MARGE, 4),
-          "dx": round(-d["L"] * REP_RINT_DX, 4),
-          "dy": round(-d["W"] * REP_RINT_DY, 4)}),
-        ("procede", "épaisseur", d["ep"], f"{kp}.epaisseur", {"type": "note"}),
+         {"type": "rayon", "x": {"L": -REP_RINT_X},
+          "y": {"W": -DEMI, "un": REP_RINT_MARGE},
+          "dx": {"L": -REP_RINT_DX}, "dy": {"W": -REP_RINT_DY}}),
+        ("procede", "épaisseur", "ep", f"{kp}.epaisseur", {"type": "note"}),
     ]
     # Garde-fou : une clé déclarée qui n'existe pas dans le relevé est un
     # défaut, pas un tiret à afficher.
@@ -359,12 +362,17 @@ def main(argv=None) -> int:
               "    C'est le prototype de la méthode : un modèle, un paramètre",
               "    d'épaisseur, un DXF par couple machine-matériau.",
               "", "cotes_schema:"]
-    for rang, lib, valeur, cle, trace in schema:
+    for rang, lib, grandeur, cle, trace in schema:
         lignes += [f"  - rang: {rang}",
                    f"    libelle: \"{lib}\"",
                    f"    cle: {cle}",
-                   f"    valeur: {valeur}",
-                   f"    trace: {{{', '.join(f'{k}: {v}' for k, v in trace.items())}}}"]
+                   # `grandeur` : le nom de la cote dans le bloc `cotes` de
+                   # la simulation. Sans lui, le navigateur devrait deviner
+                   # d'après le libellé — le lien fragile qu'on a déjà payé
+                   # une fois sur la colonne Origine.
+                   f"    grandeur: {grandeur}",
+                   f"    valeur: {an_d[grandeur]}",
+                   f"    trace: {json.dumps(trace, ensure_ascii=False)}"]
     # ── ce que le navigateur a le droit de faire bouger ───────────────
     # La pièce déclare ses paramètres réglables ET une RÉFÉRENCE : les
     # cotes et un échantillon de contour calculés ici, en Python. Le

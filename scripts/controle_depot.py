@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+"""Rien de binaire dans Git — la règle 4, vérifiée sur TOUT le dépôt.
+
+    .venv/bin/python scripts/controle_depot.py
+
+═══════════════════════════════════════════════════════════════════════
+ POURQUOI CE FICHIER EXISTE
+═══════════════════════════════════════════════════════════════════════
+
+Le 2026-09-28, treize fichiers sont entrés dans Git — dont un STEP, un
+STL, un DXF et un PDF — le jour même où la fiche 0018 l'interdisait. Rien
+ne l'a signalé.
+
+Le lendemain, `site/` a été ajouté à `.gitignore`. Cela a bouché LE TROU,
+pas LA CLASSE DE TROU : un `.step` déposé dans `parts/` serait entré
+exactement pareil.
+
+Ce contrôle ne regarde donc aucun répertoire en particulier. Il regarde
+**tout ce que Git suit**, et par deux moyens indépendants :
+
+  1. **l'extension** — un `.step` est binaire même s'il est vide ;
+  2. **le contenu** — un octet NUL dans les 8 000 premiers, qui est
+     l'heuristique de Git lui-même. Elle attrape ce que l'extension rate,
+     par exemple un fichier sans extension ou nommé `.txt` à tort.
+
+Aucun des deux ne suffit seul, et c'est voulu : une liste d'extensions
+ne prévoit jamais le format suivant, et le reniflement de contenu laisse
+passer un binaire ASCII comme un STEP.
+"""
+from __future__ import annotations
+import subprocess
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+SONDE = 8000                      # non-cote: taille de l'échantillon reniflé
+
+# Extensions tenues pour binaires. La liste part des formats que le projet
+# produit (règle 4 les nomme : STEP, STL, DXF, URDF, rendus) et s'étend
+# aux familles voisines. Le DXF est du TEXTE, mais la règle 4 l'interdit
+# nommément : il est engendré, il n'a rien à faire dans Git.
+EXTENSIONS = {
+    # géométrie engendrée — nommées par la règle 4
+    ".step", ".stp", ".stl", ".dxf", ".dwg", ".iges", ".igs", ".3mf",
+    ".obj", ".ply", ".gltf", ".glb", ".f3d", ".scad_bak",
+    # images et rendus
+    ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tif", ".tiff", ".webp",
+    ".ico", ".psd", ".mp4", ".mov", ".webm", ".avi",
+    # documents compilés
+    ".pdf", ".docx", ".xlsx", ".pptx", ".odt", ".ods",
+    # archives et exécutables
+    ".zip", ".gz", ".bz2", ".xz", ".7z", ".rar", ".tar",
+    ".so", ".dylib", ".dll", ".exe", ".bin", ".o", ".a",
+    # poids de modèles — fiche 0008
+    ".pt", ".pth", ".ckpt", ".onnx", ".safetensors", ".npz", ".npy",
+    ".h5", ".pkl", ".pickle", ".joblib",
+    # polices
+    ".ttf", ".otf", ".woff", ".woff2", ".eot",
+}
+
+# Exceptions ASSUMÉES, avec leur motif. Une exception sans motif est un
+# oubli déguisé : le champ n'est pas facultatif.
+EXCEPTIONS: dict[str, str] = {
+    # exemple de la forme attendue, aucune exception aujourd'hui :
+    # "docs/schema.png": "capture d'écran d'un document amont, non régénérable",
+}
+
+
+def suivis() -> list[str]:
+    out = subprocess.run(["git", "ls-files", "-z"], cwd=REPO,
+                         capture_output=True, text=True, check=True)
+    return [f for f in out.stdout.split("\0") if f]
+
+
+def binaire_par_contenu(p: Path) -> bool:
+    """Heuristique de Git : un octet NUL dans l'échantillon de tête."""
+    try:
+        return b"\0" in p.open("rb").read(SONDE)
+    except OSError:
+        return False
+
+
+def controler() -> list[tuple[str, str]]:
+    fautes = []
+    for rel in suivis():
+        if rel in EXCEPTIONS:
+            continue
+        p = REPO / rel
+        if not p.is_file():
+            continue
+        ext = p.suffix.lower()
+        if ext in EXTENSIONS:
+            fautes.append((rel, f"extension {ext} tenue pour binaire"))
+        elif binaire_par_contenu(p):
+            fautes.append((rel, "octet NUL dans les premiers "
+                                f"{SONDE} octets (heuristique de Git)"))
+    return fautes
+
+
+def main() -> int:
+    if not (REPO / ".git").exists():
+        # Dit, jamais tu : un contrôle qui se tait en passant est pire
+        # qu'un contrôle absent, parce qu'on le croit passé.
+        print("   contrôle du dépôt IGNORÉ : pas de dépôt git ici "
+              "(construction Docker)")
+        return 0
+    fautes = controler()
+    n = len(suivis())
+    if not fautes:
+        print(f"   règle 4 : {n} fichiers suivis, aucun binaire")
+        if EXCEPTIONS:
+            print(f"   ({len(EXCEPTIONS)} exception(s) assumée(s))")
+        return 0
+    print(f"\n✗ RÈGLE 4 VIOLÉE — {len(fautes)} fichier(s) binaire(s) suivis "
+          f"par Git :")
+    for rel, motif in fautes:
+        print(f"   {rel}\n      {motif}")
+    print("\n  Ces fichiers se régénèrent : ils vont dans exports/ ou site/,")
+    print("  qui sont ignorés. Pour en assumer un, l'inscrire dans")
+    print("  EXCEPTIONS de ce fichier AVEC SON MOTIF.")
+    return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

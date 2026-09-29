@@ -1,6 +1,8 @@
 # 0021 — Séparer la machine du matériau
 
-Statut : **proposée** le 2026-09-29 — rien n'est appliqué.
+Date : 2026-09-29
+Statut : **proposée** — rien n'est appliqué.
+Amendée par : `0026-machine-procede-matiere.md` — la clé composée ne tient pas à six axes ; migration SUSPENDUE.
 
 ## Ce qui est faux aujourd'hui
 

@@ -1,4 +1,11 @@
-# 0016 — L'architecture en plaques n'a aucun précédent open source
+# 0016 — ~~L'architecture en plaques n'a aucun précédent open source~~
+
+> ⚠ **CE TITRE EST FAUX.** Le constat a été infirmé le 2026-09-28 par
+> la fiche 0017 : MEVITA, MEVIUS et MEVIUS2 construisent en tôle
+> métallique découpée. Le texte d'origine est conservé barré plutôt
+> que corrigé — même convention que les contraintes retirées de
+> CLAUDE.md. La règle 5 interdit de réécrire une fiche ; elle
+> n'oblige pas à laisser un titre mentir à qui parcourt la liste.
 
 Date : 2026-09-28
 Statut : acceptée

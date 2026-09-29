@@ -1,5 +1,6 @@
 # 0023 — Simuler dans le navigateur, sans rien enregistrer
 
+Date : 2026-09-29
 Statut : **acceptée** le 2026-09-29, à la demande de Jeremy, qui en a
 fixé les contraintes. Appliquée le jour même.
 

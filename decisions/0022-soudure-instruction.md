@@ -1,5 +1,6 @@
 # 0022 — La soudure : instruction, sans décision
 
+Date : 2026-09-29
 Statut : **instruction** — ne tranche rien, à dessein. Aucune règle du
 projet n'est modifiée par cette fiche.
 

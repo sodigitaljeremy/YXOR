@@ -73,6 +73,8 @@ INDET = '<span class="ind">non déterminé</span>'
 # Fiche 0020 : un `null` a trois sens, pas un. La condition qui les
 # distingue est LUE dans params/nullites.yaml, jamais écrite ici.
 import nullites as NU
+import controle_depot
+import index_fiches
 REGLES_NUL = NU.charger()
 
 
@@ -301,6 +303,19 @@ def table_schema(cotes_schema, cotes_origine) -> str:
             + "".join(lignes) + "</tbody></table></div>")
 
 
+def repli(etiquette: str, contenu: str) -> str:
+    """Le même contenu, replié SOUS la ligne au lieu d'être à côté.
+
+    Sous 620 px, les colonnes de prose (nature, source, motif) quittent
+    leur colonne et passent sous la valeur. Le tableau tombe à trois
+    colonnes, donc dans l'écran, et RIEN n'est perdu : le texte est
+    toujours là, ailleurs. C'est le seul compromis qui ne sacrifie ni la
+    comparaison verticale — raison d'être d'un tableau de cotes — ni le
+    contenu.
+    """
+    return (f'<span class="repli"><b>{e(etiquette)}</b> {contenu}</span>')
+
+
 def table_cotes(cotes) -> str:
     if not cotes:
         return '<p class="src">Aucune cote relevée.</p>'
@@ -308,15 +323,20 @@ def table_cotes(cotes) -> str:
     for c in cotes:
         o = c.get("origine") or "non_qualifie"
         n = c.get("nature") or "sans_objet"
+        nat = e(LIB_NATURE.get(n, n))
+        src = val(c.get("source"),
+                  ind="<span class='ind'>source absente</span>")
         lignes.append(
-            f"<tr><td><code>{e(c.get('cle'))}</code></td>"
+            f"<tr><td><code>{e(c.get('cle'))}</code>"
+            + repli("nature", nat) + repli("source", src) + "</td>"
             f'<td class="num">{val(c.get("valeur"))}</td>'
             f"<td>{badge(o)}</td>"
-            f'<td class="nat">{e(LIB_NATURE.get(n, n))}</td>'
-            f'<td class="src">{val(c.get("source"), ind="<span class=\'ind\'>source absente</span>")}</td></tr>')
+            f'<td class="nat pliable">{nat}</td>'
+            f'<td class="src pliable">{src}</td></tr>')
     return ('<div class="defile"><table><thead><tr><th>Cote</th>'
             "<th>Valeur</th><th>Origine</th>"
-            "<th>Nature</th><th>Source</th></tr></thead><tbody>"
+            '<th class="pliable">Nature</th><th class="pliable">Source</th>'
+            "</tr></thead><tbody>"
             + "".join(lignes) + "</tbody></table></div>")
 
 
@@ -357,6 +377,15 @@ def bloc_rangs(cotes) -> str:
     return "".join(out)
 
 
+def cotes_ref(p) -> dict:
+    """Les cotes de référence, telles que la pièce les a publiées.
+
+    Elles servent à évaluer les repères du schéma, qui sont déclarés en
+    coefficients et non en millimètres (fiche 0026).
+    """
+    return ((p.get("_simulation") or {}).get("reference") or {}).get("cotes") or {}
+
+
 def bloc_simulation(p) -> str:
     """Le bac à sable : calculer n'est pas stocker (fiche 0023).
 
@@ -371,6 +400,9 @@ def bloc_simulation(p) -> str:
     # `</` est échappé dans le JSON en ligne : une chaîne contenant
     # « </script> » refermerait la balise et livrerait le reste en HTML.
     # Rien n'en contient aujourd'hui ; c'est pour le jour où.
+    # Le schéma lettré part avec la simulation : c'est lui qui porte les
+    # repères, et c'est lui qui donne les lettres.
+    sim = dict(sim, schema=p["_schema"])
     return (f"""
 <h2>Simuler une autre taille</h2>
 <p class="sous">Le dépôt reste la seule source de vérité. Rien de ce qui est
@@ -409,7 +441,10 @@ def page_piece(p) -> str:
 <div class="grille g2">
   <div class="carte">
     <h2 style="margin-top:0">Schéma coté</h2>
-    <div class="svgbox">{svg_schema(p["_contours"], p["_schema"])}</div>
+    <div class="svgbox">{svg_schema(p["_contours"], p["_schema"], valeurs=cotes_ref(p))}</div>
+    <p class="zoomaide">Pincer pour agrandir, glisser pour déplacer.
+    C'est un dessin technique : il doit pouvoir être lu de près.</p>
+    <script src="/assets/zoom.js"></script>
     {table_schema(p["_schema"], p["cotes"])}
   </div>
   <div class="carte">
@@ -432,21 +467,21 @@ def page_piece(p) -> str:
 {legende()}
 
 <h2>Fabrication</h2>
-<div class="carte"><div class="defile"><table><tbody>
-  <tr><th>Matériau</th><td class="num">{val(p.get('materiau'))}</td></tr>
-  <tr><th>Machine</th><td class="num">{val(p.get('machine'))}</td></tr>
-  <tr><th>Lieu</th><td class="num">{val(p.get('lieu'))}</td></tr>
-  <tr><th>Saignée</th><td class="num">{val(p.get('saignee_mm'),' mm')}</td></tr>
-  <tr><th>Voile minimal</th><td class="num">{val(p.get('voile_min_mm'),' mm')}</td></tr>
-  <tr><th>Fixation</th><td class="num">{val(p.get('fixation'))}</td></tr>
-  <tr><th>Anisotrope</th><td class="num">{'oui' if p.get('anisotrope') else 'non'}</td></tr>
-  <tr><th>Cannelures</th><td class="num">{val(
+<dl class="fiche">
+  <dt>Matériau</dt><dd class="txt">{val(p.get('materiau'))}</dd>
+  <dt>Machine</dt><dd class="txt">{val(p.get('machine'))}</dd>
+  <dt>Lieu</dt><dd class="txt">{val(p.get('lieu'))}</dd>
+  <dt>Saignée</dt><dd class="num">{val(p.get('saignee_mm'),' mm')}</dd>
+  <dt>Voile minimal</dt><dd class="num">{val(p.get('voile_min_mm'),' mm')}</dd>
+  <dt>Fixation</dt><dd class="txt">{val(p.get('fixation'))}</dd>
+  <dt>Anisotrope</dt><dd class="txt">{'oui' if p.get('anisotrope') else 'non'}</dd>
+  <dt>Cannelures</dt><dd class="txt">{val(
       p.get('orientation_cannelures_deg'), '°',
       regles=REGLES_NUL.get('piece', []),
-      cle='orientation_cannelures_deg', voisines=p)}</td></tr>
-  <tr><th>Palier</th><td class="num">{val(p.get('palier'))}</td></tr>
-  <tr><th>Volume</th><td class="num">{val(p.get('volume_mm3'),' mm³')}</td></tr>
-</tbody></table></div></div>
+      cle='orientation_cannelures_deg', voisines=p)}</dd>
+  <dt>Palier</dt><dd class="txt">{val(p.get('palier'))}</dd>
+  <dt>Volume</dt><dd class="num">{val(p.get('volume_mm3'),' mm³')}</dd>
+</dl>
 <script src="/assets/viewer.js"></script>
 <script>visualiseurSTL(document.getElementById('vue'),
   {json.dumps('/fichiers/' + p["fichiers"]["stl"].name) if 'stl' in p["fichiers"] else 'null'},
@@ -528,9 +563,11 @@ def page_tracabilite(audit) -> str:
         f'<div style="width:{100*audit["origines"].get(o,0)/total:.3f}%;'
         f'background:var(--o-{o})"></div>' for o in ORIGINES if audit["origines"].get(o))
     lignes = "".join(
-        f"<tr><td>{badge(o)}</td><td class='num'>{n}</td>"
+        f"<tr><td>{badge(o)}"
+        + repli("définition", e(LIB_ORIGINE.get(o, (o, ''))[1]))
+        + f"</td><td class='num'>{n}</td>"
         f"<td class='num'>{100*n/total:.1f} %</td>"
-        f"<td class='src'>{e(LIB_ORIGINE.get(o,(o,''))[1])}</td></tr>"
+        f"<td class='src pliable'>{e(LIB_ORIGINE.get(o,(o,''))[1])}</td></tr>"
         for o, n in sorted(audit["origines"].items(), key=lambda kv: -kv[1]))
     nat = "".join(f"<tr><td>{e(LIB_NATURE.get(k,k))}</td><td class='num'>{v}</td></tr>"
                   for k, v in sorted(audit["natures"].items(), key=lambda kv: -kv[1]))
@@ -539,7 +576,7 @@ def page_tracabilite(audit) -> str:
 nature — ce qui le détermine. Cet inventaire ne dit pas ce qu'il faut en conclure.</p>
 <div class="barre">{segs}</div>
 <div class="carte"><div class="defile"><table><thead><tr><th>Origine</th><th>Valeurs</th><th>Part</th>
-<th>Définition</th></tr></thead><tbody>{lignes}</tbody></table></div></div>
+<th class="pliable">Définition</th></tr></thead><tbody>{lignes}</tbody></table></div></div>
 <h2>Par nature</h2>
 <div class="carte"><div class="defile"><table><tbody>{nat}</tbody></table></div></div>
 <div class="note">Les cotes d'origine <b>amont</b> viennent de ToddlerBot, dont la mécanique
@@ -557,13 +594,15 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
             f'<span class="{NU.CLS[et]}">{e(m.replace("_", " "))}</span>'
             for m, et in st["manque_coupe"]) or "—"
         lignes.append(
-            f"<tr><td><code>{e(nom)}</code></td>"
-            f'<td class="num">{val(pr.get("materiau"))}</td>'
-            f'<td class="num"><span class="v {"ok" if st["dessinable"] else "no"}">'
+            f"<tr><td><code>{e(nom)}</code>"
+            + repli("matériau", val(pr.get("materiau")))
+            + repli("manque", manque) + "</td>"
+            f'<td class="txt pliable">{val(pr.get("materiau"))}</td>'
+            f'<td class="txt"><span class="v {"ok" if st["dessinable"] else "no"}">'
             f'{"oui" if st["dessinable"] else "non"}</span></td>'
-            f'<td class="num"><span class="v {"ok" if st["coupable"] else "no"}">'
+            f'<td class="txt"><span class="v {"ok" if st["coupable"] else "no"}">'
             f'{"oui" if st["coupable"] else "non"}</span></td>'
-            f'<td class="src">{manque}</td></tr>')
+            f'<td class="src pliable">{manque}</td></tr>')
 
     # Le tri se fait sur la DÉCLARATION de la fiche 0020, plus sur le
     # préfixe du nom de la clé. L'ancien filtre triait juste pour la
@@ -589,9 +628,12 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
 
     def tableau(grp, avec_motif=False):
         return "".join(
-            f"<tr><td><code>{e(k)}</code></td><td class='num'>{len(v)}</td>"
-            + (f"<td class='src'>{prose(m)}</td>" if avec_motif else "")
-            + f"<td class='src'>{e(', '.join(v))}</td></tr>"
+            f"<tr><td><code>{e(k)}</code>"
+            + (repli("pourquoi", prose(m)) if avec_motif else "")
+            + repli("où", e(', '.join(v)))
+            + f"</td><td class='num'>{len(v)}</td>"
+            + (f"<td class='src pliable'>{prose(m)}</td>" if avec_motif else "")
+            + f"<td class='src pliable'>{e(', '.join(v))}</td></tr>"
             for (k, m), v in sorted(grp.items(), key=lambda kv: (-len(kv[1]), kv[0])))
 
     amesurer = [c for v in par_etat[NU.A_MESURER].values() for c in v]
@@ -616,21 +658,24 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
 <h2>Ce que je peux faire aujourd'hui</h2>
 <p class="sous">Dessiner et couper proprement n'exigent pas les mêmes valeurs.
 Un fichier dessinable mais non coupable a l'air complet : c'est le piège.</p>
-<div class="carte"><div class="defile"><table><thead><tr><th>Procédé</th><th>Matériau</th>
-<th>Dessiner</th><th>Couper</th><th>Manque pour couper</th></tr></thead>
+<div class="carte"><div class="defile"><table><thead><tr><th>Procédé</th>
+<th class="pliable">Matériau</th>
+<th>Dessiner</th><th>Couper</th><th class="pliable">Manque pour couper</th></tr></thead>
 <tbody>{"".join(lignes)}</tbody></table></div></div>
 
 <h2>À mesurer <span class="cpt">{len(amesurer)} valeurs</span></h2>
 <p class="sous">Rien ne les empêche : personne ne les a relevées.</p>
 <div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
-<th>Nombre</th><th>Où</th></tr></thead><tbody>{lm}</tbody></table></div></div>
+<th>Nombre</th><th class="pliable">Où</th></tr></thead>
+<tbody>{lm}</tbody></table></div></div>
 
 <h2>Se déduira <span class="cpt">{len(deduites)} valeurs</span></h2>
 <p class="sous">Absentes, mais <b>pas à mesurer</b> : elles dérivent d'un
 autre champ, lui-même absent. Les compter avec les précédentes gonflerait
 le travail restant de {round(100 * len(deduites) / max(1, len(amesurer) + len(deduites)))} %.</p>
 <div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
-<th>Nombre</th><th>Pourquoi</th><th>Où</th></tr></thead>
+<th>Nombre</th><th class="pliable">Pourquoi</th>
+<th class="pliable">Où</th></tr></thead>
 <tbody>{ld}</tbody></table></div></div>
 
 <h2>Non vérifié <span class="cpt">{len(nv)} sur {len(an['ratios'])}</span></h2>
@@ -772,7 +817,7 @@ def main(argv=None) -> int:
     (SITE / "assets").mkdir(parents=True)
     (SITE / "fichiers").mkdir()
     (SITE / "data").mkdir()
-    for f in ("style.css", "viewer.js", "simulateur.js"):
+    for f in ("style.css", "viewer.js", "simulateur.js", "zoom.js"):
         shutil.copy2(WEB / f, SITE / "assets" / f)
 
     for p in pieces:
@@ -796,6 +841,12 @@ def main(argv=None) -> int:
         ensure_ascii=False, indent=2), encoding="utf-8")
     (SITE / "data" / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2),
                                               encoding="utf-8")
+
+    # Règle 4, sur TOUT le dépôt — pas seulement sur les répertoires
+    # ignorés. C'est la classe de trou, pas le trou (fiche 0024 §4).
+    if controle_depot.main() != 0:
+        return 1
+    index_fiches.main()
 
     mal = controler_html()
     if mal:

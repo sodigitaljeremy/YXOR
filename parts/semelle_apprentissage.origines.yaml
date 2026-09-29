@@ -30,33 +30,39 @@ cotes_schema:
   - rang: hors_tout
     libelle: "longueur"
     cle: ratios.pied_longueur
+    grandeur: L
     valeur: 136.8
-    trace: {type: cote_h, x1: -68.4, x2: 68.4}
+    trace: {"type": "cote_h", "x1": {"L": -0.5}, "x2": {"L": 0.5}}
   - rang: hors_tout
     libelle: "largeur"
     cle: ratios.pied_largeur
+    grandeur: W
     valeur: 49.5
-    trace: {type: cote_v, y1: -24.75, y2: 24.75}
+    trace: {"type": "cote_v", "y1": {"W": -0.5}, "y2": {"W": 0.5}}
   - rang: derivee
     libelle: "largeur au creux"
     cle: ratio_resserrement
+    grandeur: largeur_creux
     valeur: 34.65
-    trace: {type: cote_v_int, x: 0.0, y1: -17.325, y2: 17.325}
+    trace: {"type": "cote_v_int", "x": {"un": 0.0}, "y1": {"largeur_creux": -0.5}, "y2": {"largeur_creux": 0.5}}
   - rang: derivee
     libelle: "congé extérieur"
     cle: ratio_coins
+    grandeur: r_ext
     valeur: 12.375
-    trace: {type: rayon, x: 64.7754, y: 21.1254, dx: 8.208, dy: 9.9}
+    trace: {"type": "rayon", "x": {"L": 0.5, "r_ext": -0.29290000000000005}, "y": {"W": 0.5, "r_ext": -0.29290000000000005}, "dx": {"L": 0.06}, "dy": {"W": 0.2}}
   - rang: procede
     libelle: "rayon intérieur minimal"
     cle: procedes.cutter_carton.rayon_interieur_min
+    grandeur: r_int
     valeur: 2.5
-    trace: {type: rayon, x: -32.832, y: -24.55, dx: -6.84, dy: -12.87}
+    trace: {"type": "rayon", "x": {"L": -0.24}, "y": {"W": -0.5, "un": 0.2}, "dx": {"L": -0.05}, "dy": {"W": -0.26}}
   - rang: procede
     libelle: "épaisseur"
     cle: procedes.cutter_carton.epaisseur
+    grandeur: ep
     valeur: 5.0
-    trace: {type: note}
+    trace: {"type": "note"}
 
 simulation:
   tolerance_mm: 0.05

@@ -1,5 +1,6 @@
 # 0020 — Trois états de la valeur absente
 
+Date : 2026-09-29
 Statut : **acceptée** le 2026-09-29, à la demande de Jeremy, après un
 défaut constaté sur le site en ligne.
 

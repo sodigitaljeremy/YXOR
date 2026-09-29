@@ -192,3 +192,73 @@ pre.yaml{background:#12151b;border:1px solid var(--bord);border-radius:8px;
   padding:12px 14px;overflow-x:auto;font-size:12.5px;line-height:1.55;
   font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;
   overflow-wrap:anywhere}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Mobile d'abord — fiche 0025
+   Écran de référence : 390 px. Deux lecteurs, deux téléphones.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* `num` avait fini par désigner « toute valeur », y compris du texte de
+   49 caractères — et son `white-space:nowrap` interdisait le repli, ce
+   qui écrasait la colonne d'en-tête. `num` ne porte plus que des
+   nombres ; le texte prend `txt`, qui se replie. */
+td.txt,dd.txt{text-align:left;white-space:normal;overflow-wrap:anywhere}
+
+/* Le tableau Fabrication n'était pas un tableau : c'était une fiche.
+   Aucune de ses lignes ne se compare aux autres — « Machine » contre
+   « Volume » ne veut rien dire. Donc une liste de définitions, qui
+   s'empile naturellement et ne coûte aucune largeur. */
+dl.fiche{display:grid;grid-template-columns:auto 1fr;gap:2px 16px;
+  margin:0;padding:16px 18px;background:var(--carte);
+  border:1px solid var(--bord);border-radius:10px;font-size:14px}
+dl.fiche dt{color:var(--doux);font-size:12px;text-transform:uppercase;
+  letter-spacing:.04em;padding-top:5px;white-space:nowrap}
+dl.fiche dd{margin:0;padding:3px 0 7px;font-variant-numeric:tabular-nums}
+@media(max-width:430px){
+  dl.fiche{grid-template-columns:1fr;gap:0}
+  dl.fiche dd{padding-bottom:12px}
+}
+
+/* ── Repli des colonnes de prose ─────────────────────────────────────
+   Un tableau de cotes ne s'empile PAS : on y compare une colonne de haut
+   en bas, et c'est sa raison d'être. Mais les colonnes de prose (nature,
+   source, motif) ne se comparent pas — elles se lisent une par une.
+   Sous 620 px, elles quittent leur colonne et passent sous la valeur.
+   Le tableau tombe à trois colonnes, donc dans l'écran, et rien n'est
+   perdu : le texte est ailleurs, pas supprimé. */
+.repli{display:none}
+@media(max-width:620px){
+  .pliable{display:none}
+  .repli{display:block;font-size:12px;color:var(--doux);
+    margin-top:3px;overflow-wrap:anywhere}
+  .repli b{color:var(--doux);font-weight:600;text-transform:uppercase;
+    font-size:10.5px;letter-spacing:.05em;margin-right:5px}
+  .defile>table{min-width:0}          /* plus besoin de défiler */
+}
+
+/* ── Cibles tactiles : 44 px ─────────────────────────────────────────
+   Seuil des plateformes, pas le minimum d'accessibilité (24 px). Sur un
+   dessin technique manipulé à l'atelier, les mains sales, le minimum ne
+   suffit pas. La navigation était à ~21 px, les curseurs à ~16. */
+nav{display:flex;flex-wrap:wrap;gap:2px}
+nav a{margin-right:0;min-height:44px;display:inline-flex;align-items:center;
+  padding:0 14px 0 0}
+.dl a,#simraz{min-height:44px;display:inline-flex;align-items:center;
+  box-sizing:border-box}
+.rang>summary{min-height:44px;align-items:center}
+.reglages input[type=range]{height:44px;margin:0}
+.reglages input[type=range]::-webkit-slider-thumb{width:26px;height:26px}
+.reglages input[type=range]::-moz-range-thumb{width:26px;height:26px}
+
+/* ── Le schéma se pince ──────────────────────────────────────────────
+   `touch-action:none` est indispensable : sans lui le navigateur prend
+   le geste pour faire défiler la page, et le dessin ne bouge jamais. */
+.svgbox{position:relative;touch-action:none;user-select:none}
+.svgbox svg{touch-action:none}
+.zoomcmd{position:absolute;top:8px;right:8px;display:flex;gap:6px}
+.zoomcmd button{min-width:44px;min-height:44px;border-radius:8px;
+  border:1px solid var(--bord);background:rgba(18,21,27,.86);
+  color:var(--texte);font-size:17px;cursor:pointer;font-family:inherit;
+  line-height:1;padding:0}
+.zoomcmd button:hover{border-color:var(--accent)}
+.zoomaide{font-size:12px;color:var(--doux);margin:6px 0 0}

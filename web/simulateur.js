@@ -104,38 +104,56 @@
     return pts;
   }
 
-  /* ── écart d'un contour à l'autre, point à SEGMENT ───────────────── */
-  function distSeg(q, a, b) {
-    var dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy;
-    var t = L2 === 0 ? 0 : Math.max(0, Math.min(1,
-      ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / L2));
-    return Math.hypot(q[0] - (a[0] + t * dx), q[1] - (a[1] + t * dy));
-  }
-  function ecart(A, B) {
-    var pire = 0;
-    for (var i = 0; i < A.length; i++) {
-      var d = Infinity;
-      for (var j = 0; j < B.length; j++)
-        d = Math.min(d, distSeg(A[i], B[j], B[(j + 1) % B.length]));
-      pire = Math.max(pire, d);
-    }
-    return pire;
+  /* ── dessin : même langage que scripts/plan_decoupe.svg_schema ───── */
+  function echappe(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   }
 
-  /* ── dessin : même langage que scripts/plan_decoupe.svg_schema ───── */
+  /* La cote affichée sous une lettre est celle que la pièce a DÉCLARÉE,
+     par son nom de grandeur. On ne devine rien d'après le libellé. */
+  function valeurCote(c, d) {
+    return d[c.grandeur];
+  }
+
   var fmt = function (v) {
     return (Math.round(v * 100) / 100).toString().replace(".", ",");
   };
 
-  function dessiner(d, pts) {
+  /* ── évaluation des repères : MÊME déclaration que scripts/plan_decoupe
+     Les coefficients viennent du relevé de la pièce. Aucune constante de
+     placement n'est écrite ici — c'était la duplication non gardée que
+     l'audit du 2026-09-29 a trouvée (fiche 0024 §2). */
+  var BASES = ["L", "W", "r_ext", "r_int", "ep", "largeur_creux", "un"];
+
+  function evaluerTrace(trace, d) {
+    var base = {}, k;
+    for (k in d) if (d.hasOwnProperty(k)) base[k] = d[k];
+    base.un = 1;
+    var out = {};
+    for (k in trace) {
+      if (!trace.hasOwnProperty(k)) continue;
+      var v = trace[k];
+      if (typeof v !== "object" || v === null) { out[k] = v; continue; }
+      var somme = 0, b;
+      for (b in v) if (v.hasOwnProperty(b)) somme += (base[b] || 0) * v[b];
+      out[k] = Math.round(somme * 1e4) / 1e4;
+    }
+    return out;
+  }
+
+  function dessiner(d, pts, schema) {
     var ech = Math.max(d.L, d.W);
     var tp = ech * 0.030, tr = ech * 0.0045;
-    var mg = ech * 0.09, md = ech * 0.13, mb = md + tp * 1.55;
+    var mg = ech * 0.09, md = ech * 0.13;
+    var notes = schema.filter(function (c) {
+      return (c.trace || {}).type === "note";
+    });
+    var mb = md + notes.length * tp * 1.55;
     var x0 = -d.L / 2, y1 = d.W / 2, y0 = -d.W / 2, x1 = d.L / 2;
     var o = ['<svg viewBox="' + (x0 - mg) + ' ' + (-(y1 + mg)) + ' '
       + (d.L + mg + md) + ' ' + (d.W + mg + mb) + '" width="100%" '
-      + 'style="max-width:560px" xmlns="http://www.w3.org/2000/svg" '
-      + 'role="img" aria-label="schéma simulé">'];
+      + 'xmlns="http://www.w3.org/2000/svg" role="img" '
+      + 'aria-label="schéma simulé">'];
     o.push('<g fill="none" stroke="currentColor" stroke-width="' + (tr * 2)
       + '" stroke-linejoin="round">');
     o.push('<path d="M ' + pts.map(function (q) {
@@ -143,50 +161,63 @@
     }).join(" L ") + ' Z"/></g>');
 
     var txt = [];
-    function etiq(x, y, lettre, valeur, dessous) {
+    function etiq(x, y, lettre, valeur, dessous, ancre) {
       var dy = dessous ? -tp * 1.15 : tp * 0.95;
       txt.push('<circle cx="' + x + '" cy="' + (-y) + '" r="' + tp * 0.62
         + '" fill="currentColor" opacity="0.14"/>'
         + '<text x="' + x + '" y="' + (-y + tp * 0.34) + '" text-anchor="middle" '
         + 'font-size="' + tp * 0.78 + '" font-weight="700" fill="currentColor">'
         + lettre + '</text>'
-        + '<text x="' + x + '" y="' + (-y - dy) + '" text-anchor="middle" '
-        + 'font-size="' + tp * 0.74 + '" fill="currentColor" opacity="0.72">'
-        + valeur + '</text>');
+        + '<text x="' + x + '" y="' + (-y - dy) + '" text-anchor="'
+        + (ancre || "middle") + '" font-size="' + tp * 0.74
+        + '" fill="currentColor" opacity="0.72">' + valeur + '</text>');
     }
-    o.push('<g stroke="currentColor" stroke-width="' + tr + '" fill="none" opacity="0.62">');
-    var yl = y0 - md * 0.58;                                    /* A */
-    o.push('<path d="M ' + x0 + ' ' + (-y0) + ' L ' + x0 + ' ' + (-(yl - ech * 0.012)) + '"/>');
-    o.push('<path d="M ' + x1 + ' ' + (-y0) + ' L ' + x1 + ' ' + (-(yl - ech * 0.012)) + '"/>');
-    o.push('<path d="M ' + x0 + ' ' + (-yl) + ' L ' + x1 + ' ' + (-yl) + '"/>');
-    etiq(0, yl, "A", fmt(d.L));
-    var xl = x1 + md * 0.55;                                    /* B */
-    o.push('<path d="M ' + x1 + ' ' + (-y1) + ' L ' + (xl + ech * 0.012) + ' ' + (-y1) + '"/>');
-    o.push('<path d="M ' + x1 + ' ' + (-y0) + ' L ' + (xl + ech * 0.012) + ' ' + (-y0) + '"/>');
-    o.push('<path d="M ' + xl + ' ' + (-y0) + ' L ' + xl + ' ' + (-y1) + '"/>');
-    etiq(xl, 0, "B", fmt(d.W));
-    var wc = d.largeur_creux / 2;                               /* C */
-    o.push('<path d="M 0 ' + wc + ' L 0 ' + (-wc) + '"/>');
-    etiq(0, 0, "C", fmt(d.largeur_creux));
-    var cx = x1 - d.r_ext + d.r_ext * 0.7071;                   /* D */
-    var cy = y1 - d.r_ext + d.r_ext * 0.7071;
-    var dx = cx + d.L * 0.06, dy2 = cy + d.W * 0.20;
-    o.push('<path d="M ' + cx + ' ' + (-cy) + ' L ' + dx + ' ' + (-dy2) + '"/>');
-    etiq(dx, dy2, "D", "R " + fmt(d.r_ext));
-    var ex = -d.L * 0.24, ey = y0 + 0.2;                        /* E */
-    var ex2 = ex - d.L * 0.05, ey2 = ey - d.W * 0.26;
-    o.push('<path d="M ' + ex + ' ' + (-ey) + ' L ' + ex2 + ' ' + (-ey2) + '"/>');
-    etiq(ex2, ey2, "E", "R " + fmt(d.r_int), true);
+    o.push('<g stroke="currentColor" stroke-width="' + tr
+      + '" fill="none" opacity="0.62">');
+
+    var iNote = 0;
+    schema.forEach(function (c) {
+      var t = evaluerTrace(c.trace || {}, d), L = c.lettre;
+      var v = fmt(valeurCote(c, d));
+      if (t.type === "cote_h") {
+        var yl = y0 - md * 0.58;
+        [t.x1, t.x2].forEach(function (x) {
+          o.push('<path d="M ' + x + ' ' + (-y0) + ' L ' + x + ' '
+            + (-(yl - ech * 0.012)) + '"/>');
+        });
+        o.push('<path d="M ' + t.x1 + ' ' + (-yl) + ' L ' + t.x2 + ' ' + (-yl) + '"/>');
+        etiq((t.x1 + t.x2) / 2, yl, L, v);
+      } else if (t.type === "cote_v") {
+        var xl = x1 + md * 0.55;
+        [t.y1, t.y2].forEach(function (y) {
+          o.push('<path d="M ' + x1 + ' ' + (-y) + ' L ' + (xl + ech * 0.012)
+            + ' ' + (-y) + '"/>');
+        });
+        o.push('<path d="M ' + xl + ' ' + (-t.y1) + ' L ' + xl + ' ' + (-t.y2) + '"/>');
+        etiq(xl, (t.y1 + t.y2) / 2, L, v);
+      } else if (t.type === "cote_v_int") {
+        o.push('<path d="M ' + t.x + ' ' + (-t.y1) + ' L ' + t.x + ' '
+          + (-t.y2) + '"/>');
+        etiq(t.x, (t.y1 + t.y2) / 2, L, v);
+      } else if (t.type === "rayon") {
+        var lx = t.x + t.dx, ly = t.y + t.dy;
+        o.push('<path d="M ' + t.x + ' ' + (-t.y) + ' L ' + lx + ' '
+          + (-ly) + '"/>');
+        etiq(lx, ly, L, "R " + v, t.dy < 0);
+      } else if (t.type === "note") {
+        var yn = y0 - md - tp * (1 + iNote * 1.55);
+        iNote++;
+        txt.push('<circle cx="' + (x0 + tp * 0.62) + '" cy="' + (-yn) + '" r="'
+          + tp * 0.62 + '" fill="currentColor" opacity="0.14"/>'
+          + '<text x="' + (x0 + tp * 0.62) + '" y="' + (-yn + tp * 0.34)
+          + '" text-anchor="middle" font-size="' + tp * 0.78
+          + '" font-weight="700" fill="currentColor">' + L + '</text>'
+          + '<text x="' + (x0 + tp * 1.55) + '" y="' + (-yn + tp * 0.30)
+          + '" font-size="' + tp * 0.74 + '" fill="currentColor" opacity="0.72">'
+          + echappe(c.libelle) + " " + v + ' (hors du plan de la vue)</text>');
+      }
+    });
     o.push('</g>');
-    var yn = y0 - md - tp;                                      /* F, en note */
-    txt.push('<circle cx="' + (x0 + tp * 0.62) + '" cy="' + (-yn) + '" r="'
-      + tp * 0.62 + '" fill="currentColor" opacity="0.14"/>'
-      + '<text x="' + (x0 + tp * 0.62) + '" y="' + (-yn + tp * 0.34)
-      + '" text-anchor="middle" font-size="' + tp * 0.78
-      + '" font-weight="700" fill="currentColor">F</text>'
-      + '<text x="' + (x0 + tp * 1.55) + '" y="' + (-yn + tp * 0.30)
-      + '" font-size="' + tp * 0.74 + '" fill="currentColor" opacity="0.72">'
-      + 'épaisseur ' + fmt(d.ep) + ' (hors du plan de la vue)</text>');
     o.push(txt.join(""));
     o.push('</svg>');
     return o.join("");
@@ -254,10 +285,6 @@
     var bandeau = document.getElementById("simb");
     var boiteYaml = document.getElementById("simyaml");
 
-    function echappe(s) {
-      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    }
-
     function rendre() {
       var d = cotes(etat), mauvais = diagnostic(d), modifie = false, k;
       for (k in etat) if (etat[k] !== depart[k]) modifie = true;
@@ -280,19 +307,21 @@
         boiteSvg.innerHTML = '<p class="ind" style="padding:20px">Forme '
           + 'impossible : ' + echappe(mauvais[0]) + '.</p>';
       } else {
-        boiteSvg.innerHTML = dessiner(d, contour(d, 48));
+        boiteSvg.innerHTML = dessiner(d, contour(d, 48), ref.schema);
+        // le SVG est refait à chaque mouvement de curseur : le zoom doit
+        // être réinstallé, sinon il ne s'applique qu'au tout premier.
+        boiteSvg.dataset.zoom = "";
+        if (window.equiperZoom) window.equiperZoom();
       }
 
-      var l = [["A", "longueur", d.L, "mm"], ["B", "largeur", d.W, "mm"],
-               ["C", "largeur au creux", d.largeur_creux, "mm"],
-               ["D", "congé extérieur", d.r_ext, "mm"],
-               ["E", "rayon intérieur minimal", d.r_int, "mm"],
-               ["F", "épaisseur", d.ep, "mm"]];
-      boiteCotes.innerHTML = '<div class="defile"><table class="schema"><tbody>'
-        + l.map(function (r) {
-            return '<tr><td class="lettre">' + r[0] + '</td><td>' + r[1]
-              + '</td><td class="num">' + fmt(r[2]) + " " + r[3] + "</td></tr>";
-          }).join("") + "</tbody></table></div>";
+      /* Les lettres et les libellés viennent du dépôt, pas d'une liste
+         recopiée ici : ajouter une cote à la pièce la fait apparaître. */
+      boiteCotes.innerHTML = '<table class="schema"><tbody>'
+        + ref.schema.map(function (c) {
+            return '<tr><td class="lettre">' + echappe(c.lettre) + '</td><td>'
+              + echappe(c.libelle) + '</td><td class="num">'
+              + fmt(valeurCote(c, d)) + " mm</td></tr>";
+          }).join("") + "</tbody></table>";
 
       if (!modifie) { boiteYaml.innerHTML = ""; return; }
       var lignes = [];
