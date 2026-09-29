@@ -37,9 +37,16 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 
-# Les répertoires que le Dockerfile copie, et eux seuls : l'empreinte
-# décrit ce qui entre dans l'image, pas ce qui traîne dans le dépôt.
+# Ce que le Dockerfile copie, et cela seul : l'empreinte décrit ce qui
+# entre dans l'image, pas ce qui traîne dans le dépôt.
+#
+# requirements.txt et le Dockerfile y sont depuis le 2026-09-30 (audit de
+# la nuit, § 8 H10) : une montée de version de build123d, ou un étage
+# constructeur modifié, peut changer le site sans toucher une ligne des
+# quatre répertoires. Le Dockerfile se copie lui-même dans l'image pour
+# que l'empreinte se calcule PAREIL en local et en construction.
 SOURCES = ("params", "parts", "scripts", "web")
+FICHIERS = ("requirements.txt", "Dockerfile")
 
 
 def empreinte() -> str:
@@ -50,6 +57,14 @@ def empreinte() -> str:
                 continue
             h.update(str(f.relative_to(REPO)).encode())
             h.update(f.read_bytes())
+    for nom in FICHIERS:
+        f = REPO / nom
+        # Pas de saut muet : un fichier absent donnerait une empreinte
+        # qu'aucune autre construction ne pourrait reproduire.
+        if not f.is_file():
+            raise FileNotFoundError(f"empreinte : {nom} absent de {REPO}")
+        h.update(nom.encode())
+        h.update(f.read_bytes())
     return h.hexdigest()[:10]
 
 

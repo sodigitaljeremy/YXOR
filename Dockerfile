@@ -62,6 +62,9 @@ COPY params/ params/
 COPY parts/  parts/
 COPY scripts/ scripts/
 COPY web/    web/
+# Pour l'empreinte (scripts/empreinte.py), qui hache aussi ces deux
+# fichiers : sans lui, l'image calculerait une autre valeur que le poste.
+COPY Dockerfile .
 
 # ── L'EMPREINTE DU COMMIT, pour qu'un site périmé se reconnaisse ──────
 #
