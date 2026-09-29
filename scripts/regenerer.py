@@ -31,6 +31,7 @@ import datetime
 import html
 import importlib.util
 import json
+import re
 import shutil
 import sys
 import traceback
@@ -69,6 +70,30 @@ FORMATS = [("dxf", "DXF", "découpe 2D"), ("step", "STEP", "échange CAO"),
 
 INDET = '<span class="ind">non déterminé</span>'
 
+# Fiche 0020 : un `null` a trois sens, pas un. La condition qui les
+# distingue est LUE dans params/nullites.yaml, jamais écrite ici.
+import nullites as NU
+REGLES_NUL = NU.charger()
+
+
+def prose(txt: str) -> str:
+    """Échappe, puis rend `ceci` en <code>ceci</code>.
+
+    Les motifs de nullites.yaml NOMMENT le champ dont ils dépendent : sans
+    cette conversion, le lecteur voit des accents graves au lieu d'un
+    identifiant, et l'identifiant est justement l'information.
+    """
+    out, morceaux = [], e(txt).split("`")
+    for i, m in enumerate(morceaux):
+        out.append(f"<code>{m}</code>" if i % 2 and i < len(morceaux) - 1 else m)
+    return "".join(out)
+
+
+def nul(etat: str, motif: str = "") -> str:
+    """Une valeur absente se DIT, et dit pourquoi elle est absente."""
+    t = f' title="{e(motif)}"' if motif else ""   # attribut : pas de balise
+    return f'<span class="{NU.CLS[etat]}"{t}>{NU.LIB[etat]}</span>'
+
 # ── Hiérarchie du tableau d'origines ──────────────────────────────────
 # Pas l'ordre des étiquettes : l'ACTION que chacune appelle. On balaie
 # pour savoir quoi faire, pas pour lire une taxonomie.
@@ -99,12 +124,35 @@ def rang_cote(c) -> int:
     return 3
 
 
-def etat_procede(p: dict) -> dict:
+def _manque(p: dict, cles, prefixe="") -> list:
+    """Ce qui MANQUE, quelle qu'en soit la raison.
+
+    Piège écarté ici : « à mesurer » et « manquant » ne sont pas la même
+    chose. Le rayon intérieur minimal de la découpe métal se déduira du
+    moyen — il n'est donc pas à MESURER — mais il manque quand même, et
+    sans lui on ne peut pas dessiner. Le confondre avec « rien à faire »
+    ferait afficher « dessinable » une pièce qu'on ne peut pas dessiner.
+
+    Seul `sans_objet` sort de la liste : là, il n'y a rien, pas même en
+    attente.
+    """
+    out = []
+    for k in cles:
+        if p.get(k) is not None:
+            continue
+        st = NU.etat(REGLES_NUL.get("hardware.yaml", []), f"{prefixe}{k}", p)
+        if st["etat"] != NU.SANS_OBJET:
+            out.append((k, st["etat"]))
+    return out
+
+
+def etat_procede(p: dict, nom: str = "*") -> dict:
     """Deux niveaux, jamais un voyant unique."""
-    md = [k for k in CLES_DESSIN if p.get(k) is None]
-    mc = [k for k in CLES_COUPE if p.get(k) is None]
+    pre = f"procedes.{nom}."
+    md = _manque(p, CLES_DESSIN, pre)
+    mc = _manque(p, CLES_COUPE, pre)
     if p.get("machine") is None:
-        mc.insert(0, "machine")
+        mc.insert(0, ("machine", NU.A_MESURER))
     return dict(dessinable=not md, coupable=not (md or mc),
                 manque_dessin=md, manque_coupe=md + mc)
 
@@ -113,11 +161,18 @@ def e(x) -> str:
     return html.escape(str(x), quote=True)
 
 
-def val(x, unite="", ind=INDET) -> str:
-    """Jamais une case vide : une valeur absente se DIT."""
-    if x is None or x == "" or x == "null":
+def val(x, unite="", ind=INDET, regles=None, cle="", voisines=None) -> str:
+    """Jamais une case vide : une valeur absente se DIT, et dit pourquoi.
+
+    Sans `regles`, on retombe sur « non déterminé » — le défaut de la
+    fiche 0020 : l'absence de déclaration ressort en rouge.
+    """
+    if not (x is None or x == "" or x == "null"):
+        return f"{e(x)}{unite}"
+    if regles is None:
         return ind
-    return f"{e(x)}{unite}"
+    st = NU.etat(regles, cle, voisines or {})
+    return nul(st["etat"], st["parce_que"])
 
 
 # ──────────────────────────────────────────────────── exécution des pièces
@@ -185,6 +240,18 @@ def bandeau() -> str:
             "mais <b>cet inventaire n'est pas complet</b>.</div>")
 
 
+def ecourter(txt: str, n: int = 240) -> str:
+    """Coupe sur une frontière de MOT, jamais au milieu.
+
+    Le site affichait « un paramètre d'épaisseur, u ». Un texte coupé en
+    plein mot se lit comme un bogue — et c'en était un.
+    """
+    txt = " ".join(str(txt).split())
+    if len(txt) <= n:
+        return txt
+    return txt[:n].rsplit(" ", 1)[0].rstrip(" ,;:.") + "…"
+
+
 def page(titre, corps, fil=None, cls="") -> str:
     nav = ('<nav><a href="/">Pièces</a><a href="/etat/">État du projet</a>'
            '<a href="/tracabilite/">Traçabilité</a></nav>')
@@ -227,9 +294,10 @@ def table_schema(cotes_schema, cotes_origine) -> str:
             f'<code>{e(cle)}</code></span></td>'
             f'<td class="num">{val(c.get("valeur"), " mm")}</td>'
             f'<td>{badge(o) if o else badge("non_qualifie")}</td></tr>')
-    return ('<table class="schema"><thead><tr><th></th><th>Cote</th>'
+    return ('<div class="defile"><table class="schema">'
+            "<thead><tr><th></th><th>Cote</th>"
             "<th>Valeur</th><th>Origine</th></tr></thead><tbody>"
-            + "".join(lignes) + "</tbody></table>")
+            + "".join(lignes) + "</tbody></table></div>")
 
 
 def table_cotes(cotes) -> str:
@@ -245,9 +313,10 @@ def table_cotes(cotes) -> str:
             f"<td>{badge(o)}</td>"
             f'<td class="nat">{e(LIB_NATURE.get(n, n))}</td>'
             f'<td class="src">{val(c.get("source"), ind="<span class=\'ind\'>source absente</span>")}</td></tr>')
-    return ("<table><thead><tr><th>Cote</th><th>Valeur</th><th>Origine</th>"
+    return ('<div class="defile"><table><thead><tr><th>Cote</th>'
+            "<th>Valeur</th><th>Origine</th>"
             "<th>Nature</th><th>Source</th></tr></thead><tbody>"
-            + "".join(lignes) + "</tbody></table>")
+            + "".join(lignes) + "</tbody></table></div>")
 
 
 def legende() -> str:
@@ -334,7 +403,7 @@ def page_piece(p) -> str:
 {legende()}
 
 <h2>Fabrication</h2>
-<div class="carte"><table><tbody>
+<div class="carte"><div class="defile"><table><tbody>
   <tr><th>Matériau</th><td class="num">{val(p.get('materiau'))}</td></tr>
   <tr><th>Machine</th><td class="num">{val(p.get('machine'))}</td></tr>
   <tr><th>Lieu</th><td class="num">{val(p.get('lieu'))}</td></tr>
@@ -342,15 +411,18 @@ def page_piece(p) -> str:
   <tr><th>Voile minimal</th><td class="num">{val(p.get('voile_min_mm'),' mm')}</td></tr>
   <tr><th>Fixation</th><td class="num">{val(p.get('fixation'))}</td></tr>
   <tr><th>Anisotrope</th><td class="num">{'oui' if p.get('anisotrope') else 'non'}</td></tr>
-  <tr><th>Cannelures</th><td class="num">{val(p.get('orientation_cannelures_deg'),'°')}</td></tr>
+  <tr><th>Cannelures</th><td class="num">{val(
+      p.get('orientation_cannelures_deg'), '°',
+      regles=REGLES_NUL.get('piece', []),
+      cle='orientation_cannelures_deg', voisines=p)}</td></tr>
   <tr><th>Palier</th><td class="num">{val(p.get('palier'))}</td></tr>
   <tr><th>Volume</th><td class="num">{val(p.get('volume_mm3'),' mm³')}</td></tr>
-</tbody></table></div>
+</tbody></table></div></div>
 <script src="/assets/viewer.js"></script>
 <script>visualiseurSTL(document.getElementById('vue'),
   {json.dumps('/fichiers/' + p["fichiers"]["stl"].name) if 'stl' in p["fichiers"] else 'null'},
   m => document.getElementById('msg').textContent = m || '');</script>
-""", fil=e(p.get("role", "")).replace("\n", " ")[:160])
+""", fil=e(ecourter(p.get("role", ""))))
 
 
 def page_atelier(p) -> str:
@@ -363,7 +435,7 @@ def page_atelier(p) -> str:
         verdict = ('<div class="ok-bloc"><b>Prêt à couper.</b> '
                    "Toutes les valeurs du procédé sont renseignées.</div>")
     else:
-        manque = ", ".join(e(m.replace("_", " ")) for m in ep["manque_coupe"])
+        manque = ", ".join(e(m.replace("_", " ")) for m, _ in ep["manque_coupe"])
         verdict = (f'<div class="att"><b>NE PAS COUPER ENCORE.</b><br>'
                    f"Le dessin est juste, mais il manque : <b>{manque}</b>.<br>"
                    "Ces valeurs ne sont pas « sans objet » : elles sont à mesurer. "
@@ -437,10 +509,10 @@ def page_tracabilite(audit) -> str:
 <p class="sous">Toute cote du projet porte une origine — d'où vient le nombre — et une
 nature — ce qui le détermine. Cet inventaire ne dit pas ce qu'il faut en conclure.</p>
 <div class="barre">{segs}</div>
-<div class="carte"><table><thead><tr><th>Origine</th><th>Valeurs</th><th>Part</th>
-<th>Définition</th></tr></thead><tbody>{lignes}</tbody></table></div>
+<div class="carte"><div class="defile"><table><thead><tr><th>Origine</th><th>Valeurs</th><th>Part</th>
+<th>Définition</th></tr></thead><tbody>{lignes}</tbody></table></div></div>
 <h2>Par nature</h2>
-<div class="carte"><table><tbody>{nat}</tbody></table></div>
+<div class="carte"><div class="defile"><table><tbody>{nat}</tbody></table></div></div>
 <div class="note">Les cotes d'origine <b>amont</b> viennent de ToddlerBot, dont la mécanique
 est publiée en licence non commerciale. Leur inventaire est un fait, pas un avis juridique.</div>""")
 
@@ -451,8 +523,10 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
     # donc rien ne peut se désynchroniser.
     lignes = []
     for nom, pr in hw["procedes"].items():
-        st = etat_procede(pr)
-        manque = ", ".join(e(m.replace("_", " ")) for m in st["manque_coupe"]) or "—"
+        st = etat_procede(pr, nom)
+        manque = ", ".join(
+            f'<span class="{NU.CLS[et]}">{e(m.replace("_", " "))}</span>'
+            for m, et in st["manque_coupe"]) or "—"
         lignes.append(
             f"<tr><td><code>{e(nom)}</code></td>"
             f'<td class="num">{val(pr.get("materiau"))}</td>'
@@ -462,18 +536,39 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
             f'{"oui" if st["coupable"] else "non"}</span></td>'
             f'<td class="src">{manque}</td></tr>')
 
-    amesurer = []
+    # Le tri se fait sur la DÉCLARATION de la fiche 0020, plus sur le
+    # préfixe du nom de la clé. L'ancien filtre triait juste pour la
+    # mauvaise raison, et aurait laissé passer tout champ de prose
+    # nommé autrement.
+    par_etat = {NU.A_MESURER: {}, NU.SE_DEDUIRA: {}}
     for fam in ("procedes", "materiaux"):
         for nom, d in hw[fam].items():
             for k, v in d.items():
-                if v is None and not str(k).startswith(("source", "note", "axe", "mesure")):
-                    amesurer.append((f"{fam}.{nom}", k))
-    grp = {}
-    for cle, k in amesurer:
-        grp.setdefault(k, []).append(cle)
-    lm = "".join(f"<tr><td><code>{e(k)}</code></td><td class='num'>{len(v)}</td>"
-                 f"<td class='src'>{e(', '.join(v))}</td></tr>"
-                 for k, v in sorted(grp.items(), key=lambda kv: -len(kv[1])))
+                if v is not None:
+                    continue
+                st = NU.etat(REGLES_NUL.get("hardware.yaml", []),
+                             f"{fam}.{nom}.{k}", d)
+                if st["etat"] == NU.SANS_OBJET:
+                    continue
+                # Groupé par (clé, motif) : deux champs de même nom
+                # peuvent être absents pour des raisons DIFFÉRENTES. Le
+                # rayon intérieur minimal se déduit de l'épaisseur au
+                # cutter, du moyen de découpe au métal. Les fondre
+                # afficherait la mauvaise raison pour l'un des deux.
+                g = (k, st["parce_que"])
+                par_etat[st["etat"]].setdefault(g, []).append(f"{fam}.{nom}")
+
+    def tableau(grp, avec_motif=False):
+        return "".join(
+            f"<tr><td><code>{e(k)}</code></td><td class='num'>{len(v)}</td>"
+            + (f"<td class='src'>{prose(m)}</td>" if avec_motif else "")
+            + f"<td class='src'>{e(', '.join(v))}</td></tr>"
+            for (k, m), v in sorted(grp.items(), key=lambda kv: (-len(kv[1]), kv[0])))
+
+    amesurer = [c for v in par_etat[NU.A_MESURER].values() for c in v]
+    deduites = [c for v in par_etat[NU.SE_DEDUIRA].values() for c in v]
+    lm = tableau(par_etat[NU.A_MESURER])
+    ld = tableau(par_etat[NU.SE_DEDUIRA], avec_motif=True)
 
     nv = [k for k, v in an["ratios"].items()
           if isinstance(v, dict) and v.get("verifie") is False]
@@ -492,13 +587,22 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
 <h2>Ce que je peux faire aujourd'hui</h2>
 <p class="sous">Dessiner et couper proprement n'exigent pas les mêmes valeurs.
 Un fichier dessinable mais non coupable a l'air complet : c'est le piège.</p>
-<div class="carte"><table><thead><tr><th>Procédé</th><th>Matériau</th>
+<div class="carte"><div class="defile"><table><thead><tr><th>Procédé</th><th>Matériau</th>
 <th>Dessiner</th><th>Couper</th><th>Manque pour couper</th></tr></thead>
-<tbody>{"".join(lignes)}</tbody></table></div>
+<tbody>{"".join(lignes)}</tbody></table></div></div>
 
 <h2>À mesurer <span class="cpt">{len(amesurer)} valeurs</span></h2>
-<div class="carte"><table><thead><tr><th>Clé</th><th>Nombre</th>
-<th>Où</th></tr></thead><tbody>{lm}</tbody></table></div>
+<p class="sous">Rien ne les empêche : personne ne les a relevées.</p>
+<div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
+<th>Nombre</th><th>Où</th></tr></thead><tbody>{lm}</tbody></table></div></div>
+
+<h2>Se déduira <span class="cpt">{len(deduites)} valeurs</span></h2>
+<p class="sous">Absentes, mais <b>pas à mesurer</b> : elles dérivent d'un
+autre champ, lui-même absent. Les compter avec les précédentes gonflerait
+le travail restant de {round(100 * len(deduites) / max(1, len(amesurer) + len(deduites)))} %.</p>
+<div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
+<th>Nombre</th><th>Pourquoi</th><th>Où</th></tr></thead>
+<tbody>{ld}</tbody></table></div></div>
 
 <h2>Non vérifié <span class="cpt">{len(nv)} sur {len(an['ratios'])}</span></h2>
 <div class="carte"><p class="src">Ratios de <code>anthropometry.yaml</code> dont
@@ -508,7 +612,7 @@ n'apparaît dans le texte.</p>
 <p class="src"><code>{e(', '.join(nv))}</code></p></div>
 
 <h2>Confiance sur le matériel amont</h2>
-<div class="carte"><table><tbody>{lc}</tbody></table>
+<div class="carte"><div class="defile"><table><tbody>{lc}</tbody></table></div>
 <p class="src" style="margin-top:10px">Le MJCF <b>représente</b>, il ne
 <b>décrit</b> pas. Une confiance déduite du modèle n'est pas une source
 matérielle.</p></div>
@@ -534,6 +638,46 @@ def lancer_audit() -> dict:
         k2 = c.get("nature") or "non déclarée"
         n[k2] = n.get(k2, 0) + 1
     return {"total": len(cotes), "origines": o, "natures": n}
+
+
+BALISES_VIDES = {"meta", "link", "br", "hr", "img", "input", "source"}
+
+
+def controler_html() -> list[str]:
+    """Vérifie que les balises se referment, et dans l'ordre.
+
+    Motif : un `div` laissé ouvert fait remonter tout ce qui suit dans le
+    conteneur précédent — c'est ainsi que la vue 3D s'est retrouvée
+    par-dessus le tableau des origines, sur mobile, le 2026-09-29. Le
+    navigateur ne proteste pas : il referme silencieusement et affiche
+    une page fausse.
+
+    Ce contrôle ne remplace PAS un écran. Il attrape les fautes de
+    STRUCTURE, pas celles de mise en page : une colonne trop large ou un
+    texte illisible passeront toujours. C'est la limite de la règle 6,
+    et elle est là.
+    """
+    defauts = []
+    for f in sorted(SITE.rglob("*.html")):
+        t = re.sub(r"<(script|style|svg)\b.*?</\1>", "",
+                   f.read_text(encoding="utf-8"), flags=re.S)
+        pile = []
+        for m in re.finditer(r"<(/?)([a-zA-Z][\w-]*)([^>]*)>", t):
+            fin, nom, reste = m.group(1), m.group(2).lower(), m.group(3)
+            if nom in BALISES_VIDES or reste.rstrip().endswith("/"):
+                continue
+            if not fin:
+                pile.append(nom)
+            elif pile and pile[-1] == nom:
+                pile.pop()
+            else:
+                defauts.append(f"{f.relative_to(SITE)} : </{nom}> inattendu")
+                break
+        else:
+            if pile:
+                defauts.append(f"{f.relative_to(SITE)} : jamais fermé — "
+                               + ", ".join(f"<{b}>" for b in pile))
+    return defauts
 
 
 def main(argv=None) -> int:
@@ -623,6 +767,15 @@ def main(argv=None) -> int:
         ensure_ascii=False, indent=2), encoding="utf-8")
     (SITE / "data" / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2),
                                               encoding="utf-8")
+
+    mal = controler_html()
+    if mal:
+        print("\n✗ STRUCTURE HTML INVALIDE :")
+        for d in mal:
+            print(f"   {d}")
+        print("  Une balise non fermée déplace le contenu qui suit.")
+        return 1
+    print("   structure HTML : balises équilibrées sur toutes les pages")
 
     n_f = sum(1 for _ in SITE.rglob("*") if _.is_file())
     taille = sum(f.stat().st_size for f in SITE.rglob("*") if f.is_file())

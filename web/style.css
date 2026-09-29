@@ -137,3 +137,33 @@ table.schema td.lettre{font-weight:800;text-align:center;width:2.2em;
   margin-left:8px;vertical-align:middle}
 .ok-bloc{border-left:4px solid var(--o-propre);background:rgba(63,185,80,.08);
   padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Corrections vues sur mobile, 2026-09-29
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Un élément de grille vaut `min-width:auto` par défaut, c'est-à-dire la
+   largeur MINIMALE de son contenu. Un canvas dont l'attribut width vaut
+   800 (400 px × 2 pour la densité d'écran) impose donc une colonne de
+   800 px, et la grille déborde l'écran. C'est ce qui faisait passer la
+   vue 3D par-dessus le tableau des origines. */
+.grille>*{min-width:0}
+canvas{max-width:100%}
+
+/* Un tableau de cotes ne se replie pas : on ne peut ni retirer une
+   colonne, ni casser un nombre. C'est donc le CONTENEUR qui défile —
+   la page, elle, ne bouge pas. */
+.defile{overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;margin:0 -2px;padding:0 2px}
+.defile>table{min-width:min(100%, 480px)}
+.defile>table.schema{min-width:min(100%, 380px)}
+/* Une clé de chemin peut être longue ; elle se coupe plutôt que
+   d'élargir la colonne indéfiniment. */
+code{overflow-wrap:anywhere}
+.src{overflow-wrap:break-word}
+
+/* Les trois états d'une valeur absente (fiche 0020).
+   `ind` existait déjà : c'est le rouge de « non déterminé ». */
+.so{color:var(--doux);font-style:italic}
+.der{color:var(--o-catalogue)}
+.defile .so,.defile .der,.defile .ind{white-space:nowrap}

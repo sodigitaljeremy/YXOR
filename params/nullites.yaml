@@ -1,0 +1,99 @@
+# Pourquoi telle valeur est absente — voir decisions/0020-nullite-conditionnelle.md
+#
+# Un `null` n'a pas un sens, il en a trois. Les confondre fait annoncer du
+# travail là où il n'y en a pas, ou taire du travail qu'il y a.
+#
+#   a_mesurer   rien ne l'empêche, personne ne l'a fait   -> aller mesurer
+#   sans_objet  la notion n'existe pas ICI, à cause       -> rien à faire
+#               d'un AUTRE champ
+#   se_deduira  dérive d'un autre champ, lui-même absent  -> remplir l'autre
+#
+# `a_mesurer` est le DÉFAUT : un null non déclaré ressort en rouge. Même
+# principe que `non_qualifie` dans l'audit — l'oubli se voit.
+#
+# `motif` : chemin de clé, `*` joker sur un segment, `**` sur plusieurs.
+#           Le PREMIER motif qui correspond gagne : du plus précis au
+#           plus général.
+# `si`    : condition portant sur une clé SŒUR de la valeur nulle.
+#           Sans `si`, la règle s'applique toujours.
+# `parce_que` : la phrase affichée. Elle doit NOMMER l'autre champ, sinon
+#           le lecteur voit un état sans en voir la cause.
+
+fichiers:
+
+  # ═══════════════════════════════════════════════════════════════════════
+  #  Bloc `piece:` des relevés parts/<nom>.origines.yaml
+  # ═══════════════════════════════════════════════════════════════════════
+  piece:
+    regles:
+      - motif: "orientation_cannelures_deg"
+        si: {cle: anisotrope, vaut: false}
+        etat: sans_objet
+        parce_que: >
+          le matériau est isotrope (`anisotrope: false`) : il n'a pas de
+          cannelures, donc pas d'orientation. Ce n'est pas une mesure qui
+          manque, c'est une notion qui n'existe pas pour cette matière.
+
+  # ═══════════════════════════════════════════════════════════════════════
+  #  params/hardware.yaml
+  # ═══════════════════════════════════════════════════════════════════════
+  hardware.yaml:
+    regles:
+
+      # ── Champs de PROSE : ce ne sont pas des valeurs ──────────────────
+      # Remplacent le filtre par préfixe de nom qui traînait dans le
+      # générateur. Il triait juste, mais sur le nom du champ.
+      - motif: "**.note"
+        etat: sans_objet
+        parce_que: "champ de prose, pas une valeur à relever"
+      - motif: "**.note_anisotropie"
+        etat: sans_objet
+        parce_que: "champ de prose, pas une valeur à relever"
+      - motif: "**.mesure_epaisseur"
+        etat: sans_objet
+        parce_que: "protocole de mesure, pas une valeur à relever"
+      - motif: "**.axe_reference"
+        etat: sans_objet
+        parce_que: "désignation d'un axe, pas une valeur à relever"
+
+      # ── Rayon intérieur minimal : DEUX raisons distinctes ─────────────
+      # Ordre important : le cas du métal d'abord, parce que son épaisseur
+      # est connue et que la règle générale y conclurait à tort.
+      - motif: "procedes.decoupe_metal.rayon_interieur_min"
+        si: {cle: machine, vaut: null}
+        etat: se_deduira
+        parce_que: >
+          il dépend du moyen de découpe, et `machine` n'est pas encore
+          établie. Un jet d'eau, un laser et un plasma ne donnent pas le
+          même rayon minimal. Rien à mesurer tant que le moyen est inconnu.
+      - motif: "procedes.*.rayon_interieur_min"
+        si: {cle: epaisseur, vaut: null}
+        etat: se_deduira
+        parce_que: >
+          il vaut 0,5 x `epaisseur` (CLAUDE.md), et l'épaisseur n'est pas
+          encore mesurée. Il suivra tout seul : ce n'est pas une seconde
+          mesure à faire.
+
+      # ── La source d'une mesure vient AVEC la mesure ───────────────────
+      - motif: "procedes.*.source_saignee"
+        si: {cle: saignee, vaut: null}
+        etat: se_deduira
+        parce_que: >
+          une mesure non faite n'a pas de source. Elle se renseignera en
+          même temps que `saignee`.
+
+      - motif: "materiaux.*.source"
+        si: {cle: masse_surfacique, vaut: null}
+        etat: se_deduira
+        parce_que: >
+          le matériau n'est pas encore caractérisé : `masse_surfacique`
+          est absente. La source se renseignera avec le relevé.
+
+      # ── Densité : un quotient, pas un relevé ──────────────────────────
+      - motif: "materiaux.*.densite"
+        si: {cle: masse_surfacique, vaut: null}
+        etat: se_deduira
+        parce_que: >
+          densité = `masse_surfacique` / `epaisseur_mesuree`. C'est un
+          quotient de deux relevés, pas un troisième relevé. La compter
+          « à mesurer » gonflerait le travail restant d'un tiers.

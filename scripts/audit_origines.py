@@ -47,6 +47,16 @@ PARAMS = REPO / "params"
 PARTS = REPO / "parts"
 DECLARATION = PARAMS / "origines.yaml"
 
+# Fichiers qui DÉCLARENT des règles sur les cotes, sans en porter aucune.
+# Les auditer reviendrait à demander l'origine d'un motif de chemin de clé
+# ou d'une phrase d'explication : la question n'a pas de sens. La liste est
+# nommée plutôt que testée au cas par cas, pour que la prochaine addition
+# soit une ligne et non une exception de plus.
+FICHIERS_DECLARATIFS = {
+    "origines.yaml",    # origine et nature des cotes (fiches 0010, 0013)
+    "nullites.yaml",    # pourquoi une valeur est absente (fiche 0020)
+}
+
 ORIGINES = ("propre", "catalogue", "litterature", "amont", "mesure", "ambigu")
 NATURES = ("echelle", "tenue", "interface", "procede")   # fiche 0013
 NON_QUALIFIE = "non_qualifie"
@@ -119,7 +129,7 @@ class ParamsYaml(Source):
         decl = lire_declaration(DECLARATION)
         out = []
         for f in sorted(PARAMS.glob("*.yaml")):
-            if f.name == "origines.yaml":
+            if f.name in FICHIERS_DECLARATIFS:
                 continue
             regles = decl.get(f.name, [])
             for chemin, valeur in lire_yaml_plat(f):
