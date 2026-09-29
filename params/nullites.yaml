@@ -107,12 +107,13 @@ fichiers:
           est connue. Tant que `epaisseur` est absente, il n'y a pas de
           feuille définie à peser.
 
-      - motif: "materiaux.*.densite"
+      - motif: "matieres.*.densite"
         etat: se_deduira
         parce_que: >
-          densité = `masse_surfacique` / `epaisseur_mesuree`, relevées sur
-          la MATIÈRE. C'est un quotient de deux mesures, pas une troisième
-          mesure. La compter « à mesurer » gonflerait le travail restant.
+          densité = `masse_surfacique` / `epaisseur_mesuree`, toutes deux
+          portées par la MATIÈRE. C'est un quotient de deux mesures, pas
+          une troisième mesure. La compter « à mesurer » gonflerait le
+          travail restant.
 
       - motif: "materiaux.*.source"
         etat: se_deduira

@@ -113,26 +113,19 @@ materiaux:
 
   carton_plume:
     anisotrope: false        # mousse : isotrope dans le plan
-    densite: null
     source: null
 
   carton_ondule:
-    # SUSPENSION LEVÉE le 2026-09-30 : profil confirmé à la tranche,
-    # double cannelure. Les mesures appartiennent désormais à
-    # `matieres.carton_ondule_double`. Voir la fiche 0043 § Résolution.
+    # `densite` a vécu ici jusqu'au 2026-09-30. Elle est DESCENDUE à la
+    # matière : deux profils de cannelure n'ont pas la même densité
+    # apparente, et la laisser au matériau la faisait valoir pour la
+    # simple comme pour la double. Troisième erreur de localisation du
+    # projet, après le verdict (0037) et le rayon (0042).
     #
-    # ⚠ `densite` reste ici pour ce commit, et n'y a pas sa place : deux
-    #   profils n'ont pas la même densité apparente. Descendue à la
-    #   matière au commit suivant.
+    # Ce qui reste ici est ce qui vaut pour TOUT carton ondulé, quel que
+    # soit son profil : l'anisotropie et le sens de référence.
     anisotrope: true
     axe_reference: "sens des cannelures"
-    # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
-    # (fiche 0020). 0,6349 / 3,5 = 0,1814 mg/mm³ = 181 kg/m³.
-    # ⚠ ±14,5 %, hérité surtout de l'ÉPAISSEUR (14,3 %) et non plus de
-    # la masse (2,5 %) : peser mieux n'améliorera plus cette valeur.
-    densite: 0.1855          # mg/mm³ — BORNE HAUTE : si le carton est
-                             # comprimé, l'épaisseur est sous-estimée et
-                             # la densité surestimée. ±14,5 %.
     source: >
       Relevé le 2026-09-30 sur un panneau de 220 x 140 mm pesant 20 g,
       épaisseur 3,5 mm à la règle. Carton de récupération en DOUBLE
@@ -153,12 +146,10 @@ materiaux:
 
   contreplaque:
     anisotrope: true         # le fil des plis donne une direction
-    densite: null
     source: null
 
   aluminium:
     anisotrope: false
-    densite: null
     source: null
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -172,6 +163,7 @@ materiaux:
 matieres:
 
   carton_plume_5:
+    densite: null            # se déduira de masse_surfacique / epaisseur
     materiau: carton_plume
     forme: plaque
     epaisseur: 5.0
@@ -179,6 +171,7 @@ matieres:
     masse_surfacique: null   # mg/mm2 — LA grandeur à mesurer
 
   carton_ondule_simple:
+    densite: null            # aucune mesure : voir la note ci-dessous
     materiau: carton_ondule
     forme: plaque
     # AUCUNE MESURE. Les valeurs relevées le 2026-09-30 appartenaient à
@@ -235,10 +228,16 @@ matieres:
                              # semelle coupée) tenait : 649 tombe dans son
                              # intervalle 556-714. Deux mesures
                              # indépendantes concordantes.
-    densite: null            # DÉPLACÉE ICI au commit suivant — voir la
-                             # note de `materiaux.carton_ondule`.
+    # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
+    # (fiche 0020). 0,6494 / 3,5 = 0,1855 mg/mm³ = 186 kg/m³.
+    # ⚠ BORNE HAUTE : si le carton est comprimé, l'épaisseur est
+    #   sous-estimée et la densité surestimée.
+    # ⚠ ±14,5 %, hérité surtout de l'ÉPAISSEUR (14,3 %) et non plus de
+    #   la masse (2,5 %) : peser mieux n'améliorera plus cette valeur.
+    densite: 0.1855          # mg/mm³
 
   contreplaque_3:
+    densite: null            # se déduira de masse_surfacique / epaisseur
     materiau: contreplaque
     forme: plaque
     epaisseur: 3.0
@@ -246,6 +245,7 @@ matieres:
     masse_surfacique: null
 
   alu_tole_3:
+    densite: null            # se déduira de masse_surfacique / epaisseur
     materiau: aluminium
     forme: tole
     epaisseur: 3.0
