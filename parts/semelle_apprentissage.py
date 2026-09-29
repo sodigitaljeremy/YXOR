@@ -60,6 +60,10 @@ REP_RINT_X = 0.24       # non-cote: abscisse du repère de rayon intérieur
 REP_RINT_DX = 0.05      # non-cote: décalage du repère de rayon intérieur
 REP_RINT_DY = 0.26      # non-cote: décalage du repère de rayon intérieur
 REP_RINT_MARGE = 0.2    # non-cote: écart au bord pour poser le repère
+GARDE_DIV_ZERO = 1e-9   # non-cote: évite une division par zéro
+CENT = 100              # non-cote: conversion en pourcentage
+TOLERANCE_AIRE = 1e-3   # non-cote: écart relatif toléré entre l'aire
+                        # analytique et celle du noyau CAO
 SORTIE = REPO / "exports" / "parts"
 
 
@@ -287,6 +291,15 @@ def main(argv=None) -> int:
     ctrl.append((f"contour analytique conforme au noyau CAO "
                  f"({ecart:.4f} mm <= {profil.TOLERANCE_MM})",
                  ecart <= profil.TOLERANCE_MM and not ecarts_cotes))
+    # L'AIRE, parce que Hausdorff est aveugle à l'ordre des points.
+    # Deux contours de même forme et d'ordre différent sont à distance
+    # nulle l'un de l'autre et n'ont pas la même aire.
+    a_an, a_cao = profil.aire(an_c), profil.aire(contours[0])
+    ecart_aire = abs(a_an - a_cao) / max(a_cao, GARDE_DIV_ZERO)
+    pct_aire = ecart_aire * CENT
+    ctrl.append((f"aire analytique conforme ({a_an:.2f} contre "
+                 f"{a_cao:.2f} mm², {pct_aire:.3f} %)",
+                 ecart_aire < TOLERANCE_AIRE))
     if ecarts_cotes:
         print("\n  ⚠ COTES DIVERGENTES entre le noyau CAO et le calcul analytique :")
         for k, v1, v2 in ecarts_cotes:

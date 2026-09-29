@@ -57,6 +57,7 @@ FICHIERS_DECLARATIFS = {
     "nullites.yaml",    # pourquoi une valeur est absente (fiche 0020)
     "fournisseurs.yaml",# provenance des fichiers tiers (fiche 0030)
     "sources.yaml",     # registre des documents lus (fiche 0040)
+    "mesures.yaml",     # actes de mesure et incertitudes (fiche 0041)
 }
 
 ORIGINES = ("propre", "catalogue", "litterature", "amont", "mesure", "ambigu")

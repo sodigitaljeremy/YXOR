@@ -157,8 +157,9 @@ def controler_absorption(fichier: str) -> list[str]:
     return fautes
 
 
-def controler(fichier: str) -> list[str]:
+def controler(fichier: str, dormantes: list | None = None) -> list[str]:
     fautes = []
+    dormantes = dormantes if dormantes is not None else []
     for cible, regles in _regles(fichier).items():
         cles = _cles_des_pieces() if cible == "piece" else _cles_du_fichier(cible)
         if not cles:
@@ -185,12 +186,27 @@ def controler(fichier: str) -> list[str]:
             if not correspondants:
                 fautes.append(f"{fichier} / {cible} : le motif « {motif} » ne "
                               f"correspond à aucune clé")
+            elif r.get("si") is not None:
+                # DORMANTE, pas morte. Sa condition ne trouve aucun cas
+                # AUJOURD'HUI — typiquement parce que la donnée qu'elle
+                # attendait vient d'être mesurée. Elle redeviendra utile
+                # dès qu'une matière aura de nouveau ce champ à `null`.
+                #
+                # Distinction ajoutée le 2026-09-30 : la première mesure
+                # physique du projet a rempli `carton_ondule.epaisseur`,
+                # et le contrôle a crié à la règle morte. Un contrôle qui
+                # se trompe finit ignoré — c'est déjà la deuxième fois
+                # qu'il faut l'affiner pour cette raison.
+                dormantes.append(f"{cible} : « {motif} » (condition sans "
+                                 f"cas actuel)")
             else:
-                # Elle correspond mais ne gagne jamais : une règle placée
-                # AVANT la capte. On nomme la coupable, sinon la faute est
-                # illisible.
+                # Elle correspond, elle est INCONDITIONNELLE, et elle ne
+                # gagne jamais : une règle placée AVANT la capte. Seule
+                # une règle sans condition peut masquer — une règle
+                # conditionnelle ne gagne pas toujours.
                 for j, autre in enumerate(regles[:i]):
-                    if correspond(autre["motif"], correspondants[0]):
+                    if autre.get("si") is None and correspond(autre["motif"],
+                                                              correspondants[0]):
                         fautes.append(
                             f"{fichier} / {cible} : le motif « {motif} » est "
                             f"MASQUÉ par « {autre['motif']} », déclaré avant "
@@ -228,11 +244,11 @@ def controler_rayon() -> list[str]:
 
 
 def main() -> int:
-    total, fautes = 0, []
+    total, fautes, dormantes = 0, [], []
     for f in ("origines.yaml", "nullites.yaml"):
         n = sum(len(r) for r in _regles(f).values())
         total += n
-        fautes += controler(f) + controler_absorption(f)
+        fautes += controler(f, dormantes) + controler_absorption(f)
     fautes += controler_rayon()
     if fautes:
         print(f"\n✗ RÈGLES DÉFECTUEUSES — {len(fautes)} sur {total} :")
@@ -244,6 +260,8 @@ def main() -> int:
         return 1
     print(f"   règles déclaratives : {total} motifs, tous atteints ; "
           f"rayon minimal conforme sur {len(PROC.reglages())} réglages")
+    for d in dormantes:
+        print(f"     dormante — {d}")
     return 0
 
 

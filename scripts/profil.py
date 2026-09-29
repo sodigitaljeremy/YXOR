@@ -115,6 +115,28 @@ def hausdorff(A, B) -> float:
                    for i in range(len(B))) for p in A)
 
 
+def aire(contour) -> float:
+    """Aire algébrique du contour, par la formule du lacet.
+
+    ⚠ ELLE MESURE CE QUE HAUSDORFF NE VOIT PAS : l'ORDRE des points.
+
+    Un contour dont les points sont tous à leur place mais parcourus dans
+    le désordre reste à distance nulle du bon contour — Hausdorff compare
+    des ENSEMBLES. Son aire, elle, s'effondre : le 2026-09-30, un contour
+    à 0,0022 mm du noyau CAO avait une aire de 3605,90 mm² au lieu de
+    6300,49, parce que le bas était parcouru à l'envers et que la boucle
+    se refermait en huit.
+
+    Le défaut a été trouvé par une MESURE PHYSIQUE — il fallait l'aire
+    pour convertir 4 g en masse surfacique — et non par un contrôle.
+    Celui-ci existe désormais.
+    """
+    n = len(contour)
+    return abs(sum(contour[i][0] * contour[(i + 1) % n][1]
+                   - contour[(i + 1) % n][0] * contour[i][1]
+                   for i in range(n))) / 2.0
+
+
 def _arc(cx, cy, r, a0, a1, n):
     """Échantillonne un arc. `a1` peut être inférieur à `a0` : on tourne
     alors dans l'autre sens. Le premier point est omis — il appartient au
@@ -177,8 +199,19 @@ def contour(d: dict, n_arc: int = 48) -> list[tuple[float, float]]:
         return s
 
     pts.append((x0, y0 - re_))
-    pts += bord(+1)
-    pts.append((-x0, -(y0 - re_)))
-    pts += [(-x, -y) for x, y in bord(+1)][::-1][1:]
-    pts.append((x0, -(y0 - re_)))
+    haut = bord(+1)
+    pts += haut
+    pts.append((-x0, -(y0 - re_)))      # flanc gauche, de haut en bas
+    # Le bas est le miroir du haut. Le miroir (x,y) -> (-x,-y) le parcourt
+    # DÉJÀ de gauche à droite : le renverser en plus faisait repartir du
+    # coin bas-DROIT alors qu'on se trouve en bas à GAUCHE, et le contour
+    # se refermait en huit.
+    #
+    # La forme restait juste point par point — écart de Hausdorff 0,0022 mm
+    # contre le noyau CAO — mais son AIRE valait 3605,90 mm² au lieu de
+    # 6300,49. Hausdorff mesure une distance point-à-ensemble : il est
+    # aveugle à l'ordre. Trouvé le 2026-09-30, en calculant l'aire pour
+    # une masse surfacique. C'est une mesure PHYSIQUE qui a révélé le
+    # défaut, pas un contrôle.
+    pts += [(-x, -y) for x, y in haut]
     return pts

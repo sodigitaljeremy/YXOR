@@ -82,6 +82,59 @@ allemand. Il ne pilote aucun calcul. Il donne un **vocabulaire stable et
 extérieur au projet**, qui survivra à nos renommages — et il permet à
 qui nous lit de rattacher notre bricolage à une classification connue.
 
+## RÉSULTAT — prédiction vérifiée le 2026-09-30
+
+> **La saignée du cutter sur carton ondulé est indétectable par
+> superposition. La prédiction de cette fiche est confirmée par un
+> objet.**
+
+Cette fiche avançait, en tirant la conséquence du classement DIN :
+
+> « Zerteilen ne retire pas de matière, donc saignée structurellement
+> nulle. Abtragen en retire toujours, donc saignée non nulle, et
+> croissante avec l'épaisseur. »
+
+Le 2026-09-30, la semelle d'apprentissage a été coupée au cutter dans du
+carton ondulé simple cannelure de 3,5 mm. **La pièce superposée au plan
+papier coïncide** : aucun écart mesurable, une passe par trait sauf les
+angles à deux.
+
+`reglages.cutter_cartonondule.saignee` porte désormais **0,0 mm**.
+
+### Ce que ce résultat vaut, et ce qu'il ne vaut pas
+
+**Ce n'est pas un zéro mesuré, c'est un écart indétectable par le moyen
+employé.** La superposition sur un plan imprimé ne descend pas sous le
+demi-millimètre. Une mesure fine — comparateur, ou empilement de n
+découpes — donnerait une **borne supérieure** au lieu d'un zéro. C'est
+inscrit comme tel dans `params/mesures.yaml`
+(`type_incertitude: sous_resolution`).
+
+**Et la prédiction ne portait que sur l'ORDRE DE GRANDEUR** : la norme dit
+qu'il n'y a pas de copeau, elle ne dit pas que la lame ne déplace rien.
+Ce qui est vérifié, c'est que la saignée du Messerschneiden n'est pas du
+même ordre que celle d'un Abtragen — où l'on attend 0,1 à 0,3 mm au laser
+et jusqu'à 1,5 mm en découpe métal.
+
+### Pourquoi cela compte au-delà de la valeur
+
+**C'est la première affirmation de ce dépôt confrontée à un objet.**
+
+Jusqu'ici, tout ce que le projet savait venait de sources — un graphique
+de Winter, un CSV de l'armée américaine, une norme allemande non lue, une
+thèse. Le vocabulaire DIN avait été adopté comme *« vocabulaire racine,
+pas modèle de données »*, sans qu'on sache s'il prédisait quoi que ce
+soit d'utile.
+
+**Il prédit.** Le classement d'un procédé dans un sous-groupe de la
+DIN 8580 a permis d'annoncer, avant toute mesure, laquelle des quatre
+saignées du projet serait nulle. C'est ce qui distingue une taxonomie
+d'une nomenclature.
+
+Corollaire pratique : **sur les quatre `saignee: null` du projet, celle
+du cutter n'était pas à mesurer au même titre que les autres.** Les deux
+Abtragen restent à mesurer, et le resteront.
+
 ## 2 — Vos trois questions
 
 ### L'épaisseur entre-t-elle dans la CLÉ ?

@@ -98,9 +98,12 @@
     var haut = bord(1);
     pts = pts.concat(haut);
     pts.push([-x0, -(y0 - re)]);
-    var bas = haut.map(function (q) { return [-q[0], -q[1]]; }).reverse().slice(1);
-    pts = pts.concat(bas);
-    pts.push([x0, -(y0 - re)]);
+    /* Le miroir (x,y) -> (-x,-y) parcourt DÉJÀ le bas de gauche à droite.
+       Le renverser en plus faisait repartir du coin bas-droit alors qu'on
+       est en bas à gauche : le contour se refermait en huit. La forme
+       restait juste point par point, l'aire non — 3605,90 mm² au lieu de
+       6300,49. Corrigé le 2026-09-30, côté Python et ici. */
+    pts = pts.concat(haut.map(function (q) { return [-q[0], -q[1]]; }));
     return pts;
   }
 

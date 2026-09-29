@@ -1,0 +1,90 @@
+# Les ACTES DE MESURE — voir decisions/0041.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  CE FICHIER DÉCRIT DES MESURES, PAS DES VALEURS
+# ─────────────────────────────────────────────────────────────────────────
+#  Une entrée par grandeur DIRECTEMENT mesurée. Jamais pour une grandeur
+#  dérivée : l'incertitude d'un quotient se CALCULE depuis celles de ses
+#  membres, elle ne se déclare pas. La déclarer deux fois, c'est la faire
+#  diverger (CLAUDE.md, « ce qui peut se calculer se calcule »).
+#
+#  `type_incertitude` :
+#    resolution   le pas de l'instrument — demi-graduation par convention
+#    dispersion   l'écart-type de n relevés répétés
+#  Ce ne sont pas la même chose et elles ne se combinent pas pareil.
+#
+#  `n: 1` dit qu'un seul relevé a été fait, donc qu'aucun écart-type
+#  n'existe. Le dire évite d'en inventer un.
+#
+#  Pour un produit ou un quotient, les incertitudes RELATIVES
+#  s'additionnent en quadrature :
+#      σ_rel(a/b) = racine( σ_rel(a)² + σ_rel(b)² )
+
+mesures:
+
+  semelle_masse_2026_09_30:
+    grandeur: "masse de la semelle d'apprentissage, pièce entière"
+    valeur: 4.0
+    unite: g
+    incertitude: 0.5
+    type_incertitude: resolution
+    instrument: "balance de cuisine, affichage au gramme"
+    n: 1
+    date: 2026-09-30
+    alimente: [matieres.carton_ondule_simple.masse_surfacique]
+    note: >
+      Première mesure physique du projet. À REPESER sur une masse plus
+      grande : 12,5 % d'incertitude relative est le prix d'une pesée
+      unique près du pas de l'instrument.
+
+  carton_ondule_epaisseur_2026_09_30:
+    grandeur: "épaisseur du carton ondulé simple cannelure"
+    valeur: 3.5
+    unite: mm
+    incertitude: 0.5
+    type_incertitude: resolution
+    instrument: "règle graduée"
+    n: 1
+    date: 2026-09-30
+    alimente: [matieres.carton_ondule_simple.epaisseur_mesuree]
+    note: >
+      Relevée EN PLUSIEURS ENDROITS, mais sans moyenne consignée : n=1 est
+      donc prudent. Pas au pied à coulisse — ses becs écrasent les
+      cannelures, et l'écrasement est irréversible.
+      ⚠ L'incertitude de 0,5 mm est une HYPOTHÈSE : « à la règle » ne dit
+      pas la graduation. À confirmer par Jeremy.
+
+  semelle_saignee_2026_09_30:
+    grandeur: "saignée du cutter sur carton ondulé"
+    valeur: 0.0
+    unite: mm
+    incertitude: null
+    type_incertitude: sous_resolution
+    instrument: "superposition de la pièce coupée sur le plan papier"
+    n: 1
+    date: 2026-09-30
+    alimente: [reglages.cutter_cartonondule.saignee]
+    note: >
+      Il ne s'agit pas d'un zéro mesuré mais d'un écart INDÉTECTABLE par
+      le moyen employé. La fiche 0026 le prédisait : le Messerschneiden
+      est une séparation sans copeau (DIN 8580, 3.1), donc sans matière
+      enlevée. Prédiction VÉRIFIÉE sur l'objet.
+      Une mesure fine — comparateur, ou empilement de n découpes —
+      donnerait une borne supérieure au lieu d'un zéro.
+
+# ═════════════════════════════════════════════════════════════════════════
+#  INCERTITUDES PROPAGÉES, au 2026-09-30 — CALCULÉES, jamais saisies
+# ═════════════════════════════════════════════════════════════════════════
+#
+#   masse surfacique = masse / aire
+#     aire = 6300,49 mm², CALCULÉE (trois voies concordantes), σ ≈ 0
+#     σ_rel = 0,5/4,0 = 12,5 %
+#     -> 0,635 ± 0,079 mg/mm²   soit 635 ± 79 g/m²
+#
+#   densité = masse_surfacique / epaisseur_mesuree
+#     σ_rel = racine( 0,125² + 0,143² ) = 19,0 %
+#     -> 0,181 ± 0,034 mg/mm³   soit 181 ± 34 kg/m³
+#
+#   ⚠ LA DENSITÉ EST PLUS INCERTAINE QUE LA MASSE SURFACIQUE : elle
+#     hérite de DEUX incertitudes. Une valeur recopiée « ±12,5 % » aurait
+#     été fausse. C'est la raison d'être du calcul.

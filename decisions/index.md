@@ -37,7 +37,7 @@ lisent quand leur question se pose.
 | [0012](0012-correction-anthropometry.md) | Correction de `anthropometry.yaml` : sources rétablies | historique | appliquée | 2026-09-28 |  |
 | [0013](0013-nature-des-cotes.md) | Nature des cotes : la règle 1 restreinte à son domaine | gouvernante | appliquée | 2026-09-28 |  |
 | [0014](0014-pas-d-imprimante-3d.md) | Il n'y a pas d'imprimante 3D | historique | appliquée | 2026-09-28 |  |
-| [0015](0015-architecture-plaques-entretoises.md) | Architecture en plaques et entretoises, découpe 2D seule | close | amendée | 2026-09-28 | **0016** — aucun projet open source accessible ne suit cette voie ; Solo, Bolt et Upkie … |
+| [0015](0015-architecture-plaques-entretoises.md) | Architecture en plaques et entretoises, découpe 2D seule | close | amendée | 2026-09-28 | **0042** — la règle du rayon minimal ne décrit que ce que la MATIÈRE supporte, pas ce qu… |
 | [0016](0016-plaques-sans-precedent.md) | ~~L'architecture en plaques n'a aucun précédent open source~~ | historique | amendée | 2026-09-28 | **0017** — le constat « aucun précédent » est FAUX : MEVITA, MEVIUS et MEVIUS2 construis… |
 | [0017](0017-mevita-decoupe-metal.md) | MEVITA : la découpe métal a bien un précédent | historique | appliquée | 2026-09-28 |  |
 | [0018](0018-application-web.md) | Application web : un site statique engendré par le dépôt | gouvernante | appliquée | 2026-09-28 |  |
@@ -63,5 +63,7 @@ lisent quand leur question se pose.
 | [0038](0038-dimensionnement-thermique.md) | Le facteur limitant n'est pas le couple, c'est la température | proposition | proposée | 2026-09-29 |  |
 | [0039](0039-semelle-porte-capteurs.md) | La vraie semelle sera d'abord un porte-capteurs | historique | appliquée | 2026-09-29 |  |
 | [0040](0040-registre-des-sources.md) | Un registre des sources, pas un index de recherche | gouvernante | appliquée | 2026-09-29 |  |
+| [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | proposée | 2026-09-30 |  |
+| [0042](0042-rayon-matiere-ou-geste.md) | Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ? | proposition | proposée | 2026-09-30 |  |
 
-**40 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**42 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.

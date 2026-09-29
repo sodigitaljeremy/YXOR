@@ -119,8 +119,14 @@ materiaux:
   carton_ondule:
     anisotrope: true
     axe_reference: "sens des cannelures"
-    densite: null
-    source: null
+    # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
+    # (fiche 0020). 0,6349 / 3,5 = 0,1814 mg/mm³ = 181 kg/m³.
+    # ⚠ ±12,5 %, hérité de la masse — voir params/mesures.yaml.
+    densite: 0.1814          # mg/mm³
+    source: >
+      Relevé sur la semelle d'apprentissage coupée le 2026-09-30 :
+      carton ondulé simple cannelure de récupération, 4 g pour
+      6 300,49 mm² et 3,5 mm d'épaisseur.
     note_anisotropie: >
       Une cannelure est une suite d'arches collées entre deux papiers.
       Elle donne au panneau une direction FORTE (le long des arches) et
@@ -163,9 +169,16 @@ matieres:
   carton_ondule_simple:
     materiau: carton_ondule
     forme: plaque
-    epaisseur: null          # varie selon simple ou double cannelure
-    epaisseur_mesuree: null
-    masse_surfacique: null
+    # ── MESURÉ LE 2026-09-30, sur la première pièce coupée ──────────
+    # Première matière du projet à porter des valeurs relevées sur un
+    # objet réel plutôt que sur un catalogue.
+    epaisseur: 3.5           # mm — nominale retenue = la mesurée
+    epaisseur_mesuree: 3.5   # mm, à la RÈGLE, en plusieurs endroits.
+                             # Pas au pied à coulisse : ses becs écrasent
+                             # les cannelures, et l'écrasement est
+                             # irréversible (protocole du 2026-09-28).
+    masse_surfacique: 0.6349 # mg/mm² = 635 g/m². Pièce de 4 g sur
+                             # 6300,49 mm². ⚠ ±12,5 % — voir mesures.yaml.
     note: >
       Carton de colis récupéré. DISTINCT du carton-plume : celui-ci est
       une mousse prise entre deux papiers, isotrope dans son plan ; le
@@ -217,11 +230,21 @@ reglages:
     procede: messerschneiden
     matiere: carton_ondule_simple
     valide: true
-    saignee: null
-    rayon_interieur_min: null # = 0,5 x epaisseur, inconnue tant qu'elle l'est
-    voile_min: null          # un voile étroit s'effondre entre deux cannelures
+    # ── MESURÉ LE 2026-09-30 ────────────────────────────────────────
+    # La fiche 0026 PRÉDISAIT cette valeur : le Messerschneiden est une
+    # séparation sans copeau (DIN 8580, 3.1), donc sans matière enlevée.
+    # Prédiction vérifiée sur l'objet. Voir fiche 0026 § Résultat.
+    saignee: 0.0             # mm — quasi nulle, lame fine de cutter.
+                             # 0,0 est la valeur RETENUE, pas une mesure
+                             # au micron : sous la résolution du moyen.
+    source_saignee: >
+      Relevé sur la semelle d'apprentissage, 2026-09-30. Lame fine de
+      cutter, 1 passe sauf les angles à 2. Superposition de la pièce
+      coupée sur le plan papier : coïncide.
+    rayon_interieur_min: 1.75 # = 0,5 x 3,5 mm (CLAUDE.md)
+    voile_min: null          # toujours à mesurer : aucune bande étroite
+                             # sur cette pièce, elle ne s'interface avec rien
     fixation: "vis traversante + rondelles larges des deux côtés"
-    source_saignee: null
 
   - id: laser_contreplaque_3
     machine: laser_fablab
