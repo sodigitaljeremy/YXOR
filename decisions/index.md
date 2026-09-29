@@ -37,7 +37,7 @@ lisent quand leur question se pose.
 | [0012](0012-correction-anthropometry.md) | Correction de `anthropometry.yaml` : sources rétablies | historique | appliquée | 2026-09-28 |  |
 | [0013](0013-nature-des-cotes.md) | Nature des cotes : la règle 1 restreinte à son domaine | gouvernante | appliquée | 2026-09-28 |  |
 | [0014](0014-pas-d-imprimante-3d.md) | Il n'y a pas d'imprimante 3D | historique | appliquée | 2026-09-28 |  |
-| [0015](0015-architecture-plaques-entretoises.md) | Architecture en plaques et entretoises, découpe 2D seule | close | amendée | 2026-09-28 | **0042** — la règle du rayon minimal ne décrit que ce que la MATIÈRE supporte, pas ce qu… |
+| [0015](0015-architecture-plaques-entretoises.md) | Architecture en plaques et entretoises, découpe 2D seule | close | amendée | 2026-09-28 | **0042** — la règle du rayon minimal ne décrit que ce que la MATIÈRE supporte, pas ce qu…<br>**0016** — aucun projet open source accessible ne suit cette voie ; Solo, Bolt et Upkie … |
 | [0016](0016-plaques-sans-precedent.md) | ~~L'architecture en plaques n'a aucun précédent open source~~ | historique | amendée | 2026-09-28 | **0017** — le constat « aucun précédent » est FAUX : MEVITA, MEVIUS et MEVIUS2 construis… |
 | [0017](0017-mevita-decoupe-metal.md) | MEVITA : la découpe métal a bien un précédent | historique | appliquée | 2026-09-28 |  |
 | [0018](0018-application-web.md) | Application web : un site statique engendré par le dépôt | gouvernante | appliquée | 2026-09-28 |  |

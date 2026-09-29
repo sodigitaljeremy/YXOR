@@ -47,9 +47,14 @@ def entete(texte: str) -> dict:
     def champ(nom):
         m = re.search(rf"^{nom}\s*:\s*(.+)$", texte, re.M | re.I)
         return re.sub(r"\*\*|`", "", m.group(1)).strip() if m else ""
+    # TOUTES les lignes « Amendée par », pas la première seulement : la
+    # 0015 en porte deux, et la seconde disparaissait de l'index jusqu'au
+    # 2026-09-30 (audit de la nuit, § 8 C4).
+    amendee = [re.sub(r"\*\*|`", "", m).strip() for m in
+               re.findall(r"^Amendée par\s*:\s*(.+)$", texte, re.M | re.I)]
     return dict(titre=titre, statut=champ("Statut"), date=champ("Date"),
                 espece=champ("Espèce"), etat=champ("État"),
-                amende=champ("Amende"), amendee=champ("Amendée par"))
+                amende=champ("Amende"), amendee=amendee)
 
 
 def construire() -> str:
@@ -79,11 +84,14 @@ def construire() -> str:
         titre = titre[len(num):].lstrip(" —-") if titre.startswith(num) else titre
         if not d["date"]:
             sans_date.append(num)
-        am = d["amendee"]
-        if am:
+        am = ""
+        if d["amendee"]:
             amendees.append(num)
-            am = re.sub(r"^(\d{4})[^ ]*\.md\s*—?\s*", r"**\1** — ", am)
-            am = am[:88] + ("…" if len(am) > 88 else "")
+            morceaux = []
+            for x in d["amendee"]:
+                x = re.sub(r"^(\d{4})[^ ]*\.md\s*—?\s*", r"**\1** — ", x)
+                morceaux.append(x[:88] + ("…" if len(x) > 88 else ""))
+            am = "<br>".join(morceaux)
         if d["espece"] and d["espece"] not in ESPECES:
             mauvais.append(f"{num} : espèce « {d['espece']} » hors liste")
         if d["etat"] and d["etat"] not in ETATS:
