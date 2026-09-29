@@ -199,12 +199,41 @@ def controler(fichier: str) -> list[str]:
     return fautes
 
 
+def controler_rayon() -> list[str]:
+    """`rayon_interieur_min == 0,5 x epaisseur`, sur TOUTE la table.
+
+    CLAUDE.md pose la règle, et la pièce la vérifiait — pour le seul
+    réglage qu'elle employait. Les cinq autres n'étaient contrôlés par
+    rien : une valeur fausse y aurait attendu la première pièce qui s'en
+    serait servie, c'est-à-dire le moment où elle aurait coûté une pièce.
+
+    Un réglage IMPOSSIBLE est sauté : ses cotes n'ont pas de sens. Un
+    réglage dont l'épaisseur est inconnue l'est aussi — la règle ne dit
+    rien tant qu'on ne connaît pas son membre de droite, et c'est
+    `nullites.yaml` qui porte ce `se_deduira`.
+    """
+    fautes = []
+    for rid, r in PROC.reglages().items():
+        if r.get("valide") is False:
+            continue
+        ep, ri = r.get("epaisseur"), r.get("rayon_interieur_min")
+        if ep is None or ri is None:
+            continue
+        if abs(ri - 0.5 * ep) > 1e-9:
+            fautes.append(
+                f"hardware.yaml / {rid} : rayon_interieur_min = {ri} mm, "
+                f"or 0,5 x epaisseur = {0.5 * ep} mm (CLAUDE.md). "
+                f"Un rayon rentrant trop faible déchire la matière.")
+    return fautes
+
+
 def main() -> int:
     total, fautes = 0, []
     for f in ("origines.yaml", "nullites.yaml"):
         n = sum(len(r) for r in _regles(f).values())
         total += n
         fautes += controler(f) + controler_absorption(f)
+    fautes += controler_rayon()
     if fautes:
         print(f"\n✗ RÈGLES DÉFECTUEUSES — {len(fautes)} sur {total} :")
         for x in fautes:
@@ -213,7 +242,8 @@ def main() -> int:
         print("  croit avoir ; un motif qui avale tout rend le vert sans valeur.")
         print("  Corriger, ou assumer explicitement.")
         return 1
-    print(f"   règles déclaratives : {total} motifs, tous atteints")
+    print(f"   règles déclaratives : {total} motifs, tous atteints ; "
+          f"rayon minimal conforme sur {len(PROC.reglages())} réglages")
     return 0
 
 
