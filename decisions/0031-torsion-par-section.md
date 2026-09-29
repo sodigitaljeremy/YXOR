@@ -1,6 +1,8 @@
 # 0031 — La rigidité en torsion se calcule, elle ne se stocke pas
 
 Date : 2026-09-29
+Espèce : historique
+État : appliquée
 Statut : **acceptée** — correction chiffrée.
 Amende : `0022-soudure-instruction.md`.
 

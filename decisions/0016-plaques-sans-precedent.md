@@ -8,6 +8,8 @@
 > n'oblige pas à laisser un titre mentir à qui parcourt la liste.
 
 Date : 2026-09-28
+Espèce : historique
+État : amendée
 Statut : acceptée
 Amende : `0015-architecture-plaques-entretoises.md`
 Amendée par : `0017-mevita-decoupe-metal.md` — le constat « aucun précédent » est FAUX : MEVITA, MEVIUS et MEVIUS2 construisent en tôle métallique découpée.

@@ -1,6 +1,8 @@
 # 0034 — ANSUR II remplace Drillis & Contini
 
 Date : 2026-09-29
+Espèce : historique
+État : appliquée
 Statut : **acceptée** le 2026-09-29, sur décision de Jeremy — appliquée
 le jour même.
 Amende : `0012-correction-anthropometry.md`, dont la correction de
@@ -129,3 +131,35 @@ effet de bord — même règle que la simulation du navigateur (fiche 0023) :
 calculer n'est pas enregistrer.
 
 L'application de ce jour a été faite à la main, sur décision explicite.
+
+---
+
+## Troisième réserve, ajoutée le 2026-09-29 : la comparabilité perdue
+
+Drillis & Contini est la **référence commune du champ biomécanique**.
+Winter la reproduit, les manuels la reprennent, et la plupart des projets
+de robotique humanoïde qui se disent anthropomorphes en dérivent — sans
+toujours le dire.
+
+En recalculant nos propres ratios, **nous sortons de cette référence**.
+Nos proportions ne sont plus comparables à celles des autres projets :
+dire « notre tibia fait 0,2267 de la stature » n'a plus de sens commun
+avec « le leur fait 0,246 », puisque les deux nombres ne décrivent plus
+la même population.
+
+**C'est un bon échange**, et la raison est nette : nous troquons la
+comparabilité contre la **vérifiabilité**. Les quatorze ratios étaient
+invérifiables ; ils sont maintenant recalculables en huit secondes par
+n'importe qui. Un nombre comparable mais incontrôlable vaut moins qu'un
+nombre contrôlable mais isolé.
+
+**Mais il fallait l'écrire.** Deux conséquences pratiques :
+
+1. **Toute comparaison future avec un autre projet devra passer par les
+   ratios d'origine**, pas par les nôtres — et donc les recalculer, ou
+   comparer des dimensions absolues plutôt que des proportions.
+2. Le jour où un écart nous surprendra face à un projet tiers, il faudra
+   **se souvenir que la base a changé** avant de chercher une erreur.
+
+Cette réserve est au même rang que les deux autres : elle ne s'efface pas
+par le fait que le choix soit bon.

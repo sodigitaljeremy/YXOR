@@ -1,6 +1,8 @@
 # 0030 — Aucun fichier fournisseur non redistribuable dans le dépôt
 
 Date : 2026-09-29
+Espèce : gouvernante
+État : acceptée
 Statut : **acceptée**.
 
 ## Le constat vérifié

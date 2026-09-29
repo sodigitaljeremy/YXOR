@@ -2,6 +2,8 @@
 
 Date : 2026-09-29
 Amendée par : `0031-torsion-par-section.md` — le facteur de rigidité en torsion n'est pas une constante : il se calcule par section (395x mesuré pour 40 x 60 en tôle de 2 mm, et non « un à deux ordres de grandeur »).
+Espèce : historique
+État : instruction
 Statut : **instruction** — ne tranche rien, à dessein. Aucune règle du
 projet n'est modifiée par cette fiche.
 

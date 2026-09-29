@@ -1,6 +1,8 @@
 # 0007 — Sourcing des affirmations sur le matériel
 
 Date : 2026-09-28
+Espèce : close
+État : appliquée
 Statut : acceptée
 
 ## Contexte

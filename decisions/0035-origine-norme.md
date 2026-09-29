@@ -1,6 +1,8 @@
 # 0035 — Une sixième origine : `norme`
 
 Date : 2026-09-29
+Espèce : proposition
+État : proposée
 Statut : **proposée** — instruction, rien n'est appliqué.
 
 ## Le cas qui la réclame
@@ -139,3 +141,78 @@ cache hors du dépôt** — on ne l'a pas.
 
 Le point 2 est le plus important et le moins évident : **c'est une
 troisième dimension, pas une sixième valeur.**
+
+---
+
+## Correction du 2026-09-29 : la vérifiabilité se DÉDUIT, elle ne se déclare pas
+
+Jeremy retient l'axe `verifiabilite` mais refuse de le déclarer :
+
+> Il se DÉDUIT du champ `source`. Un axe calculé coûte zéro déclaration
+> sur 1 431 valeurs. Un axe déclaré en coûte 1 431, et il divergera.
+
+**La version calculée tient, et elle est meilleure que la mienne.** Voici
+ce que j'ai vérifié, et les deux points où elle demande une précision.
+
+### Pourquoi elle tient
+
+L'argument du coût est déjà démontré dans ce dépôt. La ligne `Date:` des
+fiches était déclarée : elle a disparu de **quatre fiches d'affilée**
+sans que rien ne le dise. La convention de statut a divergé en six
+formulations. **Ce qui se déclare à la main diverge — c'est mesuré, pas
+supposé.**
+
+Et l'argument est plus fort ici : un axe déclaré sur 1 431 valeurs serait
+rempli par des motifs de `origines.yaml`, donc par des jokers. On sait
+maintenant où cela mène : `ratios.**` a déclaré `effectif: 6068` de
+nature `echelle`, et `reglages.**` a fait passer un identifiant écrit à
+la main pour une mesure. **Un axe déclaré par joker aurait la même
+valeur qu'un vert obtenu par fourre-tout : aucune.**
+
+### La règle de déduction, précisée
+
+| `source` contient | `verifiabilite` |
+| --- | --- |
+| une URL, une empreinte `sha256:`, ou un script du dépôt | **recalculable** |
+| une référence bibliographique ou normative complète | **consultable** |
+| une référence sans accès, ou une figure | **inaccessible** |
+| rien | **inconnu** |
+
+Appliqué à l'existant, en lisant les `source` actuelles :
+
+- `ANSUR II 2012, +footlength / stature` → **recalculable** : le script
+  est dans le dépôt, l'empreinte des CSV dans `fournisseurs.yaml` ;
+- `Winter tab. 4.1 — Foot` → **consultable** : la table existe et se lit ;
+- `D&C fig. 4.1 — non dérivable d'ANSUR II` → **inaccessible**, ce qui
+  est exactement le statut des deux ratios restants ;
+- `DIN 8580:2022-12 … NORME NON LUE (payante)` → **consultable**, et la
+  fiche dit déjà qu'elle ne l'a pas été.
+
+### Deux précisions que la version calculée exige
+
+**1. Il faut un vocabulaire minimal dans `source`, sinon la déduction
+devine.** Une source rédigée librement — « d'après le catalogue » — ne
+tombe dans aucune case et sortirait `inconnu` alors qu'elle est
+consultable. **Ce n'est pas un défaut : c'est le bon comportement.** Un
+`inconnu` visible vaut mieux qu'un `consultable` supposé. Mais il faut
+l'annoncer, sinon on croira à un bogue.
+
+**2. La déduction doit être CONTRÔLÉE, pas seulement calculée.** Le
+risque propre à un axe calculé est l'inverse de celui d'un axe déclaré :
+il ne diverge pas, il **se trompe silencieusement** si la règle de
+lecture est trop lâche. Une source contenant « http » quelque part dans
+une phrase serait classée recalculable à tort.
+
+Proposé : `controle_regles.py` rapporte la **répartition** des quatre
+valeurs à chaque régénération. Un basculement massif d'une catégorie à
+l'autre entre deux commits est le signe que la règle de lecture, ou les
+sources, ont bougé.
+
+C'est la leçon du jour appliquée à l'axe lui-même : **un calcul qui ne
+peut pas échouer est aussi dangereux qu'une déclaration qui diverge.**
+
+### Ce que cela ne change pas
+
+L'origine `norme` reste une **sixième origine**, indépendamment. Les deux
+idées sont orthogonales : `norme` dit *ce qu'on corrige quand le réel
+diverge* ; `verifiabilite` dit *ce qu'on peut faire pour en douter*.

@@ -1,6 +1,8 @@
 # 0017 — MEVITA : la découpe métal a bien un précédent
 
 Date : 2026-09-28
+Espèce : historique
+État : appliquée
 Statut : acceptée
 Amende : `0016-plaques-sans-precedent.md`
 

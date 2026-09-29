@@ -1,6 +1,8 @@
 # 0005 — Topologie du bras en P1 : celle de ToddlerBot
 
 Date : 2026-09-28
+Espèce : close
+État : amendée
 Statut : acceptée
 Amendée par : `0011-origine-litterature.md` — l'emprunt dimensionnel (H) est adossé au même palier P1 que l'emprunt topologique traité ici.
 

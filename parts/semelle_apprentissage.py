@@ -75,6 +75,11 @@ class Cotes:
         self.anthro = yaml.safe_load((REPO / "params/anthropometry.yaml").read_text("utf-8"))
         self.hw = yaml.safe_load((REPO / "params/hardware.yaml").read_text("utf-8"))
         self.releve: list[dict] = []
+        # Cotes de procédé RÉELLEMENT lues par la pièce. Sert au verdict
+        # `coupable` (fiche 0037) : une pièce ne peut pas être bloquée par
+        # une valeur qu'elle n'emploie pas.
+        self.lues_procede: set[str] = set()
+        self.besoins_declares: dict[str, str] = {}
 
     def _note(self, cle, valeur, origine, nature, source):
         self.releve.append(dict(cle=cle, valeur=valeur, origine=origine,
@@ -107,8 +112,30 @@ class Cotes:
         # sembleraient porter deux épaisseurs indépendantes.
         chemin = (f"matieres.{r['matiere']}.{cle}" if cle in PROC.CLES_MATIERE
                   else f"reglages.{rid}.{cle}")
+        self.lues_procede.add(cle)
         return self._note(chemin, v, "mesure", "procede",
                           f"hardware.yaml, réglage {rid}")
+
+    def besoin(self, cle: str, motif: str) -> None:
+        """Cote de procédé nécessaire À LA COUPE, mais pas au DESSIN.
+
+        ⚠ LA LIMITE DE LA DÉDUCTION PURE, trouvée en l'implémentant.
+
+        La fiche 0037 proposait de déduire les besoins du seul usage :
+        « si la pièce lit la saignée, elle en a besoin ». C'est vrai, mais
+        insuffisant — et le cas manquant est justement celui qui compte.
+
+        Une pièce à fente PEUT se dessiner sans connaître la saignée : on
+        trace la fente nominale. Elle ne peut pas se COUPER sans elle, car
+        il faut compenser le trait. Elle ne lit donc pas la valeur au
+        moment du dessin, et la déduction ne verrait rien.
+
+        D'où cet appel : ce qu'on ne lit pas mais dont on aura besoin.
+        Il reste honnête parce qu'il porte un MOTIF, et parce qu'une pièce
+        qui déclare une fente doit aussi la dessiner — la géométrie et la
+        déclaration se contrôlent l'une l'autre.
+        """
+        self.besoins_declares[cle] = motif
 
     def choix(self, nom: str, valeur, motif: str):
         """Choix de projet assumé : ni dérivé, ni sourcé ailleurs."""
@@ -373,6 +400,11 @@ def main(argv=None) -> int:
               f"  longueur_mm: {d['L']}",
               f"  largeur_mm: {d['W']}",
               f"  volume_mm3: {round(piece.volume, 1)}",
+              # Fiche 0037 : ce dont la pièce a besoin, déduit de ce
+              # qu'elle a lu, plus ce qu'elle a déclaré pour la coupe.
+              "  besoins_procede: ["
+              + ", ".join(sorted(c.lues_procede | set(c.besoins_declares)))
+              + "]",
               f"  role: >",
               "    Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.",
               "    C'est le prototype de la méthode : un modèle, un paramètre",

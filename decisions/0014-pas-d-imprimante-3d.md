@@ -1,6 +1,8 @@
 # 0014 — Il n'y a pas d'imprimante 3D
 
 Date : 2026-09-28
+Espèce : historique
+État : appliquée
 Statut : acceptée
 
 ## Le fait

@@ -1,6 +1,8 @@
 # 0028 — Quatre affirmations d'un retour extérieur, passées au crible
 
 Date : 2026-09-29
+Espèce : historique
+État : appliquée
 Statut : **acceptée** — vérification, pas décision.
 
 Quatre affirmations reposaient sur une source unique. Voici ce qui tient.

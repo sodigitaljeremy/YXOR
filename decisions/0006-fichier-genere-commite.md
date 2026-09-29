@@ -1,6 +1,8 @@
 # 0006 — Un fichier généré qui est commité
 
 Date : 2026-09-28
+Espèce : close
+État : appliquée
 Statut : acceptée
 
 ## Contexte

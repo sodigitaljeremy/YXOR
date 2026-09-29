@@ -1,6 +1,8 @@
 # 0004 — Du code YXOR qui s'exécute avec le venv amont
 
 Date : 2026-09-28
+Espèce : gouvernante
+État : acceptée
 Statut : acceptée
 
 ## Contexte

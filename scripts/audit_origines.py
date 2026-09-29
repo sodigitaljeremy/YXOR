@@ -307,6 +307,14 @@ def main(argv=None) -> int:
         print()
         return 0
 
+    # Une source qui s'escamote fait baisser le total sans un mot, et
+    # --strict passe d'autant plus facilement. Elle doit se signaler.
+    for nom in inactives:
+        print(f"  ⚠ SOURCE INACTIVE : {nom} — aucune donnée collectée. "
+              "Le total ci-dessus est d'autant plus bas.")
+    if inactives:
+        print()
+
     par_origine: dict[str, int] = {}
     for c in cotes:
         par_origine[c["origine"]] = par_origine.get(c["origine"], 0) + 1
@@ -314,7 +322,12 @@ def main(argv=None) -> int:
     print("═" * 78)
     print(" AUDIT DE L'ORIGINE DES COTES — inventaire, pas avis juridique")
     print("═" * 78)
-    print(f"\n{len(cotes)} valeurs inventoriées.\n")
+    num = sum(1 for c in cotes
+              if isinstance(c["valeur"], (int, float))
+              and not isinstance(c["valeur"], bool))
+    print(f"\n{len(cotes)} valeurs inventoriées, dont {num} NUMÉRIQUES.")
+    print("  Le reste est de la prose, des booléens et des nuls : ils ont une")
+    print("  origine, mais ce ne sont pas des cotes.\n")
     largeur = max((len(o) for o in par_origine), default=10)
     for o in list(ORIGINES) + [NON_QUALIFIE]:
         if o in par_origine:
@@ -322,8 +335,6 @@ def main(argv=None) -> int:
             barre = "█" * max(1, round(40 * n / len(cotes)))
             marque = "  <-- risque de licence amont" if o == "amont" else ""
             print(f"  {o:<{largeur}}  {n:4d}  {barre}{marque}")
-    if inactives:
-        print(f"\n  sources inactives (pas encore de données) : {', '.join(inactives)}")
 
     par_nature: dict[str, int] = {}
     for c in cotes:

@@ -1,6 +1,8 @@
 # 0037 — Le verdict se calcule par PIÈCE, pas par réglage
 
 Date : 2026-09-29
+Espèce : close
+État : appliquée
 Statut : **proposée** — instruction, rien n'est appliqué.
 Amende : `0019-interface-catalogue.md`, où le verdict a été introduit.
 

@@ -1,6 +1,8 @@
 # 0012 — Correction de `anthropometry.yaml` : sources rétablies
 
 Date : 2026-09-28
+Espèce : historique
+État : appliquée
 Statut : acceptée
 
 ## Contexte

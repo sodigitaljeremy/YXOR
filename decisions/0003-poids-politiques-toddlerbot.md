@@ -1,6 +1,8 @@
 # 0003 — Provenance des politiques pré-entraînées ToddlerBot
 
 Date : 2026-09-20
+Espèce : historique
+État : appliquée
 Statut : acceptée
 
 ## Contexte

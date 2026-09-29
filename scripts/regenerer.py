@@ -212,8 +212,15 @@ def controler_html() -> list[str]:
     texte illisible passeront toujours. C'est la limite de la règle 6,
     et elle est là.
     """
+    pages_vues = sorted(SITE.rglob("*.html"))
+    if not pages_vues:
+        # Un contrôle qui n'a rien à contrôler PASSE, et son message
+        # rassure : « balises équilibrées sur toutes les pages » — sur
+        # zéro page. C'est le faux vert le plus simple à produire.
+        return ["aucune page HTML à contrôler : le site n'a pas été "
+                "engendré, ou SITE pointe ailleurs"]
     defauts = []
-    for f in sorted(SITE.rglob("*.html")):
+    for f in pages_vues:
         t = re.sub(r"<(script|style|svg)\b.*?</\1>", "",
                    f.read_text(encoding="utf-8"), flags=re.S)
         pile = []
@@ -283,6 +290,7 @@ def main(argv=None) -> int:
     import build123d as _bd
     for p in pieces:
         p["_procede"] = PROC.reglages(hw).get(p.get("reglage"), {})
+        p["besoins_procede"] = p.get("besoins_procede")
         p["_contours"] = []
         st = p["fichiers"].get("step")
         if st:
@@ -336,7 +344,8 @@ def main(argv=None) -> int:
             print(f"   {d}")
         print("  Une balise non fermée déplace le contenu qui suit.")
         return 1
-    print("   structure HTML : balises équilibrées sur toutes les pages")
+    print(f"   structure HTML : {len(list(SITE.rglob('*.html')))} pages, "
+          "balises équilibrées")
 
     n_f = sum(1 for _ in SITE.rglob("*") if _.is_file())
     taille = sum(f.stat().st_size for f in SITE.rglob("*") if f.is_file())

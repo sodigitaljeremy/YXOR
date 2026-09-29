@@ -23,6 +23,7 @@ piece:
   longueur_mm: 138.06
   largeur_mm: 51.93
   volume_mm3: 31502.4
+  besoins_procede: [epaisseur, rayon_interieur_min]
   role: >
     Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.
     C'est le prototype de la méthode : un modèle, un paramètre

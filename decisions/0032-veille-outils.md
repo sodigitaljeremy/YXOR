@@ -1,6 +1,8 @@
 # 0032 — Cinq pistes en veille : notées, pas adoptées
 
 Date : 2026-09-29
+Espèce : veille
+État : veille
 Statut : **veille** — aucune n'est adoptée, aucune n'est écartée.
 
 > **Trois des quatre premiers déclencheurs sont le même fait :

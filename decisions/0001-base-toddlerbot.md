@@ -1,6 +1,8 @@
 # 0001 — ToddlerBot comme base de départ
 
 Date : 2026-09-20
+Espèce : historique
+État : appliquée
 Statut : acceptée
 
 ## Contexte

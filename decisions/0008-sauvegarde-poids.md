@@ -1,6 +1,8 @@
 # 0008 — Sauvegarde des poids : manifeste versionné, binaires hors Git
 
 Date : 2026-09-28
+Espèce : close
+État : appliquée
 Statut : acceptée
 
 > **Manquement de procédure signalé.** Cette fiche est écrite *après*

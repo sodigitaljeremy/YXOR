@@ -1,6 +1,8 @@
 # 0002 — Ancrage de ToddlerBot et environnement bicéphale
 
 Date : 2026-09-20
+Espèce : close
+État : appliquée
 Statut : acceptée
 
 ## Contexte

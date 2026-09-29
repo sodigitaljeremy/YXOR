@@ -51,6 +51,32 @@ fichiers:
         nature: echelle
         source: "choix de projet, ne vient pas de ToddlerBot"
 
+      # Les champs de MÉTHODE d'un ratio — effectif, écart-type, source,
+      # vérification, note — ne sont pas des cotes. Les laisser au
+      # fourre-tout faisait déclarer `effectif: 6068` de nature ECHELLE,
+      # donc « dérive de H » : un effectif qui grandirait avec le robot.
+      - motif: "ratios.*.effectif"
+        origine: litterature
+        nature: sans_objet
+        source: "nombre de sujets du relevé ANSUR II, pas une cote"
+      - motif: "ratios.*.ecart_type"
+        origine: litterature
+        nature: sans_objet
+        source: >
+          dispersion des PROPORTIONS entre sujets. Décrit la population,
+          ne dimensionne rien.
+      - motif: "ratios.*.verifie"
+        origine: propre
+        nature: sans_objet
+        source: "état de vérification de la ligne, pas une cote"
+      - motif: "ratios.*.source"
+        origine: propre
+        nature: sans_objet
+        source: "citation de la source, pas une cote"
+      - motif: "ratios.*.note"
+        origine: propre
+        nature: sans_objet
+        source: "prose explicative"
       - motif: "ratios.**"
         origine: litterature
         nature: echelle
@@ -276,6 +302,7 @@ fichiers:
   upstream_joints.generated.yaml:
     regles:
       - motif: "**"
+        fourre_tout: true
         origine: amont
         nature: interface
         source: >
@@ -287,6 +314,7 @@ fichiers:
   ckpts.manifest.yaml:
     regles:
       - motif: "**"
+        fourre_tout: true
         origine: amont
         nature: interface
         source: "empreintes et identifiants des poids ToddlerBot (fiche 0003)"

@@ -1,6 +1,8 @@
 # 0024 — Audit du dépôt et plan de refactorisation
 
 Date : 2026-09-29
+Espèce : close
+État : appliquée
 Statut : **acceptée** le 2026-09-29 — **rang 1 appliqué en entier (7/7)**.
 Rangs 2 et 3 non entamés, à la demande de Jeremy.
 

@@ -1,6 +1,8 @@
 # 0036 — Refonte des fiches : espèce, cycle de vie, parcours d'entrée
 
 Date : 2026-09-29
+Espèce : proposition
+État : proposée
 Statut : **proposée** — rien n'est appliqué.
 
 33 fiches en dix jours. Le réflexe est bon, le rythme ne l'est pas : à ce

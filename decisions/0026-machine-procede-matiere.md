@@ -2,6 +2,8 @@
 
 Date : 2026-09-29
 Amendée par : `0033-epaisseur-cle-ou-champ.md` — le chiffrage du choix clé/champ sur nullites.yaml et origines.yaml.
+Espèce : close
+État : amendée
 Statut : **acceptée** le 2026-09-29 — migration appliquée, complétée par la 0033.
 Amende : `0021-machine-x-materiau.md` — **sa migration est SUSPENDUE.**
 

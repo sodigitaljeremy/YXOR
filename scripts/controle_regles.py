@@ -29,6 +29,23 @@ Trois façons pour une règle de mourir, et les trois sont détectées :
 
 Le cas 2 est le plus vicieux : la règle correspond, elle est simplement
 inatteignable. Aucun test de correspondance seul ne la trouve.
+
+═══════════════════════════════════════════════════════════════════════
+ ET LA QUATRIÈME : LE FOURRE-TOUT QUI NE PEUT PAS ÉCHOUER
+═══════════════════════════════════════════════════════════════════════
+
+Un motif `**` qui capte tout un fichier rend `non_qualifie` INATTEIGNABLE
+pour ce fichier. L'audit y sort vert par construction, quoi qu'on y
+écrive. Ce n'est pas une règle morte — c'est l'inverse : une règle trop
+vivante, qui avale ce qu'elle devrait laisser signaler.
+
+Mesuré le 2026-09-29 : 755 valeurs sur 1431, soit **54 % de l'audit**,
+étaient couvertes par deux motifs `**` seuls. Le chiffre « 0 non
+qualifiée » était donc à moitié vide de sens.
+
+Un fourre-tout reste parfois le bon choix — un fichier ENGENDRÉ n'a pas
+à être qualifié ligne à ligne. Mais alors il doit être **assumé**, pas
+subi : `fourre_tout: true` sur la règle, et un motif écrit.
 """
 from __future__ import annotations
 import sys
@@ -108,6 +125,38 @@ def _condition_possible(regle: dict, cible: str, chemin: str) -> bool:
     return parent[si["cle"]] == si.get("vaut")
 
 
+SEUIL_FOURRE_TOUT = 0.50      # au-delà, un joker doit être assumé
+
+
+def controler_absorption(fichier: str) -> list[str]:
+    """Un motif qui capte plus de la moitié d'un fichier doit le dire.
+
+    Sinon le vert de l'audit ne vaut rien pour ce fichier : aucune valeur
+    ne peut y ressortir `non_qualifie`, quoi qu'on y écrive.
+    """
+    fautes = []
+    for cible, regles in _regles(fichier).items():
+        if cible == "piece":
+            continue
+        cles = _cles_du_fichier(cible)
+        if not cles:
+            continue
+        for r in regles:
+            if "**" not in r["motif"]:
+                continue
+            n = sum(1 for c in cles
+                    if next((x for x in regles if correspond(x["motif"], c)), None) is r)
+            part = n / len(cles)
+            if part < SEUIL_FOURRE_TOUT or r.get("fourre_tout"):
+                continue
+            fautes.append(
+                f"{fichier} / {cible} : « {r['motif'] } » capte {n} valeurs "
+                f"sur {len(cles)} ({part:.0%}) — `non_qualifie` est "
+                f"INATTEIGNABLE pour ce fichier. Affiner le motif, ou "
+                f"assumer le fourre-tout avec `fourre_tout: true`")
+    return fautes
+
+
 def controler(fichier: str) -> list[str]:
     fautes = []
     for cible, regles in _regles(fichier).items():
@@ -155,13 +204,14 @@ def main() -> int:
     for f in ("origines.yaml", "nullites.yaml"):
         n = sum(len(r) for r in _regles(f).values())
         total += n
-        fautes += controler(f)
+        fautes += controler(f) + controler_absorption(f)
     if fautes:
-        print(f"\n✗ RÈGLES MORTES — {len(fautes)} sur {total} :")
+        print(f"\n✗ RÈGLES DÉFECTUEUSES — {len(fautes)} sur {total} :")
         for x in fautes:
             print(f"   {x}")
         print("\n  Une règle qui ne s'applique jamais est un garde-fou qu'on")
-        print("  croit avoir. La corriger, ou la retirer en le disant.")
+        print("  croit avoir ; un motif qui avale tout rend le vert sans valeur.")
+        print("  Corriger, ou assumer explicitement.")
         return 1
     print(f"   règles déclaratives : {total} motifs, tous atteints")
     return 0

@@ -1,6 +1,8 @@
 # 0011 — Cinquième origine `litterature`, et filiation de H
 
 Date : 2026-09-28
+Espèce : close
+État : appliquée
 Statut : acceptée
 Amende : `0010-origine-des-cotes.md`, `0005-topologie-bras-p1.md`
 

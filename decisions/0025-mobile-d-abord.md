@@ -1,6 +1,8 @@
 # 0025 — Le site en mobile d'abord
 
 Date : 2026-09-29
+Espèce : close
+État : appliquée
 Statut : **acceptée** le 2026-09-29 — appliquée.
 
 Deux lecteurs : vous sur votre téléphone, votre cousin sur le sien, à

@@ -138,6 +138,13 @@ def main() -> int:
               "(construction Docker)")
         return 0
     liste = suivis()
+    if not liste:
+        # « 0 fichiers suivis, aucun binaire » est vrai et ne veut rien
+        # dire. Un contrôle dont l'entrée est vide doit le DIRE, pas
+        # rendre un vert.
+        print("\n✗ aucun fichier suivi par Git : le contrôle de la règle 4")
+        print("  n'a rien inspecté. Vérifier qu'on est bien dans le dépôt.")
+        return 1
     fautes = controler()
     mauvaises_fiches = controler_fournisseurs(set(liste))
     n = len(liste)

@@ -1,6 +1,8 @@
 # 0027 — La règle de la « phase 6 » n'a jamais eu de référent
 
 Date : 2026-09-29
+Espèce : close
+État : appliquée
 Statut : **acceptée** le 2026-09-29 — option B retenue par Jeremy, **avec
 une correction de sa main** : le défaut que j'avais signalé (l'outillage
 n'est lié à aucune pièce) est comblé par une troisième branche. La règle

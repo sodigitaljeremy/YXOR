@@ -1,6 +1,8 @@
 # 0010 — Traçabilité de l'origine des cotes
 
 Date : 2026-09-28
+Espèce : gouvernante
+État : amendée
 Statut : acceptée
 Amendée par : `0011-origine-litterature.md` — cinquième origine `litterature`, et filiation de H consignée.
 

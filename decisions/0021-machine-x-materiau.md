@@ -1,6 +1,8 @@
 # 0021 — Séparer la machine du matériau
 
 Date : 2026-09-29
+Espèce : abandonnee
+État : abandonnée
 Statut : **abandonnée** le 2026-09-29 — jamais appliquée, remplacée par la
 0026 puis la 0033. Conservée pour son analyse d'impact, qui reste juste.
 Amendée par : `0026-machine-procede-matiere.md` — la clé composée ne tient pas à six axes ; migration SUSPENDUE.

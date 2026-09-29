@@ -1,6 +1,8 @@
 # 0029 — CERN-OHL-S n'est pas non commerciale : trois familles, pas deux
 
 Date : 2026-09-29
+Espèce : historique
+État : appliquée
 Statut : **acceptée** — correction d'une erreur de classement.
 Amende : `0009-build123d.md`, et la règle de `CLAUDE.md`.
 

@@ -138,7 +138,7 @@ def _manque(p: dict, cles, prefixe="") -> list:
         if st["etat"] != NU.SANS_OBJET:
             out.append((k, st["etat"]))
     return out
-def etat_procede(p: dict, nom: str = "*") -> dict:
+def etat_procede(p: dict, nom: str = "*", besoins: list | None = None) -> dict:
     """Deux niveaux, jamais un voyant unique.
 
     Un réglage déclaré IMPOSSIBLE n'est ni dessinable ni coupable, et ce
@@ -148,11 +148,19 @@ def etat_procede(p: dict, nom: str = "*") -> dict:
         return dict(dessinable=False, coupable=False, impossible=True,
                     manque_dessin=[], manque_coupe=[])
     md = _manque(p, CLES_DESSIN)
-    mc = _manque(p, CLES_COUPE)
+    # Fiche 0037 : une pièce n'est bloquée que par ce dont ELLE a besoin.
+    # Sans liste déclarée, on retombe sur l'ancien comportement — toutes
+    # les cotes de coupe du réglage — pour qu'un relevé ancien ne devienne
+    # pas coupable par le simple fait d'être muet.
+    cles_coupe = CLES_COUPE if besoins is None else tuple(
+        k for k in CLES_COUPE if k in besoins)
+    mc = _manque(p, cles_coupe)
     if p.get("machine_nom") is None:
         mc.insert(0, ("moyen de découpe", NU.A_MESURER))
     return dict(dessinable=not md, coupable=not (md or mc), impossible=False,
-                manque_dessin=md, manque_coupe=md + mc)
+                manque_dessin=md, manque_coupe=md + mc,
+                sans_besoin=besoins is not None and not mc and bool(
+                    _manque(p, CLES_COUPE)))
 def e(x) -> str:
     return html.escape(str(x), quote=True)
 def val(x, unite="", ind=INDET, regles=None, cle="", voisines=None) -> str:
@@ -358,7 +366,8 @@ def page_piece(p) -> str:
             "Elles viennent de ToddlerBot, dont la mécanique est publiée en licence "
             "non commerciale. Inventaire, pas avis juridique — fiche 0010.</div>"
             if amont else "")
-    ep = etat_procede(p.get("_procede") or {})
+    ep = etat_procede(p.get("_procede") or {},
+                      besoins=p.get("besoins_procede"))
     voyant = (f'<span class="v {"ok" if ep["dessinable"] else "no"}">'
               f'{"dessinable" if ep["dessinable"] else "non dessinable"}</span> '
               f'<span class="v {"ok" if ep["coupable"] else "no"}">'
@@ -422,11 +431,25 @@ def page_piece(p) -> str:
 """, fil=e(ecourter(p.get("role", ""))))
 def page_atelier(p) -> str:
     dxf = p["fichiers"].get("dxf")
-    ep = etat_procede(p.get("_procede") or {})
+    ep = etat_procede(p.get("_procede") or {},
+                      besoins=p.get("besoins_procede"))
     # La distinction dessinable / coupable doit être ICI aussi : c'est la
     # page que l'opérateur ouvre, et c'est là que la confondre coûterait
     # une pièce ratée.
-    if ep["coupable"]:
+    if ep["coupable"] and ep.get("sans_besoin"):
+        # Troisième cas (fiche 0037) : prêt MALGRÉ un réglage incomplet.
+        # Il doit dire POURQUOI, sinon on croira à une régression du
+        # contrôle — un verdict qui s'adoucit sans s'expliquer inquiète
+        # à juste titre.
+        manque = ", ".join(e(m.replace("_", " "))
+                           for m, _ in _manque(p.get("_procede") or {}, CLES_COUPE))
+        verdict = ('<div class="ok-bloc"><b>Prêt à couper.</b> '
+                   f"Le procédé n'a pas toutes ses valeurs — il manque "
+                   f"<b>{manque}</b> — mais <b>cette pièce ne s'en sert pas</b> : "
+                   "elle ne s'emboîte avec rien, et n'a aucun voile étroit. "
+                   "La saignée compte quand deux pièces s'ajustent ; ici, "
+                   "couper sur le trait suffit.</div>")
+    elif ep["coupable"]:
         verdict = ('<div class="ok-bloc"><b>Prêt à couper.</b> '
                    "Toutes les valeurs du procédé sont renseignées.</div>")
     else:

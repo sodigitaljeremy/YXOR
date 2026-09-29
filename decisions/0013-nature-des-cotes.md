@@ -1,6 +1,8 @@
 # 0013 — Nature des cotes : la règle 1 restreinte à son domaine
 
 Date : 2026-09-28
+Espèce : gouvernante
+État : acceptée
 Statut : acceptée
 Restreint : la règle 1 de `CLAUDE.md`
 
