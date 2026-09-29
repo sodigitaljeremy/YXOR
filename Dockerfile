@@ -63,6 +63,19 @@ COPY parts/  parts/
 COPY scripts/ scripts/
 COPY web/    web/
 
+# ── L'EMPREINTE DU COMMIT, pour qu'un site périmé se reconnaisse ──────
+#
+#  L'image n'a pas de dépôt git : `git rev-parse` y est impossible. Le
+#  SHA doit donc ENTRER par l'extérieur. Coolify fournit `SOURCE_COMMIT`
+#  en argument de construction.
+#
+#  Valeur par défaut « inconnu » : si l'argument n'est pas passé, les
+#  pages le DISENT au lieu d'afficher un SHA faux. Le 2026-09-29, un
+#  déploiement a échoué quatre heures sans que rien ne le signale, et le
+#  site périmé servait un plan de découpe faux avec l'air d'être à jour.
+ARG SOURCE_COMMIT=inconnu
+ENV YXOR_COMMIT=$SOURCE_COMMIT
+
 # La commande unique — la même que celle lancée en local.
 RUN python scripts/regenerer.py
 

@@ -298,6 +298,19 @@ def main(argv=None) -> int:
         print(f"    {'OK ' if ok else 'ÉCHEC'}  {lib}")
 
     stamp = datetime.date.today().isoformat()
+    # LE SHA SUR LE PLAN PAPIER. C'est lui qu'on colle sur la matière :
+    # un tirage périmé doit se reconnaître AVANT le premier coup de lame.
+    # Le 2026-09-29, un plan de 136,80 x 49,50 a failli être coupé alors
+    # que la pièce mesurait 138,06 x 51,93 — la date seule ne l'aurait pas
+    # trahi, puisqu'elle était celle du dernier déploiement RÉUSSI.
+    import subprocess as _sp
+    try:
+        _r = _sp.run(["git", "rev-parse", "--short=12", "HEAD"], cwd=REPO,
+                     capture_output=True, text=True, timeout=5)
+        sha = _r.stdout.strip() if _r.returncode == 0 else ""
+    except Exception:
+        sha = ""
+    sha = sha or __import__("os").environ.get("YXOR_COMMIT", "")[:12] or "inconnu"
     reg = PROC.reglage(a.reglage, c.hw)
     anisotrope = reg["anisotrope"]
     fleche = None
@@ -322,7 +335,9 @@ def main(argv=None) -> int:
          (f"Materiau ANISOTROPE : orienter la feuille selon la fleche ci-dessous."
           if anisotrope else
           "Materiau isotrope : l'orientation de la feuille est indifferente."),
-         f"Genere le {stamp} — ne pas coter sur ce plan, il fait foi par sa geometrie"],
+         f"Genere le {stamp}  —  COMMIT {sha}",
+         f"Verifier ce commit avant de couper : s'il ne correspond pas au depot,",
+         f"ce tirage est PERIME. Ne pas coter sur ce plan : il fait foi par sa geometrie."],
         fleche=fleche)
     print(f"\n  plan A4 : {larg:.2f} x {haut:.2f} mm sur 210 x 297")
 

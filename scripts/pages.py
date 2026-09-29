@@ -41,6 +41,36 @@ import procedes as PROC  # noqa: E402
 # bandeau rouge des pages en dépend. Une liste, pas un import croisé.
 ECHECS: list[str] = []
 
+
+def commit() -> str:
+    """L'empreinte du commit d'où ce site est engendré.
+
+    En construction Docker : `YXOR_COMMIT`, passé par Coolify. En local :
+    `git rev-parse`. Sinon « inconnu » — dit, jamais deviné.
+
+    Sert à une chose : qu'un site périmé se reconnaisse. Le 2026-09-29,
+    une construction a échoué quatre heures, l'ancien conteneur a continué
+    de servir, et un plan de découpe faux a failli être coupé. La date
+    seule ne suffit pas : elle est celle de la GÉNÉRATION, donc du dernier
+    déploiement RÉUSSI, et un site périmé affiche une date plausible.
+    """
+    import os
+    import subprocess
+    v = os.environ.get("YXOR_COMMIT", "").strip()
+    if v and v != "inconnu":
+        return v
+    try:
+        r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
+                           capture_output=True, text=True, timeout=5)
+        if r.returncode == 0:
+            return r.stdout.strip()
+    except Exception:
+        pass
+    return "inconnu"
+
+
+COMMIT = commit()
+
 ORIGINES = ["propre", "litterature", "catalogue", "mesure", "amont", "ambigu"]
 LIB_ORIGINE = {
     "propre": ("propre", "dérivée de H et d'un ratio du projet"),
@@ -207,7 +237,11 @@ def page(titre, corps, fil=None, cls="") -> str:
 </head><body><header><div class="wrap">
 <h1>{e(titre)}</h1><p class="sous">{fil or 'YXOR — robot humanoïde bipède paramétrique'}</p>
 {nav}</div></header><div class="wrap {cls}">{bandeau()}{corps}
-<footer>Site engendré depuis le dépôt YXOR le {datetime.date.today().isoformat()}.
+<footer>Site engendré depuis le dépôt YXOR le {datetime.date.today().isoformat()},
+au commit <code class="sha">{e(COMMIT[:12])}</code>.
+Comparer&nbsp;: <code>git rev-parse --short=12 HEAD</code>. S'ils diffèrent,
+<b>cette page est périmée</b> — le déploiement a échoué et l'ancien
+conteneur sert encore.
 Il ne contient aucune donnée propre : chaque valeur vient d'un fichier du dépôt.
 Régénérer&nbsp;: <code>python scripts/regenerer.py</code></footer>
 </div></body></html>"""
@@ -460,6 +494,14 @@ def page_atelier(p) -> str:
                    "Un fichier dessinable n\'est pas un fichier coupable.</div>")
     # Le verdict passe EN TÊTE : il doit être lu avant les cotes, pas après.
     return page(p.get("titre") or p["nom"], f"""
+<div class="sha-atelier">
+  <div class="sha-lbl">Version de ce plan</div>
+  <div class="sha-val">{e(COMMIT[:12])}</div>
+  <p>Comparer avec <code>git rev-parse --short=12 HEAD</code> avant de couper.
+  <b>S'ils diffèrent, ce plan est périmé</b> : le déploiement a échoué et
+  le site sert encore l'ancienne version. La date ne suffit pas à le dire —
+  c'est celle du dernier déploiement <i>réussi</i>.</p>
+</div>
 {verdict}
 <div class="bloc">
   <p class="lbl">Matière</p><p class="spec"><b>{val(p.get('materiau'))}</b></p>
