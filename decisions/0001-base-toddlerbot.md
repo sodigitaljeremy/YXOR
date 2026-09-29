@@ -32,7 +32,24 @@ déploiement, projet activement maintenu, robustesse reconnue.
 ## Conséquences
 
 - Le code amont est sous licence MIT ; les fichiers mécaniques sont sous
-  Creative Commons **non commerciale**. Apprendre, modifier et publier sont
+  **CC BY-NC-SA 4.0**. Apprendre, modifier et publier sont
   permis ; vendre un dérivé ne l'est pas.
+
+  *Corrigé le 2026-09-30 : la licence était désignée « Creative Commons
+  non commerciale », sans sa clause SA.* Ligne exacte du README amont au
+  commit `e337f3b` (`README.md:167`) :
+
+  > The ToddlerBot design (Onshape document, STL files, etc.) is released
+  > under the [...] CC BY-NC-SA [...], which allows you to use and build
+  > upon our work non-commercially.
+
+  **Conséquence de la clause SA** : un dérivé doit être publié sous la
+  même licence, donc **aucune géométrie amont n'entre dans une pièce
+  YXOR**. Si une géométrie amont y entrait, la pièce hériterait de la
+  licence NC-SA.
+
+  **Question juridique ouverte, sans avis ici** (fiche 0010 §4) : les
+  valeurs numériques extraites de l'amont (butées, rapports, axes)
+  sont-elles couvertes par la licence ?
 - À réévaluer seulement si une exploitation commerciale devient un objectif.
 - Le palier P1 est fixé à H = 0,56 m par cette décision.

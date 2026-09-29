@@ -250,6 +250,19 @@ Voir `decisions/0035-origine-norme.md`.
   | copyleft, réciproque | GPL, AGPL, CERN-OHL-S | **oui** | **non** |
   | permissive | MIT, Apache-2.0, BSD, ISC | oui | oui |
 
-  La mécanique amont de ToddlerBot est en **CC BY-NC** : c'est la première
-  famille, celle qui interdit la vente. C'est elle, et non la seconde, qui
-  pèse sur les 1121 cotes d'origine `amont`.
+  La mécanique amont de ToddlerBot est en **CC BY-NC-SA 4.0**
+  (`~/upstream/toddlerbot/README.md:167`, commit `e337f3b`).
+
+  ⚠ **Corrigé le 2026-09-30** : ce paragraphe disait « CC BY-NC », sans
+  la clause SA. Or la licence appartient aux **deux** premières familles
+  à la fois :
+
+  - **NC** interdit la vente ;
+  - **SA** impose la même licence à tout dérivé.
+
+  Conséquence : **aucune géométrie amont n'entre dans une pièce YXOR**
+  (fiche 0001).
+
+  **Question juridique ouverte, sans avis** (fiche 0010 §4) : les valeurs
+  numériques extraites de l'amont, celles d'origine `amont` dans l'audit,
+  sont-elles couvertes par la licence ?
