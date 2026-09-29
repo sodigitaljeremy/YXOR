@@ -167,3 +167,28 @@ code{overflow-wrap:anywhere}
 .so{color:var(--doux);font-style:italic}
 .der{color:var(--o-catalogue)}
 .defile .so,.defile .der,.defile .ind{white-space:nowrap}
+
+/* ── Simulation en direct (fiche 0023) ────────────────────────────────
+   Le bandeau change d'aspect DÈS qu'une valeur s'écarte du dépôt. Un
+   avertissement permanent finit par ne plus se lire ; celui-ci ne
+   s'allume que lorsqu'il a quelque chose à dire. */
+.simbandeau{padding:11px 14px;border-radius:8px;font-size:13px;
+  border:1px solid var(--bord);color:var(--doux);margin-bottom:16px}
+.simbandeau.actif{border-color:var(--o-manque);color:#fee2e2;
+  background:rgba(248,81,73,.12)}
+.reglages{display:grid;gap:10px;margin-bottom:16px}
+@media(min-width:620px){.reglages{grid-template-columns:1fr 1fr}}
+.reglages label{display:grid;grid-template-columns:1fr;gap:3px;font-size:13px}
+.reglages .rl{color:var(--doux)}
+.reglages input[type=range]{width:100%;accent-color:var(--accent)}
+.reglages output{font-variant-numeric:tabular-nums;font-size:13px;
+  font-family:ui-monospace,Menlo,Consolas,monospace}
+.reglages output.modif{color:var(--o-manque);font-weight:700}
+#simraz{margin-top:12px;background:transparent;color:var(--texte);
+  border:1px solid var(--bord);border-radius:8px;padding:8px 14px;
+  font-size:13px;cursor:pointer;font-family:inherit}
+#simraz:hover{border-color:var(--accent)}
+pre.yaml{background:#12151b;border:1px solid var(--bord);border-radius:8px;
+  padding:12px 14px;overflow-x:auto;font-size:12.5px;line-height:1.55;
+  font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;
+  overflow-wrap:anywhere}

@@ -211,6 +211,7 @@ def lire_releves() -> list[dict]:
             continue
         p["cotes"] = d.get("cotes") or []
         p["_schema"] = ordonner_cotes(d.get("cotes_schema") or [])
+        p["_simulation"] = d.get("simulation")
         p["fichiers"] = {}
         base = p.get("base_fichier", p["nom"])
         for ext, _, _ in FORMATS:
@@ -356,6 +357,32 @@ def bloc_rangs(cotes) -> str:
     return "".join(out)
 
 
+def bloc_simulation(p) -> str:
+    """Le bac à sable : calculer n'est pas stocker (fiche 0023).
+
+    La pièce publie ses paramètres réglables ET une référence calculée en
+    Python. Le script de la page se contrôle contre elle au chargement et
+    se désactive s'il ne la retrouve pas : sans navigateur ici, c'est la
+    seule garde entre un portage faux et un dessin faux.
+    """
+    sim = p.get("_simulation")
+    if not sim:
+        return ""
+    # `</` est échappé dans le JSON en ligne : une chaîne contenant
+    # « </script> » refermerait la balise et livrerait le reste en HTML.
+    # Rien n'en contient aujourd'hui ; c'est pour le jour où.
+    return (f"""
+<h2>Simuler une autre taille</h2>
+<p class="sous">Le dépôt reste la seule source de vérité. Rien de ce qui est
+calculé ici n'est envoyé, ni stocké : recharger la page rend les valeurs du
+dépôt. Pour figer une valeur, il faut modifier le dépôt et régénérer.</p>
+<div class="carte" id="sim"><p class="src">Simulation indisponible :
+JavaScript est désactivé. Les valeurs ci-dessus restent celles du dépôt.</p></div>
+<script src="/assets/simulateur.js"></script>
+<script>simulateur({json.dumps(sim, ensure_ascii=False).replace("</", "<\\/")},
+  {{hote: document.getElementById('sim')}});</script>""")
+
+
 def page_piece(p) -> str:
     dl = "".join(
         f'<a href="/fichiers/{e(f.name)}" download>{e(lib)}'
@@ -395,6 +422,8 @@ def page_piece(p) -> str:
     <p style="margin-top:12px"><a href="/atelier/{e(p['nom'])}/">Fiche atelier →</a></p>
   </div>
 </div>
+
+{bloc_simulation(p)}
 
 <h2>D'où vient chaque cote</h2>
 <p class="sous">Rangées par ce qu'elles appellent à faire, non par étiquette.</p>
@@ -743,7 +772,7 @@ def main(argv=None) -> int:
     (SITE / "assets").mkdir(parents=True)
     (SITE / "fichiers").mkdir()
     (SITE / "data").mkdir()
-    for f in ("style.css", "viewer.js"):
+    for f in ("style.css", "viewer.js", "simulateur.js"):
         shutil.copy2(WEB / f, SITE / "assets" / f)
 
     for p in pieces:

@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import json
 import sys
 from pathlib import Path
 
@@ -41,6 +42,7 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 from plan_decoupe import ecrire_plan_a4, polylignes_depuis_face  # noqa: E402
+import profil  # noqa: E402
 
 NOM = "semelle_apprentissage"
 
@@ -214,12 +216,45 @@ def main(argv=None) -> int:
             ("largeur conforme", abs(bb.size.Y - d["W"]) < 1e-6),
             ("épaisseur conforme", abs(bb.size.Z - d["ep"]) < 1e-6),
             ("tient sur une A4", d["L"] < 180 and d["W"] < 180)]
+    contours = polylignes_depuis_face(face)
+
+    # --- LA SECONDE IMPLÉMENTATION, ET SON GARDE-FOU ------------------
+    # Le navigateur ne peut pas exécuter build123d : la simulation en
+    # direct (fiche 0023) recalcule la forme analytiquement. Deux
+    # implémentations de la même chose divergent toujours, et celle-ci
+    # divergerait en restant plausible. On les confronte ici, à chaque
+    # régénération, dans les DEUX sens : l'un vérifie la forme, l'autre
+    # vérifie qu'aucun morceau n'a été oublié.
+    an_d = profil.cotes(d["H"], c.anthro["ratios"]["pied_longueur"]["valeur"],
+                        c.anthro["ratios"]["pied_largeur"]["valeur"],
+                        a.resserrement, a.coins, a.etendue, d["ep"])
+    # non-cote: même seuil d'égalité numérique
+    ecarts_cotes = [(k, d[k], an_d[k]) for k in ("L", "W", "r_ext", "R",
+                                                 "profondeur", "largeur_creux")
+                    if abs(d[k] - an_d[k]) > 1e-4]
+    # Le simulateur applique la règle « rayon intérieur = 0,5 x épaisseur »
+    # (CLAUDE.md). Si la donnée du procédé ne la suit pas, le navigateur
+    # dessinerait autre chose que la pièce. On le dit ici, pas plus tard.
+    # non-cote: 1e-4 est le seuil d'égalité de deux nombres, pas une cote
+    if abs(an_d["r_int"] - d["r_int"]) > 1e-4:
+        ecarts_cotes.append(("r_int (0,5 x épaisseur)", d["r_int"], an_d["r_int"]))
+    # non-cote: finesse d'échantillonnage de la confrontation
+    an_c = profil.contour(an_d, n_arc=400)
+    ecart = max(profil.hausdorff(an_c, contours[0]),
+                profil.hausdorff(contours[0], an_c))
+    ctrl.append((f"contour analytique conforme au noyau CAO "
+                 f"({ecart:.4f} mm <= {profil.TOLERANCE_MM})",
+                 ecart <= profil.TOLERANCE_MM and not ecarts_cotes))
+    if ecarts_cotes:
+        print("\n  ⚠ COTES DIVERGENTES entre le noyau CAO et le calcul analytique :")
+        for k, v1, v2 in ecarts_cotes:
+            print(f"      {k} : CAO {v1} / analytique {v2}")
+
+    # --- plan A4 ---
     print("\n  contrôles :")
     for lib, ok in ctrl:
         print(f"    {'OK ' if ok else 'ÉCHEC'}  {lib}")
 
-    # --- plan A4 ---
-    contours = polylignes_depuis_face(face)
     stamp = datetime.date.today().isoformat()
     mat = c.hw["materiaux"].get(c.hw["procedes"][a.procede]["materiau"], {})
     anisotrope = bool(mat.get("anisotrope"))
@@ -330,6 +365,49 @@ def main(argv=None) -> int:
                    f"    cle: {cle}",
                    f"    valeur: {valeur}",
                    f"    trace: {{{', '.join(f'{k}: {v}' for k, v in trace.items())}}}"]
+    # ── ce que le navigateur a le droit de faire bouger ───────────────
+    # La pièce déclare ses paramètres réglables ET une RÉFÉRENCE : les
+    # cotes et un échantillon de contour calculés ici, en Python. Le
+    # simulateur se contrôle contre eux au chargement. S'il ne les
+    # retrouve pas, il se désactive au lieu de dessiner du faux.
+    N_ARC_REF = 48          # non-cote: finesse d'échantillonnage du contour
+    reference = profil.contour(an_d, n_arc=N_ARC_REF)
+    parametres = [
+        dict(nom="H", libelle="taille du robot", unite=" m", valeur=d["H"],
+             mini=0.30, maxi=2.00, pas=0.01,   # non-cote: bornes du curseur de simulation
+             cible=f"params/anthropometry.yaml  ->  paliers.{a.palier}"),
+        dict(nom="r_pied_long", libelle="ratio longueur de pied", unite="",
+             valeur=c.anthro["ratios"]["pied_longueur"]["valeur"],
+             mini=0.10, maxi=0.22, pas=0.001,   # non-cote: bornes du curseur de simulation
+             cible="params/anthropometry.yaml  ->  ratios.pied_longueur.valeur"),
+        dict(nom="r_pied_larg", libelle="ratio largeur de pied", unite="",
+             valeur=c.anthro["ratios"]["pied_largeur"]["valeur"],
+             mini=0.030, maxi=0.090, pas=0.001,   # non-cote: bornes du curseur de simulation
+             cible="params/anthropometry.yaml  ->  ratios.pied_largeur.valeur"),
+        dict(nom="resserrement", libelle="resserrement à la taille", unite="",
+             valeur=a.resserrement, mini=0.40, maxi=0.98, pas=0.01,   # non-cote: bornes du curseur
+             cible=f"argument de la pièce  ->  --resserrement"),
+        dict(nom="coins", libelle="congé des coins", unite="",
+             valeur=a.coins, mini=0.02, maxi=0.49, pas=0.01,   # non-cote: bornes du curseur
+             cible="argument de la pièce  ->  --coins"),
+        dict(nom="etendue", libelle="étendue du creux", unite="",
+             valeur=a.etendue, mini=0.15, maxi=0.90, pas=0.01,   # non-cote: bornes du curseur
+             cible="argument de la pièce  ->  --etendue"),
+        dict(nom="ep", libelle="épaisseur du matériau", unite=" mm",
+             valeur=d["ep"], mini=0.5, maxi=25.0, pas=0.1,   # non-cote: bornes du curseur
+             cible=f"params/hardware.yaml  ->  procedes.{a.procede}.epaisseur"),
+    ]
+    lignes += ["", "simulation:",
+               "  tolerance_mm: " + str(profil.TOLERANCE_MM),
+               "  parametres:"]
+    for pa in parametres:
+        lignes.append("    - " + json.dumps(pa, ensure_ascii=False))
+    lignes += ["  reference:",
+               f"    n_arc: {N_ARC_REF}",
+               "    cotes: " + json.dumps(an_d, ensure_ascii=False),
+               "    contour: " + json.dumps(
+                   [[round(x, 4), round(y, 4)] for x, y in reference])]
+
     lignes += ["", "cotes:"]
     for r in c.releve:
         lignes += [f"  - cle: {r['cle']}",
