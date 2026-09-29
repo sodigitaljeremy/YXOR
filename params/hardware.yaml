@@ -117,13 +117,19 @@ materiaux:
     source: null
 
   carton_ondule:
+    # ⚠ `densite` SUSPENDUE le 2026-09-30 : profil de cannelure non
+    #   confirmé, et l'épaisseur dont elle dérive est douteuse.
+    #   Voir matieres.carton_ondule_simple et la fiche 0043.
+    mesures_suspendues: true
     anisotrope: true
     axe_reference: "sens des cannelures"
     # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
     # (fiche 0020). 0,6349 / 3,5 = 0,1814 mg/mm³ = 181 kg/m³.
     # ⚠ ±14,5 %, hérité surtout de l'ÉPAISSEUR (14,3 %) et non plus de
     # la masse (2,5 %) : peser mieux n'améliorera plus cette valeur.
-    densite: 0.1855          # mg/mm³ — BORNE HAUTE, voir la note du profil
+    densite: 0.1855          # mg/mm³ — ⚠ SUSPENDUE. BORNE HAUTE : si le
+                             # carton est comprimé, l'épaisseur est
+                             # sous-estimée et la densité surestimée.
     source: >
       Relevé le 2026-09-30 sur un panneau de 220 x 140 mm pesant 20 g,
       épaisseur 3,5 mm à la règle. Carton de récupération, PROFIL DE
@@ -171,15 +177,40 @@ matieres:
   carton_ondule_simple:
     materiau: carton_ondule
     forme: plaque
-    # ── MESURÉ LE 2026-09-30, sur la première pièce coupée ──────────
-    # Première matière du projet à porter des valeurs relevées sur un
-    # objet réel plutôt que sur un catalogue.
-    epaisseur: 3.5           # mm — nominale retenue = la mesurée
+    # ══════════════════════════════════════════════════════════════
+    #  ⚠ MESURES SUSPENDUES LE 2026-09-30 — NE PAS S'EN SERVIR
+    # ══════════════════════════════════════════════════════════════
+    #  Les trois valeurs ci-dessous sont RELEVÉES et CONSERVÉES, mais
+    #  elles ne font pas foi. Deux motifs, de poids inégal :
+    #
+    #  1. PROFIL NON CONFIRMÉ — décisif. Le carton mesuré est peut-être
+    #     en DOUBLE cannelure. Ces valeurs porteraient alors le nom
+    #     d'une matière qu'on n'a pas eue en main. Rien dans le dépôt ne
+    #     pouvait le signaler : il ne sait pas ce qui était sur
+    #     l'établi (fiche 0043 §3).
+    #
+    #  2. Masse près de la résolution de la balance — vrai de la
+    #     PREMIÈRE pesée (4 g au gramme, soit 12,5 %), beaucoup moins de
+    #     celle retenue (20 g, soit 2,5 %). Je le consigne tel quel :
+    #     inscrire un motif inexact serait la faute même que ce bloc
+    #     existe pour éviter.
+    #
+    #  Ce qui ne dépend d'AUCUN des deux : la masse surfacique. Ni le
+    #  profil ni l'écrasement ne changent la masse ou l'aire. C'est la
+    #  seule des trois qui survivra à la confirmation, quelle qu'elle
+    #  soit.
+    #
+    #  Reprise : voir la fin du journal du 2026-09-30.
+    # ══════════════════════════════════════════════════════════════
+    mesures_suspendues: true   # profil de cannelure non confirmé
+    epaisseur: 3.5           # mm — ⚠ SUSPENDUE. Mince pour une double :
+                             # zone peut-être empilée, donc comprimée.
     epaisseur_mesuree: 3.5   # mm, à la RÈGLE, en plusieurs endroits.
                              # Pas au pied à coulisse : ses becs écrasent
                              # les cannelures, et l'écrasement est
                              # irréversible (protocole du 2026-09-28).
-    masse_surfacique: 0.6494 # mg/mm² = 649 g/m². Panneau de 20 g sur
+    masse_surfacique: 0.6494 # mg/mm² = 649 g/m². ⚠ SUSPENDUE PAR LE NOM,
+                             # pas par la mesure. Panneau de 20 g sur
                              # 220 x 140 mm. ±2,5 % — voir mesures.yaml.
                              # La première pesée (635 g/m² ±12,5 %) tenait :
                              # 649 tombe dans son intervalle 556-714.

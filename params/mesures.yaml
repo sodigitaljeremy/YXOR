@@ -20,6 +20,19 @@
 #  s'additionnent en quadrature :
 #      σ_rel(a/b) = racine( σ_rel(a)² + σ_rel(b)² )
 
+# ⚠ TROIS MESURES SUSPENDUES LE 2026-09-30 (`suspendue: true`).
+#
+#   Elles ont bien eu lieu et ne sont pas effacées. Ce qui est douteux
+#   n'est pas l'acte de mesure, c'est L'OBJET MESURÉ : le carton est
+#   peut-être en double cannelure, donc `alimente:` pointe peut-être
+#   vers la mauvaise matière.
+#
+#   C'est exactement la limite relevée par la fiche 0043 §3 : une mesure
+#   porte la matière SUPPOSÉE, et rien ne peut vérifier la supposition.
+#
+#   Une mesure suspendue ne nourrit plus rien tant que l'objet n'est pas
+#   identifié. Elle reprendra sa place dès que le profil sera vu.
+
 mesures:
 
   semelle_masse_2026_09_30:
@@ -43,6 +56,7 @@ mesures:
       concordantes valent mieux qu'une mesure précise seule.
 
   panneau_masse_2026_09_30:
+    suspendue: true
     grandeur: "masse d'un panneau de carton ondulé, zone plate non écrasée"
     valeur: 20.0
     unite: g
@@ -61,6 +75,7 @@ mesures:
       mais la correction est consignée plutôt que faite en silence.
 
   panneau_dimensions_2026_09_30:
+    suspendue: true
     grandeur: "dimensions du panneau pesé"
     valeur: 30800.0
     unite: mm2
@@ -75,6 +90,7 @@ mesures:
       relative — négligeable devant les 2,5 % de la masse.
 
   carton_ondule_epaisseur_2026_09_30:
+    suspendue: true
     grandeur: "épaisseur du carton ondulé simple cannelure"
     valeur: 3.5
     unite: mm
