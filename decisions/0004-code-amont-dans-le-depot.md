@@ -2,8 +2,8 @@
 
 Date : 2026-09-28
 Espèce : gouvernante
-État : acceptée
-Statut : acceptée
+État : appliquée
+Statut : **appliquée** — `sim/upstream/` refuse le mauvais interpréteur, vérifié à l'exécution.
 
 ## Contexte
 

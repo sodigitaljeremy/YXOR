@@ -3,7 +3,7 @@
 Date : 2026-09-29
 Espèce : close
 État : appliquée
-Statut : **proposée** — instruction, rien n'est appliqué.
+Statut : **appliquée** le 2026-09-29 — `besoins_procede` déduit de l'usage, plus le canal `c.besoin()` pour ce qui n'est pas lu au dessin. La semelle est coupable.
 Amende : `0019-interface-catalogue.md`, où le verdict a été introduit.
 
 ## Le défaut, tel qu'il se voit aujourd'hui

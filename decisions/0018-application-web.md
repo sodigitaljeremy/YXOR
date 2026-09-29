@@ -2,9 +2,8 @@
 
 Date : 2026-09-28
 Espèce : gouvernante
-État : acceptée
-Statut : **acceptée** — validée le 2026-09-28, mise en œuvre le jour même.
-Seule la ligne de statut est modifiée ; le raisonnement n'est pas réécrit (règle 5).
+État : appliquée
+Statut : **appliquée** — le site est engendré par le Dockerfile en deux étages, et rien n'est commité.
 
 ## Contexte
 

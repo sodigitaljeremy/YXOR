@@ -2,8 +2,8 @@
 
 Date : 2026-09-29
 Espèce : gouvernante
-État : acceptée
-Statut : **acceptée**.
+État : appliquée
+Statut : **appliquée** — `params/fournisseurs.yaml`, six champs contrôlés par `controle_depot.py`.
 
 ## Le constat vérifié
 

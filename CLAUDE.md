@@ -99,6 +99,85 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 - Le code amont vit dans `~/upstream/`, **hors du dépôt**. Rien de ce qui s'y
   trouve ne doit être copié ou commité ici.
 
+## Ce qu'un contrôle doit faire pour valoir quelque chose
+
+Quatre règles apprises le **2026-09-29**, chacune au prix d'une faute
+réelle. Elles portent toutes sur la même chose : **un système qui échoue
+en silence est pire qu'un système qui n'existe pas**, parce qu'on
+construit dessus.
+
+### 1. Tout contrôle annonce la TAILLE de ce qu'il a inspecté
+
+> « 5 pages », « 92 fichiers suivis », « 62 motifs », « dont 682
+> numériques ».
+
+**Un zéro se voit ; un vert ne se voit pas.** `controler_html` a annoncé
+« balises équilibrées sur toutes les pages » — sur zéro page.
+`controle_depot` a dit « 0 fichiers suivis, aucun binaire », ce qui est
+vrai et ne veut rien dire. Les deux échouent désormais sur entrée vide.
+
+Corollaire : **un contrôle qui saute le DIT**, avec sa raison.
+`controle_depot` et `index_fiches` sautent en construction Docker et
+l'annoncent. Un saut muet est un vert volé.
+
+*Fiches 0024 (§4), et le journal du 2026-09-29.*
+
+### 2. Un motif qui capte plus de la moitié d'un fichier doit être assumé
+
+Un joker `**` qui couvre tout un fichier rend `non_qualifie`
+**inatteignable** : l'audit y sort vert par construction, quoi qu'on
+écrive. Mesuré : **755 valeurs sur 1431 — 54 %** — étaient dans ce cas.
+
+Un fourre-tout reste parfois le bon choix — un fichier ENGENDRÉ n'a pas à
+être qualifié ligne à ligne. Mais alors il porte `fourre_tout: true`,
+écrit à la main. `scripts/controle_regles.py` le refuse autrement.
+
+*Fiche 0020, et le contrôle des règles mortes.*
+
+### 3. Ce qui peut se calculer se calcule — jamais se déclarer
+
+**Une convention écrite à la main diverge.** La ligne `Date:` des fiches
+était déclarée : elle a disparu de **quatre fiches d'affilée** sans que
+rien ne le dise. La convention de statut a divergé en six formulations.
+
+Ce n'est pas de la paresse, c'est structurel : une déclaration répétée
+sur N éléments coûte N occasions de se tromper. Un axe calculé en coûte
+zéro.
+
+**Le contre-poison** : un calcul qui ne peut pas échouer est aussi
+dangereux qu'une déclaration qui diverge. Il ne dérive pas, il **se
+trompe en silence** si sa règle de lecture est trop lâche. Donc on
+rapporte sa répartition, et un basculement massif alerte.
+
+*Fiche 0035 (§ correction du 2026-09-29).*
+
+### 4. Tout artefact servi porte son empreinte dans son URL
+
+Sinon un cache le fige, et le site sert du périmé **avec l'air d'être à
+jour**.
+
+Constaté **trois fois le même jour**, sous trois formes :
+
+| Forme | Ce qui était périmé |
+| --- | --- |
+| construction Docker muette | 4 h, le site entier |
+| SHA affiché mais incomparable | le signal lui-même |
+| `expires 7d` sur URL fixe | la feuille de style, **et le plan A4 de découpe** |
+
+Le troisième est le plus grave : un plan corrigé restait téléchargeable
+une semaine. L'empreinte du contenu dans l'URL — `?v=...` — change dès
+que le site change. **Elle permet de GARDER le cache long**, qui est
+utile, au lieu de le supprimer.
+
+Et l'empreinte doit se calculer **de la même façon partout**. Un premier
+jet montrait le SHA git en local et un repli en Docker : les deux ne se
+seraient jamais comparées, et un signal qu'on ne peut pas confronter ne
+signale rien.
+
+    .venv/bin/python scripts/empreinte.py
+
+*Journal du 2026-09-29, et `scripts/empreinte.py`.*
+
 ## Sources sous droits : une valeur, jamais le texte
 
 Normes (ISO, DIN) et ouvrages (Springer, Elsevier, MIT Press) sont payants

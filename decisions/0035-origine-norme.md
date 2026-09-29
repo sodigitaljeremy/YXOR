@@ -2,8 +2,9 @@
 
 Date : 2026-09-29
 Espèce : proposition
-État : proposée
-Statut : **proposée** — instruction, rien n'est appliqué.
+État : acceptée
+Statut : **acceptée** le 2026-09-29 sur le principe, avec la correction de Jeremy (axe CALCULÉ, non déclaré).
+Rien n'est appliqué : ni l'origine `norme`, ni l'axe `verifiabilite`.
 
 ## Le cas qui la réclame
 

@@ -2,9 +2,8 @@
 
 Date : 2026-09-29
 Espèce : gouvernante
-État : acceptée
-Statut : **acceptée** le 2026-09-29, à la demande de Jeremy, après un
-défaut constaté sur le site en ligne.
+État : appliquée
+Statut : **appliquée** — les trois états sont portés par `nullites.yaml` et affichés par le site.
 
 ## Le défaut
 

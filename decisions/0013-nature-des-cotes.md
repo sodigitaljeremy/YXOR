@@ -2,8 +2,8 @@
 
 Date : 2026-09-28
 Espèce : gouvernante
-État : acceptée
-Statut : acceptée
+État : appliquée
+Statut : **appliquée** — la nature est déclarée dans `origines.yaml` et contrôlée par l'audit.
 Restreint : la règle 1 de `CLAUDE.md`
 
 ## Contexte

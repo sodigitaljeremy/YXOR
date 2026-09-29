@@ -1,7 +1,7 @@
 # 0038 — Le facteur limitant n'est pas le couple, c'est la température
 
 Date : 2026-09-29
-Espèce : gouvernante
+Espèce : proposition
 État : proposée
 Statut : **proposée** — instruction. Ne tranche rien.
 

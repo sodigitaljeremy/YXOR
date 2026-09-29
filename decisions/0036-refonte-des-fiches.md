@@ -1,9 +1,9 @@
 # 0036 — Refonte des fiches : espèce, cycle de vie, parcours d'entrée
 
 Date : 2026-09-29
-Espèce : proposition
-État : proposée
-Statut : **proposée** — rien n'est appliqué.
+Espèce : close
+État : appliquée
+Statut : **appliquée** le 2026-09-29 — espèces et états posés sur les 40 fiches, `index_fiches.py` les refuse hors liste, parcours d'entrée en tête de l'index.
 
 33 fiches en dix jours. Le réflexe est bon, le rythme ne l'est pas : à ce
 compte elles cesseront d'être lues, et une fiche non lue ne gouverne rien.
