@@ -88,8 +88,12 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 - Tout ce qui est dans ce dépôt se lance avec `.venv/bin/python` — **sauf
   `sim/upstream/`**, seul répertoire qui s'exécute avec le venv amont parce
   qu'il importe `toddlerbot` (fiche 0004). L'inverse est interdit dans les
-  deux sens, et les deux sens sont vérifiés à l'exécution : `sim/upstream/`
-  refuse de démarrer sous le mauvais interpréteur.
+  deux sens, mais **un seul sens est vérifié à l'exécution** :
+  `sim/upstream/` refuse de démarrer sous le mauvais interpréteur
+  (`require_upstream_env()`). **Le code YXOR ne vérifie rien.** Lancé
+  sous le venv amont, il tournerait avec MuJoCo 3.3.4 sans rien signaler.
+  Ce sens ne repose que sur la discipline, et sur le contrôle manuel
+  ci-dessous.
 - ToddlerBot exige Python ≤ 3.12 : ses versions épinglées (`numpy==1.26.4`,
   `jaxlib==0.4.28`, `torch==2.3.1`) n'ont pas de roue pour 3.14. Ce n'est pas
   contournable sans maintenir un fork.
@@ -108,8 +112,9 @@ construit dessus.
 
 ### 1. Tout contrôle annonce la TAILLE de ce qu'il a inspecté
 
-> « 5 pages », « 92 fichiers suivis », « 62 motifs », « dont 682
-> numériques ».
+> « N pages », « N fichiers suivis », « N motifs », « dont N
+> numériques » — le nombre lu dans la sortie du contrôle, jamais recopié
+> ici.
 
 **Un zéro se voit ; un vert ne se voit pas.** `controler_html` a annoncé
 « balises équilibrées sur toutes les pages » — sur zéro page.
@@ -126,7 +131,8 @@ l'annoncent. Un saut muet est un vert volé.
 
 Un joker `**` qui couvre tout un fichier rend `non_qualifie`
 **inatteignable** : l'audit y sort vert par construction, quoi qu'on
-écrive. Mesuré : **755 valeurs sur 1431 — 54 %** — étaient dans ce cas.
+écrive. Mesuré le 2026-09-29 : **plus de la moitié des valeurs**
+inventoriées étaient dans ce cas (chiffres au journal du jour).
 
 Un fourre-tout reste parfois le bon choix — un fichier ENGENDRÉ n'a pas à
 être qualifié ligne à ligne. Mais alors il porte `fourre_tout: true`,
@@ -207,10 +213,22 @@ Voir `decisions/0035-origine-norme.md`.
 
   **a. Ce qui est lié à une pièce** — matériau, quincaillerie, découpe :
   rien n'est proposé à l'achat tant que la pièce n'est pas **`coupable`**.
-  Critère vérifiable : `etat_procede` le calcule déjà, le site l'affiche,
-  et `regenerer.py` peut le refuser. Une pièce est `coupable` quand toutes
-  les cotes de son procédé sont renseignées — donc quand on sait ce qu'on
-  achète, et pourquoi.
+  Une pièce est `coupable` quand toutes les cotes de son procédé sont
+  renseignées — donc quand on sait ce qu'on achète, et pourquoi.
+
+  **Ce qui existe réellement** : `etat_procede` le calcule et le site
+  l'affiche. **Rien ne le refuse** : `regenerer.py` ne bloque aucun achat,
+  et aucun contrôle ne s'oppose au verdict. La règle tient par la
+  conduite, pas par un outil.
+
+  **Et le verdict est aujourd'hui inerte.** `besoins_procede` est déduit
+  de ce que la pièce lit. Or toute pièce constructible lit son épaisseur
+  et son rayon minimal, sans quoi elle ne se dessine pas. Ni la saignée ni
+  le voile minimal n'y figurent. `coupable` est donc vrai dès que la pièce
+  se construit sur un réglage dont la machine est connue
+  (`pages.etat_procede`). Le seul chemin pour qu'une pièce se bloque
+  elle-même est `c.besoin()`, qu'aucune pièce n'appelle. Le verdict
+  redeviendra utile à la première pièce qui s'emboîte.
 
   **b. L'outillage** — imprimante, balance, pied à coulisse, instruments :
   **aucun critère automatique**. C'est la décision de Jeremy, et elle est
