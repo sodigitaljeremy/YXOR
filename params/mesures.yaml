@@ -31,11 +31,48 @@ mesures:
     instrument: "balance de cuisine, affichage au gramme"
     n: 1
     date: 2026-09-30
+    alimente: []            # ne nourrit plus rien : voir `remplacee_par`
+    remplacee_par: panneau_masse_2026_09_30
+    note: >
+      PREMIÈRE MESURE PHYSIQUE DU PROJET. Conservée, jamais effacée.
+      Remplacée le jour même par une pesée sur panneau plus grand, qui
+      divise l'incertitude par cinq.
+      Elle garde toute sa valeur de VÉRIFICATION : elle donnait
+      635 g/m² à ±12,5 %, soit 556 à 714. La mesure qui la remplace donne
+      649 g/m². **La première pesée tenait.** Deux mesures indépendantes
+      concordantes valent mieux qu'une mesure précise seule.
+
+  panneau_masse_2026_09_30:
+    grandeur: "masse d'un panneau de carton ondulé, zone plate non écrasée"
+    valeur: 20.0
+    unite: g
+    incertitude: 0.5
+    type_incertitude: resolution
+    instrument: "balance de cuisine, affichage au gramme"
+    n: 1
+    date: 2026-09-30
     alimente: [matieres.carton_ondule_simple.masse_surfacique]
     note: >
-      Première mesure physique du projet. À REPESER sur une masse plus
-      grande : 12,5 % d'incertitude relative est le prix d'une pesée
-      unique près du pas de l'instrument.
+      Panneau de 220 x 140 mm, relevé à la règle.
+      ⚠ UNITÉ CORRIGÉE À LA LECTURE : le relevé disait « 22 x 14 mm ».
+      En millimètres, 20 g sur 308 mm² donneraient 65 000 g/m² — un
+      carton de 65 kg au mètre carré. Lu en centimètres, 649 g/m², à
+      2 % de la mesure précédente. Le contexte tranche sans ambiguïté,
+      mais la correction est consignée plutôt que faite en silence.
+
+  panneau_dimensions_2026_09_30:
+    grandeur: "dimensions du panneau pesé"
+    valeur: 30800.0
+    unite: mm2
+    incertitude: 130.0
+    type_incertitude: resolution
+    instrument: "règle graduée, demi-graduation sur chaque côté"
+    n: 1
+    date: 2026-09-30
+    alimente: [matieres.carton_ondule_simple.masse_surfacique]
+    note: >
+      220 x 140 mm, ±0,5 mm par côté. L'aire porte 0,42 % d'incertitude
+      relative — négligeable devant les 2,5 % de la masse.
 
   carton_ondule_epaisseur_2026_09_30:
     grandeur: "épaisseur du carton ondulé simple cannelure"
@@ -76,15 +113,26 @@ mesures:
 #  INCERTITUDES PROPAGÉES, au 2026-09-30 — CALCULÉES, jamais saisies
 # ═════════════════════════════════════════════════════════════════════════
 #
-#   masse surfacique = masse / aire
-#     aire = 6300,49 mm², CALCULÉE (trois voies concordantes), σ ≈ 0
-#     σ_rel = 0,5/4,0 = 12,5 %
-#     -> 0,635 ± 0,079 mg/mm²   soit 635 ± 79 g/m²
+#   masse surfacique = masse / aire       (pesée sur PANNEAU, retenue)
+#     σ_rel(masse) = 0,5/20 = 2,50 %
+#     σ_rel(aire)  = racine( (0,5/220)² + (0,5/140)² ) = 0,42 %
+#     σ_rel        = racine( 2,50² + 0,42² ) = 2,54 %
+#     -> 0,6494 ± 0,0165 mg/mm²   soit 649 ± 17 g/m²
 #
 #   densité = masse_surfacique / epaisseur_mesuree
-#     σ_rel = racine( 0,125² + 0,143² ) = 19,0 %
-#     -> 0,181 ± 0,034 mg/mm³   soit 181 ± 34 kg/m³
+#     σ_rel = racine( 2,54² + 14,29² ) = 14,51 %
+#     -> 0,1855 ± 0,0269 mg/mm³   soit 186 ± 27 kg/m³
 #
-#   ⚠ LA DENSITÉ EST PLUS INCERTAINE QUE LA MASSE SURFACIQUE : elle
-#     hérite de DEUX incertitudes. Une valeur recopiée « ±12,5 % » aurait
-#     été fausse. C'est la raison d'être du calcul.
+#   ⚠ CE QUE LA REPESÉE A CHANGÉ, ET CE QU'ELLE N'A PAS CHANGÉ
+#
+#     masse surfacique : 12,5 % -> 2,5 %, un facteur CINQ.
+#     densité          : 19,0 % -> 14,5 %, presque rien.
+#
+#     Parce que la densité est DÉSORMAIS DOMINÉE PAR L'ÉPAISSEUR
+#     (14,3 %), et non plus par la masse (2,5 %). Peser mieux
+#     n'améliorera plus la densité : c'est la règle sur une matière
+#     compressible qui la limite.
+#
+#     C'est ce que la quadrature dit et qu'aucune intuition ne donne :
+#     le terme dominant décide, et il a CHANGÉ DE CÔTÉ entre les deux
+#     pesées.

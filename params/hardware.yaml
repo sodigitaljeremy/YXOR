@@ -121,12 +121,14 @@ materiaux:
     axe_reference: "sens des cannelures"
     # DÉDUITE, jamais saisie : masse_surfacique / epaisseur_mesuree
     # (fiche 0020). 0,6349 / 3,5 = 0,1814 mg/mm³ = 181 kg/m³.
-    # ⚠ ±12,5 %, hérité de la masse — voir params/mesures.yaml.
-    densite: 0.1814          # mg/mm³
+    # ⚠ ±14,5 %, hérité surtout de l'ÉPAISSEUR (14,3 %) et non plus de
+    # la masse (2,5 %) : peser mieux n'améliorera plus cette valeur.
+    densite: 0.1855          # mg/mm³ — BORNE HAUTE, voir la note du profil
     source: >
-      Relevé sur la semelle d'apprentissage coupée le 2026-09-30 :
-      carton ondulé simple cannelure de récupération, 4 g pour
-      6 300,49 mm² et 3,5 mm d'épaisseur.
+      Relevé le 2026-09-30 sur un panneau de 220 x 140 mm pesant 20 g,
+      épaisseur 3,5 mm à la règle. Carton de récupération, PROFIL DE
+      CANNELURE NON CONFIRMÉ. Une première pesée sur la semelle coupée
+      (4 g / 6 300,49 mm²) donnait une valeur concordante.
     note_anisotropie: >
       Une cannelure est une suite d'arches collées entre deux papiers.
       Elle donne au panneau une direction FORTE (le long des arches) et
@@ -177,8 +179,29 @@ matieres:
                              # Pas au pied à coulisse : ses becs écrasent
                              # les cannelures, et l'écrasement est
                              # irréversible (protocole du 2026-09-28).
-    masse_surfacique: 0.6349 # mg/mm² = 635 g/m². Pièce de 4 g sur
-                             # 6300,49 mm². ⚠ ±12,5 % — voir mesures.yaml.
+    masse_surfacique: 0.6494 # mg/mm² = 649 g/m². Panneau de 20 g sur
+                             # 220 x 140 mm. ±2,5 % — voir mesures.yaml.
+                             # La première pesée (635 g/m² ±12,5 %) tenait :
+                             # 649 tombe dans son intervalle 556-714.
+    # ⚠⚠ PROFIL DE CANNELURE NON CONFIRMÉ, 2026-09-30
+    #
+    #  Cette matière s'appelle `carton_ondule_simple`, mais le carton
+    #  mesuré est peut-être en DOUBLE cannelure. Les mesures ci-dessus
+    #  sont donc portées par un nom qui n'est pas vérifié.
+    #
+    #  Deux indices, qui tirent en sens CONTRAIRE :
+    #    - 649 g/m² est ÉLEVÉ pour une simple cannelure : deux couches
+    #      d'arches et trois papiers l'expliqueraient mieux ;
+    #    - 3,5 mm est MINCE pour une double, qui fait couramment le
+    #      double de cette épaisseur.
+    #
+    #  Ils ne s'excluent pas : une double cannelure ÉCRASÉE satisfait
+    #  les deux à la fois. L'écrasement ne change ni la masse ni l'aire,
+    #  donc pas la masse surfacique — mais il réduit l'épaisseur, donc
+    #  il GONFLE la densité calculée.
+    #
+    #  Tant que le profil n'est pas confirmé, `densite` est une borne
+    #  HAUTE. Rien n'est renommé : voir la fiche 0043.
     note: >
       Carton de colis récupéré. DISTINCT du carton-plume : celui-ci est
       une mousse prise entre deux papiers, isotrope dans son plan ; le

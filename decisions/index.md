@@ -65,5 +65,6 @@ lisent quand leur question se pose.
 | [0040](0040-registre-des-sources.md) | Un registre des sources, pas un index de recherche | gouvernante | appliquée | 2026-09-29 |  |
 | [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | proposée | 2026-09-30 |  |
 | [0042](0042-rayon-matiere-ou-geste.md) | Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ? | proposition | proposée | 2026-09-30 |  |
+| [0043](0043-profil-de-cannelure-et-lot-mesure.md) | Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main | proposition | proposée | 2026-09-30 |  |
 
-**42 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**43 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
