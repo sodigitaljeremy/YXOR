@@ -68,6 +68,7 @@ Voir `decisions/0018-application-web.md`.
 ## Documents
 
 - [Index des fiches de décision](decisions/index.md) — engendré
+- [État des lieux du 2026-09-29](docs/etat-des-lieux-2026-09-29.md) — inventaire, règles outillées, distance au premier objet
 - [Glossaire](docs/glossaire.md)
 - [Lecture du modèle amont](docs/lecture-modele.md)
 - [Instructions de travail](CLAUDE.md)
