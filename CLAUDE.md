@@ -99,6 +99,24 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 - Le code amont vit dans `~/upstream/`, **hors du dépôt**. Rien de ce qui s'y
   trouve ne doit être copié ou commité ici.
 
+## Sources sous droits : une valeur, jamais le texte
+
+Normes (ISO, DIN) et ouvrages (Springer, Elsevier, MIT Press) sont payants
+et protégés. Le dépôt en extrait **des valeurs numériques avec leur
+référence précise**, et rien d'autre.
+
+- **Jamais** d'extrait rédigé, de tableau recopié, de figure reproduite.
+- Une valeur isolée accompagnée de sa référence est un **fait** ; la
+  rédaction et la mise en forme sont l'**œuvre** de l'auteur.
+- **Si la source n'a pas été lue, la fiche le dit.** Ce n'est pas une
+  précaution de style : c'est ce qui permet à quelqu'un d'autre de savoir
+  quoi vérifier. Fait pour la DIN 8580 (fiche 0026), pour ISO 4762
+  (0028), et à refaire chaque fois.
+- Le fichier lui-même **n'entre pas dans le dépôt** et s'inscrit dans
+  `params/fournisseurs.yaml` avec ses six champs (fiche 0030).
+
+Voir `decisions/0035-origine-norme.md`.
+
 ## Ce qu'il ne faut pas faire
 
 - ~~Proposer d'acheter du matériel avant la phase 6 du plan d'action.~~

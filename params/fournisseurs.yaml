@@ -73,3 +73,56 @@ fichiers:
       Identiques à `ansur_ii_male`, même réserve.
     redistribuable: true
     chemin: null
+
+  forget_2018_these:
+    source: >
+      Forget, F. (2018), thèse, Université Toulouse 3 Paul Sabatier, HAL tel-02128260.
+      Exemplaire personnel de Jeremy, hors du dépôt.
+    reference: "Modélisation et contrôle d'actionneurs pour la robotique humanoïde.pdf"
+    date: 2026-09-29
+    empreinte: "sha256:9e659c8c6b2b312250a039de323f3373d93737bd7c6471be252581e604973b01"
+    conditions: >
+      Thèse de doctorat, dépôt HAL. Accès libre en lecture ; les droits d'auteur restent à l'auteur. Chapitre 5 LU (fiche 0038).
+      Règle appliquée (CLAUDE.md, fiche 0035) : on cite une valeur et une
+      référence, JAMAIS le texte, jamais un tableau, jamais une figure.
+    redistribuable: true
+    chemin: null
+  kajita_humanoid_robotics:
+    source: >
+      Kajita, S. et al., Introduction to Humanoid Robotics, Springer.
+      Exemplaire personnel de Jeremy, hors du dépôt.
+    reference: "Introduction-to-Humanoid-Robotics.pdf"
+    date: 2026-09-29
+    empreinte: "sha256:0f97ef22e2a2194b37a6d36acf4309ddf4c23edc40e15e60c17674fc2cad5d9b"
+    conditions: >
+      Ouvrage SOUS DROITS, éditeur Springer. §3.2 et §3.2.2 lus (fiche 0039). Aucun texte reproduit.
+      Règle appliquée (CLAUDE.md, fiche 0035) : on cite une valeur et une
+      référence, JAMAIS le texte, jamais un tableau, jamais une figure.
+    redistribuable: false
+    chemin: null
+  nenchev_modeling_control:
+    source: >
+      Nenchev, D. et al., Humanoid Robots: Modeling and Control, Elsevier.
+      Exemplaire personnel de Jeremy, hors du dépôt.
+    reference: "humanoid-robots-modeling-and-control.pdf"
+    date: 2026-09-29
+    empreinte: "sha256:d8cd44f5f2f8ff68d6572249a64094271275327141511d91869d9ac2d6e93172"
+    conditions: >
+      Ouvrage SOUS DROITS, éditeur Elsevier. NON LU à ce jour.
+      Règle appliquée (CLAUDE.md, fiche 0035) : on cite une valeur et une
+      référence, JAMAIS le texte, jamais un tableau, jamais une figure.
+    redistribuable: false
+    chemin: null
+  bennehar_rapport:
+    source: >
+      Rapport Bennehar — référence exacte à établir.
+      Exemplaire personnel de Jeremy, hors du dépôt.
+    reference: "rapport_bennehar.pdf"
+    date: 2026-09-29
+    empreinte: "sha256:fd19bc0074ec0338d804cf6e34673420e010d08c726eb72199ce42f9b0c0eb59"
+    conditions: >
+      Statut de diffusion NON ÉTABLI. NON LU à ce jour au-delà de la mention du ZMP.
+      Règle appliquée (CLAUDE.md, fiche 0035) : on cite une valeur et une
+      référence, JAMAIS le texte, jamais un tableau, jamais une figure.
+    redistribuable: false
+    chemin: null

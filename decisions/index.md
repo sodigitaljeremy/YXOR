@@ -60,5 +60,7 @@ lisent quand leur question se pose.
 | [0035](0035-origine-norme.md) | Une sixième origine : `norme` | proposition | proposée | 2026-09-29 |  |
 | [0036](0036-refonte-des-fiches.md) | Refonte des fiches : espèce, cycle de vie, parcours d'entrée | proposition | proposée | 2026-09-29 |  |
 | [0037](0037-verdict-par-piece.md) | Le verdict se calcule par PIÈCE, pas par réglage | close | appliquée | 2026-09-29 |  |
+| [0038](0038-dimensionnement-thermique.md) | Le facteur limitant n'est pas le couple, c'est la température | gouvernante | proposée | 2026-09-29 |  |
+| [0039](0039-semelle-porte-capteurs.md) | La vraie semelle sera d'abord un porte-capteurs | historique | appliquée | 2026-09-29 |  |
 
-**37 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**39 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
