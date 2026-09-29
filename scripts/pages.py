@@ -43,30 +43,52 @@ ECHECS: list[str] = []
 
 
 def commit() -> str:
-    """L'empreinte du commit d'où ce site est engendré.
+    """L'identité de ce site — l'EMPREINTE DE SON CONTENU, toujours.
 
-    En construction Docker : `YXOR_COMMIT`, passé par Coolify. En local :
-    `git rev-parse`. Sinon « inconnu » — dit, jamais deviné.
+    Premier jet : le SHA du commit, via `YXOR_COMMIT` en Docker et
+    `git rev-parse` en local. Deux défauts constatés le 2026-09-29 :
 
-    Sert à une chose : qu'un site périmé se reconnaisse. Le 2026-09-29,
-    une construction a échoué quatre heures, l'ancien conteneur a continué
-    de servir, et un plan de découpe faux a failli être coupé. La date
-    seule ne suffit pas : elle est celle de la GÉNÉRATION, donc du dernier
-    déploiement RÉUSSI, et un site périmé affiche une date plausible.
+    1. **Coolify ne passe pas `SOURCE_COMMIT`** — vérifié sur le site en
+       ligne, qui affichait « inconnu ».
+    2. Et surtout : en local on aurait vu le SHA git, en Docker
+       l'empreinte de repli. **Les deux ne se seraient jamais
+       comparées** — un signal qu'on ne peut pas confronter ne signale
+       rien.
+
+    Donc : une seule grandeur, calculée de la même façon partout, à
+    partir des fichiers qui produisent le site. Elle a en outre une
+    propriété que le SHA n'a pas — elle décrit ce qui a été CONSTRUIT,
+    pas ce qui a été commité. Une modification non commitée la change,
+    donc elle ne peut pas affirmer une fraîcheur qu'elle n'a pas.
     """
-    import os
-    import subprocess
-    v = os.environ.get("YXOR_COMMIT", "").strip()
-    if v and v != "inconnu":
-        return v
-    try:
-        r = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO,
-                           capture_output=True, text=True, timeout=5)
-        if r.returncode == 0:
-            return r.stdout.strip()
-    except Exception:
-        pass
-    return "inconnu"
+    return empreinte_source()
+
+
+def empreinte_source() -> str:
+    """Empreinte du CONTENU qui a produit ce site.
+
+    Repli quand ni `YXOR_COMMIT` ni git ne sont disponibles — et c'est le
+    cas réel : vérifié le 2026-09-29, Coolify ne passe PAS `SOURCE_COMMIT`
+    par défaut, et le site affichait « inconnu ».
+
+    Un « inconnu » honnête vaut mieux qu'un SHA faux, mais il ne permet
+    pas de comparer. Cette empreinte, si : elle se recalcule à
+    l'identique en local, par la même commande.
+
+    Et elle a une propriété que le SHA du commit n'a pas : **elle décrit
+    ce qui a été CONSTRUIT**, pas ce qui a été commité. Un fichier ignoré
+    par Git, ou une modification non commitée, la changent — donc elle ne
+    peut pas affirmer une fraîcheur qu'elle n'a pas.
+    """
+    import hashlib
+    h = hashlib.sha256()
+    for d in ("params", "parts", "scripts", "web"):
+        for f in sorted((REPO / d).rglob("*")):
+            if not f.is_file() or "__pycache__" in f.parts:
+                continue
+            h.update(str(f.relative_to(REPO)).encode())
+            h.update(f.read_bytes())
+    return h.hexdigest()[:10]
 
 
 COMMIT = commit()
@@ -239,7 +261,7 @@ def page(titre, corps, fil=None, cls="") -> str:
 {nav}</div></header><div class="wrap {cls}">{bandeau()}{corps}
 <footer>Site engendré depuis le dépôt YXOR le {datetime.date.today().isoformat()},
 au commit <code class="sha">{e(COMMIT[:12])}</code>.
-Comparer&nbsp;: <code>git rev-parse --short=12 HEAD</code>. S'ils diffèrent,
+Comparer&nbsp;: <code>python scripts/empreinte.py</code>. S'ils diffèrent,
 <b>cette page est périmée</b> — le déploiement a échoué et l'ancien
 conteneur sert encore.
 Il ne contient aucune donnée propre : chaque valeur vient d'un fichier du dépôt.
@@ -497,7 +519,7 @@ def page_atelier(p) -> str:
 <div class="sha-atelier">
   <div class="sha-lbl">Version de ce plan</div>
   <div class="sha-val">{e(COMMIT[:12])}</div>
-  <p>Comparer avec <code>git rev-parse --short=12 HEAD</code> avant de couper.
+  <p>Comparer avec <code>python scripts/empreinte.py</code> avant de couper.
   <b>S'ils diffèrent, ce plan est périmé</b> : le déploiement a échoué et
   le site sert encore l'ancienne version. La date ne suffit pas à le dire —
   c'est celle du dernier déploiement <i>réussi</i>.</p>
