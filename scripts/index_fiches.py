@@ -102,6 +102,17 @@ def construire() -> str:
 
 
 def main() -> int:
+    # `decisions/` n'est PAS copié dans l'image Docker : le site ne sert
+    # aucune fiche. Ce script est une tâche de MAINTENANCE DU DÉPÔT, pas
+    # de construction du site — et l'avoir câblé dans `regenerer.py` sans
+    # y penser a cassé le déploiement pendant quatre heures.
+    #
+    # On saute, et ON LE DIT. Un saut muet est le faux vert qu'on vient
+    # de corriger six fois.
+    if not DEC.is_dir():
+        print("   index des fiches IGNORÉ : pas de decisions/ ici "
+              "(construction Docker)")
+        return 0
     t, mauvais = construire()
     if mauvais:
         print("\n✗ CONVENTION DES FICHES VIOLÉE :")

@@ -53,6 +53,7 @@ EXPORTS = REPO / "exports" / "parts"
 # Fiche 0020 : un `null` a trois sens, pas un. La condition qui les
 # distingue est LUE dans params/nullites.yaml, jamais écrite ici.
 import controle_depot
+import controle_regles
 import index_fiches
 import nullites as NU
 import procedes as PROC
@@ -334,6 +335,10 @@ def main(argv=None) -> int:
     # Règle 4, sur TOUT le dépôt — pas seulement sur les répertoires
     # ignorés. C'est la classe de trou, pas le trou (fiche 0024 §4).
     if controle_depot.main() != 0:
+        return 1
+    # Ne lit que params/, qui EST copié dans l'image : ce contrôle vaut
+    # aussi en construction Docker, contrairement aux deux voisins.
+    if controle_regles.main() != 0:
         return 1
     index_fiches.main()
 
