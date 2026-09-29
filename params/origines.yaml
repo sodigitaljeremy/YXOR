@@ -166,6 +166,16 @@ fichiers:
         origine: propre
         nature: sans_objet
         source: "plaque, tôle, barre — un fait d'approvisionnement"
+      # Une exception PRÉCISE, avant le joker : l'ondulé double est un
+      # carton de récupération, sans catalogue. Son épaisseur nominale
+      # EST la mesurée (hardware.yaml : « nominale retenue = la
+      # mesurée »). Le joker la classait `catalogue`, à tort — audit de
+      # la nuit du 2026-09-29, passation point 3. Corrigé le 2026-09-30.
+      - motif: "matieres.carton_ondule_double.epaisseur"
+        origine: mesure
+        nature: procede
+        source: "params/mesures.yaml, carton_ondule_double_epaisseur_2026_09_29"
+        note: "relevée à la règle, ±0,5 mm ; aucune épaisseur annoncée n'existe"
       - motif: "matieres.*.epaisseur"
         origine: catalogue
         nature: procede
