@@ -70,33 +70,69 @@ fichiers:
   # ═══════════════════════════════════════════════════════════════════════
   hardware.yaml:
     regles:
-      - motif: "procede_defaut"
+      - motif: "reglage_defaut"
         origine: propre
         nature: sans_objet
-        source: "choix de projet — quel couple machine-matériau les pièces emploient"
+        source: "choix de projet — quel réglage les pièces emploient par défaut"
         note: >
-          Ce n'est pas une cote mais un SÉLECTEUR : il nomme un procédé,
+          Ce n'est pas une cote mais un SÉLECTEUR : il nomme un réglage,
           il ne mesure rien. Déplacé du code vers les données le
           2026-09-28 pour qu'un changement de matériau reste une
           modification de donnée.
 
-      # --- procédés : réécrits le 2026-09-28, fiches 0014 et 0015 ---
-      - motif: "procedes.**"
+      # --- quatre tables, réécrites le 2026-09-29, fiches 0026 et 0033 ---
+      # Les motifs `procedes.**` et `materiaux.**` d'avant couvraient une
+      # table unique qui fondait machine et matière. Ils sont remplacés,
+      # pas élargis : un joker trop large rendrait `non_qualifie`
+      # impossible à atteindre, et l'audit cesserait de mordre.
+
+      # MACHINES — des faits à constater, pas des cotes
+      - motif: "machines.*.nom"
+        origine: propre
+        nature: sans_objet
+        source: "désignation de l'appareil, pas une cote"
+      - motif: "machines.*.lieu"
+        origine: propre
+        nature: sans_objet
+        source: "où se trouve la machine, pas une cote"
+      - motif: "machines.*.pilotage"
+        origine: propre
+        nature: sans_objet
+        source: "manuel ou numérique — un fait, pas une mesure"
+      - motif: "machines.**"
         origine: mesure
         nature: procede
         source: null
-        note: >
-          À MESURER sur pièce d'essai, couple machine-matériau par couple
-          machine-matériau. Les valeurs à `null` sont des trous déclarés,
-          pas des oublis : une saignée supposée fausse toutes les cotes
-          d'assemblage.
+        note: "caractéristique de l'appareil, à relever sur la machine"
 
-      - motif: "materiaux.*.epaisseur_nominale"
+      # PROCÉDÉS — vocabulaire DIN 8580, aucun calcul n'en dépend
+      - motif: "procedes.*.din"
+        origine: litterature
+        nature: sans_objet
+        source: >
+          DIN 8580:2022-12, Fertigungsverfahren — Begriffe, Einteilung.
+          NORME NON LUE (payante) : existence, date et classement vérifiés
+          sur sources secondaires concordantes. Fiche 0026.
+      - motif: "procedes.**"
+        origine: propre
+        nature: sans_objet
+        source: "vocabulaire de classement, ne dimensionne rien"
+
+      # MATIÈRES — ce qu'on achète : matériau x forme x épaisseur
+      - motif: "matieres.*.materiau"
+        origine: propre
+        nature: sans_objet
+        source: "référence vers la table des matériaux"
+      - motif: "matieres.*.forme"
+        origine: propre
+        nature: sans_objet
+        source: "plaque, tôle, barre — un fait d'approvisionnement"
+      - motif: "matieres.*.epaisseur"
         origine: catalogue
         nature: procede
         source: null
-        note: "épaisseur annoncée du stock ; l'épaisseur RÉELLE est à mesurer"
-      - motif: "materiaux.**"
+        note: "épaisseur ANNONCÉE du stock ; la réelle est `epaisseur_mesuree`"
+      - motif: "matieres.**"
         origine: mesure
         nature: procede
         source: null
@@ -104,6 +140,50 @@ fichiers:
           Protocole au journal du 2026-09-28. `masse_surfacique` est la
           grandeur à privilégier : elle contourne la dispersion de
           l'épaisseur, qui domine l'erreur.
+
+      # MATÉRIAUX — propriétés intrinsèques
+      - motif: "materiaux.*.anisotrope"
+        origine: litterature
+        nature: sans_objet
+        source: "propriété structurelle du matériau, pas une cote"
+      - motif: "materiaux.**"
+        origine: mesure
+        nature: procede
+        source: null
+
+      # RÉGLAGES — le croisement, et LES MESURES
+      - motif: "reglages.*.id"
+        origine: propre
+        nature: sans_objet
+        source: "identifiant écrit à la main (fiche 0026)"
+      - motif: "reglages.*.machine"
+        origine: propre
+        nature: sans_objet
+        source: "référence vers la table des machines"
+      - motif: "reglages.*.procede"
+        origine: propre
+        nature: sans_objet
+        source: "référence vers la table des procédés"
+      - motif: "reglages.*.matiere"
+        origine: propre
+        nature: sans_objet
+        source: "référence vers la table des matières"
+      - motif: "reglages.*.valide"
+        origine: propre
+        nature: sans_objet
+        source: "le couple est-il possible — un fait constaté, pas une cote"
+      - motif: "reglages.*.fixation"
+        origine: propre
+        nature: sans_objet
+        source: "mode d'assemblage retenu, pas une cote"
+      - motif: "reglages.**"
+        origine: mesure
+        nature: procede
+        source: null
+        note: >
+          À MESURER sur pièce d'essai, réglage par réglage. Les valeurs à
+          `null` sont des trous déclarés, pas des oublis : une saignée
+          supposée fausse toutes les cotes d'assemblage.
 
       # --- quincaillerie : inchangée ---
       - motif: "vis.*.diametre"

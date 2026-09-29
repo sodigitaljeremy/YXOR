@@ -42,6 +42,7 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 from plan_decoupe import ecrire_plan_a4, polylignes_depuis_face  # noqa: E402
+import procedes as PROC  # noqa: E402
 import profil  # noqa: E402
 
 NOM = "semelle_apprentissage"
@@ -87,14 +88,27 @@ class Cotes:
         return self._note(f"ratios.{cle_ratio}", v, "litterature", "echelle",
                           f"{r['source']} (x H)")
 
-    def procede(self, proc: str, cle: str) -> float:
-        p = self.hw["procedes"][proc]
-        v = p[cle]
+    def reglage(self, rid: str, cle: str) -> float:
+        """Cote de procédé, lue dans un RÉGLAGE résolu (fiches 0026, 0033).
+
+        La jointure machine x procédé x matière est faite par le chargeur,
+        jamais ici : faite dans chaque pièce, elle divergerait.
+        Une cote peut venir du réglage lui-même (saignée, rayon minimal)
+        ou de la matière qu'il désigne (épaisseur) — le chargeur a mis les
+        deux à plat, mais la CLÉ RELEVÉE dit d'où elle vient réellement.
+        """
+        r = PROC.reglage(rid, self.hw)
+        v = r.get(cle)
         if v is None:
-            raise ValueError(f"procedes.{proc}.{cle} vaut null — à mesurer "
+            raise ValueError(f"reglages.{rid}.{cle} vaut null — à mesurer "
                              f"avant d'en dépendre (fiches 0014, 0015)")
-        return self._note(f"procedes.{proc}.{cle}", v, "mesure", "procede",
-                          f"hardware.yaml, procédé {proc}")
+        # `epaisseur` appartient à la MATIÈRE : la relever sous le réglage
+        # mentirait sur sa provenance, et deux réglages sur la même tôle
+        # sembleraient porter deux épaisseurs indépendantes.
+        chemin = (f"matieres.{r['matiere']}.{cle}" if cle in PROC.CLES_MATIERE
+                  else f"reglages.{rid}.{cle}")
+        return self._note(chemin, v, "mesure", "procede",
+                          f"hardware.yaml, réglage {rid}")
 
     def choix(self, nom: str, valeur, motif: str):
         """Choix de projet assumé : ni dérivé, ni sourcé ailleurs."""
@@ -111,8 +125,8 @@ def construire(c: Cotes, palier: str, resserrement: float, proc: str,
 
     L = c.echelle("pied_longueur", H)
     W = c.echelle("pied_largeur", H)
-    ep = c.procede(proc, "epaisseur")
-    r_int = c.procede(proc, "rayon_interieur_min")
+    ep = c.reglage(proc, "epaisseur")
+    r_int = c.reglage(proc, "rayon_interieur_min")
     rc = c.choix("ratio_coins", ratio_coins,
                  "choix libre : aucune règle ne contraint un congé convexe")
     r_ext = round(W * rc, 4)
@@ -156,11 +170,10 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--palier", default="P2", choices=["P1", "P2", "P3"])
     ap.add_argument("--resserrement", type=float, default=0.70)
-    defaut = yaml.safe_load((REPO / "params/hardware.yaml").read_text("utf-8")
-                            ).get("procede_defaut", "cutter_carton")
-    ap.add_argument("--procede", default=defaut,
-                    help=f"couple machine-matériau ; défaut lu dans hardware.yaml "
-                         f"(actuellement {defaut})")
+    defaut = PROC.defaut()
+    ap.add_argument("--reglage", default=defaut,
+                    help=f"identifiant de réglage machine x procédé x matière ; "
+                         f"défaut lu dans hardware.yaml (actuellement {defaut})")
     ap.add_argument("--coins", type=float, default=0.25,
                     help="congé des coins, en fraction de la largeur")
     ap.add_argument("--etendue", type=float, default=0.50,
@@ -173,20 +186,20 @@ def main(argv=None) -> int:
 
     c = Cotes()
     try:
-        piece, d = construire(c, a.palier, a.resserrement, a.procede,
+        piece, d = construire(c, a.palier, a.resserrement, a.reglage,
                               a.coins, a.etendue)
-    except ValueError as err:
+    except (ValueError, PROC.ReglageInconnu) as err:
         # Message net plutôt qu'une trace : ce n'est pas un bug, c'est le
         # garde-fou de la fiche 0015 qui refuse une cote non mesurée.
         print(f"\n  ARRÊT — {err}\n")
-        print(f"  Le procédé « {a.procede} » n'a pas toutes ses cotes.")
+        print(f"  Le réglage « {a.reglage} » n'a pas toutes ses cotes.")
         print("  Renseignez-les dans params/hardware.yaml après mesure,")
         print("  puis relancez. Voir le protocole au journal du 2026-09-28.")
         return 2
     SORTIE.mkdir(parents=True, exist_ok=True)
-    base = f"{NOM}_{a.palier}_{a.procede}"
+    base = f"{NOM}_{a.palier}_{a.reglage}"
 
-    print(f"Semelle d'apprentissage — palier {a.palier}, procédé {a.procede}\n")
+    print(f"Semelle d'apprentissage — palier {a.palier}, réglage {a.reglage}\n")
     print(f"  longueur        {d['L']:8.2f} mm   = H x ratio pied_longueur")
     print(f"  largeur         {d['W']:8.2f} mm   = H x ratio pied_largeur")
     print(f"  largeur au creux{d['largeur_creux']:8.2f} mm   = largeur x {d['ratio']}")
@@ -258,8 +271,8 @@ def main(argv=None) -> int:
         print(f"    {'OK ' if ok else 'ÉCHEC'}  {lib}")
 
     stamp = datetime.date.today().isoformat()
-    mat = c.hw["materiaux"].get(c.hw["procedes"][a.procede]["materiau"], {})
-    anisotrope = bool(mat.get("anisotrope"))
+    reg = PROC.reglage(a.reglage, c.hw)
+    anisotrope = reg["anisotrope"]
     fleche = None
     if anisotrope:
         # Sans flèche sur le plan, déclarer un sens de fibre ne sert à
@@ -273,7 +286,7 @@ def main(argv=None) -> int:
     larg, haut = ecrire_plan_a4(
         contours, SORTIE / f"{base}_planA4.pdf",
         f"YXOR — semelle d'apprentissage",
-        [f"Palier {a.palier} (H = {d['H']} m)    matiere : {a.procede}    "
+        [f"Palier {a.palier} (H = {d['H']} m)    matiere : {reg['materiau']}    "
          f"epaisseur {d['ep']:.1f} mm",
          f"Hors-tout {d['L']:.2f} x {d['W']:.2f} mm    "
          f"resserrement {d['ratio']:.2f} -> {d['largeur_creux']:.2f} mm au creux",
@@ -297,7 +310,8 @@ def main(argv=None) -> int:
     # libellé change. Quand deux clés concourent (la largeur au creux vient
     # de la largeur ET du resserrement), on déclare celle qui répond à
     # « pourquoi ce nombre-là » : le choix, pas la grandeur qu'il module.
-    kp = f"procedes.{a.procede}"
+    kp = f"reglages.{a.reglage}"
+    km = f"matieres.{reg['matiere']}"
     # Les repères sont publiés en COEFFICIENTS sur les cotes, jamais en
     # millimètres : c'est ce qui permet au navigateur de les replacer
     # quand H change, sans recopier une seule de nos constantes.
@@ -319,7 +333,7 @@ def main(argv=None) -> int:
          {"type": "rayon", "x": {"L": -REP_RINT_X},
           "y": {"W": -DEMI, "un": REP_RINT_MARGE},
           "dx": {"L": -REP_RINT_DX}, "dy": {"W": -REP_RINT_DY}}),
-        ("procede", "épaisseur", "ep", f"{kp}.epaisseur", {"type": "note"}),
+        ("procede", "épaisseur", "ep", f"{km}.epaisseur", {"type": "note"}),
     ]
     # Garde-fou : une clé déclarée qui n'existe pas dans le relevé est un
     # défaut, pas un tiret à afficher.
@@ -333,17 +347,19 @@ def main(argv=None) -> int:
     # --- relevé, lu par scripts/audit_origines.py ET scripts/regenerer.py ---
     # La pièce publie ses propres métadonnées : elle seule les connaît.
     # L'application ne fait que les lire — elle ne crée aucune donnée.
-    proc = c.hw["procedes"][a.procede]
+    proc = reg
     lignes = ["# Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.",
-              f"# Pièce : {NOM}   palier {a.palier}   procédé {a.procede}",
+              f"# Pièce : {NOM}   palier {a.palier}   réglage {a.reglage}",
               f"# Généré le {stamp} par parts/{NOM}.py", "",
               "piece:",
               f"  nom: {NOM}",
               f"  titre: \"Semelle d'apprentissage\"",
               f"  base_fichier: {base}",
               f"  palier: {a.palier}",
-              f"  procede: {a.procede}",
-              f"  machine: \"{proc['machine'] or 'non déterminé'}\"",
+              f"  reglage: {a.reglage}",
+              f"  procede: {reg['procede']}",
+              f"  procede_din: \"{reg['procede_din']}\"",
+              f"  machine: \"{proc['machine_nom'] or 'non déterminé'}\"",
               f"  lieu: \"{proc['lieu'] or 'non déterminé'}\"",
               f"  materiau: {proc['materiau']}",
               f"  epaisseur_mm: {d['ep']}",
@@ -403,7 +419,7 @@ def main(argv=None) -> int:
              cible="argument de la pièce  ->  --etendue"),
         dict(nom="ep", libelle="épaisseur du matériau", unite=" mm",
              valeur=d["ep"], mini=0.5, maxi=25.0, pas=0.1,   # non-cote: bornes du curseur
-             cible=f"params/hardware.yaml  ->  procedes.{a.procede}.epaisseur"),
+             cible=f"params/hardware.yaml  ->  matieres.{reg['matiere']}.epaisseur"),
     ]
     lignes += ["", "simulation:",
                "  tolerance_mm: " + str(profil.TOLERANCE_MM),

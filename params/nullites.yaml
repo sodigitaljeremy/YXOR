@@ -41,8 +41,6 @@ fichiers:
     regles:
 
       # ── Champs de PROSE : ce ne sont pas des valeurs ──────────────────
-      # Remplacent le filtre par préfixe de nom qui traînait dans le
-      # générateur. Il triait juste, mais sur le nom du champ.
       - motif: "**.note"
         etat: sans_objet
         parce_que: "champ de prose, pas une valeur à relever"
@@ -55,45 +53,76 @@ fichiers:
       - motif: "**.axe_reference"
         etat: sans_objet
         parce_que: "désignation d'un axe, pas une valeur à relever"
+      - motif: "**.motif"
+        etat: sans_objet
+        parce_que: >
+          motif d'un réglage déclaré impossible : c'est une explication,
+          pas une cote qui manque
+
+      # ── Un réglage IMPOSSIBLE n'a pas de cotes manquantes ─────────────
+      # Ses nuls ne sont pas « à mesurer » : il n'y a rien à mesurer sur
+      # un couple qui n'existe pas. C'est la distinction de la fiche 0020
+      # portée au niveau du réglage entier.
+      - motif: "reglages.**"
+        si: {cle: valide, vaut: false}
+        etat: sans_objet
+        parce_que: >
+          ce réglage est déclaré impossible : aucune de ses cotes n'a de
+          sens, et aucune n'est à mesurer
 
       # ── Rayon intérieur minimal : DEUX raisons distinctes ─────────────
-      # Ordre important : le cas du métal d'abord, parce que son épaisseur
-      # est connue et que la règle générale y conclurait à tort.
-      - motif: "procedes.decoupe_metal.rayon_interieur_min"
-        si: {cle: machine, vaut: null}
+      # Ordre important, et la première règle emploie un CHEMIN ABSOLU
+      # (fiche 0033) : la machine n'est plus une clé sœur du réglage
+      # depuis le passage à quatre tables.
+      - motif: "reglages.cousin_alu_3.rayon_interieur_min"
+        si: {chemin: "machines.decoupe_cousin.nom", vaut: null}
         etat: se_deduira
         parce_que: >
-          il dépend du moyen de découpe, et `machine` n'est pas encore
-          établie. Un jet d'eau, un laser et un plasma ne donnent pas le
-          même rayon minimal. Rien à mesurer tant que le moyen est inconnu.
-      - motif: "procedes.*.rayon_interieur_min"
+          il dépend du moyen de découpe, et `machines.decoupe_cousin.nom`
+          n'est pas encore établi. Un jet d'eau, un laser et un plasma ne
+          donnent pas le même rayon minimal. Rien à mesurer tant que le
+          moyen est inconnu.
+      - motif: "reglages.*.rayon_interieur_min"
         si: {cle: epaisseur, vaut: null}
         etat: se_deduira
         parce_que: >
-          il vaut 0,5 x `epaisseur` (CLAUDE.md), et l'épaisseur n'est pas
-          encore mesurée. Il suivra tout seul : ce n'est pas une seconde
-          mesure à faire.
+          il vaut 0,5 x `epaisseur` (CLAUDE.md), et l'épaisseur de la
+          matière n'est pas encore mesurée. Il suivra tout seul : ce n'est
+          pas une seconde mesure à faire.
 
       # ── La source d'une mesure vient AVEC la mesure ───────────────────
-      - motif: "procedes.*.source_saignee"
+      - motif: "reglages.*.source_saignee"
         si: {cle: saignee, vaut: null}
         etat: se_deduira
         parce_que: >
           une mesure non faite n'a pas de source. Elle se renseignera en
           même temps que `saignee`.
 
-      - motif: "materiaux.*.source"
-        si: {cle: masse_surfacique, vaut: null}
+      # ── Matières et matériaux ─────────────────────────────────────────
+      - motif: "matieres.*.masse_surfacique"
+        si: {cle: epaisseur, vaut: null}
         etat: se_deduira
         parce_que: >
-          le matériau n'est pas encore caractérisé : `masse_surfacique`
-          est absente. La source se renseignera avec le relevé.
+          la masse surfacique se relève sur une feuille dont l'épaisseur
+          est connue. Tant que `epaisseur` est absente, il n'y a pas de
+          feuille définie à peser.
 
-      # ── Densité : un quotient, pas un relevé ──────────────────────────
       - motif: "materiaux.*.densite"
-        si: {cle: masse_surfacique, vaut: null}
         etat: se_deduira
         parce_que: >
-          densité = `masse_surfacique` / `epaisseur_mesuree`. C'est un
-          quotient de deux relevés, pas un troisième relevé. La compter
-          « à mesurer » gonflerait le travail restant d'un tiers.
+          densité = `masse_surfacique` / `epaisseur_mesuree`, relevées sur
+          la MATIÈRE. C'est un quotient de deux mesures, pas une troisième
+          mesure. La compter « à mesurer » gonflerait le travail restant.
+
+      - motif: "materiaux.*.source"
+        etat: se_deduira
+        parce_que: >
+          le matériau n'est pas encore caractérisé. La source se
+          renseignera avec le premier relevé qui le concerne.
+
+      # ── Machine du cousin : ce n'est pas une mesure, c'est un fait ────
+      - motif: "machines.decoupe_cousin.nom"
+        etat: a_mesurer
+        parce_que: >
+          à CONSTATER, pas à mesurer : il suffit de demander au cousin
+          quel est son moyen de découpe.

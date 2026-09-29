@@ -1,7 +1,19 @@
-# 0032 — Quatre pistes en veille : notées, pas adoptées
+# 0032 — Cinq pistes en veille : notées, pas adoptées
 
 Date : 2026-09-29
 Statut : **veille** — aucune n'est adoptée, aucune n'est écartée.
+
+> **Trois des quatre premiers déclencheurs sont le même fait :
+> l'acquisition d'une imprimante 3D.** OrcaSlicer, 3MF et — indirectement
+> — la question de la reproductibilité du G-code n'attendent que cela.
+> C'est cohérent avec la fiche 0026 : l'impression est le **groupe
+> principal 1** de la DIN 8580 (*Urformen*), quand toute l'architecture
+> actuelle vit dans le **groupe 3** (*Trennen*). Ces outils sont
+> l'outillage d'un groupe que le projet n'a pas encore ouvert.
+>
+> **Jeremy achète une imprimante cette semaine** (fiche 0027, branche b).
+> Ces déclencheurs vont donc se présenter, et cette fiche est à relire à
+> ce moment-là — pas avant.
 
 Quatre pistes reviennent dans les retours extérieurs. Jeremy ne les veut
 **pas encore**. Les noter sans les adopter suppose d'écrire ce qui
@@ -80,10 +92,45 @@ a pas besoin aujourd'hui.
 constate — les deux sorties comparées sont des `.gcode.3mf`. Ce n'est pas
 un reproche au format, c'est une coïncidence à ne pas mal lire.
 
+## bd_warehouse
+
+**Ce que c'est.** Une collection de pièces paramétriques pour build123d :
+vis aux normes ISO 4762 et ASME B18.3, roulements, engrenages, joints
+toriques. **Apache-2.0**, donc famille permissive : aucun obstacle de
+licence (fiche 0029).
+
+**Pourquoi pas encore.** Deux constats obtenus en l'exécutant
+(fiche 0028), et aucun des deux n'était devinable sur le papier :
+
+1. **Il couvre un seul de nos trois roulements.** MR85 (5 × 8 × 2,5)
+   absent, 623 (3 × 10 × 4) présent, 688 (8 × 16 × 5) absent. Adopter une
+   bibliothèque qui couvre un tiers du besoin, c'est en maintenir deux.
+2. **`length` désigne la longueur SOUS TÊTE.** Une M3 `length=12` mesure
+   15 mm hors-tout. Ce n'est pas un défaut de la bibliothèque — c'est la
+   convention des normes de visserie — mais c'est exactement le genre de
+   cote qu'on recopie de travers, et le projet n'a aujourd'hui aucune
+   pièce qui permettrait de s'en apercevoir.
+
+**Déclencheur.** *La première pièce qui tient une vis.* Tant qu'aucune
+pièce n'a de perçage de fixation, la bibliothèque ne servirait à rien et
+ses deux pièges resteraient invisibles. Dès qu'il y en a une, elle
+devient testable : on compare la cote produite au relevé de la pièce, et
+le piège de `length` se voit au premier contrôle.
+
+**Coût d'entrée.** Faible : une ligne dans `requirements.txt`, aucune
+dépendance nouvelle hors build123d que nous avons déjà. Le coût réel est
+ailleurs — décider si une cote venue d'`ISO 4762` est d'origine
+`catalogue` ou `litterature`. La taxonomie de la fiche 0010 n'a pas prévu
+le cas d'une norme, et c'est cette question-là qu'il faudra trancher
+d'abord.
+
+**État du paquet.** Installé, exercé et **retiré** le 2026-09-29. Il n'est
+pas dans `requirements.txt` : le laisser installé sans l'inscrire aurait
+fait échouer la construction Docker sans explication.
+
 ## Ce que cette fiche établit
 
-Aucune des quatre n'est écartée. Trois déclencheurs sur quatre dépendent
-du même fait : **l'acquisition d'une imprimante 3D**. C'est cohérent avec
-la fiche 0026 — l'impression est le groupe principal 1 de la DIN 8580,
-quand toute l'architecture actuelle vit dans le groupe 3. Ces outils sont
-l'outillage d'un groupe que le projet n'a pas encore ouvert.
+**Aucune des cinq n'est écartée.** Quatre attendent l'imprimante, une —
+bd_warehouse — attend la première vis. Aucune n'attend une décision de
+principe : toutes ont un fait observable pour déclencheur, et c'est ce
+qui distingue une veille d'une liste de regrets.

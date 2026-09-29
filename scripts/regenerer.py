@@ -74,8 +74,12 @@ INDET = '<span class="ind">non déterminé</span>'
 # distingue est LUE dans params/nullites.yaml, jamais écrite ici.
 import nullites as NU
 import controle_depot
+import procedes as PROC
 import index_fiches
 REGLES_NUL = NU.charger()
+# Document complet : les conditions `si: {chemin: ...}` de la fiche
+# 0033 s'y résolvent, la machine n'étant plus une clé sœur.
+HW_DOC = PROC.charger()
 
 
 def prose(txt: str) -> str:
@@ -126,6 +130,20 @@ def rang_cote(c) -> int:
     return 3
 
 
+def _chemin_nul(r: dict, cle: str) -> str:
+    """Le chemin RÉEL de la cote, dans les quatre tables.
+
+    L'épaisseur vient de la matière, la saignée du réglage. Le chargeur
+    les met à plat, mais les motifs de nullites.yaml visent la vraie
+    table : se tromper ici ferait taire une règle sans que rien ne le
+    dise — et la valeur ressortirait en rouge « à mesurer » alors qu'elle
+    se déduit.
+    """
+    if cle in PROC.CLES_MATIERE:
+        return f"matieres.{r.get('matiere')}.{cle}"
+    return f"reglages.{r.get('id')}.{cle}"
+
+
 def _manque(p: dict, cles, prefixe="") -> list:
     """Ce qui MANQUE, quelle qu'en soit la raison.
 
@@ -142,20 +160,27 @@ def _manque(p: dict, cles, prefixe="") -> list:
     for k in cles:
         if p.get(k) is not None:
             continue
-        st = NU.etat(REGLES_NUL.get("hardware.yaml", []), f"{prefixe}{k}", p)
+        st = NU.etat(REGLES_NUL.get("hardware.yaml", []),
+                     _chemin_nul(p, k), p, document=HW_DOC)
         if st["etat"] != NU.SANS_OBJET:
             out.append((k, st["etat"]))
     return out
 
 
 def etat_procede(p: dict, nom: str = "*") -> dict:
-    """Deux niveaux, jamais un voyant unique."""
-    pre = f"procedes.{nom}."
-    md = _manque(p, CLES_DESSIN, pre)
-    mc = _manque(p, CLES_COUPE, pre)
-    if p.get("machine") is None:
-        mc.insert(0, ("machine", NU.A_MESURER))
-    return dict(dessinable=not md, coupable=not (md or mc),
+    """Deux niveaux, jamais un voyant unique.
+
+    Un réglage déclaré IMPOSSIBLE n'est ni dessinable ni coupable, et ce
+    n'est pas un manque : c'est un fait. On le distingue par `impossible`.
+    """
+    if p.get("valide") is False:
+        return dict(dessinable=False, coupable=False, impossible=True,
+                    manque_dessin=[], manque_coupe=[])
+    md = _manque(p, CLES_DESSIN)
+    mc = _manque(p, CLES_COUPE)
+    if p.get("machine_nom") is None:
+        mc.insert(0, ("moyen de découpe", NU.A_MESURER))
+    return dict(dessinable=not md, coupable=not (md or mc), impossible=False,
                 manque_dessin=md, manque_coupe=md + mc)
 
 
@@ -173,13 +198,28 @@ def val(x, unite="", ind=INDET, regles=None, cle="", voisines=None) -> str:
         return f"{e(x)}{unite}"
     if regles is None:
         return ind
-    st = NU.etat(regles, cle, voisines or {})
+    st = NU.etat(regles, cle, voisines or {}, document=HW_DOC)
     return nul(st["etat"], st["parce_que"])
 
 
 # ──────────────────────────────────────────────────── exécution des pièces
 def executer_pieces() -> list[str]:
-    """Exécute chaque parts/*.py dans CE processus. Renvoie les échecs."""
+    """Exécute chaque parts/*.py dans CE processus. Renvoie les échecs.
+
+    `exports/parts/` est VIDÉ d'abord. Sans cela, un fichier engendré sous
+    un nom qui n'existe plus survit et continue de s'ouvrir : le 2026-09-29,
+    la migration des procédés a renommé la base de `..._cutter_carton` à
+    `..._cutter_cartonplume_5`, et les anciens DXF sont restés là, valides
+    en apparence. Un fichier périmé qui s'ouvre est pire qu'un fichier
+    absent : rien ne signale qu'il ne correspond plus à rien.
+    """
+    if EXPORTS.exists():
+        n = 0
+        for f in EXPORTS.iterdir():
+            if f.is_file():
+                f.unlink(); n += 1
+        if n:
+            print(f"  exports/parts/ vidé ({n} fichier(s) de la passe précédente)")
     scripts = sorted(p for p in PARTS.glob("*.py") if not p.name.startswith("_"))
     echecs = []
     if not scripts:
@@ -588,11 +628,24 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
     # anthropometry.yaml, les confiance de joints.yaml. Rien n'est saisi,
     # donc rien ne peut se désynchroniser.
     lignes = []
-    for nom, pr in hw["procedes"].items():
+    for nom, pr in PROC.reglages(hw).items():
         st = etat_procede(pr, nom)
         manque = ", ".join(
             f'<span class="{NU.CLS[et]}">{e(m.replace("_", " "))}</span>'
             for m, et in st["manque_coupe"]) or "—"
+        if st["impossible"]:
+            # Ni dessinable ni coupable, mais ce n'est PAS un manque :
+            # c'est un fait établi. L'afficher comme « non, non, — » le
+            # ferait lire « incomplet », soit l'inverse de ce qu'on sait.
+            motif = prose(" ".join((pr.get("motif") or "").split()))
+            lignes.append(
+                f"<tr><td><code>{e(nom)}</code>"
+                + repli("matériau", val(pr.get("materiau")))
+                + repli("pourquoi", motif) + "</td>"
+                f'<td class="txt pliable">{val(pr.get("materiau"))}</td>'
+                f'<td class="txt" colspan="2"><span class="so">impossible</span></td>'
+                f'<td class="src pliable">{motif}</td></tr>')
+            continue
         lignes.append(
             f"<tr><td><code>{e(nom)}</code>"
             + repli("matériau", val(pr.get("materiau")))
@@ -609,13 +662,19 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
     # mauvaise raison, et aurait laissé passer tout champ de prose
     # nommé autrement.
     par_etat = {NU.A_MESURER: {}, NU.SE_DEDUIRA: {}}
-    for fam in ("procedes", "materiaux"):
-        for nom, d in hw[fam].items():
+    # `reglages` est une LISTE indexée par un `id` écrit à la main
+    # (fiche 0026) : elle ne se balaie pas comme les tables. L'oublier
+    # ferait disparaître toutes les saignées du compte « à mesurer » —
+    # le chiffre resterait affiché, simplement faux et rassurant.
+    a_balayer = [(f, nom, d) for f in ("machines", "materiaux", "matieres")
+                 for nom, d in (hw.get(f) or {}).items()]
+    a_balayer += [("reglages", r["id"], r) for r in (hw.get("reglages") or [])]
+    for fam, nom, d in a_balayer:
             for k, v in d.items():
                 if v is not None:
                     continue
                 st = NU.etat(REGLES_NUL.get("hardware.yaml", []),
-                             f"{fam}.{nom}.{k}", d)
+                             f"{fam}.{nom}.{k}", d, document=hw)
                 if st["etat"] == NU.SANS_OBJET:
                     continue
                 # Groupé par (clé, motif) : deux champs de même nom
@@ -801,7 +860,7 @@ def main(argv=None) -> int:
     jo = yaml.safe_load((REPO / "params/joints.yaml").read_text("utf-8"))
     import build123d as _bd
     for p in pieces:
-        p["_procede"] = hw["procedes"].get(p.get("procede"), {})
+        p["_procede"] = PROC.reglages(hw).get(p.get("reglage"), {})
         p["_contours"] = []
         st = p["fichiers"].get("step")
         if st:

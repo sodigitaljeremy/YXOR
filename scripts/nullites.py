@@ -33,22 +33,52 @@ def charger(chemin: Path | None = None) -> dict[str, list[dict]]:
             for f, d in (doc.get("fichiers") or {}).items()}
 
 
-def etat(regles: list[dict], chemin: str, voisines: dict) -> dict:
+def _suivre(racine: dict, chemin: str):
+    """Descend un chemin pointé. `INTROUVABLE` si un segment manque."""
+    cur = racine
+    for seg in chemin.split("."):
+        if not isinstance(cur, dict) or seg not in cur:
+            return INTROUVABLE
+        cur = cur[seg]
+    return cur
+
+
+INTROUVABLE = object()
+
+
+def etat(regles: list[dict], chemin: str, voisines: dict,
+         document: dict | None = None) -> dict:
     """État d'une valeur nulle, et le motif à afficher.
 
-    `voisines` : les clés SŒURS de la valeur, où se résout la condition.
-    C'est la limite assumée de la fiche 0020 : une condition ne regarde
-    pas plus loin que la fratrie.
+    Deux formes de condition :
+
+      si: {cle: <sœur>, vaut: <valeur>}       fratrie — fiche 0020
+      si: {chemin: "a.b.c", vaut: <valeur>}   chemin absolu — fiche 0033
+
+    La seconde a été ajoutée parce que la première ne suffisait plus : en
+    passant de deux tables à quatre (fiche 0026), la machine cesse d'être
+    une sœur du réglage. La fiche 0020 avait prévu que sa limite sauterait
+    et annoncé qu'elle sauterait « du bon côté » — la règle ne
+    correspondrait plus et le champ ressortirait en rouge. C'est
+    exactement ce qui se serait produit ; on l'étend plutôt que de le
+    subir.
     """
     for r in regles:
         if not correspond(r["motif"], chemin):
             continue
         si = r.get("si")
         if si is not None:
-            if si["cle"] not in voisines:
-                continue                       # condition inapplicable ici
-            if voisines[si["cle"]] != si.get("vaut"):
-                continue
+            if "chemin" in si:
+                if document is None:
+                    continue                   # pas de document : inapplicable
+                v = _suivre(document, si["chemin"])
+                if v is INTROUVABLE or v != si.get("vaut"):
+                    continue
+            else:
+                if si["cle"] not in voisines:
+                    continue                   # condition inapplicable ici
+                if voisines[si["cle"]] != si.get("vaut"):
+                    continue
         return dict(etat=r.get("etat", A_MESURER),
                     parce_que=" ".join((r.get("parce_que") or "").split()))
     return dict(etat=A_MESURER, parce_que="")

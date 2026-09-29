@@ -1,7 +1,7 @@
 # 0033 — L'épaisseur reste un CHAMP : le coût de l'autre choix, chiffré
 
 Date : 2026-09-29
-Statut : **proposée** — instruction, aucune migration.
+Statut : **acceptée** le 2026-09-29 — option B appliquée le jour même.
 Amende : `0026-machine-procede-matiere.md`, qu'elle complète du chiffrage
 demandé.
 

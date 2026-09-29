@@ -101,7 +101,32 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 
 ## Ce qu'il ne faut pas faire
 
-- Proposer d'acheter du matériel avant la phase 6 du plan d'action.
+- ~~Proposer d'acheter du matériel avant la phase 6 du plan d'action.~~
+
+  ⚠ **Remplacée le 2026-09-29** (fiche 0027). Le plan d'action n'a jamais
+  existé : la règle renvoyait à un document absent, donc à un critère que
+  personne ne pouvait constater. Trois règles la remplacent, parce qu'elle
+  mélangeait trois choses distinctes.
+
+  **a. Ce qui est lié à une pièce** — matériau, quincaillerie, découpe :
+  rien n'est proposé à l'achat tant que la pièce n'est pas **`coupable`**.
+  Critère vérifiable : `etat_procede` le calcule déjà, le site l'affiche,
+  et `regenerer.py` peut le refuser. Une pièce est `coupable` quand toutes
+  les cotes de son procédé sont renseignées — donc quand on sait ce qu'on
+  achète, et pourquoi.
+
+  **b. L'outillage** — imprimante, balance, pied à coulisse, instruments :
+  **aucun critère automatique**. C'est la décision de Jeremy, et elle est
+  hors de portée de l'assistant. Ne pas inventer de garde-fou ici : il
+  serait faux, et il donnerait l'illusion d'en avoir un.
+
+  **c. Et celle qui ne dépend de rien :** *l'assistant ne propose jamais
+  un achat de lui-même.* Si Jeremy demande un comparatif, il le donne,
+  complet et chiffré. Il ne suggère pas de dépenser. Cette règle n'a ni
+  exception ni condition — c'est la seule des trois qui visait vraiment
+  un risque d'assistant, et c'est celle que la « phase 6 » portait sans
+  le dire.
+
 - Avancer sur une phase suivante tant que la précédente n'est pas sortie.
 - Introduire une dépendance **copyleft fort** (GPL, AGPL, CERN-OHL-S) dans le
   cœur du projet.

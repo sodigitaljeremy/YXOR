@@ -1,7 +1,7 @@
 # 0025 — Le site en mobile d'abord
 
 Date : 2026-09-29
-Statut : **proposée** — rien n'est codé.
+Statut : **acceptée** le 2026-09-29 — appliquée.
 
 Deux lecteurs : vous sur votre téléphone, votre cousin sur le sien, à
 l'atelier. Référence de travail : **390 px de large**.

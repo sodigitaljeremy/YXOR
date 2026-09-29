@@ -1,13 +1,15 @@
 # Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.
-# Pièce : semelle_apprentissage   palier P2   procédé cutter_carton
+# Pièce : semelle_apprentissage   palier P2   réglage cutter_cartonplume_5
 # Généré le 2026-09-29 par parts/semelle_apprentissage.py
 
 piece:
   nom: semelle_apprentissage
   titre: "Semelle d'apprentissage"
-  base_fichier: semelle_apprentissage_P2_cutter_carton
+  base_fichier: semelle_apprentissage_P2_cutter_cartonplume_5
   palier: P2
-  procede: cutter_carton
+  reglage: cutter_cartonplume_5
+  procede: messerschneiden
+  procede_din: "3.1"
   machine: "cutter à main"
   lieu: "sur place"
   materiau: carton_plume
@@ -53,13 +55,13 @@ cotes_schema:
     trace: {"type": "rayon", "x": {"L": 0.5, "r_ext": -0.29290000000000005}, "y": {"W": 0.5, "r_ext": -0.29290000000000005}, "dx": {"L": 0.06}, "dy": {"W": 0.2}}
   - rang: procede
     libelle: "rayon intérieur minimal"
-    cle: procedes.cutter_carton.rayon_interieur_min
+    cle: reglages.cutter_cartonplume_5.rayon_interieur_min
     grandeur: r_int
     valeur: 2.5
     trace: {"type": "rayon", "x": {"L": -0.24}, "y": {"W": -0.5, "un": 0.2}, "dx": {"L": -0.05}, "dy": {"W": -0.26}}
   - rang: procede
     libelle: "épaisseur"
-    cle: procedes.cutter_carton.epaisseur
+    cle: matieres.carton_plume_5.epaisseur
     grandeur: ep
     valeur: 5.0
     trace: {"type": "note"}
@@ -73,7 +75,7 @@ simulation:
     - {"nom": "resserrement", "libelle": "resserrement à la taille", "unite": "", "valeur": 0.7, "mini": 0.4, "maxi": 0.98, "pas": 0.01, "cible": "argument de la pièce  ->  --resserrement"}
     - {"nom": "coins", "libelle": "congé des coins", "unite": "", "valeur": 0.25, "mini": 0.02, "maxi": 0.49, "pas": 0.01, "cible": "argument de la pièce  ->  --coins"}
     - {"nom": "etendue", "libelle": "étendue du creux", "unite": "", "valeur": 0.5, "mini": 0.15, "maxi": 0.9, "pas": 0.01, "cible": "argument de la pièce  ->  --etendue"}
-    - {"nom": "ep", "libelle": "épaisseur du matériau", "unite": " mm", "valeur": 5.0, "mini": 0.5, "maxi": 25.0, "pas": 0.1, "cible": "params/hardware.yaml  ->  procedes.cutter_carton.epaisseur"}
+    - {"nom": "ep", "libelle": "épaisseur du matériau", "unite": " mm", "valeur": 5.0, "mini": 0.5, "maxi": 25.0, "pas": 0.1, "cible": "params/hardware.yaml  ->  matieres.carton_plume_5.epaisseur"}
   reference:
     n_arc: 48
     cotes: {"L": 136.8, "W": 49.5, "r_ext": 12.375, "profondeur": 7.425, "etendue": 68.4, "R": 82.4761, "r_int": 2.5, "ep": 5.0, "largeur_creux": 34.65}
@@ -95,16 +97,16 @@ cotes:
     origine: litterature
     nature: echelle
     source: "D&C fig. 4.1 (x H)"
-  - cle: procedes.cutter_carton.epaisseur
+  - cle: matieres.carton_plume_5.epaisseur
     valeur: 5.0
     origine: mesure
     nature: procede
-    source: "hardware.yaml, procédé cutter_carton"
-  - cle: procedes.cutter_carton.rayon_interieur_min
+    source: "hardware.yaml, réglage cutter_cartonplume_5"
+  - cle: reglages.cutter_cartonplume_5.rayon_interieur_min
     valeur: 2.5
     origine: mesure
     nature: procede
-    source: "hardware.yaml, procédé cutter_carton"
+    source: "hardware.yaml, réglage cutter_cartonplume_5"
   - cle: ratio_coins
     valeur: 0.25
     origine: propre

@@ -1,8 +1,11 @@
 # 0027 — La règle de la « phase 6 » n'a jamais eu de référent
 
 Date : 2026-09-29
-Statut : **proposée** — je ne tranche pas. Deux options, ma préférence
-dite, la décision vous revient.
+Statut : **acceptée** le 2026-09-29 — option B retenue par Jeremy, **avec
+une correction de sa main** : le défaut que j'avais signalé (l'outillage
+n'est lié à aucune pièce) est comblé par une troisième branche. La règle
+appliquée est celle du § « Ce qui a été décidé » en fin de fiche, pas
+celle que je proposais.
 
 ## Le constat
 
@@ -99,3 +102,42 @@ critère fantôme par un critère que la machine sait constater.
 
 **Mais c'est votre décision, pas la mienne** — c'est une règle qui
 organise votre argent et mon comportement, pas une question technique.
+
+
+---
+
+## Ce qui a été décidé (2026-09-29)
+
+Ma proposition tenait en deux branches et laissait un trou : l'outillage.
+Jeremy en a ajouté une troisième et a tranché. La règle appliquée dans
+`CLAUDE.md` est donc :
+
+**a. Ce qui est lié à une pièce** — matériau, quincaillerie, découpe :
+rien n'est proposé à l'achat tant que la pièce n'est pas **`coupable`**.
+Critère vérifiable dans le dépôt.
+
+**b. L'outillage** — imprimante, balance, instruments : **aucun critère
+automatique.** C'est la décision de Jeremy, hors de portée de
+l'assistant. Ne pas inventer de garde-fou ici serait tentant ; ce serait
+faux, et cela donnerait l'illusion d'en avoir un.
+
+**c. L'assistant ne propose jamais un achat de lui-même.** Comparatif sur
+demande, oui ; suggestion de dépense, jamais. Sans exception ni
+condition.
+
+### Ce que la correction apporte
+
+Ma rédaction traitait « l'achat » comme une seule catégorie. Elle ne
+l'est pas : acheter une tôle et acheter une imprimante n'engagent ni le
+même montant, ni la même réversibilité, ni le même type de savoir.
+
+La branche (b) est celle que je n'aurais pas dû essayer de couvrir. En
+la nommant **explicitement sans critère**, elle devient lisible : il n'y
+a pas de garde-fou, et c'est écrit. C'est l'inverse de la « phase 6 »,
+qui laissait croire à un critère qu'aucun document ne portait.
+
+**Application immédiate** : Jeremy achète une imprimante 3D cette
+semaine. Branche (b). Voir la fiche 0032 — trois des quatre pistes en
+veille attendaient précisément ce fait, et la fiche 0026 rappelle que
+l'impression est le groupe principal 1 de la DIN 8580, quand toute
+l'architecture actuelle vit dans le groupe 3.
