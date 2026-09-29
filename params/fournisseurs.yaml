@@ -1,0 +1,39 @@
+# Provenance des fichiers fournisseurs — voir decisions/0030.
+#
+# Toute pièce obtenue d'un catalogue, constructeur ou distributeur est
+# inscrite ici, QU'ELLE ENTRE OU NON dans le dépôt.
+#
+# Pourquoi même celles qui n'entrent pas : un fichier absent et un
+# fichier interdit se ressemblent — dans les deux cas il n'y a rien.
+# Sans registre, on ne distingue pas « personne n'a cherché » de « c'est
+# interdit de le mettre ici ».
+#
+# Les six champs sont OBLIGATOIRES. `scripts/controle_depot.py` refuse
+# une entrée incomplète, et refuse qu'une entrée `redistribuable: false`
+# soit suivie par Git.
+#
+#   source         d'où il vient : nom du fournisseur, et URL si stable
+#   reference      la référence du produit chez lui
+#   date           date du téléchargement, format ISO
+#   empreinte      sha256 du fichier TÉLÉCHARGÉ, même s'il n'entre pas.
+#                  Un fournisseur modifie un modèle sans changer sa
+#                  référence : sans empreinte, un relevé de septembre et
+#                  un relevé de mars seraient indiscernables.
+#   conditions     ce que disent ses conditions d'utilisation, en clair
+#   redistribuable true | false — false interdit sa présence dans Git
+#   chemin         (facultatif) où il est, si redistribuable
+#
+# Exemple de la forme attendue, en commentaire tant qu'il n'y a rien :
+#
+# fichiers:
+#   mcmaster_91290A115:
+#     source: "McMaster-Carr"
+#     reference: "91290A115 — vis à tête cylindrique M3 x 12"
+#     date: 2026-09-29
+#     empreinte: "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+#     conditions: >
+#       Redistribution, œuvre dérivée et exploitation commerciale
+#       interdites par leurs conditions d'utilisation (fiche 0030).
+#     redistribuable: false
+
+fichiers: {}

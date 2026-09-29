@@ -103,4 +103,24 @@ Voir `decisions/0002-pin-toddlerbot.md`.
 
 - Proposer d'acheter du matériel avant la phase 6 du plan d'action.
 - Avancer sur une phase suivante tant que la précédente n'est pas sortie.
-- Introduire une dépendance GPL ou CERN-OHL-S dans le cœur du projet.
+- Introduire une dépendance **copyleft fort** (GPL, AGPL, CERN-OHL-S) dans le
+  cœur du projet.
+
+  ⚠ **Corrigé le 2026-09-29** (fiche 0029). Cette règle avait été écrite en
+  croyant CERN-OHL-S non commerciale. **Elle ne l'est pas** : vendre est
+  permis. Ce qu'elle impose est la **réciprocité** — publier les sources de
+  tout dérivé sous la même licence. La règle tient donc toujours, mais pour
+  le bon motif : ce n'est pas la vente qui serait empêchée, c'est le fait de
+  garder nos propres plans fermés.
+
+  **Deux familles à ne jamais confondre :**
+
+  | Famille | Exemples | Vendre ? | Garder fermé ? |
+  | --- | --- | --- | --- |
+  | non commerciale | CC BY-NC, CC BY-NC-SA | **non** | — |
+  | copyleft, réciproque | GPL, AGPL, CERN-OHL-S | **oui** | **non** |
+  | permissive | MIT, Apache-2.0, BSD, ISC | oui | oui |
+
+  La mécanique amont de ToddlerBot est en **CC BY-NC** : c'est la première
+  famille, celle qui interdit la vente. C'est elle, et non la seconde, qui
+  pèse sur les 1121 cotes d'origine `amont`.

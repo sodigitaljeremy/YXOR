@@ -97,6 +97,39 @@ def controler() -> list[tuple[str, str]]:
     return fautes
 
 
+CHAMPS_FOURNISSEUR = ("source", "reference", "date", "empreinte",
+                      "conditions", "redistribuable")
+
+
+def controler_fournisseurs(suivis_set: set[str]) -> list[str]:
+    """Fiche de provenance complète, et rien d'interdit dans Git (0030).
+
+    Un champ manquant n'est pas une négligence de forme : sans empreinte
+    on ne sait pas si le fournisseur a changé son modèle, et sans
+    conditions on ne sait pas si le fichier avait le droit d'être là.
+    """
+    f = REPO / "params" / "fournisseurs.yaml"
+    if not f.exists():
+        return []
+    import yaml
+    doc = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    fautes = []
+    for cle, d in (doc.get("fichiers") or {}).items():
+        d = d or {}
+        manquants = [c for c in CHAMPS_FOURNISSEUR if c not in d]
+        if manquants:
+            fautes.append(f"fournisseurs.yaml : « {cle} » sans "
+                          + ", ".join(manquants))
+        chemin = d.get("chemin")
+        if d.get("redistribuable") is False and chemin in suivis_set:
+            fautes.append(f"fournisseurs.yaml : « {cle} » est déclaré NON "
+                          f"redistribuable mais {chemin} est suivi par Git")
+        if d.get("redistribuable") is True and chemin and chemin not in suivis_set:
+            fautes.append(f"fournisseurs.yaml : « {cle} » annonce {chemin}, "
+                          "qui n'est pas suivi par Git")
+    return fautes
+
+
 def main() -> int:
     if not (REPO / ".git").exists():
         # Dit, jamais tu : un contrôle qui se tait en passant est pire
@@ -104,10 +137,18 @@ def main() -> int:
         print("   contrôle du dépôt IGNORÉ : pas de dépôt git ici "
               "(construction Docker)")
         return 0
+    liste = suivis()
     fautes = controler()
-    n = len(suivis())
+    mauvaises_fiches = controler_fournisseurs(set(liste))
+    n = len(liste)
+    if mauvaises_fiches:
+        print("\n✗ FICHES DE PROVENANCE INCOMPLÈTES (fiche 0030) :")
+        for m in mauvaises_fiches:
+            print(f"   {m}")
+        return 1
     if not fautes:
-        print(f"   règle 4 : {n} fichiers suivis, aucun binaire")
+        print(f"   règle 4 : {n} fichiers suivis, aucun binaire, "
+              "provenances conformes")
         if EXCEPTIONS:
             print(f"   ({len(EXCEPTIONS)} exception(s) assumée(s))")
         return 0

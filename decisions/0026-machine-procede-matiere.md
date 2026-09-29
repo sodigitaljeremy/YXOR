@@ -1,6 +1,7 @@
 # 0026 — Trois axes ne suffisent pas : la clé composée doit mourir
 
 Date : 2026-09-29
+Amendée par : `0033-epaisseur-cle-ou-champ.md` — le chiffrage du choix clé/champ sur nullites.yaml et origines.yaml.
 Statut : **proposée** — rien n'est appliqué.
 Amende : `0021-machine-x-materiau.md` — **sa migration est SUSPENDUE.**
 
