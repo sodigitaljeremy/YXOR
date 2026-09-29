@@ -66,5 +66,6 @@ lisent quand leur question se pose.
 | [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | proposée | 2026-09-30 |  |
 | [0042](0042-rayon-matiere-ou-geste.md) | Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ? | proposition | proposée | 2026-09-30 |  |
 | [0043](0043-profil-de-cannelure-et-lot-mesure.md) | Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main | close | appliquée | 2026-09-30 |  |
+| [0044](0044-variante-carton-ondule.md) | La semelle publiée n'est pas celle qui a été coupée | proposition | proposée | 2026-09-30 |  |
 
-**43 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**44 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
