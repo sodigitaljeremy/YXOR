@@ -99,7 +99,6 @@ def read_manifest() -> dict[str, dict]:
 
 def cmd_manifest(_):
     rows = scan()
-    now = datetime.datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
     L, A = [], None; A = L.append
     A("# Manifeste des poids ToddlerBot — SAUVEGARDE HORS GIT")
     A("#")
@@ -115,7 +114,8 @@ def cmd_manifest(_):
     A("# ⚠ Un identifiant Drive survit au remplacement de son contenu.")
     A("#   Seule l'empreinte SHA-256 prouve qu'il s'agit des mêmes poids.")
     A(f"#")
-    A(f"# Relevé le : {now}")
+    # Pas de date de relevé : ce fichier est haché par l'empreinte du site
+    # (lot A.9). Git connaît la date.
     A(f"# {len(rows)} archives, {sum(r['taille'] for r in rows)/1e6:.1f} Mo au total.")
     A("")
     A("archives:")

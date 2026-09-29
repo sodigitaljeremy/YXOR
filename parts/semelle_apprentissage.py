@@ -404,7 +404,10 @@ def main(argv=None) -> int:
     proc = reg
     lignes = ["# Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.",
               f"# Pièce : {NOM}   palier {a.palier}   réglage {a.reglage}",
-              f"# Généré le {stamp} par parts/{NOM}.py", "",
+              # Pas de date de génération : ce fichier est haché par
+              # l'empreinte, qui dépendrait sinon du jour de construction
+              # (lot A.9). Git connaît la date.
+              f"# Généré par parts/{NOM}.py", "",
               "piece:",
               f"  nom: {NOM}",
               f"  titre: \"Semelle d'apprentissage\"",
