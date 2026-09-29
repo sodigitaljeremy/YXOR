@@ -181,6 +181,32 @@ def calculer() -> dict:
     return res
 
 
+# ═══════════════════════════════════════════════════════════════════════
+#  DRILLIS & CONTINI — FIGÉES, parce que le YAML ne les porte plus
+# ═══════════════════════════════════════════════════════════════════════
+#
+# Jusqu'au 2026-09-30, la colonne « D&C » lisait `anthropometry.yaml`.
+# Depuis la fiche 0034, ce fichier porte ANSUR : la colonne affichait
+# ANSUR sous l'étiquette D&C, et l'écart valait 0 % PAR CONSTRUCTION
+# (audit de la nuit du 2026-09-29, § 8 H7).
+#
+# Valeurs relevées dans l'historique git, telles qu'elles étaient avant le
+# remplacement : `git show 9c7eef5:params/anthropometry.yaml`, bloc
+# `ratios`. Source déclarée à l'époque : « D&C fig. 4.1 » — Drillis &
+# Contini (1966), via Winter, figure 4.1 — avec `verifie: false` sur
+# chaque ligne. La figure est un GRAPHIQUE : l'attribution est établie,
+# les valeurs ne le sont pas. Elles restent donc une comparaison, pas une
+# référence. `tronc_hauteur` et `cou_hauteur` étaient DÉRIVÉES par
+# soustraction (0,818 − 0,530 et 1 − 0,130 − 0,818), pas publiées.
+DRILLIS_CONTINI = {
+    "hauteur_hanche": 0.530, "cuisse": 0.245, "tibia": 0.246,
+    "pied_longueur": 0.152, "pied_largeur": 0.055, "cheville_hauteur": 0.039,
+    "largeur_epaules": 0.259, "largeur_bassin": 0.191, "tronc_hauteur": 0.288,
+    "bras": 0.186, "avant_bras": 0.146, "main_longueur": 0.108,
+    "tete_hauteur": 0.130, "cou_hauteur": 0.052,
+}
+
+
 def afficher(res: dict, anciens: dict | None = None) -> None:
     eff = res["_effectifs"]
     print(f"\n  ANSUR II — {eff['male']} hommes + {eff['female']} femmes "
@@ -244,10 +270,7 @@ def main() -> int:
     if a.yaml:
         print(en_yaml(res))
         return 0
-    import yaml as _y
-    anc = _y.safe_load((REPO / "params/anthropometry.yaml").read_text("utf-8"))
-    anciens = {k: v["valeur"] for k, v in (anc.get("ratios") or {}).items()}
-    afficher(res, anciens)
+    afficher(res, DRILLIS_CONTINI)
     print("\n  empreintes des CSV employés :")
     for n, e in res["_empreintes"].items():
         print(f"    {n:<8} sha256:{e[:32]}…")
