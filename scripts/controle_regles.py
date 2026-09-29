@@ -192,7 +192,7 @@ def controler(fichier: str, dormantes: list | None = None) -> list[str]:
                 # attendait vient d'être mesurée. Elle redeviendra utile
                 # dès qu'une matière aura de nouveau ce champ à `null`.
                 #
-                # Distinction ajoutée le 2026-09-30 : la première mesure
+                # Distinction ajoutée le 2026-09-29 : la première mesure
                 # physique du projet a rempli `carton_ondule.epaisseur`,
                 # et le contrôle a crié à la règle morte. Un contrôle qui
                 # se trompe finit ignoré — c'est déjà la deuxième fois

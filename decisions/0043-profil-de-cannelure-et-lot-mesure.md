@@ -1,11 +1,11 @@
 # 0043 — Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main
 
-Date : 2026-09-30
+Date : 2026-09-29
 Espèce : close
 État : appliquée
-Statut : **appliquée** le 2026-09-30 — profil confirmé à la tranche, matière dédoublée, suspension levée.
+Statut : **appliquée** le 2026-09-29 — profil confirmé à la tranche, matière dédoublée, suspension levée.
 
-## RÉSOLUTION — 2026-09-30
+## RÉSOLUTION — 2026-09-29
 
 **Le profil est confirmé : DOUBLE cannelure.** Observation directe de la
 tranche par Jeremy — **deux rangées d'arches séparées par un papier
@@ -147,7 +147,7 @@ Une mesure devrait porter **ce qui a été mesuré**, et non seulement **ce
 qu'on croit que c'était** :
 
 ```yaml
-panneau_masse_2026_09_30:
+panneau_masse_2026_09_29:
   lot: carton_recup_colis_A       # l'objet physique, identifié
   matiere_supposee: carton_ondule_simple
 ```
@@ -158,7 +158,7 @@ Et un registre des lots, minimal :
 lots:
   carton_recup_colis_A:
     origine: "colis de récupération, provenance inconnue"
-    date_entree: 2026-09-30
+    date_entree: 2026-09-29
     profil: null                  # à établir en regardant la tranche
     note: "marquer physiquement le panneau : LOT A"
 ```

@@ -1,6 +1,6 @@
 # 0041 — Porter l'incertitude d'une mesure
 
-Date : 2026-09-30
+Date : 2026-09-29
 Espèce : proposition
 État : proposée
 Statut : **proposée** — instruction. Une seule chose est appliquée : le
@@ -48,7 +48,7 @@ grandeur **directement mesurée** — jamais pour une grandeur dérivée.
 
 ```yaml
 mesures:
-  semelle_masse_2026_09_30:
+  semelle_masse_2026_09_29:
     grandeur: "masse de la semelle d'apprentissage coupée"
     valeur: 4.0
     unite: g
@@ -56,7 +56,7 @@ mesures:
     type_incertitude: resolution
     instrument: "balance de cuisine, affichage au gramme"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: [matieres.carton_ondule_simple.masse_surfacique]
 ```
 
@@ -80,7 +80,7 @@ densite = masse_surfacique / epaisseur
 σ_rel(densite) = √( σ_rel(masse_surfacique)² + σ_rel(epaisseur)² )
 ```
 
-Appliqué aux mesures du 2026-09-30 :
+Appliqué aux mesures du 2026-09-29 :
 
 | | valeur | σ relatif |
 | --- | ---: | ---: |
@@ -128,6 +128,6 @@ ment tant qu'elles sont à quatre décimales.
 
 ## Ce qui est appliqué aujourd'hui
 
-`params/mesures.yaml` existe avec les **trois** mesures du 2026-09-30, et
+`params/mesures.yaml` existe avec les **trois** mesures du 2026-09-29, et
 rien de plus. Les valeurs de `hardware.yaml` portent un renvoi en
 commentaire. **Aucune autre valeur du dépôt n'a été touchée.**

@@ -1,6 +1,6 @@
 # 0042 — Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ?
 
-Date : 2026-09-30
+Date : 2026-09-29
 Espèce : proposition
 État : proposée
 Statut : **proposée** — instruction. Je ne tranche pas.

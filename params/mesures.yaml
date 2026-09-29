@@ -20,9 +20,9 @@
 #  s'additionnent en quadrature :
 #      σ_rel(a/b) = racine( σ_rel(a)² + σ_rel(b)² )
 
-# SUSPENSION LEVÉE LE 2026-09-30 — l'histoire est conservée.
+# SUSPENSION LEVÉE LE 2026-09-29 — l'histoire est conservée.
 #
-#   Trois mesures ont été suspendues le 2026-09-30 : l'acte de mesure
+#   Trois mesures ont été suspendues le 2026-09-29 : l'acte de mesure
 #   n'était pas en cause, c'était L'OBJET MESURÉ qui n'était pas
 #   identifié. `alimente:` pointait vers `carton_ondule_simple`, et le
 #   carton était peut-être une double.
@@ -40,7 +40,7 @@
 
 mesures:
 
-  semelle_masse_2026_09_30:
+  semelle_masse_2026_09_29:
     grandeur: "masse de la semelle d'apprentissage, pièce entière"
     valeur: 4.0
     unite: g
@@ -48,9 +48,9 @@ mesures:
     type_incertitude: resolution
     instrument: "balance de cuisine, affichage au gramme"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: []            # ne nourrit plus rien : voir `remplacee_par`
-    remplacee_par: panneau_masse_2026_09_30
+    remplacee_par: panneau_masse_2026_09_29
     note: >
       PREMIÈRE MESURE PHYSIQUE DU PROJET. Conservée, jamais effacée.
       Remplacée le jour même par une pesée sur panneau plus grand, qui
@@ -60,7 +60,7 @@ mesures:
       649 g/m². **La première pesée tenait.** Deux mesures indépendantes
       concordantes valent mieux qu'une mesure précise seule.
 
-  panneau_masse_2026_09_30:
+  panneau_masse_2026_09_29:
     grandeur: "masse d'un panneau de carton ondulé, zone plate non écrasée"
     valeur: 20.0
     unite: g
@@ -68,7 +68,7 @@ mesures:
     type_incertitude: resolution
     instrument: "balance de cuisine, affichage au gramme"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: [matieres.carton_ondule_double.masse_surfacique]
     note: >
       Panneau de 220 x 140 mm, relevé à la règle.
@@ -78,7 +78,7 @@ mesures:
       2 % de la mesure précédente. Le contexte tranche sans ambiguïté,
       mais la correction est consignée plutôt que faite en silence.
 
-  panneau_dimensions_2026_09_30:
+  panneau_dimensions_2026_09_29:
     grandeur: "dimensions du panneau pesé"
     valeur: 30800.0
     unite: mm2
@@ -86,13 +86,13 @@ mesures:
     type_incertitude: resolution
     instrument: "règle graduée, demi-graduation sur chaque côté"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: [matieres.carton_ondule_double.masse_surfacique]
     note: >
       220 x 140 mm, ±0,5 mm par côté. L'aire porte 0,42 % d'incertitude
       relative — négligeable devant les 2,5 % de la masse.
 
-  carton_ondule_double_epaisseur_2026_09_30:
+  carton_ondule_double_epaisseur_2026_09_29:
     grandeur: "épaisseur du carton ondulé DOUBLE cannelure"
     valeur: 3.5
     unite: mm
@@ -100,7 +100,7 @@ mesures:
     type_incertitude: resolution
     instrument: "règle graduée"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: [matieres.carton_ondule_double.epaisseur_mesuree]
     note: >
       Relevée EN PLUSIEURS ENDROITS, mais sans moyenne consignée : n=1 est
@@ -109,7 +109,7 @@ mesures:
       ⚠ L'incertitude de 0,5 mm est une HYPOTHÈSE : « à la règle » ne dit
       pas la graduation. À confirmer par Jeremy.
 
-  semelle_saignee_2026_09_30:
+  semelle_saignee_2026_09_29:
     grandeur: "saignée du cutter sur carton ondulé"
     valeur: 0.0
     unite: mm
@@ -117,7 +117,7 @@ mesures:
     type_incertitude: sous_resolution
     instrument: "superposition de la pièce coupée sur le plan papier"
     n: 1
-    date: 2026-09-30
+    date: 2026-09-29
     alimente: [reglages.cutter_cartonondule_double.saignee]
     note: >
       Il ne s'agit pas d'un zéro mesuré mais d'un écart INDÉTECTABLE par
@@ -128,7 +128,7 @@ mesures:
       donnerait une borne supérieure au lieu d'un zéro.
 
 # ═════════════════════════════════════════════════════════════════════════
-#  INCERTITUDES PROPAGÉES, au 2026-09-30 — CALCULÉES, jamais saisies
+#  INCERTITUDES PROPAGÉES, au 2026-09-29 — CALCULÉES, jamais saisies
 # ═════════════════════════════════════════════════════════════════════════
 #
 #   masse surfacique = masse / aire       (pesée sur PANNEAU, retenue)

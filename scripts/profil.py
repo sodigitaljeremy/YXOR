@@ -122,7 +122,7 @@ def aire(contour) -> float:
 
     Un contour dont les points sont tous à leur place mais parcourus dans
     le désordre reste à distance nulle du bon contour — Hausdorff compare
-    des ENSEMBLES. Son aire, elle, s'effondre : le 2026-09-30, un contour
+    des ENSEMBLES. Son aire, elle, s'effondre : le 2026-09-29, un contour
     à 0,0022 mm du noyau CAO avait une aire de 3605,90 mm² au lieu de
     6300,49, parce que le bas était parcouru à l'envers et que la boucle
     se refermait en huit.
@@ -210,7 +210,7 @@ def contour(d: dict, n_arc: int = 48) -> list[tuple[float, float]]:
     # La forme restait juste point par point — écart de Hausdorff 0,0022 mm
     # contre le noyau CAO — mais son AIRE valait 3605,90 mm² au lieu de
     # 6300,49. Hausdorff mesure une distance point-à-ensemble : il est
-    # aveugle à l'ordre. Trouvé le 2026-09-30, en calculant l'aire pour
+    # aveugle à l'ordre. Trouvé le 2026-09-29, en calculant l'aire pour
     # une masse surfacique. C'est une mesure PHYSIQUE qui a révélé le
     # défaut, pas un contrôle.
     pts += [(-x, -y) for x, y in haut]

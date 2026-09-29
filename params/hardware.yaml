@@ -116,7 +116,7 @@ materiaux:
     source: null
 
   carton_ondule:
-    # `densite` a vécu ici jusqu'au 2026-09-30. Elle est DESCENDUE à la
+    # `densite` a vécu ici jusqu'au 2026-09-29. Elle est DESCENDUE à la
     # matière : deux profils de cannelure n'ont pas la même densité
     # apparente, et la laisser au matériau la faisait valoir pour la
     # simple comme pour la double. Troisième erreur de localisation du
@@ -127,7 +127,7 @@ materiaux:
     anisotrope: true
     axe_reference: "sens des cannelures"
     source: >
-      Relevé le 2026-09-30 sur un panneau de 220 x 140 mm pesant 20 g,
+      Relevé le 2026-09-29 sur un panneau de 220 x 140 mm pesant 20 g,
       épaisseur 3,5 mm à la règle. Carton de récupération en DOUBLE
       cannelure, profil confirmé à la tranche le même jour. Une première
       pesée sur la semelle coupée (4 g / 6 300,49 mm²) donnait une
@@ -174,7 +174,7 @@ matieres:
     densite: null            # aucune mesure : voir la note ci-dessous
     materiau: carton_ondule
     forme: plaque
-    # AUCUNE MESURE. Les valeurs relevées le 2026-09-30 appartenaient à
+    # AUCUNE MESURE. Les valeurs relevées le 2026-09-29 appartenaient à
     # `carton_ondule_double` : le carton mesuré était une double
     # cannelure, confirmé à la tranche le jour même. Elles ont été
     # déplacées, pas copiées — une simple cannelure reste à mesurer.
@@ -191,14 +191,14 @@ matieres:
     materiau: carton_ondule
     forme: plaque
     # ══════════════════════════════════════════════════════════════
-    #  MESURES DU 2026-09-30 — SUSPENSION LEVÉE LE 2026-09-30
+    #  MESURES DU 2026-09-29 — SUSPENSION LEVÉE LE 2026-09-29
     # ══════════════════════════════════════════════════════════════
-    #  Ces valeurs ont été relevées le 2026-09-30 et inscrites d'abord
+    #  Ces valeurs ont été relevées le 2026-09-29 et inscrites d'abord
     #  sous `carton_ondule_simple`, puis SUSPENDUES le même jour : le
     #  profil de cannelure n'était pas confirmé, et rien dans le dépôt
     #  ne pouvait dire ce qui avait été sur l'établi (fiche 0043 §3).
     #
-    #  LEVÉE le 2026-09-30, sur observation directe de la tranche par
+    #  LEVÉE le 2026-09-29, sur observation directe de la tranche par
     #  Jeremy : DEUX rangées d'arches séparées par un papier
     #  intermédiaire, trois papiers plats au total. Photo IMG_6597,
     #  hors dépôt. C'est un constat binaire, visible à l'œil, qui ne
@@ -279,7 +279,7 @@ reglages:
     fixation: "vis traversante + rondelles larges des deux côtés"
     source_saignee: null
 
-  # Renommé le 2026-09-30 : la matière effectivement coupée était une
+  # Renommé le 2026-09-29 : la matière effectivement coupée était une
   # DOUBLE cannelure. L'ancien id `cutter_cartonondule` désignait une
   # matière qu'on n'avait pas eue en main.
   - id: cutter_cartonondule_double
@@ -287,7 +287,7 @@ reglages:
     procede: messerschneiden
     matiere: carton_ondule_double
     valide: true
-    # ── MESURÉ LE 2026-09-30 ────────────────────────────────────────
+    # ── MESURÉ LE 2026-09-29 ────────────────────────────────────────
     # La fiche 0026 PRÉDISAIT cette valeur : le Messerschneiden est une
     # séparation sans copeau (DIN 8580, 3.1), donc sans matière enlevée.
     # Prédiction vérifiée sur l'objet. Voir fiche 0026 § Résultat.
@@ -295,7 +295,7 @@ reglages:
                              # 0,0 est la valeur RETENUE, pas une mesure
                              # au micron : sous la résolution du moyen.
     source_saignee: >
-      Relevé sur la semelle d'apprentissage, 2026-09-30. Lame fine de
+      Relevé sur la semelle d'apprentissage, 2026-09-29. Lame fine de
       cutter, 1 passe sauf les angles à 2. Superposition de la pièce
       coupée sur le plan papier : coïncide.
     rayon_interieur_min: 1.75 # = 0,5 x 3,5 mm (CLAUDE.md). ⚠ Hérite de

@@ -144,7 +144,7 @@ fichiers:
         nature: sans_objet
         source: "vocabulaire de classement, ne dimensionne rien"
 
-      # ── RETIRÉ le 2026-09-30 ────────────────────────────────────────
+      # ── RETIRÉ le 2026-09-29 ────────────────────────────────────────
       # Un motif `**.mesures_suspendues` a existé une journée, le temps
       # d'une suspension. La suspension levée, le champ a disparu et le
       # motif ne correspondait plus à rien — donc MORT, et le contrôle

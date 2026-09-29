@@ -1,6 +1,6 @@
 # 0044 — La semelle publiée n'est pas celle qui a été coupée
 
-Date : 2026-09-30
+Date : 2026-09-29
 Espèce : proposition
 État : proposée
 Statut : **proposée** — instruction. **Rien n'est généré.**
@@ -24,7 +24,7 @@ matière, seules les cotes de procédé changent.
 pièce dit `carton_plume`, la cote F dit 5,0 mm, et le relevé d'origines
 fait dériver le rayon minimal d'un réglage qu'on n'a pas employé.
 
-C'est le même défaut que celui du 2026-09-30 sur les mesures, d'un cran
+C'est le même défaut que celui du 2026-09-29 sur les mesures, d'un cran
 plus haut : **une affirmation exacte dans sa forme et fausse dans son
 référent.**
 
@@ -52,7 +52,7 @@ hérite de deux faiblesses :
    et 2,00 mm.
 2. **La règle `0,5 × épaisseur` ne décrit que ce que la MATIÈRE
    supporte**, pas ce que le geste permet (fiche 0042). Et l'expérience
-   du 2026-09-30 est nette : **R 2,5 mm a déjà été difficile à couper à
+   du 2026-09-29 est nette : **R 2,5 mm a déjà été difficile à couper à
    la main**, avec deux passes dans les angles.
 
 Publier une variante à R 1,75 mm reviendrait donc à **publier un plan

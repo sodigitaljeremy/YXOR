@@ -130,6 +130,42 @@ def controler_fournisseurs(suivis_set: set[str]) -> list[str]:
     return fautes
 
 
+def controler_dates() -> list[str]:
+    """Aucun fichier de journal ne peut être daté du FUTUR.
+
+    Le 2026-09-29, `journal/2026-09-30.md` a été créé et commité à
+    22 h 37 — la veille du jour qu'il annonçait. Quarante-deux dates
+    fausses en ont découlé, propagées dans cinq fiches, trois fichiers de
+    `params/` et deux scripts.
+
+    Et le plus gênant : le défaut a été rapporté comme un bogue du PIED
+    DE PAGE, qui affichait « 2026-09-29 » pour des commits « du 30 ».
+    Le pied de page avait raison. Trois horloges indépendantes — WSL,
+    Windows et le serveur — le confirmaient. C'était le nom du fichier
+    qui mentait, et il avait l'air si naturel que personne n'a songé à
+    le vérifier.
+
+    Un nom de fichier ne lève aucune erreur. Celui-ci en lèvera une.
+    """
+    from datetime import date
+    fautes = []
+    j = REPO / "journal"
+    if not j.is_dir():
+        return fautes
+    for f in sorted(j.glob("*.md")):
+        tete = f.stem[:10]
+        try:
+            d = date.fromisoformat(tete)
+        except ValueError:
+            fautes.append(f"journal/{f.name} : le nom ne commence pas par "
+                          f"une date ISO (AAAA-MM-JJ)")
+            continue
+        if d > date.today():
+            fautes.append(f"journal/{f.name} : daté du FUTUR "
+                          f"(aujourd'hui : {date.today().isoformat()})")
+    return fautes
+
+
 def main() -> int:
     if not (REPO / ".git").exists():
         # Dit, jamais tu : un contrôle qui se tait en passant est pire
@@ -146,16 +182,17 @@ def main() -> int:
         print("  n'a rien inspecté. Vérifier qu'on est bien dans le dépôt.")
         return 1
     fautes = controler()
-    mauvaises_fiches = controler_fournisseurs(set(liste))
+    mauvaises_fiches = controler_fournisseurs(set(liste)) + controler_dates()
     n = len(liste)
     if mauvaises_fiches:
-        print("\n✗ FICHES DE PROVENANCE INCOMPLÈTES (fiche 0030) :")
+        print("\n✗ PROVENANCES OU DATES INVALIDES :")
         for m in mauvaises_fiches:
             print(f"   {m}")
         return 1
     if not fautes:
+        n_j = len(list((REPO / "journal").glob("*.md"))) if (REPO / "journal").is_dir() else 0
         print(f"   règle 4 : {n} fichiers suivis, aucun binaire, "
-              "provenances conformes")
+              f"provenances conformes, {n_j} journaux bien datés")
         if EXCEPTIONS:
             print(f"   ({len(EXCEPTIONS)} exception(s) assumée(s))")
         return 0

@@ -82,7 +82,7 @@ allemand. Il ne pilote aucun calcul. Il donne un **vocabulaire stable et
 extérieur au projet**, qui survivra à nos renommages — et il permet à
 qui nous lit de rattacher notre bricolage à une classification connue.
 
-## RÉSULTAT — prédiction vérifiée le 2026-09-30
+## RÉSULTAT — prédiction vérifiée le 2026-09-29
 
 > **La saignée du cutter sur carton ondulé est indétectable par
 > superposition. La prédiction de cette fiche est confirmée par un
@@ -94,13 +94,13 @@ Cette fiche avançait, en tirant la conséquence du classement DIN :
 > nulle. Abtragen en retire toujours, donc saignée non nulle, et
 > croissante avec l'épaisseur. »
 
-Le 2026-09-30, la semelle d'apprentissage a été coupée au cutter dans du
+Le 2026-09-29, la semelle d'apprentissage a été coupée au cutter dans du
 carton ondulé simple cannelure de 3,5 mm. **La pièce superposée au plan
 papier coïncide** : aucun écart mesurable, une passe par trait sauf les
 angles à deux.
 
 `reglages.cutter_cartonondule_double.saignee` porte désormais **0,0 mm**.
-(Identifiant renommé le 2026-09-30 : la matière coupée était une double
+(Identifiant renommé le 2026-09-29 : la matière coupée était une double
 cannelure, confirmée à la tranche.)
 
 ### Ce que ce résultat vaut, et ce qu'il ne vaut pas
