@@ -62,3 +62,10 @@ build123d==0.13.0
 # Licence MIT.
 
 PyYAML==6.0.3
+
+# Lecture des sources documentaires — scripts/source.py uniquement.
+# N'est PAS employé par la régénération : l'étage constructeur du
+# Dockerfile ne s'en sert pas. Inscrit ici quand même, parce qu'un paquet
+# installé mais non déclaré est le piège relevé pour bd_warehouse : le
+# code marche ici et échoue ailleurs sans que rien ne l'explique.
+pypdf==6.19.0

@@ -1,0 +1,163 @@
+# Registre des sources documentaires — voir decisions/0040.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  UN REGISTRE, PAS UN INDEX DE RECHERCHE
+# ─────────────────────────────────────────────────────────────────────────
+#  Neuf documents ne sont pas un problème de recherche. Ce fichier ne sert
+#  pas à RETROUVER un passage : il sert à savoir CE QU'ON A LU, jusqu'où,
+#  et ce qu'on a le droit d'en citer.
+#
+#  Le chapitre 5 de `forget2018` a été lu en entier. C'est cette lecture
+#  continue qui a permis de corriger une distinction — trois régions de
+#  fonctionnement, pas quatre — qu'un découpage en fragments aurait
+#  détruite. Un extrait sémantique ne cite pas une page ; il ne dit pas
+#  non plus ce qu'il a omis.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  CE FICHIER NE CONTIENT AUCUN CHEMIN
+# ─────────────────────────────────────────────────────────────────────────
+#  Les chemins vers les exemplaires sont dans `sources.local.yaml`, IGNORÉ
+#  par Git : ils sont propres à une machine et n'ont pas à voyager.
+#
+#  Et une RÈGLE, qui est la raison d'être de cette séparation :
+#
+#      Les exemplaires vivent dans un dossier qui contient aussi des
+#      documents personnels sans rapport avec le projet. On n'explore
+#      JAMAIS ce dossier. On ouvre les neuf chemins nommés dans
+#      `sources.local.yaml`, et rien d'autre.
+#
+#  Le registre existe pour rendre toute exploration inutile.
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  L'EMPREINTE N'EST PAS DÉCORATIVE
+# ─────────────────────────────────────────────────────────────────────────
+#  Une citation « p. 97 » ne vaut que pour l'exemplaire lu. Deux tirages
+#  d'un même ouvrage n'ont pas la même pagination ; un PDF recompressé non
+#  plus. `scripts/source.py` vérifie l'empreinte AVANT toute lecture et
+#  refuse si elle a changé.
+#
+#  `lecture` : lu | partiel | non_lu — et `lu` dit QUELLES pages.
+#  Un `non_lu` est une information, pas un oubli : il dit qu'aucune
+#  affirmation du dépôt ne peut s'en réclamer.
+
+sources:
+  forget2018:
+    auteurs: "Forget, Florent"
+    titre: "Modélisation et contrôle d'actionneurs pour la robotique humanoïde"
+    editeur: "Université Toulouse 3 Paul Sabatier — thèse de doctorat"
+    annee: 2018
+    identifiant_perenne: "HAL: tel-02128260"
+    pages: 148
+    empreinte: "sha256:9e659c8c6b2b312250a039de323f3373d93737bd7c6471be252581e604973b01"
+    octets: 2736574
+    droits: >
+      Thèse déposée sur HAL, accès libre en lecture. Droits d'auteur conservés par l'auteur : citation permise, reproduction du texte non.
+    lecture: partiel
+    lu: "chapitre 5, p. 93-102 (pages PDF 108-117)"
+    pourquoi: >
+      Le facteur limitant d'un actionneur est la température, pas le couple de pointe (fiche 0038).
+  kajita_humanoid:
+    auteurs: "Kajita, Shuuji ; Hirukawa, Hirohisa ; Harada, Kensuke ; Yokoi, Kazuhito"
+    titre: "Introduction to Humanoid Robotics"
+    editeur: "Springer"
+    annee: 2014
+    identifiant_perenne: "ISBN 978-3-642-54535-1"
+    pages: 232
+    empreinte: "sha256:0f97ef22e2a2194b37a6d36acf4309ddf4c23edc40e15e60c17674fc2cad5d9b"
+    octets: 24368157
+    droits: >
+      SOUS DROITS, Springer. Valeur et référence citables ; texte, tableaux et figures non reproductibles.
+    lecture: partiel
+    lu: "§3.2 « Measurement of ZMP » et §3.2.2, p. 79 (page PDF 90)"
+    pourquoi: >
+      Le ZMP se mesure par capteurs six axes logés dans le pied (fiche 0039).
+  nenchev_modeling:
+    auteurs: "Nenchev, Dragomir N. ; Konno, Atsushi ; Tsujita, Teppei (contrib.)"
+    titre: "Humanoid Robots: Modeling and Control"
+    editeur: "Elsevier / Butterworth-Heinemann"
+    annee: 2018
+    identifiant_perenne: "ISBN 978-0-12-804560-2"
+    pages: 499
+    empreinte: "sha256:d8cd44f5f2f8ff68d6572249a64094271275327141511d91869d9ac2d6e93172"
+    octets: 31109663
+    droits: >
+      SOUS DROITS, Elsevier. Idem : valeur et référence seulement.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Non consulté à ce jour.
+  siegwart_mobile:
+    auteurs: "Siegwart, Roland ; Nourbakhsh, Illah R."
+    titre: "Introduction to Autonomous Mobile Robots"
+    editeur: "MIT Press"
+    annee: 2004
+    identifiant_perenne: "ISBN 978-0-262-19502-7"
+    pages: 336
+    empreinte: "sha256:203f3a81666d80e13c3854f467fcd74aebbc0e96dd2d7789b1b8f0bfafec166c"
+    octets: 8292025
+    droits: >
+      SOUS DROITS, MIT Press. Idem.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Non consulté à ce jour.
+  bennehar_master:
+    auteurs: "Bennehar, Moussab"
+    titre: "De la marche humaine à la marche humanoïde"
+    editeur: "Université Mentouri de Constantine / LIRMM Montpellier — rapport de Master 2 Recherche"
+    annee: null
+    identifiant_perenne: null
+    pages: 63
+    empreinte: "sha256:fd19bc0074ec0338d804cf6e34673420e010d08c726eb72199ce42f9b0c0eb59"
+    octets: 2374069
+    droits: >
+      Statut de diffusion NON ÉTABLI. Traité comme non redistribuable par défaut.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Décrit le même montage de capteurs d'effort dans le pied que Kajita (fiche 0039), mention non vérifiée en détail.
+  handbook_humanoids:
+    auteurs: "Fitzpatrick, Paul ; Harada, Kensuke ; Kemp, Charles C. ; Matsumoto, Yoshio ; Yokoi, Kazuhito ; Yoshida, Eiichi"
+    titre: "Humanoids — Springer Handbook of Robotics, chapitre 67, partie G"
+    editeur: "Springer"
+    annee: null
+    identifiant_perenne: "chapitre 67, p. 1789 et suiv."
+    pages: 30
+    empreinte: "sha256:e29a51f0febe4540023cbadb6e2a07e012200e421400a3c151d0154e32f07a08"
+    octets: 6234902
+    droits: >
+      SOUS DROITS, Springer. Idem.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Non consulté à ce jour.
+  st_humanoid_guide:
+    auteurs: "STMicroelectronics"
+    titre: "Humanoid Robot Reference Guide"
+    editeur: "STMicroelectronics — documentation constructeur"
+    annee: null
+    identifiant_perenne: null
+    pages: 40
+    empreinte: "sha256:0dfd2c7a44773700db49b67696c316ddbaac9a2b02cf0ffdb438182bcf530341"
+    octets: 3978181
+    droits: >
+      Documentation commerciale d'un constructeur. Diffusion libre en lecture, redistribution NON ÉTABLIE.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Guide de sélection de composants — capteurs MEMS, pilotage moteur. Origine `catalogue` si une valeur en est tirée.
+  btech_curriculum:
+    auteurs: "—"
+    titre: "B.Tech Robotics and Artificial Intelligence — Curriculum & Syllabus 2024"
+    editeur: "Department of Mechanical Engineering (établissement à préciser)"
+    annee: 2024
+    identifiant_perenne: null
+    pages: 210
+    empreinte: "sha256:da0dd8cae9d570135bfcb9a9e5fdf47a20b933f1adeb3e09271aed9a0e07f21c"
+    octets: 1977123
+    droits: >
+      Document pédagogique, statut de diffusion NON ÉTABLI.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Programme d'enseignement — aucune valeur de conception n'en est tirée.

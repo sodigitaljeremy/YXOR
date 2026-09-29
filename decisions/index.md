@@ -62,5 +62,6 @@ lisent quand leur question se pose.
 | [0037](0037-verdict-par-piece.md) | Le verdict se calcule par PIÈCE, pas par réglage | close | appliquée | 2026-09-29 |  |
 | [0038](0038-dimensionnement-thermique.md) | Le facteur limitant n'est pas le couple, c'est la température | gouvernante | proposée | 2026-09-29 |  |
 | [0039](0039-semelle-porte-capteurs.md) | La vraie semelle sera d'abord un porte-capteurs | historique | appliquée | 2026-09-29 |  |
+| [0040](0040-registre-des-sources.md) | Un registre des sources, pas un index de recherche | gouvernante | appliquée | 2026-09-29 |  |
 
-**39 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**40 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.

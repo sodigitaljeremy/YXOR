@@ -105,7 +105,7 @@ def main(argv=None) -> int:
     print(f"{total} pas de contrôle ({policy.prep_duration:.0f} s de mise en pose "
           f"+ {args.seconds:.0f} s filmées), une image tous les {every} pas")
 
-    frames, rtimes, log = [], [], []
+    frames, rtimes, log, couples = [], [], [], []
     t_phys = 0.0
     for step in range(total):
         obs = simulated_time_obs(sim)          # CORRECTIF 1
@@ -117,7 +117,13 @@ def main(argv=None) -> int:
 
         if sim.data.time < policy.prep_duration:
             continue
+        # On journalise AUSSI les couples. Jusqu'ici seule la position de
+        # base l'était : la marche en boucle fermée tournait 12 s et ne
+        # laissait aucune trace de l'effort. Rien à dimensionner ici — il
+        # s'agit que la donnée existe (fiche 0038 §3).
         log.append((sim.data.time, *(float(v) for v in sim.data.qpos[:3])))
+        couples.append((sim.data.time,
+                        *(float(v) for v in sim.data.actuator_force)))
         if step % every:
             continue
         base_pos = sim.data.qpos[:3]
@@ -126,6 +132,19 @@ def main(argv=None) -> int:
         frames.append(r.render())
         rtimes.append(time.perf_counter() - t0)
     r.close()
+
+    if couples:
+        import csv as _csv
+        fc = REPO / "exports" / "actionneurs" / "couples_marche.csv"
+        fc.parent.mkdir(parents=True, exist_ok=True)
+        noms_act = [mujoco.mj_id2name(sim.model, mujoco.mjtObj.mjOBJ_ACTUATOR, i)
+                    or f"act{i}" for i in range(sim.model.nu)]
+        with fc.open("w", encoding="utf-8", newline="") as fh:
+            w = _csv.writer(fh)
+            w.writerow(["temps_s"] + noms_act)
+            w.writerows(couples)
+        print(f"  couples journalisés : {fc}  "
+              f"({len(couples)} pas, {len(noms_act)} actionneurs)")
 
     L = np.array(log)
     dx, dy = L[-1, 1] - L[0, 1], L[-1, 2] - L[0, 2]

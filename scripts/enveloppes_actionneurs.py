@@ -162,6 +162,7 @@ def cas_dynamiques(m, noms, qadr, dadr, base):
     n = int(2.0 / m.opt.timestep)
     couples = np.zeros(m.nu); vitesses = np.zeros(m.nu)
     ampl_vue = np.zeros(m.nu); qmin = np.full(m.nu, 1e9); qmax = np.full(m.nu, -1e9)
+    serie: list[tuple] = []
     for k in range(n):
         t = k * m.opt.timestep
         cible = base.copy()
@@ -179,9 +180,15 @@ def cas_dynamiques(m, noms, qadr, dadr, base):
             couples = np.maximum(couples, np.abs(d.actuator_force))
             vitesses = np.maximum(vitesses, np.abs(d.qvel[dadr]))
             qmin = np.minimum(qmin, d.qpos[qadr]); qmax = np.maximum(qmax, d.qpos[qadr])
+            # La SÉRIE, pas seulement le maximum. Le maximum ne dit pas
+            # dans quelle région thermique on travaille (fiche 0038) : le
+            # couple qui échauffe est l'EFFICACE, racine de la moyenne du
+            # carré, et il ne se retrouve pas depuis une crête.
+            # On ne dimensionne rien ici — on produit la donnée.
+            serie.append((t, *(float(x) for x in d.actuator_force)))
     return {"jambe_balancement": dict(
         couple=couples, vitesse=vitesses, amplitude=qmax - qmin,
-        residu=0.0, converge=True)}
+        residu=0.0, converge=True, serie=serie)}
 
 
 def classer(noms, couple, vitesse):
@@ -288,6 +295,19 @@ def main() -> int:
                "cas_converges": list(retenus), "cas_exclus": exclus,
                "classes": [[noms[i] for i in cl] for cl in classes]},
               open(SORTIE / "enveloppes.json", "w"), indent=2, ensure_ascii=False)
+    # La série temporelle, en CSV — une colonne par actionneur.
+    # Elle n'existait pas : le code ne gardait qu'un maximum courant, et
+    # chaque pas écrasait le précédent. Elle n'était pas perdue, elle
+    # n'avait jamais été produite (fiche 0038 §3).
+    ser = (retenus.get("jambe_balancement") or {}).get("serie") or []
+    if ser:
+        f = SORTIE / "couples_balancement.csv"
+        with f.open("w", encoding="utf-8") as fh:
+            fh.write("temps_s," + ",".join(noms) + "\n")
+            for ligne in ser:
+                fh.write(",".join(f"{v:.6g}" for v in ligne) + "\n")
+        print(f"  écrit : exports/actionneurs/{f.name}  "
+              f"({len(ser)} pas, {len(noms)} actionneurs)")
     print(f"\n  écrit : exports/actionneurs/enveloppes.json")
     return 0
 
