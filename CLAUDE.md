@@ -225,6 +225,13 @@ Voir `decisions/0035-origine-norme.md`.
   le dire.
 
 - Avancer sur une phase suivante tant que la précédente n'est pas sortie.
+- **Passer une géométrie ToddlerBot dans un outil de reconstruction**
+  (scan, maillage, plan ou photo vers CAO, générateur 3D par IA) pour en
+  tirer une pièce ou une cote YXOR. Une reconstruction ne transforme pas
+  une œuvre dérivée en conception originale : elle en produit une
+  dérivation mieux documentée. Si cela arrive, le résultat reste
+  `amont`. **Non outillée** : aucun contrôle ne voit ce qui part vers
+  un service tiers. Fiche 0045.
 - Introduire une dépendance **copyleft fort** (GPL, AGPL, CERN-OHL-S) dans le
   cœur du projet.
 
