@@ -298,19 +298,18 @@ def main(argv=None) -> int:
         print(f"    {'OK ' if ok else 'ÉCHEC'}  {lib}")
 
     stamp = datetime.date.today().isoformat()
-    # LE SHA SUR LE PLAN PAPIER. C'est lui qu'on colle sur la matière :
-    # un tirage périmé doit se reconnaître AVANT le premier coup de lame.
-    # Le 2026-09-29, un plan de 136,80 x 49,50 a failli être coupé alors
-    # que la pièce mesurait 138,06 x 51,93 — la date seule ne l'aurait pas
-    # trahi, puisqu'elle était celle du dernier déploiement RÉUSSI.
-    import subprocess as _sp
-    try:
-        _r = _sp.run(["git", "rev-parse", "--short=12", "HEAD"], cwd=REPO,
-                     capture_output=True, text=True, timeout=5)
-        sha = _r.stdout.strip() if _r.returncode == 0 else ""
-    except Exception:
-        sha = ""
-    sha = sha or __import__("os").environ.get("YXOR_COMMIT", "")[:12] or "inconnu"
+    # L'EMPREINTE SUR LE PLAN PAPIER. C'est lui qu'on colle sur la
+    # matière : un tirage périmé doit se reconnaître AVANT le premier coup
+    # de lame. Le 2026-09-29, un plan de 136,80 x 49,50 a failli être
+    # coupé alors que la pièce mesurait 138,06 x 51,93 — la date seule ne
+    # l'aurait pas trahi, puisqu'elle était celle du dernier déploiement
+    # RÉUSSI.
+    #
+    # La MÊME empreinte que le site, pas `git rev-parse` : il n'y a pas de
+    # dépôt git dans l'image, et deux grandeurs différentes ne se
+    # compareraient jamais.
+    from empreinte import empreinte as _emp
+    sha = _emp()
     reg = PROC.reglage(a.reglage, c.hw)
     anisotrope = reg["anisotrope"]
     fleche = None

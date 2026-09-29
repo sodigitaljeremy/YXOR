@@ -42,53 +42,16 @@ import procedes as PROC  # noqa: E402
 ECHECS: list[str] = []
 
 
+from empreinte import empreinte as _empreinte
+
+
 def commit() -> str:
-    """L'identité de ce site — l'EMPREINTE DE SON CONTENU, toujours.
+    """L'identité de ce site : l'empreinte de son CONTENU.
 
-    Premier jet : le SHA du commit, via `YXOR_COMMIT` en Docker et
-    `git rev-parse` en local. Deux défauts constatés le 2026-09-29 :
-
-    1. **Coolify ne passe pas `SOURCE_COMMIT`** — vérifié sur le site en
-       ligne, qui affichait « inconnu ».
-    2. Et surtout : en local on aurait vu le SHA git, en Docker
-       l'empreinte de repli. **Les deux ne se seraient jamais
-       comparées** — un signal qu'on ne peut pas confronter ne signale
-       rien.
-
-    Donc : une seule grandeur, calculée de la même façon partout, à
-    partir des fichiers qui produisent le site. Elle a en outre une
-    propriété que le SHA n'a pas — elle décrit ce qui a été CONSTRUIT,
-    pas ce qui a été commité. Une modification non commitée la change,
-    donc elle ne peut pas affirmer une fraîcheur qu'elle n'a pas.
+    Voir `scripts/empreinte.py` pour le raisonnement — en particulier
+    pourquoi ce n'est pas le SHA du commit.
     """
-    return empreinte_source()
-
-
-def empreinte_source() -> str:
-    """Empreinte du CONTENU qui a produit ce site.
-
-    Repli quand ni `YXOR_COMMIT` ni git ne sont disponibles — et c'est le
-    cas réel : vérifié le 2026-09-29, Coolify ne passe PAS `SOURCE_COMMIT`
-    par défaut, et le site affichait « inconnu ».
-
-    Un « inconnu » honnête vaut mieux qu'un SHA faux, mais il ne permet
-    pas de comparer. Cette empreinte, si : elle se recalcule à
-    l'identique en local, par la même commande.
-
-    Et elle a une propriété que le SHA du commit n'a pas : **elle décrit
-    ce qui a été CONSTRUIT**, pas ce qui a été commité. Un fichier ignoré
-    par Git, ou une modification non commitée, la changent — donc elle ne
-    peut pas affirmer une fraîcheur qu'elle n'a pas.
-    """
-    import hashlib
-    h = hashlib.sha256()
-    for d in ("params", "parts", "scripts", "web"):
-        for f in sorted((REPO / d).rglob("*")):
-            if not f.is_file() or "__pycache__" in f.parts:
-                continue
-            h.update(str(f.relative_to(REPO)).encode())
-            h.update(f.read_bytes())
-    return h.hexdigest()[:10]
+    return _empreinte()
 
 
 COMMIT = commit()
