@@ -46,50 +46,125 @@ paliers:
   P3: 1.70               # propre — choix de projet
 
 # ═════════════════════════════════════════════════════════════════════════
-#  LONGUEURS — Drillis & Contini (1966), via Winter fig. 4.1
-#  `verifie: false` partout : voir l'avertissement en tête.
+#  LONGUEURS — ANSUR II (2012), recalculées depuis les données brutes
+#  Remplacent Drillis & Contini le 2026-09-29 — fiche 0034.
+#
+#  Recalculables à tout moment :
+#      .venv/bin/python scripts/ratios_ansur.py
+#
+#  Les quatorze ratios venaient d'un GRAPHIQUE (Winter fig. 4.1), donc
+#  invérifiables : le fichier les portait avec `verifie: false`, quatorze
+#  fois. Ils viennent maintenant de 93 mesures directes sur 6 068
+#  personnes, en CSV public. On ne croit plus un graphique sur parole.
+#
+#  DEUX RÉSERVES, qui ne sont pas des détails :
+#    1. population MILITAIRE américaine, explicitement non représentative
+#       de la population générale — sélection physique, âge resserré ;
+#    2. ANSUR ne donne que des LONGUEURS. Les masses viennent de
+#       dissections : elles restent chez Dempster (bloc `masses`).
+#
+#  Deux ratios ne sont pas dérivables d'ANSUR et restent chez D&C, avec
+#  leur `verifie: false` : `tete_hauteur` et `cou_hauteur`.
 # ═════════════════════════════════════════════════════════════════════════
 ratios:
-
-  # ── Membre inférieur ──
-  hauteur_hanche:   { valeur: 0.530, source: "D&C fig. 4.1", verifie: false }
-  cuisse:           { valeur: 0.245, source: "D&C fig. 4.1", verifie: false }
-  tibia:            { valeur: 0.246, source: "D&C fig. 4.1", verifie: false }
-  pied_longueur:    { valeur: 0.152, source: "D&C fig. 4.1", verifie: false }
-  pied_largeur:     { valeur: 0.055, source: "D&C fig. 4.1", verifie: false }
-  cheville_hauteur: { valeur: 0.039, source: "D&C fig. 4.1", verifie: false }
-
-  # ── Tronc ──
-  largeur_epaules:  { valeur: 0.259, source: "D&C fig. 4.1", verifie: false }
-  largeur_bassin:   { valeur: 0.191, source: "D&C fig. 4.1", verifie: false }
+  hauteur_hanche:
+    valeur: 0.5149
+    source: "ANSUR II 2012, +trochanterionheight / stature"
+    verifie: true
+    ecart_type: 0.0152
+    effectif: 6068
+    note: "hauteur du grand trochanter"
+  cuisse:
+    valeur: 0.2476
+    source: "ANSUR II 2012, +trochanterionheight -tibialheight / stature"
+    verifie: true
+    ecart_type: 0.0113
+    effectif: 6068
+    note: "trochanter moins tibiale : le fémur"
+  tibia:
+    valeur: 0.2267
+    source: "ANSUR II 2012, +tibialheight -lateralmalleolusheight / stature"
+    verifie: true
+    ecart_type: 0.0088
+    effectif: 6068
+    note: "tibiale moins malléole : la jambe"
+  pied_longueur:
+    valeur: 0.1534
+    source: "ANSUR II 2012, +footlength / stature"
+    verifie: true
+    ecart_type: 0.0055
+    effectif: 6068
+    note: "mesure directe"
+  pied_largeur:
+    valeur: 0.0577
+    source: "ANSUR II 2012, +footbreadthhorizontal / stature"
+    verifie: true
+    ecart_type: 0.0029
+    effectif: 6068
+    note: "mesure directe"
+  cheville_hauteur:
+    valeur: 0.0405
+    source: "ANSUR II 2012, +lateralmalleolusheight / stature"
+    verifie: true
+    ecart_type: 0.0032
+    effectif: 6068
+    note: "hauteur de la malléole latérale"
+  largeur_epaules:
+    valeur: 0.2328
+    source: "ANSUR II 2012, +biacromialbreadth / stature"
+    verifie: true
+    ecart_type: 0.0114
+    effectif: 6068
+    note: "d'un acromion à l'autre"
+  largeur_bassin:
+    valeur: 0.2036
+    source: "ANSUR II 2012, +hipbreadth / stature"
+    verifie: true
+    ecart_type: 0.0167
+    effectif: 6068
+    note: "mesure directe, debout"
   tronc_hauteur:
-    valeur: 0.288
-    source: "DÉRIVÉE — non publiée sous cette forme"
-    calcul: "0.818 (hauteur d'épaule) - 0.530 (hauteur de hanche)"
+    valeur: 0.3052
+    source: "ANSUR II 2012, +acromialheight -trochanterionheight / stature"
+    verifie: true
+    ecart_type: 0.0154
+    effectif: 6068
+    note: "épaule moins hanche — DIRECTE ici, dérivée chez D&C"
+  bras:
+    valeur: 0.1909
+    source: "ANSUR II 2012, +acromionradialelength / stature"
+    verifie: true
+    ecart_type: 0.0062
+    effectif: 6068
+    note: "acromion à radiale : le bras"
+  avant_bras:
+    valeur: 0.1511
+    source: "ANSUR II 2012, +radialestylionlength / stature"
+    verifie: true
+    ecart_type: 0.0067
+    effectif: 6068
+    note: "radiale à stylion : l'avant-bras"
+  main_longueur:
+    valeur: 0.1104
+    source: "ANSUR II 2012, +handlength / stature"
+    verifie: true
+    ecart_type: 0.0044
+    effectif: 6068
+    note: "mesure directe"
+  tete_hauteur:
+    valeur: 0.130    # CONSERVÉE de Drillis & Contini
+    source: "D&C fig. 4.1 — non dérivable d'ANSUR II"
     verifie: false
     note: >
-      Cohérente avec la figure 4.1, mais personne ne l'a jamais mesurée
-      comme telle. C'est une soustraction, pas un relevé.
-
-  # ── Membre supérieur ──
-  bras:             { valeur: 0.186, source: "D&C fig. 4.1", verifie: false }
-  avant_bras:       { valeur: 0.146, source: "D&C fig. 4.1", verifie: false }
-  main_longueur:    { valeur: 0.108, source: "D&C fig. 4.1", verifie: false }
-
-  # ── Tête ──
-  tete_hauteur:     { valeur: 0.130, source: "D&C fig. 4.1", verifie: false }
+      ANSUR mesure le tragion et la cervicale, pas le menton ni le vertex sur la même verticale
   cou_hauteur:
-    valeur: 0.052
-    source: "DÉRIVÉE — non publiée sous cette forme"
-    calcul: "1 - 0.130 (hauteur de tête) - 0.818 (hauteur d'épaule)"
+    valeur: 0.052    # CONSERVÉE de Drillis & Contini
+    source: "D&C fig. 4.1 — non dérivable d'ANSUR II"
     verifie: false
     note: >
-      Même remarque que tronc_hauteur : obtenue par soustraction.
+      même raison : aucune mesure ANSUR n'isole le cou
 
-# ═════════════════════════════════════════════════════════════════════════
-#  MASSES — Dempster (1955), via Winter tab. 4.1, code M
-#  Fractions de la masse TOTALE du corps. Toutes vérifiées le 2026-09-28.
-# ═════════════════════════════════════════════════════════════════════════
+
 masses:
 
   main:         { valeur: 0.006,  source: "Winter tab. 4.1 — Hand",      verifie: true }

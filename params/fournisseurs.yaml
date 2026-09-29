@@ -36,4 +36,40 @@
 #       interdites par leurs conditions d'utilisation (fiche 0030).
 #     redistribuable: false
 
-fichiers: {}
+fichiers:
+
+  ansur_ii_male:
+    source: >
+      ANSUR II (2012 Anthropometric Survey of U.S. Army Personnel),
+      diffusion publique de 2017. Copie employée :
+      github.com/senihberkay/US-Army-ANSUR-II, branche master,
+      « ANSUR II MALE Public.csv ».
+    reference: "ANSUR II MALE Public.csv — 4082 sujets, 108 colonnes"
+    date: 2026-09-29
+    empreinte: "sha256:0547aea0170e5293de519389981135e75803f02e6d40c77ace740decc0caac64"
+    conditions: >
+      Œuvre du gouvernement fédéral américain, donc du domaine public aux
+      États-Unis (17 U.S.C. § 105) ; le rapport technique associé est en
+      diffusion illimitée (DTIC ADA611869). RÉSERVE : ce classement est
+      déduit du statut de l'auteur, pas lu dans un fichier de licence
+      accompagnant les CSV. La copie employée est un miroir tiers, dont
+      le dépôt ne porte pas de licence propre.
+    redistribuable: true
+    chemin: null
+    note: >
+      NON COMMITÉ malgré `redistribuable: true` : 2,9 Mo de données
+      brutes, régénérables par `scripts/ratios_ansur.py`, qui les met en
+      cache dans `exports/ansur/`. La règle 4 les laisserait passer —
+      c'est du texte — mais le principe tient : le dépôt porte le CODE
+      qui produit, pas les données qu'il consomme.
+
+  ansur_ii_female:
+    source: >
+      Même enquête, même miroir, « ANSUR II FEMALE Public.csv ».
+    reference: "ANSUR II FEMALE Public.csv — 1986 sujets, 108 colonnes"
+    date: 2026-09-29
+    empreinte: "sha256:ed7e800aa97a4d42f8286b988be2fe1883a2e789588169db959864b707d1757a"
+    conditions: >
+      Identiques à `ansur_ii_male`, même réserve.
+    redistribuable: true
+    chemin: null

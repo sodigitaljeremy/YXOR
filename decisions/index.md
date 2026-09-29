@@ -28,7 +28,7 @@ elle qui dit ce qu'il ne faut plus croire.
 | [0016](0016-plaques-sans-precedent.md) | ~~L'architecture en plaques n'a aucun précédent open source~~ | acceptée | 2026-09-28 | **0017** — le constat « aucun précédent » est FAUX : MEVITA, MEVIUS et MEVIUS2 construis… |
 | [0017](0017-mevita-decoupe-metal.md) | MEVITA : la découpe métal a bien un précédent | acceptée | 2026-09-28 |  |
 | [0018](0018-application-web.md) | Application web : un site statique engendré par le dépôt | acceptée — validée le 2026-09-28,  | 2026-09-28 |  |
-| [0019](0019-interface-catalogue.md) | Interface : le site devient un catalogue technique | acceptée le 2026-09-28 — codée le  | 2026-09-28 |  |
+| [0019](0019-interface-catalogue.md) | Interface : le site devient un catalogue technique | acceptée le 2026-09-28 — codée le  | 2026-09-28 | **0037** — le verdict dessinable/coupable doit se calculer par pièce, non par réglage. |
 | [0020](0020-nullite-conditionnelle.md) | Trois états de la valeur absente | acceptée le 2026-09-29, à la deman | 2026-09-29 |  |
 | [0021](0021-machine-x-materiau.md) | Séparer la machine du matériau | abandonnée le 2026-09-29 — jamais  | 2026-09-29 | **0026** — la clé composée ne tient pas à six axes ; migration SUSPENDUE. |
 | [0022](0022-soudure-instruction.md) | La soudure : instruction, sans décision | instruction — ne tranche rien, à d | 2026-09-29 | **0031** — le facteur de rigidité en torsion n'est pas une constante : il se calcule par… |
@@ -43,5 +43,9 @@ elle qui dit ce qu'il ne faut plus croire.
 | [0031](0031-torsion-par-section.md) | La rigidité en torsion se calcule, elle ne se stocke pas | acceptée — correction chiffrée. | 2026-09-29 |  |
 | [0032](0032-veille-outils.md) | Cinq pistes en veille : notées, pas adoptées | veille — aucune n'est adoptée, auc | 2026-09-29 |  |
 | [0033](0033-epaisseur-cle-ou-champ.md) | L'épaisseur reste un CHAMP : le coût de l'autre choix, chiffré | acceptée le 2026-09-29 — option B  | 2026-09-29 |  |
+| [0034](0034-ratios-ansur-ii.md) | ANSUR II remplace Drillis & Contini | acceptée le 2026-09-29, sur décisi | 2026-09-29 |  |
+| [0035](0035-origine-norme.md) | Une sixième origine : `norme` | proposée — instruction, rien n'est | 2026-09-29 |  |
+| [0036](0036-refonte-des-fiches.md) | Refonte des fiches : espèce, cycle de vie, parcours d'entrée | proposée — rien n'est appliqué. | 2026-09-29 |  |
+| [0037](0037-verdict-par-piece.md) | Le verdict se calcule par PIÈCE, pas par réglage | proposée — instruction, rien n'est | 2026-09-29 |  |
 
-**33 fiches.** 8 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0021, 0022, 0026.
+**37 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.

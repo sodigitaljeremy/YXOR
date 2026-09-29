@@ -1,6 +1,7 @@
 # 0019 — Interface : le site devient un catalogue technique
 
 Date : 2026-09-28
+Amendée par : `0037-verdict-par-piece.md` — le verdict dessinable/coupable doit se calculer par pièce, non par réglage.
 Statut : **acceptée** le 2026-09-28 — codée le jour même.
 Trois précisions ajoutées à la validation : lettrage par rang de
 lecture, verdict dessinable/coupable porté aussi par la fiche

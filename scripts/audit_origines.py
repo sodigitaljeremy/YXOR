@@ -55,6 +55,7 @@ DECLARATION = PARAMS / "origines.yaml"
 FICHIERS_DECLARATIFS = {
     "origines.yaml",    # origine et nature des cotes (fiches 0010, 0013)
     "nullites.yaml",    # pourquoi une valeur est absente (fiche 0020)
+    "fournisseurs.yaml",# provenance des fichiers tiers (fiche 0030)
 }
 
 ORIGINES = ("propre", "catalogue", "litterature", "amont", "mesure", "ambigu")
@@ -76,6 +77,17 @@ def aplatir(noeud, prefixe: str = "") -> list[tuple[str, object]]:
     """Aplatit un arbre YAML en [(chemin.de.cle, valeur_feuille)].
 
     Les éléments de liste reçoivent un index : `jambes[0].articulation.axe`.
+
+    SAUF s'ils portent un `id` : ils sont alors adressés par cet id,
+    `reglages.cutter_cartonplume_5.saignee`. La fiche 0026 l'avait promis
+    — « le chargeur en fait un dictionnaire, et les motifs s'écrivent
+    reglages.<id>.saignee » — mais seul le chargeur le faisait.
+
+    Deux conventions de chemin pour la même donnée, c'est une règle morte
+    en attente : six motifs de `origines.yaml` visaient `reglages.*.id`
+    et n'ont jamais correspondu à `reglages[0].id`. Le fourre-tout
+    `reglages.**` les remplaçait en silence, et un identifiant écrit à la
+    main était compté comme une MESURE.
     """
     out: list[tuple[str, object]] = []
     if isinstance(noeud, dict):
@@ -83,7 +95,8 @@ def aplatir(noeud, prefixe: str = "") -> list[tuple[str, object]]:
             out += aplatir(v, f"{prefixe}.{k}" if prefixe else str(k))
     elif isinstance(noeud, list):
         for i, v in enumerate(noeud):
-            out += aplatir(v, f"{prefixe}[{i}]")
+            cle = v.get("id") if isinstance(v, dict) else None
+            out += aplatir(v, f"{prefixe}.{cle}" if cle else f"{prefixe}[{i}]")
     else:
         out.append((prefixe, noeud))
     return out
