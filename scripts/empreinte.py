@@ -40,13 +40,14 @@ REPO = Path(__file__).resolve().parent.parent
 # Ce que le Dockerfile copie, et cela seul : l'empreinte décrit ce qui
 # entre dans l'image, pas ce qui traîne dans le dépôt.
 #
-# requirements.txt et le Dockerfile y sont depuis le 2026-09-30 (audit de
-# la nuit, § 8 H10) : une montée de version de build123d, ou un étage
-# constructeur modifié, peut changer le site sans toucher une ligne des
-# quatre répertoires. Le Dockerfile se copie lui-même dans l'image pour
-# que l'empreinte se calcule PAREIL en local et en construction.
+# requirements.txt y est depuis le 2026-09-30 (audit de la nuit, § 8
+# H10) : une montée de version de build123d peut changer le site sans
+# toucher une ligne des quatre répertoires.
+#
+# Le Dockerfile n'y est pas : Coolify y injecte des ARG à la construction
+# (hypothèse du 2026-09-30), donc l'image n'en a pas la version du dépôt.
 SOURCES = ("params", "parts", "scripts", "web")
-FICHIERS = ("requirements.txt", "Dockerfile")
+FICHIERS = ("requirements.txt",)
 
 
 def empreinte() -> str:
