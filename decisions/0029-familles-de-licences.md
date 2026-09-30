@@ -5,6 +5,7 @@ Espèce : historique
 État : appliquée
 Statut : **acceptée** — correction d'une erreur de classement.
 Amende : `0009-build123d.md`, et la règle de `CLAUDE.md`.
+Remplacée par : `0061-licence-amont-deux-familles.md` — la conception ToddlerBot est CC BY-NC-SA, donc dans DEUX familles, pas CC BY-NC.
 
 ## L'erreur
 

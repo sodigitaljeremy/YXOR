@@ -4,6 +4,7 @@ Date : 2026-09-29
 Espèce : proposition
 État : proposée
 Statut : **proposée** — instruction. Ne tranche rien.
+Remplacée par : `0062-dimensionnement-thermique-applique.md` — contredite en partie (série existante, classes → tailles) : remplacée par ce qui est appliqué, au lieu d'être acceptée.
 
 ## 1 — Vérification
 

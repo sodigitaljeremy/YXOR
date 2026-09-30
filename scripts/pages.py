@@ -467,7 +467,7 @@ def page_piece(p) -> str:
       p.get('orientation_cannelures_deg'), '°',
       regles=REGLES_NUL.get('piece', []),
       cle='orientation_cannelures_deg', voisines=p)}</dd>
-  <dt>Palier</dt><dd class="txt">{val(p.get('palier'))}</dd>
+  <dt>Taille</dt><dd class="txt">{val(p.get('taille'))}</dd>
   <dt>Volume</dt><dd class="num">{val(p.get('volume_mm3'),' mm³')}</dd>
 </dl>
 <script src="/assets/viewer.js?v={COMMIT}"></script>

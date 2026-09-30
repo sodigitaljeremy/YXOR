@@ -35,15 +35,26 @@
 #  Origine au sens de la fiche 0010 : `litterature` pour les deux familles.
 #  Nature au sens de la fiche 0013 : `echelle` — la règle 1 s'y applique.
 
-H: 0.56                  # mètres — palier P1
+H: 0.56                  # mètres — taille de ToddlerBot, RÉFÉRENCE du calcul
                          # ⚠ ORIGINE AMONT : c'est la taille publiée de
-                         # ToddlerBot (fiches 0001 et 0011). Toute la chaîne
-                         # dérivée en hérite. Passer en P2 rompt la filiation.
+                         # ToddlerBot (fiches 0055 et 0058). Ce n'est plus
+                         # la taille de YXOR, ni un palier.
 
-paliers:
-  P1: 0.56               # amont — identique à H
-  P2: 0.90               # propre — choix de projet
-  P3: 1.70               # propre — choix de projet
+# PALIERS REMPLACÉS le 2026-09-30 par les tailles (fiche 0055, qui remplace
+# la 0001 ; tailles décidées par la 0048). Ancien bloc, conservé :
+#   paliers:
+#     P1: 0.56               # amont — identique à H
+#     P2: 0.90               # propre — choix de projet
+#     P3: 1.70               # propre — choix de projet
+#
+# Tailles : ORDRE DE GRANDEUR du cadrage § 6, que dimensionnement.py affine
+# (fiche 0047). S est un intervalle : sa famille d'actionneurs n'est pas
+# choisie. Une pièce ne se dessine qu'à une taille qui a une valeur unique.
+tailles:
+  S:  {H_m: [0.55, 0.60], classe: "S (EduLite 05, RS05, J4310… — famille non décidée)"}
+  M:  {H_m: 0.80, classe: "M (RS02 ou équivalent)"}
+  L:  {H_m: 0.90, classe: "L (RS06 ou mixte RS06/RS02)"}
+  XL: {H_m_min: 1.0, classe: "XL (RS03 et au-delà), hors programme"}
 
 # ═════════════════════════════════════════════════════════════════════════
 #  LONGUEURS — ANSUR II (2012), recalculées depuis les données brutes

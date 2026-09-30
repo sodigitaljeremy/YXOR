@@ -4,6 +4,7 @@ Date : 2026-09-20
 Espèce : historique
 État : appliquée
 Statut : acceptée
+Remplacée par : `0055-toddlerbot-reference-et-tailles.md` — ToddlerBot reste la base et la référence de calcul, mais les paliers P1/P2/P3 cèdent la place aux tailles (0047, 0048) ; licence CC BY-NC-SA.
 
 ## Contexte
 

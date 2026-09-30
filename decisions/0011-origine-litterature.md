@@ -5,6 +5,7 @@ Espèce : close
 État : appliquée
 Statut : acceptée
 Amende : `0010-origine-des-cotes.md`, `0005-topologie-bras-p1.md`
+Remplacée par : `0058-filiation-de-h-sans-paliers.md` — l'origine `litterature` tient ; la filiation de H ne passe plus par les paliers.
 
 > **Note de procédure.** La règle 5 interdit de réécrire une fiche après
 > coup. Les fiches 0010 et 0005 ne sont donc **pas modifiées** : elles

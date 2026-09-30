@@ -4,6 +4,7 @@ Date : 2026-09-28
 Espèce : gouvernante
 État : appliquée
 Statut : **appliquée** — `sim/upstream/` refuse le mauvais interpréteur, vérifié à l'exécution.
+Remplacée par : `0056-code-amont-un-seul-sens-verifie.md` — un seul sens est vérifié à l'exécution, pas les deux.
 
 ## Contexte
 

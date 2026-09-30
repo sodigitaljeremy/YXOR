@@ -37,7 +37,9 @@ PARCOURS = [
     ("0026", "la structure de hardware.yaml en quatre tables"),
     ("0033", "et pourquoi l'épaisseur y est un champ, pas une clé"),
     ("0018", "le site est une projection du dépôt, il ne stocke rien"),
-    ("0015", "le seul choix d'architecture MÉCANIQUE — le reste est méthode"),
+    ("0060", "la fabrication : la découpe 2D n'est plus le procédé unique "
+             "(remplace la 0015, depuis la 0050)"),
+    ("0054", "une fiche acceptée ne se réécrit plus : elle est remplacée"),
 ]
 
 
@@ -52,9 +54,15 @@ def entete(texte: str) -> dict:
     # 2026-09-30 (audit de la nuit, § 8 C4).
     amendee = [re.sub(r"\*\*|`", "", m).strip() for m in
                re.findall(r"^Amendée par\s*:\s*(.+)$", texte, re.M | re.I)]
+    # Fiche 0054 : une fiche acceptée ne se réécrit plus, elle est
+    # REMPLACÉE. L'ancienne porte « Remplacée par », la nouvelle « Remplace ».
+    remplacee = [re.sub(r"\*\*|`", "", m).strip() for m in
+                 re.findall(r"^Remplacée par\s*:\s*(.+)$", texte, re.M | re.I)]
+    remplace = re.findall(r"\b(\d{4})\b", champ("Remplace"))
     return dict(titre=titre, statut=champ("Statut"), date=champ("Date"),
                 espece=champ("Espèce"), etat=champ("État"),
-                amende=champ("Amende"), amendee=amendee)
+                amende=champ("Amende"), amendee=amendee,
+                remplacee=remplacee, remplace=remplace)
 
 
 def construire() -> str:
@@ -62,23 +70,38 @@ def construire() -> str:
     out = ["# Index des fiches de décision", "",
            "**Engendré** par `scripts/index_fiches.py` — ne pas éditer à la",
            "main. Le régénérer fait partie de `scripts/regenerer.py`.", "",
-           "Une fiche n'est jamais réécrite (règle 5) : elle est *amendée*",
-           "par une autre, et le renvoi figure dans son en-tête. La colonne",
-           "« amendée par » est donc la plus importante du tableau — c'est",
-           "elle qui dit ce qu'il ne faut plus croire.", "",
+           "Une fiche acceptée n'est jamais réécrite (règle 5, fiche 0054) :",
+           "elle est *remplacée* par une autre, ou *amendée*, et le renvoi",
+           "figure dans son en-tête. Les colonnes « remplacée par » et",
+           "« amendée par » sont donc les plus importantes du tableau — ce",
+           "sont elles qui disent ce qu'il ne faut plus croire.", "",
            "## Par où commencer", "",
-           "Sept fiches suffisent avant d'écrire une ligne. Les autres se",
+           "Huit fiches suffisent avant d'écrire une ligne. Les autres se",
            "lisent quand leur question se pose.", ""]
     for num, pourquoi in PARCOURS:
         f = next((x for x in fiches if x.name.startswith(num)), None)
         if f:
             out.append(f"{len(out) and ''}1. [{num}]({f.name}) — {pourquoi}")
     out += ["",
-           "| # | Titre | Espèce | État | Date | Amendée par |",
-           "| --- | --- | --- | --- | --- | --- |"]
-    sans_date, amendees, mauvais = [], [], []
+           "| # | Titre | Espèce | État | Date | Remplacée par | Amendée par |",
+           "| --- | --- | --- | --- | --- | --- | --- |"]
+    sans_date, amendees, remplacees, mauvais = [], [], [], []
+    entetes = {f.name[:4]: entete(f.read_text(encoding="utf-8")) for f in fiches}
+    # Réciprocité (fiche 0054) : « Remplace : NNNN » exige que NNNN dise
+    # « Remplacée par » cette fiche, et inversement. Sinon : REFUS.
+    for num, d in entetes.items():
+        for cible in d["remplace"]:
+            en_face = entetes.get(cible)
+            if en_face is None:
+                mauvais.append(f"{num} : « Remplace {cible} », fiche {cible} introuvable")
+            elif not any(r.startswith(num) for r in en_face["remplacee"]):
+                mauvais.append(f"{num} : « Remplace {cible} », mais {cible} ne dit pas « Remplacée par {num} »")
+        for r in d["remplacee"]:
+            src = r[:4]
+            if src in entetes and num not in entetes[src]["remplace"]:
+                mauvais.append(f"{num} : « Remplacée par {src} », mais {src} ne dit pas « Remplace {num} »")
     for f in fiches:
-        d = entete(f.read_text(encoding="utf-8"))
+        d = entetes[f.name[:4]]
         num = f.name[:4]
         titre = d["titre"]
         titre = titre[len(num):].lstrip(" —-") if titre.startswith(num) else titre
@@ -92,6 +115,12 @@ def construire() -> str:
                 x = re.sub(r"^(\d{4})[^ ]*\.md\s*—?\s*", r"**\1** — ", x)
                 morceaux.append(x[:88] + ("…" if len(x) > 88 else ""))
             am = "<br>".join(morceaux)
+        rp = ""
+        if d["remplacee"]:
+            remplacees.append(num)
+            rp = "<br>".join(
+                (lambda x: x[:88] + ("…" if len(x) > 88 else ""))(re.sub(r"^(\d{4})[^ ]*\.md\s*—?\s*", r"**\1** — ", x))
+                for x in d["remplacee"])
         if d["espece"] and d["espece"] not in ESPECES:
             mauvais.append(f"{num} : espèce « {d['espece']} » hors liste")
         if d["etat"] and d["etat"] not in ETATS:
@@ -100,9 +129,13 @@ def construire() -> str:
             mauvais.append(f"{num} : sans ligne `Espèce:`")
         if d["etat"] == "amendée" and not d["amendee"]:
             mauvais.append(f"{num} : état « amendée » sans `Amendée par`")
+        etat = d['etat'] or '—'
+        if d["remplacee"]:
+            etat = f"**remplacée** (était : {etat})"
         out.append(f"| [{num}]({f.name}) | {titre} | {d['espece'] or '—'} | "
-                   f"{d['etat'] or '—'} | {d['date'] or '—'} | {am or ''} |")
-    out += ["", f"**{len(fiches)} fiches.** {len(amendees)} amendée(s) par une "
+                   f"{etat} | {d['date'] or '—'} | {rp} | {am or ''} |")
+    out += ["", f"**{len(fiches)} fiches.** {len(remplacees)} remplacée(s) : "
+                f"{', '.join(remplacees) or 'aucune'}. {len(amendees)} amendée(s) par une "
                 f"autre : {', '.join(amendees) or 'aucune'}."]
     if sans_date:
         out.append(f"\n⚠ Sans ligne `Date:` : {', '.join(sans_date)}.")

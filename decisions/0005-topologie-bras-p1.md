@@ -5,6 +5,7 @@ Espèce : close
 État : amendée
 Statut : acceptée
 Amendée par : `0011-origine-litterature.md` — l'emprunt dimensionnel (H) est adossé au même palier P1 que l'emprunt topologique traité ici.
+Remplacée par : `0057-topologie-du-bras-reportee-v2.md` — topologie ToddlerBot gardée pour la référence ; celle de YXOR reportée à la v2 (plus de palier P1).
 
 ## Contexte
 

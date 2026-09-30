@@ -4,6 +4,7 @@ Date : 2026-09-28
 Espèce : historique
 État : appliquée
 Statut : acceptée
+Remplacée par : `0059-imprimante-etape-deux.md` — l'impression 3D devient l'étape 2 de la fabrication séquencée (0050), dès qu'une machine est vérifiée.
 
 ## Le fait
 

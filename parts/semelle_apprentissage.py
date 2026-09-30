@@ -2,7 +2,7 @@
 """Semelle d'apprentissage — première pièce YXOR.
 
     .venv/bin/python parts/semelle_apprentissage.py
-    .venv/bin/python parts/semelle_apprentissage.py --palier P1 --resserrement 0.6
+    .venv/bin/python parts/semelle_apprentissage.py --taille M --resserrement 0.6
 
 Se lance avec le venv DU PROJET (règle des deux interpréteurs).
 
@@ -147,12 +147,17 @@ class Cotes:
 
 
 # ──────────────────────────────────────────────────────────── géométrie
-def construire(c: Cotes, palier: str, resserrement: float, proc: str,
+def construire(c: Cotes, taille: str, resserrement: float, proc: str,
                ratio_coins: float, ratio_etendue: float):
-    H = c._note(f"paliers.{palier}", c.anthro["paliers"][palier],
-                "amont" if palier == "P1" else "propre", "echelle",
-                "taille publiée de ToddlerBot (fiche 0011)" if palier == "P1"
-                else "choix de projet (fiche 0011)")
+    # Fiche 0055 : les paliers P1/P2/P3 sont remplacés par les tailles de la
+    # 0048. Une pièce se dessine à une taille qui a une hauteur UNIQUE ;
+    # S est un intervalle tant que sa famille n'est pas choisie.
+    h = c.anthro["tailles"][taille].get("H_m")
+    if not isinstance(h, (int, float)):
+        raise ValueError(f"la taille {taille} n'a pas de hauteur unique ({h}) : "
+                         "on ne dessine pas à une taille non fixée")
+    H = c._note(f"tailles.{taille}.H_m", h, "propre", "echelle",
+                "ordre de grandeur du cadrage § 6 (fiches 0048 et 0055)")
 
     L = c.echelle("pied_longueur", H)
     W = c.echelle("pied_largeur", H)
@@ -199,7 +204,8 @@ def construire(c: Cotes, palier: str, resserrement: float, proc: str,
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--palier", default="P2", choices=["P1", "P2", "P3"])
+    ap.add_argument("--taille", default="L", choices=["S", "M", "L"],
+                    help="taille de la fiche 0048 ; L = 0,90 m, l'ancien palier P2 (fiche 0055)")
     ap.add_argument("--resserrement", type=float, default=0.70)
     defaut = PROC.defaut()
     ap.add_argument("--reglage", default=defaut,
@@ -217,20 +223,22 @@ def main(argv=None) -> int:
 
     c = Cotes()
     try:
-        piece, d = construire(c, a.palier, a.resserrement, a.reglage,
+        piece, d = construire(c, a.taille, a.resserrement, a.reglage,
                               a.coins, a.etendue)
     except (ValueError, PROC.ReglageInconnu) as err:
         # Message net plutôt qu'une trace : ce n'est pas un bug, c'est le
         # garde-fou de la fiche 0015 qui refuse une cote non mesurée.
         print(f"\n  ARRÊT — {err}\n")
+        if "taille" in str(err):
+            return 2
         print(f"  Le réglage « {a.reglage} » n'a pas toutes ses cotes.")
         print("  Renseignez-les dans params/hardware.yaml après mesure,")
         print("  puis relancez. Voir le protocole au journal du 2026-09-28.")
         return 2
     SORTIE.mkdir(parents=True, exist_ok=True)
-    base = f"{NOM}_{a.palier}_{a.reglage}"
+    base = f"{NOM}_{a.taille}_{a.reglage}"
 
-    print(f"Semelle d'apprentissage — palier {a.palier}, réglage {a.reglage}\n")
+    print(f"Semelle d'apprentissage — taille {a.taille}, réglage {a.reglage}\n")
     print(f"  longueur        {d['L']:8.2f} mm   = H x ratio pied_longueur")
     print(f"  largeur         {d['W']:8.2f} mm   = H x ratio pied_largeur")
     print(f"  largeur au creux{d['largeur_creux']:8.2f} mm   = largeur x {d['ratio']}")
@@ -338,7 +346,7 @@ def main(argv=None) -> int:
     larg, haut = ecrire_plan_a4(
         contours, SORTIE / f"{base}_planA4.pdf",
         f"YXOR — semelle d'apprentissage",
-        [f"Palier {a.palier} (H = {d['H']} m)    matiere : {reg['materiau']}    "
+        [f"Taille {a.taille} (H = {d['H']} m)    matiere : {reg['materiau']}    "
          f"epaisseur {d['ep']:.1f} mm",
          f"Hors-tout {d['L']:.2f} x {d['W']:.2f} mm    "
          f"resserrement {d['ratio']:.2f} -> {d['largeur_creux']:.2f} mm au creux",
@@ -403,7 +411,7 @@ def main(argv=None) -> int:
     # L'application ne fait que les lire — elle ne crée aucune donnée.
     proc = reg
     lignes = ["# Relevé d'origines — GÉNÉRÉ, ne pas éditer à la main.",
-              f"# Pièce : {NOM}   palier {a.palier}   réglage {a.reglage}",
+              f"# Pièce : {NOM}   taille {a.taille}   réglage {a.reglage}",
               # Pas de date de génération : ce fichier est haché par
               # l'empreinte, qui dépendrait sinon du jour de construction
               # (lot A.9). Git connaît la date.
@@ -412,7 +420,7 @@ def main(argv=None) -> int:
               f"  nom: {NOM}",
               f"  titre: \"Semelle d'apprentissage\"",
               f"  base_fichier: {base}",
-              f"  palier: {a.palier}",
+              f"  taille: {a.taille}",
               f"  reglage: {a.reglage}",
               f"  procede: {reg['procede']}",
               f"  procede_din: \"{reg['procede_din']}\"",
@@ -442,8 +450,9 @@ def main(argv=None) -> int:
               ]
     # Fiche 0044, close le 2026-09-30 sans variante : l'exemplaire réel a
     # été coupé dans une autre matière que celle du plan publié. Le dire
-    # sur la page, seulement pour ce plan-là (palier et réglage par défaut).
-    if a.palier == "P2" and a.reglage == "cutter_cartonplume_5":
+    # sur la page, seulement pour ce plan-là (taille et réglage par défaut ;
+    # taille L = ancien palier P2, fiche 0055).
+    if a.taille == "L" and a.reglage == "cutter_cartonplume_5":
         lignes += ["  exemplaire_coupe: >",
                    "    L'exemplaire réel a été coupé en carton ondulé double de",
                    "    3,5 mm à partir de ce plan en carton plume : le contour 2D",
@@ -470,7 +479,7 @@ def main(argv=None) -> int:
     parametres = [
         dict(nom="H", libelle="taille du robot", unite=" m", valeur=d["H"],
              mini=0.30, maxi=2.00, pas=0.01,   # non-cote: bornes du curseur de simulation
-             cible=f"params/anthropometry.yaml  ->  paliers.{a.palier}"),
+             cible=f"params/anthropometry.yaml  ->  tailles.{a.taille}.H_m"),
         dict(nom="r_pied_long", libelle="ratio longueur de pied", unite="",
              valeur=c.anthro["ratios"]["pied_longueur"]["valeur"],
              mini=0.10, maxi=0.22, pas=0.001,   # non-cote: bornes du curseur de simulation

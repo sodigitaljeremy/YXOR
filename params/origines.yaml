@@ -31,25 +31,26 @@ fichiers:
         nature: echelle
         source: >
           Taille hors-tout publiée de ToddlerBot (fiche 0001 : « ToddlerBot
-          (Stanford). 0,56 m »), reprise comme palier P1.
+          (Stanford). 0,56 m »). Depuis le 2026-09-30 : référence du
+          dimensionnement inversé, plus un palier (fiche 0055).
         note: >
           RACINE DE TOUTE LA CHAÎNE `propre`. Chaque cote dérivée de H en P1
           est une fraction d'un nombre venu de ToddlerBot. La portée
           juridique de ce fait n'est PAS tranchée (fiche 0010 §4).
 
-      - motif: "paliers.P1"
-        origine: amont
-        nature: echelle
-        source: "identique à H"
-
-      - motif: "paliers.P2"
+      # Paliers P1/P2/P3 remplacés par les tailles le 2026-09-30 (fiche 0055).
+      - motif: "tailles.*.H_m"
         origine: propre
         nature: echelle
-        source: "choix de projet, ne vient pas de ToddlerBot"
-      - motif: "paliers.P3"
+        source: "ordre de grandeur du cadrage § 6 (fiche 0048), affiné par dimensionnement.py (fiche 0047)"
+      - motif: "tailles.*.H_m_min"
         origine: propre
         nature: echelle
-        source: "choix de projet, ne vient pas de ToddlerBot"
+        source: "cadrage § 6 : XL au-delà de 1 m (fiche 0048)"
+      - motif: "tailles.*.classe"
+        origine: propre
+        nature: sans_objet
+        source: "classe d'actionneur de jambe de la taille (fiche 0048)"
 
       # Les champs de MÉTHODE d'un ratio — effectif, écart-type, source,
       # vérification, note — ne sont pas des cotes. Les laisser au

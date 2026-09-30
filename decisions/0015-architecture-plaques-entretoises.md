@@ -7,6 +7,7 @@ Statut : acceptée
 Découle de : `0014-pas-d-imprimante-3d.md`
 Amendée par : `0042-rayon-matiere-ou-geste.md` — la règle du rayon minimal ne décrit que ce que la MATIÈRE supporte, pas ce que le GESTE permet.
 Amendée par : `0016-plaques-sans-precedent.md` — aucun projet open source accessible ne suit cette voie ; Solo, Bolt et Upkie sont imprimés en 3D.
+Remplacée par : `0060-fabrication-sequencee-appliquee.md` — la découpe 2D n'est plus le procédé unique ; le carton n'est plus qu'une maquette.
 
 ## Contrainte posée
 
