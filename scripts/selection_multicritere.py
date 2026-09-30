@@ -585,6 +585,10 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           "finaliste **dans la même condition** : la comparaison devient directe, au lieu de "
           "s'appuyer sur sa fiche.\n")
     A("---\n\n## 5 — Protocole de mesure : les couples continus en condition IDENTIQUE\n")
+    A("**Le protocole complet, avec sa section SÉCURITÉ** (alimentation à limitation de courant, "
+      "arrêt d'urgence matériel, limites logicielles, bras de levier, chauffe au rotor bloqué, ce "
+      "qu'on ne fait jamais seul) et la consignation de chaque mesure dans `params/mesures.yaml` : "
+      "`docs/protocole-banc.md` (*proposé*). Résumé :\n")
     A("But : remplacer l'hypothèse k par une mesure, sur les deux finalistes, **dans la même "
       "condition**. Les fiches ne sont pas comparables entre elles : plaques différentes, ou condition "
       "non précisée. Ce protocole est **proposé**, pas décidé.\n")

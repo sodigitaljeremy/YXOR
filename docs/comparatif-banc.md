@@ -60,6 +60,8 @@ Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 
 
 ## 5 — Protocole de mesure : les couples continus en condition IDENTIQUE
 
+**Le protocole complet, avec sa section SÉCURITÉ** (alimentation à limitation de courant, arrêt d'urgence matériel, limites logicielles, bras de levier, chauffe au rotor bloqué, ce qu'on ne fait jamais seul) et la consignation de chaque mesure dans `params/mesures.yaml` : `docs/protocole-banc.md` (*proposé*). Résumé :
+
 But : remplacer l'hypothèse k par une mesure, sur les deux finalistes, **dans la même condition**. Les fiches ne sont pas comparables entre elles : plaques différentes, ou condition non précisée. Ce protocole est **proposé**, pas décidé.
 
 1. **Même montage.** Chaque actionneur est fixé sur la **même plaque d'aluminium de 70 × 70 mm** (la plus petite condition publiée, celle du RS05 et de l'EduLite 05). L'épaisseur et la matière sont notées. La plaque est posée sur le même support isolant.
