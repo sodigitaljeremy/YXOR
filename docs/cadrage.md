@@ -58,8 +58,9 @@ P2 à 0,9 m tombait au pire endroit : trop grand pour un RS02, trop petit
 pour exploiter un RS06.
 
 **2.2 — Le budget était fixé a priori.** Les 500 à 2 000 € ont été posés
-avant tout prix de marché. On sait désormais que 12 actionneurs de jambe
-pour un robot d'environ 0,8 m coûtent déjà de l'ordre de 1 700 CHF. Ce
+avant tout prix de marché. On sait désormais que les jambes d'un robot
+d'environ 0,8 m (12 actionneurs et l'électronique connue, TVA et imprévus
+compris) coûtent déjà au moins 1 720 CHF. Ce
 montant est donc un **budget de R&D par phase**, pas le prix d'un robot.
 
 **2.3 — La méthode a grandi plus vite que le robot.** Fin septembre, le
@@ -132,8 +133,8 @@ supérieure à la masse prévue, frottements, usure, chaleur, batterie qui
 faiblit.
 
 **Ce qu'elle coûte** : la taille maximale décroît à peu près comme la marge
-à la puissance −¼ (ordre de grandeur, pas un calcul du script). Pour le
-RS02 : environ 0,87 m à 1,0 ; 0,79 m à 1,5 ; 0,73 m à 2,0.
+à la puissance −⅓ (calculé par le script, RS02 homogène). Pour le
+RS02 : 0,90 m à 1,0 ; 0,79 m à 1,5 ; 0,71 m à 2,0.
 
 **Règle proposée** : 1,5 tant que rien n'a été mesuré sur un vrai
 actionneur. On la réduit quand le banc aura mesuré le comportement
@@ -153,7 +154,7 @@ jambe).
 | RobStride RS02 | 6 (7 selon le PDF du 17-09) / 17 | 0,79 m | 12,2 kg |
 | CubeMars AK70-10 | 8,3 / 24,8 | 0,82 m | 16,2 kg |
 | RobStride RS06 | 11 / 36 | 0,91 m | 19,4 kg |
-| RobStride RS03 | 21 / 60 | 1,07 m | 30,0 kg |
+| RobStride RS03 | 20 (21 à la p. 19 du PDF) / 60 | 1,07 m | 30,0 kg |
 
 Constats :
 
@@ -248,9 +249,9 @@ Tant qu'un poste est inconnu, le total s'affiche « ≥ », jamais comme s'il
   adaptateur CAN), puis jambes, puis haut du corps.
 - **Ordres de grandeur connus au 30-09-2026** (actionneurs et électronique
   connus, TVA et 15 % d'imprévus compris, structure exclue) :
-  - M (RS02) : ≥ 1 720 CHF pour les jambes v1, ≥ 1 947 CHF avec le haut du
-    corps v2 ;
-  - RS03 : ≥ 2 277 CHF, puis ≥ 2 783 CHF.
+  - M (RS02) : ≥ 1 720 CHF pour les jambes v1, puis ≥ 1 947 CHF de plus
+    pour le haut du corps v2 ;
+  - RS03 : ≥ 2 277 CHF, puis ≥ 2 783 CHF de plus.
   - Le chiffrage de S est à produire une fois sa classe choisie.
 - **Défaut relevé** : la batterie chiffrée (22,2 V) ne correspond pas aux
   48 V nominaux des actionneurs RobStride. Une batterie adaptée reste à
