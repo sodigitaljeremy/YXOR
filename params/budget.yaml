@@ -103,6 +103,28 @@ phases:
     postes:
       - {poste: "actionneur:rs05", quantite: 2}
       - {poste: adaptateur_can, quantite: 1}
+    options:
+      verification:
+        statut: "proposé"
+        ajoutee_le: "2026-09-30"
+        description: >
+          Banc de VÉRIFICATION, pas de départage (docs/comparatif-banc.md) :
+          2 × Damiao J4310 V1.2 48 V et 1 adaptateur USB-CAN. Vérifie le
+          critère d'abandon (docs/protocole-banc.md § 2 bis) et mesure la
+          dispersion entre deux exemplaires (§ 2 ter). Aucun achat n'est
+          proposé : c'est un chiffrage, pour la décision de Jeremy.
+        postes:
+          - {poste: "actionneur:dm_j4310_48v", quantite: 2}
+          - {poste: adaptateur_can, quantite: 1}
+        non_chiffre: "alimentation du banc : un OUTILLAGE (limitation de courant réglable), décision de Jeremy (règle d'achat b)"
+        incertitudes_prix: >
+          Prix OpenELAB du J4310 48 V (params/actionneurs.yaml,
+          dm_j4310_48v) : TVA incluse ou non INCONNUE (tva_incluse: null,
+          compté hors taxe, donc le cas le plus cher sur ce poste) ;
+          « available » peut signifier PRÉCOMMANDE (délai inconnu) ;
+          « V4 » = V1.2 d'après un autre revendeur, pas affiché par
+          OpenELAB ; prix barré 172,95 € (le prix actuel est peut-être
+          promotionnel). Port et droits de douane non compris.
   jambes_v1:
     description: "12 DDL de jambe, électronique embarquée, structure"
     postes:

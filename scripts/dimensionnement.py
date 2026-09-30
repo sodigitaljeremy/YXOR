@@ -320,7 +320,12 @@ def couts(cat: dict, bud: dict, config: dict) -> dict:
     lourde = max(set(classes.values()), key=lambda c: val(cat["candidats"][c]["couple_pointe_Nm"]) or 0)
     legere = min(set(classes.values()), key=lambda c: val(cat["candidats"][c]["couple_pointe_Nm"]) or 0)
     out = {}
-    for pid, ph in bud["phases"].items():
+    # Une phase peut porter des `options` (ex. banc « vérification ») : chacune
+    # est chiffrée à part, sous la clé « <phase>:<option> ».
+    a_chiffrer = [(pid, ph) for pid, ph in bud["phases"].items()]
+    a_chiffrer += [(f"{pid}:{oid}", o) for pid, ph in bud["phases"].items()
+                   for oid, o in (ph.get("options") or {}).items()]
+    for pid, ph in a_chiffrer:
         total, inconnus = 0.0, []
         for p in ph["postes"]:
             q = p["quantite"]
@@ -515,6 +520,19 @@ def imprimer_markdown(cat, bud, lignes, marge, ref):
             return f"≥ {s}" if x["inconnus"] else s
         print(f"| {nom} | {f(ev['H_max'])} | " + " | ".join(cellule(c[p]) for p in bud["phases"])
               + f" | {', '.join(inc) or '—'} |")
+    # Options de phase : indépendantes de la configuration (leurs actionneurs
+    # sont nommés), donc chiffrées une seule fois.
+    opts = [(f"{pid}:{oid}", o) for pid, ph in bud["phases"].items() for oid, o in (ph.get("options") or {}).items()]
+    if opts and lignes:
+        c = couts(cat, bud, next(conf for _, conf, ev in lignes if "indetermine" not in ev))
+        print("\n### OPTIONS_DE_PHASE\n")
+        print("| Option | Statut | TTC CH (CHF), imprévus compris | Postes inconnus | Non chiffré |")
+        print("| --- | --- | ---: | --- | --- |")
+        for cle, o in opts:
+            x = c[cle]
+            ttc = f"{x['ttc']:,.0f}".replace(",", " ")
+            print(f"| {cle} | {o.get('statut', '—')} | {'≥ ' if x['inconnus'] else ''}{ttc} | "
+                  f"{', '.join(x['inconnus']) or '—'} | {o.get('non_chiffre') or '—'} |")
 
 
 if __name__ == "__main__":
