@@ -276,7 +276,7 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
 | TVA CH | 8,1 % | consigne de Jeremy ; la page de l'AFC n'a pas pu être ouverte |
 | imprévus | **15 %, provisoire** | **à fixer par Jeremy** — visible dans chaque total |
 | change | 1 EUR = 0,9478 CHF = 1,1355 USD = 7,6130 CNY | BCE, référence du 2026-09-30 ; les taux croisés sont calculés |
-| structure | **null** | tant que Loïc n'a pas chiffré |
+| structure | **null** | tant que l'opérateur CN n'a pas chiffré |
 
 | Phase | Contenu |
 | --- | --- |

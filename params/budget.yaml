@@ -95,7 +95,7 @@ electronique:
 structure:
   article: "plaques et entretoises découpées (fiche 0015)"
   prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
-  note: "null tant que Loïc n'a pas chiffré la découpe métal."
+  note: "null tant que l'opérateur CN n'a pas chiffré la découpe métal."
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Phases — ce que chacune achète

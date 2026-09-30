@@ -49,7 +49,7 @@ Jeremy qui le tranche.
 | sept. (date exacte inconnue) | **Réorientation** : bipède, nom YXOR, nouveau dépôt, aucune reprise de l'ancien projet. Mise à l'échelle en paliers P1 ≈ 0,56 m, P2 ≈ 0,85–1,00 m, P3 ≈ 1,70 m. | Conv. sept. |
 | **≈ 20 sept.** | **Fiche 0001 : ToddlerBot comme base.** C'est Jeremy qui le propose. Claude objecte sur le prix, puis se rallie : aux étapes 1 et 2, on n'achète rien. Fiche 0002 : amont cloisonné, épinglé à `e337f3b`. | Conv. ; fiche 0001 datée 2026-09-20 |
 | sept. | **« Arrête tout »** : Jeremy ne comprend plus la codebase. Objectif refixé : **l'appropriation avant la production**. | Conv. |
-| sept. | Découverte : **pas d'imprimante 3D**. Moyens réels : cutter, laser de fablab, découpe métal 2D chez Loïc, soudure. | Conv. |
+| sept. | Découverte : **pas d'imprimante 3D**. Moyens réels : cutter, laser de fablab, découpe métal 2D chez l'opérateur CN, soudure. | Conv. |
 | sept. | CAO en code (build123d), modèle procédés en quatre tables DIN 8580, corpus (Kajita, Forget, Nenchev, ANSUR II), refonte des fiches 33–40, premier audit trouvé **« vert mais faux »**. | Conv. |
 | 28 sept. | Domaine `yxor.fr`, déploiement Coolify sur Hetzner. | mémoire |
 | **29 sept., soir** | **Semelle coupée** (dessinée à P2, H = 0,90 m). Saignée nulle prédite par la fiche 0026, vérifiée. | Conv. ; CC |
@@ -180,9 +180,9 @@ produit de la géométrie reste à 3 %.
 | Révision de la marge 1,5 | après le banc |
 | `bd_warehouse` (visserie) | première pièce qui tient une vis |
 | Veille 0032 (3 déclencheurs sur 4 liés à l'imprimante) | achat d'une imprimante |
-| Chiffrage de la structure | procédé exact de Loïc connu |
+| Chiffrage de la structure | procédé exact de l'opérateur CN connu |
 | Batterie | tension retenue |
-| FreeCAD et serveurs MCP | besoin de collaboration avec Loïc |
+| FreeCAD et serveurs MCP | besoin de collaboration avec l'opérateur CN |
 
 ### 5.2 OUVERT
 
@@ -192,7 +192,7 @@ produit de la géométrie reste à 3 %.
 4. Poids de la masse dans le comparatif (D4).
 5. Dépôt public ou privé (D5).
 6. Ce que S doit porter : calculateur, batterie, centrale inertielle. Non chiffré.
-7. Procédé exact de Loïc (laser, plasma, jet d'eau), rayons, matières, format de fichier.
+7. Procédé exact de l'opérateur CN (laser, plasma, jet d'eau), rayons, matières, format de fichier.
 8. Imprimante 3D : un achat a été évoqué en septembre, sans suite connue.
 9. Licence des valeurs numériques extraites de ToddlerBot. Question juridique, sans avis ; **elle devient pratique si le dépôt devient public.**
 10. Immuabilité des fiches ; espèces qui sont en fait des états.
@@ -205,7 +205,7 @@ produit de la géométrie reste à 3 %.
 - Module d'actionneur unique répliqué (idée ODRI).
 - MEVITA : tôle découpée et soudée, seul précédent d'un bipède non imprimé.
 - Soudure comme moyen propre.
-- Site collaboratif avec FreeCAD pour Loïc.
+- Site collaboratif avec FreeCAD pour l'opérateur CN.
 - Générateur 3D pour la silhouette uniquement.
 - SO-101.
 

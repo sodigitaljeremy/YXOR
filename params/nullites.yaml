@@ -74,11 +74,11 @@ fichiers:
       # Ordre important, et la première règle emploie un CHEMIN ABSOLU
       # (fiche 0033) : la machine n'est plus une clé sœur du réglage
       # depuis le passage à quatre tables.
-      - motif: "reglages.cousin_alu_3.rayon_interieur_min"
-        si: {chemin: "machines.decoupe_cousin.nom", vaut: null}
+      - motif: "reglages.operateur_cn_alu_3.rayon_interieur_min"
+        si: {chemin: "machines.decoupe_operateur_cn.nom", vaut: null}
         etat: se_deduira
         parce_que: >
-          il dépend du moyen de découpe, et `machines.decoupe_cousin.nom`
+          il dépend du moyen de découpe, et `machines.decoupe_operateur_cn.nom`
           n'est pas encore établi. Un jet d'eau, un laser et un plasma ne
           donnent pas le même rayon minimal. Rien à mesurer tant que le
           moyen est inconnu.
@@ -121,9 +121,9 @@ fichiers:
           le matériau n'est pas encore caractérisé. La source se
           renseignera avec le premier relevé qui le concerne.
 
-      # ── Machine du cousin : ce n'est pas une mesure, c'est un fait ────
-      - motif: "machines.decoupe_cousin.nom"
+      # ── Machine d'un proche opérateur CN : ce n'est pas une mesure, c'est un fait ────
+      - motif: "machines.decoupe_operateur_cn.nom"
         etat: a_mesurer
         parce_que: >
-          à CONSTATER, pas à mesurer : il suffit de demander au cousin
+          à CONSTATER, pas à mesurer : il suffit de demander à un proche opérateur CN
           quel est son moyen de découpe.

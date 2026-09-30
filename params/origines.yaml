@@ -600,7 +600,7 @@ fichiers:
       - motif: "structure.prix.valeur"
         origine: catalogue
         nature: sans_objet
-        source: "chiffrage de la découpe, attendu de Loïc"
+        source: "chiffrage de la découpe, attendu de l'opérateur CN"
       - motif: "**.prix.devise"
         origine: catalogue
         nature: sans_objet

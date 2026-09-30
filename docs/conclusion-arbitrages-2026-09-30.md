@@ -176,7 +176,7 @@ Proposée depuis le 30-09, jamais validée.
 2. **Ce que S doit porter** (calculateur, batterie, centrale inertielle) :
    non chiffré. C'était la vraie contrainte derrière le seuil de taille
    retiré.
-3. **La structure** : chiffrage de Loïc (procédé exact, rayons, matières,
+3. **La structure** : chiffrage de l'opérateur CN (procédé exact, rayons, matières,
    format de fichier) et coût de l'impression.
 4. **La batterie** à la tension retenue (48 V).
 5. **Les paliers P1/P2/P3** d'`anthropometry.yaml`, à remplacer par les

@@ -56,9 +56,9 @@ machines:
     pilotage: numerique
     puissance_W: null        # à relever sur la machine du fablab
 
-  decoupe_cousin:
+  decoupe_operateur_cn:
     nom: null                # jet d'eau ? laser ? plasma ? À ÉTABLIR
-    lieu: "chez le cousin"
+    lieu: "chez un proche opérateur CN"
     pilotage: numerique
     note: >
       Le moyen exact n'est pas connu. Tant qu'il ne l'est pas, aucune
@@ -318,13 +318,13 @@ reglages:
     fixation: "vis traversante + écrou"
     source_saignee: null
 
-  - id: cousin_alu_3
-    machine: decoupe_cousin
+  - id: operateur_cn_alu_3
+    machine: decoupe_operateur_cn
     procede: abtragen_jet
     matiere: alu_tole_3
     valide: true
     saignee: null            # varie de 0,2 à 1,5 selon le moyen
-    rayon_interieur_min: null # dépend du moyen, donc de `machines.decoupe_cousin.nom`
+    rayon_interieur_min: null # dépend du moyen, donc de `machines.decoupe_operateur_cn.nom`
     voile_min: null
     fixation: "vis traversante + écrou, taraudage possible"
     source_saignee: null
@@ -392,7 +392,7 @@ actionneurs:
 #          cutter_carton        -> reglages.cutter_cartonplume_5
 #          cutter_carton_ondule -> reglages.cutter_cartonondule_double
 #          laser_contreplaque   -> reglages.laser_contreplaque_3
-#          decoupe_metal        -> reglages.cousin_alu_3
+#          decoupe_metal        -> reglages.operateur_cn_alu_3
 #
 #  materiaux.*.epaisseur_nominale
 #        MOTIF : une épaisseur n'est pas une propriété du MATÉRIAU mais de
@@ -424,5 +424,5 @@ actionneurs:
 #
 #  tolerances:
 #    decoupe_jet_eau: { profil: 0.10 }
-#        MOTIF : déplacée puis remise à null — rien ne dit que le moyen du
-#        cousin soit un jet d'eau. La valeur 0,10 n'était sourcée nulle part.
+#        MOTIF : déplacée puis remise à null — rien ne dit que le moyen d'un
+#        proche opérateur CN soit un jet d'eau. La valeur 0,10 n'était sourcée nulle part.

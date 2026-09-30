@@ -65,8 +65,8 @@ j'ai lu n'en laisse soupçonner.
 | --- | --- | --- |
 | **Adresse des auteurs de commits** | les 132 commits | une seule : `259069918+sodigitaljeremy@users.noreply.github.com`, l'adresse masquée de GitHub. Nom d'auteur : `sodigitaljeremy`. **Aucune adresse personnelle** |
 | **Prénom « Jeremy »** | 273 lignes à HEAD, 383 dans l'historique | partout (fiches, journal, CLAUDE.md, cadrage). **Aucun nom de famille** trouvé |
-| **« Loïc »** (tiers, prénom) | 19 lignes : `budget.yaml:85`, `origines.yaml:594`, `cadrage.md:261, 482, 483`, `arbitrage`, `etat-des-lieux-2026-09-30`, `dimensionnement-par-actionneur`, 0042:144, journal du 30 | un tiers identifié par son prénom et par son rôle : découpe et usinage de métal, chiffrage attendu |
-| **« le cousin »** (tiers, lien de parenté) | `hardware.yaml:59-61, 321-327` (`decoupe_cousin`, `lieu: "chez le cousin"`, `cousin_alu_3`), `nullites.yaml`, fiches 0015, 0017, 0018, 0021, 0025, 0026, 0033, 0044, journaux | ni nommé ni localisé |
+| **« l'opérateur CN »** (tiers, prénom anonymisé le 2026-09-30) | 19 lignes : `budget.yaml:85`, `origines.yaml:594`, `cadrage.md:261, 482, 483`, `arbitrage`, `etat-des-lieux-2026-09-30`, `dimensionnement-par-actionneur`, 0042:144, journal du 30 | un tiers identifié par son prénom et par son rôle : découpe et usinage de métal, chiffrage attendu |
+| **« un proche opérateur CN »** (tiers, lien de parenté anonymisé le 2026-09-30) | `hardware.yaml:59-61, 321-327` (`decoupe_operateur_cn`, `lieu: "chez un proche opérateur CN"`, `operateur_cn_alu_3`), `nullites.yaml`, fiches 0015, 0017, 0018, 0021, 0025, 0026, 0033, 0044, journaux | ni nommé ni localisé |
 | **« Segnere »** | **0 occurrence**, dans HEAD comme dans l'historique | — |
 | Nom d'utilisateur système `jeremy` | `/home/jeremy/…` dans `journal/2026-09-28.md:46`, et dans `site/data/pieces.json` de l'historique (`c078b8e`) | indique la machine, rien de plus |
 | Environnement de travail | CLAUDE.md, journaux | PC sans GPU, WSL2, Ubuntu 26.04, noyau `6.18.33.2` |
@@ -78,7 +78,7 @@ j'ai lu n'en laisse soupçonner.
 **DÉD** : rien de ceci n'est un secret. Mais deux points sont à trancher
 **avant** de basculer, parce qu'ils ne disparaîtront plus ensuite :
 
-- **Loïc et le cousin** sont des tiers. Accepteraient-ils d'être cités ?
+- **L'opérateur CN, un proche,** est un tiers. Accepterait-il d'être cité ?
 - **Les propos rapportés dans l'arbitrage** vont devenir publics.
 
 ---
@@ -244,6 +244,6 @@ prévenir, pas de réparer.
 1. Choisir les licences, ou accepter consciemment de publier sans
    licence.
 2. Décider du sort de `conclusion-arbitrages-2026-09-30.md`.
-3. Décider si Loïc, le cousin et les propos de l'arbitrage restent tels
+3. Décider si l'opérateur CN et les propos de l'arbitrage restent tels
    quels.
 4. Idéalement, passer gitleaks.

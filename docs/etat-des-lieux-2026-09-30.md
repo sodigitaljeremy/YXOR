@@ -347,7 +347,7 @@ par elles-mêmes)** : 0047 (l. 36) et 0049 (l. 30).
 | Couche logicielle `joint.command(...)` | PROPOSÉ (cadrage § 8 bis), sans fiche |
 | `actionneurs.P1.{modele, couple_nominal_Nm, entraxe_fixation}` : `null` « non déterminé » | `nullites.yaml`, **encore adossé à P1**, alors que la taille est S |
 | `materiaux.{carton_plume, contreplaque, aluminium}.source` | « se déduira » (`nullites.yaml`) |
-| `structure.prix` (`budget.yaml`) | « tant que Loïc n'a pas chiffré la **découpe métal** », texte d'avant la 0050 |
+| `structure.prix` (`budget.yaml`) | « tant que l'opérateur CN n'a pas chiffré la **découpe métal** », texte d'avant la 0050 |
 | Batterie à 48 V | constat au budget ; rien de chiffré |
 | Masse que S doit porter | question 13 du cadrage ; non chiffrée |
 | Accesseur `yxor/cotes.py`, origine `norme`, `archive/` | 0010, 0035, 0036 : **aucune raison écrite**, sauf pour 0035 |
@@ -371,7 +371,7 @@ par elles-mêmes)** : 0047 (l. 36) et 0049 (l. 30).
 | Interfaces mécaniques | reporté | « un actionneur en main » (conclusion § 4.5) |
 | Marge | à revoir | les résultats du banc |
 | Imprévus à 15 % | provisoire | « à fixer par Jeremy » — **pas de déclencheur** |
-| Structure | en attente | le chiffrage de Loïc |
+| Structure | en attente | le chiffrage de l'opérateur CN |
 | Alimentation du banc | outillage, décision de Jeremy (règle b) | **aucun** |
 | Licence des valeurs amont | ouvert (0010 § 4, question 11) | **aucun** |
 | Seconde sauvegarde des poids | 0008 | **aucun** (« à la charge de Jeremy ») |
@@ -815,7 +815,7 @@ Dans l'ordre, une phrase chacun.
 - **Tout achat réel.** Une imprimante « cette semaine » (0027:141,
   `hardware.yaml:403`) : rien ne dit si elle existe. Un actionneur
   commandé : rien ne le dit non plus.
-- **Le chiffrage et le procédé de Loïc.**
+- **Le chiffrage et le procédé de l'opérateur CN.**
 - **L'état physique** de la semelle coupée, du poste de travail, et la
   présence d'une seconde personne pour le banc.
 - **Les pages des vendeurs** (OpenELAB, Eckstein, Seeed) au moment de la

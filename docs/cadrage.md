@@ -260,7 +260,7 @@ calculée par taille et par phase** (`params/budget.yaml`) :
   locomotion, d'après Berkeley Humanoid Lite), adaptateurs CAN, centrale
   inertielle, batterie, câblage.
 - **Structure** : dépend du mode de fabrication. Aujourd'hui **inconnue** :
-  il faut le chiffrage de Loïc pour l'usinage, et le coût du filament.
+  il faut le chiffrage de l'opérateur CN pour l'usinage, et le coût du filament.
 - **Imprévus** : casse, second tirage, actionneur défectueux. 15 % en
   provisoire : **à fixer par Jeremy**.
 - **Taxes** : Suisse, TVA d'import 8,1 %, pas de droits de douane sur les
@@ -485,8 +485,8 @@ v2 : les bras ne font pas partie de la v1.
    qu'écrivait la version 1.)* **Calculée le 30-09-2026 pour L**
    (RS06 / RS02, § 5). Reste ouverte pour les autres paires.
 4. Taux d'imprévus du budget (§ 7).
-5. Chiffrage de la structure : usinage (Loïc) et impression.
-6. Procédé exact de Loïc, rayons minimaux, matières, format de fichier.
+5. Chiffrage de la structure : usinage (l'opérateur CN) et impression.
+6. Procédé exact de l'opérateur CN, rayons minimaux, matières, format de fichier.
 7. Batterie adaptée à la tension des actionneurs retenus.
 8. Remplacement des paliers P1/P2/P3 par les tailles, dans le dépôt, par
    une fiche qui remplace sans réécrire.
