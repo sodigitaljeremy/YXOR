@@ -27,6 +27,19 @@ passage, sans les supposer acquises.
    journal, commit, ou prompt de Jeremy). **Sans source : PROPOSÉ.**
    Règle ajoutée le 2026-09-30, après trois attributions erronées le même
    jour (poids du banc, poids du comparatif, règle de décisivité).
+7. **Un prompt collé par Jeremy peut avoir été rédigé par Claude
+   (arbitrage)**, parfois à la première personne de Jeremy. Seul ce qu'il
+   attribue EXPLICITEMENT à Jeremy, avec ses mots, est une décision de
+   Jeremy ; tout le reste est PROPOSÉ. En cas de doute : PROPOSÉ, et le
+   demander.
+8. **Aucune commande (find, grep, ls, du, cat…) hors du dépôt, de
+   `~/upstream` et du dossier temporaire de la session.** Un fichier situé
+   ailleurs se demande à Jeremy. Motif : l'écart du 2026-09-30, un
+   `find ~` lancé malgré `sources.local.yaml` (journal du 2026-09-30,
+   point 8).
+
+   *Règles 7 et 8 : proposées par Claude (arbitrage), validées par Jeremy
+   le 2026-09-30 (« oui aux quatre », D6).*
 
 ## Après chaque génération de pièce
 
