@@ -34,6 +34,12 @@ tant qu'une seule n'est pas remplie, on ne met pas sous tension.
   réglage de limite** (connaissance générale, non vérifiée sur sa fiche).
   **Ce poste, tel qu'il est chiffré, ne remplit donc pas cette
   condition.** C'est dit ici, pas résolu.
+- **L'alimentation d'un banc est un OUTILLAGE** (précisé le
+  2026-09-30) : elle sert le banc, pas le robot, et **doit être à
+  limitation de courant réglable**. À ce titre, son choix relève de la
+  **seule décision de Jeremy** (CLAUDE.md, règle d'achat b : l'outillage
+  n'a aucun critère automatique). Ce protocole énonce l'exigence ; il ne
+  propose aucun modèle.
 - 48 V continu reste une très basse tension de sécurité (moins de 60 V).
   C'est l'**énergie** disponible qui fait le risque, pas le contact.
 
