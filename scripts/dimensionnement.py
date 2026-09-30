@@ -320,7 +320,9 @@ def couts(cat: dict, bud: dict, config: dict) -> dict:
                 if quel == "jambes":
                     lignes = [((classes[t], cat["candidats"][classes[t]]["prix"]), 2) for t in JAMBE]
                 else:
-                    cid = {"lourde": lourde, "legere": legere}[quel]
+                    # `actionneur:<id>` : une classe PRÉCISE du catalogue,
+                    # indépendante de la configuration (le banc proposé).
+                    cid = quel if quel in cat["candidats"] else {"lourde": lourde, "legere": legere}[quel]
                     lignes = [((cid, cat["candidats"][cid]["prix"]), q)]
                 for (cid, prix), n in lignes:
                     c = chf(prix, taux)

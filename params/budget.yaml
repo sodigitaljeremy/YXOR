@@ -74,18 +74,22 @@ structure:
 # ═════════════════════════════════════════════════════════════════════════
 #  Phases — ce que chacune achète
 # ═════════════════════════════════════════════════════════════════════════
-#  Postes `actionneur:*` : résolus par la configuration étudiée.
+#  Postes `actionneur:*` : résolus par la configuration étudiée, sauf
+#  `actionneur:<id>` qui désigne une classe précise du catalogue.
 #    actionneur:lourde  la classe de l'articulation la plus exigeante
 #    actionneur:legere  la classe la moins exigeante de la configuration
 #    actionneur:jambes  les 12 actionneurs de jambe, chacun de SA classe
 #  Poste `adaptateur_bus` : TTL si toutes les classes sont Feetech, CAN sinon.
 phases:
   banc:
-    description: "un actionneur de la classe lourde, sur table, alimenté en laboratoire"
+    statut: "PROPOSÉ (cadrage § 6 et § 13, 2026-09-30) — en attente de Jeremy"
+    description: >
+      2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration
+      étudiée : thermique réelle, deux adresses sur un même bus, segment à
+      2 DDL de l'échelon 1, et une rechange.
     postes:
-      - {poste: "actionneur:lourde", quantite: 1}
-      - {poste: adaptateur_bus, quantite: 1}
-      - {poste: alimentation_labo, quantite: 1}
+      - {poste: "actionneur:rs05", quantite: 2}
+      - {poste: adaptateur_can, quantite: 1}
   jambes_v1:
     description: "12 DDL de jambe, électronique embarquée, structure"
     postes:
