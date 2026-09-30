@@ -144,6 +144,7 @@ candidats:
     masse_g: {valeur: 380, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 3 g"}
     dimensions_mm: {valeur: "Ø78,5 × 41,5", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
     prix: {valeur: 699, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix_revendeur: {valeur: 160.99, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-02-Actuator-p-6665.html", consulte_le: "2026-09-30", note: "hors taxe (« Net price. VAT & shipping applied at checkout »), en stock ; 152,99 USD dès 10 ; OpenELAB 149,95 € (moteur seul, TVA inconnue)"}
 
   rs06:
     nom: "RobStride RS06"
@@ -166,6 +167,7 @@ candidats:
     masse_g: {valeur: 621, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
     dimensions_mm: {valeur: "Ø82 × 49", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
     prix: {valeur: 849, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix_revendeur: {valeur: 210.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-06-Actuator-p-6668.html", consulte_le: "2026-09-30", note: "hors taxe, en stock ; 200 USD dès 10 ; OpenELAB 189,95 € partiellement vérifié (recherche interne de la boutique)"}
 
   rs03:
     nom: "RobStride RS03"

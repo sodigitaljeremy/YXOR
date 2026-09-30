@@ -16,15 +16,15 @@ Poids : **fixés par Jeremy le 30-09-2026** (capacité 18, continuité 18, coût
 
 | Famille | S : prudent (k = 0,5) – optimiste | M | L | Jambes S (TTC CHF) | Jambes M | Jambes L | Continuité | Trous |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
-| RobStride (RS05 → RS02 → RS06) | 0,48–0,57 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 846 | ≥ 1 774 | ≥ 2 053 | 5/5 | — |
-| RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 0,38–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 472 | ≥ 1 774 | ≥ 2 053 | 5/5 | — |
+| RobStride (RS05 → RS02 → RS06) | 0,48–0,57 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 846 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
+| RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 0,38–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 472 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 0,50–0,67 m | 0,62–0,80 m | 0,79–0,99 m | ≥ 2 354 | ≥ 3 141 | ≥ 2 543 | 5/5 | — |
 | CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,44–0,61 m | 0,68–0,84 m | 0,78–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
 | MyActuator (X2-7 → [trou] → X4-36) | 0,45–0,61 m | **TROU** | 0,76–0,95 m | ≥ 4 717 | — | ≥ 5 457 | 2/5 | M |
 
 Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est calculé à la borne basse de l'hypothèse k ; pour RobStride, c'est la valeur **en blocage** publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` (12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas chiffrée.
 
-**Prix : une base inégale, dite.** Chaque membre est chiffré au prix **revendeur** quand il a été relevé ; sinon au prix du catalogue. Pour **RS02 et RS06**, seul le prix **constructeur en yuans** est connu (hors export, port et douane) : leurs coûts M et L sont donc **sous-estimés** face aux autres familles, chiffrées chez des revendeurs.
+**Prix.** Chaque membre est chiffré au prix **revendeur** quand il a été relevé (pour RobStride : Seeed, hors taxe) ; sinon au prix du catalogue. Plus aucun membre de famille n'est chiffré au seul prix constructeur en yuans.
 
 ### Membres, trous et alternatives
 

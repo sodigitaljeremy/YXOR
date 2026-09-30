@@ -459,6 +459,10 @@ fichiers:
         origine: catalogue
         nature: sans_objet
         source: "plaque de dissipation de la mesure constructeur"
+      - motif: "candidats.*.prix_revendeur.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "prix revendeur relevé (devise, vendeur, TVA, source)"
       - motif: "candidats.*.prix.tva_incluse"
         origine: catalogue
         nature: sans_objet

@@ -295,7 +295,7 @@ def evaluer_familles(cat, crit, bud, analyse, ref, cands_S, k):
             # Même base de prix que la note de coût : le prix REVENDEUR s'il
             # est relevé (comparatif_S), sinon celui du catalogue.
             cat_prix = cat
-            pr = (cat.get("comparatif_S", {}).get(mid) or {}).get("prix_revendeur")
+            pr = c.get("prix_revendeur") or (cat.get("comparatif_S", {}).get(mid) or {}).get("prix_revendeur")
             if pr and pr.get("valeur") is not None:
                 cat_prix = dict(cat, candidats=dict(cat["candidats"], **{mid: dict(c, prix=pr)}))
             cout = D.couts(cat_prix, bud, D.config_homogene(D.classe_catalogue(cat_prix, mid)))
@@ -703,10 +703,14 @@ def doc_familles(r, date) -> str:
       "publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` "
       "(12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas "
       "chiffrée.\n")
-    A("**Prix : une base inégale, dite.** Chaque membre est chiffré au prix **revendeur** quand il a "
-      "été relevé ; sinon au prix du catalogue. Pour **RS02 et RS06**, seul le prix **constructeur en "
-      "yuans** est connu (hors export, port et douane) : leurs coûts M et L sont donc **sous-estimés** "
-      "face aux autres familles, chiffrées chez des revendeurs.\n")
+    sans_rev = [fm_t["nom"] for fm in r["fams"] for fm_t in fm["tailles"].values()
+                if fm_t and not (r["cat"]["candidats"][fm_t["id"]].get("prix_revendeur")
+                                 or (r["cat"].get("comparatif_S", {}).get(fm_t["id"]) or {}).get("prix_revendeur"))
+                and r["cat"]["candidats"][fm_t["id"]]["prix"].get("devise") == "CNY"]
+    A("**Prix.** Chaque membre est chiffré au prix **revendeur** quand il a été relevé (pour RobStride : "
+      "Seeed, hors taxe) ; sinon au prix du catalogue. "
+      + ("Restent au seul prix constructeur en yuans, donc sous-estimés : " + ", ".join(sorted(set(sans_rev))) + ".\n"
+         if sans_rev else "Plus aucun membre de famille n'est chiffré au seul prix constructeur en yuans.\n"))
     A("### Membres, trous et alternatives\n")
     for fm in r["fams"]:
         A(f"**{fm['nom']}**\n")
