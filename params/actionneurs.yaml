@@ -73,6 +73,7 @@ candidats:
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0, trame étendue, 1 Mbps"
     tension_V: {valeur: 48, source: "manuel EL05 260713, p. 9-11", consulte_le: "2026-09-30", note: "condition de mesure du couple nominal"}
+    tension_plage_V: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "16–60 V (titre de recherche)"}
     reduction: {valeur: 9, source: "manuel EL05 260713, p. 12", consulte_le: "2026-09-30"}
     couple_continu_Nm:
       valeur: 1.8
@@ -97,6 +98,7 @@ candidats:
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
+    tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     couple_continu_Nm:
       valeur: 1.8
@@ -119,6 +121,7 @@ candidats:
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "plage 15–60 V (README du 2026-07-13 : 24–60 V)"}
+    tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
     couple_continu_Nm:
       valeur: 6.0
@@ -148,6 +151,7 @@ candidats:
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "plage 15–60 V"}
+    tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
     reduction: {valeur: 9, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
     couple_continu_Nm:
       valeur: 11.0
@@ -218,6 +222,7 @@ candidats:
     fabricant: "Damiao (DM)"
     bus: "CAN 2.0B, 1 Mbit/s par défaut (CAN FD au-delà) ; UART de configuration"
     tension_V: {valeur: 24, source: "manuel V1.4, p. 8", consulte_le: "2026-09-30", note: "plage 20–28 V ; variante 48 V existante, non retenue ici"}
+    tension_plage_V: {valeur: [20, 28], source: "manuel V1.4, p. 8 (pilote 24 V)", consulte_le: "2026-09-30", note: "le pilote 48 V (variante) couvre 20–58 V, 450 rpm à vide, mêmes couples"}
     reduction: {valeur: 10, source: "manuel V1.4", consulte_le: "2026-09-30", note: "type d'engrenage non écrit dans le manuel"}
     couple_continu_Nm:
       valeur: 3.5
@@ -261,6 +266,7 @@ candidats:
     fabricant: MyActuator
     bus: "CAN 1 Mbit/s (trame standard) et EtherCAT ; protocole CAN V4.4 du 2026-04-25"
     tension_V: {valeur: 24, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "plage 20–55 V ; au-delà de 24 V, ne pas dépasser la vitesse nominale"}
+    tension_plage_V: {valeur: [20, 55], source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "au-delà de 24 V, ne pas dépasser la vitesse nominale"}
     reduction: {valeur: 28.17, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "planétaire, jeu ≤ 15 arcmin"}
     couple_continu_Nm:
       valeur: 2.5
@@ -272,7 +278,7 @@ candidats:
     vitesse_a_vide_rpm: {valeur: 178, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "à 24 V"}
     masse_g: {valeur: 260, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30"}
     dimensions_mm: {valeur: "Ø44 × 63,5", source: "plan d'installation MyActuator", consulte_le: "2026-09-30"}
-    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "OpenELAB 329,95 € ; Eckstein 269,95 € ; OZ Robotics 345 USD — résumés de recherche seulement"}
+    prix: {valeur: 299.95, devise: EUR, tva_incluse: null, vendeur: "OpenELAB", source: "https://openelab.io/products/myactuator-rmd-x2-p28-actuator (JSON de la page)", consulte_le: "2026-09-30", note: "vérifié le 2026-09-30 au soir ; TVA incluse ou non : non indiqué. Était null (résumés seulement : OpenELAB 329,95 €, Eckstein 269,95 €)"}
 
   ak45_10_v3:
     nom: "CubeMars AK45-10 V3.0 KV75"
@@ -281,6 +287,7 @@ candidats:
     fabricant: CubeMars
     bus: "CAN 1 Mbit/s (mode MIT en trames étendues) et UART"
     tension_V: {valeur: 24, source: "https://www.cubemars.com/product/ak45-10-v3-0-kv75-robotic-actuator.html", consulte_le: "2026-09-30", note: "plage inconnue"}
+    tension_plage_V: {valeur: null, source: null, consulte_le: "2026-09-30", note: "aucune variante 48 V trouvée ; les pilotes 48 V du manuel V3.2.0 ne nomment pas l'AK45"}
     reduction: {valeur: 10, source: "page produit CubeMars", consulte_le: "2026-09-30", note: "planétaire, jeu 18 arcmin"}
     couple_continu_Nm:
       valeur: 2.5
@@ -309,6 +316,128 @@ candidats:
     masse_g: {valeur: 82, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30"}
     dimensions_mm: {valeur: null, source: null, consulte_le: "2026-09-30"}
     prix: {valeur: 264.50, devise: EUR, tva_incluse: 0.0, vendeur: "Generation Robots (FR)", source: "page produit Generation Robots, relevée par la recherche du 2026-09-30", consulte_le: "2026-09-30", note: "317,40 € TTC ; Reichelt (DE) 314,95 € TTC"}
+
+  # ── Membres M et L des familles, ajoutés le 2026-09-30 (soir) ──
+
+  dm_j8006:
+    nom: "Damiao DM-J8006-2EC V1.1"
+    comparatif_seulement: true
+    fiche: {version: "V1.1 (manuel « V1.0 », p. 1 : V1.1 2024.11.10 — version contradictoire)", sha256: "a1b7b0a74aded1f07333f3e1caae2dbe5854e953ff111ade96847f7991f68111", document: "DM-J8006-2EC V1.1减速电机说明书V1.0.pdf", depot: "https://github.com/dmBots/DM-J8006-2EC", consulte_le: "2026-09-30"}
+    fabricant: "Damiao (DM)"
+    bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
+    tension_V: {valeur: 24, source: "manuel, p. 12", consulte_le: "2026-09-30", note: "« 支持24-48V »"}
+    tension_plage_V: {valeur: [15, 52], source: "manuel, p. 12 (sous-tension ≥ 15 V, surtension ≤ 52 V)", consulte_le: "2026-09-30"}
+    reduction: {valeur: 6, source: "manuel, p. 11", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 8.0, source: "manuel, p. 11-12", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 20.0, source: "manuel, p. 11-12", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 190, source: "manuel, p. 11", consulte_le: "2026-09-30", note: "à 24 V ; une 2ᵉ ligne « 390rpm@24V » est probablement une coquille pour 48 V (non vérifié)"}
+    masse_g: {valeur: 559, source: "manuel, p. 11", consulte_le: "2026-09-30"}
+    prix: {valeur: 214.00, devise: USD, tva_incluse: 0.0, vendeur: "Foxtech (revendeur)", source: "store.foxtech.com/robot/robot-joint-motor/damiao/", consulte_le: "2026-09-30", note: "révision non précisée ; Damiao ne publie aucun prix"}
+
+  dm_j4340:
+    nom: "Damiao DM-J4340-2EC V1.1 (48 V)"
+    comparatif_seulement: true
+    fiche: {version: "V1.1, manuel V1.3 du 2026-08-13", sha256: "fc144601d78d6169f73f4c87bc326a46d402782445f478a59acf38c3174e0351", document: "DM-J4340-2EC V1.1 Geared Motor User Manual V1.3 2026-08-13", depot: "https://github.com/dmBots/DM-J4340-2EC", consulte_le: "2026-09-30"}
+    fabricant: "Damiao (DM)"
+    bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
+    tension_V: {valeur: 48, source: "manuel V1.3, p. 8 (colonne « V1.1 (48V) »)", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [20, 58], source: "manuel V1.3, p. 8 (pilote 48 V)", consulte_le: "2026-09-30"}
+    reduction: {valeur: 40, source: "manuel V1.3, p. 7", consulte_le: "2026-09-30", note: "rapport élevé : réversibilité faible probable (non publiée)"}
+    couple_continu_Nm: {valeur: 12.0, source: "manuel V1.3, p. 7", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 40.0, source: "manuel V1.3, p. 7", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 112, source: "manuel V1.3, p. 7", consulte_le: "2026-09-30", note: "à 48 V (56 à 24 V)"}
+    masse_g: {valeur: 362, source: "manuel V1.3, p. 7", consulte_le: "2026-09-30"}
+    prix: {valeur: 166.00, devise: USD, tva_incluse: 0.0, vendeur: "Foxtech (revendeur)", source: "store.foxtech.com/robot/robot-joint-motor/damiao/", consulte_le: "2026-09-30", note: "155–166 USD selon 24/48 V ; la plus haute retenue ; révision non précisée"}
+
+  dm_j8009:
+    nom: "Damiao DM-J8009-2EC (alternative L)"
+    comparatif_seulement: true
+    fiche: {version: "manuel V1.1 du 2026-04-10", sha256: "1aa825763d55b301c71769fd56170151c64ad8e5883f0f84000c0d84c3435961", document: "manuel DM-J8009-2EC V1.1(4)", depot: "https://github.com/dmBots/DM-J8009-2EC", consulte_le: "2026-09-30"}
+    fabricant: "Damiao (DM)"
+    bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
+    tension_V: {valeur: 24, source: "manuel V1.1, p. 6-7", consulte_le: "2026-09-30", note: "24–48 V"}
+    tension_plage_V: {valeur: [15, 52], source: "manuel V1.1, p. 7", consulte_le: "2026-09-30"}
+    reduction: {valeur: null, source: null, consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 20.0, source: "manuel V1.1, p. 6", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 40.0, source: "manuel V1.1, p. 6", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 320, source: "manuel V1.1, p. 6", consulte_le: "2026-09-30", note: "à 48 V (160 à 24 V)"}
+    masse_g: {valeur: 896, source: "manuel V1.1, p. 6", consulte_le: "2026-09-30"}
+    prix: {valeur: 385.00, devise: USD, tva_incluse: 0.0, vendeur: "Foxtech (revendeur)", source: "store.foxtech.com/robot/robot-joint-motor/damiao/", consulte_le: "2026-09-30"}
+
+  ak80_9_v3:
+    nom: "CubeMars AK80-9 V3.0 KV100"
+    comparatif_seulement: true
+    fiche: {version: "page produit (sans version) ; plage de tension au manuel AK V3.2.0", sha256: null, document: "https://www.cubemars.com/product/ak80-9-v3-0-robotic-actuator.html", consulte_le: "2026-09-30", note: "page web ; manuel V3.2.0 sha256 ab1b62b9…20ea225"}
+    fabricant: CubeMars
+    bus: "CAN 1 Mbit/s ; modes Servo et MIT"
+    tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7 (pilotes 48 V AK60-4820 et AK80-4830)", consulte_le: "2026-09-30"}
+    reduction: {valeur: 9, source: "page produit", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 9.0, source: "page produit", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 22.0, source: "page produit", consulte_le: "2026-09-30", note: "⚠ le manuel V3.2.0, p. 42, borne le mode MIT à ±18 N·m"}
+    vitesse_a_vide_rpm: {valeur: 570, source: "page produit", consulte_le: "2026-09-30", note: "tension de mesure non précisée"}
+    masse_g: {valeur: 490, source: "page produit", consulte_le: "2026-09-30"}
+    prix: {valeur: 479.90, devise: USD, tva_incluse: 0.0, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak80-9-v3-0-robotic-actuator.html", consulte_le: "2026-09-30"}
+
+  ak10_9_v3:
+    nom: "CubeMars AK10-9 V3.0 KV60"
+    comparatif_seulement: true
+    fiche: {version: "page produit (sans version)", sha256: null, document: "https://www.cubemars.com/product/ak10-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
+    fabricant: CubeMars
+    bus: "CAN 1 Mbit/s ; modes Servo et MIT"
+    tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7", consulte_le: "2026-09-30", note: "plage des pilotes 48 V ; l'AK10-9 n'y est pas nommé explicitement"}
+    reduction: {valeur: 9, source: "page produit", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 18.0, source: "page produit", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 53.0, source: "page produit", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 320, source: "page produit", consulte_le: "2026-09-30", note: "tension de mesure non précisée"}
+    masse_g: {valeur: 940, source: "page produit", consulte_le: "2026-09-30"}
+    prix: {valeur: 698.90, devise: USD, tva_incluse: 0.0, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak10-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
+
+  ak70_9_v3:
+    nom: "CubeMars AK70-9 V3.0 KV60 (alternative L, sous la plage)"
+    comparatif_seulement: true
+    fiche: {version: "page produit (sans version)", sha256: null, document: "https://www.cubemars.com/product/ak70-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
+    fabricant: CubeMars
+    bus: "CAN 1 Mbit/s ; modes Servo et MIT"
+    tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7", consulte_le: "2026-09-30"}
+    reduction: {valeur: 9, source: "page produit", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 8.5, source: "page produit", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 29.2, source: "page produit", consulte_le: "2026-09-30", note: "sous la plage L visée (36–40)"}
+    vitesse_a_vide_rpm: {valeur: 320, source: "page produit", consulte_le: "2026-09-30", note: "tension de mesure non précisée"}
+    masse_g: {valeur: 540, source: "page produit", consulte_le: "2026-09-30"}
+    prix: {valeur: 398.90, devise: USD, tva_incluse: 0.0, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak70-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
+
+  x4_36:
+    nom: "MyActuator RMD-X4-P36-36-E (« X4-36 »)"
+    comparatif_seulement: true
+    fiche: {version: "X4-36 Motor Parameter 260903", sha256: "e1d41409a1139cf8342ab3840ef82fc3a25e30f2041c46755c6f47dce3359b70", document: "« X4-36 Motor Parameter 260903.pdf », dans l'archive https://www.myactuator.com/_files/archives/cab28a_dcb58d860356468d817e06ffe8d248af.zip", consulte_le: "2026-09-30", note: "sha256 de l'archive : 8ce1392bfb1e622a6ad86f00c2373fd631664821b5ef331342d6e8a333aa5518"}
+    fabricant: MyActuator
+    bus: "CAN et EtherCAT"
+    tension_V: {valeur: 24, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [20, 55], source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30", note: "au-delà de 24 V, ne pas dépasser la vitesse nominale"}
+    reduction: {valeur: 36, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 10.5, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30", condition: "à 83 rpm ; condition thermique non précisée", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 34.0, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30", note: "blocage 34,5 N·m pendant 3 s ; la variante -E-L donne 30 N·m (fiche) ou 34 (catalogue) : contradiction"}
+    vitesse_a_vide_rpm: {valeur: 111, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30", note: "à 24 V"}
+    masse_g: {valeur: 360, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30"}
+    prix: {valeur: 400.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Myactuator-X4-P36-Planetary-Actuator-p-6469.html", consulte_le: "2026-09-30", note: "en stock ; OpenELAB 349,95 € TTC, en rupture"}
+
+  dm_j4310_48v:
+    nom: "Damiao DM-J4310-2EC V1.2 (48 V)"
+    comparatif_seulement: true
+    fiche: {version: "V1.2, manuel V1.4 du 2026-09-14, colonne « V1.2 (48V) »", sha256: "4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245", document: "DM-J4310-2EC V1.2 Geared Motor User Manual V1.4 2026-09-14.pdf", depot: "https://github.com/dmBots/DM-J4310-2EC", consulte_le: "2026-09-30"}
+    fabricant: "Damiao (DM)"
+    bus: "CAN 2.0B, 1 Mbit/s par défaut"
+    tension_V: {valeur: 48, source: "manuel V1.4, p. 8", consulte_le: "2026-09-30"}
+    tension_plage_V: {valeur: [20, 58], source: "manuel V1.4, p. 8 (pilote 48 V : 24–48 V nominal, min 20, max 58)", consulte_le: "2026-09-30"}
+    reduction: {valeur: 10, source: "manuel V1.4", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 3.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", condition: "non précisée ; même valeur que la variante 24 V", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 12.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 450, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "à 48 V"}
+    masse_g: {valeur: 306, source: "manuel V1.4", consulte_le: "2026-09-30"}
+    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "Foxtech ne liste que la V1.1 (116–120 USD) ; aucun prix de la V1.2 48 V trouvé"}
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Configurations nommées — calculées et publiées au cadrage § 5
@@ -449,3 +578,53 @@ comparatif_S:
     garantie_mois: {valeur: null, source: null, non_verifie: "1 an, engrenages usés et moteurs brûlés exclus (robotis.us, résumé)"}
     distribution: {suisse: null, ue: "Generation Robots (FR), Reichelt (DE)", international: "ROBOTIS", source: "pages Generation Robots et Reichelt relevées le 2026-09-30", non_verifie: "Digitec 699 CHF, Galaxus 769 CHF"}
     ouverture: {protocole_public: true, sdk_libre: true, firmware_libre: false, source: "Protocol 2.0 publié ; DynamixelSDK Apache-2.0 selon l'étude externe (non revérifié ici)"}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Familles S → M → L (2026-09-30, soir)
+# ═════════════════════════════════════════════════════════════════════════
+#  Tailles visées en couple de POINTE : S ≈ 5–7, M ≈ 17–22, L ≈ 36–40 N·m.
+#  Un membre absent (null) est un TROU de gamme : il est affiché, jamais
+#  comblé par un modèle hors plage ou hors bus.
+familles:
+  robstride:
+    nom: "RobStride (RS05 → RS02 → RS06)"
+    S: rs05
+    M: rs02
+    L: rs06
+    protocole_commun: {valeur: true, source: "PDF 2026-09-17, p. 38 (CAN 2.0/CAN FD sur toute la série) ; manuels RS05 et EL05 : mêmes trames"}
+  robstride_el05:
+    nom: "RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)"
+    S: edulite05
+    M: rs02
+    L: rs06
+    protocole_commun: {valeur: true, source: "manuel EL05 260713 : trames identiques au RS05"}
+    note: "variante de la famille RobStride : seul le membre S change"
+  damiao:
+    nom: "Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)"
+    S: dm_j4310
+    M: dm_j8006
+    L: dm_j4340
+    alternatives: {L: [dm_j8009]}
+    S_variante_48V: dm_j4310_48v
+    protocole_commun: {valeur: true, source: "manuels dmBots : CAN 1 Mbit/s, modes MIT, position-vitesse et vitesse sur toute la gamme"}
+    note: "J4310 et J4340 ont une variante 48 V ; J8006 est donné 24 V, « supporte 24–48 V »"
+  cubemars:
+    nom: "CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3)"
+    S: ak45_10_v3
+    M: ak80_9_v3
+    L: ak10_9_v3
+    alternatives: {L: [ak70_9_v3]}
+    protocole_commun: {valeur: true, source: "manuel AK V3.2.0 : modes Servo et MIT pour la série AK"}
+    note: "AK70-9 V3 (29,2 N·m) sous la plage L : AK10-9 V3 (53 N·m) retenu ; AK45-10 V3 sans variante 48 V trouvée"
+  myactuator:
+    nom: "MyActuator (X2-7 → [trou] → X4-36)"
+    S: x2_7
+    M: null
+    L: x4_36
+    protocole_commun: {valeur: null, source: null, non_verifie: "protocole CAN V4.4 pour la gamme X V4 ; non vérifié modèle par modèle"}
+    note: >
+      TROU en M : le catalogue 2026 (sha256 0faddc54…) saute de X4-10
+      (10 N·m) à X8-32 (32 N·m, RS485 seulement). Le X8-20 n'y figure
+      plus, sans annonce d'arrêt trouvée ; « remplacé par X8-32 » n'est
+      écrit nulle part (l'étude externe l'affirmait). Le X8-25 (V2, 48 V,
+      25 N·m) est encore présenté mais absent du catalogue 2026.

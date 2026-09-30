@@ -51,6 +51,10 @@ electronique:
       CONFORME CE. Le texte extrait de la page l'intitule aussi
       « candlelight FD » (même prix). Était null jusqu'au 2026-09-30.
     non_verifie: "CANable 2.0 35 USD (openlightlabs.com, 429) ; adaptateur RobStride 37,80–42,00 USD (eBay)"
+  alimentation_24V:
+    article: "Mean Well RSP-320-24 (24 V, 13,4 A, 322 W, PFC)"
+    prix: {valeur: 50.95, devise: EUR, tva_incluse: 0.19, vendeur: "Reichelt (DE)", source: "https://www.reichelt.com/de/en/shop/product/switching_power_supply_pfc_322_w_24_v_13_4_a-147896", consulte_le: "2026-09-30"}
+    note: "en stock, port en sus ; Farnell CH 54,00 CHF non vérifié (page bloquée)"
   alimentation_48V:
     article: "Mean Well RSP-500-48 (48 V, 10,5 A, 504 W, PFC)"
     prix: {valeur: 82.30, devise: EUR, tva_incluse: 0.19, vendeur: "Reichelt (DE)", source: "https://www.reichelt.com/de/en/shop/product/switching_power_supply_slim_504_w_pfc_48_v_10_5_a-144823", consulte_le: "2026-09-30"}

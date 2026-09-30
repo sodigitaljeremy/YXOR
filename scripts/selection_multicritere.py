@@ -52,7 +52,8 @@ import dimensionnement as D  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 CRITERES = REPO / "params" / "criteres_selection.yaml"
-DOC_S = REPO / "docs" / "choix-classe-S.md"
+DOC_S_V1 = REPO / "docs" / "choix-classe-S.md"          # v1, figé : n'est plus régénéré
+DOC_FAMILLE = REPO / "docs" / "choix-famille-actionneurs.md"
 DOC_BANC = REPO / "docs" / "comparatif-banc.md"
 
 val = D.val
@@ -95,21 +96,6 @@ def note_tension(v):
 
 
 # ───────────────────────────── données S ────────────────────────────────
-
-def continu_retenu(c: dict) -> dict:
-    """Le couple continu sur la PLUS PETITE plaque publiée, sinon le nominal."""
-    cc = c["couple_continu_Nm"]
-    options = [dict(valeur=val(cc), plaque_mm=cc.get("plaque_mm"),
-                    condition=cc.get("condition"), source=cc.get("source"))]
-    for a in cc.get("autres_conditions") or []:
-        options.append(dict(valeur=a.get("valeur"), plaque_mm=a.get("plaque_mm"),
-                            condition=a.get("condition"), source=a.get("source")))
-    blocage = next((o for o in options if o["condition"] and "BLOCAGE" in o["condition"]), None)
-    plaques = [o for o in options if o["plaque_mm"] and o["valeur"] is not None
-               and not (o["condition"] and "BLOCAGE" in o["condition"])]
-    choisi = min(plaques, key=lambda o: o["plaque_mm"]) if plaques else options[0]
-    return dict(choisi, blocage=blocage["valeur"] if blocage else None)
-
 
 def intervalle_continu(c: dict, k: float) -> dict:
     """Couple continu OPTIMISTE et PRUDENT (criteres_selection.yaml, 2026-09-30 soir).
@@ -253,6 +239,81 @@ def evaluer_S(cat, crit, bud, analyse, ref, k=1.0):
     return out
 
 
+# ─────────────────────────────── familles ───────────────────────────────
+
+TAILLES = ("S", "M", "L")
+
+
+def plage_tension(c: dict):
+    """Plage publiée ; à défaut, la seule tension nominale."""
+    v = val(c.get("tension_plage_V") or {})
+    if v:
+        return tuple(v)
+    tv = val(c["tension_V"])
+    return (tv, tv) if tv is not None else None
+
+
+def tension_commune(plages):
+    """Une tension qui entre dans toutes les plages (48 V de préférence)."""
+    if not plages or any(p_ is None for p_ in plages):
+        return None
+    lo, hi = max(p_[0] for p_ in plages), min(p_[1] for p_ in plages)
+    if lo > hi:
+        return None
+    return 48 if lo <= 48 <= hi else (24 if lo <= 24 <= hi else lo)
+
+
+def evaluer_familles(cat, crit, bud, analyse, ref, cands_S, k):
+    """Chaque famille S → M → L : tailles, coûts, continuité intrinsèque, trous.
+
+    Les critères autres que la continuité sont ceux du MEMBRE S (le premier
+    robot), repris de evaluer_S au même k.
+    """
+    marge = val(cat["dimensionnement"]["marge"])
+    besoins = D.besoins_p1(analyse)
+    par_id = {c["id"]: c for c in cands_S}
+    out = []
+    for fid, fam in cat["familles"].items():
+        tailles = {}
+        for tl in TAILLES:
+            mid = fam.get(tl)
+            if not mid:
+                tailles[tl] = None
+                continue
+            c = cat["candidats"][mid]
+            iv = intervalle_continu(c, k)
+            Hp, evp = h_max_avec(cat, mid, iv["prudent"], ref, besoins, marge)
+            Ho, _ = h_max_avec(cat, mid, iv["optimiste"], ref, besoins, marge)
+            # Même base de prix que la note de coût : le prix REVENDEUR s'il
+            # est relevé (comparatif_S), sinon celui du catalogue.
+            cat_prix = cat
+            pr = (cat.get("comparatif_S", {}).get(mid) or {}).get("prix_revendeur")
+            if pr and pr.get("valeur") is not None:
+                cat_prix = dict(cat, candidats=dict(cat["candidats"], **{mid: dict(c, prix=pr)}))
+            cout = D.couts(cat_prix, bud, D.config_homogene(D.classe_catalogue(cat_prix, mid)))
+            tailles[tl] = dict(id=mid, nom=c["nom"], H_prud=Hp, H_opt=Ho, iv=iv,
+                               pointe=val(c["couple_pointe_Nm"]), tension=val(c["tension_V"]),
+                               plage=plage_tension(c), bus=c["bus"], masse_robot=(evp or {}).get("masse"),
+                               jambes=cout["jambes_v1"], haut=cout["haut_du_corps_v2"])
+        presents = [x for x in tailles.values() if x]
+        trous = [tl for tl, x in tailles.items() if not x]
+        can = bool(presents) and all("CAN" in x["bus"] for x in presents)
+        proto = bool(fam.get("protocole_commun", {}).get("valeur"))
+        commune = tension_commune([x["plage"] for x in presents])
+        cont = max(0, (2 if can else 0) + (2 if proto else 0) + (1 if commune else 0) - len(trous))
+        S = par_id[fam["S"]]
+        notes = dict(S["notes"], continuite=cont)
+        justif = dict(S["justif"], continuite=(
+            f"bus {'CAN sur les 3' if can else 'NON commun'} ; protocole commun "
+            f"{'oui' if proto else 'non établi'} ; tension commune "
+            f"{str(commune) + ' V' if commune else 'aucune'} ; trous : {', '.join(trous) or 'aucun'}"))
+        out.append(dict(id=fid, nom=fam["nom"], tailles=tailles, trous=trous, notes=notes,
+                        justif=justif, etat=S["etat"], reference=False, S=S, can=can, proto=proto,
+                        tension_commune=commune, alternatives=fam.get("alternatives") or {},
+                        note_famille=fam.get("note")))
+    return out
+
+
 # ─────────────────────────── score et sensibilité ───────────────────────
 
 def score(notes: dict, poids: dict) -> float:
@@ -367,110 +428,6 @@ CRIT_S = ("capacite", "cout", "continuite", "fiabilite_fournisseur", "robustesse
           "masse", "ouverture", "tension_securite", "disponibilite")
 
 
-def doc_S(cands, crit, poids, sens, marge, date):
-    L = []
-    A = L.append
-    A("# Choix de la classe d'actionneur de S — comparatif multicritère\n")
-    A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, "
-      f"le {date}. Ne pas éditer à la main : le régénérer. Aucune fiche, aucun achat "
-      "proposé (CLAUDE.md, règle d'achat c) : c'est un comparatif demandé, qui prépare "
-      "une décision de Jeremy.\n")
-    A("Sources : `params/actionneurs.yaml` (catalogue et `comparatif_S`, chaque valeur "
-      "sourcée, version de fiche et sha256), `params/criteres_selection.yaml` (grilles "
-      "écrites **avant** le calcul, poids **proposés, à fixer par Jeremy**, jugements "
-      "justifiés), `params/budget.yaml` (taux BCE). Statuts : les notes sont **calculées** "
-      "depuis le catalogue, sauf celles marquées **JUGEMENT**.\n")
-    A("---\n\n## 1 — Les candidats\n")
-    A(f"| Candidat | Continu retenu (N·m) | Condition | En blocage | Pointe | Masse (g) | Tension | Prix HT (CHF) | H_max à marge {f(marge, 1)} | H_max avec le nominal publié |")
-    A("| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
-    for c in cands:
-        cr = c["continu"]
-        A(f"| {c['nom']}{' *(référence)*' if c['reference'] else ''} | {f(cr['valeur'])} | "
-          f"{cr['condition'] or 'non précisée'} | {f(cr['blocage'])} | {f(c['pointe'])} | "
-          f"{f(c['masse_g'], 1)} | {c['tension']} V | {f(c['prix_chf'])} | **{f(c['H'])} m** | "
-          f"{f(c['H_nominal'])} m |")
-    A("\n**Couple continu retenu** : celui publié sur la **plus petite plaque de dissipation**, "
-      "sinon le nominal. Cette règle a été **modifiée le 2026-09-30** en remplissant le "
-      "catalogue, avant tout calcul de note : la version initiale (« en blocage s'il est "
-      "publié ») aurait pénalisé RobStride, seul fabricant à publier une valeur en blocage. "
-      "Voir `criteres_selection.yaml`.\n")
-    A("---\n\n## 2 — Éliminatoires\n")
-    A("| Candidat | H_max ≥ 0,55 m | Télémétrie (position, couple ou courant, température) | État |")
-    A("| --- | --- | --- | --- |")
-    for c in cands:
-        A(f"| {c['nom']} | {c['elim_capacite']} | {c['elim_telemetrie']} | **{c['etat']}**"
-          f"{' (référence, hors classement)' if c['reference'] else ''} |")
-    A("\nUn **éliminé** ne peut pas gagner, quels que soient les poids. Un **non évaluable** "
-      "reste classé, et son manque est affiché.\n")
-    bascule = [c for c in cands if c["elim_capacite"] == "éliminé" and c["H_nominal"] and c["H_nominal"] >= 0.55]
-    if bascule:
-        A("**⚠ Éliminations qui tiennent à la condition de mesure.** "
-          + " ; ".join(f"{c['nom']} : {f(c['H'])} m avec {f(c['continu']['valeur'])} N·m "
-                       f"({c['continu']['condition']}), mais {f(c['H_nominal'])} m avec son nominal publié"
-                       for c in bascule)
-          + ". La règle retient la plus petite plaque publiée (§ 1) : c'est elle qui élimine. "
-          "Sous l'autre lecture, ces candidats seraient admis. **C'est une élimination de "
-          "justesse, qui dépend d'une convention**, et non d'une impossibilité.\n")
-    A("---\n\n## 3 — Notes et score\n")
-    A("| Critère | Poids (proposé) | " + " | ".join(c["nom"] for c in cands if not c["reference"]) + " |")
-    A("| --- | ---: | " + " | ".join("---:" for c in cands if not c["reference"]) + " |")
-    for k in CRIT_S:
-        A(f"| {k} | {poids[k]} | " + " | ".join(str(c["notes"][k]) for c in cands if not c["reference"]) + " |")
-    A("| **score /5** | | " + " | ".join(
-        f"**{f(score(c['notes'], poids))}**" + (" (éliminé)" if c["etat"] == "éliminé" else "")
-        for c in cands if not c["reference"]) + " |")
-    A("\n### Justification de chaque note\n")
-    for c in cands:
-        A(f"**{c['nom']}**{' (référence)' if c['reference'] else ''}\n")
-        for k in CRIT_S:
-            A(f"- {k} = {c['notes'][k]} — {c['justif'][k]}")
-        A("")
-    A("---\n\n## 4 — Sensibilité\n")
-    A(f"Vainqueur aux poids proposés : **{next(c['nom'] for c in cands if c['id'] == sens['nominal'])}**.\n")
-    A("| Poids modifié | × 0,5 | × 1,5 |")
-    A("| --- | --- | --- |")
-    nom = {c["id"]: c["nom"] for c in cands}
-    for k in poids:
-        v = {fac: w for kk, fac, w in sens["variations"] if kk == k}
-        A(f"| {k} | {nom.get(v[0.5], '—')} | {nom.get(v[1.5], '—')} |")
-    A(f"\n**{sum(1 for *_, w in sens['variations'] if w == sens['nominal'])} variations sur "
-      f"{len(sens['variations'])}** laissent le vainqueur inchangé.\n")
-    A("Fréquence de victoire sur 1 000 jeux de poids tirés au hasard (Dirichlet α = 1, graine "
-      f"{crit['classe_S']['sensibilite']['graine']}) :\n")
-    A("| Candidat | Victoires | Fréquence |")
-    A("| --- | ---: | ---: |")
-    for w, k in sorted(sens["gagnes"].items(), key=lambda x: -x[1]):
-        A(f"| {nom.get(w, w)} | {k} | {f(100 * k / crit['classe_S']['sensibilite']['tirages'], 1)} % |")
-    A("\n## 5 — Verdict\n")
-    if sens["robuste"]:
-        A(f"**Classement ROBUSTE.** {nom[sens['nominal']]} gagne toutes les variations ±50 % "
-          f"et {f(100 * sens['freq'], 1)} % des tirages aléatoires (seuil : 60 %).\n")
-    else:
-        A(f"**Les candidats sont trop proches pour que l'analyse tranche.** Le vainqueur nominal, "
-          f"{nom[sens['nominal']]}, gagne {f(100 * sens['freq'], 1)} % des tirages aléatoires"
-          f"{'' if sens['tous_pm'] else ' et perd au moins une variation ±50 %'}. "
-          "Le choix dépend des poids : il revient à Jeremy de les fixer.\n")
-    A("## 6 — Ce que ce comparatif ne dit pas\n")
-    A("- **Les poids sont proposés, pas décidés.** La sensibilité dit seulement si le "
-      "classement en dépend.")
-    A("- **Toutes les tailles sont des plafonds optimistes** : la marche de référence était "
-      "écrêtée (cadrage § 3).")
-    A("- **Aucun couple continu n'est mesuré dans la condition du robot.** Chaque valeur est "
-      "celle du constructeur, sur sa plaque ou sans condition précisée ; le banc la mesurera.")
-    A("- **Les prix sont hors TVA suisse et hors port** ; un prix inconnu vaut 0 dans la note "
-      "de coût, par prudence.")
-    A("- **Les données marquées non vérifiées** dans le catalogue ne comptent pas comme "
-      "établies.")
-    fragiles = [c for c in cands if "régime établi" in (c["continu"]["condition"] or "")]
-    for c in fragiles:
-        A(f"- **⚠ {c['nom']} : son couple continu n'est pas un régime établi.** Condition publiée : "
-          f"« {c['continu']['condition']} ». La grille ne retire qu'un point pour une condition non "
-          f"précisée ; sa capacité ({f(c['H'])} m) est donc probablement **surestimée**. "
-          + ("C'est le vainqueur nominal : c'est le premier point à vérifier au banc."
-             if c["id"] == sens["nominal"] else ""))
-    return "\n".join(L) + "\n"
-
-
 def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date, S_robuste=True):
     L = []
     A = L.append
@@ -534,6 +491,22 @@ def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date, S_robuste=True):
 
 # ─────────────────────────────── principal ──────────────────────────────
 
+def _seuil_fin(evalue, balayage, cle_nominal):
+    """Affine au centième le k où le vainqueur change (None si aucun)."""
+    gagnant = balayage[0]["sens"]["nominal"]
+    bascule = next((b_["k"] for b_ in balayage if b_["sens"]["nominal"] != gagnant), None)
+    if bascule is None:
+        return None, None
+    haut = max(b_["k"] for b_ in balayage if b_["k"] > bascule)
+    kk = haut
+    while kk > bascule + 1e-9:
+        kk = round(kk - 0.01, 2)
+        w = evalue(kk)
+        if w != gagnant:
+            return bascule, dict(k=kk, garde=round(kk + 0.01, 2), gagnant=gagnant, nouveau=w)
+    return bascule, None
+
+
 def calculer():
     cat = D.charger_catalogue()
     crit = yaml.safe_load(CRITERES.read_text(encoding="utf-8"))
@@ -541,72 +514,187 @@ def calculer():
     analyse = AM.analyser(AM.SERIE)
     ref = D.reference(cat, analyse)
     poids = {k: v["poids"] for k, v in crit["classe_S"]["ponderes"].items()}
+    sens_cfg = crit["classe_S"]["sensibilite"]
     # DIMENSION DONNÉES : pour chaque hypothèse k sur les couples continus
-    # « non précisés », un classement complet et sa sensibilité aux poids.
-    balayage = []
+    # « non précisés », les candidats S ET les familles, chacun avec sa
+    # sensibilité aux poids.
+    balayage, fam_balayage = [], []
     for kk in crit["classe_S"]["ponderes"]["capacite"]["k_non_precisee"]:
         ck = evaluer_S(cat, crit, bud, analyse, ref, kk)
-        balayage.append(dict(k=kk, cands=ck, sens=sensibilite(ck, poids, crit["classe_S"]["sensibilite"])))
+        balayage.append(dict(k=kk, cands=ck, sens=sensibilite(ck, poids, sens_cfg)))
+        fk = evaluer_familles(cat, crit, bud, analyse, ref, ck, kk)
+        fam_balayage.append(dict(k=kk, fams=fk, sens=sensibilite(fk, poids, sens_cfg)))
     cands, sens = balayage[0]["cands"], balayage[0]["sens"]     # k = 1,0 : référence
-    gagnant_1 = sens["nominal"]
-    bascule = next((b_["k"] for b_ in balayage if b_["sens"]["nominal"] != gagnant_1), None)
-    # Affinage au centième entre le dernier k qui garde le vainqueur et le
-    # premier qui le change : c'est la valeur que le banc devra départager.
-    seuil_fin = None
-    if bascule is not None:
-        haut = max(b_["k"] for b_ in balayage if b_["k"] > bascule)
-        poids_ = {kk: v["poids"] for kk, v in crit["classe_S"]["ponderes"].items()}
-        kk = haut
-        while kk > bascule + 1e-9:
-            kk = round(kk - 0.01, 2)
-            ck = evaluer_S(cat, crit, bud, analyse, ref, kk)
-            if vainqueur(ck, poids_) != gagnant_1:
-                seuil_fin = dict(k=kk, garde=round(kk + 0.01, 2), nouveau=vainqueur(ck, poids_))
-                break
-    cl = sorted(classables(cands), key=lambda c: -score(c["notes"], poids))
-    S_id = sens["nominal"]
-    second = next((c["id"] for c in cl if c["id"] != S_id), None)
-    opts = options_banc(cands, S_id, second, cat, bud, crit)
-    pb = {k: v["poids"] for k, v in crit["banc"]["ponderes"].items()}
-    sb = sensibilite(opts, pb, crit["classe_S"]["sensibilite"])
-    return dict(cat=cat, crit=crit, cands=cands, poids=poids, sens=sens, S_id=S_id,
-                balayage=balayage, bascule=bascule, seuil_fin=seuil_fin, ref=ref, analyse=analyse, bud=bud,
-                second=second, opts=opts, pb=pb, sb=sb, marge=val(cat["dimensionnement"]["marge"]))
+    bascule, seuil_fin = _seuil_fin(
+        lambda kk: vainqueur(evaluer_S(cat, crit, bud, analyse, ref, kk), poids), balayage, "cands")
+    fam_bascule, fam_seuil = _seuil_fin(
+        lambda kk: vainqueur(evaluer_familles(cat, crit, bud, analyse, ref,
+                                              evaluer_S(cat, crit, bud, analyse, ref, kk), kk), poids),
+        fam_balayage, "fams")
+    # Les tailles « prudentes » de référence pour l'affichage : k le plus bas
+    # du balayage (borne basse de l'hypothèse).
+    fams_bas = fam_balayage[-1]["fams"]
+    return dict(cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
+                cands=cands, sens=sens, S_id=sens["nominal"], balayage=balayage,
+                bascule=bascule, seuil_fin=seuil_fin, fam_balayage=fam_balayage,
+                fam_bascule=fam_bascule, fam_seuil=fam_seuil, fams=fam_balayage[0]["fams"],
+                fams_bas=fams_bas, marge=val(cat["dimensionnement"]["marge"]))
+
+
+def tableau_familles(r) -> list[str]:
+    """Le tableau des familles : S/M/L prudent (k bas) – optimiste, coûts, continuité."""
+    kbas = r["fam_balayage"][-1]["k"]
+    bas = {x["id"]: x for x in r["fams_bas"]}
+    L = [f"| Famille | S : prudent (k = {f(kbas, 1)}) – optimiste | M | L | Jambes S (TTC CHF) | Jambes M | Jambes L | Continuité | Trous |",
+         "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |"]
+    for fm in r["fams"]:
+        cells = []
+        for tl in TAILLES:
+            x, xb = fm["tailles"][tl], bas[fm["id"]]["tailles"][tl]
+            cells.append("**TROU**" if not x else f"{f(xb['H_prud'])}–{f(x['H_opt'])} m")
+        jam = []
+        for tl in TAILLES:
+            x = fm["tailles"][tl]
+            if not x:
+                jam.append("—")
+            else:
+                j_ = x["jambes"]
+                jam.append(f"{'≥ ' if j_['inconnus'] else ''}{j_['ttc']:,.0f}".replace(",", " "))
+        L.append(f"| {fm['nom']} | " + " | ".join(cells) + " | " + " | ".join(jam)
+                 + f" | {fm['notes']['continuite']}/5 | {', '.join(fm['trous']) or '—'} |")
+    return L
+
+
+def doc_familles(r, date) -> str:
+    poids, crit = r["poids"], r["crit"]
+    L = []
+    A = L.append
+    A("# Choix de la famille d'actionneurs — comparatif multicritère v2\n")
+    A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}. "
+      "Ne pas éditer à la main. **C'est le document de décision** : il remplace "
+      "`docs/choix-classe-S.md` (v1, conservé, méthode corrigée). Aucune fiche, aucun achat "
+      "proposé (CLAUDE.md, règle d'achat c) : il prépare un choix de Jeremy.\n")
+    A("**Ce qui a changé depuis la v1** (relecture externe du 30-09-2026 ; chaque changement est "
+      "daté dans `params/criteres_selection.yaml`, section `modifications`) :\n")
+    A("1. **La taille n'est plus éliminatoire** : c'est une sortie de la démarche inversée "
+      "(fiche 0047). Elle est notée. Seule la télémétrie élimine.")
+    A("2. **La capacité est un intervalle.** Taille *optimiste* (le nominal publié le plus "
+      "favorable) et *prudente* (en blocage si publié ; sinon la plus petite plaque publiée ; "
+      "sinon — condition non précisée — le nominal × **k**). k est une **hypothèse**, balayée de "
+      "1,0 à 0,5.")
+    A("3. **On compare des familles S → M → L**, pas des modèles. La continuité se mesure dans "
+      "chaque famille, et un membre absent est un **trou**, affiché.\n")
+    A("Poids : **proposés, à fixer par Jeremy**. Marge : 1,5 (fiche 0051). Toutes les tailles "
+      "sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).\n")
+    A("---\n\n## 1 — Les familles\n")
+    L.extend(tableau_familles(r))
+    A("\nTailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est "
+      "calculé à la borne basse de l'hypothèse k ; pour RobStride, c'est la valeur **en blocage** "
+      "publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` "
+      "(12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas "
+      "chiffrée.\n")
+    A("**Prix : une base inégale, dite.** Chaque membre est chiffré au prix **revendeur** quand il a "
+      "été relevé ; sinon au prix du catalogue. Pour **RS02 et RS06**, seul le prix **constructeur en "
+      "yuans** est connu (hors export, port et douane) : leurs coûts M et L sont donc **sous-estimés** "
+      "face aux autres familles, chiffrées chez des revendeurs.\n")
+    A("### Membres, trous et alternatives\n")
+    for fm in r["fams"]:
+        A(f"**{fm['nom']}**\n")
+        for tl in TAILLES:
+            x = fm["tailles"][tl]
+            if not x:
+                A(f"- {tl} : **TROU** de gamme.")
+                continue
+            iv = x["iv"]
+            A(f"- {tl} : {x['nom']} — pointe {f(x['pointe'], 1)} N·m ; continu optimiste "
+              f"{f(iv['optimiste'])} N·m, prudent {f(iv['prudent'])} N·m ({iv['base_prudente']}) ; "
+              f"{x['tension']} V, plage {x['plage'] if x['plage'] else 'inconnue'}")
+        if fm["alternatives"]:
+            A(f"- alternatives : " + "; ".join(f"{k_} = {', '.join(v)}" for k_, v in fm["alternatives"].items()))
+        A(f"- continuité : {fm['justif']['continuite']}")
+        if fm["note_famille"]:
+            A(f"- note : {fm['note_famille'].strip()}")
+        A("")
+    A("---\n\n## 2 — Notes (membre S, et continuité de famille) à k = 1,0\n")
+    A("Les critères autres que la continuité se notent sur le **membre S**, le premier robot.\n")
+    fams = r["fams"]
+    A("| Critère | Poids (proposé) | " + " | ".join(fm["nom"].split(" (")[0] + (" EL05" if "el05" in fm["id"] else "") for fm in fams) + " |")
+    A("| --- | ---: | " + " | ".join("---:" for _ in fams) + " |")
+    for k_ in CRIT_S:
+        A(f"| {k_} | {poids[k_]} | " + " | ".join(str(fm["notes"][k_]) for fm in fams) + " |")
+    A("| **score /5** | | " + " | ".join(f"**{f(score(fm['notes'], poids))}**" for fm in fams) + " |")
+    A("\n### Justification de chaque note\n")
+    for fm in fams:
+        A(f"**{fm['nom']}**\n")
+        for k_ in CRIT_S:
+            A(f"- {k_} = {fm['notes'][k_]} — {fm['justif'][k_]}")
+        A("")
+    A("---\n\n## 3 — La dimension « données » : le vainqueur pour chaque k\n")
+    A("| k | Famille gagnante | Tirages gagnés | Variations ±50 % | Verdict |")
+    A("| ---: | --- | ---: | --- | --- |")
+    nom = {fm["id"]: fm["nom"] for fm in fams}
+    for b_ in r["fam_balayage"]:
+        s_ = b_["sens"]
+        A(f"| {f(b_['k'], 1)} | {nom[s_['nominal']]} | {f(100 * s_['freq'], 1)} % | "
+          f"{'toutes' if s_['tous_pm'] else 'PAS toutes'} | {'ROBUSTE' if s_['robuste'] else 'trop proches'} |")
+    if r["fam_seuil"]:
+        sf = r["fam_seuil"]
+        A(f"\n**Seuil de bascule : {nom[sf['gagnant']]} gagne jusqu'à k = {f(sf['garde'])} ; "
+          f"{nom[sf['nouveau']]} gagne dès k = {f(sf['k'])}.**\n")
+        A("En clair : le classement dépend du rapport entre le couple continu **réel** des "
+          "actionneurs « condition non précisée » et leur nominal publié. **C'est ce rapport que le "
+          "banc doit mesurer**, dans une condition identique pour les deux finalistes "
+          "(`docs/comparatif-banc.md`).\n")
+    else:
+        A("\n**Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.\n")
+    A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
+    A("| Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
+    A("| --- | --- | ---: | --- |")
+    for c in sorted(r["cands"], key=lambda c: -score(c["notes"], poids)):
+        A(f"| {c['nom']} | {f(c['H'])}–{f(c['H_opt'])} m | {f(score(c['notes'], poids))} | {c['etat']}"
+          f"{' (référence)' if c['reference'] else ''} |")
+    A("\nLeur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent à une famille ; "
+      "les autres (Feetech STS3250, SteadyWin GIM4310-10, Dynamixel XM430) sont listés pour mémoire.\n")
+    A("---\n\n## 5 — Questions ouvertes\n")
+    A("- **Ce que S doit porter** (calculateur, batterie, IMU) n'est pas chiffré : c'était la "
+      "vraie contrainte derrière le seuil retiré (cadrage, question 13).")
+    A("- **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?")
+    A("- **Les poids** : proposés, pas décidés.\n")
+    A("## 6 — Ce que ce comparatif ne dit pas\n")
+    A("- **Aucun couple continu n'est mesuré dans la condition du robot.** k est une hypothèse ; le "
+      "banc la remplacera par une mesure.")
+    A("- **Les prix** sont ceux relevés le 30-09-2026, hors port ; plusieurs viennent de revendeurs.")
+    A("- **Les données marquées non vérifiées** dans le catalogue ne comptent pas comme établies.")
+    return "\n".join(L) + "\n"
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--ecrire", action="store_true", help="engendre les deux documents")
+    ap.add_argument("--ecrire", action="store_true", help="engendre les documents")
     a = ap.parse_args(argv)
     if not AM.SERIE.exists():
         print(f"série absente : {AM.SERIE}\n  la régénérer : ~/upstream/toddlerbot/.venv/bin/python "
               "sim/upstream/enregistrer_marche.py")
         return 1
     r = calculer()
-    print(f"  {len(r['cands'])} candidats S (dont {sum(c['reference'] for c in r['cands'])} référence)")
-    for c in sorted(r["cands"], key=lambda c: -score(c["notes"], r["poids"])):
-        print(f"    {c['nom']:42s} {c['etat']:14s} H_max {f(c['H'])} m  score {f(score(c['notes'], r['poids']))}"
-              f"{'  (référence)' if c['reference'] else ''}")
-    s = r["sens"]
-    print("  balayage de k (couples continus « non précisés » × k) :")
-    for b_ in r["balayage"]:
-        sb_ = b_["sens"]
-        print(f"    k = {f(b_['k'], 1)} : vainqueur {sb_['nominal']:12s} tirages {f(100 * sb_['freq'], 1):>5} %  "
-              f"±50 % {'tous' if sb_['tous_pm'] else 'PAS tous':8s} -> {'ROBUSTE' if sb_['robuste'] else 'trop proches'}")
-    print(f"  bascule du vainqueur : " + (f"k = {f(r['bascule'], 1)}" if r["bascule"] else "aucune entre 1,0 et 0,5"))
-    if r["seuil_fin"]:
-        sf = r["seuil_fin"]
-        print(f"  seuil affiné : {r['S_id']} gagne jusqu'à k = {f(sf['garde'])}, {sf['nouveau']} dès k = {f(sf['k'])}")
-    sb = r["sb"]
-    print(f"  banc : {sb['nominal']} ; tirages {f(100 * sb['freq'], 1)} % -> "
-          f"{'ROBUSTE' if sb['robuste'] else 'TROP PROCHES'}")
+    print("\n  FAMILLES (tailles en m, S/M/L prudent à k bas – optimiste)\n")
+    for ligne in tableau_familles(r):
+        print("  " + ligne)
+    print("\n  vainqueur par k :")
+    nom = {fm["id"]: fm["nom"] for fm in r["fams"]}
+    for b_ in r["fam_balayage"]:
+        s_ = b_["sens"]
+        print(f"    k = {f(b_['k'], 1)} : {nom[s_['nominal']]:58s} tirages {f(100 * s_['freq'], 1):>5} % "
+              f"-> {'ROBUSTE' if s_['robuste'] else 'trop proches'}")
+    if r["fam_seuil"]:
+        sf = r["fam_seuil"]
+        print(f"  SEUIL k : {nom[sf['gagnant']]} jusqu'à k = {f(sf['garde'])} ; {nom[sf['nouveau']]} dès k = {f(sf['k'])}")
+    else:
+        print("  SEUIL k : aucune bascule entre 1,0 et 0,5")
     if a.ecrire:
         date = datetime.date.today().isoformat()
-        nom = {c["id"]: c["nom"] for c in r["cands"]}
-        DOC_S.write_text(doc_S(r["cands"], r["crit"], r["poids"], s, r["marge"], date), encoding="utf-8")
-        DOC_BANC.write_text(doc_banc(r["opts"], r["crit"], r["pb"], sb, nom[r["S_id"]],
-                                     nom.get(r["second"]), date, s["robuste"]), encoding="utf-8")
-        print(f"  -> {DOC_S.relative_to(REPO)}, {DOC_BANC.relative_to(REPO)}")
+        DOC_FAMILLE.write_text(doc_familles(r, date), encoding="utf-8")
+        print(f"  -> {DOC_FAMILLE.relative_to(REPO)}")
     return 0
 
 

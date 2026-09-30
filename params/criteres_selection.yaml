@@ -73,6 +73,21 @@ modifications:
       mesure « H_max à marge 1,5, avec le couple continu le plus prudent
       disponible » ; correction_dissipation −1 si continu sur
       dissipateur ou condition non précisée.
+  - date: "2026-09-30"
+    moment: "soir ; origine : relecture externe (Claude)"
+    objet: "on compare des FAMILLES ; la continuité devient INTRINSÈQUE"
+    raison: >
+      La continuité v1 mesurait la proximité avec RS02 et RS06 (M et L
+      supposés) : elle favorisait RobStride par construction. On compare
+      désormais des familles S → M → L, et la continuité se mesure DANS
+      chaque famille : 2 points si les trois membres sont en CAN, 2 si
+      le protocole est commun à la famille, 1 si une même tension entre
+      dans les plages publiées des trois membres ; −1 par membre
+      manquant (TROU de gamme), plancher 0. Les autres critères se
+      notent sur le membre S, le premier robot.
+    ancien_texte: >
+      continuite : « ce qui se garde en passant à M et L (RS02, RS06) » —
+      2 points bus CAN, 2 points même protocole que M et L, 1 point 48 V.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -122,11 +137,12 @@ classe_S:
       poids: 15
       statut: "proposé, à fixer par Jeremy"
       mode: calcule
-      mesure: "ce qui se garde en passant à M et L (RS02, RS06)"
+      mesure: "continuité INTRINSÈQUE de la famille S → M → L (modifiée le 2026-09-30, soir)"
       grille_points:
-        bus_can: "2 points si le bus est CAN, comme M et L"
-        meme_protocole: "2 points si c'est le même protocole que M et L (même fabricant et même famille)"
-        tension_48V: "1 point si la tension nominale est 48 V, comme M et L"
+        bus_can: "2 points si les trois membres sont en CAN"
+        meme_protocole: "2 points si le protocole est commun à la famille (documenté)"
+        meme_tension: "1 point si une même tension entre dans les plages publiées des trois membres"
+        trou: "−1 point par membre manquant, plancher 0"
       note: "somme des points, de 0 à 5"
 
     fiabilite_fournisseur:

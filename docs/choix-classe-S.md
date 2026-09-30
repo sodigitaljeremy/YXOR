@@ -1,3 +1,5 @@
+> **v1, méthode corrigée : voir `docs/choix-famille-actionneurs.md`.** Ce document n'est plus régénéré ni tenu à jour. Trois défauts de méthode y ont été corrigés le 30-09-2026 au soir (relecture externe) : un éliminatoire de taille qui contredisait la démarche inversée, une capacité en valeur unique, et une comparaison de modèles au lieu de familles. Il est gardé pour la trace, tel qu'il a été produit.
+
 # Choix de la classe d'actionneur de S — comparatif multicritère
 
 **Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le 2026-09-30. Ne pas éditer à la main : le régénérer. Aucune fiche, aucun achat proposé (CLAUDE.md, règle d'achat c) : c'est un comparatif demandé, qui prépare une décision de Jeremy.
