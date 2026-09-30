@@ -181,6 +181,26 @@ modifications:
       décisives tranchées (toutes → 5 ; au moins la moitié → 3 ; au
       moins une → 2 ; aucune → 0), puisque leur nombre peut changer.
     ancien_texte: "k balayé de 1,0 à 0,5 ; k_damiao toujours décisive ; grille 3 → 5, 2 → 3, 1 → 2, 0 → 0 sur trois inconnues"
+  - date: "2026-09-30"
+    moment: "nuit ; règle écrite AVANT le recalcul (réponse de Jeremy : oui)"
+    objet: "RÈGLE DE DÉCISIVITÉ ÉTENDUE : blocage_edulite et rs05_contre_edulite"
+    raison: >
+      Règle générale : une inconnue n'est décisive que si son issue peut
+      changer la DÉCISION DE FAMILLE dans la plage plausible de k (k ≥
+      plus petit rapport blocage / nominal publié, 0,619 aujourd'hui).
+      blocage_edulite et rs05_contre_edulite ne départagent que des
+      membres S de la famille RobStride : elles ne comptent que si une
+      famille RobStride gagne quelque part dans cette plage. Règle
+      calculable : `decisive_si: {famille_gagne_dans_la_plage_plausible:
+      [robstride, robstride_el05]}`, lue sur le balayage de k (points k ≥
+      borne basse). Limite : le balayage applique le même k à tous les
+      actionneurs sans valeur en blocage ; à k = 1,0, l'EduLite 05 est à
+      son nominal complet, son cas le plus favorable, et la famille
+      Damiao gagne quand même. Si aucune inconnue n'est décisive, la
+      valeur de décision vaut 0 pour TOUTES les options : ce critère ne
+      départage plus rien, et le document du banc le dit (« banc de
+      VÉRIFICATION, pas de départage »).
+    ancien_texte: "blocage_edulite et rs05_contre_edulite : toujours décisives (« toujours comptée »)"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -362,9 +382,11 @@ banc:
     blocage_edulite:
       question: "le couple de l'EduLite 05 près du blocage : aucune valeur en blocage n'est publiée"
       tranchee_si: {contient_un: [edulite05]}
+      decisive_si: {famille_gagne_dans_la_plage_plausible: [robstride, robstride_el05]}   # 2026-09-30, nuit
     rs05_contre_edulite:
       question: "RS05 ou EduLite 05 pour S dans la famille RobStride, mesurés dans la même condition"
       tranchee_si: {contient_tous: [rs05, edulite05]}
+      decisive_si: {famille_gagne_dans_la_plage_plausible: [robstride, robstride_el05]}   # 2026-09-30, nuit
 
   ponderes:
     valeur_decision:
