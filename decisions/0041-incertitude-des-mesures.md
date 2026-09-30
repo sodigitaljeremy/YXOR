@@ -2,10 +2,9 @@
 
 Date : 2026-09-29
 Espèce : proposition
-État : proposée
-Statut : **proposée** — instruction. Une seule chose est appliquée : le
-fichier `params/mesures.yaml` et ses trois premières entrées. Rien n'est
-répandu ailleurs.
+État : acceptée
+Statut : **acceptée** le 2026-09-30 (~23 h) — lot de cohérence validé par Jeremy, point 7 (D9 de `docs/arbitrage-2026-09-30.md`). Statut d'origine : « proposée — instruction ; une seule chose est appliquée : le fichier `params/mesures.yaml` et ses trois premières entrées ; rien n'est répandu ailleurs ».
+Appliquée dans : `params/mesures.yaml` (5 entrées ; vocabulaire `sous_resolution`, `incertitude: null`) ; `scripts/audit_origines.py:60` (fichier déclaratif) ; `docs/protocole-banc.md` § 3 (forme de consignation des mesures du banc) ; `docs/estimation-thermique-j4310.md` et `scripts/selection_multicritere.py` (une estimation n'y entre pas). Non tranché : la troncature des décimales au rang de l'incertitude (question 1 du corps).
 
 ## Le problème, posé par la première mesure du projet
 

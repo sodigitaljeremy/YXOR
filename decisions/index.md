@@ -65,7 +65,7 @@ lisent quand leur question se pose.
 | [0038](0038-dimensionnement-thermique.md) | Le facteur limitant n'est pas le couple, c'est la température | proposition | **remplacée** (était : proposée) | 2026-09-29 | **0062** — contredite en partie (série existante, classes → tailles) : remplacée par ce … |  |
 | [0039](0039-semelle-porte-capteurs.md) | La vraie semelle sera d'abord un porte-capteurs | historique | appliquée | 2026-09-29 |  |  |
 | [0040](0040-registre-des-sources.md) | Un registre des sources, pas un index de recherche | gouvernante | appliquée | 2026-09-29 |  |  |
-| [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | proposée | 2026-09-29 |  |  |
+| [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | acceptée | 2026-09-29 |  |  |
 | [0042](0042-rayon-matiere-ou-geste.md) | Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ? | close | archivée | 2026-09-29 |  |  |
 | [0043](0043-profil-de-cannelure-et-lot-mesure.md) | Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main | close | appliquée | 2026-09-29 |  |  |
 | [0044](0044-variante-carton-ondule.md) | La semelle publiée n'est pas celle qui a été coupée | close | appliquée | 2026-09-29 |  |  |
