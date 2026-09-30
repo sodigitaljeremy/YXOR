@@ -166,6 +166,21 @@ modifications:
       valeurs sont gardées ; leur statut redevient « proposé ».
       L'entrée précédente n'est pas effacée : elle reste, pour que
       l'erreur se voie.
+  - date: "2026-09-30"
+    moment: "soir ; règles écrites AVANT le recalcul"
+    objet: "balayage de k étendu à 0,3 ; k_damiao décisif SEULEMENT si k < bascule ; valeur de décision en proportion"
+    raison: >
+      Avec la grille de capacité corrigée, le Damiao gagnait à tout k
+      entre 1,0 et 0,5 : k_damiao ne changeait plus la décision dans
+      cette plage. Le balayage descend à 0,3 pour trouver la bascule
+      réelle. k_damiao n'est décisive que si le k réel du Damiao peut
+      tomber sous cette bascule. Règle calculable : elle l'est si la
+      bascule est au-dessus de la BORNE BASSE PLAUSIBLE de k, prise égale
+      au plus petit rapport blocage / nominal publié (RobStride). La
+      valeur de décision se note désormais en PROPORTION des inconnues
+      décisives tranchées (toutes → 5 ; au moins la moitié → 3 ; au
+      moins une → 2 ; aucune → 0), puisque leur nombre peut changer.
+    ancien_texte: "k balayé de 1,0 à 0,5 ; k_damiao toujours décisive ; grille 3 → 5, 2 → 3, 1 → 2, 0 → 0 sur trois inconnues"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -188,7 +203,7 @@ classe_S:
       statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
-      k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]   # hypothèse balayée, pas une valeur
+      k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]   # hypothèse balayée, pas une valeur ; étendue à 0,3 le 2026-09-30
       grille:
         5: "H_max ≥ 0,65 m"
         4: "0,60 ≤ H_max < 0,65 m"
@@ -341,8 +356,9 @@ banc:
   # Écrit AVANT le calcul, le 2026-09-30 (soir).
   inconnues_decisives:
     k_damiao:
-      question: "le couple continu réel du Damiao J4310 (son k) : décide la bascule Damiao / RobStride"
+      question: "le couple continu réel du Damiao J4310 (son k) : DÉCISIF SEULEMENT SI k < bascule"
       tranchee_si: {contient_un: [dm_j4310, dm_j4310_48v]}
+      decisive_si: "bascule_dans_la_plage_plausible"   # bascule ≥ plus petit rapport blocage/nominal publié
     blocage_edulite:
       question: "le couple de l'EduLite 05 près du blocage : aucune valeur en blocage n'est publiée"
       tranchee_si: {contient_un: [edulite05]}
@@ -355,11 +371,11 @@ banc:
       poids: 40
       statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: calcule
-      mesure: "nombre d'inconnues décisives que l'option tranche (inconnues_decisives)"
+      mesure: "PROPORTION des inconnues décisives que l'option tranche (inconnues_decisives, celles qui le sont)"
       grille:
-        5: "les trois"
-        3: "deux"
-        2: "une"
+        5: "toutes"
+        3: "au moins la moitié"
+        2: "au moins une"
         0: "aucune"
     apprentissage:
       poids: 10

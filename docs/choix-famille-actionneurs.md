@@ -14,13 +14,13 @@ Poids : **fixés par Jeremy le 30-09-2026** (capacité 18, continuité 18, coût
 
 ## 1 — Les familles
 
-| Famille | S : prudent (k = 0,5) – optimiste | M | L | Jambes S (TTC CHF) | Jambes M | Jambes L | Continuité | Trous |
+| Famille | S : prudent (k = 0,3) – optimiste | M | L | Jambes S (TTC CHF) | Jambes M | Jambes L | Continuité | Trous |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
 | RobStride (RS05 → RS02 → RS06) | 0,48–0,57 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 846 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
-| RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 0,38–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 472 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
-| Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 0,50–0,67 m | 0,62–0,80 m | 0,79–0,99 m | ≥ 2 354 | ≥ 3 141 | ≥ 2 543 | 5/5 | — |
-| CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,44–0,61 m | 0,68–0,84 m | 0,78–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
-| MyActuator (X2-7 → [trou] → X4-36) | 0,45–0,61 m | **TROU** | 0,76–0,95 m | ≥ 4 717 | — | ≥ 5 457 | 2/5 | M |
+| RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 0,27–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 472 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
+| Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 0,38–0,67 m | 0,47–0,80 m | 0,66–0,99 m | ≥ 2 354 | ≥ 3 141 | ≥ 2 543 | 5/5 | — |
+| CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,33–0,61 m | 0,53–0,84 m | 0,60–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
+| MyActuator (X2-7 → [trou] → X4-36) | 0,33–0,61 m | **TROU** | 0,62–0,95 m | ≥ 4 717 | — | ≥ 5 457 | 2/5 | M |
 
 Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est calculé à la borne basse de l'hypothèse k ; pour RobStride, c'est la valeur **en blocage** publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` (12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas chiffrée.
 
@@ -162,13 +162,17 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 | 0,7 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 57,0 % |
 | 0,6 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 52,1 % |
 | 0,5 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 55,3 % |
+| 0,4 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 44,8 % |
+| 0,3 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 44,8 % |
 
 **Verdict à k = 1,0.** **Aux poids fixés par Jeremy : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 64,1 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 12,1 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
-**Verdict à la borne basse (k = 0,5).** **Aux poids fixés par Jeremy : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)** — il **ne tient que 17 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 55,3 % des tirages ; « RobStride (RS05 → RS02 → RS06) » en gagne 24,4 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+**Verdict à la borne basse (k = 0,3).** **Aux poids fixés par Jeremy : RobStride (RS05 → RS02 → RS06)** — il **ne tient que 17 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 44,8 % des tirages ; « Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) » en gagne 27,3 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
 
-**Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.
+**Seuil de bascule : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) gagne jusqu'à k = 0,50 ; RobStride (RS05 → RS02 → RS06) gagne dès k = 0,49.**
+
+En clair : le classement dépend du rapport entre le couple continu **réel** des actionneurs « condition non précisée » et leur nominal publié. **C'est ce rapport que le banc doit mesurer**, dans une condition identique pour les deux finalistes (`docs/comparatif-banc.md`).
 
 ---
 
@@ -184,7 +188,7 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 | RobStride RS03 | 13,0 | 21,0 | **0,619** |
 | **moyenne** | | | **0,718** |
 
-**Aucune bascule entre k = 1,0 et 0,5** : quelle que soit la valeur de k dans cette plage, le vainqueur ne change pas.
+.
 
 *Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.
 

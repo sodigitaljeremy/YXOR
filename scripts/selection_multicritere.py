@@ -463,7 +463,24 @@ def options_banc(r):
     opts.append(dict(id="feetech", nom="2 × Feetech STS3250 (banc d'apprentissage)",
                      ids=["sts3250", "sts3250"], tension=12, appr=appr(2, True, True), transfert=1,
                      transfert_j="autre fabricant, autre bus (TTL) que tous les finalistes → 1"))
-    inc = b.get("inconnues_decisives") or {}
+    inc_toutes = b.get("inconnues_decisives") or {}
+    # Une inconnue « decisive_si: bascule_dans_la_plage_plausible » ne compte que
+    # si la bascule de k tombe au-dessus du plus petit rapport blocage / nominal
+    # publié (borne basse plausible de k). Sinon, la mesurer ne change rien.
+    rb = rapports_blocage(cat)
+    borne_basse = min(x["rapport"] for x in rb) if rb else None
+    k_bascule = r["fam_seuil"]["k"] if r["fam_seuil"] else None
+    decisives = {}
+    for nom_i, d in inc_toutes.items():
+        if d.get("decisive_si") == "bascule_dans_la_plage_plausible":
+            ok = k_bascule is not None and borne_basse is not None and k_bascule >= borne_basse
+            d = dict(d, _decisive=ok, _pourquoi=(
+                f"bascule k ≈ {f(k_bascule)} " + ("≥" if ok else "<") + f" borne basse plausible {f(borne_basse, 3)}"
+                if k_bascule is not None else "aucune bascule dans le balayage"))
+        else:
+            d = dict(d, _decisive=True, _pourquoi="toujours comptée")
+        decisives[nom_i] = d
+    inc = {k_: d for k_, d in decisives.items() if d["_decisive"]}
 
     def tranchees(ids):
         s = set(ids)
@@ -478,13 +495,15 @@ def options_banc(r):
     for o in opts:
         o["cout"], o["manquants"] = cout(o["ids"], o["tension"])
         o["tranchees"] = tranchees(o["ids"])
-        nd = {3: 5, 2: 3, 1: 2}.get(len(o["tranchees"]), 0)
+        part = len(o["tranchees"]) / len(inc) if inc else 0
+        nd = 5 if inc and part >= 1 else (3 if part >= 0.5 else (2 if part > 0 else 0))
         o["notes"] = dict(valeur_decision=nd, apprentissage=o["appr"][0], transfert_S=o["transfert"],
                           cout=0 if o["manquants"] else seuils(o["cout"], (250, 400, 600, 900, 1300), (5, 4, 3, 2, 1), 0),
                           risque=jr[o["id"]]["note"])
         o["risque_j"] = jr[o["id"]]["justification"]
         o["etat"], o["reference"] = "admis", False
     pb = {k: v["poids"] for k, v in b["ponderes"].items()}
+    r["_inconnues"] = decisives
     return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension)
 
 
@@ -520,11 +539,21 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     L = []
     A = L.append
     fixes = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
+    inc = r.get("_inconnues") or {}
     A("# Comparatif du banc d'essai — v3\n")
     A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}, "
       "après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est "
       "proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).\n")
-    if r["fam_seuil"]:
+    kd = inc.get("k_damiao")
+    if r["fam_seuil"] and kd is not None and not kd["_decisive"]:
+        sf = r["fam_seuil"]
+        A(f"**Où en est la décision.** Le choix de famille bascule à **k ≈ {f(sf['garde'])}** : au-dessus, "
+          f"**{nomf[sf['gagnant']]}** ; en dessous, **{nomf[sf['nouveau']]}**. Mais cette bascule est "
+          f"**sous la borne basse plausible de k** ({kd['_pourquoi']}) : si le Damiao se comporte comme les "
+          "actionneurs RobStride, dont les rapports blocage / nominal sont publiés, **la famille est déjà "
+          "décidée par les données**. La mesure de son k reste une **vérification**, pas un départage : "
+          "elle n'est plus comptée comme décisive. La valeur du banc vient des autres inconnues.\n")
+    elif r["fam_seuil"]:
         sf = r["fam_seuil"]
         A(f"**Pourquoi ce banc compte.** Le choix de famille bascule au seuil **k ≈ {f(sf['garde'])}** : "
           f"au-dessus, **{nomf[sf['gagnant']]}** ; en dessous, **{nomf[sf['nouveau']]}**. k est le "
@@ -534,7 +563,7 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     A("| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
     A("| --- | --- | --- | --- | ---: | --- | --- |")
     for o in opts:
-        A(f"| {o['nom']} | {len(o['tranchees'])}/3 : {', '.join(o['tranchees']) or 'aucune'} | "
+        A(f"| {o['nom']} | {len(o['tranchees'])}/{sum(1 for d in inc.values() if d['_decisive'])} : {', '.join(o['tranchees']) or 'aucune'} | "
           f"{o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
           f"{'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF | {', '.join(o['manquants']) or '—'} | "
           f"{o['notes']['risque']} — {o['risque_j']} |")
@@ -551,13 +580,12 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           + " ; ".join(f"{cat['candidats'][x]['nom']}" for x in paire) + ". "
           + ("Le prix de la variante 48 V du Damiao n'est pas connu : son coût est donc incomplet.\n"
              if any(cat["candidats"][x]["prix"].get("valeur") is None for x in paire) else "\n"))
-    inc = r["crit"]["banc"].get("inconnues_decisives") or {}
     if inc:
-        A("**Les trois inconnues décisives** (grille écrite avant le calcul, "
-          "`criteres_selection.yaml`) :\n")
+        A("**Les inconnues décisives** (règles écrites avant le calcul, `criteres_selection.yaml`) :\n")
         for k_, d in inc.items():
-            A(f"- `{k_}` — {d['question']}")
-        A("")
+            A(f"- `{k_}` — {d['question']} — **{'décisive' if d['_decisive'] else 'NON décisive'}** "
+              f"({d['_pourquoi']})")
+        A("\nLa valeur de décision se note en **proportion** des inconnues décisives que l'option tranche.\n")
     A("---\n\n## 2 — Notes et score\n")
     A(f"| Critère | Poids ({'fixé par Jeremy' if fixes else 'proposé'}) | " + " | ".join(o["nom"] for o in opts) + " |")
     A("| --- | ---: | " + " | ".join("---:" for _ in opts) + " |")
