@@ -332,7 +332,7 @@ Aucune de ces trois interfaces n'est encore décidée : pas de fiche.
 
 ---
 
-## 9. Étude des fabricants et fournisseurs — *ouvert*
+## 9. Étude des fabricants et fournisseurs — *instruit le 30-09-2026*
 
 Jusqu'ici, on a comparé des **modèles**. Il manque la comparaison des
 **fabricants et distributeurs**, qui pèse autant sur le projet.
@@ -353,6 +353,31 @@ Critères :
 
 Fabricants à couvrir, au minimum : RobStride, CubeMars (T-Motor), MyActuator,
 Damiao, Unitree, Steadywin, ROBOTIS, Feetech, mjbots (contrôleurs), ODrive.
+
+### Synthèse de l'étude
+
+Source : `docs/sources/etude-fournisseurs-chatgpt-2026-09-30.md` (étude
+ChatGPT, **source externe non vérifiée par le dépôt**). Les chiffres qui
+recoupent `params/actionneurs.yaml` sont vérifiés au journal du
+2026-09-30.
+
+- **RobStride est la seule gamme alignée sur S, M et L** : RS05, RS02 et
+  RS06 (5,5 / 17 / 36 N·m en pointe), tous à 48 V et sur le même bus CAN.
+- **RS02 plutôt que RS01** pour M : le RS01 est spécifié à 36 V (PDF
+  RobStride p. 7), le RS02 à 48 V comme les deux autres.
+- **Plans B** : **MyActuator**, distribué en France par A2V, et
+  **CubeMars**, qui publie une garantie d'un an. Leurs gammes collent
+  moins bien au triplet.
+- **Aucun fabricant n'a de bride commune entre classes** : l'interface
+  mécanique doit venir de YXOR (§ 8 bis).
+- **Les spécifications bougent.** L'écart RS02 « 6 ou 7 N·m » est en
+  partie une question de **condition de mesure** : le PDF du 17-09 donne
+  7 N·m en rotation, sur plaque d'aluminium, et 6 N·m en blocage (p. 11
+  et p. 13). Il faut donc toujours noter la condition avec la valeur.
+- **Le backend RobStride de LeRobot était défaillant en 2026** : il
+  employait un framing de type Damiao. C'est un argument pour une couche
+  moteur propre à YXOR (§ 8 bis), plutôt que pour un wrapper tiers.
+- **Aucun distributeur suisse** n'a été trouvé, pour aucun fabricant.
 
 ---
 
