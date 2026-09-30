@@ -1,9 +1,9 @@
 # 0042 — Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ?
 
 Date : 2026-09-29
-Espèce : proposition
-État : proposée
-Statut : **proposée** — instruction. Je ne tranche pas.
+Espèce : close
+État : archivée
+Statut : **close** le 2026-09-30 par Jeremy, **sans rien trancher**. La question du rayon est propre à chaque procédé ; elle sera reposée avec le procédé réel.
 Amende : `0015-architecture-plaques-entretoises.md`, dont la contrainte
 de rayon est reprise sans distinction.
 
@@ -128,3 +128,24 @@ Le dépôt a passé dix jours à se donner des garde-fous pour ce qu'il
 pouvait calculer. Le premier objet coupé a produit, en une heure, une
 prédiction vérifiée, un contour faux depuis trois jours, et une règle
 dont on découvre qu'elle ne décrit que la moitié du problème.
+
+## Clôture — 2026-09-30
+
+**Décision de Jeremy : close. Rien n'est tranché pour le carton.**
+
+Le carton a rempli son rôle, qui était de valider la chaîne. Sa
+caractérisation est arrêtée : ses valeurs ne se transfèrent pas au robot
+réel, fait de pièces imprimées, usinées ou découpées en métal.
+
+**La question du rayon est propre à chaque procédé.** Elle sera reposée
+avec le procédé réel :
+
+- en usinage, c'est le **rayon d'outil** ;
+- en découpe métal, ce sont les limites de **la machine de Loïc**.
+
+Le champ `rayon_min_geste` n'est pas créé. La question 3 — d'où vient
+`0,5 × épaisseur` — reste ouverte, et elle se reposera au même moment.
+
+Cette fiche amendait la 0015. Le renvoi reste dans l'en-tête de la 0015 :
+le constat « la règle décrit la matière, pas le geste » demeure vrai,
+même s'il n'a rien produit pour le carton.
