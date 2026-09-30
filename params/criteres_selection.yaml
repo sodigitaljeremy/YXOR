@@ -54,6 +54,25 @@ modifications:
       modèle de masse de dimensionnement.py les met à l'échelle avec
       la structure de ToddlerBot, sans les compter. Question ouverte,
       reportée au cadrage (§ 13).
+  - date: "2026-09-30"
+    moment: "soir ; origine : relecture externe (Claude)"
+    objet: "la capacité devient un INTERVALLE, et la correction −1 disparaît"
+    raison: >
+      Une seule valeur de couple continu cachait l'incertitude sur sa
+      condition de mesure. Chaque candidat a désormais deux tailles :
+      OPTIMISTE (le nominal publié le plus favorable) et PRUDENTE (en
+      blocage si publié ; sinon la plus petite plaque publiée ; sinon —
+      condition non précisée — le nominal × k). k est une HYPOTHÈSE,
+      balayée de 1,0 à 0,5 par pas de 0,1. La note de capacité se
+      calcule sur la taille PRUDENTE ; la correction forfaitaire −1
+      (dissipateur ou condition non précisée) est retirée, puisque k la
+      remplace. Le Damiao, dont la courbe constructeur montre que
+      3,5 N·m n'est pas un régime établi, est déclassé comme les autres
+      « non précisée », sans traitement particulier.
+    ancien_texte: >
+      mesure « H_max à marge 1,5, avec le couple continu le plus prudent
+      disponible » ; correction_dissipation −1 si continu sur
+      dissipateur ou condition non précisée.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -75,7 +94,8 @@ classe_S:
       poids: 20
       statut: "proposé, à fixer par Jeremy"
       mode: calcule
-      mesure: "H_max à marge 1,5, avec le couple continu le plus prudent disponible"
+      mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
+      k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]   # hypothèse balayée, pas une valeur
       grille:
         5: "H_max ≥ 0,70 m"
         4: "0,65 ≤ H_max < 0,70 m"
@@ -83,15 +103,7 @@ classe_S:
         2: "0,58 ≤ H_max < 0,61 m"
         1: "0,55 ≤ H_max < 0,58 m"
         0: "H_max < 0,55 m ou non calculable"
-      correction_dissipation: >
-        −1 (plancher 0) si le couple continu retenu est mesuré sur un
-        dissipateur (plaque métallique) : le robot n'offrira pas
-        forcément cette plaque. −1 aussi si la condition de mesure n'est
-        pas précisée. Pas de correction pour une valeur mesurée sans
-        dissipateur.
-        (Phrase « aucune correction si le calcul emploie la valeur en
-        blocage » retirée le 2026-09-30 avec la modification de base
-        ci-dessus.)
+      # correction_dissipation : RETIRÉE le 2026-09-30 (soir), remplacée par k — voir `modifications`.
 
     cout:
       poids: 20

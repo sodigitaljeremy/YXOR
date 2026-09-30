@@ -111,13 +111,51 @@ def continu_retenu(c: dict) -> dict:
     return dict(choisi, blocage=blocage["valeur"] if blocage else None)
 
 
+def intervalle_continu(c: dict, k: float) -> dict:
+    """Couple continu OPTIMISTE et PRUDENT (criteres_selection.yaml, 2026-09-30 soir).
+
+    optimiste : le nominal publié le plus favorable (hors blocage) ;
+    prudent   : en blocage si publié ; sinon la plus petite plaque
+                publiée ; sinon (condition non précisée) le nominal × k.
+    k est une HYPOTHÈSE balayée, jamais une valeur mesurée.
+    """
+    cc = c["couple_continu_Nm"]
+    opts = [dict(valeur=val(cc), plaque_mm=cc.get("plaque_mm"), condition=cc.get("condition"))]
+    opts += [dict(valeur=a.get("valeur"), plaque_mm=a.get("plaque_mm"), condition=a.get("condition"))
+             for a in (cc.get("autres_conditions") or [])]
+    bloque = lambda o: bool(o["condition"]) and "BLOCAGE" in o["condition"]
+    rot = [o for o in opts if o["valeur"] is not None and not bloque(o)]
+    if not rot:
+        return dict(optimiste=None, prudent=None, base_prudente="continu inconnu", k_applique=False)
+    optimiste = max(o["valeur"] for o in rot)
+    blocage = next((o for o in opts if bloque(o) and o["valeur"] is not None), None)
+    plaques = [o for o in rot if o["plaque_mm"]]
+    if blocage:
+        return dict(optimiste=optimiste, prudent=blocage["valeur"], base_prudente="en blocage",
+                    k_applique=False)
+    if plaques:
+        pl = min(plaques, key=lambda o: o["plaque_mm"])
+        return dict(optimiste=optimiste, prudent=pl["valeur"],
+                    base_prudente=f"plus petite plaque publiée ({pl['plaque_mm']} mm)", k_applique=False)
+    return dict(optimiste=optimiste, prudent=optimiste * k,
+                base_prudente=f"condition non précisée : nominal × k ({f(k, 1)})", k_applique=True)
+
+
+def h_max_avec(cat, cid, continu, ref, besoins, marge):
+    """H_max, en configuration homogène, avec un couple continu imposé."""
+    cl = D.classe_catalogue(cat, cid)
+    cl["continu"] = continu
+    ev = D.evaluer(ref, D.config_homogene(cl), besoins, marge)
+    return (None, None) if "indetermine" in ev else (ev["H_max"], ev)
+
+
 def prix_chf(cat, cid, bud):
     fs = cat.get("comparatif_S", {}).get(cid, {})
     p = fs.get("prix_revendeur") or cat["candidats"][cid]["prix"]
     return D.chf(p, bud["taux_de_change"]), p
 
 
-def evaluer_S(cat, crit, bud, analyse, ref):
+def evaluer_S(cat, crit, bud, analyse, ref, k=1.0):
     """Faits, éliminatoires et notes de chaque candidat S (et référence)."""
     marge = val(cat["dimensionnement"]["marge"])
     besoins = D.besoins_p1(analyse)
@@ -129,18 +167,14 @@ def evaluer_S(cat, crit, bud, analyse, ref):
     out = []
     for cid in cs["candidats"] + cs["references"]:
         c, fs = cat["candidats"][cid], cs[cid]
-        cr = continu_retenu(c)
+        iv = intervalle_continu(c, k)
+        H, ev = h_max_avec(cat, cid, iv["prudent"], ref, besoins, marge)
+        H_opt, _ = h_max_avec(cat, cid, iv["optimiste"], ref, besoins, marge)
+        ev = ev or {}
+        cr = dict(valeur=iv["prudent"], condition=iv["base_prudente"], blocage=None,
+                  plaque_mm=None, optimiste=iv["optimiste"], k_applique=iv["k_applique"])
         classe = D.classe_catalogue(cat, cid)
-        classe["continu"] = cr["valeur"]
-        ev = D.evaluer(ref, D.config_homogene(classe), besoins, marge)
-        H = None if "indetermine" in ev else ev["H_max"]
-        # Le même calcul avec le couple NOMINAL publié (première valeur de la
-        # fiche) : pour montrer ce qu'une élimination doit à la condition de
-        # mesure retenue.
-        cn = D.classe_catalogue(cat, cid)
-        evn = D.evaluer(ref, D.config_homogene(cn), besoins, marge)
-        H_nominal = None if "indetermine" in evn else evn["H_max"]
-        # ── éliminatoires ──
+        H_nominal = H_opt
         # La taille n'élimine plus : elle est seulement notée (capacité).
         elim_cap = "notée, non éliminatoire"
         tel = fs["telemetrie"]
@@ -153,13 +187,10 @@ def evaluer_S(cat, crit, bud, analyse, ref):
         etat = elim_tel
         # ── notes ──
         n, j = {}, {}
-        base = note_capacite(H)
-        corr = 1 if (cr["plaque_mm"] or not cr["condition"] or "non précisée" in (cr["condition"] or "")) else 0
-        n["capacite"] = max(base - corr, 0) if cr["valeur"] is not None else 0
-        j["capacite"] = (f"H_max {f(H)} m avec {f(cr['valeur'])} N·m continu "
-                         f"({cr['condition'] or 'condition non précisée'}) → {base}"
-                         + (f", −1 dissipation/condition → {n['capacite']}" if corr and cr['valeur'] is not None else "")
-                         + ("" if cr["valeur"] is not None else " ; continu inconnu → 0"))
+        n["capacite"] = note_capacite(H) if cr["valeur"] is not None else 0
+        j["capacite"] = (f"taille PRUDENTE {f(H)} m ({f(cr['valeur'])} N·m, {cr['condition']}) → "
+                         f"{n['capacite']} ; optimiste {f(H_opt)} m ({f(cr['optimiste'])} N·m)"
+                         if cr["valeur"] is not None else "couple continu inconnu → 0")
         chf, p = prix_chf(cat, cid, bud)
         n["cout"] = note_cout(chf)
         j["cout"] = (f"{f(chf)} CHF HT ({p.get('valeur')} {p.get('devise')}, {p.get('vendeur')})"
@@ -214,7 +245,7 @@ def evaluer_S(cat, crit, bud, analyse, ref):
         j["disponibilite"] = (d.get("suisse") or d.get("ue") or d.get("international")
                               or ("non vérifié : " + d["non_verifie"] if d.get("non_verifie") else "inconnu"))
         out.append(dict(id=cid, nom=c["nom"], reference=bool(c.get("reference")),
-                        H=H, H_nominal=H_nominal, masse_robot=None if "indetermine" in ev else ev["masse"],
+                        H=H, H_nominal=H_nominal, H_opt=H_opt, k=k, masse_robot=ev.get("masse"),
                         limitantes=ev.get("limitantes", []), continu=cr, prix_chf=chf,
                         elim_capacite=elim_cap, elim_telemetrie=elim_tel, etat=etat,
                         notes=n, justif=j, tension=val(c["tension_V"]),
@@ -509,9 +540,29 @@ def calculer():
     bud = yaml.safe_load(D.BUDGET.read_text(encoding="utf-8"))
     analyse = AM.analyser(AM.SERIE)
     ref = D.reference(cat, analyse)
-    cands = evaluer_S(cat, crit, bud, analyse, ref)
     poids = {k: v["poids"] for k, v in crit["classe_S"]["ponderes"].items()}
-    sens = sensibilite(cands, poids, crit["classe_S"]["sensibilite"])
+    # DIMENSION DONNÉES : pour chaque hypothèse k sur les couples continus
+    # « non précisés », un classement complet et sa sensibilité aux poids.
+    balayage = []
+    for kk in crit["classe_S"]["ponderes"]["capacite"]["k_non_precisee"]:
+        ck = evaluer_S(cat, crit, bud, analyse, ref, kk)
+        balayage.append(dict(k=kk, cands=ck, sens=sensibilite(ck, poids, crit["classe_S"]["sensibilite"])))
+    cands, sens = balayage[0]["cands"], balayage[0]["sens"]     # k = 1,0 : référence
+    gagnant_1 = sens["nominal"]
+    bascule = next((b_["k"] for b_ in balayage if b_["sens"]["nominal"] != gagnant_1), None)
+    # Affinage au centième entre le dernier k qui garde le vainqueur et le
+    # premier qui le change : c'est la valeur que le banc devra départager.
+    seuil_fin = None
+    if bascule is not None:
+        haut = max(b_["k"] for b_ in balayage if b_["k"] > bascule)
+        poids_ = {kk: v["poids"] for kk, v in crit["classe_S"]["ponderes"].items()}
+        kk = haut
+        while kk > bascule + 1e-9:
+            kk = round(kk - 0.01, 2)
+            ck = evaluer_S(cat, crit, bud, analyse, ref, kk)
+            if vainqueur(ck, poids_) != gagnant_1:
+                seuil_fin = dict(k=kk, garde=round(kk + 0.01, 2), nouveau=vainqueur(ck, poids_))
+                break
     cl = sorted(classables(cands), key=lambda c: -score(c["notes"], poids))
     S_id = sens["nominal"]
     second = next((c["id"] for c in cl if c["id"] != S_id), None)
@@ -519,6 +570,7 @@ def calculer():
     pb = {k: v["poids"] for k, v in crit["banc"]["ponderes"].items()}
     sb = sensibilite(opts, pb, crit["classe_S"]["sensibilite"])
     return dict(cat=cat, crit=crit, cands=cands, poids=poids, sens=sens, S_id=S_id,
+                balayage=balayage, bascule=bascule, seuil_fin=seuil_fin, ref=ref, analyse=analyse, bud=bud,
                 second=second, opts=opts, pb=pb, sb=sb, marge=val(cat["dimensionnement"]["marge"]))
 
 
@@ -536,8 +588,15 @@ def main(argv=None) -> int:
         print(f"    {c['nom']:42s} {c['etat']:14s} H_max {f(c['H'])} m  score {f(score(c['notes'], r['poids']))}"
               f"{'  (référence)' if c['reference'] else ''}")
     s = r["sens"]
-    print(f"  vainqueur nominal : {s['nominal']} ; ±50 % : {'tous' if s['tous_pm'] else 'PAS tous'} ; "
-          f"tirages : {f(100 * s['freq'], 1)} % -> {'ROBUSTE' if s['robuste'] else 'TROP PROCHES'}")
+    print("  balayage de k (couples continus « non précisés » × k) :")
+    for b_ in r["balayage"]:
+        sb_ = b_["sens"]
+        print(f"    k = {f(b_['k'], 1)} : vainqueur {sb_['nominal']:12s} tirages {f(100 * sb_['freq'], 1):>5} %  "
+              f"±50 % {'tous' if sb_['tous_pm'] else 'PAS tous':8s} -> {'ROBUSTE' if sb_['robuste'] else 'trop proches'}")
+    print(f"  bascule du vainqueur : " + (f"k = {f(r['bascule'], 1)}" if r["bascule"] else "aucune entre 1,0 et 0,5"))
+    if r["seuil_fin"]:
+        sf = r["seuil_fin"]
+        print(f"  seuil affiné : {r['S_id']} gagne jusqu'à k = {f(sf['garde'])}, {sf['nouveau']} dès k = {f(sf['k'])}")
     sb = r["sb"]
     print(f"  banc : {sb['nominal']} ; tirages {f(100 * sb['freq'], 1)} % -> "
           f"{'ROBUSTE' if sb['robuste'] else 'TROP PROCHES'}")

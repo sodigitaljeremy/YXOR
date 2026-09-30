@@ -133,6 +133,9 @@ candidats:
       autres_valeurs:
         - {valeur: 7.0, source: "PDF RobStride 2026-09-17, p. 11 et p. 38", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 150 × 150 mm"}
         - {valeur: 7.0, source: "fiche RobStride du 2026-07-13 (README du dépôt constructeur)", consulte_le: "2026-09-30"}
+      autres_conditions:
+        - {valeur: 7.0, plaque_mm: 150, condition: "à 100 rpm, plaque aluminium 150 × 150 mm (en rotation)", source: "PDF RobStride 2026-09-17, p. 11 et p. 13", consulte_le: "2026-09-30"}
+        - {valeur: 6.0, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 13", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 17.0, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 410, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
     masse_g: {valeur: 380, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 3 g"}
@@ -146,7 +149,14 @@ candidats:
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     reduction: {valeur: 9, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
-    couple_continu_Nm: {valeur: 11.0, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 200 × 200 mm"}
+    couple_continu_Nm:
+      valeur: 11.0
+      source: "PDF RobStride 2026-09-17, p. 31"
+      consulte_le: "2026-09-30"
+      condition: "à 100 rpm, plaque aluminium 200 × 200 mm"
+      plaque_mm: 200
+      autres_conditions:
+        - {valeur: 8.0, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 33", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 36.0, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
     masse_g: {valeur: 621, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
@@ -167,6 +177,9 @@ candidats:
       note: "CONTRADICTION INTERNE au PDF : p. 19 dit 21, p. 38 dit 20. La plus basse est retenue, par prudence."
       autres_valeurs:
         - {valeur: 21.0, source: "PDF RobStride 2026-09-17, p. 19 ; README du dépôt constructeur", consulte_le: "2026-09-30", note: "à 100 rpm, plaque alu 200 × 200 mm"}
+      autres_conditions:
+        - {valeur: 21.0, plaque_mm: 200, condition: "à 100 rpm, plaque aluminium 200 × 200 mm (en rotation)", source: "PDF RobStride 2026-09-17, p. 19 et p. 21", consulte_le: "2026-09-30"}
+        - {valeur: 13.0, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 21", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 60.0, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 195, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
     masse_g: {valeur: 900, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "± 20 g"}
