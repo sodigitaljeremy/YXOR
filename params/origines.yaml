@@ -344,3 +344,179 @@ fichiers:
         note: >
           Ce ne sont pas des cotes mécaniques : aucune portée
           dimensionnelle. Listé pour l'exhaustivité de l'inventaire.
+
+  # ═══════════════════════════════════════════════════════════════════════
+  #  actionneurs.yaml — catalogue des candidats (2026-09-30)
+  # ═══════════════════════════════════════════════════════════════════════
+  #  Les VALEURS sont `catalogue` (fiche constructeur ou revendeur) et de
+  #  nature `interface` : un actionneur est une pièce achetée, il ne suit
+  #  jamais H (règle 2). Les champs de méthode — source, date, note —
+  #  ne sont pas des cotes.
+  actionneurs.yaml:
+    regles:
+      - motif: "consultation"
+        origine: propre
+        nature: sans_objet
+        source: "date de consultation des sources"
+      - motif: "dimensionnement.marge"
+        origine: propre
+        nature: tenue
+        source: "choix de Jeremy à valider — pas une norme"
+      - motif: "dimensionnement.tolerance_coherence_m"
+        origine: propre
+        nature: sans_objet
+        source: "tolérance numérique du contrôle de cohérence"
+      - motif: "dimensionnement.articulations_lourdes"
+        origine: propre
+        nature: sans_objet
+        source: "consigne de Jeremy, 2026-09-30 : configuration mixte"
+
+      # --- référence ToddlerBot : ses nombres viennent de l'amont ---
+      - motif: "reference_toddlerbot.hauteur_m.valeur"
+        origine: amont
+        nature: echelle
+        source: "taille publiée de ToddlerBot (fiche 0001)"
+      - motif: "reference_toddlerbot.masse_totale_kg.valeur"
+        origine: amont
+        nature: tenue
+        source: "somme des body_mass du MJCF amont épinglé"
+      - motif: "reference_toddlerbot.masse_dynamixel_g.*.valeur"
+        origine: catalogue
+        nature: interface
+        source: "e-Manual ROBOTIS, masse par axe"
+      - motif: "controle_coherence.toddlerbot.hauteur_m.valeur"
+        origine: amont
+        nature: echelle
+        source: "taille publiée de ToddlerBot (fiche 0001)"
+      - motif: "controle_coherence.zeroth01.hauteur_m.valeur"
+        origine: ambigu
+        nature: echelle
+        source: "consigne de Jeremy ; introuvable dans les sources consultées"
+        note: "0,48 m déclaré, ~0,40 m lu dans deux sources — voir la note du fichier"
+      - motif: "controle_coherence.zeroth01.hauteur_m.autres_valeurs.valeur"
+        origine: litterature
+        nature: echelle
+        source: "README public d'un constructeur indépendant de Zeroth-01"
+      - motif: "controle_coherence.*.classe"
+        origine: propre
+        nature: sans_objet
+        source: "rattachement du robot de référence à une classe du catalogue"
+
+      # --- candidats ---
+      - motif: "candidats.*.*.autres_valeurs.valeur"
+        origine: catalogue
+        nature: interface
+        source: "valeur constructeur non retenue, portée pour mémoire"
+      - motif: "candidats.*.*.valeur"
+        origine: catalogue
+        nature: interface
+        source: "fiche constructeur ou revendeur, URL dans le champ `source`"
+      - motif: "candidats.*.nom"
+        origine: catalogue
+        nature: sans_objet
+        source: "désignation commerciale"
+      - motif: "candidats.*.fabricant"
+        origine: catalogue
+        nature: sans_objet
+        source: "désignation commerciale"
+      - motif: "candidats.*.bus"
+        origine: catalogue
+        nature: interface
+        source: "fiche constructeur"
+      - motif: "candidats.*.prix.devise"
+        origine: catalogue
+        nature: sans_objet
+        source: "devise du prix relevé"
+      - motif: "candidats.*.prix.vendeur"
+        origine: catalogue
+        nature: sans_objet
+        source: "vendeur du prix relevé"
+
+      # --- champs de méthode, partout dans le fichier ---
+      - motif: "**.source"
+        origine: propre
+        nature: sans_objet
+        source: "référence de la valeur voisine"
+      - motif: "**.consulte_le"
+        origine: propre
+        nature: sans_objet
+        source: "date de consultation"
+      - motif: "**.note"
+        origine: propre
+        nature: sans_objet
+        source: "commentaire de saisie"
+      - motif: "**.non_verifie"
+        origine: propre
+        nature: sans_objet
+        source: "lecture non vérifiée, gardée pour mémoire"
+      - motif: "**.origine_texte"
+        origine: catalogue
+        nature: sans_objet
+        source: "valeur dans l'unité d'origine du constructeur"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  #  budget.yaml — chiffrage par phase (2026-09-30)
+  # ═══════════════════════════════════════════════════════════════════════
+  #  Un prix n'est pas une cote : nature `sans_objet`.
+  budget.yaml:
+    regles:
+      - motif: "consultation"
+        origine: propre
+        nature: sans_objet
+        source: "date de consultation des sources"
+      - motif: "tva_ch.valeur"
+        origine: litterature
+        nature: sans_objet
+        source: "taux normal de TVA suisse, droit public"
+      - motif: "marge_imprevus.valeur"
+        origine: propre
+        nature: sans_objet
+        source: "paramètre provisoire, à fixer par Jeremy"
+      - motif: "taux_de_change.par_eur.*.valeur"
+        origine: litterature
+        nature: sans_objet
+        source: "taux de référence BCE du 2026-09-30"
+      - motif: "taux_de_change.date_reference"
+        origine: litterature
+        nature: sans_objet
+        source: "date de publication BCE"
+      - motif: "electronique.*.prix.valeur"
+        origine: catalogue
+        nature: sans_objet
+        source: "prix revendeur, URL dans le champ `source`"
+      - motif: "structure.prix.valeur"
+        origine: catalogue
+        nature: sans_objet
+        source: "chiffrage de la découpe, attendu de Loïc"
+      - motif: "**.prix.devise"
+        origine: catalogue
+        nature: sans_objet
+        source: "devise du prix relevé"
+      - motif: "**.prix.vendeur"
+        origine: catalogue
+        nature: sans_objet
+        source: "vendeur du prix relevé"
+      - motif: "**.article"
+        origine: catalogue
+        nature: sans_objet
+        source: "désignation de l'article chiffré"
+      - motif: "phases.**"
+        origine: propre
+        nature: sans_objet
+        source: "découpage en phases, choix de projet"
+      - motif: "**.source"
+        origine: propre
+        nature: sans_objet
+        source: "référence de la valeur voisine"
+      - motif: "**.consulte_le"
+        origine: propre
+        nature: sans_objet
+        source: "date de consultation"
+      - motif: "**.note"
+        origine: propre
+        nature: sans_objet
+        source: "commentaire de saisie"
+      - motif: "**.non_verifie"
+        origine: propre
+        nature: sans_objet
+        source: "lecture non vérifiée, gardée pour mémoire"

@@ -1,0 +1,102 @@
+# Budget par phase — lu par scripts/dimensionnement.py
+#
+# Un CHIFFRAGE demandé par Jeremy, pas une liste d'achat (CLAUDE.md,
+# règle d'achat c). Chaque prix porte sa source et sa date ; un prix
+# inconnu est null, et le total qui en dépend s'affiche « ≥ », jamais
+# comme s'il était complet.
+#
+# coût TTC = (actionneurs + électronique + structure) × (1 + imprévus) × (1 + TVA)
+#
+# Non comptés, et dit : frais de port, droits de douane, visserie,
+# câblage, connecteurs, outillage. Ils ne sont pas nuls ; ils sont
+# INCONNUS.
+
+consultation: "2026-09-30"
+
+tva_ch:
+  valeur: 0.081
+  source: "consigne de Jeremy ; taux normal depuis le 2024-01-01 selon l'extrait de recherche de https://www.estv.admin.ch/fr/taux-de-la-tva-suisse"
+  consulte_le: "2026-09-30"
+  note: "La page de l'AFC n'a PAS pu être ouverte (connexion réinitialisée) : confirmation officielle à faire."
+
+marge_imprevus:
+  valeur: 0.15
+  source: "choix provisoire de l'assistant, 2026-09-30"
+  note: "PARAMÈTRE À FIXER PAR JEREMY. Laissé visible dans chaque total."
+
+# Taux de référence BCE, tous exprimés POUR 1 EUR. Le taux croisé vers le
+# CHF se calcule dans le script, il ne se déclare pas.
+taux_de_change:
+  source: "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
+  date_reference: "2026-09-30"
+  par_eur:
+    CHF: {valeur: 0.9478}
+    USD: {valeur: 1.1355}
+    CNY: {valeur: 7.6130}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Électronique — un article précis par poste, prix relevé
+# ═════════════════════════════════════════════════════════════════════════
+electronique:
+  adaptateur_ttl:
+    article: "Feetech FE-URT-1 (USB vers bus TTL/RS485)"
+    prix: {valeur: 10.00, devise: USD, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Feetech-FE-URT-1-p-6705.html", consulte_le: "2026-09-30"}
+    note: "aucun revendeur suisse trouvé"
+  adaptateur_can:
+    article: "adaptateur USB-CAN (RobStride « CAN to USB debugging module » ou CANable 2.0)"
+    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
+    non_verifie: "37,80–42,00 USD (eBay) et 35 USD (CANable, openlightlabs.com) lus dans des extraits ; pages en 429"
+  ordinateur:
+    article: "Raspberry Pi 5, 8 Go"
+    prix: {valeur: 159.55, devise: CHF, vendeur: "BerryBase CH", source: "https://www.berrybase.ch/en/raspberry-pi-5-8gb-ram", consulte_le: "2026-09-30"}
+    note: "digitec et Galaxus : CHF 170.00 (Toppreise)"
+  imu:
+    article: "Adafruit BNO085 (réf. 4754)"
+    prix: {valeur: 24.95, devise: CHF, vendeur: "BerryBase CH", source: "https://www.berrybase.ch/en/adafruit-9-dof-orientation-imu-fusion-breakout-bno085-bno080", consulte_le: "2026-09-30"}
+  batterie:
+    article: "Gens ace LiPo 6S 22,2 V 5000 mAh 45C"
+    prix: {valeur: 155.00, devise: CHF, vendeur: "hobbyshop.ch", source: "https://www.hobbyshop.ch/gens-ace-5000-mah-6s-22-2v-45c-lipo-pack-b-45c-5000-6s1p-gen116.html", consulte_le: "2026-09-30"}
+    note: >
+      En rupture le 2026-09-30. ⚠ 22,2 V ne correspond PAS à la tension
+      des caractéristiques retenues : 48 V pour RobStride et CubeMars,
+      12 V pour Feetech. La vitesse d'un actionneur baisse avec la
+      tension. Une batterie adaptée à chaque bus n'est pas chiffrée.
+  alimentation_labo:
+    article: "PeakTech 6155, 0–30 V / 20 A"
+    prix: {valeur: 230.80, devise: CHF, vendeur: "reichelt.ch, via Toppreise", source: "https://www.toppreise.ch/browse?q=Labornetzger%C3%A4t+30V+20A", consulte_le: "2026-09-30"}
+    note: "⚠ 30 V au plus : suffit pour un banc Feetech, pas pour un actionneur 48 V à pleine vitesse."
+
+structure:
+  article: "plaques et entretoises découpées (fiche 0015)"
+  prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
+  note: "null tant que Loïc n'a pas chiffré la découpe métal."
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Phases — ce que chacune achète
+# ═════════════════════════════════════════════════════════════════════════
+#  Postes `actionneur:*` : résolus par la configuration étudiée.
+#    actionneur:lourde  la classe de l'articulation la plus exigeante
+#    actionneur:legere  la classe la moins exigeante de la configuration
+#    actionneur:jambes  les 12 actionneurs de jambe, chacun de SA classe
+#  Poste `adaptateur_bus` : TTL si toutes les classes sont Feetech, CAN sinon.
+phases:
+  banc:
+    description: "un actionneur de la classe lourde, sur table, alimenté en laboratoire"
+    postes:
+      - {poste: "actionneur:lourde", quantite: 1}
+      - {poste: adaptateur_bus, quantite: 1}
+      - {poste: alimentation_labo, quantite: 1}
+  jambes_v1:
+    description: "12 DDL de jambe, électronique embarquée, structure"
+    postes:
+      - {poste: "actionneur:jambes", quantite: 12}
+      - {poste: adaptateur_bus, quantite: 1}
+      - {poste: ordinateur, quantite: 1}
+      - {poste: imu, quantite: 1}
+      - {poste: batterie, quantite: 1}
+      - {poste: structure, quantite: 1}
+  haut_du_corps_v2:
+    description: "18 DDL de ToddlerBot hors jambes (14 bras, 2 taille, 2 cou), classe légère"
+    postes:
+      - {poste: "actionneur:legere", quantite: 18}
+      - {poste: structure, quantite: 1}

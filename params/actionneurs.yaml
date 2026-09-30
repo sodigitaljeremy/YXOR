@@ -1,0 +1,218 @@
+# Catalogue des actionneurs candidats — lu par scripts/dimensionnement.py
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  CE QUE CE FICHIER EST, ET N'EST PAS
+# ─────────────────────────────────────────────────────────────────────────
+#  Un relevé de caractéristiques CONSTRUCTEUR, chaque valeur avec sa
+#  source et sa date de consultation. Ce n'est ni un choix ni une liste
+#  d'achat (CLAUDE.md, règle d'achat c : un comparatif demandé, rien de
+#  plus).
+#
+#  Règles de saisie :
+#    · valeur inconnue = null, JAMAIS estimée ni prise sur un produit voisin ;
+#    · valeur vue seulement dans un résumé de moteur de recherche, sans
+#      page ouverte = null, et la lecture est notée dans `non_verifie` ;
+#    · deux sources en désaccord : les deux sont portées, la valeur
+#      retenue est dite et justifiée ;
+#    · les unités d'ORIGINE sont conservées (rpm, s/60°, kg·cm) : la
+#      conversion en rad/s ou N·m se CALCULE dans le script, elle ne se
+#      déclare pas (CLAUDE.md, règle 3 des contrôles).
+#
+#  Vitesse : c'est la vitesse À VIDE. Sous charge, un actionneur tourne
+#  moins vite : la contrainte de vitesse est donc optimiste.
+#
+#  Dépôt constructeur RobStride : https://github.com/RobStride/Product_Information
+#  PDF « 灵足时代RS系列产品规格介绍(2026.09.17).pdf » — texte extrait avec
+#  pypdf, pages de détail citées, et comparatif p. 38. robstride.com est
+#  rendu en JavaScript et n'a PAS pu être lu automatiquement.
+
+consultation: "2026-09-30"
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Paramètres du dimensionnement — choix, pas mesures
+# ═════════════════════════════════════════════════════════════════════════
+dimensionnement:
+  marge: 1.5                  # CHOIX DE JEREMY À VALIDER — pas une norme
+  tolerance_coherence_m: 0.005
+  # Configuration mixte : classe lourde ici, légère ailleurs (consigne de
+  # Jeremy, 2026-09-30).
+  articulations_lourdes: [hip_roll, hip_pitch, knee, ankle_pitch]
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Candidats
+# ═════════════════════════════════════════════════════════════════════════
+candidats:
+
+  sts3250:
+    nom: "Feetech STS3250"
+    fabricant: Feetech
+    bus: "TTL série half-duplex asynchrone, 38 400 bps à 1 Mbps"
+    tension_V: {valeur: 12, source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "plage 6–12 V ; caractéristiques données à 12 V"}
+    reduction: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "345:1 chez un tiers (servodatabase.com), absent de la page constructeur"}
+    couple_continu_Nm:
+      valeur: 1.569
+      origine_texte: "rated torque 16 kg·cm @12 V"
+      source: "https://www.feetechrc.com/562636.html"
+      consulte_le: "2026-09-30"
+      note: "Couple NOMINAL constructeur, retenu comme continu. 16 × 0,0980665."
+    couple_pointe_Nm:
+      valeur: 4.903
+      origine_texte: "stall torque 50 kg·cm @12 V"
+      source: "https://www.feetechrc.com/562636.html"
+      consulte_le: "2026-09-30"
+      note: "Couple de BLOCAGE, pas un couple de pointe utilisable en mouvement. 50 × 0,0980665."
+    vitesse_s_par_60deg: {valeur: 0.133, source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "@12 V, à vide"}
+    masse_g: {valeur: 74.5, source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "± 1 g"}
+    dimensions_mm: {valeur: "45,22 × 24,72 × 35", source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30"}
+    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "Feetech n'affiche pas de prix ; pages revendeurs illisibles (429)"}
+
+  edulite05:
+    nom: "RobStride EduLite 05"
+    fabricant: "RobStride Dynamics"
+    bus: "CAN 2.0, trame étendue, 1 Mbps"
+    tension_V: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "16–60 V lu dans un titre de résultat de recherche (x.com, 402)"}
+    reduction: {valeur: 9, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur"}
+    couple_continu_Nm:
+      valeur: null
+      source: null
+      consulte_le: "2026-09-30"
+      non_verifie: "1,8 N·m lu dans le TITRE d'un résultat de recherche (x.com/RobStride_com/status/1989174130705621140), page non ouverte (402)"
+    couple_pointe_Nm:
+      valeur: 6.0
+      source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html"
+      consulte_le: "2026-09-30"
+      note: "Revendeur. Corroboré par la limite logicielle ±6 N·m du dépôt constructeur EDULITE_A3 (README)."
+    vitesse_a_vide_rpm: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "430 rpm ±10 % vu seulement dans un résumé de recherche"}
+    masse_g: {valeur: 242, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur"}
+    dimensions_mm: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "46 × 46 × 44 mm dans un titre de résultat de recherche"}
+    prix: {valeur: 80.00, devise: USD, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "76 USD à partir de 10"}
+
+  rs05:
+    nom: "RobStride RS05"
+    fabricant: "RobStride Dynamics"
+    bus: "CAN 2.0 / CAN FD"
+    tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
+    reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 1.8, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 150 × 150 mm"}
+    couple_pointe_Nm: {valeur: 5.5, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "± 10 % ; tension de mesure non précisée (nominale 48 V)"}
+    masse_g: {valeur: 191, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
+    dimensions_mm: {valeur: "Ø46 × 44", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix: {valeur: 499, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+
+  rs02:
+    nom: "RobStride RS02"
+    fabricant: "RobStride Dynamics"
+    bus: "CAN 2.0 / CAN FD"
+    tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "plage 15–60 V (README du 2026-07-13 : 24–60 V)"}
+    reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
+    couple_continu_Nm:
+      valeur: 6.0
+      source: "site RobStride, consulté par Jeremy le 2026-09-30"
+      consulte_le: "2026-09-30"
+      note: >
+        Valeur RETENUE sur consigne de Jeremy. Le site n'a PAS pu être relu
+        automatiquement (rendu JavaScript). ⚠ Le PDF constructeur du
+        2026-09-17 donne encore 7 N·m pour le RS02 ; la mention « 6 (nouveau)
+        / 5 (ancien) » de ce PDF concerne le RS00. Une confusion n'est pas
+        exclue : à confirmer sur la page produit.
+      autres_valeurs:
+        - {valeur: 7.0, source: "PDF RobStride 2026-09-17, p. 11 et p. 38", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 150 × 150 mm"}
+        - {valeur: 7.0, source: "fiche RobStride du 2026-07-13 (README du dépôt constructeur)", consulte_le: "2026-09-30"}
+    couple_pointe_Nm: {valeur: 17.0, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 410, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
+    masse_g: {valeur: 380, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 3 g"}
+    dimensions_mm: {valeur: "Ø78,5 × 41,5", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix: {valeur: 699, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+
+  rs06:
+    nom: "RobStride RS06"
+    fabricant: "RobStride Dynamics"
+    bus: "CAN 2.0 / CAN FD"
+    tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "plage 15–60 V"}
+    reduction: {valeur: 9, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: 11.0, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 200 × 200 mm"}
+    couple_pointe_Nm: {valeur: 36.0, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
+    masse_g: {valeur: 621, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
+    dimensions_mm: {valeur: "Ø82 × 49", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix: {valeur: 849, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+
+  rs03:
+    nom: "RobStride RS03"
+    fabricant: "RobStride Dynamics"
+    bus: "CAN 2.0 / CAN FD"
+    tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "plage 15–60 V"}
+    reduction: {valeur: 9, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30"}
+    couple_continu_Nm:
+      valeur: 20.0
+      source: "PDF RobStride 2026-09-17, p. 38"
+      consulte_le: "2026-09-30"
+      note: "CONTRADICTION INTERNE au PDF : p. 19 dit 21, p. 38 dit 20. La plus basse est retenue, par prudence."
+      autres_valeurs:
+        - {valeur: 21.0, source: "PDF RobStride 2026-09-17, p. 19 ; README du dépôt constructeur", consulte_le: "2026-09-30", note: "à 100 rpm, plaque alu 200 × 200 mm"}
+    couple_pointe_Nm: {valeur: 60.0, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 195, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
+    masse_g: {valeur: 900, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "± 20 g"}
+    dimensions_mm: {valeur: "Ø98 × 54,1", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    prix: {valeur: 999, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+
+  ak70_10:
+    nom: "CubeMars AK70-10 KV100"
+    fabricant: CubeMars
+    bus: "CAN et UART"
+    tension_V: {valeur: 48, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "24 ou 48 V ; valeurs retenues à 48 V, comme les RobStride"}
+    reduction: {valeur: 10, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
+    couple_continu_Nm:
+      valeur: 8.3
+      source: "https://www.cubemars.com/goods-1031-AK70-10.html ; https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html"
+      consulte_le: "2026-09-30"
+      note: "Les deux pages constructeur concordent."
+      autres_valeurs:
+        - {valeur: 10.0, source: "https://store.cubemars.com/products/ak70-10", consulte_le: "2026-09-30", note: "« Rated Torque 10Nm » selon un RÉSUMÉ d'outil, douteux — non retenu"}
+    couple_pointe_Nm: {valeur: 24.8, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 480, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "à 48 V (240 à 24 V)"}
+    masse_g: {valeur: 621, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "521 g dans un résumé de recherche, non retrouvé"}
+    dimensions_mm: {valeur: "Ø89 × 50,25", source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
+    prix: {valeur: 398.90, devise: USD, vendeur: CubeMars, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Référence du modèle de masse : ToddlerBot (P1)
+# ═════════════════════════════════════════════════════════════════════════
+reference_toddlerbot:
+  hauteur_m: {valeur: 0.56, source: "fiche 0001 ; arXiv 2502.00893v1 : 0,56 m", consulte_le: "2026-09-30"}
+  masse_totale_kg: {valeur: 3.454, source: "somme des body_mass du MJCF toddlerbot_2xc.xml @ e337f3b (MuJoCo 3.13.0)", consulte_le: "2026-09-30", note: "l'article arXiv 2502.00893v1 dit 3,4 kg"}
+  # Masse PAR AXE. Les 2XC430 et 2XL430 sont des boîtiers à DEUX axes :
+  # un seul 2XC430 de 102 g porte le roulis ET le tangage de hanche
+  # (arXiv 2502.00893v1, § VIII-E : « 2XC430-W250 — Hip RP »).
+  # Compter 102 g par actionneur doublerait sa masse.
+  masse_dynamixel_g:
+    XC330:      {valeur: 23,   source: "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/", consulte_le: "2026-09-30", note: "XC330-T288"}
+    XC430:      {valeur: 65,   source: "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/", consulte_le: "2026-09-30", note: "XC430-T240BB, celui cité par l'article"}
+    XM430-W210: {valeur: 82,   source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30"}
+    2XC430:     {valeur: 51,   source: "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/", consulte_le: "2026-09-30", note: "102 g le boîtier, divisé par ses 2 axes"}
+    2XL430:     {valeur: 49.1, source: "https://emanual.robotis.com/docs/en/dxl/x/2xl430-w250/", consulte_le: "2026-09-30", note: "98,2 g le boîtier, divisé par ses 2 axes"}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Contrôle de cohérence : des robots qui existent, dans leur classe
+# ═════════════════════════════════════════════════════════════════════════
+controle_coherence:
+  toddlerbot:
+    classe: toddlerbot          # ses Dynamixel, bornes du modèle de simulation amont
+    hauteur_m: {valeur: 0.56, source: "fiche 0001", consulte_le: "2026-09-30"}
+  zeroth01:
+    classe: sts3250
+    hauteur_m:
+      valeur: 0.48
+      source: "consigne de Jeremy, 2026-09-30"
+      consulte_le: "2026-09-30"
+      note: >
+        ⚠ 0,48 m n'a été trouvé dans AUCUNE source. docs.kscale.dev ne
+        résout plus (DNS). Un extrait de recherche de cette page et le
+        README https://github.com/Justin-Riekehof/zeroth-01-build disent
+        « ~40 cm ». La valeur la plus haute est gardée : le contrôle est
+        ainsi le plus exigeant. Zeroth-01 a 5 DDL par jambe et non 6, et
+        aucune marche RÉELLE n'a été vue, seulement en simulation (README
+        Riekehof ; K-Scale annonce « basic locomotion »).
+      autres_valeurs:
+        - {valeur: 0.40, source: "https://github.com/Justin-Riekehof/zeroth-01-build/blob/main/README.md", consulte_le: "2026-09-30"}
