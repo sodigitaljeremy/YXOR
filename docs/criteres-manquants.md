@@ -369,7 +369,7 @@ valeur a été trouvée dans un document du registre.
   la série, qui ne cite pas ce modèle. Même conclusion, sauf si sa fiche
   produit est versée.
 
-**Conclusion.** Aujourd'hui, **9 sous-critères sont notables et
+**Conclusion.** Aujourd'hui, **10 sous-critères sont notables et
 utilisables** pour choisir S : A1, A2, B3, B4, C2, D1 à D4, E1. Ils
 couvrent A, B, C, D et E **partiellement**. **F et G sont
 inutilisables** : F manque de données dans le registre, G attend une
