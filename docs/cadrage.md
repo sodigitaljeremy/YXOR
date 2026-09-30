@@ -145,17 +145,27 @@ faible.
 
 ## 5. Résultats du dimensionnement
 
-Source : `docs/dimensionnement-par-actionneur.md`, calculé le 30-09-2026,
-marge 1,5, configuration homogène (même classe sur les 12 articulations de
-jambe).
+Source : **engendré** par `.venv/bin/python scripts/dimensionnement.py --markdown`
+(bloc `TABLEAU_CADRAGE`), le 30-09-2026. Ce tableau n'est pas recopié à la main :
+il se remplace par la sortie du script. Les valeurs du RS02 (6 retenu, 7 dans le PDF
+du 17-09) et du RS03 (20 retenu, 21 à la p. 19) sont discutées dans
+`params/actionneurs.yaml`.
 
-| Classe | Continu / pointe (N·m) | Taille maximale | Masse convergée |
-| --- | --- | --- | --- |
-| STS3250, EduLite 05, RS05 | ≈ 1 à 2 / 5 à 6 | 0,57 à 0,60 m | 4 à 6 kg |
-| RobStride RS02 | 6 (7 selon le PDF du 17-09) / 17 | 0,79 m | 12,2 kg |
-| CubeMars AK70-10 | 8,3 / 24,8 | 0,82 m | 16,2 kg |
-| RobStride RS06 | 11 / 36 | 0,91 m | 19,4 kg |
-| RobStride RS03 | 20 (21 à la p. 19 du PDF) / 60 | 1,07 m | 30,0 kg |
+<!-- engendré : scripts/dimensionnement.py --markdown, bloc TABLEAU_CADRAGE -->
+| Configuration (marge 1,5) | Continu / pointe (N·m) | Taille maximale | Masse convergée | Articulation limitante |
+| --- | --- | ---: | ---: | --- |
+| homogène Feetech STS3250 | STS3250 1,6 / 4,9 | 0,60 m | 4,2 kg | hip_roll |
+| homogène RobStride EduLite 05 | EduLite 05 null / 6,0 | 0,58 m | 6,0 kg | hip_roll, knee, ankle_pitch |
+| homogène RobStride RS05 | RS05 1,8 / 5,5 | 0,57 m | 5,1 kg | hip_roll |
+| homogène RobStride RS02 | RS02 6,0 / 17,0 | 0,79 m | 12,2 kg | hip_roll |
+| homogène RobStride RS06 | RS06 11,0 / 36,0 | 0,91 m | 19,4 kg | hip_roll |
+| homogène RobStride RS03 | RS03 20,0 / 60,0 | 1,07 m | 30,0 kg | hip_roll |
+| homogène CubeMars AK70-10 KV100 | AK70-10 KV100 8,3 / 24,8 | 0,82 m | 16,2 kg | hip_roll |
+| S — RS05 homogène | RS05 1,8 / 5,5 | 0,57 m | 5,1 kg | hip_roll |
+| L — RS06 sur la hanche (3 axes), le genou et le tangage de cheville ; RS02 sur le roulis de cheville | RS06 11,0 / 36,0 ; RS02 6,0 / 17,0 | 0,92 m | 19,2 kg | hip_roll |
+
+Toutes ces tailles sont des **plafonds optimistes** : le roulis de hanche, et d'autres articulations de jambe, étaient écrêtés dans la marche de référence.
+<!-- fin du bloc engendré -->
 
 Constats :
 
@@ -168,7 +178,8 @@ Constats :
   STS3250 plafonnent à 0,48 m, contre 0,60 m en STS3250 seul. La
   configuration avec le lacet de hanche en classe lourde n'avait pas été
   calculée *(correction du 30-09-2026 : la version 1 la disait « en cours
-  de calcul », ce qui était faux)*.
+  de calcul », ce qui était faux)*. Elle l'est désormais pour L : ligne
+  « L » du tableau ci-dessus.
 - **La valeur du RS02 (6 ou 7 N·m) change peu le résultat** : 9 mm.
 - **L'ancien P2 à 0,9 m** n'est atteint que par le RS06 (de justesse) et
   le RS03.
@@ -410,7 +421,8 @@ v2 : les bras ne font pas partie de la v1.
 2. Classe d'actionneur pour S (§ 6), après l'étude fournisseurs (§ 9).
 3. Configuration mixte avec le lacet de hanche en classe lourde. *(Correction
    du 30-09-2026 : ce calcul n'était PAS en cours, contrairement à ce
-   qu'écrivait la version 1.)*
+   qu'écrivait la version 1.)* **Calculée le 30-09-2026 pour L**
+   (RS06 / RS02, § 5). Reste ouverte pour les autres paires.
 4. Taux d'imprévus du budget (§ 7).
 5. Chiffrage de la structure : usinage (Loïc) et impression.
 6. Procédé exact de Loïc, rayons minimaux, matières, format de fichier.

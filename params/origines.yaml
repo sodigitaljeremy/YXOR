@@ -402,7 +402,17 @@ fichiers:
         nature: sans_objet
         source: "rattachement du robot de référence à une classe du catalogue"
 
+      # --- configurations nommées : des choix de calcul, pas des cotes ---
+      - motif: "configurations_nommees.**"
+        origine: propre
+        nature: sans_objet
+        source: "configurations demandées par Jeremy le 2026-09-30"
+
       # --- candidats ---
+      - motif: "candidats.*.fiche.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "version et empreinte du document constructeur lu"
       - motif: "candidats.*.*.autres_valeurs.valeur"
         origine: catalogue
         nature: interface

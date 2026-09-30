@@ -96,3 +96,24 @@ fichiers:
     redistribuable: true
     chemin: null
 
+
+  robstride_rs_specs_20260917:
+    source: >
+      RobStride Dynamics, dépôt GitHub du fabricant
+      https://github.com/RobStride/Product_Information, commit 3f0cae4986
+      (2026-09-24), fichier « 灵足时代RS系列产品规格介绍(2026.09.17).pdf ».
+    reference: "Spécifications de la série RS, version du 2026-09-17 — 38 pages"
+    date: 2026-09-30
+    empreinte: "sha256:76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence (API GitHub : license = null).
+      Sans licence, aucun droit de redistribution n'est accordé. Seules
+      des valeurs numériques en sont extraites, avec leur page, vers
+      params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le
+      texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: >
+      Empreinte vérifiée deux fois le 2026-09-30 : copie téléchargée
+      pendant la recherche, et copie retéléchargée depuis
+      raw.githubusercontent.com — sha256 identiques. Le fichier n'est
+      pas dans le dépôt.

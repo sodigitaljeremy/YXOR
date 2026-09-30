@@ -45,6 +45,7 @@ candidats:
 
   sts3250:
     nom: "Feetech STS3250"
+    fiche: {version: null, sha256: null, document: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "page web sans numéro de version ; lue par un outil de résumé, aucune copie conservée"}
     fabricant: Feetech
     bus: "TTL série half-duplex asynchrone, 38 400 bps à 1 Mbps"
     tension_V: {valeur: 12, source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "plage 6–12 V ; caractéristiques données à 12 V"}
@@ -68,6 +69,7 @@ candidats:
 
   edulite05:
     nom: "RobStride EduLite 05"
+    fiche: {version: null, sha256: null, document: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "page revendeur ; absente du PDF RobStride du 2026-09-17 ; aucune copie conservée"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0, trame étendue, 1 Mbps"
     tension_V: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "16–60 V lu dans un titre de résultat de recherche (x.com, 402)"}
@@ -89,6 +91,7 @@ candidats:
 
   rs05:
     nom: "RobStride RS05"
+    fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
@@ -102,6 +105,7 @@ candidats:
 
   rs02:
     nom: "RobStride RS02"
+    fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "plage 15–60 V (README du 2026-07-13 : 24–60 V)"}
@@ -127,6 +131,7 @@ candidats:
 
   rs06:
     nom: "RobStride RS06"
+    fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "plage 15–60 V"}
@@ -140,6 +145,7 @@ candidats:
 
   rs03:
     nom: "RobStride RS03"
+    fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "plage 15–60 V"}
@@ -159,6 +165,7 @@ candidats:
 
   ak70_10:
     nom: "CubeMars AK70-10 KV100"
+    fiche: {version: null, sha256: null, document: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "page web sans numéro de version ; aucune copie conservée"}
     fabricant: CubeMars
     bus: "CAN et UART"
     tension_V: {valeur: 48, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "24 ou 48 V ; valeurs retenues à 48 V, comme les RobStride"}
@@ -175,6 +182,26 @@ candidats:
     masse_g: {valeur: 621, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "521 g dans un résumé de recherche, non retrouvé"}
     dimensions_mm: {valeur: "Ø89 × 50,25", source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
     prix: {valeur: 398.90, devise: USD, vendeur: CubeMars, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Configurations nommées — calculées et publiées au cadrage § 5
+# ═════════════════════════════════════════════════════════════════════════
+#  Une configuration donne la classe de chaque type d'articulation de
+#  jambe (les deux côtés ont la même). `lourde` va sur `articulations_lourdes`,
+#  `legere` ailleurs. Le statut est celui du cadrage, pas une décision ici.
+configurations_nommees:
+  S_rs05:
+    libelle: "S — RS05 homogène"
+    statut: "classe de S ouverte (cadrage § 6) ; calcul demandé le 2026-09-30"
+    lourde: rs05
+    legere: rs05
+    articulations_lourdes: []
+  L_rs06_rs02:
+    libelle: "L — RS06 sur la hanche (3 axes), le genou et le tangage de cheville ; RS02 sur le roulis de cheville"
+    statut: "calcul demandé le 2026-09-30 (question ouverte 3 du cadrage)"
+    lourde: rs06
+    legere: rs02
+    articulations_lourdes: [hip_roll, hip_pitch, hip_yaw_drive, knee, ankle_pitch]
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Référence du modèle de masse : ToddlerBot (P1)

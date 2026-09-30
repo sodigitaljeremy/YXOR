@@ -361,6 +361,16 @@ def configurations(cat: dict) -> list[tuple[str, dict]]:
     return confs
 
 
+def configurations_nommees(cat: dict) -> list[tuple[str, str, dict]]:
+    """Les configurations nommées du catalogue (publiées au cadrage § 5)."""
+    out = []
+    for cid, c in (cat.get("configurations_nommees") or {}).items():
+        lourde = classe_catalogue(cat, c["lourde"])
+        legere = classe_catalogue(cat, c["legere"])
+        out.append((cid, c["libelle"], config_mixte(lourde, legere, c["articulations_lourdes"])))
+    return out
+
+
 def f(x, n=2):
     return "—" if x is None else f"{x:.{n}f}".replace(".", ",")
 
@@ -410,9 +420,45 @@ def main(argv=None) -> int:
         print(f"  {nom:48s} H_max {f(ev['H_max'], 3)} m  masse {f(ev['masse'])} kg  "
               f"H_min {f(ev['H_min_vitesse'], 3)}  limitée par {', '.join(ev['limitantes'])}"
               + ("  ⚠ PLAFOND OPTIMISTE (écrêté)" if ec else ""))
+    nommees = []
+    print()
+    for cid, lib, conf in configurations_nommees(cat):
+        ev = evaluer(ref, conf, besoins, marge)
+        nommees.append((lib, conf, ev))
+        print(f"  [{cid}] {lib}\n      H_max {f(ev.get('H_max'), 3)} m  masse {f(ev.get('masse'))} kg  "
+              f"limitée par {', '.join(ev.get('limitantes') or [])}")
     if a.markdown:
         imprimer_markdown(cat, bud, lignes, marge, ref)
+        imprimer_cadrage(lignes, nommees, marge)
     return 0
+
+
+def _classes_de(conf) -> str:
+    vus = []
+    for t in JAMBE:
+        c = conf[t]
+        if c["id"] not in [v["id"] for v in vus]:
+            vus.append(c)
+    return " ; ".join(f"{c['nom'].replace('RobStride ', '').replace('Feetech ', '').replace('CubeMars ', '')} "
+                      f"{f(c['continu'], 1) if c['continu'] is not None else 'null'} / {f(c['pointe'], 1)}"
+                      for c in vus)
+
+
+def imprimer_cadrage(lignes, nommees, marge):
+    """Le tableau du cadrage § 5 — engendré, jamais recopié à la main."""
+    print("\n### TABLEAU_CADRAGE\n")
+    print(f"| Configuration (marge {f(marge, 1)}) | Continu / pointe (N·m) | Taille maximale | "
+          "Masse convergée | Articulation limitante |")
+    print("| --- | --- | ---: | ---: | --- |")
+    rangs = [(n, c, e) for n, c, e in lignes if n.startswith("homogène")] + nommees
+    for nom, conf, ev in rangs:
+        if "indetermine" in ev:
+            print(f"| {nom} | {_classes_de(conf)} | — | — | indéterminé |")
+            continue
+        print(f"| {nom} | {_classes_de(conf)} | {f(ev['H_max'])} m | {f(ev['masse'], 1)} kg | "
+              f"{', '.join(ev['limitantes'])} |")
+    print("\nToutes ces tailles sont des **plafonds optimistes** : le roulis de hanche, "
+          "et d'autres articulations de jambe, étaient écrêtés dans la marche de référence.")
 
 
 def imprimer_markdown(cat, bud, lignes, marge, ref):
