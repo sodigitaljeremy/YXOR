@@ -88,6 +88,17 @@ modifications:
     ancien_texte: >
       continuite : « ce qui se garde en passant à M et L (RS02, RS06) » —
       2 points bus CAN, 2 points même protocole que M et L, 1 point 48 V.
+  - date: "2026-09-30"
+    moment: "soir ; comparatif du banc v2"
+    objet: "banc : note de transfert quand le modèle de S dépend encore de k"
+    raison: >
+      La grille dit « 5 si c'est exactement le modèle retenu pour S ». Or
+      le modèle retenu bascule avec k (docs/choix-famille-actionneurs.md).
+      JUGEMENT, appliqué dans le script et justifié dans le document :
+      options « × vainqueur » → 3 (5 si k ≥ seuil, 1 sinon, k encore
+      inconnu) ; option « un de chaque finaliste » → 5 (le modèle
+      gagnant est sur le banc, quel que soit k). La grille n'est pas
+      modifiée ; c'est son application qui l'est, et c'est dit.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S

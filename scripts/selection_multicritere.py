@@ -356,33 +356,51 @@ def sensibilite(cands, poids, sens):
 
 # ─────────────────────────────── banc ───────────────────────────────────
 
-def options_banc(cands, S_id, second_id, cat, bud, crit):
-    """Les cinq options du comparatif du banc, avec leurs notes."""
+def options_banc(r):
+    """Options du banc, construites sur le résultat des FAMILLES (point 3).
+
+    Vainqueur : le membre S de la famille gagnante à k = 1,0. Finalistes :
+    les membres S des deux familles qui gagnent de part et d'autre du seuil
+    k ; à défaut de bascule, les deux premières familles à k = 1,0.
+    """
+    cat, bud, crit = r["cat"], r["bud"], r["crit"]
     b = crit["banc"]
     taux, tva, imp = bud["taux_de_change"], val(bud["tva_ch"]), val(bud["marge_imprevus"])
     elec = bud["electronique"]
-    c_by = {c["id"]: c for c in cands}
     jr = b["ponderes"]["risque"]["jugements_par_option"]
+    fams = {fm["id"]: fm for fm in r["fams"]}
+    cat_fam = cat["familles"]
+    gagnant = r["fam_balayage"][0]["sens"]["nominal"]
+    if r["fam_seuil"]:
+        fa, fb = r["fam_seuil"]["gagnant"], r["fam_seuil"]["nouveau"]
+    else:
+        tri = sorted(r["fams"], key=lambda x: -score(x["notes"], r["poids"]))
+        fa, fb = tri[0]["id"], tri[1]["id"]
+    S_id = cat_fam[gagnant]["S"]
+    seuil = r["fam_seuil"]["garde"] if r["fam_seuil"] else None
 
-    def cout(ids, bus):
+    def info(cid):
+        c = cat["candidats"][cid]
+        chf, _ = prix_chf(cat, cid, bud)
+        return dict(id=cid, nom=c["nom"], prix=chf, plage=plage_tension(c), tension=val(c["tension_V"]),
+                    can="CAN" in c["bus"])
+
+    def cout(ids, tension):
         ht, manquants = 0.0, []
-        for i in ids:
-            p = c_by[i]["prix_chf"] if i in c_by else None
-            if p is None:
-                manquants.append(f"prix {c_by[i]['nom'] if i in c_by else i}")
+        for i_ in ids:
+            x = info(i_)
+            if x["prix"] is None:
+                manquants.append(f"prix {x['nom']}")
             else:
-                ht += p
-        adapt = "adaptateur_can" if bus == "can" else "adaptateur_ttl"
-        a = D.chf(elec[adapt]["prix"], taux)
-        (manquants.append(adapt) if a is None else None)
+                ht += x["prix"]
+        can = all(info(i_)["can"] for i_ in ids)
+        a = D.chf(elec["adaptateur_can" if can else "adaptateur_ttl"]["prix"], taux)
+        (manquants.append("adaptateur") if a is None else None)
         ht += a or 0
-        tensions = {c_by[i]["tension"] for i in ids}
-        if tensions == {48}:
-            al = D.chf(elec["alimentation_48V"]["prix"], taux)
-            (manquants.append("alimentation_48V") if al is None else None)
-            ht += al or 0
-        else:
-            manquants.append(f"alimentation {'/'.join(str(t) for t in sorted(tensions))} V (non chiffrée)")
+        cle = {48: "alimentation_48V", 24: "alimentation_24V"}.get(tension)
+        al = D.chf(elec[cle]["prix"], taux) if cle and cle in elec else None
+        (manquants.append(f"alimentation {tension} V") if al is None else None)
+        ht += al or 0
         return ht * (1 + imp) * (1 + tva), manquants
 
     def appr(n, meme_modele, meme_bus):
@@ -392,56 +410,71 @@ def options_banc(cands, S_id, second_id, cat, bud, crit):
                "dispersion": n >= 3 and meme_modele}
         return sum(pts.values()), [k for k, v in pts.items() if v]
 
-    bus = lambda i: "can" if c_by[i]["famille"].endswith("_can") else "ttl"
-    fam_S = c_by[S_id]["famille"]
     opts = []
+    vs = info(S_id)
+    t_v = tension_commune([vs["plage"]]) or vs["tension"]
     for n, cle in ((1, "un_vainqueur"), (2, "deux_vainqueurs"), (3, "trois_vainqueurs")):
-        ids = [S_id] * n
-        opts.append(dict(id=cle, nom=f"{n} × {c_by[S_id]['nom']}", ids=ids, bus=bus(S_id),
-                         appr=appr(n, True, True), transfert=5,
-                         transfert_j="exactement le modèle retenu pour S"))
-    if second_id:
-        ids = [S_id, second_id]
-        mb = bus(S_id) == bus(second_id)
+        opts.append(dict(id=cle, nom=f"{n} × {vs['nom']}", ids=[S_id] * n, tension=vs["tension"],
+                         appr=appr(n, True, True), transfert=3,
+                         transfert_j=(f"JUGEMENT : 5 si k ≥ {f(seuil)} (sa famille gagne), 1 sinon ; "
+                                      "k inconnu tant que le banc ne l'a pas mesuré → 3")
+                                     if seuil else "exactement le modèle retenu pour S → 5"))
+        if not seuil:
+            opts[-1]["transfert"] = 5
+    # 1 × finaliste A + 1 × finaliste B, MÊME TENSION (48 V de préférence)
+    SA, SB = cat_fam[fa]["S"], cat_fam[fb]["S"]
+    choix = []
+    for fid, sid in ((fa, SA), (fb, SB)):
+        var = cat_fam[fid].get("S_variante_48V")
+        choix.append([sid] + ([var] if var else []))
+    paire, tension = None, None
+    for cible in (48, 24):
+        a_ = next((x for x in choix[0] if (pl := info(x)["plage"]) and pl[0] <= cible <= pl[1]), None)
+        b_ = next((x for x in choix[1] if (pl := info(x)["plage"]) and pl[0] <= cible <= pl[1]), None)
+        if a_ and b_:
+            paire, tension = [a_, b_], cible
+            break
+    if paire:
         opts.append(dict(id="deux_finalistes",
-                         nom=f"1 × {c_by[S_id]['nom']} + 1 × {c_by[second_id]['nom']}",
-                         ids=ids, bus=bus(S_id), appr=appr(2, False, mb), transfert=3,
-                         transfert_j="un seul des deux actionneurs est le modèle retenu (JUGEMENT : 3)"))
+                         nom=f"1 × {info(paire[0])['nom']} + 1 × {info(paire[1])['nom']} ({tension} V)",
+                         ids=paire, tension=tension, appr=appr(2, False, True), transfert=5,
+                         transfert_j=("JUGEMENT : quel que soit k, le modèle S de la famille gagnante est "
+                                      "sur le banc → 5"),
+                         finalistes=True))
     opts.append(dict(id="feetech", nom="2 × Feetech STS3250 (banc d'apprentissage)",
-                     ids=["sts3250", "sts3250"], bus="ttl", appr=appr(2, True, True),
-                     transfert=5 if fam_S == c_by["sts3250"]["famille"] else 1,
-                     transfert_j=("même modèle que S" if fam_S == c_by["sts3250"]["famille"]
-                                  else "autre fabricant et autre protocole que S")))
+                     ids=["sts3250", "sts3250"], tension=12, appr=appr(2, True, True), transfert=1,
+                     transfert_j="autre fabricant, autre bus (TTL) que tous les finalistes → 1"))
     for o in opts:
-        o["cout"], o["manquants"] = cout(o["ids"], o["bus"])
+        o["cout"], o["manquants"] = cout(o["ids"], o["tension"])
         o["notes"] = dict(apprentissage=o["appr"][0], transfert_S=o["transfert"],
                           cout=0 if o["manquants"] else seuils(o["cout"], (250, 400, 600, 900, 1300), (5, 4, 3, 2, 1), 0),
                           risque=jr[o["id"]]["note"])
         o["risque_j"] = jr[o["id"]]["justification"]
         o["etat"], o["reference"] = "admis", False
-    return opts
+    pb = {k: v["poids"] for k, v in b["ponderes"].items()}
+    return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension)
 
-
-# ─────────────────────────────── documents ──────────────────────────────
 
 CRIT_S = ("capacite", "cout", "continuite", "fiabilite_fournisseur", "robustesse",
           "masse", "ouverture", "tension_securite", "disponibilite")
 
 
-def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date, S_robuste=True):
+def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
+    fa, fb, SA, SB, paire, tension = finalistes
+    cat = r["cat"]
+    nomf = {fm["id"]: fm["nom"] for fm in r["fams"]}
     L = []
     A = L.append
-    A("# Comparatif du banc d'essai\n")
-    A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, "
-      f"le {date}, par la même méthode que `docs/choix-classe-S.md`. Aucun achat n'est "
+    A("# Comparatif du banc d'essai — v2\n")
+    A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}, "
+      "après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est "
       "proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).\n")
-    A(f"Les options dépendent du classement de S : vainqueur nominal **{S_nom}**, "
-      f"second **{second_nom or '—'}**. Si ce classement change, ce document change.\n")
-    if not S_robuste:
-        A("**⚠ Ce classement de S n'est PAS robuste** (`docs/choix-classe-S.md`, § 5) : le "
-          "vainqueur nominal dépend des poids. Les options « × vainqueur » ci-dessous valent "
-          "donc **pour ce vainqueur-là**. Ce qui se transfère d'un vainqueur à l'autre, c'est le "
-          "**nombre** d'exemplaires qu'elles recommandent, pas le modèle.\n")
+    if r["fam_seuil"]:
+        sf = r["fam_seuil"]
+        A(f"**Pourquoi ce banc compte.** Le choix de famille bascule au seuil **k ≈ {f(sf['garde'])}** : "
+          f"au-dessus, **{nomf[sf['gagnant']]}** ; en dessous, **{nomf[sf['nouveau']]}**. k est le "
+          "rapport entre le couple continu réel des actionneurs « condition non précisée » et leur "
+          "nominal publié. **Il ne se décide pas, il se mesure** — c'est le rôle premier du banc.\n")
     A("---\n\n## 1 — Les options\n")
     A("| Option | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
     A("| --- | --- | --- | ---: | --- | --- |")
@@ -449,47 +482,83 @@ def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date, S_robuste=True):
         A(f"| {o['nom']} | {o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
           f"{'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF | {', '.join(o['manquants']) or '—'} | "
           f"{o['notes']['risque']} — {o['risque_j']} |")
-    A("\nCoût TTC CH = (actionneurs + adaptateur + alimentation du bus) × (1 + imprévus) × "
-      "(1 + TVA 8,1 %). Adaptateur CAN : candleLight de Linux Automation, **prototype non "
-      "conforme CE** selon son fabricant. Alimentation 48 V : Mean Well RSP-500-48. Un poste non "
-      "chiffré met la note de coût à 0.\n")
+    A("\nCoût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, provisoire) × "
+      "(1 + TVA 8,1 %). Alimentations : Mean Well RSP-320-24 (24 V) ou RSP-500-48 (48 V), Reichelt. "
+      "Un poste non chiffré met la note de coût à 0.\n")
+    A("**Adaptateur USB-CAN** : candleLight de Linux Automation (54,74 € TTC, vérifié), **prototype "
+      "non conforme CE** selon son fabricant. **Alternative : CANable 2.0** (Openlight Labs), 35 USD "
+      "**non vérifié** (page inaccessible), conformité CE **inconnue** ; livré avec le firmware slcan "
+      "(**GPL-3.0**), compatible candleLight_fw (**MIT**) mais **sans CAN FD** sur la 2.0 ; licence "
+      "du matériel non nommée.\n")
+    if paire:
+        A(f"**L'option à deux finalistes** tourne à **{tension} V**, pour une seule alimentation : "
+          + " ; ".join(f"{cat['candidats'][x]['nom']}" for x in paire) + ". "
+          + ("Le prix de la variante 48 V du Damiao n'est pas connu : son coût est donc incomplet.\n"
+             if any(cat["candidats"][x]["prix"].get("valeur") is None for x in paire) else "\n"))
     A("---\n\n## 2 — Notes et score\n")
     A("| Critère | Poids (proposé) | " + " | ".join(o["nom"] for o in opts) + " |")
     A("| --- | ---: | " + " | ".join("---:" for _ in opts) + " |")
-    for k in poids:
-        A(f"| {k} | {poids[k]} | " + " | ".join(str(o["notes"][k]) for o in opts) + " |")
-    A("| **score /5** | | " + " | ".join(f"**{f(score(o['notes'], poids))}**" for o in opts) + " |")
+    for k_ in pb:
+        A(f"| {k_} | {pb[k_]} | " + " | ".join(str(o["notes"][k_]) for o in opts) + " |")
+    A("| **score /5** | | " + " | ".join(f"**{f(score(o['notes'], pb))}**" for o in opts) + " |")
     nom = {o["id"]: o["nom"] for o in opts}
     A("\n## 3 — Sensibilité\n")
-    A(f"Vainqueur aux poids proposés : **{nom[sens['nominal']]}**. "
-      f"{sum(1 for *_, w in sens['variations'] if w == sens['nominal'])} variations ±50 % sur "
-      f"{len(sens['variations'])} le laissent en tête.\n")
+    A(f"Vainqueur aux poids proposés : **{nom[sb['nominal']]}**. "
+      f"{sum(1 for *_, w in sb['variations'] if w == sb['nominal'])} variations ±50 % sur "
+      f"{len(sb['variations'])} le laissent en tête.\n")
     A("| Option | Victoires sur 1 000 tirages |")
     A("| --- | ---: |")
-    for w, k in sorted(sens["gagnes"].items(), key=lambda x: -x[1]):
-        A(f"| {nom.get(w, w)} | {k} |")
-    if all(o["notes"]["cout"] == 0 for o in opts):
-        A("\n**Le critère de coût ne départage rien** : aucune option n'est entièrement chiffrée "
-          "(voir « Postes non chiffrés »), donc toutes ont la note 0. Le verdict repose sur les "
-          "trois autres critères.\n")
+    for w, k_ in sorted(sb["gagnes"].items(), key=lambda x: -x[1]):
+        A(f"| {nom.get(w, w)} | {k_} |")
     A("\n## 4 — Verdict\n")
-    if sens["robuste"]:
-        A(f"**Classement ROBUSTE** : {nom[sens['nominal']]}"
-          + ("" if S_robuste else ", **pour ce vainqueur de S**") + ".\n")
-    else:
-        A("**Les options sont trop proches pour que l'analyse tranche** : le choix dépend des "
-          "poids, que Jeremy fixera.\n")
-    A("## 5 — Ce que ce comparatif ne dit pas\n")
-    A("- Les poids et les notes de risque sont **proposés** ; la sensibilité dit si le "
-      "classement en dépend.")
+    A(f"**{'Classement ROBUSTE' if sb['robuste'] else 'Options trop proches pour que l analyse tranche'.replace('l analyse', 'l’analyse')}** "
+      f": {nom[sb['nominal']]}"
+      + (" — le choix dépend des poids, que Jeremy fixera." if not sb["robuste"] else ".") + "\n")
+    k_seul = [x for x in (SA, SB) if intervalle_continu(cat["candidats"][x], 0.5)["k_applique"]]
+    if k_seul:
+        A("**Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la "
+          "condition de mesure n'est pas publiée : ici **"
+          + ", ".join(cat["candidats"][x]["nom"] for x in k_seul)
+          + "**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options "
+          "« × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre "
+          "finaliste **dans la même condition** : la comparaison devient directe, au lieu de "
+          "s'appuyer sur sa fiche.\n")
+    A("---\n\n## 5 — Protocole de mesure : les couples continus en condition IDENTIQUE\n")
+    A("But : remplacer l'hypothèse k par une mesure, sur les deux finalistes, **dans la même "
+      "condition**. Les fiches ne sont pas comparables entre elles : plaques différentes, ou condition "
+      "non précisée. Ce protocole est **proposé**, pas décidé.\n")
+    A("1. **Même montage.** Chaque actionneur est fixé sur la **même plaque d'aluminium de 70 × 70 mm** "
+      "(la plus petite condition publiée, celle du RS05 et de l'EduLite 05). L'épaisseur et la "
+      "matière sont notées. La plaque est posée sur le même support isolant.")
+    A("2. **Même alimentation**, à la même tension (celle de l'option), et le même bus CAN au même "
+      "débit.")
+    A("3. **Rotor bloqué**, par un bras de levier sur un dynamomètre ou une balance, longueur notée. "
+      "Le couple **réel** est lu sur le dynamomètre, et le couple **déclaré** par la télémétrie : leur "
+      "écart est lui-même une mesure. *Le blocage est la condition la plus proche d'un robot qui tient "
+      "debout ; une mesure en rotation demanderait un frein, et n'est pas prévue ici.*")
+    A("4. **Mêmes paliers de couple**, par ordre croissant, sur les deux actionneurs : le continu "
+      "publié le plus bas des deux, puis des paliers de 10 % au-dessus, jusqu'au seuil k × nominal "
+      "à départager.")
+    A("5. **Même durée** : chaque palier est tenu jusqu'à l'équilibre thermique (variation < 1 °C sur "
+      "5 min), ou au plus 30 min, ou jusqu'à 10 °C sous la protection thermique du constructeur.")
+    A("6. **Relevés** à 1 Hz : température bobinage et driver (télémétrie), température du boîtier "
+      "(thermocouple), courant, couple réel. La **température ambiante** est notée au début et à la "
+      "fin de chaque palier.")
+    A("7. **Résultat** : le plus haut couple tenu à l'équilibre sous la limite thermique est le "
+      "**continu mesuré**, dans cette condition. Divisé par le nominal publié, il donne le **k "
+      "mesuré** de chaque actionneur, à reporter dans le catalogue comme une mesure (fiche 0041) :")
+    A("   il départage les finalistes au seuil du § 1.\n")
+    A("---\n\n## 6 — Ce que ce comparatif ne dit pas\n")
+    A("- Les poids, les notes de transfert et de risque sont **proposés** ou de **jugement**, et "
+      "justifiés ligne par ligne.")
     A("- L'option Feetech n'a **ni prix vérifié ni alimentation 12 V chiffrée** : son coût est "
-      "inconnu, sa note de coût vaut 0.")
-    A("- Le banc à trois exemplaires répond à la condition « au moins 3 RS05 » de l'étude "
-      "externe (§ 15.2), qui veut mesurer la dispersion entre exemplaires.")
+      "inconnu.")
+    A("- La mesure au rotor bloqué ne dit rien du rendement en rotation ; elle compare les deux "
+      "finalistes entre eux, dans la même condition.")
+    A("- Le banc à trois exemplaires répond à la demande de l'étude externe (« au moins 3 », § 15.2) "
+      "pour la dispersion entre exemplaires.")
     return "\n".join(L) + "\n"
 
-
-# ─────────────────────────────── principal ──────────────────────────────
 
 def _seuil_fin(evalue, balayage, cle_nominal):
     """Affine au centième le k où le vainqueur change (None si aucun)."""
@@ -691,10 +760,16 @@ def main(argv=None) -> int:
         print(f"  SEUIL k : {nom[sf['gagnant']]} jusqu'à k = {f(sf['garde'])} ; {nom[sf['nouveau']]} dès k = {f(sf['k'])}")
     else:
         print("  SEUIL k : aucune bascule entre 1,0 et 0,5")
+    opts, pb, sb, fin = options_banc(r)
+    print(f"\n  banc : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; tirages "
+          f"{f(100 * sb['freq'], 1)} % -> {'ROBUSTE' if sb['robuste'] else 'trop proches'}")
+    for o in opts:
+        print(f"    {o['nom']:70s} score {f(score(o['notes'], pb))}  coût {'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF")
     if a.ecrire:
         date = datetime.date.today().isoformat()
         DOC_FAMILLE.write_text(doc_familles(r, date), encoding="utf-8")
-        print(f"  -> {DOC_FAMILLE.relative_to(REPO)}")
+        DOC_BANC.write_text(doc_banc(r, opts, pb, sb, fin, date), encoding="utf-8")
+        print(f"  -> {DOC_FAMILLE.relative_to(REPO)}, {DOC_BANC.relative_to(REPO)}")
     return 0
 
 
