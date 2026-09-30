@@ -2,17 +2,15 @@
 
 **Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le 2026-09-30, après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).
 
-**Pourquoi ce banc compte.** Le choix de famille bascule au seuil **k ≈ 0,70** : au-dessus, **Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)** ; en dessous, **RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)**. k est le rapport entre le couple continu réel des actionneurs « condition non précisée » et leur nominal publié. **Il ne se décide pas, il se mesure** — c'est le rôle premier du banc.
-
 ---
 
 ## 1 — Les options
 
 | Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |
 | --- | --- | --- | --- | ---: | --- | --- |
-| 1 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 2/5 : protocole, thermique | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 261 CHF | — | 3 — pas de rechange : une casse arrête le banc |
-| 2 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 418 CHF | — | 5 — rechange disponible, un seul modèle à maîtriser |
-| 3 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 5/5 : protocole, thermique, bus_multi_adresses, segment_2ddl, dispersion | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 574 CHF | — | 5 — rechange disponible, un seul modèle |
+| 1 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 2/5 : protocole, thermique | 5 — exactement le modèle retenu pour S → 5 | 261 CHF | — | 3 — pas de rechange : une casse arrête le banc |
+| 2 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — exactement le modèle retenu pour S → 5 | 418 CHF | — | 5 — rechange disponible, un seul modèle à maîtriser |
+| 3 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 5/5 : protocole, thermique, bus_multi_adresses, segment_2ddl, dispersion | 5 — exactement le modèle retenu pour S → 5 | 574 CHF | — | 5 — rechange disponible, un seul modèle |
 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 2/3 : k_damiao, blocage_edulite | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — JUGEMENT : quel que soit k, le modèle S de la famille gagnante est sur le banc → 5 | 385 CHF | — | 3 — deux modèles, deux protocoles possibles à maîtriser, pas de rechange de chacun |
 | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 3/3 : k_damiao, blocage_edulite, rs05_contre_edulite | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — JUGEMENT : les modèles S des deux familles en tête sont sur le banc, quel que soit k → 5 | 499 CHF | — | 3 — trois modèles, deux protocoles (RobStride commun au RS05 et à l'EduLite 05), pas de rechange de chacun |
 | 2 × Feetech STS3250 (banc d'apprentissage) | 0/3 : aucune | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 1 — autre fabricant, autre bus (TTL) que tous les finalistes → 1 | ≥ 10 CHF | prix Feetech STS3250, prix Feetech STS3250, alimentation 12 V | 1 — impasse : bus TTL et servo à engrenages, rien ne se transfère à une classe S en CAN |
@@ -37,20 +35,20 @@ Coût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %,
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | valeur_decision | 30 | 2 | 2 | 2 | 3 | 5 | 0 |
 | apprentissage | 24.5 | 2 | 4 | 5 | 4 | 4 | 4 |
-| transfert_S | 17.5 | 3 | 3 | 3 | 5 | 5 | 1 |
+| transfert_S | 17.5 | 5 | 5 | 5 | 5 | 5 | 1 |
 | cout | 17.5 | 4 | 3 | 3 | 4 | 3 | 0 |
 | risque | 10.5 | 3 | 5 | 5 | 3 | 3 | 1 |
-| **score /5** | | **2,63** | **3,15** | **3,40** | **3,77** | **4,20** | **1,26** |
+| **score /5** | | **2,98** | **3,50** | **3,75** | **3,77** | **4,20** | **1,26** |
 
 ## 3 — Sensibilité
 
-Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)**. 10 variations ±50 % sur 10 le laissent en tête.
+Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)**. 9 variations ±50 % sur 10 le laissent en tête.
 
 | Option | Victoires sur 1 000 tirages |
 | --- | ---: |
-| qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 515 |
-| 3 × Damiao DM-J4310-2EC V1.2 | 273 |
-| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 212 |
+| 3 × Damiao DM-J4310-2EC V1.2 | 501 |
+| qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 384 |
+| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 115 |
 
 ## 4 — Verdict
 

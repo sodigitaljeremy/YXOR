@@ -77,7 +77,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 | Critère | Poids (fixé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| capacite | 18 | 0 | 0 | 4 | 2 | 2 |
+| capacite | 18 | 1 | 2 | 5 | 4 | 4 |
 | cout | 15 | 3 | 4 | 3 | 2 | 1 |
 | continuite | 18 | 5 | 5 | 5 | 5 | 2 |
 | fiabilite_fournisseur | 15 | 3 | 3 | 2 | 1 | 3 |
@@ -86,13 +86,13 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 | ouverture | 5 | 2 | 2 | 2 | 2 | 2 |
 | tension_securite | 5 | 2 | 2 | 4 | 4 | 4 |
 | disponibilite | 7 | 3 | 3 | 4 | 2 | 1 |
-| **score /5** | | **2,77** | **2,87** | **3,41** | **2,85** | **2,39** |
+| **score /5** | | **2,95** | **3,23** | **3,59** | **3,21** | **2,75** |
 
 ### Justification de chaque note
 
 **RobStride (RS05 → RS02 → RS06)**
 
-- capacite = 0 — taille PRUDENTE 0,48 m (1,20 N·m, en blocage (publié)) → 0 ; optimiste 0,57 m (1,80 N·m)
+- capacite = 1 — taille PRUDENTE 0,48 m (1,20 N·m, en blocage (publié)) → 1 ; optimiste 0,57 m (1,80 N·m)
 - cout = 3 — 91,82 CHF HT (110.0 USD, Seeed Studio)
 - continuite = 5 — bus CAN sur les 3 ; protocole commun oui ; tension commune 48 V ; trous : aucun
 - fiabilite_fournisseur = 3 — garantie écrite 12 mois ; UE non ; CH non
@@ -104,7 +104,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 **RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)**
 
-- capacite = 0 — taille PRUDENTE 0,54 m (1,80 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 0 ; optimiste 0,54 m (1,80 N·m)
+- capacite = 2 — taille PRUDENTE 0,54 m (1,80 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 2 ; optimiste 0,54 m (1,80 N·m)
 - cout = 4 — 66,78 CHF HT (80.0 USD, Seeed Studio)
 - continuite = 5 — bus CAN sur les 3 ; protocole commun oui ; tension commune 48 V ; trous : aucun
 - fiabilite_fournisseur = 3 — garantie écrite 12 mois ; UE non ; CH non
@@ -116,7 +116,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 **Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)**
 
-- capacite = 4 — taille PRUDENTE 0,67 m (3,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 4 ; optimiste 0,67 m (3,50 N·m)
+- capacite = 5 — taille PRUDENTE 0,67 m (3,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 5 ; optimiste 0,67 m (3,50 N·m)
 - cout = 3 — 125,84 CHF HT (158.0 EUR, Eckstein GmbH (DE))
 - continuite = 5 — bus CAN sur les 3 ; protocole commun oui ; tension commune 24 V ; trous : aucun
 - fiabilite_fournisseur = 2 — garantie écrite non trouvée ; UE Eckstein GmbH (DE) ; CH non
@@ -128,7 +128,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 **CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3)**
 
-- capacite = 2 — taille PRUDENTE 0,61 m (2,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 2 ; optimiste 0,61 m (2,50 N·m)
+- capacite = 4 — taille PRUDENTE 0,61 m (2,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 4 ; optimiste 0,61 m (2,50 N·m)
 - cout = 2 — 130,13 CHF HT (155.9 USD, CubeMars)
 - continuite = 5 — bus CAN sur les 3 ; protocole commun oui ; tension commune 24 V ; trous : aucun
 - fiabilite_fournisseur = 1 — garantie écrite non trouvée ; UE non ; CH non
@@ -140,7 +140,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 **MyActuator (X2-7 → [trou] → X4-36)**
 
-- capacite = 2 — taille PRUDENTE 0,61 m (2,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 2 ; optimiste 0,61 m (2,50 N·m)
+- capacite = 4 — taille PRUDENTE 0,61 m (2,50 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 4 ; optimiste 0,61 m (2,50 N·m)
 - cout = 1 — 284,29 CHF HT (299.95 EUR, OpenELAB)
 - continuite = 2 — bus CAN sur les 3 ; protocole commun non établi ; tension commune 48 V ; trous : M
 - fiabilite_fournisseur = 3 — garantie écrite 12 mois ; UE non ; CH non
@@ -156,16 +156,14 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 | k | Famille gagnante | Tirages gagnés | Variations ±50 % | Verdict |
 | ---: | --- | ---: | --- | --- |
-| 1,0 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 70,0 % | toutes | ROBUSTE |
-| 0,9 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 62,6 % | toutes | ROBUSTE |
-| 0,8 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 66,4 % | toutes | ROBUSTE |
-| 0,7 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 60,3 % | PAS toutes | trop proches |
-| 0,6 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 22,1 % | toutes | trop proches |
-| 0,5 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 22,1 % | toutes | trop proches |
+| 1,0 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 64,1 % | toutes | ROBUSTE |
+| 0,9 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 59,2 % | PAS toutes | trop proches |
+| 0,8 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 62,6 % | toutes | ROBUSTE |
+| 0,7 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 57,0 % | PAS toutes | trop proches |
+| 0,6 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 52,1 % | PAS toutes | trop proches |
+| 0,5 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 55,3 % | PAS toutes | trop proches |
 
-**Seuil de bascule : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) gagne jusqu'à k = 0,70 ; RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) gagne dès k = 0,69.**
-
-En clair : le classement dépend du rapport entre le couple continu **réel** des actionneurs « condition non précisée » et leur nominal publié. **C'est ce rapport que le banc doit mesurer**, dans une condition identique pour les deux finalistes (`docs/comparatif-banc.md`).
+**Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.
 
 ---
 
@@ -181,7 +179,7 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 | RobStride RS03 | 13,0 | 21,0 | **0,619** |
 | **moyenne** | | | **0,718** |
 
-**Position par rapport au seuil de bascule (k ≈ 0,70) : la moyenne RobStride, 0,718, est AU-DESSUS du seuil.** Si les actionneurs sans valeur en blocage se comportaient comme ceux de RobStride, le vainqueur serait « Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) » — mais l'écart entre les quatre rapports (0,619 à 0,857) couvre le seuil : **les données constructeur ne tranchent pas, le banc tranchera.**
+**Aucune bascule entre k = 1,0 et 0,5** : quelle que soit la valeur de k dans cette plage, le vainqueur ne change pas.
 
 *Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.
 
@@ -191,14 +189,14 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 
 | Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |
 | --- | --- | ---: | --- |
-| RobStride EduLite 05 | 0,54–0,54 m | 2,87 | admis |
-| Damiao DM-J4310-2EC V1.2 | 0,67–0,67 m | 2,87 | admis |
-| RobStride RS05 | 0,48–0,57 m | 2,77 | admis |
-| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 0,61–0,61 m | 2,39 | admis |
-| CubeMars AK45-10 V3.0 KV75 | 0,61–0,61 m | 2,31 | admis |
-| SteadyWin GIM4310-10 (driver GDZ34) | 0,53–0,53 m | 2,05 | admis |
+| RobStride EduLite 05 | 0,54–0,54 m | 3,23 | admis |
+| Damiao DM-J4310-2EC V1.2 | 0,67–0,67 m | 3,05 | admis |
+| RobStride RS05 | 0,48–0,57 m | 2,95 | admis |
+| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 0,61–0,61 m | 2,75 | admis |
+| CubeMars AK45-10 V3.0 KV75 | 0,61–0,61 m | 2,67 | admis |
+| SteadyWin GIM4310-10 (driver GDZ34) | 0,53–0,53 m | 2,41 | admis |
 | Dynamixel XM430-W210 (référence) | 0,53–0,53 m | 1,55 | admis (référence) |
-| Feetech STS3250 | 0,60–0,60 m | 1,30 | admis |
+| Feetech STS3250 | 0,60–0,60 m | 1,48 | admis |
 
 Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent à une famille ; les autres (Feetech STS3250, SteadyWin GIM4310-10, Dynamixel XM430) sont listés pour mémoire.
 

@@ -135,6 +135,16 @@ modifications:
       une alimentation 48 V, un adaptateur CAN.
     ancien_texte: "poids du banc : apprentissage 35, transfert_S 25, cout 25, risque 15"
     nouveau_texte: "valeur_decision 30, apprentissage 24,5, transfert_S 17,5, cout 17,5, risque 10,5"
+  - date: "2026-09-30"
+    moment: "soir ; comparatif v3, fin ; origine : relecture externe ; grille écrite AVANT recalcul"
+    objet: "grille de CAPACITÉ décalée vers le bas"
+    raison: >
+      La note 0 pour « H_max < 0,55 m » gardait en creux l'éliminatoire
+      retiré : tout candidat sous 0,55 m était noté comme s'il ne
+      portait rien. La grille couvre désormais 0,45 à 0,65 m. Elle n'est
+      plus recopiée dans le script : `seuils_m` est lu directement.
+    ancien_texte: "5 ≥ 0,70 ; 4 0,65–0,70 ; 3 0,61–0,65 ; 2 0,58–0,61 ; 1 0,55–0,58 ; 0 < 0,55 m"
+    nouveau_texte: "5 ≥ 0,65 ; 4 0,60–0,65 ; 3 0,55–0,60 ; 2 0,50–0,55 ; 1 0,45–0,50 ; 0 < 0,45 m"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -159,12 +169,14 @@ classe_S:
       mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
       k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]   # hypothèse balayée, pas une valeur
       grille:
-        5: "H_max ≥ 0,70 m"
-        4: "0,65 ≤ H_max < 0,70 m"
-        3: "0,61 ≤ H_max < 0,65 m"
-        2: "0,58 ≤ H_max < 0,61 m"
-        1: "0,55 ≤ H_max < 0,58 m"
-        0: "H_max < 0,55 m ou non calculable"
+        5: "H_max ≥ 0,65 m"
+        4: "0,60 ≤ H_max < 0,65 m"
+        3: "0,55 ≤ H_max < 0,60 m"
+        2: "0,50 ≤ H_max < 0,55 m"
+        1: "0,45 ≤ H_max < 0,50 m"
+        0: "H_max < 0,45 m ou non calculable"
+      # Les mêmes seuils, lus par le script : la grille n'est écrite qu'ici.
+      seuils_m: [[0.65, 5], [0.60, 4], [0.55, 3], [0.50, 2], [0.45, 1]]
       # correction_dissipation : RETIRÉE le 2026-09-30 (soir), remplacée par k — voir `modifications`.
 
     cout:

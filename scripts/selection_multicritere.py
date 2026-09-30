@@ -76,12 +76,14 @@ def seuils(x, bornes, notes, defaut=0):
     return notes[-1] if len(notes) > len(bornes) else defaut
 
 
-def note_capacite(H):
-    if H is None or H < 0.55:
+def note_capacite(H, seuils_m):
+    """Grille lue dans criteres_selection.yaml (`capacite.seuils_m`) — jamais recopiée ici."""
+    if H is None:
         return 0
-    for s, n in ((0.70, 5), (0.65, 4), (0.61, 3), (0.58, 2), (0.55, 1)):
+    for s, n in seuils_m:
         if H >= s:
             return n
+    return 0
 
 
 def note_cout(chf):
@@ -181,7 +183,7 @@ def evaluer_S(cat, crit, bud, analyse, ref, k=1.0):
         etat = elim_tel
         # ── notes ──
         n, j = {}, {}
-        n["capacite"] = note_capacite(H) if cr["valeur"] is not None else 0
+        n["capacite"] = note_capacite(H, crit["classe_S"]["ponderes"]["capacite"]["seuils_m"]) if cr["valeur"] is not None else 0
         j["capacite"] = (f"taille PRUDENTE {f(H)} m ({f(cr['valeur'])} N·m, {cr['condition']}) → "
                          f"{n['capacite']} ; optimiste {f(H_opt)} m ({f(cr['optimiste'])} N·m)"
                          if cr["valeur"] is not None else "couple continu inconnu → 0")
