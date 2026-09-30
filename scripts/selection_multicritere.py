@@ -99,11 +99,12 @@ def note_tension(v):
 # ───────────────────────────── données S ────────────────────────────────
 
 def intervalle_continu(c: dict, k: float) -> dict:
-    """Couple continu OPTIMISTE et PRUDENT (criteres_selection.yaml, 2026-09-30 soir).
+    """Couple continu OPTIMISTE et PRUDENT (règle unifiée du 2026-09-30, v3).
 
     optimiste : le nominal publié le plus favorable (hors blocage) ;
-    prudent   : en blocage si publié ; sinon la plus petite plaque
-                publiée ; sinon (condition non précisée) le nominal × k.
+    prudent   : EN BLOCAGE si publié ; sinon le nominal × k, pour TOUT
+                candidat, qu'une plaque soit publiée ou non — un robot
+                debout travaille près du blocage.
     k est une HYPOTHÈSE balayée, jamais une valeur mesurée.
     """
     cc = c["couple_continu_Nm"]
@@ -116,16 +117,22 @@ def intervalle_continu(c: dict, k: float) -> dict:
         return dict(optimiste=None, prudent=None, base_prudente="continu inconnu", k_applique=False)
     optimiste = max(o["valeur"] for o in rot)
     blocage = next((o for o in opts if bloque(o) and o["valeur"] is not None), None)
-    plaques = [o for o in rot if o["plaque_mm"]]
     if blocage:
-        return dict(optimiste=optimiste, prudent=blocage["valeur"], base_prudente="en blocage",
+        return dict(optimiste=optimiste, prudent=blocage["valeur"], base_prudente="en blocage (publié)",
                     k_applique=False)
-    if plaques:
-        pl = min(plaques, key=lambda o: o["plaque_mm"])
-        return dict(optimiste=optimiste, prudent=pl["valeur"],
-                    base_prudente=f"plus petite plaque publiée ({pl['plaque_mm']} mm)", k_applique=False)
     return dict(optimiste=optimiste, prudent=optimiste * k,
-                base_prudente=f"condition non précisée : nominal × k ({f(k, 1)})", k_applique=True)
+                base_prudente=f"aucune valeur en blocage publiée : nominal × k ({f(k, 1)})", k_applique=True)
+
+
+def rapports_blocage(cat) -> list[dict]:
+    """Ce que les données disent de k : blocage / nominal, là où les deux sont publiés."""
+    out = []
+    for cid, c in cat["candidats"].items():
+        iv = intervalle_continu(c, 1.0)
+        if iv["prudent"] is not None and not iv["k_applique"] and iv["optimiste"]:
+            out.append(dict(id=cid, nom=c["nom"], blocage=iv["prudent"], nominal=iv["optimiste"],
+                            rapport=iv["prudent"] / iv["optimiste"]))
+    return out
 
 
 def h_max_avec(cat, cid, continu, ref, besoins, marge):
@@ -719,6 +726,36 @@ def doc_familles(r, date) -> str:
           "(`docs/comparatif-banc.md`).\n")
     else:
         A("\n**Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.\n")
+    A("---\n\n## 3 bis — Ce que les données disent de k\n")
+    rb = rapports_blocage(r["cat"])
+    A("Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) **et** un "
+      "couple en blocage : RobStride (PDF du 17-09-2026). Leur rapport est une mesure constructeur de "
+      "ce que k représente — pour **ses** actionneurs, dans **ses** conditions.\n")
+    A("| Actionneur | Blocage (N·m) | Nominal (N·m) | Blocage / nominal |")
+    A("| --- | ---: | ---: | ---: |")
+    for x in rb:
+        A(f"| {x['nom']} | {f(x['blocage'], 1)} | {f(x['nominal'], 1)} | **{f(x['rapport'], 3)}** |")
+    moy = sum(x["rapport"] for x in rb) / len(rb) if rb else None
+    A(f"| **moyenne** | | | **{f(moy, 3)}** |\n")
+    if r["fam_seuil"] and moy is not None:
+        sf = r["fam_seuil"]
+        cote = "AU-DESSUS" if moy > sf["garde"] else ("SOUS" if moy < sf["k"] else "AU NIVEAU")
+        A(f"**Position par rapport au seuil de bascule (k ≈ {f(sf['garde'])}) : la moyenne RobStride, "
+          f"{f(moy, 3)}, est {cote} du seuil.** "
+          + ("Si les actionneurs sans valeur en blocage se comportaient comme ceux de RobStride, "
+             f"le vainqueur serait « {nomf_[sf['gagnant']] if (nomf_ := {fm['id']: fm['nom'] for fm in r['fams']}) else ''} »"
+             if moy >= sf["k"] else
+             f"Si les actionneurs sans valeur en blocage se comportaient comme ceux de RobStride, "
+             f"le vainqueur serait « {nomf_[sf['nouveau']] if (nomf_ := {fm['id']: fm['nom'] for fm in r['fams']}) else ''} »")
+          + f" — mais l'écart entre les quatre rapports ({f(min(x['rapport'] for x in rb), 3)} à "
+          f"{f(max(x['rapport'] for x in rb), 3)}) couvre le seuil : **les données constructeur ne "
+          "tranchent pas, le banc tranchera.**\n" if min(x["rapport"] for x in rb) < sf["garde"] < max(x["rapport"] for x in rb)
+          else ".\n")
+    elif moy is not None:
+        A("**Aucune bascule entre k = 1,0 et 0,5** : quelle que soit la valeur de k dans cette plage, "
+          "le vainqueur ne change pas.\n")
+    A("*Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. "
+      "Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.\n")
     A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
     A("| Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
     A("| --- | --- | ---: | --- |")
@@ -764,6 +801,11 @@ def main(argv=None) -> int:
         print(f"  SEUIL k : {nom[sf['gagnant']]} jusqu'à k = {f(sf['garde'])} ; {nom[sf['nouveau']]} dès k = {f(sf['k'])}")
     else:
         print("  SEUIL k : aucune bascule entre 1,0 et 0,5")
+    rb = rapports_blocage(r["cat"])
+    print("\n  rapports blocage / nominal publiés (RobStride) :")
+    for x in rb:
+        print(f"    {x['nom']:24s} {f(x['blocage'], 1):>5} / {f(x['nominal'], 1):>5} = {f(x['rapport'], 3)}")
+    print(f"    moyenne {f(sum(x['rapport'] for x in rb) / len(rb), 3)}")
     opts, pb, sb, fin = options_banc(r)
     print(f"\n  banc : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; tirages "
           f"{f(100 * sb['freq'], 1)} % -> {'ROBUSTE' if sb['robuste'] else 'trop proches'}")

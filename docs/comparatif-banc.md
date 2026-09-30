@@ -48,7 +48,7 @@ Vainqueur aux poids proposés : **3 × Damiao DM-J4310-2EC V1.2**. 8 variations 
 
 **Classement ROBUSTE** : 3 × Damiao DM-J4310-2EC V1.2.
 
-**Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la condition de mesure n'est pas publiée : ici **Damiao DM-J4310-2EC V1.2**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options « × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre finaliste **dans la même condition** : la comparaison devient directe, au lieu de s'appuyer sur sa fiche.
+**Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la condition de mesure n'est pas publiée : ici **Damiao DM-J4310-2EC V1.2, RobStride EduLite 05**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options « × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre finaliste **dans la même condition** : la comparaison devient directe, au lieu de s'appuyer sur sa fiche.
 
 ---
 

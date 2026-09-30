@@ -110,6 +110,19 @@ modifications:
       restent proposés.
     ancien_texte: "poids proposés par Claude : capacite 20, continuite 15, cout 20, fiabilite_fournisseur 15, robustesse 10, disponibilite 5, masse 5, ouverture 5, tension_securite 5"
     nouveau_texte: "capacite 18, continuite 18, cout 15, fiabilite_fournisseur 15, robustesse 12, disponibilite 7, masse 5, ouverture 5, tension_securite 5"
+  - date: "2026-09-30"
+    moment: "soir ; comparatif v3 ; origine : relecture externe"
+    objet: "règle « prudent » UNIFIÉE"
+    raison: >
+      Prudent = couple EN BLOCAGE s'il est publié ; sinon nominal × k,
+      pour TOUT candidat, qu'une plaque soit publiée ou non. Avant, la
+      plus petite plaque publiée servait de base prudente : l'EduLite 05
+      (1,8 N·m sur 70 × 70 mm, aucune valeur en blocage) échappait ainsi
+      à la décote que subit le RS05 (1,2 N·m en blocage). Or un robot
+      debout travaille près du blocage.
+    ancien_texte: >
+      prudent = en blocage si publié ; sinon la plus petite plaque
+      publiée ; sinon (condition non précisée) le nominal × k.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
