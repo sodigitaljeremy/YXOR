@@ -156,12 +156,12 @@ du 17-09) et du RS03 (20 retenu, 21 à la p. 19) sont discutées dans
 | --- | --- | ---: | ---: | --- |
 | homogène Feetech STS3250 | STS3250 1,6 / 4,9 | 0,60 m | 4,2 kg | hip_roll |
 | homogène RobStride EduLite 05 | EduLite 05 1,8 / 6,0 | 0,54 m | 5,4 kg | hip_roll |
-| homogène RobStride RS05 | RS05 1,8 / 5,5 | 0,57 m | 5,1 kg | hip_roll |
+| homogène RobStride RS05 | RS05 1,6 / 5,5 | 0,54 m | 4,8 kg | hip_roll |
 | homogène RobStride RS02 | RS02 6,0 / 17,0 | 0,79 m | 12,2 kg | hip_roll |
 | homogène RobStride RS06 | RS06 11,0 / 36,0 | 0,91 m | 19,4 kg | hip_roll |
 | homogène RobStride RS03 | RS03 20,0 / 60,0 | 1,07 m | 30,0 kg | hip_roll |
 | homogène CubeMars AK70-10 KV100 | AK70-10 KV100 8,3 / 24,8 | 0,82 m | 16,2 kg | hip_roll |
-| S — RS05 homogène | RS05 1,8 / 5,5 | 0,57 m | 5,1 kg | hip_roll |
+| S — RS05 homogène | RS05 1,6 / 5,5 | 0,54 m | 4,8 kg | hip_roll |
 | L — RS06 sur la hanche (3 axes), le genou et le tangage de cheville ; RS02 sur le roulis de cheville | RS06 11,0 / 36,0 ; RS02 6,0 / 17,0 | 0,92 m | 19,2 kg | hip_roll |
 
 Toutes ces tailles sont des **plafonds optimistes** : le roulis de hanche, et d'autres articulations de jambe, étaient écrêtés dans la marche de référence.

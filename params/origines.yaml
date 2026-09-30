@@ -429,6 +429,10 @@ fichiers:
         origine: catalogue
         nature: sans_objet
         source: "désignation commerciale"
+      - motif: "candidats.*.revision.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "modèle, révision matérielle et firmware lus dans le document constructeur (2026-09-30) ; null = non publié"
       - motif: "candidats.*.bus"
         origine: catalogue
         nature: interface

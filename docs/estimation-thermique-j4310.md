@@ -20,6 +20,19 @@ condition de mesure du nominal (3,5 N·m) n'est pas publiée : k y est une
 Peut-on estimer k **sans acheter d'actionneur**, à partir de ce que
 Damiao publie ?
 
+> **Mise à jour du 2026-09-30, 22 h 30.** Les tableaux ci-dessous ont été
+> calculés au seuil de **100 °C**, la protection recommandée. Le script
+> prend désormais **le seuil du protocole de banc** : 100 °C moins
+> 10 °C, soit **90 °C**. C'est un seul seuil pour l'estimation et pour la
+> mesure, lu dans `params/`.
+>
+> À 90 °C, **k ≈ 0,86–0,95** (médiane 0,90), au lieu de 0,92–1,02.
+> Décoté au blocage, il vaut **0,53–0,81**, au lieu de 0,57–0,87.
+>
+> Le comparatif lit ces valeurs à la source
+> (`estimation_thermique.estimer()`) : plus rien n'est recopié. Le
+> texte ci-dessous est conservé tel quel.
+
 ---
 
 ## 2 — Les données

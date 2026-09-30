@@ -98,6 +98,22 @@ def charger_catalogue(chemin: Path = CATALOGUE) -> dict:
     return yaml.safe_load(chemin.read_text(encoding="utf-8"))
 
 
+def cle_revision(c: dict) -> str:
+    """Clé de révision : fabricant + modèle + révision matérielle + tension (+ firmware).
+
+    CALCULÉE depuis `fabricant`, `revision` et `tension_V` du catalogue,
+    jamais déclarée (2026-09-30, 22 h 30). Un champ null s'affiche « non
+    publiée » : la clé dit ce qu'on ne sait pas de l'objet noté.
+    """
+    rv = c.get("revision") or {}
+    mat = rv.get("materielle")
+    fw = rv.get("firmware")
+    tv = val(c.get("tension_V") or {})
+    return (f"{c.get('fabricant')} {rv.get('modele') or c.get('nom')} · "
+            f"rév. {mat if mat else 'non publiée'} · {f'{tv:g} V' if tv is not None else 'tension inconnue'}"
+            f" · firmware {fw if fw else 'non publié'}")
+
+
 def vitesse_rad_s(c: dict) -> float | None:
     """La vitesse se CALCULE depuis l'unité d'origine du constructeur."""
     if val(c.get("vitesse_a_vide_rpm")) is not None:

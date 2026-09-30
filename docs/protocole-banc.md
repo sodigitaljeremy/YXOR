@@ -168,6 +168,19 @@ toute mesure. Un critère écrit après la mesure s'ajuste au résultat ;
   et 3,5 N·m confirme la famille, même s'il est sous le nominal publié.
   C'est précisément ce que k décrit.
 
+*Mise à jour du 2026-09-30, 22 h 30 — le texte ci-dessus est conservé,
+il ne vaut plus.* Le critère est désormais **calculé** par
+`scripts/selection_multicritere.py` (`criteres_selection.yaml`,
+`banc.critere_abandon`) et publié dans `docs/comparatif-banc.md` § 4.
+Il prend **un seul seuil thermique**, celui du § 1.5 : 90 °C pour le
+Damiao, c'est-à-dire la protection de 100 °C moins 10 °C. L'estimation
+utilise le même seuil.
+
+**Résultat du recalcul en 48 V : le critère est SANS OBJET.** La famille
+Damiao, notée sur la variante 48 V, ne gagne à aucun k du balayage. Il
+n'y a donc pas de choix Damiao à rouvrir. Le seuil de 1,75 N·m ne repose
+plus sur rien. Détail : `journal/2026-09-30.md`, « Recalcul en 48 V ».
+
 ---
 
 ## 2 ter — Dispersion entre deux exemplaires

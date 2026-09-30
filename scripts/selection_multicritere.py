@@ -50,6 +50,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analyser_marche as AM  # noqa: E402
 import dimensionnement as D  # noqa: E402
+import estimation_thermique as ET  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 CRITERES = REPO / "params" / "criteres_selection.yaml"
@@ -520,11 +521,10 @@ def options_banc(r):
     return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension)
 
 
-# Estimation thermique du J4310 EN ROTATION (k = continu estimé / 3,5 N·m).
-# Recopiée de docs/estimation-thermique-j4310.md § 4 : le script qui la calcule
-# (scripts/estimation_thermique.py) lit des images d'exports/, absentes en
-# construction Docker. ESTIMATION, pas une mesure.
-K_ESTIME_ROTATION_J4310 = (0.92, 1.02)
+# L'estimation thermique du J4310 n'est plus recopiée ici (2026-09-30, 22 h 30) :
+# `calculer()` la lit à la source, scripts/estimation_thermique.estimer(), au seuil
+# thermique du protocole. Sans les images d'exports/thermique/, le script s'arrête
+# et le dit (il ne tourne pas en construction Docker).
 
 CRIT_S = ("capacite", "cout", "continuite", "fiabilite_fournisseur", "robustesse",
           "masse", "ouverture", "tension_securite", "disponibilite")
@@ -671,6 +671,38 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           "« × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre "
           "finaliste **dans la même condition** : la comparaison devient directe, au lieu de "
           "s'appuyer sur sa fiche.\n")
+    ca = r.get("critere")
+    if ca and ca["sans_objet"]:
+        nomf_ = {fm["id"]: fm["nom"] for fm in r["fams"]}
+        A("### Critère d'abandon — SANS OBJET à ce jour (" + ca["statut"] + ")\n")
+        A(f"La famille de **{ca['nom']}** ({nomf_.get(ca['famille'], ca['famille'])}) **ne gagne à aucun k "
+          "du balayage** : gagnants " + ", ".join(nomf_[g] for g in ca["gagnants"]) + ". Un critère "
+          "d'abandon dit quand rouvrir un choix ; il n'y a pas de choix à rouvrir pour cet actionneur. "
+          "Le seuil de 1,75 N·m de `docs/protocole-banc.md` § 2 bis ne repose plus sur rien. Le seuil "
+          f"thermique unique reste {f(ca['t_lim'], 0)} °C ({ca['t_lim_source']}).\n")
+    elif ca:
+        e_ = r["estimation"]
+        rb_ = rapports_blocage(cat)
+        rmin_, rmax_ = min(x["rapport"] for x in rb_), max(x["rapport"] for x in rb_)
+        A("### Critère d'abandon — CALCULÉ, " + ca["statut"] + "\n")
+        A(f"> Si le couple continu de **{ca['nom']}** (clé : {ca['cle']}), mesuré **au blocage** sur la "
+          f"plaque de 70 × 70 mm, à l'équilibre sous **{f(ca['t_lim'], 0)} °C** de bobinage "
+          f"({ca['t_lim_source']}), est inférieur à **{f(ca['seuil'])} N·m**, le choix de famille est "
+          "**rouvert**.\n")
+        A(f"- **D'où vient ce seuil** : garde de la bascule k = {f(ca['k_garde'])} (dernier k où la famille "
+          f"recommandée gagne ; l'autre gagne dès {f(ca['k_bascule'])}) × nominal publié {f(ca['nominal'], 1)} "
+          f"N·m. La bascule est connue au centième : le seuil est **entre {f(ca['seuil_bas'])} et "
+          f"{f(ca['seuil'])} N·m** ; la valeur haute est retenue, la plus exigeante pour la famille recommandée.")
+        A(f"- **Un seul seuil thermique**, {f(ca['t_lim'], 0)} °C, pour la mesure ET pour l'estimation "
+          f"(`scripts/estimation_thermique.py`) : k estimé {f(e_['k_bas'])}–{f(e_['k_haut'])} en rotation ; "
+          f"décoté par les rapports blocage / nominal RobStride ({f(rmin_, 3)}–{f(rmax_, 3)}) : "
+          f"**{f(e_['k_bas'] * rmin_)}–{f(e_['k_haut'] * rmax_)} au blocage** (hypothèse sur hypothèse), soit "
+          f"{f(e_['k_bas'] * rmin_ * ca['nominal'])}–{f(e_['k_haut'] * rmax_ * ca['nominal'])} N·m contre "
+          f"{f(ca['seuil'])} N·m.")
+        A("- **Réserve** : les valeurs RobStride (en blocage, publiées) portent le seuil thermique de leur "
+          "constructeur, pas celui du protocole ; l'estimation vient des courbes **24 V** (le manuel donne "
+          "les mêmes couples à 48 V). Le texte de `docs/protocole-banc.md` § 2 bis (1,75 N·m) est antérieur "
+          "à ce calcul.\n")
     A("---\n\n## 5 — Protocole de mesure : les couples continus en condition IDENTIQUE\n")
     A("**Le protocole complet, avec sa section SÉCURITÉ** (alimentation à limitation de courant, "
       "arrêt d'urgence matériel, limites logicielles, bras de levier, chauffe au rotor bloqué, ce "
@@ -756,7 +788,28 @@ def calculer():
     # Les tailles « prudentes » de référence pour l'affichage : k le plus bas
     # du balayage (borne basse de l'hypothèse).
     fams_bas = fam_balayage[-1]["fams"]
-    return dict(cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
+    estimation = ET.estimer()
+    ca_cfg = crit["banc"]["critere_abandon"]
+    c_ab = cat["candidats"][ca_cfg["actionneur"]]
+    nominal_ab = val(c_ab["couple_continu_Nm"])
+    critere = None
+    # Le critère n'a de sens que si la bascule oppose la famille dont
+    # l'actionneur est le membre S (celle qui gagne au-dessus) à une autre.
+    # Sinon, il est déclaré SANS OBJET, et dit pourquoi — jamais calculé à vide.
+    fam_de_l_actionneur = next((fid for fid, fm in cat["familles"].items()
+                                if fm.get("S") == ca_cfg["actionneur"]), None)
+    gagnants = sorted({b_["sens"]["nominal"] for b_ in fam_balayage})
+    if fam_seuil and fam_seuil["gagnant"] != fam_de_l_actionneur:
+        critere = dict(sans_objet=True, nom=c_ab["nom"], famille=fam_de_l_actionneur, gagnants=gagnants,
+                       statut=ca_cfg["statut"], t_lim=estimation["t_lim"], t_lim_source=estimation["t_lim_source"])
+    elif fam_seuil:
+        critere = dict(sans_objet=False, actionneur=ca_cfg["actionneur"], nom=c_ab["nom"], cle=D.cle_revision(c_ab),
+                       nominal=nominal_ab, k_garde=fam_seuil["garde"], k_bascule=fam_seuil["k"],
+                       seuil=round(fam_seuil["garde"] * nominal_ab, 2),
+                       seuil_bas=round(fam_seuil["k"] * nominal_ab, 2),
+                       t_lim=estimation["t_lim"], t_lim_source=estimation["t_lim_source"],
+                       statut=ca_cfg["statut"])
+    return dict(estimation=estimation, critere=critere, cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
                 cands=cands, sens=sens, S_id=sens["nominal"], balayage=balayage,
                 bascule=bascule, seuil_fin=seuil_fin, fam_balayage=fam_balayage,
                 fam_bascule=fam_bascule, fam_seuil=fam_seuil, fams=fam_balayage[0]["fams"],
@@ -834,7 +887,7 @@ def doc_familles(r, date) -> str:
                 A(f"- {tl} : **TROU** de gamme.")
                 continue
             iv = x["iv"]
-            A(f"- {tl} : {x['nom']} — pointe {f(x['pointe'], 1)} N·m ; continu optimiste "
+            A(f"- {tl} : {x['nom']} — clé : {D.cle_revision(r['cat']['candidats'][x['id']])} — pointe {f(x['pointe'], 1)} N·m ; continu optimiste "
               f"{f(iv['optimiste'])} N·m, prudent {f(iv['prudent'])} N·m ({iv['base_prudente']}) ; "
               f"{x['tension']} V, plage {x['plage'] if x['plage'] else 'inconnue'}")
         if fm["alternatives"]:
@@ -910,17 +963,25 @@ def doc_familles(r, date) -> str:
     A("*Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. "
       "Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.\n")
     if rb:
-        kr_bas, kr_haut = K_ESTIME_ROTATION_J4310
+        kr_bas, kr_haut = r["estimation"]["k_bas"], r["estimation"]["k_haut"]
         rmin, rmax = min(x["rapport"] for x in rb), max(x["rapport"] for x in rb)
         kb_bas, kb_haut = kr_bas * rmin, kr_haut * rmax
         A("### k au blocage du J4310 : une hypothèse sur une hypothèse\n")
-        A(f"L'estimation thermique (`docs/estimation-thermique-j4310.md`) donne, **en rotation** à "
-          f"120 rpm, dans la condition de l'essai constructeur, **k ≈ {f(kr_bas)}–{f(kr_haut)}**. Un robot "
+        A(f"L'estimation thermique (`scripts/estimation_thermique.py`, lue à la source) donne, **en rotation** à "
+          f"120 rpm et 24 V, dans la condition de l'essai constructeur, **au seuil thermique du protocole "
+          f"({f(r['estimation']['t_lim'], 0)} °C : {r['estimation']['t_lim_source']})**, "
+          f"**k ≈ {f(kr_bas)}–{f(kr_haut)}**. Un robot "
           "debout travaille près du blocage. En décotant cette estimation par les rapports blocage / "
           f"nominal de RobStride ci-dessus ({f(rmin, 3)} à {f(rmax, 3)}), le k du J4310 **au blocage** "
           f"serait de l'ordre de **{f(kb_bas)}–{f(kb_haut)}** ({f(kr_bas)} × {f(rmin, 3)} à "
           f"{f(kr_haut)} × {f(rmax, 3)}).\n")
-        if r["fam_seuil"]:
+        fam_dm = next((fid for fid, fm_ in r["cat"]["familles"].items()
+                       if fm_.get("S") == r["crit"]["banc"]["critere_abandon"]["actionneur"]), None)
+        if r["fam_seuil"] and fam_dm not in (r["fam_seuil"]["gagnant"], r["fam_seuil"]["nouveau"]):
+            A(f"**La bascule (k ≈ {f(r['fam_seuil']['k'])}) n'oppose pas la famille de cet actionneur** : "
+              "situer cette fourchette par rapport à elle ne décide rien. Elle reste une information "
+              "sur le J4310, pas un argument de choix.\n")
+        elif r["fam_seuil"]:
             sf = r["fam_seuil"]
             pos = ("**toujours au-dessus de la bascule**" if kb_bas > sf["garde"]
                    else "**à cheval sur la bascule**" if kb_haut >= sf["k"] else "**sous la bascule**")
@@ -929,10 +990,11 @@ def doc_familles(r, date) -> str:
               "vaut pas une mesure ; elle dit seulement que les deux estimations disponibles vont dans "
               "le même sens que la borne plausible.\n")
     A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
-    A("| Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
-    A("| --- | --- | ---: | --- |")
+    A("| Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
+    A("| --- | --- | --- | ---: | --- |")
     for c in sorted(r["cands"], key=lambda c: -score(c["notes"], poids)):
-        A(f"| {c['nom']} | {f(c['H'])}–{f(c['H_opt'])} m | {f(score(c['notes'], poids))} | {c['etat']}"
+        A(f"| {c['nom']} | {D.cle_revision(r['cat']['candidats'][c['id']])} | {f(c['H'])}–{f(c['H_opt'])} m | "
+          f"{f(score(c['notes'], poids))} | {c['etat']}"
           f"{' (référence)' if c['reference'] else ''} |")
     A("\nLeur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent à une famille ; "
       "les autres (Feetech STS3250, SteadyWin GIM4310-10, Dynamixel XM430) sont listés pour mémoire.\n")
@@ -997,6 +1059,17 @@ def main(argv=None) -> int:
     for x in rb:
         print(f"    {x['nom']:24s} {f(x['blocage'], 1):>5} / {f(x['nominal'], 1):>5} = {f(x['rapport'], 3)}")
     print(f"    moyenne {f(sum(x['rapport'] for x in rb) / len(rb), 3)}")
+    e_ = r["estimation"]
+    print(f"\n  estimation thermique J4310 (seuil {e_['t_lim']:g} °C, {e_['t_lim_source']}) : "
+          f"k {f(e_['k_bas'])}–{f(e_['k_haut'])} en rotation")
+    if r["critere"] and r["critere"]["sans_objet"]:
+        print(f"  critère d'abandon : SANS OBJET — la famille de {r['critere']['nom']} ne gagne à aucun k "
+              f"(gagnants : {', '.join(r['critere']['gagnants'])})")
+    elif r["critere"]:
+        ca = r["critere"]
+        print(f"  critère d'abandon ({ca['statut']}) : {ca['nom']} au blocage < {f(ca['seuil'])} N·m "
+              f"(bascule {f(ca['k_bascule'])}–{f(ca['k_garde'])} × {f(ca['nominal'], 1)} N·m ; "
+              f"{f(ca['seuil_bas'])}–{f(ca['seuil'])})")
     opts, pb, sb, fin = options_banc(r)
     fixes_b = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
     print(f"\n  banc (poids {'fixés' if fixes_b else 'PROPOSÉS'}) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "

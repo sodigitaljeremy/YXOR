@@ -42,11 +42,19 @@ dimensionnement:
 #  Candidats
 # ═════════════════════════════════════════════════════════════════════════
 candidats:
+  # CLÉ DE RÉVISION (2026-09-30, 22 h 30) : fabricant + modèle + révision
+  # matérielle + tension (+ firmware si connu). Elle se CALCULE
+  # (`dimensionnement.cle_revision`) depuis `fabricant`, `revision` et
+  # `tension_V` ; elle ne se déclare pas. Une révision ou un firmware null
+  # veut dire « non publié », et la clé l'affiche. Motif : le 30-09, la
+  # famille Damiao a été notée sur la variante 24 V alors que la 48 V
+  # était recommandée (docs/etat-des-lieux-2026-09-30.md, § 8, K1).
 
   sts3250:
     nom: "Feetech STS3250"
     fiche: {version: null, sha256: null, document: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "page web sans numéro de version ; lue par un outil de résumé, aucune copie conservée"}
     fabricant: Feetech
+    revision: {modele: "STS3250", materielle: null, firmware: null, source: "page constructeur sans numéro de version"}
     bus: "TTL série half-duplex asynchrone, 38 400 bps à 1 Mbps"
     tension_V: {valeur: 12, source: "https://www.feetechrc.com/562636.html", consulte_le: "2026-09-30", note: "plage 6–12 V ; caractéristiques données à 12 V"}
     reduction: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "345:1 chez un tiers (servodatabase.com), absent de la page constructeur"}
@@ -71,6 +79,7 @@ candidats:
     nom: "RobStride EduLite 05"
     fiche: {version: "260713", sha256: "0497aae0b068d9b13444e1c12464a7613ee3db103adfbc95ca1710e310cbae26", document: "Product Literature/EL05/EL05User Manual260713.pdf", depot: "https://github.com/RobStride/Product_Information", consulte_le: "2026-09-30", note: "manuel constructeur, 80 p. ; absent du PDF de spécifications du 2026-09-17"}
     fabricant: "RobStride Dynamics"
+    revision: {modele: "EduLite 05 (EL05)", materielle: null, firmware: null, source: "manuel EL05 260713 : version du DOCUMENT, pas du matériel"}
     bus: "CAN 2.0, trame étendue, 1 Mbps"
     tension_V: {valeur: 48, source: "manuel EL05 260713, p. 9-11", consulte_le: "2026-09-30", note: "condition de mesure du couple nominal"}
     tension_plage_V: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "16–60 V (titre de recherche)"}
@@ -96,18 +105,31 @@ candidats:
     nom: "RobStride RS05"
     fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
+    revision: {modele: "RS05", materielle: null, firmware: null, source: "PDF 2026-09-17 et manuel 260713 : versions des DOCUMENTS, aucune révision matérielle écrite"}
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
+    # MODIFIÉ le 2026-09-30 (22 h 30), consigne de Jeremy : deux valeurs
+    # nominales publiées, la PLUS BASSE est retenue. Ancien texte :
+    #   valeur: 1.8, source « PDF RobStride 2026-09-17, p. 27 »,
+    #   condition « à 100 rpm, plaque 150 × 150 mm », plaque_mm: 150,
+    #   et 1,6 N·m (70 × 70 mm) en `autres_conditions`.
+    # 1,8 passe en `autres_valeurs` : `intervalle_continu` prend le MAXIMUM
+    # des conditions en rotation, et l'aurait repris comme « optimiste ».
     couple_continu_Nm:
-      valeur: 1.8
-      source: "PDF RobStride 2026-09-17, p. 27"
+      valeur: 1.6
+      source: "manuel RS05 260713, p. 10-11 (sha256 1b2c61a6…6360e82)"
       consulte_le: "2026-09-30"
-      condition: "à 100 rpm, plaque de dissipation aluminium 150 × 150 mm"
-      plaque_mm: 150
+      condition: "à 100 rpm, plaque aluminium 70 × 70 mm, 2,4 Apk"
+      plaque_mm: 70
+      note: >
+        1,6 N·m : aussi la valeur des pages revendeurs consultées le
+        2026-09-30 d'après docs/arbitrage-2026-09-30.md, § 6 n° 9 (pages
+        non relues ici). Même plaque que l'EduLite 05 (70 × 70 mm).
+      autres_valeurs:
+        - {valeur: 1.8, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "à 100 rpm, plaque de dissipation aluminium 150 × 150 mm — non retenue : la plus basse des deux l'est"}
       autres_conditions:
-        - {valeur: 1.6, plaque_mm: 70, condition: "à 100 rpm, plaque aluminium 70 × 70 mm, 2,4 Apk", source: "manuel RS05 260713, p. 10-11 (sha256 1b2c61a6…6360e82)", consulte_le: "2026-09-30"}
         - {valeur: 1.2, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 29", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 5.5, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "± 10 % ; tension de mesure non précisée (nominale 48 V)"}
@@ -119,6 +141,7 @@ candidats:
     nom: "RobStride RS02"
     fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
+    revision: {modele: "RS02", materielle: null, firmware: null, source: "PDF 2026-09-17 : version du DOCUMENT, aucune révision matérielle écrite"}
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "plage 15–60 V (README du 2026-07-13 : 24–60 V)"}
     tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
@@ -150,6 +173,7 @@ candidats:
     nom: "RobStride RS06"
     fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
+    revision: {modele: "RS06", materielle: null, firmware: null, source: "PDF 2026-09-17 : version du DOCUMENT, aucune révision matérielle écrite"}
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 31", consulte_le: "2026-09-30"}
@@ -173,6 +197,7 @@ candidats:
     nom: "RobStride RS03"
     fiche: {version: "2026.09.17", sha256: "76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1", document: "灵足时代RS系列产品规格介绍(2026.09.17).pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-09-30"}
     fabricant: "RobStride Dynamics"
+    revision: {modele: "RS03", materielle: null, firmware: null, source: "PDF 2026-09-17 : version du DOCUMENT, aucune révision matérielle écrite"}
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     reduction: {valeur: 9, source: "PDF RobStride 2026-09-17, p. 19", consulte_le: "2026-09-30"}
@@ -196,6 +221,7 @@ candidats:
     nom: "CubeMars AK70-10 KV100"
     fiche: {version: null, sha256: null, document: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "page web sans numéro de version ; aucune copie conservée"}
     fabricant: CubeMars
+    revision: {modele: "AK70-10 KV100", materielle: null, firmware: null, source: "page produit sans révision"}
     bus: "CAN et UART"
     tension_V: {valeur: 48, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30", note: "24 ou 48 V ; valeurs retenues à 48 V, comme les RobStride"}
     reduction: {valeur: 10, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
@@ -222,6 +248,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "V1.2, manuel V1.4 du 2026-09-14", sha256: "4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245", document: "DM-J4310-2EC V1.2 Geared Motor User Manual V1.4 2026-09-14.pdf", depot: "https://github.com/dmBots/DM-J4310-2EC", consulte_le: "2026-09-30"}
     fabricant: "Damiao (DM)"
+    revision: {modele: "DM-J4310-2EC", materielle: "V1.2", firmware: null, source: "manuel V1.4, colonne V1.2 (24 V)"}
     bus: "CAN 2.0B, 1 Mbit/s par défaut (CAN FD au-delà) ; UART de configuration"
     tension_V: {valeur: 24, source: "manuel V1.4, p. 8", consulte_le: "2026-09-30", note: "plage 20–28 V ; variante 48 V existante, non retenue ici"}
     tension_plage_V: {valeur: [20, 28], source: "manuel V1.4, p. 8 (pilote 24 V)", consulte_le: "2026-09-30", note: "le pilote 48 V (variante) couvre 20–58 V, 450 rpm à vide, mêmes couples"}
@@ -247,6 +274,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "tableau de sélection GDZ ; protocole GDZ-CAN V3.10b2 du 2026-06-09", sha256: "b2cdb36434fe51180641c6225e60033250c39894156146c0af2a9df21a72ce38", document: "tableau de sélection GDZ (xlsx), lien de la page produit SteadyWin", consulte_le: "2026-09-30", note: "SteadyWin annonce l'abandon des drivers GDZ/GDS au profit du GDK34, sans fiche trouvée"}
     fabricant: SteadyWin
+    revision: {modele: "GIM4310-10 (driver GDZ34)", materielle: null, firmware: null, source: "tableau de sélection GDZ, sans révision matérielle"}
     bus: "CAN, 1 Mbit/s par défaut, et RS485 (Modbus, CANopen)"
     tension_V: {valeur: 24, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "plage 12–40 V"}
     reduction: {valeur: 10, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "planétaire acier, jeu 15 arcmin"}
@@ -270,6 +298,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "X2-7 Motor Parameter 260903", sha256: "66d2e63668eff87b2e5761ab2a344170ca0544e478bc79ec0da6315914043b9b", document: "« X2-7 Motor Parameter 260903.pdf », dans l'archive https://www.myactuator.com/_files/archives/cab28a_77b7670917e14f6b8256b4db4d912857.zip", consulte_le: "2026-09-30", note: "sha256 de l'archive : 422766c89d6bdc9abce4f656a119b3f253ab2928ab1d42c93eed516516767e73"}
     fabricant: MyActuator
+    revision: {modele: "RMD-X2-P28-7-E", materielle: null, firmware: null, source: "X2-7 Motor Parameter 260903 : version du DOCUMENT"}
     bus: "CAN 1 Mbit/s (trame standard) et EtherCAT ; protocole CAN V4.4 du 2026-04-25"
     tension_V: {valeur: 24, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "plage 20–55 V ; au-delà de 24 V, ne pas dépasser la vitesse nominale"}
     tension_plage_V: {valeur: [20, 55], source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "au-delà de 24 V, ne pas dépasser la vitesse nominale"}
@@ -291,6 +320,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "manuel AK V3.2.0", sha256: "ab1b62b94c3c00693259a6acc00df5a44040d748a702918f4562986d420ea225", document: "https://www.cubemars.com/data/cms/202602/ak-series-prodcut-manual-v3-2-0-for-ak-3-0-robotic-actuator.pdf", consulte_le: "2026-09-30", note: "et la page produit cubemars.com (sans version)"}
     fabricant: CubeMars
+    revision: {modele: "AK45-10 KV75", materielle: "V3.0", firmware: null, source: "page produit CubeMars (désignation V3.0)"}
     bus: "CAN 1 Mbit/s (mode MIT en trames étendues) et UART"
     tension_V: {valeur: 24, source: "https://www.cubemars.com/product/ak45-10-v3-0-kv75-robotic-actuator.html", consulte_le: "2026-09-30", note: "plage inconnue"}
     tension_plage_V: {valeur: null, source: null, consulte_le: "2026-09-30", note: "aucune variante 48 V trouvée ; les pilotes 48 V du manuel V3.2.0 ne nomment pas l'AK45"}
@@ -313,6 +343,7 @@ candidats:
     reference: true
     fiche: {version: null, sha256: null, document: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30", note: "e-Manual sans date ; c'est le moteur du genou de ToddlerBot"}
     fabricant: ROBOTIS
+    revision: {modele: "XM430-W210", materielle: null, firmware: null, source: "e-Manual ROBOTIS, sans révision matérielle"}
     bus: "TTL ou RS485 (Protocol 2.0)"
     tension_V: {valeur: 12, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30", note: "plage 10–14,8 V"}
     reduction: {valeur: 212.6, source: "e-Manual ROBOTIS", consulte_le: "2026-09-30"}
@@ -330,6 +361,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "V1.1 (manuel « V1.0 », p. 1 : V1.1 2024.11.10 — version contradictoire)", sha256: "a1b7b0a74aded1f07333f3e1caae2dbe5854e953ff111ade96847f7991f68111", document: "DM-J8006-2EC V1.1减速电机说明书V1.0.pdf", depot: "https://github.com/dmBots/DM-J8006-2EC", consulte_le: "2026-09-30"}
     fabricant: "Damiao (DM)"
+    revision: {modele: "DM-J8006-2EC", materielle: "V1.1", firmware: null, source: "manuel, p. 1 (« V1.1 2024.11.10 », version contradictoire avec le titre)"}
     bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
     tension_V: {valeur: 24, source: "manuel, p. 12", consulte_le: "2026-09-30", note: "« 支持24-48V »"}
     tension_plage_V: {valeur: [15, 52], source: "manuel, p. 12 (sous-tension ≥ 15 V, surtension ≤ 52 V)", consulte_le: "2026-09-30"}
@@ -345,6 +377,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "V1.1, manuel V1.3 du 2026-08-13", sha256: "fc144601d78d6169f73f4c87bc326a46d402782445f478a59acf38c3174e0351", document: "DM-J4340-2EC V1.1 Geared Motor User Manual V1.3 2026-08-13", depot: "https://github.com/dmBots/DM-J4340-2EC", consulte_le: "2026-09-30"}
     fabricant: "Damiao (DM)"
+    revision: {modele: "DM-J4340-2EC", materielle: "V1.1", firmware: null, source: "manuel V1.3, colonne V1.1 (48 V)"}
     bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
     tension_V: {valeur: 48, source: "manuel V1.3, p. 8 (colonne « V1.1 (48V) »)", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [20, 58], source: "manuel V1.3, p. 8 (pilote 48 V)", consulte_le: "2026-09-30"}
@@ -360,6 +393,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "manuel V1.1 du 2026-04-10", sha256: "1aa825763d55b301c71769fd56170151c64ad8e5883f0f84000c0d84c3435961", document: "manuel DM-J8009-2EC V1.1(4)", depot: "https://github.com/dmBots/DM-J8009-2EC", consulte_le: "2026-09-30"}
     fabricant: "Damiao (DM)"
+    revision: {modele: "DM-J8009-2EC", materielle: null, firmware: null, source: "manuel V1.1 : version du DOCUMENT, révision matérielle non écrite"}
     bus: "CAN 1 Mbit/s ; modes MIT, position-vitesse, vitesse"
     tension_V: {valeur: 24, source: "manuel V1.1, p. 6-7", consulte_le: "2026-09-30", note: "24–48 V"}
     tension_plage_V: {valeur: [15, 52], source: "manuel V1.1, p. 7", consulte_le: "2026-09-30"}
@@ -375,6 +409,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "page produit (sans version) ; plage de tension au manuel AK V3.2.0", sha256: null, document: "https://www.cubemars.com/product/ak80-9-v3-0-robotic-actuator.html", consulte_le: "2026-09-30", note: "page web ; manuel V3.2.0 sha256 ab1b62b9…20ea225"}
     fabricant: CubeMars
+    revision: {modele: "AK80-9 KV100", materielle: "V3.0", firmware: null, source: "page produit CubeMars (désignation V3.0)"}
     bus: "CAN 1 Mbit/s ; modes Servo et MIT"
     tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7 (pilotes 48 V AK60-4820 et AK80-4830)", consulte_le: "2026-09-30"}
@@ -390,6 +425,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "page produit (sans version)", sha256: null, document: "https://www.cubemars.com/product/ak10-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
     fabricant: CubeMars
+    revision: {modele: "AK10-9 KV60", materielle: "V3.0", firmware: null, source: "page produit CubeMars (désignation V3.0)"}
     bus: "CAN 1 Mbit/s ; modes Servo et MIT"
     tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7", consulte_le: "2026-09-30", note: "plage des pilotes 48 V ; l'AK10-9 n'y est pas nommé explicitement"}
@@ -405,6 +441,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "page produit (sans version)", sha256: null, document: "https://www.cubemars.com/product/ak70-9-v3-0-kv60-robotic-actuator.html", consulte_le: "2026-09-30"}
     fabricant: CubeMars
+    revision: {modele: "AK70-9 KV60", materielle: "V3.0", firmware: null, source: "page produit CubeMars (désignation V3.0)"}
     bus: "CAN 1 Mbit/s ; modes Servo et MIT"
     tension_V: {valeur: 48, source: "page produit", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7", consulte_le: "2026-09-30"}
@@ -420,6 +457,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "X4-36 Motor Parameter 260903", sha256: "e1d41409a1139cf8342ab3840ef82fc3a25e30f2041c46755c6f47dce3359b70", document: "« X4-36 Motor Parameter 260903.pdf », dans l'archive https://www.myactuator.com/_files/archives/cab28a_dcb58d860356468d817e06ffe8d248af.zip", consulte_le: "2026-09-30", note: "sha256 de l'archive : 8ce1392bfb1e622a6ad86f00c2373fd631664821b5ef331342d6e8a333aa5518"}
     fabricant: MyActuator
+    revision: {modele: "RMD-X4-P36-36-E", materielle: null, firmware: null, source: "X4-36 Motor Parameter 260903 : version du DOCUMENT"}
     bus: "CAN et EtherCAT"
     tension_V: {valeur: 24, source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [20, 55], source: "X4-36 Motor Parameter 260903", consulte_le: "2026-09-30", note: "au-delà de 24 V, ne pas dépasser la vitesse nominale"}
@@ -435,6 +473,7 @@ candidats:
     comparatif_seulement: true
     fiche: {version: "V1.2, manuel V1.4 du 2026-09-14, colonne « V1.2 (48V) »", sha256: "4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245", document: "DM-J4310-2EC V1.2 Geared Motor User Manual V1.4 2026-09-14.pdf", depot: "https://github.com/dmBots/DM-J4310-2EC", consulte_le: "2026-09-30"}
     fabricant: "Damiao (DM)"
+    revision: {modele: "DM-J4310-2EC", materielle: "V1.2", firmware: null, source: "manuel V1.4, colonne « V1.2 (48V) » ; OpenELAB vend la référence DM-J4310-2EC-48V-V4, « V4 » = V1.2 d'après Eckstein (non affiché par OpenELAB)"}
     bus: "CAN 2.0B, 1 Mbit/s par défaut"
     tension_V: {valeur: 48, source: "manuel V1.4, p. 8", consulte_le: "2026-09-30"}
     tension_plage_V: {valeur: [20, 58], source: "manuel V1.4, p. 8 (pilote 48 V : 24–48 V nominal, min 20, max 58)", consulte_le: "2026-09-30"}
@@ -442,7 +481,8 @@ candidats:
     couple_continu_Nm: {valeur: 3.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", condition: "non précisée ; même valeur que la variante 24 V", plaque_mm: null}
     couple_pointe_Nm: {valeur: 12.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 450, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "à 48 V"}
-    masse_g: {valeur: 306, source: "manuel V1.4", consulte_le: "2026-09-30"}
+    masse_g: {valeur: 306, source: "manuel V1.4", consulte_le: "2026-09-30", note: "« Weight corrected » est la seule modification de la V1.4 ; 325 g cité par l'audit externe du 2026-09-30 (docs/arbitrage-2026-09-30.md, § 6 n° 6), non retrouvé au manuel"}
+    protection_thermique_C: {valeur: 100, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "protection moteur configurable, ≤ 100 °C RECOMMANDÉ ; pilote coupé à 120 °C. Lu par scripts/estimation_thermique.py : le seuil du protocole de banc en découle"}
     prix: {valeur: 140.95, devise: EUR, tva_incluse: null, vendeur: "OpenELAB", source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310 (données lues via .js, référence DM-J4310-2EC-48V-V4)", consulte_le: "2026-09-30", note: "TVA incluse ou non : inconnue (page HTML en 429) ; « V4 » = V1.2 d'après le titre Eckstein, pas affiché par OpenELAB ; « available » peut signifier précommande. Prix barré 172,95 €"}
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -514,7 +554,7 @@ controle_coherence:
 #  justification ; elles ne sont pas ici.
 #  `famille_protocole` sert au critère de continuité vers M et L.
 comparatif_S:
-  candidats: [rs05, edulite05, sts3250, dm_j4310, gim4310_10, x2_7, ak45_10_v3]
+  candidats: [rs05, edulite05, sts3250, dm_j4310, dm_j4310_48v, gim4310_10, x2_7, ak45_10_v3]
   references: [xm430_w210]
 
   rs05:
@@ -551,6 +591,18 @@ comparatif_S:
     reversibilite: {reversible: null, detail: "10:1, type d'engrenage non publié", source: "manuel V1.4"}
     garantie_mois: {valeur: null, source: null, non_verifie: "« 3 mois à 1 an » chez des revendeurs"}
     distribution: {suisse: null, ue: "Eckstein GmbH (DE)", international: "Seeed Studio", source: "https://eckstein-shop.de/dm-j4310-2ec-v1-2-24v-dual-encoder-servo-motor"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel V1.4 ; dépôt dmBots (licence non relevée)"}
+
+  # Ajouté le 2026-09-30 (22 h 30) : la variante 48 V, membre S de la
+  # famille Damiao. Même manuel V1.4 que la 24 V : télémétrie,
+  # réversibilité et ouverture identiques. Seuls le vendeur et la
+  # distribution diffèrent.
+  dm_j4310_48v:
+    famille_protocole: damiao_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "position, vitesse, couple, T_MOS (driver), T_Rotor (bobinage), ERR", source: "manuel V1.4, p. 14-15"}
+    reversibilite: {reversible: null, detail: "10:1, type d'engrenage non publié", source: "manuel V1.4"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "« 3 mois à 1 an » chez des revendeurs (variante 24 V)"}
+    distribution: {suisse: null, ue: null, international: "OpenELAB", source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310", non_verifie: "localisation UE d'OpenELAB non vérifiée pour cette référence ; « available » peut signifier précommande ; Eckstein (DE) ne liste que la 24 V"}
     ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel V1.4 ; dépôt dmBots (licence non relevée)"}
 
   gim4310_10:
@@ -606,12 +658,16 @@ familles:
     protocole_commun: {valeur: true, source: "manuel EL05 260713 : trames identiques au RS05"}
     note: "variante de la famille RobStride : seul le membre S change"
   damiao:
-    nom: "Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)"
-    S: dm_j4310
+    nom: "Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1)"
+    # MODIFIÉ le 2026-09-30 (22 h 30) : le membre S est la variante 48 V,
+    # celle que la recommandation vise. Ancien texte :
+    #   S: dm_j4310            (24 V, Eckstein)
+    #   S_variante_48V: dm_j4310_48v
+    # La 24 V reste au catalogue et au comparatif S, pour mémoire.
+    S: dm_j4310_48v
     M: dm_j8006
     L: dm_j4340
     alternatives: {L: [dm_j8009]}
-    S_variante_48V: dm_j4310_48v
     protocole_commun: {valeur: true, source: "manuels dmBots : CAN 1 Mbit/s, modes MIT, position-vitesse et vitesse sur toute la gamme"}
     note: "J4310 et J4340 ont une variante 48 V ; J8006 est donné 24 V, « supporte 24–48 V »"
   cubemars:

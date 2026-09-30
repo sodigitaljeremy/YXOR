@@ -29,7 +29,17 @@ Les télécharger :
    publiée ; la courbe T-N du manuel est à 25 °C).
 4. EN TIRER LE COUPLE CONTINU. Pertes ∝ couple² :
        couple_continu = C_essai × √((T_lim − T_amb) / (T∞ − T_amb))
-   avec T_lim = 100 °C, et k = couple_continu / 3,5 N·m.
+   et k = couple_continu / 3,5 N·m.
+
+UN SEUL SEUIL THERMIQUE (2026-09-30, 22 h 30). T_lim est celui du
+protocole de banc : la protection du constructeur (params/actionneurs.yaml,
+dm_j4310_48v.protection_thermique_C, 100 °C) moins l'écart du protocole
+(params/criteres_selection.yaml, banc.critere_abandon, 10 °C), soit 90 °C.
+Avant, l'estimation prenait 100 °C et le protocole arrêtait à 90 °C : le
+continu mesuré aurait été ~7 % sous l'estimé, par construction.
+
+`estimer()` est lu par scripts/selection_multicritere.py : la fourchette de
+k n'est plus recopiée à la main.
 """
 from __future__ import annotations
 
@@ -50,7 +60,7 @@ COURBES = {
                           sha256="bb65aa2049ed5ef617070a59f7dd2b8146f5fd22826e2b856e81b9359d409278"),
 }
 NOMINAL_NM = 3.5        # manuel V1.4, p. 7
-T_LIM = 100.0           # protection moteur recommandée ≤ 100 °C, manuel V1.4, p. 7
+ACTIONNEUR = "dm_j4310_48v"
 AMBIANTES = (20.0, 25.0, 30.0)
 PLATEAU_C = 98.5
 
@@ -79,22 +89,44 @@ def modele(t, T0, D, tau):
     return T0 + D * (1 - np.exp(-t / tau))
 
 
-def main() -> int:
+def seuil_thermique() -> tuple[float, str]:
+    """T_lim du protocole : protection constructeur − écart du protocole. Lu, jamais écrit ici."""
+    import yaml
+    cat = yaml.safe_load((REPO / "params" / "actionneurs.yaml").read_text(encoding="utf-8"))
+    crit = yaml.safe_load((REPO / "params" / "criteres_selection.yaml").read_text(encoding="utf-8"))
+    ca = crit["banc"]["critere_abandon"]
+    prot = cat["candidats"][ca["actionneur"]]["protection_thermique_C"]["valeur"]
+    ecart = ca["ecart_sous_protection_C"]["valeur"]
+    return float(prot - ecart), f"protection {prot:g} °C − {ecart:g} °C du protocole"
+
+
+class ImagesAbsentes(RuntimeError):
+    pass
+
+
+def estimer(bavard: bool = False) -> dict:
+    """Numérise, ajuste, et rend la fourchette de k au seuil du protocole.
+
+    Lève ImagesAbsentes si les courbes manquent ou ont changé : pas de repli
+    silencieux sur une valeur recopiée.
+    """
+    t_lim, t_lim_src = seuil_thermique()
     manquants = [n for n in COURBES if not (DOSSIER / n).exists()]
     if manquants:
-        print(f"images absentes de {DOSSIER.relative_to(REPO)} : {', '.join(manquants)} — voir la docstring")
-        return 1
+        raise ImagesAbsentes(f"images absentes de {DOSSIER.relative_to(REPO)} : {', '.join(manquants)} "
+                             "— voir la docstring de scripts/estimation_thermique.py")
+    say = print if bavard else (lambda *a, **k: None)
+    say(f"  seuil thermique : {t_lim:g} °C ({t_lim_src})")
     lignes = []
     for nom, c in COURBES.items():
         chemin = DOSSIER / nom
         sha = hashlib.sha256(chemin.read_bytes()).hexdigest()
         if sha != c["sha256"]:
-            print(f"✗ {nom} : sha256 {sha[:12]}… ≠ attendu {c['sha256'][:12]}… — la courbe a changé")
-            return 1
+            raise ImagesAbsentes(f"{nom} : sha256 {sha[:12]}… ≠ attendu {c['sha256'][:12]}… — la courbe a changé")
         t, T = numeriser(chemin, c)
         ip = next(i for i in range(len(T)) if (T[i:] >= PLATEAU_C).all())
         tf, Tf = t[:ip], T[:ip]
-        print(f"\n  {nom} — {c['couple']} N·m, 120 rpm, 24 V ; {len(tf)} points, plateau exclu dès {t[ip]:.0f} s")
+        say(f"\n  {nom} — {c['couple']} N·m, 120 rpm, 24 V ; {len(tf)} points, plateau exclu dès {t[ip]:.0f} s")
         fits = []
         p, cov = curve_fit(modele, tf, Tf, p0=(25, 80, 200), maxfev=20000)
         fits.append(("départ libre", p, np.sqrt(np.diag(cov))))
@@ -109,13 +141,23 @@ def main() -> int:
                     continue
                 if Tinf <= Ta:
                     continue
-                cc = c["couple"] * np.sqrt((T_LIM - Ta) / (Tinf - Ta))
+                cc = c["couple"] * np.sqrt((t_lim - Ta) / (Tinf - Ta))
                 lignes.append((nom, c["couple"], lib, Ta, p_[1], p_[2], Tinf, rms, cc, cc / NOMINAL_NM))
-                print(f"    {lib:14s} ambiante {Ta:4.0f} °C : ΔT {p_[1]:5.1f}  τ {p_[2]:4.0f} s  T∞ {Tinf:6.1f} °C  "
-                      f"rms {rms:4.2f}  -> continu {cc:4.2f} N·m, k = {cc / NOMINAL_NM:4.2f}")
-    ks = [l[-1] for l in lignes]
-    print(f"\n  k estimé : {min(ks):.2f} à {max(ks):.2f} (médiane {np.median(ks):.2f}), sur {len(ks)} combinaisons "
-          "(2 courbes × ajustements × ambiantes)")
+                say(f"    {lib:14s} ambiante {Ta:4.0f} °C : ΔT {p_[1]:5.1f}  τ {p_[2]:4.0f} s  T∞ {Tinf:6.1f} °C  "
+                    f"rms {rms:4.2f}  -> continu {cc:4.2f} N·m, k = {cc / NOMINAL_NM:4.2f}")
+    ks = [float(l[-1]) for l in lignes]
+    return dict(k_bas=round(min(ks), 2), k_haut=round(max(ks), 2), k_mediane=round(float(np.median(ks)), 2),
+                n=len(ks), t_lim=t_lim, t_lim_source=t_lim_src, lignes=lignes)
+
+
+def main() -> int:
+    try:
+        r = estimer(bavard=True)
+    except ImagesAbsentes as e:
+        print(e)
+        return 1
+    print(f"\n  k estimé : {r['k_bas']:.2f} à {r['k_haut']:.2f} (médiane {r['k_mediane']:.2f}), sur {r['n']} combinaisons "
+          f"(2 courbes × ajustements × ambiantes), au seuil de {r['t_lim']:g} °C")
     print("  ESTIMATION, pas une mesure : ne va pas dans params/mesures.yaml.")
     return 0
 

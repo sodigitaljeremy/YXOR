@@ -201,6 +201,25 @@ modifications:
       départage plus rien, et le document du banc le dit (« banc de
       VÉRIFICATION, pas de départage »).
     ancien_texte: "blocage_edulite et rs05_contre_edulite : toujours décisives (« toujours comptée »)"
+  - date: "2026-09-30"
+    moment: "22 h 30 ; écrit AVANT le recalcul ; consigne de Jeremy (prompt P1 de docs/arbitrage-2026-09-30.md)"
+    objet: "RECALCUL EN 48 V : membre S de Damiao = J4310 V1.2 48 V ; RS05 à 1,6 N·m ; critère d'abandon à un seul seuil thermique"
+    raison: >
+      Constat K1 de docs/etat-des-lieux-2026-09-30.md : la famille Damiao
+      était notée sur la variante 24 V (tension 4, disponibilité et
+      fiabilité d'Eckstein), alors que la recommandation vise la 48 V.
+      Trois changements, et rien d'autre : (1) le membre S de Damiao
+      devient `dm_j4310_48v`, noté sur SES faits (48 V, OpenELAB) ; sa
+      note de robustesse reprend celle de la 24 V, même mécanique, même
+      manuel. (2) Le RS05 porte deux nominaux publiés, 1,8 (150 × 150 mm)
+      et 1,6 (70 × 70 mm) : la plus basse est retenue. (3) Le critère
+      d'abandon est CALCULÉ (`banc.critere_abandon`) : bascule du
+      comparatif × nominal publié, et l'estimation thermique prend le
+      seuil du protocole (protection − 10 °C), au lieu de la protection
+      elle-même. K_ESTIME n'est plus recopié : il est lu à la source.
+      Poids, grilles et règle de décisivité INCHANGÉS. Statut « recommandé »
+      inchangé.
+    ancien_texte: "damiao.S = dm_j4310 (24 V) ; rs05 continu 1,8 N·m ; critère 1,75 N·m écrit à la main (0,5 × 3,5) ; estimation à T_lim = 100 °C ; K_ESTIME_ROTATION_J4310 = (0.92, 1.02) recopié"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -346,6 +365,7 @@ classe_S:
       edulite05: {note: 3, justification: "9:1, protections documentées comme le RS05 ; type de réducteur et réversibilité non publiés par le constructeur → 3"}
       sts3250: {note: 1, justification: "servo à engrenages, rapport annoncé 1:345 (non vérifié) ; la protection se déclenche vers 25 kg·cm selon un essai tiers → fragile au blocage prolongé"}
       dm_j4310: {note: 3, justification: "10:1, codes d'erreur documentés (surchauffe MOS et bobinage) ; type d'engrenage et réversibilité non publiés → 3"}
+      dm_j4310_48v: {note: 3, justification: "même mécanique et même manuel V1.4 que la variante 24 V : 10:1, codes d'erreur documentés ; type d'engrenage et réversibilité non publiés → 3 (ajouté le 2026-09-30, 22 h 30)"}
       gim4310_10: {note: 3, justification: "planétaire acier 10:1, défauts documentés ; réversibilité non publiée → 3"}
       x2_7: {note: 5, justification: "planétaire 28,17:1 (< 50:1), couple de réversibilité publié 0,4 N·m, protections documentées (blocage, surchauffe…) → 5"}
       ak45_10_v3: {note: 5, justification: "planétaire 10:1, couple de réversibilité publié 0,1 N·m, codes d'erreur (surchauffe, blocage…) → 5"}
@@ -371,6 +391,17 @@ banc:
     bus_multi_adresses: "faire parler au moins deux adresses sur un même bus"
     segment_2ddl: "monter le segment à 2 degrés de liberté de l'échelon 1 (cadrage § 10)"
     dispersion: "mesurer l'écart entre exemplaires d'un même modèle (≥ 3)"
+
+  # Critère d'abandon (docs/protocole-banc.md § 2 bis) — PROPOSÉ, calculé
+  # depuis le 2026-09-30 (22 h 30). Seuil : garde de la bascule du
+  # comparatif (dernier k où la famille recommandée gagne) × nominal publié
+  # du membre S. Un seul seuil thermique : celui du protocole (§ 1.5),
+  # protection du constructeur moins `ecart_sous_protection_C`. Le même
+  # seuil sert à l'estimation thermique.
+  critere_abandon:
+    statut: "proposé, à valider par Jeremy"
+    actionneur: dm_j4310_48v
+    ecart_sous_protection_C: {valeur: 10, source: "docs/protocole-banc.md § 1.5 (proposé) : un palier s'arrête 10 °C sous la protection du constructeur"}
 
   # Les inconnues qui départagent les familles (docs/choix-famille-actionneurs.md).
   # Écrit AVANT le calcul, le 2026-09-30 (soir).
