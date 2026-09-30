@@ -1,0 +1,255 @@
+# Critères de sélection — lus par scripts/selection_multicritere.py
+#
+# ─────────────────────────────────────────────────────────────────────────
+#  ÉCRIT AVANT LES NOTES
+# ─────────────────────────────────────────────────────────────────────────
+#  Les grilles 0–5 ci-dessous ont été écrites le 2026-09-30, AVANT que le
+#  script ne calcule une seule note. Une grille écrite après coup se
+#  règle sur le vainqueur qu'on souhaite ; celle-ci ne le pouvait pas.
+#  Toute modification ultérieure d'une grille doit être datée ici et
+#  signalée au journal.
+#
+#  Les POIDS sont proposés par Claude : « proposé, à fixer par Jeremy ».
+#  Ce ne sont pas des décisions. L'analyse de sensibilité du script dit
+#  justement si le classement en dépend.
+#
+#  Une donnée manquante n'élimine JAMAIS en silence : le critère devient
+#  « non évaluable », c'est affiché, et une note pondérée manquante vaut
+#  0 PAR PRUDENCE (le candidat ne profite pas de ce qu'on ignore).
+#
+#  Aucun achat n'est proposé ici (CLAUDE.md, règle d'achat c) : c'est un
+#  comparatif demandé par Jeremy.
+
+date_des_grilles: "2026-09-30"
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Choix de la classe d'actionneur de S
+# ═════════════════════════════════════════════════════════════════════════
+classe_S:
+  # Les classes M et L de référence, pour le critère de continuité.
+  # Cadrage § 6 : M ≈ RS02, L ≈ RS06.
+  continuite_vers: [rs02, rs06]
+
+  eliminatoires:
+    capacite:
+      regle: "H_max ≥ 0,55 m à marge 1,5 (scripts/dimensionnement.py, configuration homogène)"
+      seuil_m: 0.55
+      note: >
+        Calculé avec le couple continu publié sur la PLUS PETITE plaque
+        de dissipation ; à défaut de plaque publiée, avec le couple
+        nominal. Voir la modification du 2026-09-30 ci-dessous.
+      modification_2026_09_30: >
+        La version initiale disait « le couple en blocage s'il est publié,
+        sinon le nominal ». Défaut relevé EN REMPLISSANT le catalogue,
+        avant tout calcul de note : seul RobStride publie une valeur en
+        blocage. La règle aurait jugé RobStride sur sa valeur la plus
+        prudente et ses concurrents sur leur valeur la plus favorable —
+        pénaliser le fabricant qui publie le plus. La plus petite plaque
+        publiée donne une base commune : RS05 et EduLite 05 y sont tous
+        deux mesurés sur 70 × 70 mm. Les valeurs en blocage restent
+        affichées, pour information.
+    telemetrie:
+      regle: "le protocole renvoie la position, le couple OU le courant, ET la température"
+      note: "sans température, aucune protection thermique ; sans couple ni courant, aucune mesure au banc"
+
+  ponderes:
+
+    capacite:
+      poids: 20
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "H_max à marge 1,5, avec le couple continu le plus prudent disponible"
+      grille:
+        5: "H_max ≥ 0,70 m"
+        4: "0,65 ≤ H_max < 0,70 m"
+        3: "0,61 ≤ H_max < 0,65 m"
+        2: "0,58 ≤ H_max < 0,61 m"
+        1: "0,55 ≤ H_max < 0,58 m"
+        0: "H_max < 0,55 m ou non calculable"
+      correction_dissipation: >
+        −1 (plancher 0) si le couple continu retenu est mesuré sur un
+        dissipateur (plaque métallique) : le robot n'offrira pas
+        forcément cette plaque. −1 aussi si la condition de mesure n'est
+        pas précisée. Pas de correction pour une valeur mesurée sans
+        dissipateur.
+        (Phrase « aucune correction si le calcul emploie la valeur en
+        blocage » retirée le 2026-09-30 avec la modification de base
+        ci-dessus.)
+
+    cout:
+      poids: 20
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "prix unitaire converti en CHF (taux BCE), hors TVA et port"
+      grille:
+        5: "≤ 60 CHF"
+        4: "≤ 90 CHF"
+        3: "≤ 130 CHF"
+        2: "≤ 200 CHF"
+        1: "≤ 300 CHF"
+        0: "> 300 CHF, ou prix inconnu"
+
+    continuite:
+      poids: 15
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "ce qui se garde en passant à M et L (RS02, RS06)"
+      grille_points:
+        bus_can: "2 points si le bus est CAN, comme M et L"
+        meme_protocole: "2 points si c'est le même protocole que M et L (même fabricant et même famille)"
+        tension_48V: "1 point si la tension nominale est 48 V, comme M et L"
+      note: "somme des points, de 0 à 5"
+
+    fiabilite_fournisseur:
+      poids: 15
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "garantie écrite et distribution identifiées"
+      grille:
+        5: "garantie écrite ≥ 12 mois ET distributeur en Suisse"
+        4: "garantie écrite ≥ 12 mois ET distributeur dans l'UE"
+        3: "garantie écrite ≥ 12 mois, sans distributeur UE/CH identifié"
+        2: "garantie écrite < 12 mois, ou distributeur UE sans garantie écrite trouvée"
+        1: "ni garantie écrite trouvée, ni distributeur UE/CH, mais fabricant identifié"
+        0: "rien d'établi"
+
+    robustesse:
+      poids: 10
+      statut: "proposé, à fixer par Jeremy"
+      mode: jugement
+      mesure: "tenue d'une articulation de jambe au blocage et aux chocs"
+      grille:
+        5: "réducteur planétaire, réversible, protections thermiques et de courant documentées"
+        4: "réducteur planétaire, réversible ; protections non documentées"
+        3: "réducteur planétaire, réversibilité non établie"
+        2: "réducteur à grand rapport (> 50:1), peu réversible"
+        1: "servo à engrenages droits à grand rapport : fragile au blocage prolongé"
+        0: "inconnu"
+
+    masse:
+      poids: 5
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "masse de l'actionneur"
+      grille:
+        5: "≤ 150 g"
+        4: "≤ 200 g"
+        3: "≤ 250 g"
+        2: "≤ 350 g"
+        1: "≤ 500 g"
+        0: "> 500 g ou inconnue"
+
+    ouverture:
+      poids: 5
+      statut: "proposé, à fixer par Jeremy"
+      mode: jugement
+      mesure: "ce qu'on peut lire et modifier"
+      grille_points:
+        protocole_public: "2 points si le protocole de communication est publié"
+        sdk_libre: "2 points si un SDK ou pilote sous licence libre existe"
+        firmware_libre: "1 point si le firmware est publié"
+      note: "somme des points, de 0 à 5"
+
+    tension_securite:
+      poids: 5
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "tension nominale du bus de puissance"
+      grille:
+        5: "≤ 12 V"
+        4: "≤ 24 V"
+        3: "≤ 36 V"
+        2: "≤ 48 V"
+        1: "> 48 V"
+        0: "inconnue"
+      note: "tout est en très basse tension ; plus la tension est basse, plus l'énergie en jeu au banc est faible"
+
+    disponibilite:
+      poids: 5
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "où l'acheter depuis la Suisse"
+      grille:
+        5: "revendeur en Suisse"
+        4: "revendeur dans l'UE"
+        3: "revendeur international (hors UE) identifié"
+        2: "fabricant seulement, vente directe"
+        1: "canal flou"
+        0: "inconnu"
+
+  # Notes de JUGEMENT, une par candidat, avec leur justification. Écrites
+  # le 2026-09-30 depuis les faits de params/actionneurs.yaml
+  # (comparatif_S), selon la grille ci-dessus, AVANT le calcul des scores.
+  jugements:
+    robustesse:
+      rs05: {note: 3, justification: "planétaire à pignons acier 7,75:1, protections documentées (surchauffe, surintensité, blocage) ; réversibilité non publiée → 3 selon la grille, strictement"}
+      edulite05: {note: 3, justification: "9:1, protections documentées comme le RS05 ; type de réducteur et réversibilité non publiés par le constructeur → 3"}
+      sts3250: {note: 1, justification: "servo à engrenages, rapport annoncé 1:345 (non vérifié) ; la protection se déclenche vers 25 kg·cm selon un essai tiers → fragile au blocage prolongé"}
+      dm_j4310: {note: 3, justification: "10:1, codes d'erreur documentés (surchauffe MOS et bobinage) ; type d'engrenage et réversibilité non publiés → 3"}
+      gim4310_10: {note: 3, justification: "planétaire acier 10:1, défauts documentés ; réversibilité non publiée → 3"}
+      x2_7: {note: 5, justification: "planétaire 28,17:1 (< 50:1), couple de réversibilité publié 0,4 N·m, protections documentées (blocage, surchauffe…) → 5"}
+      ak45_10_v3: {note: 5, justification: "planétaire 10:1, couple de réversibilité publié 0,1 N·m, codes d'erreur (surchauffe, blocage…) → 5"}
+      xm430_w210: {note: 1, justification: "servo à engrenages 212,6:1 ; la garantie annoncée exclut les engrenages usés et les moteurs brûlés → 1"}
+
+  sensibilite:
+    variation_poids: 0.5          # chaque poids ±50 %, un à la fois
+    tirages: 1000                 # tirages de poids aléatoires (Dirichlet α = 1)
+    graine: 20260930
+    seuil_robuste: 0.60           # fréquence de victoire minimale
+    note: >
+      ROBUSTE si le vainqueur nominal gagne dans TOUTES les variations
+      ±50 % et dans au moins 60 % des tirages. Sinon, les candidats sont
+      trop proches pour que l'analyse tranche, et le document le dit.
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Comparatif du banc
+# ═════════════════════════════════════════════════════════════════════════
+banc:
+  apprentissages:              # ce que le banc permet d'apprendre, 1 point chacun
+    protocole: "piloter et relire un actionneur par son protocole"
+    thermique: "mesurer l'échauffement réel au couple continu"
+    bus_multi_adresses: "faire parler au moins deux adresses sur un même bus"
+    segment_2ddl: "monter le segment à 2 degrés de liberté de l'échelon 1 (cadrage § 10)"
+    dispersion: "mesurer l'écart entre exemplaires d'un même modèle (≥ 3)"
+
+  ponderes:
+    apprentissage:
+      poids: 35
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      grille: "nombre d'apprentissages couverts, de 0 à 5"
+    transfert_S:
+      poids: 25
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      grille:
+        5: "exactement le modèle retenu pour S"
+        3: "même fabricant et même protocole que le modèle retenu pour S"
+        1: "autre fabricant ou autre protocole"
+    cout:
+      poids: 25
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "coût TTC CH : actionneurs + adaptateur + alimentation du bus, imprévus compris"
+      grille:
+        5: "≤ 250 CHF"
+        4: "≤ 400 CHF"
+        3: "≤ 600 CHF"
+        2: "≤ 900 CHF"
+        1: "≤ 1 300 CHF"
+        0: "> 1 300 CHF, ou incomplet"
+    risque:
+      poids: 15
+      statut: "proposé, à fixer par Jeremy"
+      mode: jugement
+      jugements_par_option:
+        un_vainqueur: {note: 3, justification: "pas de rechange : une casse arrête le banc"}
+        deux_vainqueurs: {note: 5, justification: "rechange disponible, un seul modèle à maîtriser"}
+        trois_vainqueurs: {note: 5, justification: "rechange disponible, un seul modèle"}
+        deux_finalistes: {note: 3, justification: "deux modèles, deux protocoles possibles à maîtriser, pas de rechange de chacun"}
+        feetech: {note: 1, justification: "impasse : bus TTL et servo à engrenages, rien ne se transfère à une classe S en CAN"}
+      grille:
+        5: "rechange disponible, modèle unique, pas d'impasse technique"
+        3: "une seule faiblesse (pas de rechange, ou deux modèles à maîtriser)"
+        1: "une impasse : ce qu'on apprend ne sert pas au robot"
+        0: "plusieurs faiblesses cumulées"
