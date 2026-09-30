@@ -90,7 +90,7 @@ résumée en témoigne ; sa date exacte est inconnue.
 
 ### 3.2 À CONFIRMER
 
-> **Réponse de Jeremy du 2026-09-30 :** poids et règle de décisivité NON fixés par lui ; règle d'achat : à confirmer.
+> **Réponse de Jeremy du 2026-09-30 :** poids et règle de décisivité d'abord NON fixés par lui, puis validés tels quels à ~23 h, avec la réserve « critères manquants » ; règle d'achat : à confirmer.
 
 | Point | Ce que disent les sources | Pourquoi je doute |
 | --- | --- | --- |

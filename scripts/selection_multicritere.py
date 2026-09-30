@@ -27,9 +27,10 @@ Engendre :
    manquante vaut 0 par prudence.
 3. SCORE = moyenne des notes pondérée par les poids. Leur STATUT est lu
    dans criteres_selection.yaml : un poids n'est dit « fixé » que si son
-   statut commence par « fixé ». Au 2026-09-30 (23 h), aucun ne l'est :
-   Jeremy n'a fixé ni ceux de la classe S et des familles, ni ceux du
-   banc (attribution erronée, corrigée).
+   statut commence par « fixé » ou « DÉCIDÉ ». Au 2026-09-30 (~23 h),
+   ceux de la classe S et des familles sont DÉCIDÉS par Jeremy, validés
+   tels quels après avoir été d'abord attribués à tort ; ceux du banc
+   restent proposés.
 4. SENSIBILITÉ. Chaque poids ±50 %, un à la fois ; puis 1 000 jeux de
    poids tirés au hasard (Dirichlet α = 1, graine fixe). On compte qui
    gagne. Le classement est ROBUSTE si le vainqueur nominal gagne toutes
@@ -546,7 +547,7 @@ def verdict_texte(s, nom, fixes: bool) -> str:
                    if autre else "")
                 + ". Cette dernière mesure dit seulement qu'**un autre principe de pondération** que "
                 "celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.")
-        return f"**Aux poids fixés par Jeremy : {nom[s['nominal']]}** — {tenue}.{info}"
+        return f"**Aux poids décidés par Jeremy : {nom[s['nominal']]}** — {tenue}.{info}"
     if s["robuste"]:
         return f"**Classement ROBUSTE** : {nom[s['nominal']]}."
     return (f"**Options trop proches pour que l'analyse tranche** : {nom[s['nominal']]} en tête aux poids "
@@ -559,7 +560,7 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     nomf = {fm["id"]: fm["nom"] for fm in r["fams"]}
     L = []
     A = L.append
-    fixes = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
+    fixes = all(v.get("statut", "").startswith(("fixé", "DÉCIDÉ")) for v in r["crit"]["banc"]["ponderes"].values())
     inc = r.get("_inconnues") or {}
     A("# Comparatif du banc d'essai — v3\n")
     A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}, "
@@ -861,14 +862,18 @@ def doc_familles(r, date) -> str:
       "1,0 à 0,5.")
     A("3. **On compare des familles S → M → L**, pas des modèles. La continuité se mesure dans "
       "chaque famille, et un membre absent est un **trou**, affiché.\n")
-    fixes_hdr = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["classe_S"]["ponderes"].values())
-    A("Poids : " + ("**fixés par Jeremy**" if fixes_hdr else
-                    "**PROPOSÉS, appliqués, NON validés par Jeremy** (réponse du 2026-09-30 ; ils avaient été "
-                    "enregistrés à tort comme fixés par lui)")
+    fixes_hdr = all(v.get("statut", "").startswith(("fixé", "DÉCIDÉ")) for v in r["crit"]["classe_S"]["ponderes"].values())
+    q_ = (r["crit"]["classe_S"].get("questions_ouvertes") or {}).get("criteres_manquants")
+    A("Poids : " + ("**décidés par Jeremy le 2026-09-30 (~23 h)**, validés tels quels après avoir été "
+                    "d'abord attribués à tort (`criteres_selection.yaml`, `modifications`)" if fixes_hdr else
+                    "**PROPOSÉS, appliqués, NON validés par Jeremy**")
       + " (capacité 18, continuité 18, coût 15, fiabilité 15, "
       "robustesse 12, disponibilité 7, masse, ouverture, tension 5 chacun). Marge : 1,5 (fiche 0051). "
       "Toutes les tailles "
       "sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).\n")
+    if q_:
+        A(f"> **Réserve de Jeremy, question OUVERTE** : « {q_['texte']} » ({q_['auteur']}). "
+          f"{q_['statut']}.\n")
     A("---\n\n## 1 — Les familles\n")
     L.extend(tableau_familles(r))
     A("\nTailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est "
@@ -924,7 +929,7 @@ def doc_familles(r, date) -> str:
         s_ = b_["sens"]
         A(f"| {f(b_['k'], 1)} | {nom[s_['nominal']]} | "
           f"{'oui, toutes' if s_['tous_pm'] else 'NON, pas toutes'} | {f(100 * s_['freq'], 1)} % |")
-    fixes_f = all(v.get("statut", "").startswith("fixé") for v in crit["classe_S"]["ponderes"].values())
+    fixes_f = all(v.get("statut", "").startswith(("fixé", "DÉCIDÉ")) for v in crit["classe_S"]["ponderes"].values())
     A("\n**Verdict à k = 1,0.** " + verdict_texte(r["fam_balayage"][0]["sens"], nom, fixes_f))
     A("\n**Verdict à la borne basse (k = " + f(r["fam_balayage"][-1]["k"], 1) + ").** "
       + verdict_texte(r["fam_balayage"][-1]["sens"], nom, fixes_f) + "\n")
@@ -1078,7 +1083,7 @@ def main(argv=None) -> int:
               f"(bascule {f(ca['k_bascule'])}–{f(ca['k_garde'])} × {f(ca['nominal'], 1)} N·m ; "
               f"{f(ca['seuil_bas'])}–{f(ca['seuil'])})")
     opts, pb, sb, fin = options_banc(r)
-    fixes_b = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
+    fixes_b = all(v.get("statut", "").startswith(("fixé", "DÉCIDÉ")) for v in r["crit"]["banc"]["ponderes"].values())
     print(f"\n  banc (poids {'fixés' if fixes_b else 'PROPOSÉS'}) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "
           f"±50 % : {'tient toutes' if sb['tous_pm'] else 'NE tient PAS toutes'} ; tirages quelconques {f(100 * sb['freq'], 1)} %")
     for o in opts:

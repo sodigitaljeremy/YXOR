@@ -184,7 +184,7 @@ modifications:
   - date: "2026-09-30"
     moment: "nuit ; règle écrite AVANT le recalcul"
     # ancien texte de `moment` : « nuit ; règle écrite AVANT le recalcul (réponse de Jeremy : oui) »
-    statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"
+    statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # avant ~23 h : « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
     origine: "proposée par Claude Code, journal/2026-09-30.md, § Point 2 (« C'est à Jeremy de dire si la règle doit s'étendre »), puis appliquée sur une consigne présentée comme la réponse de Jeremy"
     objet: "RÈGLE DE DÉCISIVITÉ ÉTENDUE : blocage_edulite et rs05_contre_edulite"
     raison: >
@@ -244,11 +244,31 @@ modifications:
       leur statut change.
     ancien_texte: "statut « fixé par Jeremy le 2026-09-30 (soir) » (9 poids) ; « réponse de Jeremy : oui » (règle de décisivité)"
     nouveau_texte: "statut « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »"
+  - date: "2026-09-30"
+    moment: "~23 h ; réponse de Jeremy à docs/arbitrage-2026-09-30.md, APRÈS l'entrée précédente"
+    objet: "POIDS DU COMPARATIF ET RÈGLE DE DÉCISIVITÉ ÉTENDUE : validés tels quels par Jeremy"
+    raison: >
+      Précision de Jeremy sur sa réponse : AVANT elle, il n'avait fixé ni
+      les poids ni la règle — le dépôt les lui attribuait à tort (entrée
+      précédente, qui reste). À ~23 h, il les VALIDE tels quels. Statut :
+      « DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md ». Réserve de Jeremy, mot pour mot : « il manque des
+      critères de comparaison essentiels ». Elle est portée en question
+      ouverte (`questions_ouvertes`, ci-dessous) : à instruire AVANT tout
+      nouveau calcul de famille.
+    ancien_texte: "statut « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »"
+    nouveau_texte: "statut « DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md »"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
 # ═════════════════════════════════════════════════════════════════════════
 classe_S:
+  # Réserve de Jeremy du 2026-09-30 (~23 h), en validant les poids :
+  # À INSTRUIRE AVANT tout nouveau calcul de famille.
+  questions_ouvertes:
+    criteres_manquants:
+      texte: "il manque des critères de comparaison essentiels"
+      auteur: "Jeremy, 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"
+      statut: "OUVERT — à instruire avant tout nouveau calcul de famille"
   # Les classes M et L de référence, pour le critère de continuité.
   # Cadrage § 6 : M ≈ RS02, L ≈ RS06.
   continuite_vers: [rs02, rs06]
@@ -263,7 +283,7 @@ classe_S:
 
     capacite:
       poids: 18
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
       k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]   # hypothèse balayée, pas une valeur ; étendue à 0,3 le 2026-09-30
@@ -280,7 +300,7 @@ classe_S:
 
     cout:
       poids: 15
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "prix unitaire converti en CHF (taux BCE), hors TVA et port"
       grille:
@@ -293,7 +313,7 @@ classe_S:
 
     continuite:
       poids: 18
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "continuité INTRINSÈQUE de la famille S → M → L (modifiée le 2026-09-30, soir)"
       grille_points:
@@ -305,7 +325,7 @@ classe_S:
 
     fiabilite_fournisseur:
       poids: 15
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "garantie écrite et distribution identifiées"
       grille:
@@ -318,7 +338,7 @@ classe_S:
 
     robustesse:
       poids: 12
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: jugement
       mesure: "tenue d'une articulation de jambe au blocage et aux chocs"
       grille:
@@ -331,7 +351,7 @@ classe_S:
 
     masse:
       poids: 5
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "masse de l'actionneur"
       grille:
@@ -344,7 +364,7 @@ classe_S:
 
     ouverture:
       poids: 5
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: jugement
       mesure: "ce qu'on peut lire et modifier"
       grille_points:
@@ -355,7 +375,7 @@ classe_S:
 
     tension_securite:
       poids: 5
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "tension nominale du bus de puissance"
       grille:
@@ -369,7 +389,7 @@ classe_S:
 
     disponibilite:
       poids: 7
-      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
+      statut: "DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md"   # d'abord « fixé par Jeremy le 2026-09-30 (soir) » (attribution erronée), puis « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »
       mode: calcule
       mesure: "où l'acheter depuis la Suisse"
       grille:

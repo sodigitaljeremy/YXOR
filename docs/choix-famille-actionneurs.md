@@ -8,7 +8,9 @@
 2. **La capacité est un intervalle.** Taille *optimiste* (le nominal publié le plus favorable) et *prudente* (en blocage si publié ; sinon la plus petite plaque publiée ; sinon — condition non précisée — le nominal × **k**). k est une **hypothèse**, balayée de 1,0 à 0,5.
 3. **On compare des familles S → M → L**, pas des modèles. La continuité se mesure dans chaque famille, et un membre absent est un **trou**, affiché.
 
-Poids : **PROPOSÉS, appliqués, NON validés par Jeremy** (réponse du 2026-09-30 ; ils avaient été enregistrés à tort comme fixés par lui) (capacité 18, continuité 18, coût 15, fiabilité 15, robustesse 12, disponibilité 7, masse, ouverture, tension 5 chacun). Marge : 1,5 (fiche 0051). Toutes les tailles sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).
+Poids : **décidés par Jeremy le 2026-09-30 (~23 h)**, validés tels quels après avoir été d'abord attribués à tort (`criteres_selection.yaml`, `modifications`) (capacité 18, continuité 18, coût 15, fiabilité 15, robustesse 12, disponibilité 7, masse, ouverture, tension 5 chacun). Marge : 1,5 (fiche 0051). Toutes les tailles sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).
+
+> **Réserve de Jeremy, question OUVERTE** : « il manque des critères de comparaison essentiels » (Jeremy, 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md). OUVERT — à instruire avant tout nouveau calcul de famille.
 
 ---
 
@@ -75,7 +77,7 @@ Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « P
 
 Les critères autres que la continuité se notent sur le **membre S**, le premier robot.
 
-| Critère | Poids (proposé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
+| Critère | Poids (fixé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | capacite | 18 | 1 | 2 | 5 | 4 | 4 |
 | cout | 15 | 3 | 4 | 2 | 2 | 1 |
@@ -154,7 +156,7 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 ## 3 — La dimension « données » : le vainqueur pour chaque k
 
-| k | Famille gagnante (poids proposés) | Tient ±50 % | Tirages quelconques gagnés |
+| k | Famille gagnante (poids fixés) | Tient ±50 % | Tirages quelconques gagnés |
 | ---: | --- | --- | ---: |
 | 1,0 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | NON, pas toutes | 30,6 % |
 | 0,9 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | oui, toutes | 38,2 % |
@@ -165,9 +167,9 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 | 0,4 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 57,0 % |
 | 0,3 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 57,0 % |
 
-**Verdict à k = 1,0.** **Options trop proches pour que l'analyse tranche** : RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) en tête aux poids proposés — le choix dépend des poids, que Jeremy fixera.
+**Verdict à k = 1,0.** **Aux poids décidés par Jeremy : RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)** — il **ne tient que 11 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 30,6 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 34,7 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
-**Verdict à la borne basse (k = 0,3).** **Options trop proches pour que l'analyse tranche** : RobStride (RS05 → RS02 → RS06) en tête aux poids proposés — le choix dépend des poids, que Jeremy fixera.
+**Verdict à la borne basse (k = 0,3).** **Aux poids décidés par Jeremy : RobStride (RS05 → RS02 → RS06)** — il **ne tient que 17 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 57,0 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 20,2 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
 
 **Seuil de bascule : RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) gagne jusqu'à k = 0,68 ; RobStride (RS05 → RS02 → RS06) gagne dès k = 0,67.**
@@ -222,7 +224,7 @@ Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent
 
 - **Ce que S doit porter** (calculateur, batterie, IMU) n'est pas chiffré : c'était la vraie contrainte derrière le seuil retiré (cadrage, question 13).
 - **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?
-- **La sensibilité aux poids** reste affichée : les poids ne sont pas fixés par Jeremy, et un classement qui ne tiendrait qu'à eux mériterait d'être su.
+- **La sensibilité aux poids** reste affichée : les poids sont fixés, mais un classement qui ne tiendrait qu'à eux mériterait d'être su.
 
 ### Limite du membre L de Damiao — question ouverte, à rouvrir AVANT L
 
