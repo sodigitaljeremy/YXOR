@@ -477,6 +477,19 @@ def options_banc(r):
             d = dict(d, _decisive=ok, _pourquoi=(
                 f"bascule k ≈ {f(k_bascule)} " + ("≥" if ok else "<") + f" borne basse plausible {f(borne_basse, 3)}"
                 if k_bascule is not None else "aucune bascule dans le balayage"))
+        elif isinstance(d.get("decisive_si"), dict) and "famille_gagne_dans_la_plage_plausible" in d["decisive_si"]:
+            # Règle étendue (2026-09-30, nuit) : l'inconnue ne départage que des
+            # membres de ces familles ; elle compte si l'une d'elles gagne en un
+            # point du balayage situé dans la plage plausible (k ≥ borne basse).
+            cibles = set(d["decisive_si"]["famille_gagne_dans_la_plage_plausible"])
+            plage = [b_ for b_ in r["fam_balayage"] if borne_basse is not None and b_["k"] >= borne_basse]
+            gagnes = sorted({b_["sens"]["nominal"] for b_ in plage})
+            ok = bool(cibles & set(gagnes))
+            d = dict(d, _decisive=ok, _pourquoi=(
+                f"dans la plage plausible (k de {f(max(b_['k'] for b_ in plage), 1)} à {f(min(b_['k'] for b_ in plage), 1)}, "
+                f"≥ {f(borne_basse, 3)}), la famille gagnante est toujours {', '.join(gagnes)} ; "
+                + ("une famille concernée y gagne" if ok else f"aucune de ces familles ({', '.join(sorted(cibles))}) n'y gagne")
+                if plage else "aucun point du balayage dans la plage plausible"))
         else:
             d = dict(d, _decisive=True, _pourquoi="toujours comptée")
         decisives[nom_i] = d
@@ -545,6 +558,14 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
       "après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est "
       "proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).\n")
     kd = inc.get("k_damiao")
+    verif = bool(inc) and not any(d["_decisive"] for d in inc.values())
+    if verif:
+        A("> **Banc de VÉRIFICATION, pas de départage.** Aucune des inconnues n'est décisive (règle "
+          "étendue du 2026-09-30, `criteres_selection.yaml`) : dans la plage plausible de k, aucune "
+          "mesure du banc ne peut changer la décision de famille. Le banc **vérifie** une décision que "
+          "les données publiées portent déjà ; il ne la prend pas. La valeur de décision (poids "
+          f"{r['crit']['banc']['ponderes']['valeur_decision']['poids']}) vaut donc **0 pour toutes les "
+          "options** : elle ne départage plus rien, et le classement se fait sur les autres critères.\n")
     if r["fam_seuil"] and kd is not None and not kd["_decisive"]:
         sf = r["fam_seuil"]
         A(f"**Où en est la décision.** Le choix de famille bascule à **k ≈ {f(sf['garde'])}** : au-dessus, "
@@ -552,7 +573,10 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           f"**sous la borne basse plausible de k** ({kd['_pourquoi']}) : si le Damiao se comporte comme les "
           "actionneurs RobStride, dont les rapports blocage / nominal sont publiés, **la famille est déjà "
           "décidée par les données**. La mesure de son k reste une **vérification**, pas un départage : "
-          "elle n'est plus comptée comme décisive. La valeur du banc vient des autres inconnues.\n")
+          "elle n'est plus comptée comme décisive."
+          + (" Il en va de même des deux inconnues propres à RobStride : elles ne comptent que si cette "
+             "famille gagne, ce qui n'arrive que sous la bascule.\n" if verif
+             else " La valeur du banc vient des autres inconnues.\n"))
     elif r["fam_seuil"]:
         sf = r["fam_seuil"]
         A(f"**Pourquoi ce banc compte.** Le choix de famille bascule au seuil **k ≈ {f(sf['garde'])}** : "
@@ -562,8 +586,10 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     A("---\n\n## 1 — Les options\n")
     A("| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
     A("| --- | --- | --- | --- | ---: | --- | --- |")
+    n_dec = sum(1 for d in inc.values() if d["_decisive"])
     for o in opts:
-        A(f"| {o['nom']} | {len(o['tranchees'])}/{sum(1 for d in inc.values() if d['_decisive'])} : {', '.join(o['tranchees']) or 'aucune'} | "
+        A(f"| {o['nom']} | " + (f"{len(o['tranchees'])}/{n_dec} : {', '.join(o['tranchees']) or 'aucune'}"
+                                if n_dec else "— (aucune n'est décisive)") + " | "
           f"{o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
           f"{'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF | {', '.join(o['manquants']) or '—'} | "
           f"{o['notes']['risque']} — {o['risque_j']} |")
@@ -603,8 +629,35 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
         A(f"| {nom.get(w, w)} | {k_} |")
     A("\n## 4 — Verdict\n")
     A(verdict_texte(sb, nom, fixes) + "\n")
+    s_max = max(score(o["notes"], pb) for o in opts)
+    ex = [o for o in opts if abs(score(o["notes"], pb) - s_max) < 1e-9]
+    if len(ex) > 1:
+        A(f"**{len(ex)} options EX ÆQUO à {f(s_max)}** : " + " ; ".join(o["nom"] for o in ex)
+          + f". « {nom[sb['nominal']]} » n'est en tête **que par l'ordre alphabétique de son "
+          "identifiant**, qui départage les égalités dans le script : c'est un artefact d'écriture, "
+          "pas un résultat. **À ces poids, le comparatif ne classe pas ces options entre elles.**\n")
+    jumeaux = {}
+    for o in opts:
+        jumeaux.setdefault(tuple(o["notes"][k_] for k_ in pb), []).append(o)
+    for grp in (g for g in jumeaux.values() if len(g) > 1):
+        A("**Notes IDENTIQUES sur tous les critères** : " + " ; ".join(o["nom"] for o in grp)
+          + ". **Aucun jeu de poids ne peut les séparer** : dans les tirages du § 3, les victoires "
+          "comptées à l'une appartiennent à toutes, l'identifiant départageant l'égalité.\n")
+    if verif:
+        A("**Une note de jugement que la règle étendue interroge, et qui n'est PAS corrigée ici** "
+          "(elle n'a pas été demandée) : le transfert à S des options « × Damiao » vaut 3 parce que "
+          "« k inconnu tant que le banc ne l'a pas mesuré ». Si k n'est plus décisif, le J4310 est le "
+          "modèle S de la famille retenue dans toute la plage plausible, et cette note serait 5. "
+          "C'est à Jeremy de le décider ; le changement doit être daté avant d'être appliqué.\n")
     k_seul = [x for x in (SA, SB) if intervalle_continu(cat["candidats"][x], 0.5)["k_applique"]]
-    if k_seul:
+    if k_seul and verif:
+        A("**Ce que chaque option vérifie.** L'hypothèse k ne touche que les actionneurs dont la "
+          "condition de mesure n'est pas publiée : ici **"
+          + ", ".join(cat["candidats"][x]["nom"] for x in k_seul)
+          + "**. Mesurer son couple continu en blocage **vérifie** que k reste au-dessus de la bascule "
+          "(critère d'abandon : `docs/protocole-banc.md`). Les options à plusieurs modèles ajoutent une "
+          "comparaison directe dans la même condition, sans départager la famille.\n")
+    elif k_seul:
         A("**Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la "
           "condition de mesure n'est pas publiée : ici **"
           + ", ".join(cat["candidats"][x]["nom"] for x in k_seul)
@@ -640,7 +693,8 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     A("7. **Résultat** : le plus haut couple tenu à l'équilibre sous la limite thermique est le "
       "**continu mesuré**, dans cette condition. Divisé par le nominal publié, il donne le **k "
       "mesuré** de chaque actionneur, à reporter dans le catalogue comme une mesure (fiche 0041) :")
-    A("   il départage les finalistes au seuil du § 1.\n")
+    A("   il " + ("**vérifie** la décision de famille (critère d'abandon écrit avant la mesure, "
+                 "`docs/protocole-banc.md`).\n" if verif else "départage les finalistes au seuil du § 1.\n"))
     A("---\n\n## 6 — Ce que ce comparatif ne dit pas\n")
     A(f"- Les poids du banc sont **{'fixés par Jeremy' if fixes else 'proposés'}** ; les notes de "
       "transfert et de risque sont de **jugement**, justifiées ligne par ligne.")

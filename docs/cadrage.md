@@ -496,6 +496,12 @@ v2 : les bras ne font pas partie de la v1.
     en tête l'option « qualification » : 1 × Damiao J4310 V1.2 48 V + 1 × EduLite 05
     + 1 × RS05, une alimentation 48 V, un adaptateur CAN. Protocole *proposé* :
     `docs/protocole-banc.md`. L'ancienne option « 2 × RS05 » n'est plus en tête.
+    **Mise à jour du 30-09-2026, nuit** : avec la règle de décisivité étendue,
+    **aucune inconnue n'est décisive** — c'est un **banc de VÉRIFICATION, pas de
+    départage**. La qualification perd son avance : trois options sont **ex
+    æquo à 2,30** (3 × J4310, paire J4310 + RS05, qualification). Le
+    comparatif ne les classe plus entre elles. Critère d'abandon *proposé* :
+    `docs/protocole-banc.md`.
 13. **Ce que S doit porter.** Le seuil de taille retiré du comparatif le
     30-09-2026 (« H_max ≥ 0,55 m ») cachait une vraie contrainte : S doit
     porter son calculateur, sa batterie et son IMU. Elle n'est pas
