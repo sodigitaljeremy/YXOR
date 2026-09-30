@@ -90,6 +90,8 @@ résumée en témoigne ; sa date exacte est inconnue.
 
 ### 3.2 À CONFIRMER
 
+> **Réponse de Jeremy du 2026-09-30 :** poids et règle de décisivité NON fixés par lui ; règle d'achat : à confirmer.
+
 | Point | Ce que disent les sources | Pourquoi je doute |
 | --- | --- | --- |
 | Poids du comparatif (capacité 18, continuité 18, coût 15…) | CC et ma conclusion du 30 : « décidé » | je n'ai retrouvé aucune phrase de Jeremy qui les fixe ; un précédent existe (poids du banc attribués à tort, corrigé) |

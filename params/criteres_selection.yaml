@@ -101,7 +101,7 @@ modifications:
       modifiée ; c'est son application qui l'est, et c'est dit.
   - date: "2026-09-30"
     moment: "soir ; comparatif v3"
-    objet: "POIDS FIXÉS PAR JEREMY (classe S et familles)"
+    objet: "POIDS FIXÉS PAR JEREMY (classe S et familles)"   # ATTRIBUTION ERRONÉE : voir l'entrée du 2026-09-30, 23 h
     raison: >
       Décision de Jeremy : « équilibre entre apprendre/préparer M et L, et
       un S convaincant par lui-même ; meilleur rapport performance,
@@ -182,7 +182,10 @@ modifications:
       moins une → 2 ; aucune → 0), puisque leur nombre peut changer.
     ancien_texte: "k balayé de 1,0 à 0,5 ; k_damiao toujours décisive ; grille 3 → 5, 2 → 3, 1 → 2, 0 → 0 sur trois inconnues"
   - date: "2026-09-30"
-    moment: "nuit ; règle écrite AVANT le recalcul (réponse de Jeremy : oui)"
+    moment: "nuit ; règle écrite AVANT le recalcul"
+    # ancien texte de `moment` : « nuit ; règle écrite AVANT le recalcul (réponse de Jeremy : oui) »
+    statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"
+    origine: "proposée par Claude Code, journal/2026-09-30.md, § Point 2 (« C'est à Jeremy de dire si la règle doit s'étendre »), puis appliquée sur une consigne présentée comme la réponse de Jeremy"
     objet: "RÈGLE DE DÉCISIVITÉ ÉTENDUE : blocage_edulite et rs05_contre_edulite"
     raison: >
       Règle générale : une inconnue n'est décisive que si son issue peut
@@ -220,6 +223,27 @@ modifications:
       Poids, grilles et règle de décisivité INCHANGÉS. Statut « recommandé »
       inchangé.
     ancien_texte: "damiao.S = dm_j4310 (24 V) ; rs05 continu 1,8 N·m ; critère 1,75 N·m écrit à la main (0,5 × 3,5) ; estimation à T_lim = 100 °C ; K_ESTIME_ROTATION_J4310 = (0.92, 1.02) recopié"
+  - date: "2026-09-30"
+    moment: "23 h ; réponse de Jeremy"
+    objet: "POIDS DU COMPARATIF ET RÈGLE DE DÉCISIVITÉ ÉTENDUE : retour à « proposé » — ATTRIBUTION ERRONÉE"
+    raison: >
+      Jeremy a répondu le 2026-09-30 (~23 h) qu'il n'a PAS fixé les poids
+      du comparatif (capacité 18, continuité 18, coût 15, fiabilité 15,
+      robustesse 12, disponibilité 7, masse, ouverture, tension 5) ni la
+      règle de décisivité étendue. Les deux entrées précédentes restent,
+      pour que l'erreur se voie, comme pour les poids du banc.
+      ORIGINE. Poids : origine non retrouvée dans le dépôt ; les valeurs
+      sont arrivées par la consigne du 30-09 vers 19 h 55
+      (journal/2026-09-30.md, « Comparatif v3 », Point 1 ; commit
+      ef4c3ec), qui les présentait comme une décision de Jeremy. Les
+      poids ANTÉRIEURS (20/15/20/15/10/5/5/5/5) étaient proposés par
+      Claude Code. Règle de décisivité : proposée par Claude Code
+      (journal/2026-09-30.md, « C'est à Jeremy de dire si la règle doit
+      s'étendre »), appliquée au commit 62deecf.
+      Les valeurs restent appliquées : le calcul ne change pas ; seul
+      leur statut change.
+    ancien_texte: "statut « fixé par Jeremy le 2026-09-30 (soir) » (9 poids) ; « réponse de Jeremy : oui » (règle de décisivité)"
+    nouveau_texte: "statut « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -239,7 +263,7 @@ classe_S:
 
     capacite:
       poids: 18
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
       k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3]   # hypothèse balayée, pas une valeur ; étendue à 0,3 le 2026-09-30
@@ -256,7 +280,7 @@ classe_S:
 
     cout:
       poids: 15
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "prix unitaire converti en CHF (taux BCE), hors TVA et port"
       grille:
@@ -269,7 +293,7 @@ classe_S:
 
     continuite:
       poids: 18
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "continuité INTRINSÈQUE de la famille S → M → L (modifiée le 2026-09-30, soir)"
       grille_points:
@@ -281,7 +305,7 @@ classe_S:
 
     fiabilite_fournisseur:
       poids: 15
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "garantie écrite et distribution identifiées"
       grille:
@@ -294,7 +318,7 @@ classe_S:
 
     robustesse:
       poids: 12
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: jugement
       mesure: "tenue d'une articulation de jambe au blocage et aux chocs"
       grille:
@@ -307,7 +331,7 @@ classe_S:
 
     masse:
       poids: 5
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "masse de l'actionneur"
       grille:
@@ -320,7 +344,7 @@ classe_S:
 
     ouverture:
       poids: 5
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: jugement
       mesure: "ce qu'on peut lire et modifier"
       grille_points:
@@ -331,7 +355,7 @@ classe_S:
 
     tension_securite:
       poids: 5
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "tension nominale du bus de puissance"
       grille:
@@ -345,7 +369,7 @@ classe_S:
 
     disponibilite:
       poids: 7
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30)"   # ancien : « fixé par Jeremy le 2026-09-30 (soir) »
       mode: calcule
       mesure: "où l'acheter depuis la Suisse"
       grille:
