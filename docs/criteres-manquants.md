@@ -297,3 +297,35 @@ poids se répartit au prorata sur les autres.
   il remplacera l'hypothèse k **dans la capacité**, et non à côté.
 - G ne se note pas tant que la convention du courant n'est pas levée
   (§ 5). Son poids reste réservé.
+
+---
+
+## 4 — Ce que le banc devrait mesurer : ajouts proposés au protocole
+
+**Proposition seulement** : `docs/protocole-banc.md` n'est **pas
+modifié**. Chaque ligne dit ce qu'on ajouterait, l'instrument, et ce que
+la mesure tranche. Les préalables de sécurité du protocole (§ 1)
+s'appliquent à tout.
+
+| Sous-critère | Mesure proposée | Instrument | Ce que cela tranche |
+| --- | --- | --- | --- |
+| **E1** — chien de garde | **Avant toute mise sous tension de puissance** : lire la valeur usine du délai de perte de communication, la régler à une valeur non nulle, puis débrancher le câble CAN à vide et chronométrer la coupure | lecture de registre ; chronomètre ou horodatage du bus | la valeur usine réelle (le relevé en trouve **trois désactivées sur trois documentées**) ; le délai effectif |
+| **E2** — bus-off | Provoquer des erreurs de bus (nœud à mauvais débit, ou ligne ouverte) **à vide** ; observer le passage en bus-off et la reprise | adaptateur USB-CAN, `candump` | ce qu'aucun document ne publie (0 sur 6) |
+| **E3** — réaction des protections | Abaisser le seuil de surchauffe réglable et le laisser se déclencher sur un palier modeste ; baisser la tension d'alimentation jusqu'à la sous-tension ; observer coupure ou limitation | alimentation à limitation réglable (préalable § 1.1) ; télémétrie | la **réaction**, que 4 fiches sur 6 ne décrivent pas |
+| **B1** — réversibilité | Moteur **désactivé**, faire tourner la sortie par le bras de levier ; relever le couple de démarrage, dans les deux sens | dynamomètre du § 2 | la valeur publiée par 1 candidat sur 6 |
+| **B2** — jeu | Rotor tenu en position (mode position), appliquer un couple faible dans un sens puis dans l'autre ; relever l'angle de la sortie | comparateur ou pointeur laser sur le bras (le codeur interne ne voit pas le jeu) | la valeur publiée par 2 sur 6 |
+| **B4** — que mesure le capteur ? | Pendant un palier thermique, comparer la température remontée au thermocouple collé sur le carter, et suivre leur écart | thermocouple du § 2 | bobinage, pilote ou estimation : 3 fiches sur 6 sont ambiguës |
+| **B5** — débit de retour réel | Horodater les réponses à une salve de commandes au débit nominal | `candump -t a` | le débit, que les fiches donnent rarement |
+| **G** — Kt mesuré et convention du courant | Au blocage, relever couple (dynamomètre) et courant (télémétrie **et** pince ampèremétrique sur une phase) à plusieurs paliers | dynamomètre ; pince ampèremétrique | **Kt de sortie et convention crête ou efficace** : c'est ce qui rend G notable (§ 5) |
+| **C3** — continu au blocage | Déjà au protocole (§ 2). À ajouter : le rapporter au besoin RMS × 1,5 de la pire articulation, à la taille S | — | la grille C3 |
+
+Deux remarques :
+
+- **E1 est un préalable de sécurité**, pas seulement un critère : un chien
+  de garde désactivé en usine laisse l'actionneur exécuter sa dernière
+  consigne si le PC plante. Proposition : qu'il rejoigne le § 1.3 du
+  protocole, parmi les conditions à remplir avant de mettre sous
+  tension.
+- **G et B4 lèvent des ambiguïtés de fiche**, plus qu'ils ne départagent.
+  Ils servent à rendre notables des critères qui ne le sont pas
+  aujourd'hui (§ 5).
