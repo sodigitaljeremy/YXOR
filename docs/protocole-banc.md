@@ -9,6 +9,13 @@ Le banc, tel que le comparatif le place en tête : **1 × Damiao J4310 V1.2
 48 V + 1 × RobStride EduLite 05 + 1 × RobStride RS05**, une alimentation
 48 V, un adaptateur USB-CAN.
 
+**Mise à jour du 2026-09-30, nuit.** Avec la règle de décisivité étendue,
+aucune inconnue n'est décisive : c'est un **banc de VÉRIFICATION, pas de
+départage** (`docs/comparatif-banc.md`). Il vérifie une décision de
+famille que les données publiées portent déjà ; le § 2 bis dit, avant la
+mesure, ce qui la ferait rouvrir. Le § 2 ter ajoute la dispersion entre
+deux exemplaires.
+
 **Ce document ne propose aucun achat** (CLAUDE.md, règle d'achat c).
 Quand une condition de sécurité n'est pas remplie par un poste du
 budget, il le constate, sans rien suggérer.
@@ -130,6 +137,65 @@ ou la condition n'est pas publiée.
 
 ---
 
+## 2 bis — Critère d'abandon, écrit AVANT la mesure — *proposé*
+
+**Statut : PROPOSÉ**, écrit le 2026-09-30 (nuit), avant tout achat et
+toute mesure. Un critère écrit après la mesure s'ajuste au résultat ;
+écrit avant, il peut donner tort.
+
+> **Si le couple continu du J4310, mesuré AU BLOCAGE sur la plaque
+> d'aluminium de 70 × 70 mm (§ 2), est inférieur à 1,75 N·m, le choix
+> de famille est ROUVERT vers RobStride.**
+
+- **D'où vient 1,75 N·m** : 0,5 × 3,5 N·m (nominal publié). Le comparatif
+  des familles bascule à **k ≈ 0,50** : Damiao gagne jusqu'à k = 0,50 ;
+  RobStride (RS05 → RS02 → RS06) gagne dès k = 0,49
+  (`docs/choix-famille-actionneurs.md`). Sous 1,75 N·m, le k mesuré du
+  J4310 est sous la bascule.
+- **« Rouvert », pas « changé »** : la valeur mesurée entre au catalogue
+  (§ 3), le comparatif est relancé, et c'est son résultat, lu par
+  Jeremy, qui décide. Le critère déclenche le réexamen ; il ne le fait
+  pas.
+- **L'incertitude compte** (*proposé*) : le critère est rempli si la
+  borne **haute** de l'intervalle mesuré (valeur + incertitude) est sous
+  1,75 N·m. Si 1,75 N·m tombe **dans** l'intervalle, la mesure ne
+  tranche pas : on le consigne, et on réduit l'incertitude avant de
+  conclure.
+- **Avec deux exemplaires** (§ 2 ter), le critère s'applique au **plus
+  faible** des deux (*proposé*) : un robot est limité par sa moins bonne
+  articulation.
+- **Ce qui ne rouvre pas le choix** : un continu mesuré entre 1,75 N·m
+  et 3,5 N·m confirme la famille, même s'il est sous le nominal publié.
+  C'est précisément ce que k décrit.
+
+---
+
+## 2 ter — Dispersion entre deux exemplaires
+
+**Pourquoi** : une mesure sur un seul exemplaire ne dit pas si l'on a
+mesuré le modèle ou l'exemplaire. Deux exemplaires du même modèle
+(option « vérification » du budget : 2 × J4310) donnent un premier
+ordre de grandeur de l'écart de fabrication.
+
+1. **Même protocole, à l'identique** (§ 2) : même plaque, même
+   alimentation, même bras, mêmes paliers, et si possible le même jour.
+   Chaque exemplaire est mesuré **seul** sur la plaque, l'un après
+   l'autre. L'ordre de passage est noté.
+2. **Les deux continus mesurés** sont consignés **séparément**, chacun
+   avec son incertitude de résolution.
+3. **L'écart** entre les deux est consigné comme une entrée à part,
+   `type_incertitude: dispersion`, `n: 2`.
+4. **Ce que deux exemplaires ne disent pas** : avec n = 2, l'écart
+   n'est **pas** un écart-type, et il ne permet aucune statistique sur
+   la production. Il dit seulement si deux pièces du même modèle sont
+   proches (écart comparable à la résolution) ou non (écart nettement
+   plus grand : la valeur publiée ne peut pas être prise pour tout un
+   robot).
+5. **Même mesure croisée pour la télémétrie** : le rapport couple réel ÷
+   couple déclaré (§ 3), sur chaque exemplaire.
+
+---
+
 ## 3 — Chaque mesure : ce qu'elle tranche, et comment on la consigne
 
 Chaque relevé devient une entrée de `params/mesures.yaml`, sous la forme
@@ -143,6 +209,7 @@ avec la valeur, jamais après coup.**
 | Continu en blocage du **J4310** (70 × 70 mm, 48 V) | le **k du Damiao** : continu mesuré ÷ 3,5 N·m publié | `candidats.dm_j4310_48v.couple_continu_Nm` (nouvelle condition, en blocage) | `dispersion` si plusieurs essais, sinon `resolution` du dynamomètre |
 | Continu en blocage de l'**EduLite 05** | son comportement près du blocage, que RobStride ne publie pas | `candidats.edulite05.couple_continu_Nm` (nouvelle condition, en blocage) | idem |
 | Continu en blocage du **RS05** | vérifie la valeur publiée (1,2 N·m, PDF p. 29) **et** départage RS05 / EduLite 05 dans la même condition | `candidats.rs05.couple_continu_Nm` (condition en blocage) | idem |
+| Écart entre deux exemplaires de **J4310** (§ 2 ter) | si la valeur d'un exemplaire vaut pour le modèle | aucune cote : une entrée à part | `dispersion`, `n: 2` |
 | Couple réel ÷ couple déclaré, par actionneur | la confiance à accorder à la télémétrie de couple (le cas LeRobot, `docs/choix-interfaces.md`) | aucune cote : une note de l'entrée | `resolution` |
 | Température ambiante, épaisseur de la plaque, longueur du bras | la condition elle-même : sans elles, la mesure n'est pas reproductible | champs `note` de chaque entrée | `resolution` |
 
@@ -165,6 +232,12 @@ avec la valeur, jamais après coup.**
 - **Il ne mesure pas la dispersion entre exemplaires** : un seul
   exemplaire de chaque modèle. L'option « 3 × J4310 » la mesurerait,
   pour un seul modèle.
+  *Mise à jour du 2026-09-30, nuit* : le § 2 ter ajoute une mesure de
+  dispersion entre **deux** exemplaires de J4310, un ordre de grandeur
+  et pas une statistique.
+- **Le critère d'abandon (§ 2 bis) est proposé**, pas décidé : son
+  seuil, sa règle d'incertitude et son application au plus faible des
+  deux exemplaires sont à valider par Jeremy.
 - **Le dynamomètre ou la balance, le thermocouple et la plaque ne sont
   pas chiffrés.** L'outillage relève de la seule décision de Jeremy
   (CLAUDE.md, règle d'achat b).
