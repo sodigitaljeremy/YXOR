@@ -237,3 +237,63 @@ les deux bornes ; tant qu'elles ne sont pas levées, G1 ne se note pas
 | E. Sécurité | E1, E2, E3 | FICHE + BANC | robustesse (protections) | ajouter ; E3 reprend les protections |
 | F. Écosystème | F1 à F4 | FICHE | ouverture (SDK libre) | **fusionner** avec l'ouverture |
 | G. Énergie | G1 | FICHE (calcul) | capacité (thermique, sans doublon) | ajouter, noté seulement quand la convention du courant est levée |
+
+---
+
+## 3 — Trois jeux de poids, sans choix
+
+Chaque jeu fait **100**. Le calcul et l'arrondi sont refaits par un script.
+Poids par **famille** ; dans une famille, les sous-critères notés ont des
+poids égaux. **Si D devient un indicateur hors score (option b)**, son
+poids se répartit au prorata sur les autres.
+
+| Critère | Actuel (validé) | (i) 70 / 30 | (ii) 50 / 50 | (iii) fusion |
+| --- | ---: | ---: | ---: | ---: |
+| capacité | 18 | 12,6 | 9 | 14,6 |
+| continuité | 18 | 12,6 | 9 | 14,5 |
+| coût | 15 | 10,5 | 7,5 | 12,1 |
+| fiabilité du fournisseur | 15 | 10,5 | 7,5 | 12,1 |
+| robustesse | 12 | 8,4 | 6 | 6 (résiduelle : réducteur, blocage) |
+| disponibilité | 7 | 4,9 | 3,5 | 5,7 |
+| masse | 5 | 3,5 | 2,5 | — (remplacée par C) |
+| ouverture | 5 | 3,5 | 2,5 | — (fusionnée dans F) |
+| tension | 5 | 3,5 | 2,5 | 4,0 |
+| **A** intégration | — | 5 | 8 | 7 |
+| **B** contrôle | — | 6 | 10 | 3 (réversibilité reprise de la robustesse) |
+| **C** thermique (C1, C2) | — | 5 | 8 | 5 (le poids de la masse) |
+| **D** preuves | — | 3 | 5 | 4 |
+| **E** sécurité | — | 5 | 8 | 3 (protections reprises de la robustesse) |
+| **F** écosystème | — | 3 | 6 | 5 (le poids de l'ouverture) |
+| **G** énergie | — | 3 | 5 | 4 |
+| **Total** | 100 | 100 | 100 | 100 |
+
+**(i) 70 / 30.**
+- Les 9 critères validés gardent 70 % de leur poids ; les 7 familles se
+  partagent 30, B, A, C et E en tête.
+- Le classement actuel pèse encore le plus. Mais **masse et C, ouverture
+  et F, robustesse et B/E comptent en double**, puisque rien n'est
+  fusionné.
+
+**(ii) 50 / 50.**
+- Moitié chacun. B reçoit le plus (10), parce qu'une jambe se commande
+  en couple : réversibilité, jeu, mode MIT.
+- Le choix change le plus probablement, pour le même défaut de doublons
+  que (i).
+
+**(iii) fusion.**
+- **Les remplacements héritent exactement du poids remplacé** :
+  - masse 5 → C ;
+  - ouverture 5 → F ;
+  - robustesse 12 → 6 résiduels + 3 pour B + 3 pour E.
+- Les **ajouts purs** (A 7, D 4, G 4, soit 15) sont pris au prorata sur
+  les six critères qui ne recoupent rien.
+- Aucun doublon, et l'esprit des poids validés est gardé (78 → 63 sur
+  ces six critères). En contrepartie, B et E, jugés essentiels,
+  n'héritent que de 3 chacun.
+
+**Remarques** :
+
+- C3 (le continu mesuré au banc) n'a pas de poids ici : quand il existera,
+  il remplacera l'hypothèse k **dans la capacité**, et non à côté.
+- G ne se note pas tant que la convention du courant n'est pas levée
+  (§ 5). Son poids reste réservé.
