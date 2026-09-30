@@ -442,6 +442,78 @@ fichiers:
         nature: sans_objet
         source: "vendeur du prix relevé"
 
+      # --- conditions de mesure et autres conditions du couple continu ---
+      - motif: "candidats.*.couple_continu_Nm.autres_conditions.valeur"
+        origine: catalogue
+        nature: interface
+        source: "couple continu constructeur dans une autre condition de mesure"
+      - motif: "candidats.*.couple_continu_Nm.autres_conditions.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "condition de mesure publiée par le constructeur"
+      - motif: "candidats.*.couple_continu_Nm.condition"
+        origine: catalogue
+        nature: sans_objet
+        source: "condition de mesure publiée par le constructeur"
+      - motif: "candidats.*.couple_continu_Nm.plaque_mm"
+        origine: catalogue
+        nature: sans_objet
+        source: "plaque de dissipation de la mesure constructeur"
+      - motif: "candidats.*.prix.tva_incluse"
+        origine: catalogue
+        nature: sans_objet
+        source: "taux de TVA contenu dans le prix relevé"
+      - motif: "candidats.*.comparatif_seulement"
+        origine: propre
+        nature: sans_objet
+        source: "rattachement au seul comparatif S"
+      - motif: "candidats.*.reference"
+        origine: propre
+        nature: sans_objet
+        source: "candidat de référence, hors classement"
+
+      # --- comparatif de la classe S : faits constructeur et revendeur ---
+      - motif: "comparatif_S.candidats"
+        origine: propre
+        nature: sans_objet
+        source: "liste des candidats du comparatif S"
+      - motif: "comparatif_S.references"
+        origine: propre
+        nature: sans_objet
+        source: "liste des références du comparatif S"
+      - motif: "comparatif_S.*.famille_protocole"
+        origine: propre
+        nature: sans_objet
+        source: "classement du protocole, pour le critère de continuité"
+      - motif: "comparatif_S.*.essai_tiers"
+        origine: litterature
+        nature: sans_objet
+        source: "essai publié par un tiers"
+      - motif: "comparatif_S.*.telemetrie.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "protocole ou table mémoire publiés"
+      - motif: "comparatif_S.*.reversibilite.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "fiche constructeur"
+      - motif: "comparatif_S.*.garantie_mois.valeur"
+        origine: catalogue
+        nature: sans_objet
+        source: "manuel constructeur"
+      - motif: "comparatif_S.*.distribution.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "pages revendeurs relevées"
+      - motif: "comparatif_S.*.prix_revendeur.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "prix revendeur relevé"
+      - motif: "comparatif_S.*.ouverture.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "protocole, SDK et firmware publiés ou non"
+
       # --- champs de méthode, partout dans le fichier ---
       - motif: "**.source"
         origine: propre
@@ -490,6 +562,10 @@ fichiers:
         origine: litterature
         nature: sans_objet
         source: "date de publication BCE"
+      - motif: "electronique.*.prix.tva_incluse"
+        origine: catalogue
+        nature: sans_objet
+        source: "taux de TVA contenu dans le prix relevé"
       - motif: "electronique.*.prix.valeur"
         origine: catalogue
         nature: sans_objet
@@ -530,3 +606,18 @@ fichiers:
         origine: propre
         nature: sans_objet
         source: "lecture non vérifiée, gardée pour mémoire"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  #  criteres_selection.yaml — grilles, poids et jugements (2026-09-30)
+  # ═══════════════════════════════════════════════════════════════════════
+  #  Tout ce fichier est fait de CHOIX DE PROJET : grilles écrites avant
+  #  les notes, poids proposés, jugements justifiés. Aucune de ses valeurs
+  #  n'est une cote. Un fourre-tout est donc le bon motif, et il est
+  #  assumé (CLAUDE.md, règle 2 des contrôles).
+  criteres_selection.yaml:
+    regles:
+      - motif: "**"
+        fourre_tout: true
+        origine: propre
+        nature: sans_objet
+        source: "critères de sélection écrits le 2026-09-30, poids proposés par Claude, à fixer par Jeremy"

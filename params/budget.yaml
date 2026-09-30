@@ -43,9 +43,18 @@ electronique:
     prix: {valeur: 10.00, devise: USD, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Feetech-FE-URT-1-p-6705.html", consulte_le: "2026-09-30"}
     note: "aucun revendeur suisse trouvé"
   adaptateur_can:
-    article: "adaptateur USB-CAN (RobStride « CAN to USB debugging module » ou CANable 2.0)"
-    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
-    non_verifie: "37,80–42,00 USD (eBay) et 35 USD (CANable, openlightlabs.com) lus dans des extraits ; pages en 429"
+    article: "Linux Automation candleLight (USB-CAN, SocketCAN natif, matériel sous CERN-OHL)"
+    prix: {valeur: 54.74, devise: EUR, tva_incluse: 0.19, vendeur: "Linux Automation GmbH (DE)", source: "https://shop.linux-automation.com/candlelight-D02-R01-V01-C00-en", consulte_le: "2026-09-30"}
+    note: >
+      Prix vérifié sur la page ouverte, en stock. ⚠ Le fabricant le dit
+      « prototype », réservé au développement et à la recherche, NON
+      CONFORME CE. Le texte extrait de la page l'intitule aussi
+      « candlelight FD » (même prix). Était null jusqu'au 2026-09-30.
+    non_verifie: "CANable 2.0 35 USD (openlightlabs.com, 429) ; adaptateur RobStride 37,80–42,00 USD (eBay)"
+  alimentation_48V:
+    article: "Mean Well RSP-500-48 (48 V, 10,5 A, 504 W, PFC)"
+    prix: {valeur: 82.30, devise: EUR, tva_incluse: 0.19, vendeur: "Reichelt (DE)", source: "https://www.reichelt.com/de/en/shop/product/switching_power_supply_slim_504_w_pfc_48_v_10_5_a-144823", consulte_le: "2026-09-30"}
+    note: "alimentation à découper, en stock ; aucun revendeur suisse vérifié (RS CH 403, Distrelec page vide)"
   ordinateur:
     article: "Raspberry Pi 5, 8 Go"
     prix: {valeur: 159.55, devise: CHF, vendeur: "BerryBase CH", source: "https://www.berrybase.ch/en/raspberry-pi-5-8gb-ram", consulte_le: "2026-09-30"}

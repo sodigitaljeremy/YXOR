@@ -69,22 +69,24 @@ candidats:
 
   edulite05:
     nom: "RobStride EduLite 05"
-    fiche: {version: null, sha256: null, document: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "page revendeur ; absente du PDF RobStride du 2026-09-17 ; aucune copie conservée"}
+    fiche: {version: "260713", sha256: "0497aae0b068d9b13444e1c12464a7613ee3db103adfbc95ca1710e310cbae26", document: "Product Literature/EL05/EL05User Manual260713.pdf", depot: "https://github.com/RobStride/Product_Information", consulte_le: "2026-09-30", note: "manuel constructeur, 80 p. ; absent du PDF de spécifications du 2026-09-17"}
     fabricant: "RobStride Dynamics"
     bus: "CAN 2.0, trame étendue, 1 Mbps"
-    tension_V: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "16–60 V lu dans un titre de résultat de recherche (x.com, 402)"}
-    reduction: {valeur: 9, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur"}
+    tension_V: {valeur: 48, source: "manuel EL05 260713, p. 9-11", consulte_le: "2026-09-30", note: "condition de mesure du couple nominal"}
+    reduction: {valeur: 9, source: "manuel EL05 260713, p. 12", consulte_le: "2026-09-30"}
     couple_continu_Nm:
-      valeur: null
-      source: null
+      valeur: 1.8
+      source: "manuel EL05 260713, p. 9-11"
       consulte_le: "2026-09-30"
-      non_verifie: "1,8 N·m lu dans le TITRE d'un résultat de recherche (x.com/RobStride_com/status/1989174130705621140), page non ouverte (402)"
+      condition: "à 100 rpm, plaque de dissipation aluminium 70 × 70 mm, 25 °C, 48 V, enroulement limité à 135 °C"
+      plaque_mm: 70
+      note: "était null le matin du 2026-09-30 (lu seulement dans un titre de recherche) ; désormais lu dans le manuel constructeur"
     couple_pointe_Nm:
       valeur: 6.0
       source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html"
       consulte_le: "2026-09-30"
       note: "Revendeur. Corroboré par la limite logicielle ±6 N·m du dépôt constructeur EDULITE_A3 (README)."
-    vitesse_a_vide_rpm: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "430 rpm ±10 % vu seulement dans un résumé de recherche"}
+    vitesse_a_vide_rpm: {valeur: 430, source: "manuel EL05 260713, p. 10", consulte_le: "2026-09-30", note: "± 10 % ; était null, désormais lu dans le manuel constructeur"}
     masse_g: {valeur: 242, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur"}
     dimensions_mm: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "46 × 46 × 44 mm dans un titre de résultat de recherche"}
     prix: {valeur: 80.00, devise: USD, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "76 USD à partir de 10"}
@@ -96,7 +98,15 @@ candidats:
     bus: "CAN 2.0 / CAN FD"
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
-    couple_continu_Nm: {valeur: 1.8, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "nominal, mesuré à 100 rpm, plaque alu 150 × 150 mm"}
+    couple_continu_Nm:
+      valeur: 1.8
+      source: "PDF RobStride 2026-09-17, p. 27"
+      consulte_le: "2026-09-30"
+      condition: "à 100 rpm, plaque de dissipation aluminium 150 × 150 mm"
+      plaque_mm: 150
+      autres_conditions:
+        - {valeur: 1.6, plaque_mm: 70, condition: "à 100 rpm, plaque aluminium 70 × 70 mm, 2,4 Apk", source: "manuel RS05 260713, p. 10-11 (sha256 1b2c61a6…6360e82)", consulte_le: "2026-09-30"}
+        - {valeur: 1.2, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 29", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 5.5, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "± 10 % ; tension de mesure non précisée (nominale 48 V)"}
     masse_g: {valeur: 191, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
@@ -183,6 +193,110 @@ candidats:
     dimensions_mm: {valeur: "Ø89 × 50,25", source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
     prix: {valeur: 398.90, devise: USD, vendeur: CubeMars, source: "https://www.cubemars.com/goods-1031-AK70-10.html", consulte_le: "2026-09-30"}
 
+  # ── Candidats ajoutés le 2026-09-30 pour le comparatif de la classe S ──
+  # `comparatif_seulement: true` : ils ne rejoignent pas les tableaux
+  # généraux de dimensionnement.py (qui visent M et L), seulement
+  # scripts/selection_multicritere.py.
+
+  dm_j4310:
+    nom: "Damiao DM-J4310-2EC V1.2"
+    comparatif_seulement: true
+    fiche: {version: "V1.2, manuel V1.4 du 2026-09-14", sha256: "4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245", document: "DM-J4310-2EC V1.2 Geared Motor User Manual V1.4 2026-09-14.pdf", depot: "https://github.com/dmBots/DM-J4310-2EC", consulte_le: "2026-09-30"}
+    fabricant: "Damiao (DM)"
+    bus: "CAN 2.0B, 1 Mbit/s par défaut (CAN FD au-delà) ; UART de configuration"
+    tension_V: {valeur: 24, source: "manuel V1.4, p. 8", consulte_le: "2026-09-30", note: "plage 20–28 V ; variante 48 V existante, non retenue ici"}
+    reduction: {valeur: 10, source: "manuel V1.4", consulte_le: "2026-09-30", note: "type d'engrenage non écrit dans le manuel"}
+    couple_continu_Nm:
+      valeur: 3.5
+      source: "manuel V1.4, p. 7"
+      consulte_le: "2026-09-30"
+      condition: "non précisée ; à 3,5 N·m, 120 rpm, 24 V, le moteur passe de ~32 °C à ~99 °C en ~310 s (courbe constructeur) : ce n'est PAS un régime établi"
+      plaque_mm: null
+    couple_pointe_Nm: {valeur: 12.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 200, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "à 24 V"}
+    masse_g: {valeur: 306, source: "manuel V1.4", consulte_le: "2026-09-30", note: "« Weight corrected » est la seule modification de la V1.4"}
+    dimensions_mm: {valeur: "Ø57 × 46", source: "manuel V1.4", consulte_le: "2026-09-30"}
+    prix: {valeur: 158.00, devise: EUR, tva_incluse: 0.19, vendeur: "Eckstein GmbH (DE)", source: "https://eckstein-shop.de/dm-j4310-2ec-v1-2-24v-dual-encoder-servo-motor", consulte_le: "2026-09-30"}
+
+  gim4310_10:
+    nom: "SteadyWin GIM4310-10 (driver GDZ34)"
+    comparatif_seulement: true
+    fiche: {version: "tableau de sélection GDZ ; protocole GDZ-CAN V3.10b2 du 2026-06-09", sha256: "b2cdb36434fe51180641c6225e60033250c39894156146c0af2a9df21a72ce38", document: "tableau de sélection GDZ (xlsx), lien de la page produit SteadyWin", consulte_le: "2026-09-30", note: "SteadyWin annonce l'abandon des drivers GDZ/GDS au profit du GDK34, sans fiche trouvée"}
+    fabricant: SteadyWin
+    bus: "CAN, 1 Mbit/s par défaut, et RS485 (Modbus, CANopen)"
+    tension_V: {valeur: 24, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "plage 12–40 V"}
+    reduction: {valeur: 10, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "planétaire acier, jeu 15 arcmin"}
+    couple_continu_Nm:
+      valeur: 1.63
+      source: "tableau de sélection GDZ, colonne GIM4310-10"
+      consulte_le: "2026-09-30"
+      condition: "non précisée"
+      plaque_mm: null
+      note: "⚠ Kt 2,61 N·m/A × 1,3 A ≠ 1,63 N·m : incohérence interne au tableau"
+      autres_valeurs:
+        - {valeur: 2.05, source: "tableau de sélection GDS, driver GDS34", consulte_le: "2026-09-30", note: "variante GDS34, pointe 5,6 N·m"}
+    couple_pointe_Nm: {valeur: 7.98, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "« Peak » au tableau, « Stall » sur la page produit (résumé)"}
+    vitesse_a_vide_rpm: {valeur: 212, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "vitesse MAX après réduction, pas une vitesse à vide mesurée ; 24 V"}
+    masse_g: {valeur: 227, source: "tableau de sélection GDZ", consulte_le: "2026-09-30", note: "avec driver (217 g sans)"}
+    dimensions_mm: {valeur: "Ø53 × 38", source: "tableau de sélection GDZ", consulte_le: "2026-09-30"}
+    prix: {valeur: 169.95, devise: EUR, tva_incluse: null, vendeur: "OpenELAB (localisation DE)", source: "page produit OpenELAB, relevée par la recherche du 2026-09-30", consulte_le: "2026-09-30", note: "TVA incluse ou non : non confirmé"}
+
+  x2_7:
+    nom: "MyActuator RMD-X2-P28-7-E (« X2-7 »)"
+    comparatif_seulement: true
+    fiche: {version: "X2-7 Motor Parameter 260903", sha256: "66d2e63668eff87b2e5761ab2a344170ca0544e478bc79ec0da6315914043b9b", document: "« X2-7 Motor Parameter 260903.pdf », dans l'archive https://www.myactuator.com/_files/archives/cab28a_77b7670917e14f6b8256b4db4d912857.zip", consulte_le: "2026-09-30", note: "sha256 de l'archive : 422766c89d6bdc9abce4f656a119b3f253ab2928ab1d42c93eed516516767e73"}
+    fabricant: MyActuator
+    bus: "CAN 1 Mbit/s (trame standard) et EtherCAT ; protocole CAN V4.4 du 2026-04-25"
+    tension_V: {valeur: 24, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "plage 20–55 V ; au-delà de 24 V, ne pas dépasser la vitesse nominale"}
+    reduction: {valeur: 28.17, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "planétaire, jeu ≤ 15 arcmin"}
+    couple_continu_Nm:
+      valeur: 2.5
+      source: "X2-7 Motor Parameter 260903"
+      consulte_le: "2026-09-30"
+      condition: "à 142 rpm, 3 A ; condition thermique non précisée"
+      plaque_mm: null
+    couple_pointe_Nm: {valeur: 7.0, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 178, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30", note: "à 24 V"}
+    masse_g: {valeur: 260, source: "X2-7 Motor Parameter 260903", consulte_le: "2026-09-30"}
+    dimensions_mm: {valeur: "Ø44 × 63,5", source: "plan d'installation MyActuator", consulte_le: "2026-09-30"}
+    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "OpenELAB 329,95 € ; Eckstein 269,95 € ; OZ Robotics 345 USD — résumés de recherche seulement"}
+
+  ak45_10_v3:
+    nom: "CubeMars AK45-10 V3.0 KV75"
+    comparatif_seulement: true
+    fiche: {version: "manuel AK V3.2.0", sha256: "ab1b62b94c3c00693259a6acc00df5a44040d748a702918f4562986d420ea225", document: "https://www.cubemars.com/data/cms/202602/ak-series-prodcut-manual-v3-2-0-for-ak-3-0-robotic-actuator.pdf", consulte_le: "2026-09-30", note: "et la page produit cubemars.com (sans version)"}
+    fabricant: CubeMars
+    bus: "CAN 1 Mbit/s (mode MIT en trames étendues) et UART"
+    tension_V: {valeur: 24, source: "https://www.cubemars.com/product/ak45-10-v3-0-kv75-robotic-actuator.html", consulte_le: "2026-09-30", note: "plage inconnue"}
+    reduction: {valeur: 10, source: "page produit CubeMars", consulte_le: "2026-09-30", note: "planétaire, jeu 18 arcmin"}
+    couple_continu_Nm:
+      valeur: 2.5
+      source: "page produit CubeMars"
+      consulte_le: "2026-09-30"
+      condition: "à 120 rpm, 1,9 A ; condition thermique non précisée"
+      plaque_mm: null
+    couple_pointe_Nm: {valeur: 7.0, source: "page produit CubeMars", consulte_le: "2026-09-30"}
+    vitesse_a_vide_rpm: {valeur: 180, source: "page produit CubeMars", consulte_le: "2026-09-30", note: "à 24 V"}
+    masse_g: {valeur: 262, source: "page produit CubeMars", consulte_le: "2026-09-30"}
+    dimensions_mm: {valeur: "Ø53 × 45,2", source: "page produit CubeMars", consulte_le: "2026-09-30"}
+    prix: {valeur: 155.90, devise: USD, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak45-10-v3-0-kv75-robotic-actuator.html", consulte_le: "2026-09-30", note: "balise JSON-LD de la page"}
+
+  xm430_w210:
+    nom: "Dynamixel XM430-W210 (référence)"
+    comparatif_seulement: true
+    reference: true
+    fiche: {version: null, sha256: null, document: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30", note: "e-Manual sans date ; c'est le moteur du genou de ToddlerBot"}
+    fabricant: ROBOTIS
+    bus: "TTL ou RS485 (Protocol 2.0)"
+    tension_V: {valeur: 12, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30", note: "plage 10–14,8 V"}
+    reduction: {valeur: 212.6, source: "e-Manual ROBOTIS", consulte_le: "2026-09-30"}
+    couple_continu_Nm: {valeur: null, source: null, consulte_le: "2026-09-30", condition: null, plaque_mm: null, note: "ROBOTIS ne publie aucun couple continu"}
+    couple_pointe_Nm: {valeur: 3.0, source: "e-Manual ROBOTIS", consulte_le: "2026-09-30", note: "couple de BLOCAGE à 12 V"}
+    vitesse_a_vide_rpm: {valeur: 77, source: "e-Manual ROBOTIS", consulte_le: "2026-09-30", note: "à 12 V"}
+    masse_g: {valeur: 82, source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/", consulte_le: "2026-09-30"}
+    dimensions_mm: {valeur: null, source: null, consulte_le: "2026-09-30"}
+    prix: {valeur: 264.50, devise: EUR, tva_incluse: 0.0, vendeur: "Generation Robots (FR)", source: "page produit Generation Robots, relevée par la recherche du 2026-09-30", consulte_le: "2026-09-30", note: "317,40 € TTC ; Reichelt (DE) 314,95 € TTC"}
+
 # ═════════════════════════════════════════════════════════════════════════
 #  Configurations nommées — calculées et publiées au cadrage § 5
 # ═════════════════════════════════════════════════════════════════════════
@@ -243,3 +357,82 @@ controle_coherence:
         Riekehof ; K-Scale annonce « basic locomotion »).
       autres_valeurs:
         - {valeur: 0.40, source: "https://github.com/Justin-Riekehof/zeroth-01-build/blob/main/README.md", consulte_le: "2026-09-30"}
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Comparatif de la classe S — faits par candidat (2026-09-30)
+# ═════════════════════════════════════════════════════════════════════════
+#  Des FAITS relevés, chacun avec sa source. Les notes qui demandent un
+#  jugement sont dans params/criteres_selection.yaml, avec leur
+#  justification ; elles ne sont pas ici.
+#  `famille_protocole` sert au critère de continuité vers M et L.
+comparatif_S:
+  candidats: [rs05, edulite05, sts3250, dm_j4310, gim4310_10, x2_7, ak45_10_v3]
+  references: [xm430_w210]
+
+  rs05:
+    famille_protocole: robstride_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "trame type 2 : angle, vitesse, couple, température ; trame 21 : défauts (surchauffe moteur 135 °C…)", source: "manuel RS05 260713, p. 46 et 50"}
+    reversibilite: {reversible: null, detail: "« Quasi-Direct Drive », 7,75:1 à pignons acier usinés ; aucune valeur de couple de réversibilité publiée", source: "manuel RS05 260713, p. 1 ; PDF 2026-09-17, p. 27"}
+    garantie_mois: {valeur: 12, source: "manuel RS05 260713, p. 5", note: "cadre du droit chinois"}
+    distribution: {suisse: null, ue: null, international: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Actuator-p-6666.html", non_verifie: "OpenELAB (UE), page en 429"}
+    prix_revendeur: {valeur: 110.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Actuator-p-6666.html", consulte_le: "2026-09-30", note: "105 USD dès 10 ; le prix constructeur en CNY du catalogue ne tient pas compte de l'export"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel RS05 (protocole) ; étude externe (firmware : non trouvé)"}
+
+  edulite05:
+    famille_protocole: robstride_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "identique au RS05 (trame type 2, couple sur ±6 N·m ; trame 21)", source: "manuel EL05 260713, p. 41 et 45"}
+    reversibilite: {reversible: null, detail: "9:1 ; type de réducteur écrit seulement chez le revendeur (planétaire)", source: "manuel EL05, p. 12 ; Seeed"}
+    garantie_mois: {valeur: 12, source: "manuel EL05 260713, p. 3"}
+    distribution: {suisse: null, ue: null, international: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", non_verifie: "OpenELAB 76,95 €"}
+    prix_revendeur: {valeur: 80.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel EL05 (protocole)"}
+
+  sts3250:
+    famille_protocole: feetech_ttl
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "Present_Position, Velocity, Load, Voltage, Temperature, Status, Current", source: "SOURCE SECONDAIRE : table mémoire de LeRobot, src/lerobot/motors/feetech/tables.py ; aucune fiche constructeur"}
+    reversibilite: {reversible: null, detail: "1:345, pignons métal — NON VÉRIFIÉ (résumé de recherche)", source: null}
+    garantie_mois: {valeur: null, source: null}
+    distribution: {suisse: null, ue: null, international: null, source: null, non_verifie: "OpenELAB 73,99 USD ; Alibaba 38,05 CHF"}
+    prix_revendeur: {valeur: null, devise: null, tva_incluse: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "table mémoire publiée via LeRobot (secondaire)"}
+    essai_tiers: "jeu 0,43° ; ~25 kg·cm tenus avant la protection — Robonine, robonine.com/feetech-sts3250-smart-actuator-evaluation-of-accuracy-torque-and-backlash/"
+
+  dm_j4310:
+    famille_protocole: damiao_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "position, vitesse, couple, T_MOS (driver), T_Rotor (bobinage), ERR", source: "manuel V1.4, p. 14-15"}
+    reversibilite: {reversible: null, detail: "10:1, type d'engrenage non publié", source: "manuel V1.4"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "« 3 mois à 1 an » chez des revendeurs"}
+    distribution: {suisse: null, ue: "Eckstein GmbH (DE)", international: "Seeed Studio", source: "https://eckstein-shop.de/dm-j4310-2ec-v1-2-24v-dual-encoder-servo-motor"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel V1.4 ; dépôt dmBots (licence non relevée)"}
+
+  gim4310_10:
+    famille_protocole: steadywin_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "angle, vitesse, courant Iq, température « de fonctionnement » (moteur ou driver : NON PRÉCISÉ), défauts", source: "protocole GDZ-CAN V3.10b2 (archive sha256 27f712c8eda642b4b041e054fda1de6be15637ea0a68469482edf24d471f5099)"}
+    reversibilite: {reversible: null, detail: "planétaire acier 10:1, jeu 15 arcmin ; réversibilité non publiée", source: "tableau de sélection GDZ"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "« 3 mois à 1 an » sur Alibaba"}
+    distribution: {suisse: null, ue: "OpenELAB (localisation DE)", international: "SteadyWin (direct)", source: "page OpenELAB, relevée le 2026-09-30"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "protocole GDZ-CAN publié"}
+
+  x2_7:
+    famille_protocole: myactuator_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "0x9A : températures moteur et MOS, tension, erreurs ; 0x9C : température, courant Iq, vitesse, angle", source: "CAN BUS Motor Motion Protocol V4.4 (PDF sha256 2e0e73a9…eecd, dans l'archive 375e0d68338a8ea0dd3c6d420aa64db282bb78e76a69b871d3df05aab3a4ebcd)"}
+    reversibilite: {reversible: true, detail: "couple de réversibilité 0,4 N·m ; planétaire 28,17:1", source: "X2-7 Motor Parameter 260903"}
+    garantie_mois: {valeur: 12, source: "User Manual X Series V1.1 (mai 2025), p. 9, hébergé par Seeed", note: "manuel antérieur à la gamme V4"}
+    distribution: {suisse: null, ue: null, international: null, source: null, non_verifie: "A2V (France) selon l'étude externe ; Eckstein et OpenELAB selon des résumés"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "protocole CAN V4.4 publié ; SDK communautaire MIT selon l'étude externe (non vérifié)"}
+
+  ak45_10_v3:
+    famille_protocole: cubemars_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "position, vitesse, courant, température (moteur ou driver : AMBIGU au manuel p. 46 ; l'UART les sépare), code d'erreur", source: "manuel AK V3.2.0, p. 46"}
+    reversibilite: {reversible: true, detail: "couple de réversibilité 0,1 N·m ; planétaire 10:1, jeu 18 arcmin", source: "page produit CubeMars"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "1 an : résumé de recherche ; 365 jours selon l'étude externe (politique du 14-05-2025)"}
+    distribution: {suisse: null, ue: null, international: "CubeMars (direct)", source: "https://www.cubemars.com/product/ak45-10-v3-0-kv75-robotic-actuator.html", non_verifie: "OpenELAB listé, prix non obtenu"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel AK V3.2.0 (protocoles CAN et UART)"}
+
+  xm430_w210:
+    famille_protocole: dynamixel_p2
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "Present Current (2,69 mA/unité), Velocity, Position, Input Voltage, Temperature ; Hardware Error Status", source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/"}
+    reversibilite: {reversible: null, detail: "212,6:1, servo à engrenages", source: "e-Manual ROBOTIS"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "1 an, engrenages usés et moteurs brûlés exclus (robotis.us, résumé)"}
+    distribution: {suisse: null, ue: "Generation Robots (FR), Reichelt (DE)", international: "ROBOTIS", source: "pages Generation Robots et Reichelt relevées le 2026-09-30", non_verifie: "Digitec 699 CHF, Galaxus 769 CHF"}
+    ouverture: {protocole_public: true, sdk_libre: true, firmware_libre: false, source: "Protocol 2.0 publié ; DynamixelSDK Apache-2.0 selon l'étude externe (non revérifié ici)"}

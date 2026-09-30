@@ -155,7 +155,7 @@ du 17-09) et du RS03 (20 retenu, 21 à la p. 19) sont discutées dans
 | Configuration (marge 1,5) | Continu / pointe (N·m) | Taille maximale | Masse convergée | Articulation limitante |
 | --- | --- | ---: | ---: | --- |
 | homogène Feetech STS3250 | STS3250 1,6 / 4,9 | 0,60 m | 4,2 kg | hip_roll |
-| homogène RobStride EduLite 05 | EduLite 05 null / 6,0 | 0,58 m | 6,0 kg | hip_roll, knee, ankle_pitch |
+| homogène RobStride EduLite 05 | EduLite 05 1,8 / 6,0 | 0,54 m | 5,4 kg | hip_roll |
 | homogène RobStride RS05 | RS05 1,8 / 5,5 | 0,57 m | 5,1 kg | hip_roll |
 | homogène RobStride RS02 | RS02 6,0 / 17,0 | 0,79 m | 12,2 kg | hip_roll |
 | homogène RobStride RS06 | RS06 11,0 / 36,0 | 0,91 m | 19,4 kg | hip_roll |
@@ -216,7 +216,10 @@ où un actionneur conçu par Jeremy a le plus de chances de fonctionner (§ 8).
 - **EduLite 05** : même protocole CAN que RS02 et RS06, donc tout le
   logiciel écrit pour S (pilote, calibration, sécurité) se réutilise en M
   et L. Mais son couple continu et sa vitesse ne sont pas vérifiés : ils
-  viennent de revendeurs, et sont à null dans le catalogue.
+  viennent de revendeurs, et sont à null dans le catalogue. *(Mise à jour
+  du 30-09-2026 : ils sont désormais lus dans le manuel constructeur EL05
+  — 1,8 N·m sur plaque de 70 × 70 mm, 430 rpm — voir
+  `docs/choix-classe-S.md`.)*
 - **STS3250** : le moins cher, mais c'est un écosystème (bus TTL, Feetech)
   qu'on abandonnerait en passant à M. Réducteur 1:345, peu réversible, jeu
   mesuré indépendamment supérieur au jeu annoncé.

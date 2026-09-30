@@ -294,6 +294,10 @@ def chf(prix: dict, taux: dict) -> float | None:
     v, dev = val(prix.get("valeur")), prix.get("devise")
     if v is None or dev is None:
         return None
+    # Un prix relevé TTC étranger (ex. TVA allemande 19 %) est ramené HORS
+    # TVA : c'est la TVA SUISSE qui s'applique ensuite, pas les deux.
+    if prix.get("tva_incluse"):
+        v = v / (1 + prix["tva_incluse"])
     if dev == "CHF":
         return v
     par_eur = taux["par_eur"]
@@ -350,7 +354,9 @@ def couts(cat: dict, bud: dict, config: dict) -> dict:
 # ─────────────────────────────── sortie ─────────────────────────────────
 
 def configurations(cat: dict) -> list[tuple[str, dict]]:
-    ids = list(cat["candidats"])
+    # Les candidats du seul comparatif S (`comparatif_seulement`) sont
+    # traités par scripts/selection_multicritere.py, pas ici.
+    ids = [i for i, c in cat["candidats"].items() if not c.get("comparatif_seulement")]
     cls = {i: classe_catalogue(cat, i) for i in ids}
     confs = [(f"homogène {cls[i]['nom']}", config_homogene(cls[i])) for i in ids]
     lourdes = cat["dimensionnement"]["articulations_lourdes"]
