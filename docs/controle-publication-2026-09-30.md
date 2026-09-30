@@ -1,5 +1,7 @@
 # Contrôle avant publication — 2026-09-30
 
+> **Mise à jour du 2026-09-30, ~23 h 55 — tiers : accord obtenu, historique publié tel quel.** Décidé par Jeremy (voir le journal du 2026-09-30, « Avant publication », point 4). L'anonymisation des fichiers actuels reste.
+
 **Commencé à 22 h 33 CEST** (`date`). Base : commit `3007a58`, et
 **132 commits** dans `git log --all`.
 
