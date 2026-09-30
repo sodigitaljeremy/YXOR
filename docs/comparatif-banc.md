@@ -31,7 +31,7 @@ Coût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %,
 
 ## 2 — Notes et score
 
-| Critère | Poids (fixé par Jeremy) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
+| Critère | Poids (proposé) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | valeur_decision | 40 | 2 | 2 | 2 | 3 | 5 | 0 |
 | apprentissage | 10 | 2 | 4 | 5 | 4 | 4 | 4 |
@@ -52,7 +52,7 @@ Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 
 
 ## 4 — Verdict
 
-**Aux poids fixés par Jeremy : qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 38,4 % des tirages ; « 3 × Damiao DM-J4310-2EC V1.2 » en gagne 50,1 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+**Options trop proches pour que l'analyse tranche** : qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) en tête aux poids proposés — le choix dépend des poids, que Jeremy fixera.
 
 **Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la condition de mesure n'est pas publiée : ici **Damiao DM-J4310-2EC V1.2, RobStride EduLite 05**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options « × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre finaliste **dans la même condition** : la comparaison devient directe, au lieu de s'appuyer sur sa fiche.
 
@@ -77,7 +77,7 @@ But : remplacer l'hypothèse k par une mesure, sur les deux finalistes, **dans l
 
 ## 6 — Ce que ce comparatif ne dit pas
 
-- Les poids du banc sont **fixés par Jeremy** ; les notes de transfert et de risque sont de **jugement**, justifiées ligne par ligne.
+- Les poids du banc sont **proposés** ; les notes de transfert et de risque sont de **jugement**, justifiées ligne par ligne.
 - L'option Feetech n'a **ni prix vérifié ni alimentation 12 V chiffrée** : son coût est inconnu.
 - La mesure au rotor bloqué ne dit rien du rendement en rotation ; elle compare les deux finalistes entre eux, dans la même condition.
 - Le banc à trois exemplaires répond à la demande de l'étude externe (« au moins 3 », § 15.2) pour la dispersion entre exemplaires.

@@ -519,7 +519,7 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     nomf = {fm["id"]: fm["nom"] for fm in r["fams"]}
     L = []
     A = L.append
-    fixes = all("fixé" in v.get("statut", "") for v in r["crit"]["banc"]["ponderes"].values())
+    fixes = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
     A("# Comparatif du banc d'essai — v3\n")
     A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}, "
       "après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est "
@@ -777,7 +777,7 @@ def doc_familles(r, date) -> str:
         s_ = b_["sens"]
         A(f"| {f(b_['k'], 1)} | {nom[s_['nominal']]} | "
           f"{'oui, toutes' if s_['tous_pm'] else 'NON, pas toutes'} | {f(100 * s_['freq'], 1)} % |")
-    fixes_f = all("fixé" in v.get("statut", "") for v in crit["classe_S"]["ponderes"].values())
+    fixes_f = all(v.get("statut", "").startswith("fixé") for v in crit["classe_S"]["ponderes"].values())
     A("\n**Verdict à k = 1,0.** " + verdict_texte(r["fam_balayage"][0]["sens"], nom, fixes_f))
     A("\n**Verdict à la borne basse (k = " + f(r["fam_balayage"][-1]["k"], 1) + ").** "
       + verdict_texte(r["fam_balayage"][-1]["sens"], nom, fixes_f) + "\n")
@@ -872,7 +872,8 @@ def main(argv=None) -> int:
         print(f"    {x['nom']:24s} {f(x['blocage'], 1):>5} / {f(x['nominal'], 1):>5} = {f(x['rapport'], 3)}")
     print(f"    moyenne {f(sum(x['rapport'] for x in rb) / len(rb), 3)}")
     opts, pb, sb, fin = options_banc(r)
-    print(f"\n  banc (poids fixés) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "
+    fixes_b = all(v.get("statut", "").startswith("fixé") for v in r["crit"]["banc"]["ponderes"].values())
+    print(f"\n  banc (poids {'fixés' if fixes_b else 'PROPOSÉS'}) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "
           f"±50 % : {'tient toutes' if sb['tous_pm'] else 'NE tient PAS toutes'} ; tirages quelconques {f(100 * sb['freq'], 1)} %")
     for o in opts:
         print(f"    {o['nom']:70s} score {f(score(o['notes'], pb))}  coût {'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF")

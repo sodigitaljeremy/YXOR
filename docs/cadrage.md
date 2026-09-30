@@ -466,7 +466,7 @@ v2 : les bras ne font pas partie de la v1.
 | 30-09 | **Marge de 1,5** (fiche 0051) | Jeremy | § 4 | 1,0 ; 2,0 | résultats du banc |
 | 30-09 | Vision du § 1 | **proposé**, en attente | — | — | — |
 | 30-09 | **Poids du comparatif d'actionneurs** (classe S et familles) : capacité 18, continuité 18, coût 15, fiabilité 15, robustesse 12, disponibilité 7, masse, ouverture, tension 5 | Jeremy | équilibre entre préparer M et L et un S convaincant par lui-même | poids proposés par Claude | résultats du banc |
-| 30-09 | **Poids du banc** : valeur de décision 40, transfert 20, risque 15, coût 15, apprentissage 10 | Jeremy | « le banc sert d'abord à décider la famille ; on n'achète en quantité qu'après la mesure » | poids proposés par Claude | — |
+| 30-09 | ~~**Poids du banc** : valeur de décision 40, transfert 20, risque 15, coût 15, apprentissage 10~~ | **RETIRÉE, attribution erronée** (Jeremy n'avait pas validé ces poids ni la citation de principe ; il pose encore la question) | — | poids proposés par Claude | — |
 
 ---
 
@@ -492,7 +492,7 @@ v2 : les bras ne font pas partie de la v1.
 11. Les valeurs numériques extraites de ToddlerBot (axes, butées) sont-elles
     couvertes par sa licence ? Question juridique, sans avis ici.
 12. **Banc de qualification : mesurer avant d'acheter en quantité.** Le
-    comparatif du banc (`docs/comparatif-banc.md`, poids fixés par Jeremy) place
+    comparatif du banc (`docs/comparatif-banc.md`, poids **proposés**, pas encore fixés) place
     en tête l'option « qualification » : 1 × Damiao J4310 V1.2 48 V + 1 × EduLite 05
     + 1 × RS05, une alimentation 48 V, un adaptateur CAN. Protocole *proposé* :
     `docs/protocole-banc.md`. L'ancienne option « 2 × RS05 » n'est plus en tête.

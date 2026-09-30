@@ -154,6 +154,18 @@ modifications:
       Jeremy ».
     ancien_texte: "proposés : valeur_decision 30, transfert_S 17.5, risque 10.5, cout 17.5, apprentissage 24.5"
     nouveau_texte: "valeur_decision 40, transfert_S 20, risque 15, cout 15, apprentissage 10"
+  - date: "2026-09-30"
+    moment: "soir, après la clôture du v3"
+    objet: "POIDS DU BANC : retour à « proposé » — ATTRIBUTION ERRONÉE"
+    raison: >
+      Les poids du banc (valeur de décision 40, transfert 20, risque 15,
+      coût 15, apprentissage 10) ont été enregistrés comme « fixés par
+      Jeremy », avec une citation de principe (« le banc sert d'abord à
+      décider la famille ; on n'achète en quantité qu'après la mesure »)
+      que Jeremy n'avait PAS validée : il pose encore la question. Les
+      valeurs sont gardées ; leur statut redevient « proposé ».
+      L'entrée précédente n'est pas effacée : elle reste, pour que
+      l'erreur se voie.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -341,7 +353,7 @@ banc:
   ponderes:
     valeur_decision:
       poids: 40
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: calcule
       mesure: "nombre d'inconnues décisives que l'option tranche (inconnues_decisives)"
       grille:
@@ -351,12 +363,12 @@ banc:
         0: "aucune"
     apprentissage:
       poids: 10
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: calcule
       grille: "nombre d'apprentissages couverts, de 0 à 5"
     transfert_S:
       poids: 20
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: calcule
       grille:
         5: "exactement le modèle retenu pour S"
@@ -364,7 +376,7 @@ banc:
         1: "autre fabricant ou autre protocole"
     cout:
       poids: 15
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: calcule
       mesure: "coût TTC CH : actionneurs + adaptateur + alimentation du bus, imprévus compris"
       grille:
@@ -376,7 +388,7 @@ banc:
         0: "> 1 300 CHF, ou incomplet"
     risque:
       poids: 15
-      statut: "fixé par Jeremy le 2026-09-30 (soir)"
+      statut: "proposé, à fixer par Jeremy (retour de « fixé » : attribution erronée, 2026-09-30)"
       mode: jugement
       jugements_par_option:
         un_vainqueur: {note: 3, justification: "pas de rechange : une casse arrête le banc"}
