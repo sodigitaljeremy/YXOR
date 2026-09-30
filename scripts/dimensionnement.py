@@ -301,6 +301,11 @@ def chf(prix: dict, taux: dict) -> float | None:
     if dev == "CHF":
         return v
     par_eur = taux["par_eur"]
+    # L'euro est la BASE des taux BCE : il n'a pas de ligne « EUR » dans le
+    # tableau. Sans ce cas, tout prix en euros tombait à « inconnu »
+    # (corrigé le 2026-09-30, trouvé par le comparatif S).
+    if dev == "EUR":
+        return v * val(par_eur["CHF"]) if val(par_eur.get("CHF")) is not None else None
     if val(par_eur.get(dev)) is None or val(par_eur.get("CHF")) is None:
         return None
     return v * val(par_eur["CHF"]) / val(par_eur[dev])

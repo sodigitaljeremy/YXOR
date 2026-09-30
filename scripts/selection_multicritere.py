@@ -429,10 +429,17 @@ def doc_S(cands, crit, poids, sens, marge, date):
       "de coût, par prudence.")
     A("- **Les données marquées non vérifiées** dans le catalogue ne comptent pas comme "
       "établies.")
+    fragiles = [c for c in cands if "régime établi" in (c["continu"]["condition"] or "")]
+    for c in fragiles:
+        A(f"- **⚠ {c['nom']} : son couple continu n'est pas un régime établi.** Condition publiée : "
+          f"« {c['continu']['condition']} ». La grille ne retire qu'un point pour une condition non "
+          f"précisée ; sa capacité ({f(c['H'])} m) est donc probablement **surestimée**. "
+          + ("C'est le vainqueur nominal : c'est le premier point à vérifier au banc."
+             if c["id"] == sens["nominal"] else ""))
     return "\n".join(L) + "\n"
 
 
-def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date):
+def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date, S_robuste=True):
     L = []
     A = L.append
     A("# Comparatif du banc d'essai\n")
@@ -441,6 +448,11 @@ def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date):
       "proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).\n")
     A(f"Les options dépendent du classement de S : vainqueur nominal **{S_nom}**, "
       f"second **{second_nom or '—'}**. Si ce classement change, ce document change.\n")
+    if not S_robuste:
+        A("**⚠ Ce classement de S n'est PAS robuste** (`docs/choix-classe-S.md`, § 5) : le "
+          "vainqueur nominal dépend des poids. Les options « × vainqueur » ci-dessous valent "
+          "donc **pour ce vainqueur-là**. Ce qui se transfère d'un vainqueur à l'autre, c'est le "
+          "**nombre** d'exemplaires qu'elles recommandent, pas le modèle.\n")
     A("---\n\n## 1 — Les options\n")
     A("| Option | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
     A("| --- | --- | --- | ---: | --- | --- |")
@@ -467,9 +479,14 @@ def doc_banc(opts, crit, poids, sens, S_nom, second_nom, date):
     A("| --- | ---: |")
     for w, k in sorted(sens["gagnes"].items(), key=lambda x: -x[1]):
         A(f"| {nom.get(w, w)} | {k} |")
+    if all(o["notes"]["cout"] == 0 for o in opts):
+        A("\n**Le critère de coût ne départage rien** : aucune option n'est entièrement chiffrée "
+          "(voir « Postes non chiffrés »), donc toutes ont la note 0. Le verdict repose sur les "
+          "trois autres critères.\n")
     A("\n## 4 — Verdict\n")
     if sens["robuste"]:
-        A(f"**Classement ROBUSTE** : {nom[sens['nominal']]}.\n")
+        A(f"**Classement ROBUSTE** : {nom[sens['nominal']]}"
+          + ("" if S_robuste else ", **pour ce vainqueur de S**") + ".\n")
     else:
         A("**Les options sont trop proches pour que l'analyse tranche** : le choix dépend des "
           "poids, que Jeremy fixera.\n")
@@ -528,7 +545,7 @@ def main(argv=None) -> int:
         nom = {c["id"]: c["nom"] for c in r["cands"]}
         DOC_S.write_text(doc_S(r["cands"], r["crit"], r["poids"], s, r["marge"], date), encoding="utf-8")
         DOC_BANC.write_text(doc_banc(r["opts"], r["crit"], r["pb"], sb, nom[r["S_id"]],
-                                     nom.get(r["second"]), date), encoding="utf-8")
+                                     nom.get(r["second"]), date, s["robuste"]), encoding="utf-8")
         print(f"  -> {DOC_S.relative_to(REPO)}, {DOC_BANC.relative_to(REPO)}")
     return 0
 

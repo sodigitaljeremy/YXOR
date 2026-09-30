@@ -273,9 +273,12 @@ Tant qu'un poste est inconnu, le total s'affiche « ≥ », jamais comme s'il
   adaptateur CAN), puis jambes, puis haut du corps.
 - **Ordres de grandeur connus au 30-09-2026** (actionneurs et électronique
   connus, TVA et 15 % d'imprévus compris, structure exclue) :
-  - M (RS02) : ≥ 1 720 CHF pour les jambes v1, puis ≥ 1 947 CHF de plus
+  - M (RS02) : ≥ 1 774 CHF pour les jambes v1, puis ≥ 1 947 CHF de plus
     pour le haut du corps v2 ;
-  - RS03 : ≥ 2 277 CHF, puis ≥ 2 783 CHF de plus.
+  - RS03 : ≥ 2 332 CHF, puis ≥ 2 783 CHF de plus.
+  - *(Mise à jour du 30-09-2026, soir : +54 CHF sur les jambes, parce que
+    l'adaptateur USB-CAN est désormais chiffré. Il n'y a plus de « ≥ »
+    que pour la structure.)*
   - Le chiffrage de S est à produire une fois sa classe choisie.
 - **Défaut relevé** : la batterie chiffrée (22,2 V) ne correspond pas aux
   48 V nominaux des actionneurs RobStride. Une batterie adaptée reste à
