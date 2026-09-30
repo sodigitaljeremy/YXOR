@@ -21,7 +21,12 @@ passage, sans les supposer acquises.
 4. **Rien de binaire dans Git.** Les STEP, STL, DXF, URDF et rendus vont dans
    `exports/`, qui est ignoré. Ils se régénèrent.
 5. **Une décision structurante = une fiche** dans `decisions/`, écrite *avant*
-   d'être appliquée. Jamais réécrite après coup.
+   d'être appliquée. Jamais réécrite après coup : une fiche acceptée est
+   **remplacée** par une nouvelle (fiche 0054).
+6. **Toute mention « décidé par Jeremy » cite sa source** (date et
+   journal, commit, ou prompt de Jeremy). **Sans source : PROPOSÉ.**
+   Règle ajoutée le 2026-09-30, après trois attributions erronées le même
+   jour (poids du banc, poids du comparatif, règle de décisivité).
 
 ## Après chaque génération de pièce
 
@@ -30,30 +35,65 @@ agent est régulièrement fausse de façon non évidente : trou décalé, épais
 insuffisante, collision entre pièces. Ne jamais présenter une pièce comme
 correcte sans qu'elle ait été régénérée et regardée.
 
+## Méthode : la classe d'actionneur fixe la taille
+
+À lire d'abord : `docs/cadrage.md`, puis `docs/arbitrage-2026-09-30.md`.
+
+- **La taille est une SORTIE du calcul, pas une entrée** (fiche 0047).
+  Pour chaque classe d'actionneur, `scripts/dimensionnement.py` calcule la
+  taille maximale qu'elle porte, à **marge 1,5** (fiche 0051, à revoir
+  après le banc).
+- **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048).
+  `params/anthropometry.yaml` porte les tailles, et plus les paliers
+  P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la
+  référence du calcul, pas celle de YXOR. On ne dessine qu'à une taille
+  qui a une hauteur unique.
+- **La famille d'actionneurs de S n'est pas décidée.** Le banc doit
+  départager (`docs/choix-famille-actionneurs.md`, `docs/comparatif-banc.md`).
+- **Actionneur maison** : piste parallèle, jamais sur le chemin critique
+  (fiche 0052).
+
 ## Contraintes de fabrication à respecter dès la conception
 
-**Procédé unique : la découpe 2D.** Il n'y a pas d'imprimante 3D
-(fiche 0014). Architecture en plaques et entretoises (fiche 0015).
+**Fabrication séquencée : usinage, puis impression 3D, puis hybride**
+(fiche 0050, appliquée par la 0060). Le procédé se choisit pièce par
+pièce, dans cet ordre. **Il n'y a pas d'imprimante 3D vérifiée
+aujourd'hui** (fiche 0059) : l'impression ne s'applique à une pièce
+qu'une fois une machine disponible et vérifiée. **Le carton est une
+maquette rapide, sans métrologie** : il vérifie une forme, jamais une
+cote.
 
-- **Toute pièce est plate**, d'épaisseur constante, issue d'un profil
-  découpé. Un volume s'obtient par empilement de plaques et entretoises,
-  jamais par une pièce massive.
-- Pièce découpée : contour fermé, millimètres, échelle 1:1, rayon intérieur
-  minimum 0,5 × épaisseur, aucun angle vif rentrant.
-- Aucun logement de roulement obtenu directement par découpe : prévoir un
-  palier rapporté ou un alésage repris.
-- Assemblage démontable, aucun collage structurel. Pas de filetage dans le
-  matériau : **vis traversante et écrou**.
-- **Concevoir au plus contraignant**, c'est-à-dire au carton. Les trois
-  procédés accessibles sont le cutter (carton), le laser de fablab
-  (contreplaqué) et la découpe métal (aluminium). Un dessin qui ne passe
-  pas en carton interdit l'itération rapide, qui est le principal acquis
-  de cette architecture.
+- **Aucune pièce n'est conçue en supposant un procédé non vérifié.**
+  Un moyen de fabrication est une donnée à établir, avec sa source.
+- **Pièce découpée en 2D** (plaques et entretoises : une architecture
+  possible, plus la seule) : contour fermé, millimètres, échelle 1:1,
+  rayon intérieur minimum 0,5 × épaisseur, aucun angle vif rentrant.
 - **L'épaisseur et la saignée sont des paramètres, jamais des constantes.**
   Un même modèle génère un DXF par couple machine-matériau. La saignée se
   mesure sur une pièce d'essai, elle ne se suppose pas.
+- **Pièce usinée** : les rayons d'outil, les matières et le format de
+  fichier de l'opérateur CN ne sont **pas connus** (cadrage, question 6).
+  Ne pas les supposer.
+- Aucun logement de roulement obtenu directement par le procédé : prévoir
+  un palier rapporté ou un alésage repris.
+- Assemblage démontable, aucun collage structurel. Pas de filetage dans le
+  matériau : **vis traversante et écrou**, sauf un insert à chaud dans une
+  pièce imprimée (voir ci-dessous).
 
-### Contraintes retirées le 2026-09-28, et pourquoi
+### Contraintes retirées le 2026-09-30, et pourquoi
+
+Même principe que ci-dessous : une contrainte caduque effacée en silence
+est une information perdue.
+
+- ~~« Procédé unique : la découpe 2D. Toute pièce est plate, d'épaisseur
+  constante ; un volume s'obtient par empilement de plaques et
+  entretoises »~~ — remplacé par la fabrication séquencée (fiches 0050
+  et 0060).
+- ~~« Concevoir au plus contraignant, c'est-à-dire au carton »~~ — le
+  carton n'est plus qu'une maquette ; sa caractérisation est arrêtée
+  (2026-09-30, fiche 0060).
+
+### Contraintes retirées le 2026-09-28 — à RÉTABLIR avec une imprimante (fiche 0059)
 
 Conservées ici : une contrainte caduque effacée en silence est une
 information perdue, et rien ne signalerait son retour si une imprimante
