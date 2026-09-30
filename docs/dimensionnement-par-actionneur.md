@@ -76,7 +76,7 @@ vérifiée est notée à côté.
 | Feetech STS3250 | 1,57 | 4,90 | 7,87 | 74,5 | **null** | TTL série half-duplex asynchrone | https://www.feetechrc.com/562636.html |
 | RobStride EduLite 05 | 1,80 | 6,00 | 45,03 | 242,0 | 80 USD | CAN 2.0 | manuel EL05 260713, p. 9-11 |
 | RobStride RS05 | 1,60 | 5,50 | 50,27 | 191,0 | 499 CNY | CAN 2.0 / CAN FD | manuel RS05 260713, p. 10-11 (sha256 1b2c61a6…6360e82) |
-| RobStride RS02 | 6,00 | 17,00 | 42,94 | 380,0 | 699 CNY | CAN 2.0 / CAN FD | site RobStride, consulté par Jeremy le 2026-09-30 |
+| RobStride RS02 | 6,00 | 17,00 | 42,94 | 380,0 | 699 CNY | CAN 2.0 / CAN FD | prompt relayé par Jeremy, auteur non établi |
 | RobStride RS06 | 11,00 | 36,00 | 50,27 | 621,0 | 849 CNY | CAN 2.0 / CAN FD | PDF RobStride 2026-09-17, p. 31 |
 | RobStride RS03 | 20,00 | 60,00 | 20,42 | 900,0 | 999 CNY | CAN 2.0 / CAN FD | PDF RobStride 2026-09-17, p. 38 |
 | CubeMars AK70-10 KV100 | 8,30 | 24,80 | 50,27 | 621,0 | 398,90 USD | CAN et UART | https://www.cubemars.com/goods-1031-AK70-10.html ; https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html |
@@ -88,7 +88,7 @@ vérifiée est notée à côté.
 ³ RS05 : **1,6 N·m retenu** (manuel 260713, plaque 70 × 70 mm), la plus basse
   de deux valeurs publiées ; 1,8 N·m (PDF du 17-09, plaque 150 × 150 mm) est
   gardé en `autres_valeurs` (consigne de Jeremy, 2026-09-30, 22 h 30).
-⁴ RS02 : 6 N·m sur consigne de Jeremy ; le PDF constructeur dit 7 (§ 0).
+⁴ RS02 : 6 N·m sur un prompt relayé par Jeremy, auteur non établi ; le PDF constructeur dit 7 (§ 0).
 ⁵ RS03 : contradiction interne au PDF, 21 à la p. 19 et 20 à la p. 38 : la
   plus basse est retenue.
 Les prix de ce tableau sont ceux du champ `prix` du catalogue, que lit le
@@ -273,7 +273,7 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
-| TVA CH | 8,1 % | consigne de Jeremy ; la page de l'AFC n'a pas pu être ouverte |
+| TVA CH | 8,1 % | prompt relayé par Jeremy, auteur non établi ; la page de l'AFC n'a pas pu être ouverte |
 | imprévus | **15 %, provisoire** | **à fixer par Jeremy** — visible dans chaque total |
 | change | 1 EUR = 0,9478 CHF = 1,1355 USD = 7,6130 CNY | BCE, référence du 2026-09-30 ; les taux croisés sont calculés |
 | structure | **null** | tant que l'opérateur CN n'a pas chiffré |

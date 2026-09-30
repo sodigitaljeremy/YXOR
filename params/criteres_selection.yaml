@@ -102,10 +102,19 @@ modifications:
   - date: "2026-09-30"
     moment: "soir ; comparatif v3"
     objet: "POIDS FIXÉS PAR JEREMY (classe S et familles)"   # ATTRIBUTION ERRONÉE : voir l'entrée du 2026-09-30, 23 h
+    # Paraphrase v3, remplacée le 2026-09-30 (~23 h 50) par la citation exacte :
+    #   « Décision de Jeremy : « équilibre entre apprendre/préparer M et L, et
+    #   un S convaincant par lui-même ; meilleur rapport performance,
+    #   durabilité, maintenabilité, évolutivité, qualité, prix ». »
     raison: >
-      Décision de Jeremy : « équilibre entre apprendre/préparer M et L, et
-      un S convaincant par lui-même ; meilleur rapport performance,
-      durabilité, maintenabilité, évolutivité, qualité, prix ». Statut
+      Mots de Jeremy (conversation d'arbitrage du 2026-09-30, relue par
+      Claude) : « S sert à la fois à apprendre et à préparer M et L […]
+      et S doit être aussi à la fois un robot convaincant par lui même
+      […] Il faut un bon équilibre entre ses deux critères afin d'avoir
+      le meilleur rapport performance, durabilité, maintenabilité,
+      évolutivité, qualité, prix ». Les poids qui les traduisent sont
+      PROPOSÉS PAR CLAUDE (arbitrage) ; voir l'origine dans l'entrée
+      « retour à proposé ». Statut
       « fixé par Jeremy » au lieu de « proposé ». Les poids du BANC
       restent proposés.
     ancien_texte: "poids proposés par Claude : capacite 20, continuite 15, cout 20, fiabilite_fournisseur 15, robustesse 10, disponibilite 5, masse 5, ouverture 5, tension_securite 5"
@@ -130,7 +139,9 @@ modifications:
       Le banc doit d'abord trancher ce qui départage les familles. Le
       nouveau critère compte combien des trois inconnues décisives une
       option tranche. Poids proposé 30 ; les quatre autres sont réduits
-      en proportion (× 0,7). Option ajoutée à la demande de Jeremy :
+      en proportion (× 0,7). Option ajoutée (source : prompt de Claude
+      (arbitrage), 2026-09-30 — PROPOSÉ ; « à la demande de Jeremy »
+      jusqu'au 2026-09-30, 23 h 50) :
       « qualification » = 1 × J4310 V1.2 48 V + 1 × EduLite 05 + 1 × RS05,
       une alimentation 48 V, un adaptateur CAN.
     ancien_texte: "poids du banc : apprentissage 35, transfert_S 25, cout 25, risque 15"
@@ -232,11 +243,14 @@ modifications:
       robustesse 12, disponibilité 7, masse, ouverture, tension 5) ni la
       règle de décisivité étendue. Les deux entrées précédentes restent,
       pour que l'erreur se voie, comme pour les poids du banc.
-      ORIGINE. Poids : origine non retrouvée dans le dépôt ; les valeurs
-      sont arrivées par la consigne du 30-09 vers 19 h 55
-      (journal/2026-09-30.md, « Comparatif v3 », Point 1 ; commit
-      ef4c3ec), qui les présentait comme une décision de Jeremy. Les
-      poids ANTÉRIEURS (20/15/20/15/10/5/5/5/5) étaient proposés par
+      ORIGINE (établie le 2026-09-30, ~23 h 50, par la conversation
+      d'arbitrage relue par Claude ; remplace « origine non retrouvée »).
+      Poids : PROPOSÉS PAR CLAUDE (arbitrage) vers 19 h 55, pour traduire
+      en chiffres les mots de Jeremy cités dans l'entrée « POIDS FIXÉS
+      PAR JEREMY ». Claude les a présentés « à valider », puis a écrit
+      « POIDS FIXÉS PAR JEREMY » dans le prompt v3 (commit ef4c3ec) :
+      erreur de Claude. Validés ensuite par Jeremy à ~23 h (entrée
+      suivante). Les poids ANTÉRIEURS (20/15/20/15/10/5/5/5/5) étaient proposés par
       Claude Code. Règle de décisivité : proposée par Claude Code
       (journal/2026-09-30.md, « C'est à Jeremy de dire si la règle doit
       s'étendre »), appliquée au commit 62deecf.

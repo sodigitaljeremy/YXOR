@@ -370,7 +370,7 @@ fichiers:
       - motif: "dimensionnement.articulations_lourdes"
         origine: propre
         nature: sans_objet
-        source: "consigne de Jeremy, 2026-09-30 : configuration mixte"
+        source: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ : configuration mixte"
 
       # --- référence ToddlerBot : ses nombres viennent de l'amont ---
       - motif: "reference_toddlerbot.hauteur_m.valeur"
@@ -392,7 +392,7 @@ fichiers:
       - motif: "controle_coherence.zeroth01.hauteur_m.valeur"
         origine: ambigu
         nature: echelle
-        source: "consigne de Jeremy ; introuvable dans les sources consultées"
+        source: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ ; introuvable dans les sources consultées"
         note: "0,48 m déclaré, ~0,40 m lu dans deux sources — voir la note du fichier"
       - motif: "controle_coherence.zeroth01.hauteur_m.autres_valeurs.valeur"
         origine: litterature

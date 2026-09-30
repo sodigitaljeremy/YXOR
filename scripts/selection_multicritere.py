@@ -459,7 +459,7 @@ def options_banc(r):
                          transfert_j=("JUGEMENT : quel que soit k, le modèle S de la famille gagnante est "
                                       "sur le banc → 5"),
                          finalistes=True))
-    # « qualification » (demande de Jeremy, 2026-09-30) : les trois modèles
+    # « qualification » (prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ) : les trois modèles
     # qui départagent les familles, à 48 V, une seule alimentation.
     qual = ["dm_j4310_48v", "edulite05", "rs05"]
     if all(q in cat["candidats"] for q in qual):

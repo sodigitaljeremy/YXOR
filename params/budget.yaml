@@ -15,7 +15,7 @@ consultation: "2026-09-30"
 
 tva_ch:
   valeur: 0.081
-  source: "consigne de Jeremy ; taux normal depuis le 2024-01-01 selon l'extrait de recherche de https://www.estv.admin.ch/fr/taux-de-la-tva-suisse"
+  source: "prompt relayé par Jeremy, auteur non établi (« consigne de Jeremy » jusqu'au 2026-09-30, 23 h 50) ; taux normal depuis le 2024-01-01 selon l'extrait de recherche de https://www.estv.admin.ch/fr/taux-de-la-tva-suisse"
   consulte_le: "2026-09-30"
   note: "La page de l'AFC n'a PAS pu être ouverte (connexion réinitialisée) : confirmation officielle à faire."
 

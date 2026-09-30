@@ -34,8 +34,8 @@ consultation: "2026-09-30"
 dimensionnement:
   marge: 1.5                  # DÉCIDÉ par Jeremy le 2026-09-30 (fiche 0051), à revoir après le banc — pas une norme
   tolerance_coherence_m: 0.005
-  # Configuration mixte : classe lourde ici, légère ailleurs (consigne de
-  # Jeremy, 2026-09-30).
+  # Configuration mixte : classe lourde ici, légère ailleurs (source :
+  # prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ ; « consigne de Jeremy » jusqu'au 2026-09-30, 23 h 50).
   articulations_lourdes: [hip_roll, hip_pitch, knee, ankle_pitch]
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -148,10 +148,11 @@ candidats:
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30"}
     couple_continu_Nm:
       valeur: 6.0
-      source: "site RobStride, consulté par Jeremy le 2026-09-30"
+      source: "prompt relayé par Jeremy, auteur non établi (« site RobStride, consulté par Jeremy le 2026-09-30 » jusqu'au 2026-09-30, 23 h 50)"
       consulte_le: "2026-09-30"
       note: >
-        Valeur RETENUE sur consigne de Jeremy. Le site n'a PAS pu être relu
+        Valeur RETENUE sur un prompt relayé par Jeremy, auteur non établi (« consigne de Jeremy »
+        jusqu'au 2026-09-30, 23 h 50). Le site n'a PAS pu être relu
         automatiquement (rendu JavaScript). ⚠ Le PDF constructeur du
         2026-09-17 donne encore 7 N·m pour le RS02 ; la mention « 6 (nouveau)
         / 5 (ancien) » de ce PDF concerne le RS00. Une confusion n'est pas
@@ -533,7 +534,7 @@ controle_coherence:
     classe: sts3250
     hauteur_m:
       valeur: 0.48
-      source: "consigne de Jeremy, 2026-09-30"
+      source: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ (« consigne de Jeremy » jusqu'au 2026-09-30, 23 h 50)"
       consulte_le: "2026-09-30"
       note: >
         ⚠ 0,48 m n'a été trouvé dans AUCUNE source. docs.kscale.dev ne
