@@ -413,6 +413,10 @@ def page_piece(p) -> str:
               f'{"dessinable" if ep["dessinable"] else "non dessinable"}</span> '
               f'<span class="v {"ok" if ep["coupable"] else "no"}">'
               f'{"coupable" if ep["coupable"] else "non coupable"}</span>')
+    # Fiche 0044 : l'exemplaire réellement coupé, quand il diffère du plan.
+    # Le texte vient du relevé de la pièce, jamais d'ici (fiche 0018).
+    coupe = (f'<div class="note">{e(p["exemplaire_coupe"].strip())}</div>'
+             if p.get("exemplaire_coupe") else "")
     return page(p.get("titre") or p["nom"], f"""
 <div class="specs">
   <span><b>{val(p.get('materiau'))}</b> {val(p.get('epaisseur_mm'),' mm')}</span>
@@ -420,6 +424,7 @@ def page_piece(p) -> str:
   <span>{val(p.get('longueur_mm'))} × {val(p.get('largeur_mm'))} mm</span>
   <span>{voyant}</span>
 </div>
+{coupe}
 
 <div class="grille g2">
   <div class="carte">

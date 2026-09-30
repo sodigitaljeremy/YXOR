@@ -28,6 +28,10 @@ piece:
     Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.
     C'est le prototype de la méthode : un modèle, un paramètre
     d'épaisseur, un DXF par couple machine-matériau.
+  exemplaire_coupe: >
+    L'exemplaire réel a été coupé en carton ondulé double de
+    3,5 mm à partir de ce plan en carton plume : le contour 2D
+    est identique, seule l'épaisseur diffère.
 
 cotes_schema:
   - rang: hors_tout

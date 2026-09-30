@@ -66,7 +66,7 @@ lisent quand leur question se pose.
 | [0041](0041-incertitude-des-mesures.md) | Porter l'incertitude d'une mesure | proposition | proposée | 2026-09-29 |  |
 | [0042](0042-rayon-matiere-ou-geste.md) | Le rayon minimal : ce que la matière supporte, ou ce que le geste permet ? | close | archivée | 2026-09-29 |  |
 | [0043](0043-profil-de-cannelure-et-lot-mesure.md) | Deux matières ou une ? Et ce que le dépôt ne sait pas de la matière qu'on a eue en main | close | appliquée | 2026-09-29 |  |
-| [0044](0044-variante-carton-ondule.md) | La semelle publiée n'est pas celle qui a été coupée | proposition | proposée | 2026-09-29 |  |
+| [0044](0044-variante-carton-ondule.md) | La semelle publiée n'est pas celle qui a été coupée | close | appliquée | 2026-09-29 |  |
 | [0045](0045-reconstruction-et-amont.md) | Aucune géométrie amont ne passe dans un outil de reconstruction | gouvernante | acceptée | 2026-09-30 |  |
 | [0046](0046-backflip-reconstruction-veille.md) | Backflip AI : une CAO paramétrique reconstruite ? Vérifié, pas adopté | veille | veille | 2026-09-30 |  |
 

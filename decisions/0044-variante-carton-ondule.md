@@ -1,9 +1,9 @@
 # 0044 — La semelle publiée n'est pas celle qui a été coupée
 
 Date : 2026-09-29
-Espèce : proposition
-État : proposée
-Statut : **proposée** — instruction. **Rien n'est généré.**
+Espèce : close
+État : appliquée
+Statut : **close** le 2026-09-30 par Jeremy, **sans variante générée**. Seule la voie D est appliquée : une phrase sur la page de la pièce.
 
 ## Le constat
 
@@ -129,3 +129,25 @@ seulement à celle-ci.
   **Elle serait déclarée coupable alors qu'elle est plus difficile à
   couper que celle qui l'a été.** Le verdict ne voit pas la difficulté,
   seulement la complétude.
+
+## Clôture — 2026-09-30
+
+**Décision de Jeremy : close, sans variante générée.** La caractérisation
+du carton est arrêtée (voir la 0042) : une variante ondulé ne servirait
+qu'à un matériau dont les valeurs ne se transfèrent pas au robot réel.
+
+**Seule la voie D est appliquée**, sous la forme que la question 1
+envisageait : un champ `exemplaire_coupe:` dans le relevé de la pièce,
+écrit par `parts/semelle_apprentissage.py` pour le palier P2 et le
+réglage `cutter_cartonplume_5`, et affiché par `page_piece`. La phrase
+visible sur le site :
+
+> L'exemplaire réel a été coupé en carton ondulé double de 3,5 mm à
+> partir de ce plan en carton plume : le contour 2D est identique, seule
+> l'épaisseur diffère.
+
+**Ce qui reste vrai** : la page publie toujours le réglage
+`cutter_cartonplume_5`, 5 mm. Elle ne ment plus sur ce qui a été coupé,
+mais elle ne le décrit pas non plus. Les questions 2 (deux variantes
+publiées ?) et 3 (d'où vient `0,5 × épaisseur` ?) sont sans objet pour
+le carton ; la seconde reviendra avec le procédé réel.

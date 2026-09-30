@@ -439,7 +439,16 @@ def main(argv=None) -> int:
               "    Pièce d'apprentissage. Ne remplace rien, ne s'interface avec rien.",
               "    C'est le prototype de la méthode : un modèle, un paramètre",
               "    d'épaisseur, un DXF par couple machine-matériau.",
-              "", "cotes_schema:"]
+              ]
+    # Fiche 0044, close le 2026-09-30 sans variante : l'exemplaire réel a
+    # été coupé dans une autre matière que celle du plan publié. Le dire
+    # sur la page, seulement pour ce plan-là (palier et réglage par défaut).
+    if a.palier == "P2" and a.reglage == "cutter_cartonplume_5":
+        lignes += ["  exemplaire_coupe: >",
+                   "    L'exemplaire réel a été coupé en carton ondulé double de",
+                   "    3,5 mm à partir de ce plan en carton plume : le contour 2D",
+                   "    est identique, seule l'épaisseur diffère."]
+    lignes += ["", "cotes_schema:"]
     for rang, lib, grandeur, cle, trace in schema:
         lignes += [f"  - rang: {rang}",
                    f"    libelle: \"{lib}\"",
