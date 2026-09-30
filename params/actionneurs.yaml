@@ -437,7 +437,7 @@ candidats:
     couple_pointe_Nm: {valeur: 12.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 450, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "à 48 V"}
     masse_g: {valeur: 306, source: "manuel V1.4", consulte_le: "2026-09-30"}
-    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "Foxtech ne liste que la V1.1 (116–120 USD) ; aucun prix de la V1.2 48 V trouvé"}
+    prix: {valeur: 140.95, devise: EUR, tva_incluse: null, vendeur: "OpenELAB", source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310 (données lues via .js, référence DM-J4310-2EC-48V-V4)", consulte_le: "2026-09-30", note: "TVA incluse ou non : inconnue (page HTML en 429) ; « V4 » = V1.2 d'après le titre Eckstein, pas affiché par OpenELAB ; « available » peut signifier précommande. Prix barré 172,95 €"}
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Configurations nommées — calculées et publiées au cadrage § 5

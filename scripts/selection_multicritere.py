@@ -449,12 +449,35 @@ def options_banc(r):
                          transfert_j=("JUGEMENT : quel que soit k, le modèle S de la famille gagnante est "
                                       "sur le banc → 5"),
                          finalistes=True))
+    # « qualification » (demande de Jeremy, 2026-09-30) : les trois modèles
+    # qui départagent les familles, à 48 V, une seule alimentation.
+    qual = ["dm_j4310_48v", "edulite05", "rs05"]
+    if all(q in cat["candidats"] for q in qual):
+        opts.append(dict(id="qualification",
+                         nom="qualification : 1 × " + " + 1 × ".join(info(q)["nom"] for q in qual) + " (48 V)",
+                         ids=qual, tension=48, appr=appr(3, False, True), transfert=5,
+                         transfert_j=("JUGEMENT : les modèles S des deux familles en tête sont sur le "
+                                      "banc, quel que soit k → 5")))
     opts.append(dict(id="feetech", nom="2 × Feetech STS3250 (banc d'apprentissage)",
                      ids=["sts3250", "sts3250"], tension=12, appr=appr(2, True, True), transfert=1,
                      transfert_j="autre fabricant, autre bus (TTL) que tous les finalistes → 1"))
+    inc = b.get("inconnues_decisives") or {}
+
+    def tranchees(ids):
+        s = set(ids)
+        out = []
+        for nom_i, d in inc.items():
+            reg = d["tranchee_si"]
+            if ("contient_un" in reg and s & set(reg["contient_un"])) or \
+               ("contient_tous" in reg and set(reg["contient_tous"]) <= s):
+                out.append(nom_i)
+        return out
+
     for o in opts:
         o["cout"], o["manquants"] = cout(o["ids"], o["tension"])
-        o["notes"] = dict(apprentissage=o["appr"][0], transfert_S=o["transfert"],
+        o["tranchees"] = tranchees(o["ids"])
+        nd = {3: 5, 2: 3, 1: 2}.get(len(o["tranchees"]), 0)
+        o["notes"] = dict(valeur_decision=nd, apprentissage=o["appr"][0], transfert_S=o["transfert"],
                           cout=0 if o["manquants"] else seuils(o["cout"], (250, 400, 600, 900, 1300), (5, 4, 3, 2, 1), 0),
                           risque=jr[o["id"]]["note"])
         o["risque_j"] = jr[o["id"]]["justification"]
@@ -484,10 +507,11 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           "rapport entre le couple continu réel des actionneurs « condition non précisée » et leur "
           "nominal publié. **Il ne se décide pas, il se mesure** — c'est le rôle premier du banc.\n")
     A("---\n\n## 1 — Les options\n")
-    A("| Option | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
-    A("| --- | --- | --- | ---: | --- | --- |")
+    A("| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
+    A("| --- | --- | --- | --- | ---: | --- | --- |")
     for o in opts:
-        A(f"| {o['nom']} | {o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
+        A(f"| {o['nom']} | {len(o['tranchees'])}/3 : {', '.join(o['tranchees']) or 'aucune'} | "
+          f"{o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
           f"{'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF | {', '.join(o['manquants']) or '—'} | "
           f"{o['notes']['risque']} — {o['risque_j']} |")
     A("\nCoût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, provisoire) × "
@@ -503,6 +527,13 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           + " ; ".join(f"{cat['candidats'][x]['nom']}" for x in paire) + ". "
           + ("Le prix de la variante 48 V du Damiao n'est pas connu : son coût est donc incomplet.\n"
              if any(cat["candidats"][x]["prix"].get("valeur") is None for x in paire) else "\n"))
+    inc = r["crit"]["banc"].get("inconnues_decisives") or {}
+    if inc:
+        A("**Les trois inconnues décisives** (grille écrite avant le calcul, "
+          "`criteres_selection.yaml`) :\n")
+        for k_, d in inc.items():
+            A(f"- `{k_}` — {d['question']}")
+        A("")
     A("---\n\n## 2 — Notes et score\n")
     A("| Critère | Poids (proposé) | " + " | ".join(o["nom"] for o in opts) + " |")
     A("| --- | ---: | " + " | ".join("---:" for _ in opts) + " |")

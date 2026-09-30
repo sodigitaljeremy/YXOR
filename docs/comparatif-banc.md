@@ -8,45 +8,53 @@
 
 ## 1 — Les options
 
-| Option | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |
-| --- | --- | --- | ---: | --- | --- |
-| 1 × Damiao DM-J4310-2EC V1.2 | 2/5 : protocole, thermique | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 261 CHF | — | 3 — pas de rechange : une casse arrête le banc |
-| 2 × Damiao DM-J4310-2EC V1.2 | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 418 CHF | — | 5 — rechange disponible, un seul modèle à maîtriser |
-| 3 × Damiao DM-J4310-2EC V1.2 | 5/5 : protocole, thermique, bus_multi_adresses, segment_2ddl, dispersion | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 574 CHF | — | 5 — rechange disponible, un seul modèle |
-| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — JUGEMENT : quel que soit k, le modèle S de la famille gagnante est sur le banc → 5 | ≥ 219 CHF | prix Damiao DM-J4310-2EC V1.2 (48 V) | 3 — deux modèles, deux protocoles possibles à maîtriser, pas de rechange de chacun |
-| 2 × Feetech STS3250 (banc d'apprentissage) | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 1 — autre fabricant, autre bus (TTL) que tous les finalistes → 1 | ≥ 10 CHF | prix Feetech STS3250, prix Feetech STS3250, alimentation 12 V | 1 — impasse : bus TTL et servo à engrenages, rien ne se transfère à une classe S en CAN |
+| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |
+| --- | --- | --- | --- | ---: | --- | --- |
+| 1 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 2/5 : protocole, thermique | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 261 CHF | — | 3 — pas de rechange : une casse arrête le banc |
+| 2 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 418 CHF | — | 5 — rechange disponible, un seul modèle à maîtriser |
+| 3 × Damiao DM-J4310-2EC V1.2 | 1/3 : k_damiao | 5/5 : protocole, thermique, bus_multi_adresses, segment_2ddl, dispersion | 3 — JUGEMENT : 5 si k ≥ 0,70 (sa famille gagne), 1 sinon ; k inconnu tant que le banc ne l'a pas mesuré → 3 | 574 CHF | — | 5 — rechange disponible, un seul modèle |
+| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 2/3 : k_damiao, blocage_edulite | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — JUGEMENT : quel que soit k, le modèle S de la famille gagnante est sur le banc → 5 | 385 CHF | — | 3 — deux modèles, deux protocoles possibles à maîtriser, pas de rechange de chacun |
+| qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 3/3 : k_damiao, blocage_edulite, rs05_contre_edulite | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 5 — JUGEMENT : les modèles S des deux familles en tête sont sur le banc, quel que soit k → 5 | 499 CHF | — | 3 — trois modèles, deux protocoles (RobStride commun au RS05 et à l'EduLite 05), pas de rechange de chacun |
+| 2 × Feetech STS3250 (banc d'apprentissage) | 0/3 : aucune | 4/5 : protocole, thermique, bus_multi_adresses, segment_2ddl | 1 — autre fabricant, autre bus (TTL) que tous les finalistes → 1 | ≥ 10 CHF | prix Feetech STS3250, prix Feetech STS3250, alimentation 12 V | 1 — impasse : bus TTL et servo à engrenages, rien ne se transfère à une classe S en CAN |
 
 Coût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, provisoire) × (1 + TVA 8,1 %). Alimentations : Mean Well RSP-320-24 (24 V) ou RSP-500-48 (48 V), Reichelt. Un poste non chiffré met la note de coût à 0.
 
 **Adaptateur USB-CAN** : candleLight de Linux Automation (54,74 € TTC, vérifié), **prototype non conforme CE** selon son fabricant. **Alternative : CANable 2.0** (Openlight Labs), 35 USD **non vérifié** (page inaccessible), conformité CE **inconnue** ; livré avec le firmware slcan (**GPL-3.0**), compatible candleLight_fw (**MIT**) mais **sans CAN FD** sur la 2.0 ; licence du matériel non nommée.
 
-**L'option à deux finalistes** tourne à **48 V**, pour une seule alimentation : Damiao DM-J4310-2EC V1.2 (48 V) ; RobStride EduLite 05. Le prix de la variante 48 V du Damiao n'est pas connu : son coût est donc incomplet.
+**L'option à deux finalistes** tourne à **48 V**, pour une seule alimentation : Damiao DM-J4310-2EC V1.2 (48 V) ; RobStride EduLite 05. 
+
+**Les trois inconnues décisives** (grille écrite avant le calcul, `criteres_selection.yaml`) :
+
+- `k_damiao` — le couple continu réel du Damiao J4310 (son k) : décide la bascule Damiao / RobStride
+- `blocage_edulite` — le couple de l'EduLite 05 près du blocage : aucune valeur en blocage n'est publiée
+- `rs05_contre_edulite` — RS05 ou EduLite 05 pour S dans la famille RobStride, mesurés dans la même condition
 
 ---
 
 ## 2 — Notes et score
 
-| Critère | Poids (proposé) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| apprentissage | 35 | 2 | 4 | 5 | 4 | 4 |
-| transfert_S | 25 | 3 | 3 | 3 | 5 | 1 |
-| cout | 25 | 4 | 3 | 3 | 0 | 0 |
-| risque | 15 | 3 | 5 | 5 | 3 | 1 |
-| **score /5** | | **2,90** | **3,65** | **4,00** | **3,10** | **1,80** |
+| Critère | Poids (proposé) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| valeur_decision | 30 | 2 | 2 | 2 | 3 | 5 | 0 |
+| apprentissage | 24.5 | 2 | 4 | 5 | 4 | 4 | 4 |
+| transfert_S | 17.5 | 3 | 3 | 3 | 5 | 5 | 1 |
+| cout | 17.5 | 4 | 3 | 3 | 4 | 3 | 0 |
+| risque | 10.5 | 3 | 5 | 5 | 3 | 3 | 1 |
+| **score /5** | | **2,63** | **3,15** | **3,40** | **3,77** | **4,20** | **1,26** |
 
 ## 3 — Sensibilité
 
-Vainqueur aux poids proposés : **3 × Damiao DM-J4310-2EC V1.2**. 8 variations ±50 % sur 8 le laissent en tête.
+Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)**. 10 variations ±50 % sur 10 le laissent en tête.
 
 | Option | Victoires sur 1 000 tirages |
 | --- | ---: |
-| 3 × Damiao DM-J4310-2EC V1.2 | 780 |
-| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 134 |
-| 1 × Damiao DM-J4310-2EC V1.2 | 86 |
+| qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 515 |
+| 3 × Damiao DM-J4310-2EC V1.2 | 273 |
+| 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | 212 |
 
 ## 4 — Verdict
 
-**Classement ROBUSTE** : 3 × Damiao DM-J4310-2EC V1.2.
+**Options trop proches pour que l’analyse tranche** : qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) — le choix dépend des poids, que Jeremy fixera.
 
 **Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la condition de mesure n'est pas publiée : ici **Damiao DM-J4310-2EC V1.2, RobStride EduLite 05**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options « × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre finaliste **dans la même condition** : la comparaison devient directe, au lieu de s'appuyer sur sa fiche.
 

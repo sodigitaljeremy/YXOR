@@ -123,6 +123,18 @@ modifications:
     ancien_texte: >
       prudent = en blocage si publié ; sinon la plus petite plaque
       publiée ; sinon (condition non précisée) le nominal × k.
+  - date: "2026-09-30"
+    moment: "soir ; comparatif v3 ; grille écrite AVANT le calcul"
+    objet: "banc : critère « valeur de décision », poids proposé 30 ; option « qualification »"
+    raison: >
+      Le banc doit d'abord trancher ce qui départage les familles. Le
+      nouveau critère compte combien des trois inconnues décisives une
+      option tranche. Poids proposé 30 ; les quatre autres sont réduits
+      en proportion (× 0,7). Option ajoutée à la demande de Jeremy :
+      « qualification » = 1 × J4310 V1.2 48 V + 1 × EduLite 05 + 1 × RS05,
+      une alimentation 48 V, un adaptateur CAN.
+    ancien_texte: "poids du banc : apprentissage 35, transfert_S 25, cout 25, risque 15"
+    nouveau_texte: "valeur_decision 30, apprentissage 24,5, transfert_S 17,5, cout 17,5, risque 10,5"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -292,14 +304,37 @@ banc:
     segment_2ddl: "monter le segment à 2 degrés de liberté de l'échelon 1 (cadrage § 10)"
     dispersion: "mesurer l'écart entre exemplaires d'un même modèle (≥ 3)"
 
+  # Les inconnues qui départagent les familles (docs/choix-famille-actionneurs.md).
+  # Écrit AVANT le calcul, le 2026-09-30 (soir).
+  inconnues_decisives:
+    k_damiao:
+      question: "le couple continu réel du Damiao J4310 (son k) : décide la bascule Damiao / RobStride"
+      tranchee_si: {contient_un: [dm_j4310, dm_j4310_48v]}
+    blocage_edulite:
+      question: "le couple de l'EduLite 05 près du blocage : aucune valeur en blocage n'est publiée"
+      tranchee_si: {contient_un: [edulite05]}
+    rs05_contre_edulite:
+      question: "RS05 ou EduLite 05 pour S dans la famille RobStride, mesurés dans la même condition"
+      tranchee_si: {contient_tous: [rs05, edulite05]}
+
   ponderes:
+    valeur_decision:
+      poids: 30
+      statut: "proposé, à fixer par Jeremy"
+      mode: calcule
+      mesure: "nombre d'inconnues décisives que l'option tranche (inconnues_decisives)"
+      grille:
+        5: "les trois"
+        3: "deux"
+        2: "une"
+        0: "aucune"
     apprentissage:
-      poids: 35
+      poids: 24.5
       statut: "proposé, à fixer par Jeremy"
       mode: calcule
       grille: "nombre d'apprentissages couverts, de 0 à 5"
     transfert_S:
-      poids: 25
+      poids: 17.5
       statut: "proposé, à fixer par Jeremy"
       mode: calcule
       grille:
@@ -307,7 +342,7 @@ banc:
         3: "même fabricant et même protocole que le modèle retenu pour S"
         1: "autre fabricant ou autre protocole"
     cout:
-      poids: 25
+      poids: 17.5
       statut: "proposé, à fixer par Jeremy"
       mode: calcule
       mesure: "coût TTC CH : actionneurs + adaptateur + alimentation du bus, imprévus compris"
@@ -319,7 +354,7 @@ banc:
         1: "≤ 1 300 CHF"
         0: "> 1 300 CHF, ou incomplet"
     risque:
-      poids: 15
+      poids: 10.5
       statut: "proposé, à fixer par Jeremy"
       mode: jugement
       jugements_par_option:
@@ -328,6 +363,7 @@ banc:
         trois_vainqueurs: {note: 5, justification: "rechange disponible, un seul modèle"}
         deux_finalistes: {note: 3, justification: "deux modèles, deux protocoles possibles à maîtriser, pas de rechange de chacun"}
         feetech: {note: 1, justification: "impasse : bus TTL et servo à engrenages, rien ne se transfère à une classe S en CAN"}
+        qualification: {note: 3, justification: "trois modèles, deux protocoles (RobStride commun au RS05 et à l'EduLite 05), pas de rechange de chacun"}
       grille:
         5: "rechange disponible, modèle unique, pas d'impasse technique"
         3: "une seule faiblesse (pas de rechange, ou deux modèles à maîtriser)"
