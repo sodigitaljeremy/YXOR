@@ -361,7 +361,7 @@ fichiers:
       - motif: "dimensionnement.marge"
         origine: propre
         nature: tenue
-        source: "choix de Jeremy à valider — pas une norme"
+        source: "décidé par Jeremy le 2026-09-30 (fiche 0051) — pas une norme"
       - motif: "dimensionnement.tolerance_coherence_m"
         origine: propre
         nature: sans_objet

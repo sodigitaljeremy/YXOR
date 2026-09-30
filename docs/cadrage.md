@@ -121,7 +121,7 @@ que l'échauffement est souvent la vraie limite d'un actionneur humanoïde.
 
 ---
 
-## 4. La marge de sécurité — *proposé : 1,5 provisoire*
+## 4. La marge de sécurité — *décidé le 30-09-2026 : 1,5, à revoir après le banc*
 
 **Ce que c'est.** On exige qu'un actionneur puisse fournir 1,5 fois le
 couple mesuré en simulation. C'est un facteur de sécurité, comme la charge
@@ -136,9 +136,10 @@ faiblit.
 à la puissance −⅓ (calculé par le script, RS02 homogène). Pour le
 RS02 : 0,90 m à 1,0 ; 0,79 m à 1,5 ; 0,71 m à 2,0.
 
-**Règle proposée** : 1,5 tant que rien n'a été mesuré sur un vrai
-actionneur. On la réduit quand le banc aura mesuré le comportement
-thermique réel : moins d'inconnues, marge plus faible.
+**Règle décidée** (Jeremy, 30-09-2026, fiche 0051) : 1,5 tant que rien
+n'a été mesuré sur un vrai actionneur. On la réduit quand le banc aura
+mesuré le comportement thermique réel : moins d'inconnues, marge plus
+faible.
 
 ---
 
@@ -165,8 +166,9 @@ Constats :
   classe légère sur le lacet de hanche rend ce lacet limitant, parce qu'il
   porte la masse ajoutée par les actionneurs lourds. Exemple : RS03 et
   STS3250 plafonnent à 0,48 m, contre 0,60 m en STS3250 seul. La
-  configuration avec le lacet de hanche en classe lourde est en cours de
-  calcul.
+  configuration avec le lacet de hanche en classe lourde n'avait pas été
+  calculée *(correction du 30-09-2026 : la version 1 la disait « en cours
+  de calcul », ce qui était faux)*.
 - **La valeur du RS02 (6 ou 7 N·m) change peu le résultat** : 9 mm.
 - **L'ancien P2 à 0,9 m** n'est atteint que par le RS06 (de justesse) et
   le RS03.
@@ -259,15 +261,15 @@ Tant qu'un poste est inconnu, le total s'affiche « ≥ », jamais comme s'il
 
 ---
 
-## 8. Acheter ou concevoir les actionneurs — *proposé*
+## 8. Acheter ou concevoir les actionneurs — *achat : proposé ; actionneur maison : décidé le 30-09-2026*
 
 **Pour la v1, on achète.** Concevoir un actionneur est un projet en soi.
 Berkeley Humanoid Lite l'a fait avec des cycloïdes imprimées, et ses
 auteurs les jugent trop fragiles pour des tâches exigeantes : leur V2 passe
 aux actionneurs du commerce.
 
-**En parallèle, Jeremy conçoit son propre actionneur** (souhait exprimé le
-30-09-2026). Principe proposé :
+**En parallèle, Jeremy conçoit son propre actionneur** (souhait exprimé
+le 30-09-2026, **décidé** avec les modalités ci-dessous, fiche 0052) :
 
 1. **Interface commune.** L'actionneur maison reprend l'interface d'un
    modèle du commerce de la même classe : bride, perçages, encombrement,
@@ -370,18 +372,19 @@ v2 : les bras ne font pas partie de la v1.
 | 30-09 | **Tailles Banc, S, M, L, XL ; premier robot S** | Jeremy | § 6 | P1/P2/P3 à hauteur fixe ; premier robot M | l'étude fournisseurs élimine toute classe CAN pour S |
 | 30-09 | Scripts de chiffrage versionnés, séries régénérées | Jeremy | Refaire le calcul quand les hypothèses changent | Laisser les scripts hors dépôt | — |
 | 30-09 | Pour la v1, on achète les actionneurs | proposé (Claude, ChatGPT) | § 8 | Actionneur maison sur le chemin critique | aucun actionneur du commerce ne tient l'enveloppe |
-| 30-09 | Actionneur maison, piste parallèle à interface commune | Jeremy (souhait), modalités proposées | § 8 | — | — |
-| 30-09 | Marge de 1,5 | **proposé**, en attente | § 4 | 1,0 ; 2,0 | résultats du banc |
+| 30-09 | **Actionneur maison**, piste parallèle à interface commune, taille S d'abord, jamais sur le chemin critique (fiche 0052) | Jeremy | § 8 | — | — |
+| 30-09 | **Marge de 1,5** (fiche 0051) | Jeremy | § 4 | 1,0 ; 2,0 | résultats du banc |
 | 30-09 | Vision du § 1 | **proposé**, en attente | — | — | — |
 
 ---
 
 ## 13. Questions ouvertes
 
-1. Valider la vision (§ 1) et la marge (§ 4).
+1. Valider la vision (§ 1). *(La marge du § 4 est décidée : fiche 0051.)*
 2. Classe d'actionneur pour S (§ 6), après l'étude fournisseurs (§ 9).
-3. Configuration mixte avec le lacet de hanche en classe lourde (calcul en
-   cours).
+3. Configuration mixte avec le lacet de hanche en classe lourde. *(Correction
+   du 30-09-2026 : ce calcul n'était PAS en cours, contrairement à ce
+   qu'écrivait la version 1.)*
 4. Taux d'imprévus du budget (§ 7).
 5. Chiffrage de la structure : usinage (Loïc) et impression.
 6. Procédé exact de Loïc, rayons minimaux, matières, format de fichier.

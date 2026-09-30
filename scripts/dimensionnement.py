@@ -398,7 +398,7 @@ def main(argv=None) -> int:
 
     besoins = besoins_p1(analyse)
     confs = configurations(cat)
-    print(f"\n  {len(confs)} configurations, marge {marge} (choix de Jeremy à valider)\n")
+    print(f"\n  {len(confs)} configurations, marge {marge} (décidée : fiche 0051)\n")
     lignes = []
     for nom, conf in confs:
         ev = evaluer(ref, conf, besoins, marge)

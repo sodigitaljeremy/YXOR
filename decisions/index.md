@@ -73,5 +73,7 @@ lisent quand leur question se pose.
 | [0048](0048-tailles-par-classe.md) | Tailles Banc, S, M, L, XL ; premier robot S | gouvernante | acceptée | 2026-09-30 |  |
 | [0049](0049-scripts-de-chiffrage-versionnes.md) | Les scripts de chiffrage sont versionnés, les séries se régénèrent | close | appliquée | 2026-09-30 |  |
 | [0050](0050-fabrication-sequencee.md) | Fabrication séquencée : usinage, puis impression 3D, puis hybride | gouvernante | acceptée | 2026-09-30 |  |
+| [0051](0051-marge-de-securite.md) | Marge de sécurité de 1,5 sur le couple, à revoir après le banc | gouvernante | appliquée | 2026-09-30 |  |
+| [0052](0052-actionneur-maison.md) | Actionneur maison : une piste parallèle, jamais sur le chemin critique | gouvernante | acceptée | 2026-09-30 |  |
 
-**50 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**52 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.

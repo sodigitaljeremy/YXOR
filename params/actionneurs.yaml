@@ -32,7 +32,7 @@ consultation: "2026-09-30"
 #  Paramètres du dimensionnement — choix, pas mesures
 # ═════════════════════════════════════════════════════════════════════════
 dimensionnement:
-  marge: 1.5                  # CHOIX DE JEREMY À VALIDER — pas une norme
+  marge: 1.5                  # DÉCIDÉ par Jeremy le 2026-09-30 (fiche 0051), à revoir après le banc — pas une norme
   tolerance_coherence_m: 0.005
   # Configuration mixte : classe lourde ici, légère ailleurs (consigne de
   # Jeremy, 2026-09-30).
