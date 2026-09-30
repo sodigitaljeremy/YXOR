@@ -230,7 +230,11 @@ candidats:
       valeur: 3.5
       source: "manuel V1.4, p. 7"
       consulte_le: "2026-09-30"
-      condition: "non précisée ; à 3,5 N·m, 120 rpm, 24 V, le moteur passe de ~32 °C à ~99 °C en ~310 s (courbe constructeur) : ce n'est PAS un régime établi"
+      # CORRIGÉ le 2026-09-30 (nuit), validé par Jeremy. Ancien texte, contredit par
+      # l'estimation thermique (docs/estimation-thermique-j4310.md) :
+      #   « … en ~310 s (courbe constructeur) : ce n'est PAS un régime établi »
+      # La courbe avait été lue trop vite : la montée est presque achevée à 310 s.
+      condition: "non précisée (plaque, ambiante) ; à 3,5 N·m, 120 rpm, 24 V, le moteur passe de ~32 °C à ~99 °C en ~310 s (courbe constructeur) : montée PRESQUE ACHEVÉE (τ ≈ 110–130 s), vers une asymptote ~100–103 °C, à la limite de protection recommandée (≤ 100 °C) — 3,5 N·m est à peu près un continu EN ROTATION dans cette condition (estimation, pas une mesure ; corrigé le 2026-09-30)"
       plaque_mm: null
     couple_pointe_Nm: {valeur: 12.5, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30"}
     vitesse_a_vide_rpm: {valeur: 200, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "à 24 V"}

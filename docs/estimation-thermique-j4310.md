@@ -99,6 +99,11 @@ du 2026-09-30 disent que « 3,5 N·m n'est PAS un régime établi ».
 **suffisait** à le voir ; elle avait été lue trop vite. Le catalogue n'est
 pas corrigé ici : c'est à décider.
 
+*Mise à jour du 2026-09-30, nuit* : **correction validée par Jeremy et
+appliquée** au catalogue, avec l'ancien texte conservé en commentaire
+daté. `docs/choix-classe-S.md` (v1, figé) garde l'ancienne formulation :
+c'est une archive.
+
 **Ce que la courbe ne dit pas.**
 
 - **La condition de l'essai** : rotation à 120 rpm, sans rien sur le
