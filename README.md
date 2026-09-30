@@ -2,6 +2,8 @@
 
 Robot humanoïde bipède autonome à IA embarquée locale.
 
+> **À lire en premier : [le cadrage](docs/cadrage.md).** Ce qu'est YXOR, comment se décident sa taille, son budget et ses actionneurs, et pourquoi. Tout le reste du dépôt s'y rattache.
+
 Le robot n'est pas conçu à une taille donnée, mais comme un système paramétré
 par une variable unique `H` (taille totale), déclinable en trois paliers :
 
@@ -67,6 +69,7 @@ Voir `decisions/0018-application-web.md`.
 
 ## Documents
 
+- **[Cadrage](docs/cadrage.md) — LE document à lire en premier**
 - [Index des fiches de décision](decisions/index.md) — engendré
 - [État des lieux du 2026-09-29](docs/etat-des-lieux-2026-09-29.md) — inventaire, règles outillées, distance au premier objet
 - [Glossaire](docs/glossaire.md)
