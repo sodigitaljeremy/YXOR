@@ -82,7 +82,7 @@ structure:
 #  Poste `adaptateur_bus` : TTL si toutes les classes sont Feetech, CAN sinon.
 phases:
   banc:
-    statut: "PROPOSÉ (cadrage § 6 et § 13, 2026-09-30) — en attente de Jeremy"
+    statut: "OPTION, en attente du comparatif (docs/comparatif-banc.md ; cadrage § 6 et § 13)"
     description: >
       2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration
       étudiée : thermique réelle, deux adresses sur un même bus, segment à

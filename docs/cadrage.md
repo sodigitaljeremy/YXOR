@@ -193,18 +193,19 @@ hauteur indiquée est un ordre de grandeur, que le calcul affine.
 
 | Taille | Hauteur | Classe d'actionneur de jambe | Rôle |
 | --- | --- | --- | --- |
-| **Banc** | aucune | *proposé :* 2 × RS05 + 1 adaptateur USB-CAN | apprendre la commande, mesurer la thermique réelle (échelon 0) |
+| **Banc** | aucune | *option, en attente du comparatif :* 2 × RS05 + 1 adaptateur USB-CAN | apprendre la commande, mesurer la thermique réelle (échelon 0) |
 | **S** | ≈ 0,55–0,60 m | EduLite 05, RS05 ou STS3250 | **premier robot** : petit, abordable, pour apprendre la locomotion complète |
 | **M** | ≈ 0,8 m | RS02, un seul modèle | premier YXOR « sérieux » : une seule bride, un seul fichier CAO, des pièces interchangeables |
 | **L** | ≈ 0,9 m | RS06 (ou mixte RS06/RS02 à calculer) | version grande |
 | **XL** | > 1 m | RS03 et au-delà | horizon, hors programme |
 
-**Composition du banc — *proposé*.** Deux RS05 et un adaptateur USB-CAN.
+**Composition du banc — *option, en attente du comparatif*.** Deux RS05 et un adaptateur USB-CAN.
 Deux, et non un, pour quatre raisons : mesurer la thermique réelle d'un
 actionneur ; faire parler **deux adresses sur un même bus** ; monter le
 **segment à 2 degrés de liberté** de l'échelon 1 (§ 10) ; garder une
 **rechange**. Chiffré dans `params/budget.yaml`, phase `banc`, marquée
-« proposé ». Pas de fiche tant que Jeremy n'a pas tranché.
+« option ». **Jeremy choisira sur comparatif rédigé** :
+`docs/comparatif-banc.md`. Pas de fiche d'ici là.
 
 **Premier robot : S** (décision de Jeremy). Justification : c'est la taille
 la moins chère pour franchir toute l'échelle des capacités (§ 10), et celle
@@ -468,7 +469,8 @@ v2 : les bras ne font pas partie de la v1.
     non tranchée.
 11. Les valeurs numériques extraites de ToddlerBot (axes, butées) sont-elles
     couvertes par sa licence ? Question juridique, sans avis ici.
-12. Composition du banc : 2 × RS05 + 1 adaptateur USB-CAN (§ 6), *proposé*.
+12. Composition du banc (§ 6) : « 2 × RS05 + 1 adaptateur USB-CAN » est
+    une *option, en attente du comparatif* (`docs/comparatif-banc.md`).
     Le prix de l'adaptateur n'est pas vérifié ; l'alimentation du banc
     n'est pas comprise dans la proposition.
 
