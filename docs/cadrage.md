@@ -188,6 +188,8 @@ Constats :
 
 ## 6. Les tailles de YXOR — *décidé le 30-09-2026*
 
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
+
 Les tailles sont désormais **définies par classe d'actionneur**. La
 hauteur indiquée est un ordre de grandeur, que le calcul affine.
 
@@ -348,6 +350,8 @@ Aucune de ces trois interfaces n'est encore décidée : pas de fiche.
 
 ## 9. Étude des fabricants et fournisseurs — *instruit le 30-09-2026*
 
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
+
 Jusqu'ici, on a comparé des **modèles**. Il manque la comparaison des
 **fabricants et distributeurs**, qui pèse autant sur le projet.
 
@@ -471,6 +475,8 @@ v2 : les bras ne font pas partie de la v1.
 ---
 
 ## 13. Questions ouvertes
+
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
 
 1. Valider la vision (§ 1). *(La marge du § 4 est décidée : fiche 0051.)*
 2. Classe d'actionneur pour S (§ 6), après l'étude fournisseurs (§ 9).
