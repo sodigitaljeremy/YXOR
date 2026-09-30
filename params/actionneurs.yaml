@@ -691,3 +691,295 @@ familles:
       plus, sans annonce d'arrêt trouvée ; « remplacé par X8-32 » n'est
       écrit nulle part (l'étude externe l'affirmait). Le X8-25 (V2, 48 V,
       25 N·m) est encore présenté mais absent du catalogue 2026.
+
+# ═════════════════════════════════════════════════════════════════════════
+#  COLLECTE, NON NOTÉE — critères manquants (2026-10-01)
+# ═════════════════════════════════════════════════════════════════════════
+#  Faits relevés pour les 7 familles A–G retenues par Jeremy le 2026-09-30
+#  (~23 h), dans les SEULS documents au registre (params/fournisseurs.yaml),
+#  copies de session vérifiées par sha256. Proposition de critères et de
+#  grilles : docs/criteres-manquants.md (PROPOSÉ). AUCUNE de ces valeurs
+#  n'est lue par selection_multicritere.py : rien n'est noté ni recalculé.
+#  Seul scripts/pertes_cuivre.py lit la famille G, pour information.
+#
+#  Règle de saisie : valeur trouvée = valeur + source « document, p. N » ;
+#  sinon null + « non trouvé dans <documents lus> ». Jamais d'emprunt à un
+#  modèle voisin. Pages = numéros du PDF (la pagination imprimée peut être
+#  décalée). Relevé fait par trois agents de lecture, assemblé et
+#  normalisé par Claude Code (nombres en nombres, unités en note).
+#  STS3250 : aucun document au registre, donc tout est null.
+collecte_criteres_manquants:
+  statut: "collecte, non notée"
+  date: "2026-10-01"
+  proposition: "docs/criteres-manquants.md"
+  documents:
+    robstride_specs_20260917: robstride_rs_specs_20260917
+    rs05_manual_260713: robstride_rs05_manual_260713
+    el05_manual_260713: robstride_el05_manual_260713
+    dm_j4310_manual_v1_4: damiao_j4310_manual_v1_4
+    cubemars_ak_v3_2_0: cubemars_ak_manual_v3_2_0
+    x2_7_param_260903: myactuator_x2_7_param_260903
+    myactuator_can_v4_4: myactuator_can_protocol_v4_4
+    myactuator_catalogue_2026: myactuator_catalogue_2026
+    steadywin_gdz_xlsx: steadywin_selection_gdz
+    gdz_can_protocol: steadywin_gdz_docs_2026
+  candidats:
+    rs05:
+      A_encombrement_mm: {valeur: "Ø46 × 44±0,5 (+ 3 goupilles dépassant de 3±0,25)", source: "rs05_manual_260713, p. 10 (plan) ; robstride_specs_20260917, p. 26 (plan) et p. 38 (tableau : 46 / 44)"}
+      A_bride_sortie: {valeur: "6-M4 EQS prof. 3,5, sur Ø24±0,1 ; 3 goupilles Ø4 (0/-0,012) sur Ø19±0,02 ; côté carter 8-M3 EQS prof. 7 sur Ø41,5±0,1 ; face arrière 4-M3 EQS prof. 10 sur Ø38,5±0,1", source: "rs05_manual_260713, p. 10 (plan, image)", note: "cotes lues sur l'image ; l'attribution de la ligne de rappel du cercle Ø24 n'est pas sans ambiguïté"}
+      A_plan_cote_publie: {valeur: "oui", source: "rs05_manual_260713, p. 10 ; robstride_specs_20260917, p. 26 (images, lues visuellement)"}
+      A_cao_publiee: {valeur: null, source: null, note: "aucun STEP/CAO mentionné dans specs 20260917 et manuel RS05 260713 (seuls des fichiers EDS CANopen sont cités, p. 70)"}
+      A_charge_radiale_N: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713"}
+      A_charge_axiale_N: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé ; la table des matières cite « 4.2.5 Post-Power-Off Anti-Backdrive Protection » avec un signet cassé, section absente du corps (rs05_manual_260713, p. 8)"}
+      B_jeu: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713"}
+      B_mode_couple_natif: {valeur: "mode courant (run_mode 3, consigne iq_ref ±11 A) ; mode « operation control » par défaut : t_ref = Kd·(v_set−v)+Kp·(p_set−p)+t_ff, converti en iq par la boucle de courant (Kp 0–500, Kd 0–5, couple ±5,5 N·m) ; protocole MIT (commande 3) ; CANopen mode couple (mode 4, 6071h)", source: "rs05_manual_260713, p. 45, 46, 53, 58, 77, 79-80"}
+      B_capteur_temp_bobinage: {valeur: "thermistance moteur (motorTemp 0x3006 « Motor ntc temperature ») + température MCU (0x3005) + température carte (boardTemp 0x301f) ; température de bobinage par phase CALCULÉE depuis le courant de phase et la thermistance ; trame type 2 : « Current temperature » (origine non précisée) ; trame MIT : « Winding temperature »", source: "rs05_manual_260713, p. 12, 25, 27, 46, 79"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713 (paramètre echoFreHz 0x2004, défaut 500, plage 1–10000, sans description)"}
+      B_frequence_retour_bus: {valeur: "réponse (type 2) à chaque commande ; rapport actif désactivé par défaut, intervalle par défaut 10 ms, minimum 10 ms ; bus CAN 1 Mbps", source: "rs05_manual_260713, p. 18, 45, 51, 54-55"}
+      C_plaque_nominal: {valeur: "70 × 70 mm (1,6 N·m, manuel) ; 150 × 150 mm (1,8 N·m, specs)", source: "rs05_manual_260713, p. 10-12 ; robstride_specs_20260917, p. 27-28", note: "deux conditions publiées ; le catalogue retient 1,6 N·m (70 × 70)"}
+      C_conditions_continu: {valeur: "manuel : 1,6 N·m à 100 rpm, ambiante 25 °C, dissipateur alu 70×70, limite bobinage 145 °C (« contrainte ; réelle 180 °C »), 48 VDC ; specs : 1,8 N·m à 100 rpm, 48 V, plaque 150×150", source: "rs05_manual_260713, p. 10-12 ; robstride_specs_20260917, p. 27"}
+      D_version_document: {valeur: "manuel : historique « 1.0 Initial Release, November 25, 2025 » (nom de fichier 260713) ; specs : 2026.09.17 (nom de fichier, aucune date imprimée trouvée)", source: "rs05_manual_260713, p. 86 ; robstride_specs_20260917 (nom)"}
+      D_revision_materielle: {valeur: "cartouche du plan : indice « C », code « 250922… » (tronqué) ; firmware cités : 0.5.0.13 (commandes MIT 12-15)", source: "rs05_manual_260713, p. 10 (image), 22, 83", note: "aucune révision matérielle nommée comme telle"}
+      D_notes_de_version: {valeur: "une seule ligne (1.0, 25 nov. 2025)", source: "rs05_manual_260713, p. 86"}
+      D_contradictions_internes: {valeur: "couple nominal 1,8 (specs p. 27, 38) vs 1,6 N·m (manuel p. 10-11) ; couverture « 6N.M » (p. 1, p. 12) vs crête 5,5 N·m ailleurs ; table de paramètres limit_torque 17, limit_cur 23, rated_i 8, limit_i 27 (p. 23-28) ; CANopen « 1000 = 2 N·m » (p. 76-77) ; limite bobinage 145 °C (p. 12) vs défaut surchauffe 135 °C (p. 34, 50) ; sous-tension 12 V vs plage 15-60 V ; flasque arrière 4-M3 (specs p. 26) vs 8-M3 (manuel p. 10) ; specs « CAN2.0/CANFD » vs manuel « CAN 2.0 » (p. 45)", source: "voir pages citées"}
+      E_watchdog: {valeur: "CAN_TIMEOUT (0x200c / 0x7028, uint32, 20000 = 1 s, 0 = désactivé) ; CANopen objet 0x6099 index 1", source: "rs05_manual_260713, p. 23, 33-34, 54, 73"}
+      E_watchdog_valeur_usine: {valeur: 0, source: "rs05_manual_260713, p. 23, 54, 73", note: "0 = DÉSACTIVÉ en usine"}
+      E_perte_can: {valeur: "protocole privé : passage en « reset mode » ; CANopen : moteur désactivé", source: "rs05_manual_260713, p. 34, 73"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans specs 20260917 et manuel RS05 260713"}
+      E_protections: {valeur: "surchauffe moteur (thermistance > 135 °C, défaut) ; surtension 60 V ; sous-tension 12 V ; défaut puce driver ; surintensité par phase A/B/C ; blocage/surcharge algorithmique (I²t, bit 14) ; codeur non calibré ; initialisation de position ; identification matériel ; carte de commande max 135 °C. Réaction (coupure ou limitation) non décrite, sauf « triggers protection » pour la thermique", source: "rs05_manual_260713, p. 12, 14, 34, 47, 50, 81"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre (seul « official Git repository » pour le firmware, p. 55, sans licence)"}
+      G_resistance_ohm: {valeur: 2.72, source: "robstride_specs_20260917, p. 27", note: "±10 % ; absent du manuel"}
+      G_resistance_convention: {valeur: "ligne-ligne", source: "robstride_specs_20260917, p. 27", note: "« Line Resistance »"}
+      G_kt: {valeur: 0.94, source: "robstride_specs_20260917, p. 27 ; rs05_manual_260713, p. 11", note: "N·m/Arms"}
+      G_kt_cote: {valeur: null, source: null, note: "non précisé dans specs 20260917 et manuel RS05 260713"}
+      G_kt_convention_courant: {valeur: "efficace", source: "robstride_specs_20260917, p. 27 ; rs05_manual_260713, p. 11", note: "Kt en N·m/Arms, alors que les courants nominal et crête sont en Apk"}
+      G_courant_nominal_A: {valeur: 2.4, source: "robstride_specs_20260917, p. 27 ; rs05_manual_260713, p. 11, 14", note: "Apk ±10 %"}
+      G_courant_crete_A: {valeur: 11, source: "robstride_specs_20260917, p. 27 ; rs05_manual_260713, p. 11, 14", note: "Apk ±10 %"}
+      G_reduction: {valeur: 7.75, source: "robstride_specs_20260917, p. 27, 38 ; rs05_manual_260713, p. 13"}
+    edulite05:
+      A_encombrement_mm: {valeur: "Ø46 × 44 (+ goupilles dépassant de 3)", source: "el05_manual_260713, p. 9 (plan, image)", note: "EduLite absent de robstride_specs_20260917"}
+      A_bride_sortie: {valeur: "6-M4 prof. 3 EQS, sur Ø24 ; 3 goupilles Ø4 sur Ø17,7±0,03 ; côté carter 8-M3 prof. 6 EQS sur Ø41,5 ; face arrière 4-M3 prof. 8 sur Ø38,5", source: "el05_manual_260713, p. 9 (plan, image)", note: "lecture du plan, attribution du cercle non certaine"}
+      A_plan_cote_publie: {valeur: "oui", source: "el05_manual_260713, p. 9", note: "sans tolérances, sauf Ø17,7"}
+      A_cao_publiee: {valeur: null, source: null, note: "aucun STEP/CAO mentionné dans manuel EL05 260713 (fichiers EDS CANopen seulement)"}
+      A_charge_radiale_N: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 et specs 20260917"}
+      A_charge_axiale_N: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 et specs 20260917"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 et specs 20260917"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 et specs 20260917"}
+      B_jeu: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 et specs 20260917"}
+      B_mode_couple_natif: {valeur: "mêmes modes que le RS05 : mode courant (iq_ref ±11 A), mode « operation control » / MIT par défaut (Kp, Kd, t_ff, couple ±6 N·m), CANopen mode couple (mode 4)", source: "el05_manual_260713, p. 41, 47-48, 51-52, 70-73"}
+      B_capteur_temp_bobinage: {valeur: "thermistance moteur (motorTemp 0x3006), mcuTemp (0x3005), boardTemp (0x301f) ; bobinage calculé par phase depuis courant + thermistance ; trame MIT : « Winding temperature »", source: "el05_manual_260713, p. 11, 24, 26, 71-72"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 (echoFreHz 0x2004 défaut 500, non décrit)"}
+      B_frequence_retour_bus: {valeur: "réponse à chaque commande ; rapport actif désactivé par défaut, 10 ms par défaut, minimum 10 ms ; CAN 1 Mbps", source: "el05_manual_260713, p. 13, 17, 46, 49"}
+      C_plaque_nominal: {valeur: "70 × 70 mm", source: "el05_manual_260713, p. 9-10", note: "1,8 N·m avec dissipateur alu 70 × 70"}
+      C_conditions_continu: {valeur: "1,8 N·m à 100 rpm, ambiante 25 °C, dissipateur alu 70×70, limite bobinage 135 °C (« contrainte ; réelle 180 °C »), 48 VDC", source: "el05_manual_260713, p. 9-11"}
+      D_version_document: {valeur: "historique « 1.0 Initial Release, November 25, 2025 » (nom de fichier 260713)", source: "el05_manual_260713, p. 80"}
+      D_revision_materielle: {valeur: null, source: null, note: "aucune révision matérielle nommée dans manuel EL05 260713 (firmware 1.0.5.0.4 cité pour les commandes MIT 12-15, p. 7)"}
+      D_notes_de_version: {valeur: "une seule ligne (1.0, 25 nov. 2025)", source: "el05_manual_260713, p. 80"}
+      D_contradictions_internes: {valeur: "exemple de code T_MIN/T_MAX ±5,5 (p. 56) vs ±6 N·m dans les tables ; table de paramètres limit_torque 17, limit_cur 23, rated_i 8, limit_i 27 (p. 22-27) ; CANopen « 1000 = 2 N·m » (p. 67-70) ; sous-tension 12 V vs plage 15-60 V ; carte de commande max 103 °C (p. 13) vs seuil surchauffe 135 °C", source: "voir pages citées"}
+      E_watchdog: {valeur: "CAN_TIMEOUT / canTimeout 0x7028 (20000 = 1 s, 0 = désactivé) ; CANopen objet 0x6099 index 1", source: "el05_manual_260713, p. 31, 49, 66"}
+      E_watchdog_valeur_usine: {valeur: 0, source: "el05_manual_260713, p. 49, 66", note: "0 = DÉSACTIVÉ en usine"}
+      E_perte_can: {valeur: "protocole privé : passage en « reset mode » ; CANopen : moteur désactivé", source: "el05_manual_260713, p. 31, 66"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713"}
+      E_protections: {valeur: "surchauffe thermistance moteur > 135 °C ; surtension 60 V ; sous-tension 12 V ; puce driver ; surintensité phases A/B/C ; blocage/surcharge algorithmique (bit 14) ; codeur non calibré ; initialisation position ; identification matériel ; carte de commande max 103 °C. Réaction non décrite", source: "el05_manual_260713, p. 11, 13, 31, 45"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      G_resistance_ohm: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713 ; EL05 absent de specs 20260917"}
+      G_resistance_convention: {valeur: null, source: null, note: "non trouvé dans manuel EL05 260713"}
+      G_kt: {valeur: 0.94, source: "el05_manual_260713, p. 10", note: "N·m/Arms ; valeur identique au RS05 alors que la réduction diffère (9:1 contre 7,75:1) : copier-coller probable, à ne pas utiliser sans mesure"}
+      G_kt_cote: {valeur: null, source: null, note: "non précisé dans manuel EL05 260713"}
+      G_kt_convention_courant: {valeur: "efficace", source: "el05_manual_260713, p. 10", note: "N·m/Arms"}
+      G_courant_nominal_A: {valeur: 2.6, source: "el05_manual_260713, p. 10, 13", note: "Apk ±10 %"}
+      G_courant_crete_A: {valeur: 11, source: "el05_manual_260713, p. 10, 13", note: "Apk ±10 %"}
+      G_reduction: {valeur: 9, source: "el05_manual_260713, p. 12"}
+    dm_j4310_48v:
+      A_encombrement_mm: {valeur: "Ø57 × 46 (plan : corps 45, hors-tout 46, épaulement Ø35)", source: "dm_j4310_manual_v1_4, p. 7 (Outer Diameter 57mm, Height 46mm) ; plan p. 10"}
+      A_bride_sortie: {valeur: "plan p. 10 : 2 groupes « 6xM3 ↓5 » (l'un sur Ø27, l'autre sur Ø50) ; trous de centrage 3-Ø4 (+0,04/+0,02) et 2-Ø3 (+0,04/+0,02) ↓5 ; cotes Ø24,30, Ø57 ; décalage angulaire 15°", source: "dm_j4310_manual_v1_4, p. 10 (image du plan)", note: "cotes lues sur l'image, pas dans le texte extrait ; le plan ne dit pas quelle face est la sortie ni quel cercle est la bride de sortie ; rattachement flèche → cercle à vérifier sur le PDF"}
+      A_plan_cote_publie: {valeur: "oui, p. 10 (face + profil ; pas de tolérance de concentricité ni de face arrière)", source: "dm_j4310_manual_v1_4, p. 10"}
+      A_cao_publiee: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      A_charge_radiale_N: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      A_charge_axiale_N: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      B_jeu: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      B_mode_couple_natif: {valeur: "pas de mode courant séparé. Mode MIT (p_des, v_des, Kp [0,500], Kd [0,5], t_ff) : la consigne CAN est convertie en couple, qui sert de référence à la boucle de courant ; Kp=Kd=0 donne un couple direct par t_ff. Mode force-position hybride : position + limite de vitesse + limite de courant en p.u. du courant de phase max", source: "dm_j4310_manual_v1_4, p. 11 (MIT), p. 15 (plages Kp/Kd), p. 12-13 et 16 (hybride)"}
+      B_capteur_temp_bobinage: {valeur: "trame de retour : T_MOS (température moyenne des MOSFET du driver, °C) et T_Rotor (« average motor coil temperature », °C) ; registres Tpcb (0x3D, température PCB) et Tmtr (0x3E, température moteur)", source: "dm_j4310_manual_v1_4, p. 14-15 (trame), p. 21 (registres)", note: "le capteur physique (sonde ou estimation) n'est pas décrit"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans manuel V1.4 ; seule une « bande passante » de courant est donnée : défaut 1000, registre I_BW plage [100, 1e4], sans unité (p. 20, p. 31). Ce n'est pas une fréquence de boucle"}
+      B_frequence_retour_bus: {valeur: "pas de fréquence : requête-réponse, une trame de retour par commande reçue ; CAN 1 Mbps par défaut, jusqu'à 5 Mbps (CAN FD au-dessus de 1 Mbps)", source: "dm_j4310_manual_v1_4, p. 13 (requête-réponse), p. 19 (débits)"}
+      C_plaque_nominal: {valeur: null, source: null, note: "aucune plaque ni dissipateur publié pour le nominal. Colonne 48 V du tableau p. 7 : 4,8 A phase / 1,6 A alimentation (nominal) ; 20 A phase / 12,8 A alimentation (crête) ; 3,5 N·m nominal / 12,5 N·m crête ; 120 rpm nominal ; 450 rpm à vide (200 pour le 24 V) ; couple et vitesse nominaux dans une cellule probablement commune aux deux colonnes"}
+      C_conditions_continu: {valeur: null, source: null, note: "conditions du nominal non trouvées dans manuel V1.4. La seule condition publiée est celle de la courbe T–N : 24 V, 36 rpm constants, 25 °C ambiant (p. 9). Aucune courbe à 48 V"}
+      D_version_document: {valeur: "User Manual V1.4, 2026-09-14", source: "dm_j4310_manual_v1_4, p. 1 et p. 4"}
+      D_revision_materielle: {valeur: "DM-J4310-2EC V1.2", source: "dm_j4310_manual_v1_4, p. 1 et p. 7", note: "registre hw_ver (0x0D) marqué « Reserved » (p. 20)"}
+      D_notes_de_version: {valeur: "oui, p. 4 : V1.0 2025-10-22 ; V1.1 2025-11-24 ; V1.2 2026-06-09 (codeur 14 → 16 bits) ; V1.3 2026-09-08 (coefficient de surintensité « ≤ 0,98 », courbe T–N corrigée) ; V1.4 2026-09-14 (masse corrigée)", source: "dm_j4310_manual_v1_4, p. 4"}
+      D_contradictions_internes: {valeur: "(1) seuil de sous-tension : défaut 20 V (p. 29) contre « recommandé ≥ 15V » pour le 24 V et « ≥ 20V » pour le 48 V (p. 8) ; (2) limite de courant : « 80 % du courant maximal mesurable » par défaut (p. 8) contre « pourcentage du courant nominal » (p. 30) ; (3) la page des connecteurs dit « rated voltage is 24 V » sans distinguer la variante 48 V (p. 10) ; (4) la procédure de réglage est illustrée sur le 4340P, pas sur le 4310 (p. 22)", source: "dm_j4310_manual_v1_4, p. 8, 10, 22, 29, 30"}
+      E_watchdog: {valeur: "registre TIMEOUT (0x09), plage [0, 2^32-1] ; base de temps 50 µs par unité ; actif seulement moteur activé ; sans commande CAN valide dans le délai, le moteur sort du mode Enable (défaut D, « Communication loss »)", source: "dm_j4310_manual_v1_4, p. 8, p. 11, p. 20, p. 30"}
+      E_watchdog_valeur_usine: {valeur: null, source: null, note: "non trouvé dans manuel V1.4"}
+      E_perte_can: {valeur: "sortie du mode Enable (coupure du couple) après le délai TIMEOUT ; code d'erreur D ; LED rouge clignotante", source: "dm_j4310_manual_v1_4, p. 8, p. 11, p. 15"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans manuel V1.4. Seul point voisin : en CAN FD face à un maître CAN 2.0B, « may continuously report communication errors » (p. 19)"}
+      E_protections: {valeur: "chaque protection fait sortir du mode Enable (coupure, pas limitation) : surchauffe driver à 120 °C (fixe) ; surchauffe bobinage configurable, recommandé ≤ 100 °C (registre OT plage [80, 200)) ; surtension configurable, recommandé ≤ 60 V (48 V) / ≤ 32 V (24 V) ; sous-tension, recommandé ≥ 20 V (48 V) / ≥ 15 V (24 V) ; surintensité configurable, recommandé ≤ 0,98 ; perte de communication ; surcharge (code E, sans seuil). Plage de tension 48 V : 24–48 V, min 20 V, max 58 V ; éviter le branchement à chaud au-dessus de 36 V", source: "dm_j4310_manual_v1_4, p. 7-8, p. 11, p. 20, p. 29-30"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre (seul un logiciel de configuration PC ≥ V2.0.0.0 est cité, p. 22, sans licence)"}
+      G_resistance_ohm: {valeur: 0.58, source: "dm_j4310_manual_v1_4, p. 7", note: "« ~580 mΩ » ; une seule valeur, sans distinction 24/48 V"}
+      G_resistance_convention: {valeur: "phase", source: "dm_j4310_manual_v1_4, p. 7", note: "« Phase Resistance »"}
+      G_kt: {valeur: null, source: null, note: "pas de valeur numérique dans manuel V1.4 : seulement une formule (Npp, ψf, GR, GREF, p. 9) et le registre KT_Value (0x01, p. 20)"}
+      G_kt_cote: {valeur: "sortie", source: "dm_j4310_manual_v1_4, p. 9", note: "la formule inclut GR et le rendement GREF ; aucune valeur associée"}
+      G_kt_convention_courant: {valeur: "non précisé", source: "dm_j4310_manual_v1_4, p. 9"}
+      G_courant_nominal_A: {valeur: 4.8, source: "dm_j4310_manual_v1_4, p. 7", note: "courant de PHASE à 48 V (1,6 A côté alimentation) ; 24 V : 4,9 / 3,1 ; crête ou efficace : non précisé"}
+      G_courant_crete_A: {valeur: 20, source: "dm_j4310_manual_v1_4, p. 7", note: "courant de PHASE à 48 V (12,8 A alimentation) ; 24 V : 20 / 16,5 ; crête ou efficace : non précisé"}
+      G_reduction: {valeur: 10, source: "dm_j4310_manual_v1_4, p. 7"}
+    gim4310_10:
+      A_encombrement_mm: {valeur: "Ø53 × 38 avec driver intégré ; Ø53 × 32 sans driver", source: "steadywin_gdz_xlsx, cellules I24 et I23"}
+      A_bride_sortie: {valeur: null, source: null, note: "non trouvé dans steadywin_gdz_xlsx, gdz_can_protocol"}
+      A_plan_cote_publie: {valeur: null, source: null, note: "non trouvé dans steadywin_gdz_xlsx (les images du classeur n'ont pas été examinées), gdz_can_protocol"}
+      A_cao_publiee: {valeur: null, source: null, note: "non trouvé dans steadywin_gdz_xlsx, gdz_can_protocol"}
+      A_charge_radiale_N: {valeur: 500, source: "steadywin_gdz_xlsx, cellule I26", note: "« Maximum Radial Load »"}
+      A_charge_axiale_N: {valeur: 125, source: "steadywin_gdz_xlsx, cellule I25", note: "« Maximum Axial Load »"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans steadywin_gdz_xlsx, gdz_can_protocol"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé dans steadywin_gdz_xlsx, gdz_can_protocol"}
+      B_jeu: {valeur: "15 arcmin", source: "steadywin_gdz_xlsx, cellule I20", note: "« Gear Backlash »"}
+      B_mode_couple_natif: {valeur: "0xC0 : consigne de courant d'axe Q (0,001 A), « torque = torque constant * Q-axis current » ; mode MIT (StdID 0x400|Dev_addr) : position, vitesse, Kp, Kd, couple cible, bornés par Pos_Max, Vel_Max, T_Max, Pos_KP_Max, Vel_KD_Max", source: "gdz_can_protocol, p. 3, 15, 22-25", note: "le PDF ne nomme ni GDZ34 ni GIM4310 ; seul le dossier de l'archive le rattache au GDZ34 (driver du candidat : steadywin_gdz_xlsx, cellule I3)"}
+      B_capteur_temp_bobinage: {valeur: "une seule température, « Operating temperature » (°C), remontée par 0xA4 et 0xAE ; l'exemple 0xCF l'interprète comme « motor 38°C »", source: "gdz_can_protocol, p. 7, 8, 30", note: "emplacement du capteur non précisé"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans gdz_can_protocol, steadywin_gdz_xlsx"}
+      B_frequence_retour_bus: {valeur: "requête-réponse ; 0xAE envoyé toutes les 200 ms, spontanément, seulement en cas de défaut autre que de communication ; CAN 1 « MHz » par défaut (500, 250, 125, 100 kHz possibles)", source: "gdz_can_protocol, p. 2, 3, 8"}
+      C_plaque_nominal: {valeur: null, source: null, note: "aucune plaque publiée. Nominal : 24 V (12-40 V), 1,63 N·m, 101 rpm (max 212), 1,3 A, 31,2 W ; crête 7,98 N·m / 10,67 A (steadywin_gdz_xlsx, cellules I2, I4-I11)"}
+      C_conditions_continu: {valeur: null, source: null, note: "non trouvé ; seule la plage de fonctionnement « -20~+80 » °C est donnée (cellule I31) ; pas de feuille de courbes pour la 4310-10"}
+      D_version_document: {valeur: "protocole « Custom CAN communication protocol V3.10b2 », 2026.06.09 ; classeur : aucune version", source: "gdz_can_protocol, p. 1 ; steadywin_gdz_xlsx"}
+      D_revision_materielle: {valeur: "driver GDZ34 ; versions matérielle et logicielle lisibles par 0xA0, aucune valeur publiée", source: "steadywin_gdz_xlsx, cellule I3 ; gdz_can_protocol, p. 5"}
+      D_notes_de_version: {valeur: "historique du protocole, de Rev.3.01b0 (2024.06.01) à Rev.3.10b2 (2026.06.09)", source: "gdz_can_protocol, p. 1"}
+      D_contradictions_internes: {valeur: "(1) Kt × courant ne redonne pas le couple : 2,61 × 1,3 A = 3,39 pour 1,63 N·m nominal ; 2,61 × 10,67 A = 27,8 pour 7,98 N·m crête ; (2) « Rated Power » 31,2 W = 24 V × 1,3 A, puissance électrique ; (3) débit CAN en « MHz » ; (4) colonnes P, Q, Z, AB sans libellé d'en-tête", source: "steadywin_gdz_xlsx (I5-I15) ; gdz_can_protocol, p. 2"}
+      E_watchdog: {valeur: "0xCD : active le délai de communication, fixe sa durée (ms) et l'action ; au-delà, défaut de communication et moteur désactivé ; en option, bit0 interdit l'effacement logiciel, bit1 ouvre la sortie de frein ; réglage perdu à la coupure d'alimentation", source: "gdz_can_protocol, p. 3, 16-17"}
+      E_watchdog_valeur_usine: {valeur: "désactivé", source: "gdz_can_protocol, p. 16-17", note: "désactivé par défaut ; durée par défaut 5000 ms ; action par défaut 0x00"}
+      E_perte_can: {valeur: "moteur désactivé et défaut de communication (bit 5) si le délai 0xCD est activé et dépassé ; sinon rien n'est décrit", source: "gdz_can_protocol, p. 3, 8, 16-17"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans gdz_can_protocol, steadywin_gdz_xlsx"}
+      E_protections: {valeur: "bits de défaut : tension (0), courant (1), température (2), codeur (3), communication (5), matériel (6), logiciel (7) ; rapport 0xAE toutes les 200 ms en cas de défaut ; effacement par 0xAF", source: "gdz_can_protocol, p. 3, 8-9", note: "aucun seuil chiffré ; réaction décrite seulement pour le défaut de communication"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé dans les documents au registre (l'archive contient « ROS Reference Library.txt », non lu)"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre (dossier « 8. Demo Code » non lu)"}
+      G_resistance_ohm: {valeur: 1.961, source: "steadywin_gdz_xlsx, cellule I12"}
+      G_resistance_convention: {valeur: "phase", source: "steadywin_gdz_xlsx, cellule A12", note: "« Phase Resistance »"}
+      G_kt: {valeur: 2.61, source: "steadywin_gdz_xlsx, cellule I15", note: "N·m/A ; INCOHÉRENT avec les couples et courants du même classeur (voir D_contradictions_internes) : probablement côté moteur × autre chose, à mesurer"}
+      G_kt_cote: {valeur: null, source: null, note: "non précisé dans steadywin_gdz_xlsx"}
+      G_kt_convention_courant: {valeur: "non précisé", source: "gdz_can_protocol, p. 3, 6, 15", note: "courant d'axe Q ; crête ou efficace non précisé"}
+      G_courant_nominal_A: {valeur: 1.3, source: "steadywin_gdz_xlsx, cellule I10"}
+      G_courant_crete_A: {valeur: 10.67, source: "steadywin_gdz_xlsx, cellule I11"}
+      G_reduction: {valeur: 10, source: "steadywin_gdz_xlsx, cellule I17", note: "planétaire, engrenages acier (cellule I19)"}
+    x2_7:
+      A_encombrement_mm: {valeur: "Ø44 (0/-0,1) × 63,5 ±0,5 ; centrage de sortie Ø31 (0/-0,03)", source: "x2_7_param_260903, p. 1 (plan d'installation) ; identique dans myactuator_catalogue_2026, p. 4"}
+      A_bride_sortie: {valeur: "4 × M3 prof. 4 et 4 × M3 prof. 5 ; 2 × Ø3 (+0,02/0) prof. 4, présents deux fois ; cercles de perçage Ø25 et Ø38", source: "x2_7_param_260903, p. 1 ; myactuator_catalogue_2026, p. 4", note: "l'association taraudage ↔ cercle, et la partie tournante, ne se lisent pas à cette résolution"}
+      A_plan_cote_publie: {valeur: "oui", source: "x2_7_param_260903, p. 1 ; myactuator_catalogue_2026, p. 4", note: "plan d'installation, face et profil"}
+      A_cao_publiee: {valeur: null, source: null, note: "non trouvé dans x2_7_param_260903, myactuator_catalogue_2026, myactuator_can_v4_4"}
+      A_charge_radiale_N: {valeur: 1000, source: "x2_7_param_260903, p. 1", note: "« Radial Load 1 KN » ; roulement de sortie à billes à gorge profonde"}
+      A_charge_axiale_N: {valeur: 250, source: "x2_7_param_260903, p. 1", note: "« Axial Load » 0,25 KN en traction et 0,25 KN en compression"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans x2_7_param_260903, myactuator_catalogue_2026"}
+      B_couple_reversibilite_Nm: {valeur: 0.4, source: "x2_7_param_260903, p. 1", note: "« Backdrive Torque »"}
+      B_jeu: {valeur: "≤ 15 arcmin", source: "x2_7_param_260903, p. 1", note: "« Backlash »"}
+      B_mode_couple_natif: {valeur: "0xA1 : consigne de courant de couple iqControl (int16, 0,01 A/LSB) ; « Motion Mode » 0x400+ID de type MIT : p_des, v_des, kp, kd, t_ff ; IqRef = [kp·(p_des−p) + kd·(v_des−v) + t_ff] / KT_OUT ; aussi 0x73 et 0xA9", source: "myactuator_can_v4_4, p. 68-69 et 161-162 (numéros du PDF)", note: "le protocole s'applique au « driver V3 » (p. 1) ; il ne nomme pas le X2-7"}
+      B_capteur_temp_bobinage: {valeur: "0x9A : « Motor temperature » et « MOS temperature » séparées ; la table d'erreurs parle de « motor stator temperature » ; 0x9C, 0x9D, 0xA1 : « motor temperature » seule ; la réponse du mode MIT n'a pas de température", source: "myactuator_can_v4_4, p. 53, 56, 60, 63, 163-164 (numéros du PDF)", note: "type de capteur non précisé"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans myactuator_can_v4_4, x2_7_param_260903, myactuator_catalogue_2026 (le « 4kHz » du catalogue, p. 12, concerne le contrôleur RB-C002)"}
+      B_frequence_retour_bus: {valeur: "requête-réponse ; réponse spontanée 0xB6 à intervalle réglable par pas de 10 ms (exemple 10 ms), CAN seulement ; CAN 1 Mbps", source: "myactuator_can_v4_4, p. 9 et 148-150 (numéros du PDF)", note: "aucune fréquence maximale donnée"}
+      C_plaque_nominal: {valeur: null, source: null, note: "aucune plaque ni dissipateur publié. Nominal publié : 24 V (20-55 V), 2,5 N·m, 142 rpm, 3 A, 37 W ; crête 7 N·m / 8,1 A ; rendement 63 % ; isolation classe F (x2_7_param_260903, p. 1)"}
+      C_conditions_continu: {valeur: null, source: null, note: "aucune condition de régime continu (ambiante, refroidissement, service) dans x2_7_param_260903 ni myactuator_catalogue_2026. Seul le tableau « Stall Torque Data » (p. 1) : 3,75 N·m / +20 °C / 15 s / 4,3 Arms ; 5 / 48 / 10 / 5,7 ; 6,25 / 31 / 8 / 7,4 ; 7,5 / 59 / 5 / 8,6"}
+      D_version_document: {valeur: "fiche : aucun numéro dans la page (« 260903 » vient du nom de fichier) ; protocole V4.4, couverture 2025.09 ; catalogue « Printed August 2026 »", source: "x2_7_param_260903, p. 1 ; myactuator_can_v4_4, p. 1 ; myactuator_catalogue_2026, p. 1"}
+      D_revision_materielle: {valeur: "gamme « RMD-X V4 Series » ; protocole « Applicable driver: V3 » ; référence RMD-X2-P28-7-E, sans frein", source: "myactuator_catalogue_2026, p. 4 ; myactuator_can_v4_4, p. 1 ; x2_7_param_260903, p. 1", note: "ne pas confondre avec la X2-7-L « C-Lite » (catalogue, p. 3)"}
+      D_notes_de_version: {valeur: "historique du protocole, de V3.1 (2022.6.23) à V4.4 (2026.03.25)", source: "myactuator_can_v4_4, p. 179-185 (numéros du PDF)", note: "la fiche et le catalogue n'ont pas d'historique"}
+      D_contradictions_internes: {valeur: "(1) protocole : couverture 2025.09, V4.4 révisée le 2026.03.25 ; (2) V4.3 datée 2025.5.12 (chinois) et 2024.5.12 (anglais) ; (3) MIT kp : 0–500 (chinois) et 0–1000 (anglais) ; (4) MIT kd : 0–5 au § 4.1, 0–50 dans la note de V4.4 ; (5) p_des ±12,566 et ±12,5 ; (6) 0xB6 : 10 ms, puis « 20ms » et « 10ms » ; (7) 0xB3 : réponse annoncée en recopie, exemple à zéros ; (8) fiche : 7,5 N·m / 8,6 Arms au tableau de calage, au-dessus de la crête de 7 N·m / 8,1 A", source: "myactuator_can_v4_4 (p. 1, 139-165, 181-185) et x2_7_param_260903 (p. 1)"}
+      E_watchdog: {valeur: "0xB3 : délai d'interruption de communication en ms (uint32), gardé en ROM ; 0 = désactivé, le moteur continue alors la commande en cours ; au-delà du délai : sortie coupée, frein serré ; reprise quand la communication redevient continue", source: "myactuator_can_v4_4, p. 138-141 (numéros du PDF)"}
+      E_watchdog_valeur_usine: {valeur: null, source: null, note: "non trouvé dans myactuator_can_v4_4 ; l'exemple écrit 1000 ms, ce n'est pas la valeur d'usine"}
+      E_perte_can: {valeur: "coupure de la sortie et frein serré si le délai 0xB3 est dépassé ; aucune action si le délai vaut 0", source: "myactuator_can_v4_4, p. 138-141 (numéros du PDF)"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans myactuator_can_v4_4, x2_7_param_260903, myactuator_catalogue_2026"}
+      E_protections: {valeur: "codes 0x9A : calage 0x0002 (courant > « Stall Current » pendant > « Stall Time », non auto-récupérable) ; sous-tension 0x0004 et surtension 0x0008 (seuils paramétrables, auto-récupérables) ; surintensité de phase 0x0010 (verrouillée) ; puissance 0x0040 ; calibration 0x0080 ; survitesse 0x0100 ; surchauffe des composants 0x0800 (PCB > 110 °C, reprise < 90 °C) ; surchauffe moteur 0x1000 (stator > seuil paramétré) ; codeur 0x2000 et 0x4000. Voyant : niveau 1, redémarrage requis ; niveau 2, reprise automatique", source: "myactuator_can_v4_4, p. 54-57 et 176-178 (numéros du PDF)", note: "seul le seuil 110/90 °C est chiffré ; calibration codeur « non récupérable » p. 57 mais « niveau 2 » p. 178 (contradiction)"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé pour l'actionneur ; le catalogue (p. 12) cite « ROS 2 » et « ros2_control » pour le contrôleur RB-C002, pas pour le X2-7"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      G_resistance_ohm: {valeur: 0.61, source: "x2_7_param_260903, p. 1", note: "« Line Resistance »"}
+      G_resistance_convention: {valeur: "ligne-ligne", source: "x2_7_param_260903, p. 1", note: "bobinage en Y"}
+      G_kt: {valeur: 0.8, source: "x2_7_param_260903, p. 1 ; myactuator_catalogue_2026, p. 4", note: "N·m/A"}
+      G_kt_cote: {valeur: null, source: null, note: "non précisé dans x2_7_param_260903 ; le mode MIT divise par « KT_OUT » (myactuator_can_v4_4, p. 161-162) ; 2,5 N·m / 3 A ≈ 0,83 est compatible avec le côté sortie (calcul)"}
+      G_kt_convention_courant: {valeur: "non précisé", source: "x2_7_param_260903, p. 1", note: "« Rated/Peak Current » en A sans précision ; le tableau de calage est en Arms"}
+      G_courant_nominal_A: {valeur: 3, source: "x2_7_param_260903, p. 1"}
+      G_courant_crete_A: {valeur: 8.1, source: "x2_7_param_260903, p. 1"}
+      G_reduction: {valeur: 28.17, source: "x2_7_param_260903, p. 1 ; myactuator_catalogue_2026, p. 4"}
+    ak45_10_v3:
+      A_encombrement_mm: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0 (l'AK45-10 n'y figure nulle part)"}
+      A_bride_sortie: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      A_plan_cote_publie: {valeur: null, source: null, note: "non trouvé : aucun plan moteur dans manuel AK V3.2.0 ; seules les tailles des cartes driver sont données (p. 7)"}
+      A_cao_publiee: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      A_charge_radiale_N: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      A_charge_axiale_N: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0 (0,1 N·m au catalogue vient de la page produit, hors registre)"}
+      B_jeu: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0 (18 arcmin au catalogue vient de la page produit, hors registre)"}
+      B_mode_couple_natif: {valeur: "valable pour toute la série : (a) mode servo « Current Loop » : consigne Iq en int32, ±60 A, couple = Iq × KT ; (b) mode MIT (ID de mode 8) : position, vitesse, Kp 0–500, Kd 0–5, couple ; Kp=Kd=0 donne une boucle de couple ; T = Kt × Iq au niveau de l'arbre de sortie", source: "cubemars_ak_v3_2_0, p. 33, p. 35, p. 41-42", note: "plages MIT données par modèle ; AK45-10 absent du tableau p. 42"}
+      B_capteur_temp_bobinage: {valeur: "trame CAN servo 0x29 : un octet Data[6], nommé « Motor Temperature » dans le tableau mais décrit comme « driver board temperature -20 à 127 °C » ; port série : température MOS et température moteur séparées ; logiciel PC : « Temperature MOSFET » et « Temperature Motor »", source: "cubemars_ak_v3_2_0, p. 22, p. 46, p. 48-50", note: "contradiction interne p. 46 ; format de retour du mode MIT non documenté"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      B_frequence_retour_bus: {valeur: "envoi périodique réglable de 1 à 2000 Hz, ou mode requête-réponse ; CAN 1 Mbps ; port série : position renvoyée toutes les 10 ms sur demande", source: "cubemars_ak_v3_2_0, p. 17, p. 46, p. 7, p. 49"}
+      C_plaque_nominal: {valeur: null, source: null, note: "non trouvé pour l'AK45-10 dans manuel AK V3.2.0 ; les nominaux donnés concernent les cartes AK54/AK60/AK80, dont aucune n'est listée comme compatible avec l'AK45-10 (p. 7)"}
+      C_conditions_continu: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      D_version_document: {valeur: "AK Series Module Product Manual V3.2.0 (2026.01.17)", source: "cubemars_ak_v3_2_0, p. 1 et p. 6"}
+      D_revision_materielle: {valeur: null, source: null, note: "« V3.0 » de l'AK45-10 non trouvé dans manuel AK V3.2.0 ; le manuel mentionne seulement « Driver version: V3.0 » dans l'historique Ver.2.0.0 (p. 5)"}
+      D_notes_de_version: {valeur: "oui, p. 5-6 : de Ver.2.0.0 (2023.10.18) à Ver3.2.0 (2026.01.17), aucune entrée ne concerne l'AK45", source: "cubemars_ak_v3_2_0, p. 5-6"}
+      D_contradictions_internes: {valeur: "(1) Data[6] de la trame 0x29 : « Motor Temperature » (tableau) contre « driver board temperature » (texte), p. 46 ; (2) codeur interne : « 16 bits, jusqu'à 21 bits avec firmware spécial » (p. 4) contre « 21 bit » (p. 8) ; (3) numérotation des erreurs différente entre CAN (p. 47) et série (p. 50) ; (4) commentaires inversés COMM_SET_POS_MULTI / COMM_SET_POS_SINGLE (p. 48)", source: "cubemars_ak_v3_2_0, p. 4, 8, 46-48, 50"}
+      E_watchdog: {valeur: null, source: null, note: "aucun délai de perte de communication CAN dans manuel AK V3.2.0 ; FAULT_CODE_BOOTING_FROM_WATCHDOG_RESET (p. 50) désigne un redémarrage du microcontrôleur, pas un délai de communication"}
+      E_watchdog_valeur_usine: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      E_perte_can: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0 (seulement la mention d'une interface CAN isolée, p. 4)"}
+      E_protections: {valeur: "codes CAN, valables pour toute la série : surchauffe moteur, surintensité, surtension, sous-tension, codeur, surchauffe MOSFET, blocage moteur ; codes série : en plus défauts driver et grille, sous-tension MCU, flash, capteurs de courant, courants déséquilibrés. Aucun seuil, aucune réaction (coupure ou limitation) documentés. Seul chiffre : température max de la carte driver 100 °C, pour les cartes AK54/60/80", source: "cubemars_ak_v3_2_0, p. 47, p. 50-51, p. 8"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé dans les documents au registre"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé dans les documents au registre (seul le logiciel CubeMarsTool est cité, sans licence)"}
+      G_resistance_ohm: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      G_resistance_convention: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0"}
+      G_kt: {valeur: null, source: null, note: "AK45-10 absent du tableau des coefficients de couple (p. 42) ; la p. 33 renvoie au site officiel pour KT"}
+      G_kt_cote: {valeur: "sortie", source: "cubemars_ak_v3_2_0, p. 42", note: "« T is the output torque at the output shaft », définition valable pour toute la série ; aucune valeur pour l'AK45-10"}
+      G_kt_convention_courant: {valeur: "non précisé", source: "cubemars_ak_v3_2_0, p. 42", note: "Iq, « torque current, in A »"}
+      G_courant_nominal_A: {valeur: null, source: null, note: "non trouvé pour l'AK45-10 dans manuel AK V3.2.0"}
+      G_courant_crete_A: {valeur: null, source: null, note: "non trouvé pour l'AK45-10 dans manuel AK V3.2.0 (les ±60 A de la trame sont une plage de codage)"}
+      G_reduction: {valeur: null, source: null, note: "non trouvé dans manuel AK V3.2.0 (le « 10 » du nom n'y est pas explicité)"}
+    sts3250:
+      A_encombrement_mm: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_bride_sortie: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_plan_cote_publie: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_cao_publiee: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_charge_radiale_N: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_charge_axiale_N: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      A_moment_admissible_Nm: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_couple_reversibilite_Nm: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_jeu: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_mode_couple_natif: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_capteur_temp_bobinage: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_frequence_boucle_courant_Hz: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      B_frequence_retour_bus: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      C_plaque_nominal: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      C_conditions_continu: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      D_version_document: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      D_revision_materielle: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      D_notes_de_version: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      D_contradictions_internes: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      E_watchdog: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      E_watchdog_valeur_usine: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      E_perte_can: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      E_bus_off: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      E_protections: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      F_ros2: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      F_lerobot: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      F_mujoco: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      F_sdk_licence: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_resistance_ohm: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_resistance_convention: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_kt: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_kt_cote: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_kt_convention_courant: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_courant_nominal_A: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_courant_crete_A: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}
+      G_reduction: {valeur: null, source: null, note: "non trouvé : aucun document au registre pour le STS3250 (page web feetechrc.com, sans version ni copie ; fiche 0030)"}

@@ -481,6 +481,28 @@ fichiers:
         nature: sans_objet
         source: "candidat de référence, hors classement"
 
+      # --- collecte des critères manquants (2026-10-01) : NON NOTÉE ---
+      - motif: "collecte_criteres_manquants.statut"
+        origine: propre
+        nature: sans_objet
+        source: "statut de la collecte (docs/criteres-manquants.md)"
+      - motif: "collecte_criteres_manquants.date"
+        origine: propre
+        nature: sans_objet
+        source: "date de la collecte"
+      - motif: "collecte_criteres_manquants.proposition"
+        origine: propre
+        nature: sans_objet
+        source: "renvoi au document de proposition"
+      - motif: "collecte_criteres_manquants.documents.*"
+        origine: propre
+        nature: sans_objet
+        source: "correspondance nom court → entrée de params/fournisseurs.yaml"
+      - motif: "collecte_criteres_manquants.candidats.*.*.valeur"
+        origine: catalogue
+        nature: interface
+        source: "document constructeur au registre, page citée dans le champ `source` ; null = non trouvé"
+
       # --- plages de tension et familles (2026-09-30, soir) ---
       - motif: "familles.*.protocole_commun.valeur"
         origine: catalogue
