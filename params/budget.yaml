@@ -19,6 +19,19 @@ tva_ch:
   consulte_le: "2026-09-30"
   note: "La page de l'AFC n'a PAS pu être ouverte (connexion réinitialisée) : confirmation officielle à faire."
 
+# Livraison possible dans les DEUX pays (Jeremy, 2026-09-30, ~23 h, lot de
+# cohérence point 9). La TVA de chaque pays est dans `tva_<pays>`. Le
+# classement des FAMILLES reste calculé hors taxe ; le comparatif du banc
+# affiche le coût TTC dans chaque pays, et note sur le PREMIER de la liste.
+# Port, droits de douane et frais de dédouanement : inconnus (null), non
+# comptés — voir le journal du 2026-09-30, « Sensibilité à la livraison ».
+livraison: [CH, FR]
+
+tva_fr:
+  valeur: 0.20
+  source: "taux normal français ; cadrage § 7.1 (non revérifié ici sur une page officielle)"
+  consulte_le: "2026-09-30"
+
 marge_imprevus:
   valeur: 0.15
   source: "choix provisoire de l'assistant, 2026-09-30"

@@ -380,6 +380,8 @@ def options_banc(r):
     cat, bud, crit = r["cat"], r["bud"], r["crit"]
     b = crit["banc"]
     taux, tva, imp = bud["taux_de_change"], val(bud["tva_ch"]), val(bud["marge_imprevus"])
+    pays_liv = bud.get("livraison") or ["CH"]
+    tva_de = lambda pays: val(bud[f"tva_{pays.lower()}"])
     elec = bud["electronique"]
     jr = b["ponderes"]["risque"]["jugements_par_option"]
     fams = {fm["id"]: fm for fm in r["fams"]}
@@ -415,7 +417,9 @@ def options_banc(r):
         al = D.chf(elec[cle]["prix"], taux) if cle and cle in elec else None
         (manquants.append(f"alimentation {tension} V") if al is None else None)
         ht += al or 0
-        return ht * (1 + imp) * (1 + tva), manquants
+        # TTC par pays de livraison (budget.yaml, `livraison`) : la note de
+        # coût se prend sur le PREMIER pays ; les autres sont affichés.
+        return {pays: ht * (1 + imp) * (1 + tva_de(pays)) for pays in pays_liv}, manquants
 
     def appr(n, meme_modele, meme_bus):
         pts = {"protocole": True, "thermique": True,
@@ -510,7 +514,8 @@ def options_banc(r):
         return out
 
     for o in opts:
-        o["cout"], o["manquants"] = cout(o["ids"], o["tension"])
+        o["couts"], o["manquants"] = cout(o["ids"], o["tension"])
+        o["cout"] = o["couts"][pays_liv[0]]
         o["tranchees"] = tranchees(o["ids"])
         part = len(o["tranchees"]) / len(inc) if inc else 0
         nd = 5 if inc and part >= 1 else (3 if part >= 0.5 else (2 if part > 0 else 0))
@@ -593,17 +598,24 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
           "rapport entre le couple continu réel des actionneurs « condition non précisée » et leur "
           "nominal publié. **Il ne se décide pas, il se mesure** — c'est le rôle premier du banc.\n")
     A("---\n\n## 1 — Les options\n")
-    A("| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | Coût TTC CH | Postes non chiffrés | Risque |")
-    A("| --- | --- | --- | --- | ---: | --- | --- |")
+    pays_liv = r["bud"].get("livraison") or ["CH"]
+    A("| Option | Inconnues décisives tranchées | Ce qu'elle apprend | Transfert à S | "
+      + " | ".join(f"Coût TTC {p_}" for p_ in pays_liv) + " | Postes non chiffrés | Risque |")
+    A("| --- | --- | --- | --- | " + " | ".join("---:" for _ in pays_liv) + " | --- | --- |")
     n_dec = sum(1 for d in inc.values() if d["_decisive"])
     for o in opts:
         A(f"| {o['nom']} | " + (f"{len(o['tranchees'])}/{n_dec} : {', '.join(o['tranchees']) or 'aucune'}"
                                 if n_dec else "— (aucune n'est décisive)") + " | "
           f"{o['appr'][0]}/5 : {', '.join(o['appr'][1])} | {o['transfert']} — {o['transfert_j']} | "
-          f"{'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF | {', '.join(o['manquants']) or '—'} | "
+          + " | ".join(f"{'≥ ' if o['manquants'] else ''}{f(o['couts'][p_], 0)} CHF" for p_ in pays_liv)
+          + f" | {', '.join(o['manquants']) or '—'} | "
           f"{o['notes']['risque']} — {o['risque_j']} |")
-    A("\nCoût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, provisoire) × "
-      "(1 + TVA 8,1 %). Alimentations : Mean Well RSP-320-24 (24 V) ou RSP-500-48 (48 V), Reichelt. "
+    A("\nCoût TTC = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, provisoire) × "
+      "(1 + TVA du pays de livraison : " + ", ".join(
+          f"{p_} {f(100 * val(r['bud'][f'tva_{p_.lower()}']), 1)} %" for p_ in pays_liv)
+      + f"). **Livraison possible en {' et en '.join(pays_liv)}** (`budget.yaml`, `livraison`) ; la note de "
+      f"coût se prend sur {pays_liv[0]}. Tout est en CHF (taux BCE). Port, droits de douane et frais de "
+      "dédouanement sont **inconnus**, non comptés. Alimentations : Mean Well RSP-320-24 (24 V) ou RSP-500-48 (48 V), Reichelt. "
       "Un poste non chiffré met la note de coût à 0.\n")
     A("**Adaptateur USB-CAN** : candleLight de Linux Automation (54,74 € TTC, vérifié), **prototype "
       "non conforme CE** selon son fabricant. **Alternative : CANable 2.0** (Openlight Labs), 35 USD "
@@ -1087,7 +1099,7 @@ def main(argv=None) -> int:
     print(f"\n  banc (poids {'fixés' if fixes_b else 'PROPOSÉS'}) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "
           f"±50 % : {'tient toutes' if sb['tous_pm'] else 'NE tient PAS toutes'} ; tirages quelconques {f(100 * sb['freq'], 1)} %")
     for o in opts:
-        print(f"    {o['nom']:70s} score {f(score(o['notes'], pb))}  coût {'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF")
+        print(f"    {o['nom']:70s} score {f(score(o['notes'], pb))}  coût " + " / ".join(f"{p_} {'≥ ' if o['manquants'] else ''}{f(v_, 0)}" for p_, v_ in o["couts"].items()) + " CHF")
     if a.ecrire:
         date = datetime.date.today().isoformat()
         DOC_FAMILLE.write_text(doc_familles(r, date), encoding="utf-8")

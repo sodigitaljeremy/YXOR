@@ -569,6 +569,14 @@ fichiers:
         origine: litterature
         nature: sans_objet
         source: "taux normal de TVA suisse, droit public"
+      - motif: "tva_fr.valeur"
+        origine: litterature
+        nature: sans_objet
+        source: "taux normal de TVA française, droit public (cadrage § 7.1)"
+      - motif: "livraison"
+        origine: propre
+        nature: sans_objet
+        source: "pays de livraison possibles, Jeremy, 2026-09-30 (~23 h)"
       - motif: "marge_imprevus.valeur"
         origine: propre
         nature: sans_objet
