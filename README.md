@@ -14,7 +14,42 @@ par une variable unique `H` (taille totale), déclinable en trois paliers :
 | P3 | ~1,70 m | Cible du système de conception |
 
 Base de départ : [ToddlerBot](https://github.com/hshi74/toddlerbot) (Stanford).
-Code sous licence MIT, fichiers mécaniques sous Creative Commons non commerciale.
+Son code est sous licence MIT ; sa conception (fichiers mécaniques) est sous
+**CC BY-NC-SA 4.0**. Voir « Provenance et licences » ci-dessous.
+
+## Provenance et licences — *provisoire*
+
+⚠ **Ce dépôt n'a pas encore de licence propre** (aucun fichier `LICENSE`).
+Le choix est ouvert : fiche 0053 et `docs/controle-publication-2026-09-30.md`.
+En attendant, aucun droit n'est accordé au-delà de ce que permettent les
+conditions de GitHub.
+
+**Valeurs extraites de ToddlerBot.** Les fichiers ci-dessous contiennent des
+valeurs numériques extraites de ToddlerBot : axes, butées, rapports de
+transmission, masses, hauteur, noms d'articulations, empreintes des poids.
+
+- `params/upstream_joints.generated.yaml` (extrait engendré) ;
+- `params/joints.yaml` ;
+- `params/ckpts.manifest.yaml` ;
+- dans `params/actionneurs.yaml` et `params/anthropometry.yaml`, les seules
+  entrées d'origine `amont` (`scripts/audit_origines.py --amont` les liste).
+
+Ces valeurs viennent de **ToddlerBot**, de Haochen Shi, Weizhuo Wang, Shuran
+Song et C. Karen Liu (Stanford) : <https://github.com/hshi74/toddlerbot>,
+commit `e337f3b`, article arXiv:2502.00893. La conception de ToddlerBot est
+publiée sous **[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)**,
+son code sous MIT (© 2023 Haochen Shi). Par prudence, **ces fichiers sont
+à traiter sous CC BY-NC-SA 4.0**, avec cette attribution. Les valeurs ont
+été modifiées : réconciliées, renommées, qualifiées (fiches 0005 à 0007).
+
+Savoir si des valeurs numériques isolées sont couvertes par cette licence
+est une **question ouverte, sans avis** (fiche 0010 § 4). La mention
+ci-dessus ne la tranche pas. **Aucune géométrie ToddlerBot n'entre dans une
+pièce YXOR** (fiche 0001).
+
+**Autres fichiers tiers.** `sim/models/humanoid.xml` est le modèle d'exemple
+de MuJoCo, © 2021 DeepMind Technologies Limited, sous Apache-2.0. Son
+en-tête de licence est conservé.
 
 ## Principe
 

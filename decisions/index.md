@@ -75,5 +75,6 @@ lisent quand leur question se pose.
 | [0050](0050-fabrication-sequencee.md) | Fabrication séquencée : usinage, puis impression 3D, puis hybride | gouvernante | acceptée | 2026-09-30 |  |
 | [0051](0051-marge-de-securite.md) | Marge de sécurité de 1,5 sur le couple, à revoir après le banc | gouvernante | appliquée | 2026-09-30 |  |
 | [0052](0052-actionneur-maison.md) | Actionneur maison : une piste parallèle, jamais sur le chemin critique | gouvernante | acceptée | 2026-09-30 |  |
+| [0053](0053-depot-public.md) | Le dépôt passe public | gouvernante | acceptée | 2026-09-30 |  |
 
-**52 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**53 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
