@@ -329,3 +329,55 @@ Deux remarques :
 - **G et B4 lèvent des ambiguïtés de fiche**, plus qu'ils ne départagent.
   Ils servent à rendre notables des critères qui ne le sont pas
   aujourd'hui (§ 5).
+
+---
+
+## 5 — Ce qui ne peut pas être noté aujourd'hui
+
+D'après la collecte du 2026-10-01 (`actionneurs.yaml`,
+`collecte_criteres_manquants`) : 7 candidats, 36 faits chacun, **53 % de
+valeurs nulles**. « Publiés » compte les candidats, sur 7, dont la
+valeur a été trouvée dans un document du registre.
+
+| Sous-critère | Publiés | Notable aujourd'hui ? | Utilisable pour choisir S ? |
+| --- | ---: | --- | --- |
+| A1 encombrement | 5 | oui | **oui** |
+| A2 bride documentée | 4 plans cotés, 0 CAO | oui (la grille note ce qui est publié) | **oui** |
+| A3 charges du roulement | radiale et axiale : 2 ; moment : 0 | médiane de 2 valeurs seulement ; le moment est **retiré** (personne) | **non** : 2 valeurs ne font pas une médiane, et le contrôle de bornes sera décisif |
+| B1 réversibilité | 1 | médiane d'une seule valeur | **non**, avant le banc |
+| B2 jeu | 2 | médiane de 2 | **faible**, avant le banc |
+| B3 mode couple natif | 5 | oui | **oui** |
+| B4 télémétrie thermique | 5 | oui, mais 3 fiches ambiguës | **oui**, avec réserve |
+| B5 débit de retour | 5 (souvent requête-réponse, sans fréquence) | partiellement | faible |
+| C1 masse installée | 2 plaques publiées | médiane de 2 | **non**, avant le banc ou d'autres fiches |
+| C2 conditions publiées | 7 (compte de faits) | oui | **oui**, ou en indicateur (fusion avec D) |
+| C3 continu mesuré | 0 | non | après le banc seulement |
+| D1-D4 preuves | 6 | oui | **oui** (option a ou b à choisir) |
+| D5 contradictions | 6 | oui, mais biaisé | seulement normalisé (§ 1, D) |
+| E1 chien de garde | 5 documentés ; 3 valeurs d'usine, toutes « désactivé » | oui | **oui** |
+| E2 bus-off | **0** | **retiré** (personne) | **non** : banc |
+| E3 protections | 6 listes, 2 réactions décrites | partiellement | faible |
+| F1-F4 écosystème | **0** dans les documents du registre | **retirés** | **non** : ces faits sont sur le web et les dépôts, hors registre ; il faudrait une autre collecte |
+| G1 pertes cuivre | 4 calculables, 1 seule convention connue | **non** (§ 1, G) | **non**, avant que le banc mesure Kt et la convention |
+
+**Par candidat** :
+
+- **STS3250 : 100 % nul.** Aucun document au registre : il ne peut **pas**
+  être évalué sur ces familles. Il faudrait l'exclure de ce
+  comparatif-là, ou verser un document constructeur au registre.
+- **AK45-10 : 75 % nul.** Le seul document au registre est le manuel de
+  la série, qui ne cite pas ce modèle. Même conclusion, sauf si sa fiche
+  produit est versée.
+
+**Conclusion.** Aujourd'hui, **9 sous-critères sont notables et
+utilisables** pour choisir S : A1, A2, B3, B4, C2, D1 à D4, E1. Ils
+couvrent A, B, C, D et E **partiellement**. **F et G sont
+inutilisables** : F manque de données dans le registre, G attend une
+mesure. Pour les autres, soit **le banc est la source**, soit la médiane
+repose sur une ou deux valeurs.
+
+Un calcul de famille qui intégrerait tout aujourd'hui pèserait donc
+surtout sur des médianes, c'est-à-dire sur ce qu'on ignore, **avec
+l'air d'une note**. La règle de décisivité validée dit où va l'effort
+utile : **au banc** pour B1, B2, C1, C3, E2 et G ; **à une collecte hors
+registre**, si Jeremy la demande, pour F.
