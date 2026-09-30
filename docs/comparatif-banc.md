@@ -1,4 +1,4 @@
-# Comparatif du banc d'essai — v2
+# Comparatif du banc d'essai — v3
 
 **Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le 2026-09-30, après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).
 
@@ -31,18 +31,18 @@ Coût TTC CH = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %,
 
 ## 2 — Notes et score
 
-| Critère | Poids (proposé) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
+| Critère | Poids (fixé par Jeremy) | 1 × Damiao DM-J4310-2EC V1.2 | 2 × Damiao DM-J4310-2EC V1.2 | 3 × Damiao DM-J4310-2EC V1.2 | 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 (48 V) | qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) | 2 × Feetech STS3250 (banc d'apprentissage) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| valeur_decision | 30 | 2 | 2 | 2 | 3 | 5 | 0 |
-| apprentissage | 24.5 | 2 | 4 | 5 | 4 | 4 | 4 |
-| transfert_S | 17.5 | 5 | 5 | 5 | 5 | 5 | 1 |
-| cout | 17.5 | 4 | 3 | 3 | 4 | 3 | 0 |
-| risque | 10.5 | 3 | 5 | 5 | 3 | 3 | 1 |
-| **score /5** | | **2,98** | **3,50** | **3,75** | **3,77** | **4,20** | **1,26** |
+| valeur_decision | 40 | 2 | 2 | 2 | 3 | 5 | 0 |
+| apprentissage | 10 | 2 | 4 | 5 | 4 | 4 | 4 |
+| transfert_S | 20 | 5 | 5 | 5 | 5 | 5 | 1 |
+| cout | 15 | 4 | 3 | 3 | 4 | 3 | 0 |
+| risque | 15 | 3 | 5 | 5 | 3 | 3 | 1 |
+| **score /5** | | **3,05** | **3,40** | **3,50** | **3,65** | **4,30** | **0,75** |
 
 ## 3 — Sensibilité
 
-Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)**. 9 variations ±50 % sur 10 le laissent en tête.
+Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)**. 10 variations ±50 % sur 10 le laissent en tête.
 
 | Option | Victoires sur 1 000 tirages |
 | --- | ---: |
@@ -52,7 +52,7 @@ Vainqueur aux poids proposés : **qualification : 1 × Damiao DM-J4310-2EC V1.2 
 
 ## 4 — Verdict
 
-**Options trop proches pour que l’analyse tranche** : qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V) — le choix dépend des poids, que Jeremy fixera.
+**Aux poids fixés par Jeremy : qualification : 1 × Damiao DM-J4310-2EC V1.2 (48 V) + 1 × RobStride EduLite 05 + 1 × RobStride RS05 (48 V)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 38,4 % des tirages ; « 3 × Damiao DM-J4310-2EC V1.2 » en gagne 50,1 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
 **Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la condition de mesure n'est pas publiée : ici **Damiao DM-J4310-2EC V1.2, RobStride EduLite 05**. Mesurer son couple continu réel **suffit à trancher le seuil**, et les options « × vainqueur » le font. L'option à deux finalistes ajoute la vérification de l'autre finaliste **dans la même condition** : la comparaison devient directe, au lieu de s'appuyer sur sa fiche.
 
@@ -75,7 +75,7 @@ But : remplacer l'hypothèse k par une mesure, sur les deux finalistes, **dans l
 
 ## 6 — Ce que ce comparatif ne dit pas
 
-- Les poids, les notes de transfert et de risque sont **proposés** ou de **jugement**, et justifiés ligne par ligne.
+- Les poids du banc sont **fixés par Jeremy** ; les notes de transfert et de risque sont de **jugement**, justifiées ligne par ligne.
 - L'option Feetech n'a **ni prix vérifié ni alimentation 12 V chiffrée** : son coût est inconnu.
 - La mesure au rotor bloqué ne dit rien du rendement en rotation ; elle compare les deux finalistes entre eux, dans la même condition.
 - Le banc à trois exemplaires répond à la demande de l'étude externe (« au moins 3 », § 15.2) pour la dispersion entre exemplaires.

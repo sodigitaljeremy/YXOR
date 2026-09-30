@@ -145,6 +145,15 @@ modifications:
       plus recopiée dans le script : `seuils_m` est lu directement.
     ancien_texte: "5 ≥ 0,70 ; 4 0,65–0,70 ; 3 0,61–0,65 ; 2 0,58–0,61 ; 1 0,55–0,58 ; 0 < 0,55 m"
     nouveau_texte: "5 ≥ 0,65 ; 4 0,60–0,65 ; 3 0,55–0,60 ; 2 0,50–0,55 ; 1 0,45–0,50 ; 0 < 0,45 m"
+  - date: "2026-09-30"
+    moment: "soir ; comparatif v3, fin"
+    objet: "POIDS DU BANC FIXÉS PAR JEREMY"
+    raison: >
+      Principe de Jeremy : « le banc sert d'abord à décider la famille ;
+      on n'achète en quantité qu'après la mesure ». Statut « fixé par
+      Jeremy ».
+    ancien_texte: "proposés : valeur_decision 30, transfert_S 17.5, risque 10.5, cout 17.5, apprentissage 24.5"
+    nouveau_texte: "valeur_decision 40, transfert_S 20, risque 15, cout 15, apprentissage 10"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -331,8 +340,8 @@ banc:
 
   ponderes:
     valeur_decision:
-      poids: 30
-      statut: "proposé, à fixer par Jeremy"
+      poids: 40
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "nombre d'inconnues décisives que l'option tranche (inconnues_decisives)"
       grille:
@@ -341,21 +350,21 @@ banc:
         2: "une"
         0: "aucune"
     apprentissage:
-      poids: 24.5
-      statut: "proposé, à fixer par Jeremy"
+      poids: 10
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       grille: "nombre d'apprentissages couverts, de 0 à 5"
     transfert_S:
-      poids: 17.5
-      statut: "proposé, à fixer par Jeremy"
+      poids: 20
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       grille:
         5: "exactement le modèle retenu pour S"
         3: "même fabricant et même protocole que le modèle retenu pour S"
         1: "autre fabricant ou autre protocole"
     cout:
-      poids: 17.5
-      statut: "proposé, à fixer par Jeremy"
+      poids: 15
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "coût TTC CH : actionneurs + adaptateur + alimentation du bus, imprévus compris"
       grille:
@@ -366,8 +375,8 @@ banc:
         1: "≤ 1 300 CHF"
         0: "> 1 300 CHF, ou incomplet"
     risque:
-      poids: 10.5
-      statut: "proposé, à fixer par Jeremy"
+      poids: 15
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: jugement
       jugements_par_option:
         un_vainqueur: {note: 3, justification: "pas de rechange : une casse arrête le banc"}

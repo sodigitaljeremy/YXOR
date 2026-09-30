@@ -492,13 +492,35 @@ CRIT_S = ("capacite", "cout", "continuite", "fiabilite_fournisseur", "robustesse
           "masse", "ouverture", "tension_securite", "disponibilite")
 
 
+def verdict_texte(s, nom, fixes: bool) -> str:
+    """Verdict. Poids FIXÉS : le vainqueur est une décision ; on dit s'il tient à ±50 %
+    (tenue locale) et, pour information seulement, ce que donnent des poids quelconques."""
+    n = sum(1 for *_, w in s["variations"] if w == s["nominal"])
+    tir = f"{f(100 * s['freq'], 1)} %"
+    if fixes:
+        tenue = ("il **tient toutes les variations ±50 %**" if s["tous_pm"]
+                 else f"il **ne tient que {n} variations ±50 % sur {len(s['variations'])}**")
+        autre = max(((w, k_) for w, k_ in s["gagnes"].items() if w != s["nominal"]), key=lambda x: x[1], default=None)
+        info = (f" Sur 1 000 jeux de poids **quelconques**, il gagne {tir} des tirages"
+                + (f" ; « {nom.get(autre[0], autre[0])} » en gagne {f(100 * autre[1] / sum(s['gagnes'].values()), 1)} %"
+                   if autre else "")
+                + ". Cette dernière mesure dit seulement qu'**un autre principe de pondération** que "
+                "celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.")
+        return f"**Aux poids fixés par Jeremy : {nom[s['nominal']]}** — {tenue}.{info}"
+    if s["robuste"]:
+        return f"**Classement ROBUSTE** : {nom[s['nominal']]}."
+    return (f"**Options trop proches pour que l'analyse tranche** : {nom[s['nominal']]} en tête aux poids "
+            "proposés — le choix dépend des poids, que Jeremy fixera.")
+
+
 def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     fa, fb, SA, SB, paire, tension = finalistes
     cat = r["cat"]
     nomf = {fm["id"]: fm["nom"] for fm in r["fams"]}
     L = []
     A = L.append
-    A("# Comparatif du banc d'essai — v2\n")
+    fixes = all("fixé" in v.get("statut", "") for v in r["crit"]["banc"]["ponderes"].values())
+    A("# Comparatif du banc d'essai — v3\n")
     A(f"**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le {date}, "
       "après le comparatif des familles (`docs/choix-famille-actionneurs.md`). Aucun achat n'est "
       "proposé : ce comparatif prépare le choix de Jeremy (cadrage § 6 et § 13, question 12).\n")
@@ -537,7 +559,7 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
             A(f"- `{k_}` — {d['question']}")
         A("")
     A("---\n\n## 2 — Notes et score\n")
-    A("| Critère | Poids (proposé) | " + " | ".join(o["nom"] for o in opts) + " |")
+    A(f"| Critère | Poids ({'fixé par Jeremy' if fixes else 'proposé'}) | " + " | ".join(o["nom"] for o in opts) + " |")
     A("| --- | ---: | " + " | ".join("---:" for _ in opts) + " |")
     for k_ in pb:
         A(f"| {k_} | {pb[k_]} | " + " | ".join(str(o["notes"][k_]) for o in opts) + " |")
@@ -552,9 +574,7 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
     for w, k_ in sorted(sb["gagnes"].items(), key=lambda x: -x[1]):
         A(f"| {nom.get(w, w)} | {k_} |")
     A("\n## 4 — Verdict\n")
-    A(f"**{'Classement ROBUSTE' if sb['robuste'] else 'Options trop proches pour que l analyse tranche'.replace('l analyse', 'l’analyse')}** "
-      f": {nom[sb['nominal']]}"
-      + (" — le choix dépend des poids, que Jeremy fixera." if not sb["robuste"] else ".") + "\n")
+    A(verdict_texte(sb, nom, fixes) + "\n")
     k_seul = [x for x in (SA, SB) if intervalle_continu(cat["candidats"][x], 0.5)["k_applique"]]
     if k_seul:
         A("**Ce que chaque option tranche.** L'hypothèse k ne touche que les actionneurs dont la "
@@ -590,8 +610,8 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
       "mesuré** de chaque actionneur, à reporter dans le catalogue comme une mesure (fiche 0041) :")
     A("   il départage les finalistes au seuil du § 1.\n")
     A("---\n\n## 6 — Ce que ce comparatif ne dit pas\n")
-    A("- Les poids, les notes de transfert et de risque sont **proposés** ou de **jugement**, et "
-      "justifiés ligne par ligne.")
+    A(f"- Les poids du banc sont **{'fixés par Jeremy' if fixes else 'proposés'}** ; les notes de "
+      "transfert et de risque sont de **jugement**, justifiées ligne par ligne.")
     A("- L'option Feetech n'a **ni prix vérifié ni alimentation 12 V chiffrée** : son coût est "
       "inconnu.")
     A("- La mesure au rotor bloqué ne dit rien du rendement en rotation ; elle compare les deux "
@@ -746,13 +766,17 @@ def doc_familles(r, date) -> str:
             A(f"- {k_} = {fm['notes'][k_]} — {fm['justif'][k_]}")
         A("")
     A("---\n\n## 3 — La dimension « données » : le vainqueur pour chaque k\n")
-    A("| k | Famille gagnante | Tirages gagnés | Variations ±50 % | Verdict |")
-    A("| ---: | --- | ---: | --- | --- |")
+    A("| k | Famille gagnante (poids fixés) | Tient ±50 % | Tirages quelconques gagnés |")
+    A("| ---: | --- | --- | ---: |")
     nom = {fm["id"]: fm["nom"] for fm in fams}
     for b_ in r["fam_balayage"]:
         s_ = b_["sens"]
-        A(f"| {f(b_['k'], 1)} | {nom[s_['nominal']]} | {f(100 * s_['freq'], 1)} % | "
-          f"{'toutes' if s_['tous_pm'] else 'PAS toutes'} | {'ROBUSTE' if s_['robuste'] else 'trop proches'} |")
+        A(f"| {f(b_['k'], 1)} | {nom[s_['nominal']]} | "
+          f"{'oui, toutes' if s_['tous_pm'] else 'NON, pas toutes'} | {f(100 * s_['freq'], 1)} % |")
+    fixes_f = all("fixé" in v.get("statut", "") for v in crit["classe_S"]["ponderes"].values())
+    A("\n**Verdict à k = 1,0.** " + verdict_texte(r["fam_balayage"][0]["sens"], nom, fixes_f))
+    A("\n**Verdict à la borne basse (k = " + f(r["fam_balayage"][-1]["k"], 1) + ").** "
+      + verdict_texte(r["fam_balayage"][-1]["sens"], nom, fixes_f) + "\n")
     if r["fam_seuil"]:
         sf = r["fam_seuil"]
         A(f"\n**Seuil de bascule : {nom[sf['gagnant']]} gagne jusqu'à k = {f(sf['garde'])} ; "
@@ -831,8 +855,8 @@ def main(argv=None) -> int:
     nom = {fm["id"]: fm["nom"] for fm in r["fams"]}
     for b_ in r["fam_balayage"]:
         s_ = b_["sens"]
-        print(f"    k = {f(b_['k'], 1)} : {nom[s_['nominal']]:58s} tirages {f(100 * s_['freq'], 1):>5} % "
-              f"-> {'ROBUSTE' if s_['robuste'] else 'trop proches'}")
+        print(f"    k = {f(b_['k'], 1)} : {nom[s_['nominal']]:58s} ±50 % {'tient' if s_['tous_pm'] else 'NE tient PAS':12s} "
+              f"tirages quelconques {f(100 * s_['freq'], 1):>5} %")
     if r["fam_seuil"]:
         sf = r["fam_seuil"]
         print(f"  SEUIL k : {nom[sf['gagnant']]} jusqu'à k = {f(sf['garde'])} ; {nom[sf['nouveau']]} dès k = {f(sf['k'])}")
@@ -844,8 +868,8 @@ def main(argv=None) -> int:
         print(f"    {x['nom']:24s} {f(x['blocage'], 1):>5} / {f(x['nominal'], 1):>5} = {f(x['rapport'], 3)}")
     print(f"    moyenne {f(sum(x['rapport'] for x in rb) / len(rb), 3)}")
     opts, pb, sb, fin = options_banc(r)
-    print(f"\n  banc : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; tirages "
-          f"{f(100 * sb['freq'], 1)} % -> {'ROBUSTE' if sb['robuste'] else 'trop proches'}")
+    print(f"\n  banc (poids fixés) : {next(o['nom'] for o in opts if o['id'] == sb['nominal'])} ; "
+          f"±50 % : {'tient toutes' if sb['tous_pm'] else 'NE tient PAS toutes'} ; tirages quelconques {f(100 * sb['freq'], 1)} %")
     for o in opts:
         print(f"    {o['nom']:70s} score {f(score(o['notes'], pb))}  coût {'≥ ' if o['manquants'] else ''}{f(o['cout'], 0)} CHF")
     if a.ecrire:

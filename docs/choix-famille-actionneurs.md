@@ -154,14 +154,19 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 
 ## 3 — La dimension « données » : le vainqueur pour chaque k
 
-| k | Famille gagnante | Tirages gagnés | Variations ±50 % | Verdict |
-| ---: | --- | ---: | --- | --- |
-| 1,0 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 64,1 % | toutes | ROBUSTE |
-| 0,9 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 59,2 % | PAS toutes | trop proches |
-| 0,8 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 62,6 % | toutes | ROBUSTE |
-| 0,7 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 57,0 % | PAS toutes | trop proches |
-| 0,6 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 52,1 % | PAS toutes | trop proches |
-| 0,5 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | 55,3 % | PAS toutes | trop proches |
+| k | Famille gagnante (poids fixés) | Tient ±50 % | Tirages quelconques gagnés |
+| ---: | --- | --- | ---: |
+| 1,0 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | oui, toutes | 64,1 % |
+| 0,9 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 59,2 % |
+| 0,8 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | oui, toutes | 62,6 % |
+| 0,7 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 57,0 % |
+| 0,6 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 52,1 % |
+| 0,5 | Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1) | NON, pas toutes | 55,3 % |
+
+**Verdict à k = 1,0.** **Aux poids fixés par Jeremy : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 64,1 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 12,1 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+
+**Verdict à la borne basse (k = 0,5).** **Aux poids fixés par Jeremy : Damiao (J4310 V1.2 → J8006 V1.1 → J4340 V1.1)** — il **ne tient que 17 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 55,3 % des tirages ; « RobStride (RS05 → RS02 → RS06) » en gagne 24,4 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+
 
 **Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.
 
