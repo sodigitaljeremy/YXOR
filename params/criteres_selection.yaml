@@ -99,6 +99,17 @@ modifications:
       inconnu) ; option « un de chaque finaliste » → 5 (le modèle
       gagnant est sur le banc, quel que soit k). La grille n'est pas
       modifiée ; c'est son application qui l'est, et c'est dit.
+  - date: "2026-09-30"
+    moment: "soir ; comparatif v3"
+    objet: "POIDS FIXÉS PAR JEREMY (classe S et familles)"
+    raison: >
+      Décision de Jeremy : « équilibre entre apprendre/préparer M et L, et
+      un S convaincant par lui-même ; meilleur rapport performance,
+      durabilité, maintenabilité, évolutivité, qualité, prix ». Statut
+      « fixé par Jeremy » au lieu de « proposé ». Les poids du BANC
+      restent proposés.
+    ancien_texte: "poids proposés par Claude : capacite 20, continuite 15, cout 20, fiabilite_fournisseur 15, robustesse 10, disponibilite 5, masse 5, ouverture 5, tension_securite 5"
+    nouveau_texte: "capacite 18, continuite 18, cout 15, fiabilite_fournisseur 15, robustesse 12, disponibilite 7, masse 5, ouverture 5, tension_securite 5"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -117,8 +128,8 @@ classe_S:
   ponderes:
 
     capacite:
-      poids: 20
-      statut: "proposé, à fixer par Jeremy"
+      poids: 18
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "taille atteignable PRUDENTE (H_max à marge 1,5) ; l'optimiste est affichée à côté"
       k_non_precisee: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]   # hypothèse balayée, pas une valeur
@@ -132,8 +143,8 @@ classe_S:
       # correction_dissipation : RETIRÉE le 2026-09-30 (soir), remplacée par k — voir `modifications`.
 
     cout:
-      poids: 20
-      statut: "proposé, à fixer par Jeremy"
+      poids: 15
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "prix unitaire converti en CHF (taux BCE), hors TVA et port"
       grille:
@@ -145,8 +156,8 @@ classe_S:
         0: "> 300 CHF, ou prix inconnu"
 
     continuite:
-      poids: 15
-      statut: "proposé, à fixer par Jeremy"
+      poids: 18
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "continuité INTRINSÈQUE de la famille S → M → L (modifiée le 2026-09-30, soir)"
       grille_points:
@@ -158,7 +169,7 @@ classe_S:
 
     fiabilite_fournisseur:
       poids: 15
-      statut: "proposé, à fixer par Jeremy"
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "garantie écrite et distribution identifiées"
       grille:
@@ -170,8 +181,8 @@ classe_S:
         0: "rien d'établi"
 
     robustesse:
-      poids: 10
-      statut: "proposé, à fixer par Jeremy"
+      poids: 12
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: jugement
       mesure: "tenue d'une articulation de jambe au blocage et aux chocs"
       grille:
@@ -184,7 +195,7 @@ classe_S:
 
     masse:
       poids: 5
-      statut: "proposé, à fixer par Jeremy"
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "masse de l'actionneur"
       grille:
@@ -197,7 +208,7 @@ classe_S:
 
     ouverture:
       poids: 5
-      statut: "proposé, à fixer par Jeremy"
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: jugement
       mesure: "ce qu'on peut lire et modifier"
       grille_points:
@@ -208,7 +219,7 @@ classe_S:
 
     tension_securite:
       poids: 5
-      statut: "proposé, à fixer par Jeremy"
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "tension nominale du bus de puissance"
       grille:
@@ -221,8 +232,8 @@ classe_S:
       note: "tout est en très basse tension ; plus la tension est basse, plus l'énergie en jeu au banc est faible"
 
     disponibilite:
-      poids: 5
-      statut: "proposé, à fixer par Jeremy"
+      poids: 7
+      statut: "fixé par Jeremy le 2026-09-30 (soir)"
       mode: calcule
       mesure: "où l'acheter depuis la Suisse"
       grille:

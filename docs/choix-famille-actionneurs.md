@@ -8,7 +8,7 @@
 2. **La capacité est un intervalle.** Taille *optimiste* (le nominal publié le plus favorable) et *prudente* (en blocage si publié ; sinon la plus petite plaque publiée ; sinon — condition non précisée — le nominal × **k**). k est une **hypothèse**, balayée de 1,0 à 0,5.
 3. **On compare des familles S → M → L**, pas des modèles. La continuité se mesure dans chaque famille, et un membre absent est un **trou**, affiché.
 
-Poids : **proposés, à fixer par Jeremy**. Marge : 1,5 (fiche 0051). Toutes les tailles sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).
+Poids : **fixés par Jeremy le 30-09-2026** (capacité 18, continuité 18, coût 15, fiabilité 15, robustesse 12, disponibilité 7, masse, ouverture, tension 5 chacun). Marge : 1,5 (fiche 0051). Toutes les tailles sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).
 
 ---
 
@@ -75,18 +75,18 @@ Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « P
 
 Les critères autres que la continuité se notent sur le **membre S**, le premier robot.
 
-| Critère | Poids (proposé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
+| Critère | Poids (fixé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| capacite | 20 | 0 | 0 | 4 | 2 | 2 |
-| cout | 20 | 3 | 4 | 3 | 2 | 1 |
-| continuite | 15 | 5 | 5 | 5 | 5 | 2 |
+| capacite | 18 | 0 | 0 | 4 | 2 | 2 |
+| cout | 15 | 3 | 4 | 3 | 2 | 1 |
+| continuite | 18 | 5 | 5 | 5 | 5 | 2 |
 | fiabilite_fournisseur | 15 | 3 | 3 | 2 | 1 | 3 |
-| robustesse | 10 | 3 | 3 | 3 | 5 | 5 |
+| robustesse | 12 | 3 | 3 | 3 | 5 | 5 |
 | masse | 5 | 4 | 3 | 2 | 2 | 2 |
 | ouverture | 5 | 2 | 2 | 2 | 2 | 2 |
 | tension_securite | 5 | 2 | 2 | 4 | 4 | 4 |
-| disponibilite | 5 | 3 | 3 | 4 | 2 | 1 |
-| **score /5** | | **2,65** | **2,80** | **3,35** | **2,70** | **2,30** |
+| disponibilite | 7 | 3 | 3 | 4 | 2 | 1 |
+| **score /5** | | **2,77** | **2,87** | **3,41** | **2,85** | **2,39** |
 
 ### Justification de chaque note
 
@@ -173,13 +173,13 @@ En clair : le classement dépend du rapport entre le couple continu **réel** de
 
 | Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |
 | --- | --- | ---: | --- |
-| Damiao DM-J4310-2EC V1.2 | 0,67–0,67 m | 2,90 | admis |
-| RobStride EduLite 05 | 0,54–0,54 m | 2,80 | admis |
-| RobStride RS05 | 0,48–0,57 m | 2,65 | admis |
-| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 0,61–0,61 m | 2,30 | admis |
-| CubeMars AK45-10 V3.0 KV75 | 0,61–0,61 m | 2,25 | admis |
-| SteadyWin GIM4310-10 (driver GDZ34) | 0,53–0,53 m | 1,95 | admis |
-| Dynamixel XM430-W210 (référence) | 0,53–0,53 m | 1,50 | admis (référence) |
+| RobStride EduLite 05 | 0,54–0,54 m | 2,87 | admis |
+| Damiao DM-J4310-2EC V1.2 | 0,67–0,67 m | 2,87 | admis |
+| RobStride RS05 | 0,48–0,57 m | 2,77 | admis |
+| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 0,61–0,61 m | 2,39 | admis |
+| CubeMars AK45-10 V3.0 KV75 | 0,61–0,61 m | 2,31 | admis |
+| SteadyWin GIM4310-10 (driver GDZ34) | 0,53–0,53 m | 2,05 | admis |
+| Dynamixel XM430-W210 (référence) | 0,53–0,53 m | 1,55 | admis (référence) |
 | Feetech STS3250 | 0,60–0,60 m | 1,30 | admis |
 
 Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent à une famille ; les autres (Feetech STS3250, SteadyWin GIM4310-10, Dynamixel XM430) sont listés pour mémoire.
@@ -190,7 +190,7 @@ Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent
 
 - **Ce que S doit porter** (calculateur, batterie, IMU) n'est pas chiffré : c'était la vraie contrainte derrière le seuil retiré (cadrage, question 13).
 - **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?
-- **Les poids** : proposés, pas décidés.
+- **La sensibilité aux poids** reste affichée pour mémoire : les poids sont fixés, mais un classement qui ne tiendrait qu'à eux mériterait d'être su.
 
 ## 6 — Ce que ce comparatif ne dit pas
 

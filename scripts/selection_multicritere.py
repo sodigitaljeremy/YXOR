@@ -25,8 +25,9 @@ Engendre :
    (criteres_selection.yaml). Chaque note est « calculée » depuis le
    catalogue ou « jugement », et sa justification est imprimée. Une note
    manquante vaut 0 par prudence.
-3. SCORE = moyenne des notes pondérée par les poids (proposés, pas
-   décidés).
+3. SCORE = moyenne des notes pondérée par les poids. Ceux de la classe S
+   et des familles sont FIXÉS par Jeremy (2026-09-30) ; ceux du banc
+   restent proposés.
 4. SENSIBILITÉ. Chaque poids ±50 %, un à la fois ; puis 1 000 jeux de
    poids tirés au hasard (Dirichlet α = 1, graine fixe). On compte qui
    gagne. Le classement est ROBUSTE si le vainqueur nominal gagne toutes
@@ -653,7 +654,9 @@ def doc_familles(r, date) -> str:
       "1,0 à 0,5.")
     A("3. **On compare des familles S → M → L**, pas des modèles. La continuité se mesure dans "
       "chaque famille, et un membre absent est un **trou**, affiché.\n")
-    A("Poids : **proposés, à fixer par Jeremy**. Marge : 1,5 (fiche 0051). Toutes les tailles "
+    A("Poids : **fixés par Jeremy le 30-09-2026** (capacité 18, continuité 18, coût 15, fiabilité 15, "
+      "robustesse 12, disponibilité 7, masse, ouverture, tension 5 chacun). Marge : 1,5 (fiche 0051). "
+      "Toutes les tailles "
       "sont des **plafonds optimistes** : la marche de référence était écrêtée (cadrage § 3).\n")
     A("---\n\n## 1 — Les familles\n")
     L.extend(tableau_familles(r))
@@ -687,7 +690,7 @@ def doc_familles(r, date) -> str:
     A("---\n\n## 2 — Notes (membre S, et continuité de famille) à k = 1,0\n")
     A("Les critères autres que la continuité se notent sur le **membre S**, le premier robot.\n")
     fams = r["fams"]
-    A("| Critère | Poids (proposé) | " + " | ".join(fm["nom"].split(" (")[0] + (" EL05" if "el05" in fm["id"] else "") for fm in fams) + " |")
+    A("| Critère | Poids (fixé) | " + " | ".join(fm["nom"].split(" (")[0] + (" EL05" if "el05" in fm["id"] else "") for fm in fams) + " |")
     A("| --- | ---: | " + " | ".join("---:" for _ in fams) + " |")
     for k_ in CRIT_S:
         A(f"| {k_} | {poids[k_]} | " + " | ".join(str(fm["notes"][k_]) for fm in fams) + " |")
@@ -728,7 +731,8 @@ def doc_familles(r, date) -> str:
     A("- **Ce que S doit porter** (calculateur, batterie, IMU) n'est pas chiffré : c'était la "
       "vraie contrainte derrière le seuil retiré (cadrage, question 13).")
     A("- **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?")
-    A("- **Les poids** : proposés, pas décidés.\n")
+    A("- **La sensibilité aux poids** reste affichée pour mémoire : les poids sont fixés, mais un "
+      "classement qui ne tiendrait qu'à eux mériterait d'être su.\n")
     A("## 6 — Ce que ce comparatif ne dit pas\n")
     A("- **Aucun couple continu n'est mesuré dans la condition du robot.** k est une hypothèse ; le "
       "banc la remplacera par une mesure.")
