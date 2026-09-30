@@ -192,6 +192,12 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 
 *Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.
 
+### k au blocage du J4310 : une hypothèse sur une hypothèse
+
+L'estimation thermique (`docs/estimation-thermique-j4310.md`) donne, **en rotation** à 120 rpm, dans la condition de l'essai constructeur, **k ≈ 0,92–1,02**. Un robot debout travaille près du blocage. En décotant cette estimation par les rapports blocage / nominal de RobStride ci-dessus (0,619 à 0,857), le k du J4310 **au blocage** serait de l'ordre de **0,57–0,87** (0,92 × 0,619 à 1,02 × 0,857).
+
+Cette fourchette est **toujours au-dessus de la bascule** (k ≈ 0,49). **C'est une hypothèse sur une hypothèse** : une courbe numérisée, puis le comportement d'un autre fabricant. Elle ne vaut pas une mesure ; elle dit seulement que les deux estimations disponibles vont dans le même sens que la borne plausible.
+
 ---
 
 ## 4 — Les candidats S hors famille, pour mémoire
@@ -216,6 +222,12 @@ Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent
 - **Ce que S doit porter** (calculateur, batterie, IMU) n'est pas chiffré : c'était la vraie contrainte derrière le seuil retiré (cadrage, question 13).
 - **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?
 - **La sensibilité aux poids** reste affichée pour mémoire : les poids sont fixés, mais un classement qui ne tiendrait qu'à eux mériterait d'être su.
+
+### Limite du membre L de Damiao — question ouverte, à rouvrir AVANT L
+
+- **Le membre L retenu, Damiao DM-J4340-2EC V1.1 (48 V), a une réduction de 40:1** (manuel V1.3, p. 7). Sa réversibilité n'est **pas publiée** ; un rapport aussi élevé la rend **probablement faible**. *Réversible* veut dire qu'un effort extérieur sur la sortie fait tourner le moteur : c'est ce qui laisse une jambe **encaisser un choc** (pied qui touche le sol) en cédant un peu, au lieu de le transmettre intact aux dents du réducteur. Pour une jambe, un réducteur peu réversible est **défavorable**.
+- **Alternative dans la même famille : Damiao DM-J8009-2EC (alternative L)**, 896 g (manuel V1.1, p. 6), contre 362 g : plus lourd ; sa réduction n'est pas publiée.
+- **La robustesse n'a été notée que sur le membre S** (Damiao DM-J4310-2EC V1.2) : ce comparatif ne dit rien de celle du membre L. C'est une **question ouverte pour L, à rouvrir avant de concevoir L**. Elle est **sans effet sur S** : ni la note, ni le choix de famille pour S n'en dépendent.
 
 ## 6 — Ce que ce comparatif ne dit pas
 

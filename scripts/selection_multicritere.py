@@ -520,6 +520,12 @@ def options_banc(r):
     return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension)
 
 
+# Estimation thermique du J4310 EN ROTATION (k = continu estimé / 3,5 N·m).
+# Recopiée de docs/estimation-thermique-j4310.md § 4 : le script qui la calcule
+# (scripts/estimation_thermique.py) lit des images d'exports/, absentes en
+# construction Docker. ESTIMATION, pas une mesure.
+K_ESTIME_ROTATION_J4310 = (0.92, 1.02)
+
 CRIT_S = ("capacite", "cout", "continuite", "fiabilite_fournisseur", "robustesse",
           "masse", "ouverture", "tension_securite", "disponibilite")
 
@@ -903,6 +909,25 @@ def doc_familles(r, date) -> str:
           "le vainqueur ne change pas.\n")
     A("*Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. "
       "Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.\n")
+    if rb:
+        kr_bas, kr_haut = K_ESTIME_ROTATION_J4310
+        rmin, rmax = min(x["rapport"] for x in rb), max(x["rapport"] for x in rb)
+        kb_bas, kb_haut = kr_bas * rmin, kr_haut * rmax
+        A("### k au blocage du J4310 : une hypothèse sur une hypothèse\n")
+        A(f"L'estimation thermique (`docs/estimation-thermique-j4310.md`) donne, **en rotation** à "
+          f"120 rpm, dans la condition de l'essai constructeur, **k ≈ {f(kr_bas)}–{f(kr_haut)}**. Un robot "
+          "debout travaille près du blocage. En décotant cette estimation par les rapports blocage / "
+          f"nominal de RobStride ci-dessus ({f(rmin, 3)} à {f(rmax, 3)}), le k du J4310 **au blocage** "
+          f"serait de l'ordre de **{f(kb_bas)}–{f(kb_haut)}** ({f(kr_bas)} × {f(rmin, 3)} à "
+          f"{f(kr_haut)} × {f(rmax, 3)}).\n")
+        if r["fam_seuil"]:
+            sf = r["fam_seuil"]
+            pos = ("**toujours au-dessus de la bascule**" if kb_bas > sf["garde"]
+                   else "**à cheval sur la bascule**" if kb_haut >= sf["k"] else "**sous la bascule**")
+            A(f"Cette fourchette est {pos} (k ≈ {f(sf['k'])}). **C'est une hypothèse sur une "
+              "hypothèse** : une courbe numérisée, puis le comportement d'un autre fabricant. Elle ne "
+              "vaut pas une mesure ; elle dit seulement que les deux estimations disponibles vont dans "
+              "le même sens que la borne plausible.\n")
     A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
     A("| Candidat | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
     A("| --- | --- | ---: | --- |")
@@ -917,6 +942,25 @@ def doc_familles(r, date) -> str:
     A("- **Les trous de gamme** sont-ils rédhibitoires, ou comblables par un modèle hors famille ?")
     A("- **La sensibilité aux poids** reste affichée pour mémoire : les poids sont fixés, mais un "
       "classement qui ne tiendrait qu'à eux mériterait d'être su.\n")
+    cat_ = r["cat"]
+    fd = cat_["familles"].get("damiao") or {}
+    if fd.get("L") in cat_["candidats"] and "dm_j8009" in cat_["candidats"]:
+        cL, c8 = cat_["candidats"][fd["L"]], cat_["candidats"]["dm_j8009"]
+        red = val(cL.get("reduction") or {})
+        A("### Limite du membre L de Damiao — question ouverte, à rouvrir AVANT L\n")
+        A(f"- **Le membre L retenu, {cL['nom']}, a une réduction de {f(red, 0)}:1** "
+          f"({cL['reduction']['source']}). Sa réversibilité n'est **pas publiée** ; un rapport aussi "
+          "élevé la rend **probablement faible**. *Réversible* veut dire qu'un effort extérieur sur la "
+          "sortie fait tourner le moteur : c'est ce qui laisse une jambe **encaisser un choc** (pied "
+          "qui touche le sol) en cédant un peu, au lieu de le transmettre intact aux dents du "
+          "réducteur. Pour une jambe, un réducteur peu réversible est **défavorable**.")
+        A(f"- **Alternative dans la même famille : {c8['nom']}**, {f(val(c8['masse_g']), 0)} g "
+          f"({c8['masse_g']['source']}), contre {f(val(cL['masse_g']), 0)} g : plus lourd ; sa réduction "
+          "n'est pas publiée.")
+        A(f"- **La robustesse n'a été notée que sur le membre S** ({cat_['candidats'][fd['S']]['nom']}) : ce comparatif ne dit "
+          "rien de celle du membre L. C'est une **question ouverte pour L, à rouvrir avant de "
+          "concevoir L**. Elle est **sans effet sur S** : ni la note, ni le choix de famille pour S "
+          "n'en dépendent.\n")
     A("## 6 — Ce que ce comparatif ne dit pas\n")
     A("- **Aucun couple continu n'est mesuré dans la condition du robot.** k est une hypothèse ; le "
       "banc la remplacera par une mesure.")
