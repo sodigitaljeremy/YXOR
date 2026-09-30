@@ -19,10 +19,10 @@ Son code est sous licence MIT ; sa conception (fichiers mécaniques) est sous
 
 ## Provenance et licences — *provisoire*
 
-⚠ **Ce dépôt n'a pas encore de licence propre** (aucun fichier `LICENSE`).
-Le choix est ouvert : fiche 0053 et `docs/controle-publication-2026-09-30.md`.
-En attendant, aucun droit n'est accordé au-delà de ce que permettent les
-conditions de GitHub.
+⚠ **Aucune licence pour l'instant : choix délibéré de Jeremy le 2026-09-30,
+à rouvrir.** Il n'y a pas de fichier `LICENSE`. Aucun droit n'est donc
+accordé au-delà de ce que permettent les conditions de GitHub. Les options
+étudiées sont dans `docs/controle-publication-2026-09-30.md` § 3.
 
 **Valeurs extraites de ToddlerBot.** Les fichiers ci-dessous contiennent des
 valeurs numériques extraites de ToddlerBot : axes, butées, rapports de
