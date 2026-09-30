@@ -69,5 +69,9 @@ lisent quand leur question se pose.
 | [0044](0044-variante-carton-ondule.md) | La semelle publiée n'est pas celle qui a été coupée | close | appliquée | 2026-09-29 |  |
 | [0045](0045-reconstruction-et-amont.md) | Aucune géométrie amont ne passe dans un outil de reconstruction | gouvernante | acceptée | 2026-09-30 |  |
 | [0046](0046-backflip-reconstruction-veille.md) | Backflip AI : une CAO paramétrique reconstruite ? Vérifié, pas adopté | veille | veille | 2026-09-30 |  |
+| [0047](0047-demarche-inversee.md) | Démarche inversée : la classe d'actionneur fixe la taille | gouvernante | appliquée | 2026-09-30 |  |
+| [0048](0048-tailles-par-classe.md) | Tailles Banc, S, M, L, XL ; premier robot S | gouvernante | acceptée | 2026-09-30 |  |
+| [0049](0049-scripts-de-chiffrage-versionnes.md) | Les scripts de chiffrage sont versionnés, les séries se régénèrent | close | appliquée | 2026-09-30 |  |
+| [0050](0050-fabrication-sequencee.md) | Fabrication séquencée : usinage, puis impression 3D, puis hybride | gouvernante | acceptée | 2026-09-30 |  |
 
-**46 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**50 fiches.** 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
