@@ -141,15 +141,16 @@ def evaluer_S(cat, crit, bud, analyse, ref):
         evn = D.evaluer(ref, D.config_homogene(cn), besoins, marge)
         H_nominal = None if "indetermine" in evn else evn["H_max"]
         # ── éliminatoires ──
-        if cr["valeur"] is None or classe["pointe"] is None or classe["masse"] is None:
-            elim_cap = "non évaluable"
-        else:
-            elim_cap = "admis" if H is not None and H >= crit["classe_S"]["eliminatoires"]["capacite"]["seuil_m"] else "éliminé"
+        # La taille n'élimine plus : elle est seulement notée (capacité).
+        elim_cap = "notée, non éliminatoire"
         tel = fs["telemetrie"]
         champs = [tel.get(k) for k in ("position", "couple_ou_courant", "temperature")]
         elim_tel = "éliminé" if False in champs else ("non évaluable" if None in champs else "admis")
-        etat = "éliminé" if "éliminé" in (elim_cap, elim_tel) else (
-            "non évaluable" if "non évaluable" in (elim_cap, elim_tel) else "admis")
+        # Depuis le 2026-09-30 (soir), la taille n'est PLUS éliminatoire
+        # (criteres_selection.yaml, `modifications`) : c'est une sortie de
+        # la démarche inversée, notée par le critère de capacité. Seule la
+        # télémétrie élimine.
+        etat = elim_tel
         # ── notes ──
         n, j = {}, {}
         base = note_capacite(H)

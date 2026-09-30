@@ -477,6 +477,11 @@ v2 : les bras ne font pas partie de la v1.
     couvertes par sa licence ? Question juridique, sans avis ici.
 12. Composition du banc (§ 6) : « 2 × RS05 + 1 adaptateur USB-CAN » est
     une *option, en attente du comparatif* (`docs/comparatif-banc.md`).
+13. **Ce que S doit porter.** Le seuil de taille retiré du comparatif le
+    30-09-2026 (« H_max ≥ 0,55 m ») cachait une vraie contrainte : S doit
+    porter son calculateur, sa batterie et son IMU. Elle n'est pas
+    chiffrée : `dimensionnement.py` met ces masses à l'échelle avec la
+    structure de ToddlerBot, sans les compter à part.
     Le prix de l'adaptateur n'est pas vérifié ; l'alimentation du banc
     n'est pas comprise dans la proposition.
 

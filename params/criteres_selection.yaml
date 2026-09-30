@@ -22,6 +22,39 @@
 
 date_des_grilles: "2026-09-30"
 
+# ─────────────────────────────────────────────────────────────────────────
+#  MODIFICATIONS DATÉES — la méthode change, la trace reste
+# ─────────────────────────────────────────────────────────────────────────
+modifications:
+  - date: "2026-09-30"
+    moment: "après-midi, avant tout calcul de note"
+    objet: "base du couple continu (capacité)"
+    raison: >
+      « La valeur en blocage si elle est publiée » ne s'appliquait qu'à
+      RobStride et le jugeait sur sa valeur la plus prudente, ses
+      concurrents sur leur plus favorable. Remplacée par « la plus
+      petite plaque publiée ». (Détail dans l'ancien texte, conservé
+      dans l'historique git de ce fichier.)
+  - date: "2026-09-30"
+    moment: "soir, après la v1 du comparatif ; origine : relecture externe (Claude)"
+    objet: "éliminatoire de taille RETIRÉ"
+    raison: >
+      « H_max ≥ 0,55 m » contredisait la démarche inversée (fiche 0047) :
+      la taille est une SORTIE du calcul, pas un seuil d'entrée. Elle
+      devient un critère NOTÉ (capacité = taille atteignable). Seule la
+      télémétrie reste éliminatoire. En v1, cet éliminatoire écartait
+      RS05 et EduLite 05 à 0,54 m, de justesse.
+    ancien_texte: >
+      capacite: regle « H_max ≥ 0,55 m à marge 1,5 (configuration
+      homogène) », seuil_m 0.55, calculé avec le continu de la plus
+      petite plaque publiée, sinon le nominal.
+    question_ouverte: >
+      La contrainte réelle derrière le seuil — S doit PORTER son
+      calculateur, sa batterie et son IMU — n'est pas chiffrée. Le
+      modèle de masse de dimensionnement.py les met à l'échelle avec
+      la structure de ToddlerBot, sans les compter. Question ouverte,
+      reportée au cadrage (§ 13).
+
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
 # ═════════════════════════════════════════════════════════════════════════
@@ -31,23 +64,7 @@ classe_S:
   continuite_vers: [rs02, rs06]
 
   eliminatoires:
-    capacite:
-      regle: "H_max ≥ 0,55 m à marge 1,5 (scripts/dimensionnement.py, configuration homogène)"
-      seuil_m: 0.55
-      note: >
-        Calculé avec le couple continu publié sur la PLUS PETITE plaque
-        de dissipation ; à défaut de plaque publiée, avec le couple
-        nominal. Voir la modification du 2026-09-30 ci-dessous.
-      modification_2026_09_30: >
-        La version initiale disait « le couple en blocage s'il est publié,
-        sinon le nominal ». Défaut relevé EN REMPLISSANT le catalogue,
-        avant tout calcul de note : seul RobStride publie une valeur en
-        blocage. La règle aurait jugé RobStride sur sa valeur la plus
-        prudente et ses concurrents sur leur valeur la plus favorable —
-        pénaliser le fabricant qui publie le plus. La plus petite plaque
-        publiée donne une base commune : RS05 et EduLite 05 y sont tous
-        deux mesurés sur 70 × 70 mm. Les valeurs en blocage restent
-        affichées, pour information.
+    # capacite — RETIRÉ le 2026-09-30 (soir). Voir `modifications` ci-dessous.
     telemetrie:
       regle: "le protocole renvoie la position, le couple OU le courant, ET la température"
       note: "sans température, aucune protection thermique ; sans couple ni courant, aucune mesure au banc"
