@@ -288,6 +288,32 @@ le 30-09-2026, **décidé** avec les modalités ci-dessous, fiche 0052) :
 
 ---
 
+## 8 bis. Interfaces d'actionneur — *proposé*
+
+Trois interfaces, pour qu'un changement d'actionneur — de modèle, de
+fabricant, ou pour l'actionneur maison de la fiche 0052 — ne se propage
+pas dans tout le robot.
+
+1. **Interface d'articulation mécanique propre à YXOR**, plus **un
+   adaptateur par modèle d'actionneur**. Le robot est dessiné autour de
+   l'interface YXOR, et c'est l'adaptateur qui absorbe la bride, les
+   perçages et l'encombrement de chaque modèle. Changer de modèle, ou
+   monter l'actionneur maison, ne touche alors qu'une pièce.
+2. **Interface logicielle indépendante du fabricant.** Une seule commande
+   par articulation, `joint.command(position, vitesse, couple)`, puis
+   **un backend par fabricant**, qui traduit vers son protocole, et **un
+   backend simulé MuJoCo**. Le même code de commande pilote la simulation
+   et le robot : c'est le principe « simulation d'abord » (§ 1).
+3. **Chaque actionneur est référencé par la version de sa fiche et le
+   sha256 du document lu.** Les spécifications changent sans prévenir :
+   le RS02 affiche 6 N·m sur le site et 7 dans le PDF du 17-09. Une
+   valeur sans version ni empreinte ne dit pas de quel produit elle
+   parle. `params/actionneurs.yaml` porte ces deux champs.
+
+Aucune de ces trois interfaces n'est encore décidée : pas de fiche.
+
+---
+
 ## 9. Étude des fabricants et fournisseurs — *ouvert*
 
 Jusqu'ici, on a comparé des **modèles**. Il manque la comparaison des
