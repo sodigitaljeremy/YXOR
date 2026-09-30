@@ -75,7 +75,8 @@ def suivis() -> list[str]:
 def binaire_par_contenu(p: Path) -> bool:
     """Heuristique de Git : un octet NUL dans l'échantillon de tête."""
     try:
-        return b"\0" in p.open("rb").read(SONDE)
+        with p.open("rb") as fh:          # fermé : il fuyait (ResourceWarning, audit du 30-09)
+            return b"\0" in fh.read(SONDE)
     except OSError:
         return False
 

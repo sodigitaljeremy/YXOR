@@ -113,6 +113,9 @@ information perdue, et rien ne signalerait son retour si une imprimante
   ouvre bien une fenêtre, mais n'expose aucun GPU : le rendu est logiciel
   (llvmpipe). Prévoir un rendu hors écran pour tout ce qui est répétitif.
 - Entraînement par renforcement : jamais en local, toujours sur GPU distant.
+- **Tests : `unittest`**, pas pytest (qui n'est pas installé) :
+  `.venv/bin/python -m unittest discover -s tests -v`. Ils ne tournent pas
+  dans `regenerer.py` : à lancer à chaque clôture.
 - VPS Hetzner : régénération et publication seulement, pas de calcul.
 
 ### Deux interpréteurs Python — ne jamais les confondre

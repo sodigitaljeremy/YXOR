@@ -117,3 +117,159 @@ fichiers:
       pendant la recherche, et copie retéléchargée depuis
       raw.githubusercontent.com — sha256 identiques. Le fichier n'est
       pas dans le dépôt.
+
+  # ── Documents constructeurs du comparatif d'actionneurs (2026-09-30) ──
+  # Enregistrés le 2026-09-30 (~23 h, lot de cohérence, point 8). Ils étaient
+  # cités par sha256 dans params/actionneurs.yaml et scripts/estimation_thermique.py
+  # sans figurer ici (docs/etat-des-lieux-2026-09-30.md, § 8, H6). Aucun n'est
+  # dans le dépôt.
+
+  robstride_el05_manual_260713:
+    source: >
+      RobStride Dynamics, dépôt https://github.com/RobStride/Product_Information, « Product Literature/EL05/EL05User Manual260713.pdf »
+    reference: "Manuel utilisateur EduLite 05, version 260713"
+    date: 2026-09-30
+    empreinte: "sha256:0497aae0b068d9b13444e1c12464a7613ee3db103adfbc95ca1710e310cbae26"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence (même dépôt que robstride_rs_specs_20260917). Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  robstride_rs05_manual_260713:
+    source: >
+      RobStride Dynamics, dépôt https://github.com/RobStride/Product_Information, manuel RS05
+    reference: "Manuel utilisateur RS05, version 260713"
+    date: 2026-09-30
+    empreinte: "sha256:1b2c61a6daa8331b9a348455005d10d6e425165c22e6f64c39cbca33f6360e82"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence. Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  damiao_j4310_manual_v1_4:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J4310-2EC
+    reference: "DM-J4310-2EC V1.2 Geared Motor User Manual V1.4, 2026-09-14"
+    date: 2026-09-30
+    empreinte: "sha256:4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  damiao_j4310_courbe_3_5nm:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J4310-2EC, commit 034e06552a, test-data/performance-curves/V1.2/温升_3.5Nm.png
+    reference: "Courbe d'échauffement du J4310 V1.2 à 3,5 N·m, 120 rpm, 24 V"
+    date: 2026-09-30
+    empreinte: "sha256:2c3bb34fa5034990b760b95a2faacf152174acdf1c24061198d148e04d84dda7"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique. Copie de travail dans exports/thermique/ (ignoré), empreinte vérifiée par scripts/estimation_thermique.py.
+    redistribuable: false
+
+  damiao_j4310_courbe_3_2nm:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J4310-2EC, commit 034e06552a, test-data/performance-curves/V1.2/温升.png
+    reference: "Courbe d'échauffement du J4310 V1.2 à 3,2 N·m, 120 rpm, 24 V"
+    date: 2026-09-30
+    empreinte: "sha256:bb65aa2049ed5ef617070a59f7dd2b8146f5fd22826e2b856e81b9359d409278"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique. Copie de travail dans exports/thermique/ (ignoré), empreinte vérifiée par scripts/estimation_thermique.py.
+    redistribuable: false
+
+  damiao_j8006_manual:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J8006-2EC
+    reference: "DM-J8006-2EC V1.1 减速电机说明书 V1.0 (version contradictoire : V1.1 du 2024-11-10 en p. 1)"
+    date: 2026-09-30
+    empreinte: "sha256:a1b7b0a74aded1f07333f3e1caae2dbe5854e953ff111ade96847f7991f68111"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  damiao_j4340_manual_v1_3:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J4340-2EC
+    reference: "DM-J4340-2EC V1.1 Geared Motor User Manual V1.3, 2026-08-13"
+    date: 2026-09-30
+    empreinte: "sha256:fc144601d78d6169f73f4c87bc326a46d402782445f478a59acf38c3174e0351"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  damiao_j8009_manual_v1_1:
+    source: >
+      Damiao (dmBots), https://github.com/dmBots/DM-J8009-2EC
+    reference: "Manuel DM-J8009-2EC V1.1, 2026-04-10"
+    date: 2026-09-30
+    empreinte: "sha256:1aa825763d55b301c71769fd56170151c64ad8e5883f0f84000c0d84c3435961"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  myactuator_x2_7_param_260903:
+    source: >
+      MyActuator, archive https://www.myactuator.com/_files/archives/cab28a_77b7670917e14f6b8256b4db4d912857.zip (sha256 422766c8…)
+    reference: "X2-7 Motor Parameter 260903"
+    date: 2026-09-30
+    empreinte: "sha256:66d2e63668eff87b2e5761ab2a344170ca0544e478bc79ec0da6315914043b9b"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  myactuator_x4_36_param_260903:
+    source: >
+      MyActuator, archive https://www.myactuator.com/_files/archives/cab28a_dcb58d860356468d817e06ffe8d248af.zip (sha256 8ce1392b…)
+    reference: "X4-36 Motor Parameter 260903"
+    date: 2026-09-30
+    empreinte: "sha256:e1d41409a1139cf8342ab3840ef82fc3a25e30f2041c46755c6f47dce3359b70"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  myactuator_catalogue_2026:
+    source: >
+      MyActuator, site myactuator.com (téléchargement)
+    reference: "2026 Catalog EN-260806"
+    date: 2026-09-30
+    empreinte: "sha256:0faddc544b3e2f2590f52fad68073a9fb283d21f846ae790f3ab730dd87801a1"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  myactuator_can_protocol_v4_4:
+    source: >
+      MyActuator, archive de protocoles (sha256 375e0d68338a8ea0dd3c6d420aa64db282bb78e76a69b871d3df05aab3a4ebcd)
+    reference: "CAN BUS Motor Motion Protocol V4.4, 260425"
+    date: 2026-09-30
+    empreinte: "sha256:2e0e73a994cf3b15209b9c592654af9724c03bc4c991c3744fab3c08dfd5eecd"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  cubemars_ak_manual_v3_2_0:
+    source: >
+      CubeMars, https://www.cubemars.com/data/cms/202602/ak-series-prodcut-manual-v3-2-0-for-ak-3-0-robotic-actuator.pdf
+    reference: "AK Series Product Manual V3.2.0 (actionneurs AK 3.0)"
+    date: 2026-09-30
+    empreinte: "sha256:ab1b62b94c3c00693259a6acc00df5a44040d748a702918f4562986d420ea225"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  steadywin_selection_gdz:
+    source: >
+      SteadyWin, lien de la page produit GIM4310-10
+    reference: "Tableau de sélection des drivers GDZ (xlsx)"
+    date: 2026-09-30
+    empreinte: "sha256:b2cdb36434fe51180641c6225e60033250c39894156146c0af2a9df21a72ce38"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  steadywin_gdz_docs_2026:
+    source: >
+      SteadyWin, archive de documentation des drivers GDZ
+    reference: "Documentation GDZ 2026, dont le protocole GDZ-CAN V3.10b2 du 2026-06-09"
+    date: 2026-09-30
+    empreinte: "sha256:27f712c8eda642b4b041e054fda1de6be15637ea0a68469482edf24d471f5099"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false

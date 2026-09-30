@@ -205,7 +205,13 @@ def classer(noms, couple, vitesse):
     return ordre, ecarts
 
 
-def main() -> int:
+def main(argv=None) -> int:
+    # Les arguments sont LUS avant tout travail : `--help` ne doit ni
+    # simuler ni écrire (il réécrivait exports/ jusqu'au 2026-09-30).
+    import argparse
+    argparse.ArgumentParser(description=__doc__.split("\n")[0],
+                            epilog="Écrit dans exports/actionneurs/ : enveloppes.json, "
+                                   "couples_balancement.csv.").parse_args(argv)
     SORTIE.mkdir(parents=True, exist_ok=True)
     m, noms, qadr, dadr = charger()
     print(f"modèle : {XML.name}  |  {m.nu} actionneurs  |  "
@@ -288,13 +294,14 @@ def main() -> int:
               f"({vv.min()*60/(2*math.pi):.1f} à {vv.max()*60/(2*math.pi):.1f} tr/min)")
         print(f"    {', '.join(noms[i] for i in sorted(cl, key=lambda x: -C[x]))}")
 
-    json.dump({"modele": str(XML), "masse_kg": float(sum(m.body_mass)),
-               "actionneurs": noms,
-               "couple_Nm": C.tolist(), "vitesse_rad_s": V.tolist(),
-               "amplitude_deg": [math.degrees(x) for x in A],
-               "cas_converges": list(retenus), "cas_exclus": exclus,
-               "classes": [[noms[i] for i in cl] for cl in classes]},
-              open(SORTIE / "enveloppes.json", "w"), indent=2, ensure_ascii=False)
+    with (SORTIE / "enveloppes.json").open("w", encoding="utf-8") as fj:
+        json.dump({"modele": str(XML), "masse_kg": float(sum(m.body_mass)),
+                   "actionneurs": noms,
+                   "couple_Nm": C.tolist(), "vitesse_rad_s": V.tolist(),
+                   "amplitude_deg": [math.degrees(x) for x in A],
+                   "cas_converges": list(retenus), "cas_exclus": exclus,
+                   "classes": [[noms[i] for i in cl] for cl in classes]},
+                  fj, indent=2, ensure_ascii=False)
     # La série temporelle, en CSV — une colonne par actionneur.
     # Elle n'existait pas : le code ne gardait qu'un maximum courant, et
     # chaque pas écrasait le précédent. Elle n'était pas perdue, elle
