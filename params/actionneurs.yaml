@@ -510,6 +510,240 @@ candidats:
     protection_thermique_C: {valeur: 100, source: "manuel V1.4, p. 7", consulte_le: "2026-09-30", note: "protection moteur configurable, ≤ 100 °C RECOMMANDÉ ; pilote coupé à 120 °C. Lu par scripts/estimation_thermique.py : le seuil du protocole de banc en découle"}
     prix: {valeur: 140.95, devise: EUR, tva_incluse: null, vendeur: "OpenELAB", source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310 (données lues via .js, référence DM-J4310-2EC-48V-V4)", consulte_le: "2026-09-30", note: "TVA incluse ou non : inconnue (page HTML en 429) ; « V4 » = V1.2 d'après le titre Eckstein, pas affiché par OpenELAB ; « available » peut signifier précommande. Prix barré 172,95 €"}
 
+  # ── Candidats ajoutés le 2026-10-01 (lot H) ──
+  # PROPOSÉ par Claude (arbitrage, comparatif actionneurs du 2026-10-01) ;
+  # lot lancé par Jeremy. Relevé par trois agents de lecture, valeurs clés
+  # revérifiées par Claude Code dans les copies de session (sha256 au
+  # registre params/fournisseurs.yaml). Règle de la fiche 0064 et règle par
+  # défaut du lot G appliquées : en cas de doute, la valeur la plus
+  # défavorable à la marge, notée.
+  #
+  # HighTorque : le constructeur ne publie qu'un couple « Locked-rotor »
+  # (maximum MOMENTANÉ, rotor bloqué). Il est porté en POINTE, comme le
+  # blocage du STS3250 et des Dynamixel ; il n'est PAS une valeur « en
+  # blocage » continue (`autres_conditions`), qui fixe la taille prudente.
+
+  rs00:
+    nom: "RobStride RS00"
+    fiche: {version: "260713 (manuel) ; 2026.09.17 (spécifications)", sha256: "47d0ae5c909df2d989b0485c870d36900b9e17c72e608efeb3e13b6e98953832", document: "Product Literature/RS00/RS00User Manual260713.pdf", depot: "https://github.com/RobStride/Product_Information", depot_commit: "3f0cae4986", consulte_le: "2026-10-01", note: "et le PDF de spécifications du 2026-09-17 (sha256 76c85c3c…), p. 2-5 et 38"}
+    fabricant: "RobStride Dynamics"
+    revision:
+      modele: "RS00"
+      materielle: null
+      firmware: null
+      source: >
+        Le PDF du 2026-09-17, p. 38, publie DEUX versions, « nouveau » (6 /
+        17 N·m, 330 g) et « ancien » (5 / 14 N·m, 310 g), sans désignation
+        de révision. Le manuel 260713 donne les valeurs « ancien » et ne dit
+        pas de quelle version il traite. La révision vendue n'est pas
+        établie : valeurs retenues par la fiche 0064 (ci-dessous).
+    bus: "CAN 2.0, 1 Mbit/s, trame étendue (manuel 260713, p. 38) ; « CAN2.0/CANFD » au PDF 2026-09-17, p. 38"
+    tension_V: {valeur: 48, source: "manuel RS00 260713, p. 8 ; PDF 2026-09-17, p. 3", consulte_le: "2026-10-01"}
+    tension_plage_V:
+      valeur: [24, 60]
+      source: "manuel RS00 260713, p. 8 ; README du dépôt constructeur"
+      consulte_le: "2026-10-01"
+      note: "fiche 0064 : la plage la plus ÉTROITE est retenue (borne basse la plus haute)"
+      autres_valeurs:
+        - {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 3 et 38", consulte_le: "2026-10-01", note: "non retenue (0064)"}
+    reduction: {valeur: 10, source: "manuel RS00 260713, p. 11 ; PDF 2026-09-17, p. 3 (acier usiné)", consulte_le: "2026-10-01"}
+    couple_continu_Nm:
+      valeur: 5.0
+      source: "manuel RS00 260713, p. 8-9"
+      consulte_le: "2026-10-01"
+      condition: "à 100 rpm, dissipateur 90 × 85 mm (alliage d'aluminium)"
+      plaque_mm: 90
+      note: >
+        Fiche 0064, règle par défaut du lot G : deux valeurs publiées
+        (5 « ancien », 6 « nouveau »), la plus basse est retenue. Le calcul
+        avec la version « nouveau » est publié à part, pour information
+        (journal du 2026-10-01, lot H).
+      autres_valeurs:
+        - {valeur: 6.0, source: "PDF RobStride 2026-09-17, p. 38 (« 6（新）/5（旧） »)", consulte_le: "2026-10-01", note: "version « nouveau » — non retenue (0064)"}
+      autres_conditions:
+        - {valeur: 5.0, plaque_mm: 150, condition: "à 100 rpm, plaque aluminium 150 × 150 mm (en rotation)", source: "PDF RobStride 2026-09-17, p. 3", consulte_le: "2026-10-01"}
+        - {valeur: 3.6, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), courbe de surcharge en blocage, « rated »", source: "PDF RobStride 2026-09-17, p. 5", consulte_le: "2026-10-01", note: "publiée pour la version des pages de détail (5 / 14 N·m, 310 g) ; aucune valeur en blocage pour la version « nouveau »"}
+    couple_pointe_Nm:
+      valeur: 14.0
+      source: "manuel RS00 260713, p. 9 ; PDF 2026-09-17, p. 3"
+      consulte_le: "2026-10-01"
+      note: "fiche 0064 : la plus basse des deux"
+      autres_valeurs:
+        - {valeur: 17.0, source: "PDF RobStride 2026-09-17, p. 38 (« 17（新）/14（旧） »)", consulte_le: "2026-10-01", note: "version « nouveau » — non retenue (0064)"}
+    protection_thermique_C:
+      valeur: 135
+      source: "manuel RS00 260713, p. 43 (avertissement de surchauffe, 135 °C par défaut)"
+      consulte_le: "2026-10-01"
+      note: "fiche 0064 : une limite, la plus basse ; le défaut (coupure) est à 145 °C"
+      autres_valeurs:
+        - {valeur: 145, source: "manuel RS00 260713, p. 29 et 43 (défaut de surchauffe) ; p. 9 (limite bobinage 145 °C, « réelle 180 °C »)", consulte_le: "2026-10-01", note: "non retenue (0064)"}
+    vitesse_a_vide_rpm: {valeur: 315, source: "manuel RS00 260713, p. 8 ; PDF 2026-09-17, p. 3", consulte_le: "2026-10-01", note: "± 10 % ; à 48 V"}
+    masse_g:
+      valeur: 330
+      source: "PDF RobStride 2026-09-17, p. 38 (« 330（新）/310（旧） »)"
+      consulte_le: "2026-10-01"
+      note: >
+        Fiche 0064 : la masse la plus HAUTE. Avec le couple de la version
+        « ancien », c'est une enveloppe défavorable, pas un produit unique :
+        chaque valeur est la plus prudente des deux publiées.
+      autres_valeurs:
+        - {valeur: 310, source: "manuel RS00 260713, p. 11 ; PDF 2026-09-17, p. 3", consulte_le: "2026-10-01", note: "± 3 g, version « ancien » — non retenue (0064)"}
+    dimensions_mm: {valeur: "Ø57 × 51", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-10-01"}
+    prix: {valeur: 598, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 2", consulte_le: "2026-10-01"}
+
+  htdw_4438_30:
+    nom: "HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE)"
+    comparatif_seulement: true
+    fiche: {version: "fiche « Module0602E_02 », page 1, image publiée en 2026-03", sha256: "9016ed4df5dad4e2bd1f081b47198a51d2042860347c52522a49523e987686a2", document: "https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_02.png", consulte_le: "2026-10-01", note: "fiche constructeur en IMAGE, relue par Claude Code ; page produit https://hightorque.cn/en/product?id=73"}
+    fabricant: "HighTorque Robotics"
+    revision: {modele: "HTDW-4438-30-NE", materielle: null, firmware: null, source: "fiche Module0602E_02 : double désignation « HTDW-4530-02-DNE » ; aucune révision matérielle"}
+    bus: "CAN FD / CAN, 5 Mbit/s (fiche Module0602E_02)"
+    tension_V: {valeur: 24, source: "fiche Module0602E_02", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [12, 50.4], source: "fiche Module0602E_02", consulte_le: "2026-10-01"}
+    reduction: {valeur: 30, source: "fiche Module0602E_02 (« Planetary Joint Module »)", consulte_le: "2026-10-01"}
+    couple_continu_Nm:
+      valeur: 2.0
+      source: "fiche Module0602E_02 (« Rated torque »)"
+      consulte_le: "2026-10-01"
+      condition: "non précisée (nominal à 40 rpm, 24 V, 0,7 A ; ni dissipateur ni ambiante)"
+      plaque_mm: null
+      autres_valeurs:
+        - {valeur: 1.5, source: "wiki Seeed hightorque_series, colonne « HTDW-4438-32-NE » de réduction 30", consulte_le: "2026-10-01", note: "revendeur, attribution ambiguë — non retenue : produit non établi"}
+    couple_pointe_Nm:
+      valeur: 10.0
+      source: "fiche Module0602E_02 (« Locked-rotor torque »)"
+      consulte_le: "2026-10-01"
+      note: "couple de BLOCAGE momentané, seul publié ; Seeed l'appelle « peak torque ». Aucune durée admissible publiée"
+    protection_thermique_C: {valeur: null, source: null, consulte_le: "2026-10-01", note: "seuil de surchauffe réglable (manuel de débogage, p. 3, code défaut 38) ; valeur par défaut non trouvée dans la fiche, le manuel de débogage et le wiki Seeed"}
+    vitesse_a_vide_rpm: {valeur: 160, source: "fiche Module0602E_02", consulte_le: "2026-10-01", note: "à 24 V ; nominale 40 rpm"}
+    masse_g: {valeur: 237, source: "fiche Module0602E_02", consulte_le: "2026-10-01"}
+    dimensions_mm: {valeur: "44 × 44 × 43,4", source: "fiche Module0602E_02", consulte_le: "2026-10-01"}
+    prix: {valeur: 189.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Hightorque-HTDW-4438-30-NE-Gear-Motor-p-6482.html", consulte_le: "2026-10-01", note: "hors droits d'import (expédition DAP depuis la Chine) ; boutique constructeur non lue (HTTP 429)"}
+
+  htdw_5047_36:
+    nom: "HighTorque HTDW-5047-36-NE"
+    comparatif_seulement: true
+    fiche: {version: "fiche PDF « HTDW-5047-36-NE », 1 p., créée le 2024-08-13", sha256: "0607b8bd4ea777a3081469bb0161a679c3125bb4b069e1eccf04d93b7eb46e5a", document: "https://files.seeedstudio.com/wiki/robotics/Actuator/hightorque/HTDW-5047-36-NE.pdf", consulte_le: "2026-10-01", note: "fiche constructeur hébergée par Seeed ; ABSENTE du site constructeur actuel. Seeed vend sous l'URL « 5047-36 » un produit intitulé HTDW-5036-02-DNE, aux valeurs différentes (323 g, 75 rpm) : l'équivalence n'est pas établie"}
+    fabricant: "HighTorque Robotics"
+    revision: {modele: "HTDW-5047-36-NE", materielle: null, firmware: null, source: "le SDK constructeur distingue « 5047_36 » (ancien coefficient de couple) et « 5047_36_2 » (actuel) : au moins deux révisions, non distinguées par la fiche"}
+    bus: "CAN FD / CAN, 5 Mbit/s (fiche PDF) ; CAN 1 Mbit/s documenté par le wiki Seeed"
+    tension_V: {valeur: 24, source: "fiche PDF HTDW-5047-36-NE, p. 1", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [12, 48], source: "wiki Seeed hightorque_series, tableau comparatif", consulte_le: "2026-10-01", note: "REVENDEUR ; absente de la fiche PDF"}
+    reduction: {valeur: 36, source: "fiche PDF HTDW-5047-36-NE, p. 1", consulte_le: "2026-10-01"}
+    couple_continu_Nm:
+      valeur: 4.0
+      source: "fiche PDF HTDW-5047-36-NE, p. 1 (« Rated torque »)"
+      consulte_le: "2026-10-01"
+      condition: "non précisée (nominal à 40 rpm, 24 V, 2 A ; ni dissipateur ni ambiante)"
+      plaque_mm: null
+    couple_pointe_Nm:
+      valeur: 16.0
+      source: "fiche PDF HTDW-5047-36-NE, p. 1 (« Peak torque »)"
+      consulte_le: "2026-10-01"
+      note: "fiche 0064 : la plus basse des deux limites publiées"
+      autres_valeurs:
+        - {valeur: 24.0, source: "fiche PDF HTDW-5047-36-NE, p. 1 (« Blocking torque »)", consulte_le: "2026-10-01", note: "couple de blocage momentané — non retenu comme pointe (0064)"}
+    protection_thermique_C: {valeur: null, source: null, consulte_le: "2026-10-01", note: "non trouvée dans la fiche PDF ni le manuel de débogage"}
+    vitesse_a_vide_rpm: {valeur: 60, source: "fiche PDF HTDW-5047-36-NE, p. 1", consulte_le: "2026-10-01", note: "à 24 V ; nominale 40 rpm"}
+    masse_g: {valeur: 305, source: "fiche PDF HTDW-5047-36-NE, p. 1", consulte_le: "2026-10-01"}
+    dimensions_mm: {valeur: "50 × 50 × 47", source: "fiche PDF HTDW-5047-36-NE, p. 1", consulte_le: "2026-10-01"}
+    prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-10-01", note: "non trouvé : la page Seeed « 5047-36 » (189 USD) vend désormais le HTDW-5036-02-DNE, un autre produit ; aucun emprunt", non_verifie: "207,99 USD (Seeed) et 230,95 € (OpenELAB) dans des résumés de recherche"}
+
+  htdw_5036_02_dne:
+    nom: "HighTorque HTDW-5036-02-DNE"
+    comparatif_seulement: true
+    fiche: {version: "fiche « Module0602E_05 », page 4, image publiée en 2023-07", sha256: "fa6d4fe6c3f5e7a96b03db586e43c0f9ec5035b1cb0901f55a91f1f0612c2fc4", document: "https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_05.png", consulte_le: "2026-10-01", note: "et https://hightorque.cn/en/product?id=75 ; membre M de la famille HighTorque"}
+    fabricant: "HighTorque Robotics"
+    revision: {modele: "HTDW-5036-02-DNE", materielle: null, firmware: null, source: "fiche Module0602E_05, sans révision"}
+    bus: "CAN FD / CAN, 5 Mbit/s"
+    tension_V: {valeur: 24, source: "fiche Module0602E_05", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [12, 50.4], source: "fiche Module0602E_05", consulte_le: "2026-10-01"}
+    reduction: {valeur: 36, source: "fiche Module0602E_05", consulte_le: "2026-10-01"}
+    couple_continu_Nm: {valeur: 6.0, source: "fiche Module0602E_05", consulte_le: "2026-10-01", condition: "non précisée (nominal à 50 rpm, 24 V, 2 A)", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 21.0, source: "fiche Module0602E_05 (« Locked-rotor torque »)", consulte_le: "2026-10-01", note: "couple de BLOCAGE momentané, seul publié"}
+    vitesse_a_vide_rpm: {valeur: 75, source: "fiche Module0602E_05", consulte_le: "2026-10-01", note: "à 24 V"}
+    masse_g: {valeur: 323, source: "fiche Module0602E_05", consulte_le: "2026-10-01"}
+    prix: {valeur: 189.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Hightorque-HTDW-5047-36-NE-Gear-Motor-p-6483.html (page intitulée HTDW-5036-02-DNE)", consulte_le: "2026-10-01", note: "hors droits d'import (DAP) ; 180 USD dès 10"}
+
+  htdw_6036_02_dne:
+    nom: "HighTorque HTDW-6036-02-DNE"
+    comparatif_seulement: true
+    fiche: {version: "fiche « Module0602E_07 », page 6, image publiée en 2023-07", sha256: "905ee2e0880d5a79a147211684cef0df86d6c2f2076c02da3abf9cbc548a19b6", document: "https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_07.png", consulte_le: "2026-10-01", note: "et https://hightorque.cn/en/product?id=326 ; membre L de la famille HighTorque"}
+    fabricant: "HighTorque Robotics"
+    revision: {modele: "HTDW-6036-02-DNE", materielle: null, firmware: null, source: "fiche Module0602E_07, sans révision"}
+    bus: "CAN FD / CAN, 5 Mbit/s"
+    tension_V: {valeur: 24, source: "fiche Module0602E_07", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [12, 50.4], source: "fiche Module0602E_07", consulte_le: "2026-10-01"}
+    reduction: {valeur: 36, source: "fiche Module0602E_07", consulte_le: "2026-10-01"}
+    couple_continu_Nm: {valeur: 10.0, source: "fiche Module0602E_07", consulte_le: "2026-10-01", condition: "non précisée (nominal à 50 rpm, 24 V, 3 A)", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 36.0, source: "fiche Module0602E_07 (« Locked-rotor torque »)", consulte_le: "2026-10-01", note: "couple de BLOCAGE momentané, seul publié"}
+    vitesse_a_vide_rpm: {valeur: 60, source: "fiche Module0602E_07", consulte_le: "2026-10-01", note: "à 24 V"}
+    masse_g: {valeur: 565, source: "fiche Module0602E_07", consulte_le: "2026-10-01"}
+    prix: {valeur: 219.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Hightorque-HDTW-6056-36-NE-Actuator-p-6672.html (page intitulée HTDW-6036-02-DNE)", consulte_le: "2026-10-01", note: "hors droits d'import (DAP)"}
+
+  cybergear:
+    nom: "Xiaomi CyberGear (référence)"
+    comparatif_seulement: true
+    reference: true
+    fiche: {version: "manuel chinois sans numéro (créé le 2023-10-11)", sha256: "babb20332207bf2f9aa964396049cab2156d8b8e55bd7effd86d04c5a331ac04", document: "« CyberGear 微电机使用说明书 », 30 p.", consulte_le: "2026-10-01", note: "copie hébergée par un TIERS (roboticscv.com, certificat TLS expiré) : intégrité garantie par le seul sha256. Page constructeur https://www.mi.com/cyber-gear (spécifications)"}
+    fabricant: Xiaomi
+    revision: {modele: "CyberGear", materielle: null, firmware: null, source: "manuel sans révision matérielle"}
+    bus: "CAN 2.0, 1 Mbit/s, trame étendue (page mi.com ; manuel, p. 6)"
+    tension_V: {valeur: 24, source: "page mi.com ; manuel, p. 3", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [16, 28], source: "manuel, p. 3", consulte_le: "2026-10-01"}
+    reduction: {valeur: 7.75, source: "page mi.com ; manuel, p. 6", consulte_le: "2026-10-01", note: "type de train non nommé par le constructeur"}
+    couple_continu_Nm: {valeur: 4.0, source: "page mi.com (« 持续扭矩 ») ; manuel, p. 3-4", consulte_le: "2026-10-01", condition: "non précisée (à 240 rpm, 6,5 A ; aucune plaque ni dissipateur)", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 12.0, source: "page mi.com ; manuel, p. 4", consulte_le: "2026-10-01"}
+    protection_thermique_C:
+      valeur: 75
+      source: "manuel, p. 24 (avertissement de surchauffe, 75 °C par défaut)"
+      consulte_le: "2026-10-01"
+      note: "fiche 0064 : une limite, la plus basse"
+      autres_valeurs:
+        - {valeur: 80, source: "manuel, p. 24 (défaut de surchauffe)", consulte_le: "2026-10-01", note: "non retenue (0064)"}
+    vitesse_a_vide_rpm: {valeur: 296, source: "page mi.com ; manuel, p. 4", consulte_le: "2026-10-01", note: "± 10 % ; à 24 V"}
+    masse_g: {valeur: 317, source: "page mi.com ; manuel, p. 5", consulte_le: "2026-10-01", note: "± 3 g"}
+    dimensions_mm: {valeur: "Ø80,5 × 36,5", source: "page mi.com", consulte_le: "2026-10-01"}
+    prix: {valeur: 179.00, devise: USD, tva_incluse: null, vendeur: "AIFitLab (HK)", source: "https://aifitlab.com/products/xiaomi-cybergear-micromotor", consulte_le: "2026-10-01", note: "moteur seul ; HT ou TTC non indiqué ; prix constructeur non lu (chargé dynamiquement)", non_verifie: "« EOL » et 197,89 € chez OpenELAB, résumé de recherche (HTTP 429)"}
+
+  ak40_10_v3:
+    nom: "CubeMars AK40-10 V3.0 KV170 (référence)"
+    comparatif_seulement: true
+    reference: true
+    fiche: {version: null, sha256: "5a6b66e1ee52bfc170c5b222619fb4d2657669d18b2dd4ff5db4e308eeb23e88", document: "https://www.cubemars.com/product/ak40-10-v3-0-kv170-robotic-actuator.html", consulte_le: "2026-10-01", note: "page produit sans version de document. Une autre page, « AK40-10 KV170 » sans version (185 ou 200 g, 99,90 USD), est une autre variante (un codeur) : non retenue ici (0064, § 3)"}
+    fabricant: CubeMars
+    revision: {modele: "AK40-10 KV170", materielle: "V3.0", firmware: null, source: "page produit (désignation V3.0)"}
+    bus: "CAN (modes Servo et MIT) et UART"
+    tension_V: {valeur: 24, source: "page produit V3.0", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: null, source: null, consulte_le: "2026-10-01", note: "non trouvée dans la page V3.0, le manuel AK V3.2.0 (ne nomme pas l'AK40-10) ni le dessin 2D (image). 16-28 V pour la carte AK40-2410 de la variante sans version, non reprise"}
+    reduction: {valeur: 10, source: "page produit V3.0", consulte_le: "2026-10-01", note: "planétaire, jeu 18 arcmin"}
+    couple_continu_Nm: {valeur: 1.3, source: "page produit V3.0 (« Rated Torque »)", consulte_le: "2026-10-01", condition: "non précisée (à 370 rpm, 2,7 A, 24 V ; aucune condition thermique)", plaque_mm: null}
+    couple_pointe_Nm: {valeur: 4.1, source: "page produit V3.0", consulte_le: "2026-10-01"}
+    protection_thermique_C: {valeur: null, source: null, consulte_le: "2026-10-01", note: "protection de surchauffe annoncée, seuil non publié"}
+    vitesse_a_vide_rpm: {valeur: 435, source: "page produit V3.0", consulte_le: "2026-10-01", note: "tension non précisée (nominale 24 V)"}
+    masse_g: {valeur: 190, source: "page produit V3.0", consulte_le: "2026-10-01"}
+    dimensions_mm: {valeur: "Ø53 × 40,2", source: "page produit V3.0", consulte_le: "2026-10-01"}
+    prix: {valeur: 135.90, devise: USD, tva_incluse: null, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak40-10-v3-0-kv170-robotic-actuator.html", consulte_le: "2026-10-01", note: "HT ou TTC non indiqué"}
+
+  xm430_w350:
+    nom: "Dynamixel XM430-W350 (référence)"
+    comparatif_seulement: true
+    reference: true
+    fiche: {version: null, sha256: "38038f5b32cbbb7e3c26570658855986be33589b06eb6d15e6259db338caafd3", document: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/", consulte_le: "2026-10-01", note: "e-Manual sans date ; empreinte de la page HTML téléchargée. Le prompt du lot H dit « référence ToddlerBot ». Vérifié : la classe XM430-W350 est DÉCLARÉE dans toddlerbot_2xc.xml (l. 19, commit e337f3b) mais AUCUNE articulation ne l'emploie ; la jambe de ToddlerBot utilise le XM430-W210 (déjà au catalogue)."}
+    fabricant: ROBOTIS
+    revision: {modele: "XM430-W350-T / -R", materielle: null, firmware: null, source: "e-Manual ROBOTIS, sans révision matérielle"}
+    bus: "TTL ou RS485 (Protocol 2.0)"
+    tension_V: {valeur: 12, source: "e-Manual ROBOTIS (recommandée)", consulte_le: "2026-10-01"}
+    tension_plage_V: {valeur: [10, 14.8], source: "e-Manual ROBOTIS", consulte_le: "2026-10-01"}
+    reduction: {valeur: 353.5, source: "e-Manual ROBOTIS", consulte_le: "2026-10-01", note: "Reichelt annonce 350:1 (valeurs de la ligne XH430-V350 de l'e-Manual) — non retenu"}
+    couple_continu_Nm: {valeur: null, source: null, consulte_le: "2026-10-01", condition: null, plaque_mm: null, note: "ROBOTIS ne publie aucun couple continu, et précise que le couple de blocage n'en est pas un"}
+    couple_pointe_Nm: {valeur: 4.1, source: "e-Manual ROBOTIS", consulte_le: "2026-10-01", note: "couple de BLOCAGE à 12 V (3,8 à 11,1 V ; 4,8 à 14,8 V)"}
+    protection_thermique_C: {valeur: 80, source: "e-Manual ROBOTIS (Temperature Limit, défaut 80 °C)", consulte_le: "2026-10-01"}
+    vitesse_a_vide_rpm: {valeur: 46, source: "e-Manual ROBOTIS", consulte_le: "2026-10-01", note: "à 12 V"}
+    masse_g: {valeur: 82, source: "e-Manual ROBOTIS", consulte_le: "2026-10-01"}
+    dimensions_mm: {valeur: "28,5 × 46,5 × 34", source: "e-Manual ROBOTIS", consulte_le: "2026-10-01"}
+    prix: {valeur: 264.50, devise: EUR, tva_incluse: 0.0, vendeur: "Generation Robots (FR)", source: "https://www.generationrobots.com/en/402710-dynamixel-xm430-w350-t-servo.html", consulte_le: "2026-10-01", note: "317,40 € TTC ; Reichelt (DE) 314,95 € TTC"}
+
 # ═════════════════════════════════════════════════════════════════════════
 #  Configurations nommées — calculées et publiées au cadrage § 5
 # ═════════════════════════════════════════════════════════════════════════
@@ -579,8 +813,10 @@ controle_coherence:
 #  justification ; elles ne sont pas ici.
 #  `famille_protocole` sert au critère de continuité vers M et L.
 comparatif_S:
-  candidats: [rs05, edulite05, sts3250, dm_j4310, dm_j4310_48v, gim4310_10, x2_7, ak45_10_v3]
-  references: [xm430_w210]
+  # rs00, htdw_4438_30, htdw_5047_36 ; références cybergear, ak40_10_v3,
+  # xm430_w350 : ajoutés le 2026-10-01 (lot H, PROPOSÉ par Claude, arbitrage).
+  candidats: [rs05, edulite05, sts3250, dm_j4310, dm_j4310_48v, gim4310_10, x2_7, ak45_10_v3, rs00, htdw_4438_30, htdw_5047_36]
+  references: [xm430_w210, cybergear, ak40_10_v3, xm430_w350]
 
   rs05:
     famille_protocole: robstride_can
@@ -692,6 +928,58 @@ comparatif_S:
     garantie_mois: {valeur: null, source: null, non_verifie: "1 an, engrenages usés et moteurs brûlés exclus (robotis.us, résumé)"}
     distribution: {suisse: null, ue: "Generation Robots (FR), Reichelt (DE)", international: "ROBOTIS", source: "pages Generation Robots et Reichelt relevées le 2026-09-30", non_verifie: "Digitec 699 CHF, Galaxus 769 CHF"}
     ouverture: {protocole_public: true, sdk_libre: true, firmware_libre: false, source: "Protocol 2.0 publié ; DynamixelSDK Apache-2.0 selon l'étude externe (non revérifié ici)"}
+
+  # ── Ajoutés le 2026-10-01 (lot H, PROPOSÉ par Claude, arbitrage) ──
+  rs00:
+    famille_protocole: robstride_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "trame type 2 : angle, vitesse, couple, température ; défauts dans l'identifiant ; CAN_TIMEOUT 0x7028 désactivé par défaut", source: "manuel RS00 260713, p. 28, 39, 46-47"}
+    reversibilite: {reversible: null, detail: "10:1 ; aucun couple de réversibilité publié ; amortissement hors tension documenté (p. 49) ; « planétaire » écrit seulement par Seeed", source: "manuel RS00 260713 ; Seeed"}
+    garantie_mois: {valeur: 12, source: "manuel RS00 260713, p. 3", note: "exclut les dégâts dus au dépassement du couple de pointe (p. 4)"}
+    distribution: {suisse: null, ue: null, international: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-00-Actuator-p-6664.html", non_verifie: "OpenELAB (HTTP 429)", note: "Seeed annonce un entrepôt en Allemagne pour l'UE seulement ; `ue` reste null, comme pour le RS05 (même revendeur), la référence en stock dans cet entrepôt n'étant pas établie"}
+    prix_revendeur: {valeur: 125.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-00-Actuator-p-6664.html", consulte_le: "2026-10-01", note: "hors taxes et droits d'import (DAP) ; 119 USD dès 10 ; en stock"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel RS00 (protocole) ; dépôts RobStride : Python_Sample sous MIT, couverture du RS00 non vérifiée — null, comme RS05 et EduLite 05"}
+
+  htdw_4438_30:
+    famille_protocole: hightorque_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "position, vitesse, couple, température, code d'état", source: "Hightorque Motor Debugging Manual EN (2025-05-22), p. 4 ; wiki Seeed hightorque_series"}
+    reversibilite: {reversible: null, detail: "planétaire 30:1 (« Planetary Joint Module ») ; « backdrive efficiency » annoncée sans chiffre", source: "fiche Module0602E_02 ; hightorque.cn/en/product"}
+    garantie_mois: {valeur: null, source: null, note: "non trouvée chez le constructeur ; Seeed : 12 mois, politique générale du revendeur"}
+    distribution: {suisse: null, ue: null, international: "Seeed Studio", source: "https://www.seeedstudio.com/Hightorque-HTDW-4438-30-NE-Gear-Motor-p-6482.html", note: "entrepôt Chine, livraison UE"}
+    prix_revendeur: {valeur: 189.00, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Hightorque-HTDW-4438-30-NE-Gear-Motor-p-6482.html", consulte_le: "2026-10-01", note: "hors droits d'import (DAP)"}
+    ouverture: {protocole_public: null, sdk_libre: false, firmware_libre: false, source: "protocole décrit par le wiki Seeed (revendeur) ; PDF de protocole constructeur illisible (visionneuse) ; SDK livelybot_hardware_sdk sans licence (API GitHub) ; firmware en binaires"}
+
+  htdw_5047_36:
+    famille_protocole: hightorque_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "même protocole que le 4438-30 (manuel de débogage : même procédure pour 5047 et 4438)", source: "Hightorque Motor Debugging Manual EN, p. 1 et 4"}
+    reversibilite: {reversible: null, detail: "planétaire 36:1 ; aucun chiffre de réversibilité", source: "fiche PDF HTDW-5047-36-NE"}
+    garantie_mois: {valeur: null, source: null, note: "non trouvée chez le constructeur"}
+    distribution: {suisse: null, ue: null, international: null, source: null, non_verifie: "la page Seeed « 5047-36 » vend désormais le HTDW-5036-02-DNE ; OpenELAB 230,95 € (résumé de recherche)"}
+    ouverture: {protocole_public: null, sdk_libre: false, firmware_libre: false, source: "comme le 4438-30"}
+
+  cybergear:
+    famille_protocole: cybergear_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "trame type 2 : angle, vitesse, couple, température ; CAN_TIMEOUT 0x200c, effet à l'expiration non décrit", source: "manuel CyberGear, p. 14-16, 22"}
+    reversibilite: {reversible: null, detail: "7,75:1 ; type de train non nommé par le constructeur", source: "page mi.com ; manuel"}
+    garantie_mois: {valeur: 12, source: "manuel CyberGear, p. 3", note: "15 à 365 jours ; l'USAGE COMMERCIAL est exclu de la garantie (p. 3, point 10)"}
+    distribution: {suisse: null, ue: null, international: "AIFitLab (HK)", source: "https://aifitlab.com/products/xiaomi-cybergear-micromotor", non_verifie: "« EOL » chez OpenELAB (résumé de recherche)"}
+    prix_revendeur: {valeur: 179.00, devise: USD, tva_incluse: null, vendeur: "AIFitLab (HK)", source: "https://aifitlab.com/products/xiaomi-cybergear-micromotor", consulte_le: "2026-10-01"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "protocole au manuel ; seulement des bibliothèques communautaires sous MIT, pas de SDK constructeur"}
+
+  ak40_10_v3:
+    famille_protocole: cubemars_can
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "Servo : position, vitesse, courant, température de la carte ; MIT : position, vitesse, couple, température moteur", source: "AK Series Driver Manual V1.0.18, p. 44-45 et 61 (nomme l'AK40-10)"}
+    reversibilite: {reversible: true, detail: "couple de réversibilité 0,06 N·m ; planétaire 10:1, jeu 18 arcmin", source: "page produit V3.0"}
+    garantie_mois: {valeur: 12, source: "https://www.cubemars.com/return-and-refund-policy.html", note: "« 365-day warranty », converti en mois"}
+    distribution: {suisse: null, ue: null, international: "CubeMars (direct)", source: "https://www.cubemars.com/product/ak40-10-v3-0-kv170-robotic-actuator.html", non_verifie: "OpenELAB (HTTP 429)"}
+    ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuels CubeMars ; organisation GitHub CubeMars sans dépôt public"}
+
+  xm430_w350:
+    famille_protocole: dynamixel_p2
+    telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "Present Current (2,69 mA/unité), Velocity, Position, Temperature ; Hardware Error Status", source: "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/"}
+    reversibilite: {reversible: null, detail: "353,5:1, servo à engrenages métal, jeu 15 arcmin", source: "e-Manual ROBOTIS"}
+    garantie_mois: {valeur: null, source: null, non_verifie: "1 an chez robotis.us (résumé de recherche, HTTP 429)"}
+    distribution: {suisse: null, ue: "Generation Robots (FR), Reichelt (DE)", international: "ROBOTIS", source: "pages Generation Robots et Reichelt, 2026-10-01"}
+    ouverture: {protocole_public: true, sdk_libre: true, firmware_libre: false, source: "Protocol 2.0 publié ; DynamixelSDK sous Apache-2.0 (licence vérifiée par l'API GitHub le 2026-10-01)"}
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Familles S → M → L (2026-09-30, soir)

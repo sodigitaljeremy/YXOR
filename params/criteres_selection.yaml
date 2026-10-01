@@ -284,6 +284,13 @@ modifications:
       « dispersion ». Poids du banc inchangés (proposés).
     ancien_texte: "dispersion : n ≥ 3 et même modèle (selection_multicritere.py, appr)"
     nouveau_texte: "dispersion : max(exemplaires par modèle) ≥ 2"
+  - date: "2026-10-01"
+    moment: "lot H ; PROPOSÉ par Claude (arbitrage), lot lancé par Jeremy"
+    objet: "candidats ajoutés : RS00, HTDW-4438-30, HTDW-5047-36 ; références CyberGear, AK40-10 V3, XM430-W350 ; familles robstride_rs00 et hightorque"
+    raison: >
+      Élargir le marché comparé. Poids, grilles et règles INCHANGÉS ; seules
+      les notes de robustesse des nouveaux candidats sont ajoutées
+      (`jugements`), par la grille existante.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -441,6 +448,13 @@ classe_S:
       x2_7: {note: 5, justification: "planétaire 28,17:1 (< 50:1), couple de réversibilité publié 0,4 N·m, protections documentées (blocage, surchauffe…) → 5"}
       ak45_10_v3: {note: 5, justification: "planétaire 10:1, couple de réversibilité publié 0,1 N·m, codes d'erreur (surchauffe, blocage…) → 5"}
       xm430_w210: {note: 1, justification: "servo à engrenages 212,6:1 ; la garantie annoncée exclut les engrenages usés et les moteurs brûlés → 1"}
+      # Ajoutés le 2026-10-01 (lot H) : notes PROPOSÉES par Claude (arbitrage), par la grille inchangée.
+      rs00: {note: 3, justification: "10:1, protections documentées (surchauffe 135/145 °C, surintensité, blocage) ; « planétaire » écrit seulement par le revendeur, réversibilité non publiée → 3, comme l'EduLite 05"}
+      htdw_4438_30: {note: 3, justification: "planétaire 30:1 (fiche constructeur), codes de défaut surchauffe et surtension documentés ; réversibilité annoncée sans chiffre → 3"}
+      htdw_5047_36: {note: 3, justification: "planétaire 36:1 (fiche constructeur) ; mêmes codes de défaut ; réversibilité non chiffrée → 3"}
+      cybergear: {note: 0, justification: "7,75:1, protections documentées ; mais le constructeur ne nomme pas le type de train (couronne surmoulée), donc aucune ligne 1-5 de la grille n'est établie → 0, inconnu. Référence, non classée"}
+      ak40_10_v3: {note: 5, justification: "planétaire 10:1, couple de réversibilité publié 0,06 N·m, protections surintensité et surchauffe annoncées → 5"}
+      xm430_w350: {note: 1, justification: "servo à engrenages 353,5:1 → 1, comme le W210"}
 
   sensibilite:
     variation_poids: 0.5          # chaque poids ±50 %, un à la fois

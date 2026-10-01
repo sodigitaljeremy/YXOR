@@ -273,3 +273,209 @@ fichiers:
     conditions: >
       Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
     redistribuable: false
+
+  # ── Documents du lot H (2026-10-01), PROPOSÉ par Claude (arbitrage) ──
+  # Téléchargés par trois agents de lecture ; empreintes recalculées par
+  # Claude Code sur les copies de session. Aucun n'est dans le dépôt.
+
+  robstride_rs00_manual_260713:
+    source: >
+      RobStride Dynamics, dépôt https://github.com/RobStride/Product_Information (tête 3f0cae4986), « Product Literature/RS00/RS00User Manual260713.pdf »
+    reference: "Manuel utilisateur RS00, version 260713, 79 p."
+    date: 2026-10-01
+    empreinte: "sha256:47d0ae5c909df2d989b0485c870d36900b9e17c72e608efeb3e13b6e98953832"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence (API GitHub : license = null). Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  xiaomi_cybergear_manuel_cn:
+    source: >
+      Copie hébergée par un TIERS : https://roboticscv.com/wp-content/uploads/pdf/ (« CyberGear微电机使用说明书.pdf ») ; certificat TLS du site expiré, téléchargée sans vérification TLS
+    reference: "Manuel CyberGear (chinois), 30 p., créé le 2023-10-11"
+    date: 2026-10-01
+    empreinte: "sha256:babb20332207bf2f9aa964396049cab2156d8b8e55bd7effd86d04c5a331ac04"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Intégrité garantie par le seul sha256 : à confronter à une copie Xiaomi."
+
+  cybergear_manuel_en_communautaire:
+    source: >
+      CDN Shopify de la boutique AIFitLab ; traduction communautaire de github.com/belovictor/cybergear-docs
+    reference: "CyberGear instruction manual, traduction NON officielle, 40 p."
+    date: 2026-10-01
+    empreinte: "sha256:9dfef01a66d368921e4fca847ae088b77980ead4217c7d50513cb58d6c442185"
+    conditions: >
+      Dépôt d'origine sans licence déclarée. Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Lu pour recouper seulement ; aucune valeur retenue n'en vient."
+
+  cubemars_ak_driver_manual_v1_0_18:
+    source: >
+      CubeMars, https://www.cubemars.com/data/cms/202605/ak-series-driver-manual-v1-0-18-for-ak-2-0-robotic-actuator.pdf
+    reference: "AK Series Module Driver Manual V1.0.18, 71 p."
+    date: 2026-10-01
+    empreinte: "sha256:4c82e46a5d286010b0526b558e734a0695a1cede6cdaba56e217971b6db24bef"
+    conditions: >
+      Mention du document : copyright Nanchang Kude Intelligent Technology Co., Ltd., copie et reproduction interdites sans permission. Seules des valeurs numériques en sont extraites. Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  cubemars_ak40_2410_install:
+    source: >
+      CubeMars, https://www.cubemars.com/data/cms/202607/ak40-2410-1a-a1-drive-installation-instructions.pdf
+    reference: "AK40-2410-1A-A1 Drive Installation Instructions V1.0.2, 9 p."
+    date: 2026-10-01
+    empreinte: "sha256:414246e3f6bd17e21a971fb90c7f7c5e9a4e290239099e8d83f67d3e27e04372"
+    conditions: >
+      Mention du document : copyright Nanchang Kude Intelligent Technology Co., Ltd., copie et reproduction interdites sans permission. Seules des valeurs numériques en sont extraites. Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Concerne la variante AK40-10 sans version ; aucune valeur retenue."
+
+  cubemars_ak40_10_v3_2d:
+    source: >
+      CubeMars, https://www.cubemars.com/data/cms/202607/ak40-10-v3-0-kv170-2d-drawing.pdf
+    reference: "Dessin 2D AK40-10 V3.0, 1 p. (image)"
+    date: 2026-10-01
+    empreinte: "sha256:7603775322b2b8c1d7dac3edfea9f6d32d60ce751923365d1beaddedeed23278"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Image sans texte, non lue."
+
+  cubemars_ak40_10_2d:
+    source: >
+      CubeMars, https://www.cubemars.com/data/cms/202602/ak40-10-robotic-actuator-2d-drawing.pdf
+    reference: "Dessin 2D AK40-10 (sans version), 1 p. (image)"
+    date: 2026-10-01
+    empreinte: "sha256:29f8cd275c3de90a812bb922d0bd659b732216d8781960f31606352803967de6"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Image sans texte, non lue."
+
+  hightorque_htdw_5047_36_ne:
+    source: >
+      Fiche constructeur hébergée par Seeed : https://files.seeedstudio.com/wiki/robotics/Actuator/hightorque/HTDW-5047-36-NE.pdf
+    reference: "Fiche HTDW-5047-36-NE, 1 p., 2024-08-13"
+    date: 2026-10-01
+    empreinte: "sha256:0607b8bd4ea777a3081469bb0161a679c3125bb4b069e1eccf04d93b7eb46e5a"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  hightorque_htdw_4438_32_ne:
+    source: >
+      Fiche constructeur hébergée par Seeed : https://files.seeedstudio.com/wiki/robotics/Actuator/hightorque/HTDW-4438-32-NE.pdf
+    reference: "Fiche HTDW-4438-32-NE, 1 p., 2024-08-13"
+    date: 2026-10-01
+    empreinte: "sha256:88768cea04771518d0c1201db489667e1f68948e81781de4d7ad33fdbeb800d3"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Autre modèle que le 4438-30 (réduction 32) : aucune valeur retenue."
+
+  hightorque_debugging_manual_en:
+    source: >
+      Hébergé par Seeed : https://files.seeedstudio.com/wiki/robotics/Actuator/hightorque/Hightorque_Motor_Debugging_Manual_EN.pdf
+    reference: "Hightorque Motor Debugging Assistant Manual, 16 p., 2025-05-22"
+    date: 2026-10-01
+    empreinte: "sha256:9c973fd9a54210842affe77e9c49b8ee429f9919e94d96327830ba5bc84ef6dd"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  hightorque_module0602e_02:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_02.png
+    reference: "Fiche constructeur (image) HTDW-4438-30-NE (4530-02-DNE), p. 1"
+    date: 2026-10-01
+    empreinte: "sha256:9016ed4df5dad4e2bd1f081b47198a51d2042860347c52522a49523e987686a2"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  hightorque_module0602e_03:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_03.png
+    reference: "Fiche constructeur (image) HTDW-4530-02-CNE"
+    date: 2026-10-01
+    empreinte: "sha256:98ddc3ad5e495c407710810fe06dafbc13ba1cfcffc573b31b96b81b14eaa3e1"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Non lue."
+
+  hightorque_module0602e_04:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_04.png
+    reference: "Fiche constructeur (image) HTDW-5022-02"
+    date: 2026-10-01
+    empreinte: "sha256:e2b3f514613583f37b4b4c36e334baa0311baea568afcbcd47263932bf9226db"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Non lue."
+
+  hightorque_module0602e_05:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_05.png
+    reference: "Fiche constructeur (image) HTDW-5036-02-DNE, p. 4"
+    date: 2026-10-01
+    empreinte: "sha256:fa6d4fe6c3f5e7a96b03db586e43c0f9ec5035b1cb0901f55a91f1f0612c2fc4"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  hightorque_module0602e_06:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_06.png
+    reference: "Fiche constructeur (image) HTDW-5036-02-CNE, p. 5"
+    date: 2026-10-01
+    empreinte: "sha256:c6e93b40780ff2d7cadb0a94a81ed904b0aa7b79e377e73b317c08c2e55bb2a9"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Aucune valeur retenue."
+
+  hightorque_module0602e_07:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_07.png
+    reference: "Fiche constructeur (image) HTDW-6036-02-DNE, p. 6"
+    date: 2026-10-01
+    empreinte: "sha256:905ee2e0880d5a79a147211684cef0df86d6c2f2076c02da3abf9cbc548a19b6"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+
+  hightorque_module0602e_08:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_08.png
+    reference: "Fiche constructeur (image) HTDW-6036-02-CNE"
+    date: 2026-10-01
+    empreinte: "sha256:34d3ca4bf31be8c631a209686e888141e34df9ae14cf4e0f7313a21a0b719541"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Non lue."
+
+  hightorque_module0602e_11:
+    source: >
+      HighTorque Robotics, https://hightorque.cn/en/wp-content/uploads/2025/07/Module0602E_11.png
+    reference: "Fiche constructeur (image) HTPU-6035-04-CNE, p. 10"
+    date: 2026-10-01
+    empreinte: "sha256:e69d8ac77bd6b0373cf7f83cc7bf656689cbeccb09bc983cd548890ab9e9b80f"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Aucune valeur retenue."
+
+  hightorque_module0603e_10:
+    source: >
+      HighTorque Robotics, image Module0603E_10.png (fiche HTDW-7535-02-CNE)
+    reference: "Fiche constructeur (image) HTDW-7535-02-CNE"
+    date: 2026-10-01
+    empreinte: "sha256:d464e1468da8730fd095f2624948959285ea1f9120d2bbafca3e7eda45d5538e"
+    conditions: >
+      Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
+    redistribuable: false
+    note: "Non lue."
