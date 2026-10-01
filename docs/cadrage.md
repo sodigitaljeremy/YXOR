@@ -161,7 +161,10 @@ du 17-09) et du RS03 (20 retenu, 21 à la p. 19) sont discutées dans
 | homogène RobStride RS06 | RS06 11,0 / 36,0 | 0,91 m | 19,4 kg | hip_roll |
 | homogène RobStride RS03 | RS03 20,0 / 60,0 | 1,07 m | 30,0 kg | hip_roll |
 | homogène CubeMars AK70-10 KV100 | AK70-10 KV100 8,3 / 24,8 | 0,82 m | 16,2 kg | hip_roll |
+| homogène RobStride RS00 | RS00 5,0 / 14,0 | 0,75 m | 10,7 kg | hip_roll |
 | S — RS05 homogène | RS05 1,6 / 5,5 | 0,54 m | 4,8 kg | hip_roll |
+| S — RS00 lourd (hanche roulis et tangage, genou, tangage de cheville), RS05 ailleurs | RS00 5,0 / 14,0 ; RS05 1,6 / 5,5 | 0,65 m | 7,6 kg | hip_yaw_drive |
+| S — RS00 lourd (hanche roulis et tangage, genou, tangage de cheville), EduLite 05 ailleurs | RS00 5,0 / 14,0 ; EduLite 05 1,8 / 5,5 | 0,64 m | 7,7 kg | hip_yaw_drive |
 | L — RS06 sur la hanche (3 axes), le genou et le tangage de cheville ; RS02 sur le roulis de cheville | RS06 11,0 / 36,0 ; RS02 6,0 / 17,0 | 0,92 m | 19,2 kg | hip_roll |
 
 Toutes ces tailles sont des **plafonds optimistes** : le roulis de hanche, et d'autres articulations de jambe, étaient écrêtés dans la marche de référence.

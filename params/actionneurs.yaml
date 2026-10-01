@@ -757,6 +757,21 @@ configurations_nommees:
     lourde: rs05
     legere: rs05
     articulations_lourdes: []
+  # Ajoutées le 2026-10-01 (lot H, PROPOSÉ par Claude, arbitrage) : RS00 sur
+  # les articulations lourdes (dimensionnement.articulations_lourdes), une
+  # classe S légère ailleurs.
+  S_rs00_rs05:
+    libelle: "S — RS00 lourd (hanche roulis et tangage, genou, tangage de cheville), RS05 ailleurs"
+    statut: "calcul demandé le 2026-10-01 (lot H) ; classe de S ouverte"
+    lourde: rs00
+    legere: rs05
+    articulations_lourdes: [hip_roll, hip_pitch, knee, ankle_pitch]
+  S_rs00_el05:
+    libelle: "S — RS00 lourd (hanche roulis et tangage, genou, tangage de cheville), EduLite 05 ailleurs"
+    statut: "calcul demandé le 2026-10-01 (lot H) ; classe de S ouverte"
+    lourde: rs00
+    legere: edulite05
+    articulations_lourdes: [hip_roll, hip_pitch, knee, ankle_pitch]
   L_rs06_rs02:
     libelle: "L — RS06 sur la hanche (3 axes), le genou et le tangage de cheville ; RS02 sur le roulis de cheville"
     statut: "calcul demandé le 2026-09-30 (question ouverte 3 du cadrage)"

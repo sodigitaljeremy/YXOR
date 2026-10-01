@@ -80,6 +80,7 @@ vérifiée est notée à côté.
 | RobStride RS06 | 11,00 | 36,00 | 50,27 | 621,0 | 849 CNY | CAN 2.0 / CAN FD | PDF RobStride 2026-09-17, p. 31 |
 | RobStride RS03 | 20,00 | 60,00 | 20,42 | 900,0 | 999 CNY | CAN 2.0 / CAN FD | PDF RobStride 2026-09-17, p. 38 |
 | CubeMars AK70-10 KV100 | 8,30 | 24,80 | 50,27 | 621,0 | 398,90 USD | CAN et UART | https://www.cubemars.com/goods-1031-AK70-10.html ; https://www.cubemars.com/product/ak70-10-kv100-robotic-actuator.html |
+| RobStride RS00 | 5,00 | 14,00 | 32,99 | 330,0 | 598 CNY | CAN 2.0 | manuel RS00 260713, p. 8-9 |
 
 ¹ STS3250 : couple **nominal** constructeur, 16 kg·cm, retenu comme continu ;
   la pointe est un couple de **blocage** (50 kg·cm), plafond optimiste de plus.
@@ -205,26 +206,34 @@ calculées.
 | homogène RobStride RS06 | 0,91 | 19,4 | 0,00 | hip_roll | **oui** | oui |
 | homogène RobStride RS03 | 1,07 | 30,0 | 0,03 | hip_roll | **oui** | oui |
 | homogène CubeMars AK70-10 KV100 | 0,82 | 16,2 | 0,00 | hip_roll | **oui** | oui |
+| homogène RobStride RS00 | 0,75 | 10,7 | 0,01 | hip_roll | **oui** | oui |
 | mixte RobStride EduLite 05 / Feetech STS3250 | 0,57 | 5,1 | 0,06 | hip_roll | **oui** | oui |
 | mixte RobStride RS05 / Feetech STS3250 | 0,56 | 4,6 | 0,06 | hip_roll | **oui** | oui |
 | mixte RobStride RS02 / Feetech STS3250 | 0,62 | 7,1 | 0,06 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS02 / RobStride EduLite 05 | 0,63 | 7,9 | 0,01 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS02 / RobStride RS05 | 0,63 | 7,8 | 0,01 | hip_yaw_drive | **oui** | oui |
+| mixte RobStride RS02 / RobStride RS00 | 0,79 | 12,2 | 0,01 | hip_roll | **oui** | oui |
 | mixte RobStride RS06 / Feetech STS3250 | 0,55 | 7,9 | 0,06 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS06 / RobStride EduLite 05 | 0,56 | 8,8 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS06 / RobStride RS05 | 0,57 | 8,6 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS06 / RobStride RS02 | 0,88 | 17,3 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS06 / CubeMars AK70-10 KV100 | 0,91 | 19,4 | 0,00 | hip_roll | **oui** | oui |
+| mixte RobStride RS06 / RobStride RS00 | 0,83 | 15,2 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS03 / Feetech STS3250 | 0,48 | 9,2 | 0,06 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS03 / RobStride EduLite 05 | 0,49 | 10,0 | 0,03 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS03 / RobStride RS05 | 0,50 | 9,9 | 0,03 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS03 / RobStride RS02 | 0,84 | 18,1 | 0,03 | hip_yaw_drive | **oui** | oui |
 | mixte RobStride RS03 / RobStride RS06 | 1,09 | 29,7 | 0,03 | hip_roll | **oui** | oui |
 | mixte RobStride RS03 / CubeMars AK70-10 KV100 | 0,96 | 23,3 | 0,03 | hip_yaw_drive | **oui** | oui |
+| mixte RobStride RS03 / RobStride RS00 | 0,78 | 16,0 | 0,03 | hip_yaw_drive | **oui** | oui |
 | mixte CubeMars AK70-10 KV100 / Feetech STS3250 | 0,55 | 7,9 | 0,06 | hip_yaw_drive | **oui** | oui |
 | mixte CubeMars AK70-10 KV100 / RobStride EduLite 05 | 0,56 | 8,8 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte CubeMars AK70-10 KV100 / RobStride RS05 | 0,57 | 8,6 | 0,00 | hip_yaw_drive | **oui** | oui |
 | mixte CubeMars AK70-10 KV100 / RobStride RS02 | 0,84 | 15,8 | 0,00 | hip_roll | **oui** | oui |
+| mixte CubeMars AK70-10 KV100 / RobStride RS00 | 0,83 | 15,2 | 0,00 | hip_yaw_drive | **oui** | oui |
+| mixte RobStride RS00 / Feetech STS3250 | 0,63 | 6,9 | 0,06 | hip_yaw_drive | **oui** | oui |
+| mixte RobStride RS00 / RobStride EduLite 05 | 0,64 | 7,7 | 0,01 | hip_yaw_drive | **oui** | oui |
+| mixte RobStride RS00 / RobStride RS05 | 0,65 | 7,6 | 0,01 | hip_yaw_drive | **oui** | oui |
 
 ### Par articulation, configurations homogènes
 
@@ -240,6 +249,7 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
 | homogène RobStride RS06 | 1,18 ⚠ | 0,91 ⚠ | 1,11 ⚠ | 0,93 ⚠ | 0,97 ⚠ | 1,21 |
 | homogène RobStride RS03 | 1,37 ⚠ | 1,07 ⚠ | 1,27 ⚠ | 1,09 ⚠ | 1,10 ⚠ | 1,38 |
 | homogène CubeMars AK70-10 KV100 | 1,08 ⚠ | 0,82 ⚠ | 0,99 ⚠ | 0,84 ⚠ | 0,85 ⚠ | 1,08 |
+| homogène RobStride RS00 | 0,95 ⚠ | 0,75 ⚠ | 0,87 ⚠ | 0,76 ⚠ | 0,76 ⚠ | 0,95 |
 
 ### Lecture (Déd)
 
@@ -292,26 +302,34 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
 | homogène RobStride RS06 | 0,91 | 209 | ≥ 2 053 | ≥ 2 365 | structure |
 | homogène RobStride RS03 | 1,07 | 209 | ≥ 2 332 | ≥ 2 783 | structure |
 | homogène CubeMars AK70-10 KV100 | 0,82 | 209 | ≥ 5 443 | ≥ 7 451 | structure |
+| homogène RobStride RS00 | 0,75 | 209 | ≥ 1 587 | ≥ 1 666 | structure |
 | mixte RobStride EduLite 05 / Feetech STS3250 | 0,57 | 209 | ≥ 1 140 | inconnu | prix Feetech STS3250, structure |
 | mixte RobStride RS05 / Feetech STS3250 | 0,56 | 209 | ≥ 1 094 | inconnu | prix Feetech STS3250, structure |
 | mixte RobStride RS02 / Feetech STS3250 | 0,62 | 209 | ≥ 1 342 | inconnu | prix Feetech STS3250, structure |
 | mixte RobStride RS02 / RobStride EduLite 05 | 0,63 | 209 | ≥ 1 674 | ≥ 1 494 | structure |
 | mixte RobStride RS02 / RobStride RS05 | 0,63 | 209 | ≥ 1 651 | ≥ 1 390 | structure |
+| mixte RobStride RS02 / RobStride RS00 | 0,79 | 209 | ≥ 1 712 | ≥ 1 666 | structure |
 | mixte RobStride RS06 / Feetech STS3250 | 0,55 | 209 | ≥ 1 527 | inconnu | prix Feetech STS3250, structure |
 | mixte RobStride RS06 / RobStride EduLite 05 | 0,56 | 209 | ≥ 1 859 | ≥ 1 494 | structure |
 | mixte RobStride RS06 / RobStride RS05 | 0,57 | 209 | ≥ 1 836 | ≥ 1 390 | structure |
 | mixte RobStride RS06 / RobStride RS02 | 0,88 | 209 | ≥ 1 960 | ≥ 1 947 | structure |
 | mixte RobStride RS06 / CubeMars AK70-10 KV100 | 0,91 | 209 | ≥ 3 183 | ≥ 7 451 | structure |
+| mixte RobStride RS06 / RobStride RS00 | 0,83 | 209 | ≥ 1 898 | ≥ 1 666 | structure |
 | mixte RobStride RS03 / Feetech STS3250 | 0,48 | 209 | ≥ 1 713 | inconnu | prix Feetech STS3250, structure |
 | mixte RobStride RS03 / RobStride EduLite 05 | 0,49 | 209 | ≥ 2 045 | ≥ 1 494 | structure |
 | mixte RobStride RS03 / RobStride RS05 | 0,50 | 209 | ≥ 2 022 | ≥ 1 390 | structure |
 | mixte RobStride RS03 / RobStride RS02 | 0,84 | 209 | ≥ 2 146 | ≥ 1 947 | structure |
 | mixte RobStride RS03 / RobStride RS06 | 1,09 | 209 | ≥ 2 239 | ≥ 2 365 | structure |
 | mixte RobStride RS03 / CubeMars AK70-10 KV100 | 0,96 | 209 | ≥ 3 369 | ≥ 7 451 | structure |
+| mixte RobStride RS03 / RobStride RS00 | 0,78 | 209 | ≥ 2 083 | ≥ 1 666 | structure |
 | mixte CubeMars AK70-10 KV100 / Feetech STS3250 | 0,55 | 209 | ≥ 3 788 | inconnu | prix Feetech STS3250, structure |
 | mixte CubeMars AK70-10 KV100 / RobStride EduLite 05 | 0,56 | 209 | ≥ 4 120 | ≥ 1 494 | structure |
 | mixte CubeMars AK70-10 KV100 / RobStride RS05 | 0,57 | 209 | ≥ 4 097 | ≥ 1 390 | structure |
 | mixte CubeMars AK70-10 KV100 / RobStride RS02 | 0,84 | 209 | ≥ 4 220 | ≥ 1 947 | structure |
+| mixte CubeMars AK70-10 KV100 / RobStride RS00 | 0,83 | 209 | ≥ 4 158 | ≥ 1 666 | structure |
+| mixte RobStride RS00 / Feetech STS3250 | 0,63 | 209 | ≥ 1 217 | inconnu | prix Feetech STS3250, structure |
+| mixte RobStride RS00 / RobStride EduLite 05 | 0,64 | 209 | ≥ 1 549 | ≥ 1 494 | structure |
+| mixte RobStride RS00 / RobStride RS05 | 0,65 | 209 | ≥ 1 526 | ≥ 1 390 | structure |
 
 **Options de phase** (`params/budget.yaml`, `phases.*.options`) :
 

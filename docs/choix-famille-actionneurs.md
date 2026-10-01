@@ -23,6 +23,8 @@ Poids : **décidés par Jeremy le 2026-09-30 (~23 h)**, validés tels quels apr�
 | Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1) | 0,38–0,67 m | 0,47–0,80 m | 0,66–0,99 m | ≥ 2 469 | ≥ 3 141 | ≥ 2 543 | 5/5 | — |
 | CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,33–0,61 m | 0,53–0,78 m | 0,60–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
 | MyActuator (X2-7 → [trou] → X4-36) | 0,33–0,61 m | **TROU** | 0,62–0,95 m | ≥ 4 717 | — | ≥ 5 457 | 2/5 | M |
+| RobStride, variante S = RS00 (RS00 → RS02 → RS06) | 0,67–0,75 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 2 033 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
+| HighTorque (HTDW-4438-30 → HTDW-5036-02 → HTDW-6036-02) | 0,30–0,57 m | 0,50–0,80 m | 0,53–0,89 m | ≥ 2 830 | ≥ 2 830 | ≥ 3 203 | 3/5 | — |
 
 Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est calculé à la borne basse de l'hypothèse k ; pour RobStride, c'est la valeur **en blocage** publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` (12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas chiffrée.
 
@@ -71,24 +73,41 @@ Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « P
 - continuité : bus CAN sur les 3 ; protocole commun non établi ; tension commune 48 V ; trous : M
 - note : TROU en M : le catalogue 2026 (sha256 0faddc54…) saute de X4-10 (10 N·m) à X8-32 (32 N·m, RS485 seulement). Le X8-20 n'y figure plus, sans annonce d'arrêt trouvée ; « remplacé par X8-32 » n'est écrit nulle part (l'étude externe l'affirmait). Le X8-25 (V2, 48 V, 25 N·m) est encore présenté mais absent du catalogue 2026.
 
+**RobStride, variante S = RS00 (RS00 → RS02 → RS06)**
+
+- S : RobStride RS00 — clé : RobStride Dynamics RS00 · rév. non publiée · 48 V · firmware non publié — pointe 14,0 N·m ; continu optimiste 5,00 N·m, prudent 3,60 N·m (en blocage (publié)) ; 48 V, plage (24, 60)
+- M : RobStride RS02 — clé : RobStride Dynamics RS02 · rév. non publiée · 48 V · firmware non publié — pointe 17,0 N·m ; continu optimiste 7,00 N·m, prudent 6,00 N·m (en blocage (publié)) ; 48 V, plage (15, 60)
+- L : RobStride RS06 — clé : RobStride Dynamics RS06 · rév. non publiée · 48 V · firmware non publié — pointe 36,0 N·m ; continu optimiste 11,00 N·m, prudent 8,00 N·m (en blocage (publié)) ; 48 V, plage (15, 60)
+- continuité : bus CAN sur les 3 ; protocole commun oui ; tension commune 48 V ; trous : aucun
+- note : variante de la famille RobStride : seul le membre S change. RS00 (pointe 14 N·m) est plus proche de la plage M que de la plage S visée (5-7 N·m)
+
+**HighTorque (HTDW-4438-30 → HTDW-5036-02 → HTDW-6036-02)**
+
+- S : HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) — clé : HighTorque Robotics HTDW-4438-30-NE · rév. non publiée · 24 V · firmware non publié — pointe 10,0 N·m ; continu optimiste 2,00 N·m, prudent 2,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 24 V, plage (12, 50.4)
+- M : HighTorque HTDW-5036-02-DNE — clé : HighTorque Robotics HTDW-5036-02-DNE · rév. non publiée · 24 V · firmware non publié — pointe 21,0 N·m ; continu optimiste 6,00 N·m, prudent 6,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 24 V, plage (12, 50.4)
+- L : HighTorque HTDW-6036-02-DNE — clé : HighTorque Robotics HTDW-6036-02-DNE · rév. non publiée · 24 V · firmware non publié — pointe 36,0 N·m ; continu optimiste 10,00 N·m, prudent 10,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 24 V, plage (12, 50.4)
+- alternatives : S = htdw_5047_36
+- continuité : bus CAN sur les 3 ; protocole commun non établi ; tension commune 48 V ; trous : aucun
+- note : M et L classés sur leur couple de BLOCAGE momentané (21 et 36 N·m), seul publié : ce n'est pas une pointe au sens des autres familles. HTDW-5047-36 (fiche 2024, absente du site constructeur) en S alternatif. D'autres membres existent (5036-02-CNE, 6036-02-CNE, HTPU-6035-04-CNE, 5022-02-DNE) ; non portés.
+
 ---
 
 ## 2 — Notes (membre S, et continuité de famille) à k = 1,0
 
 Les critères autres que la continuité se notent sur le **membre S**, le premier robot.
 
-| Critère | Poids (fixé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| capacite | 18 | 1 | 2 | 5 | 4 | 4 |
-| cout | 15 | 3 | 4 | 2 | 2 | 1 |
-| continuite | 18 | 5 | 5 | 5 | 5 | 2 |
-| fiabilite_fournisseur | 15 | 3 | 3 | 1 | 1 | 3 |
-| robustesse | 12 | 3 | 3 | 3 | 5 | 5 |
-| masse | 5 | 4 | 3 | 2 | 2 | 2 |
-| ouverture | 5 | 2 | 2 | 2 | 2 | 2 |
-| tension_securite | 5 | 2 | 2 | 2 | 4 | 4 |
-| disponibilite | 7 | 3 | 3 | 3 | 2 | 1 |
-| **score /5** | | **2,95** | **3,23** | **3,12** | **3,21** | **2,75** |
+| Critère | Poids (fixé) | RobStride | RobStride, variante S = EduLite 05 EL05 | Damiao | CubeMars | MyActuator | RobStride, variante S = RS00 | HighTorque |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| capacite | 18 | 1 | 2 | 5 | 4 | 4 | 5 | 3 |
+| cout | 15 | 3 | 4 | 2 | 2 | 1 | 3 | 2 |
+| continuite | 18 | 5 | 5 | 5 | 5 | 2 | 5 | 3 |
+| fiabilite_fournisseur | 15 | 3 | 3 | 1 | 1 | 3 | 3 | 1 |
+| robustesse | 12 | 3 | 3 | 3 | 5 | 5 | 3 | 3 |
+| masse | 5 | 4 | 3 | 2 | 2 | 2 | 2 | 3 |
+| ouverture | 5 | 2 | 2 | 2 | 2 | 2 | 2 | 0 |
+| tension_securite | 5 | 2 | 2 | 2 | 4 | 4 | 2 | 4 |
+| disponibilite | 7 | 3 | 3 | 3 | 2 | 1 | 3 | 3 |
+| **score /5** | | **2,95** | **3,23** | **3,12** | **3,21** | **2,75** | **3,57** | **2,45** |
 
 ### Justification de chaque note
 
@@ -152,29 +171,51 @@ Les critères autres que la continuité se notent sur le **membre S**, le premie
 - tension_securite = 4 — 24 V
 - disponibilite = 1 — non vérifié : A2V (France) selon l'étude externe ; Eckstein et OpenELAB selon des résumés
 
+**RobStride, variante S = RS00 (RS00 → RS02 → RS06)**
+
+- capacite = 5 — taille PRUDENTE 0,67 m (3,60 N·m, en blocage (publié)) → 5 ; optimiste 0,75 m (5,00 N·m)
+- cout = 3 — 104,34 CHF HT (125.0 USD, Seeed Studio)
+- continuite = 5 — bus CAN sur les 3 ; protocole commun oui ; tension commune 48 V ; trous : aucun
+- fiabilite_fournisseur = 3 — garantie écrite 12 mois ; UE non ; CH non
+- robustesse = 3 — JUGEMENT — 10:1, protections documentées (surchauffe 135/145 °C, surintensité, blocage) ; « planétaire » écrit seulement par le revendeur, réversibilité non publiée → 3, comme l'EduLite 05
+- masse = 2 — 330,0 g
+- ouverture = 2 — protocole public oui ; SDK libre non établi ; firmware libre non
+- tension_securite = 2 — 48 V
+- disponibilite = 3 — Seeed Studio
+
+**HighTorque (HTDW-4438-30 → HTDW-5036-02 → HTDW-6036-02)**
+
+- capacite = 3 — taille PRUDENTE 0,57 m (2,00 N·m, aucune valeur en blocage publiée : nominal × k (1,0)) → 3 ; optimiste 0,57 m (2,00 N·m)
+- cout = 2 — 157,76 CHF HT (189.0 USD, Seeed Studio)
+- continuite = 3 — bus CAN sur les 3 ; protocole commun non établi ; tension commune 48 V ; trous : aucun
+- fiabilite_fournisseur = 1 — garantie écrite non trouvée ; UE non ; CH non
+- robustesse = 3 — JUGEMENT — planétaire 30:1 (fiche constructeur), codes de défaut surchauffe et surtension documentés ; réversibilité annoncée sans chiffre → 3
+- masse = 3 — 237,0 g
+- ouverture = 0 — protocole public non/inconnu ; SDK libre non établi ; firmware libre non
+- tension_securite = 4 — 24 V
+- disponibilite = 3 — Seeed Studio
+
 ---
 
 ## 3 — La dimension « données » : le vainqueur pour chaque k
 
 | k | Famille gagnante (poids fixés) | Tient ±50 % | Tirages quelconques gagnés |
 | ---: | --- | --- | ---: |
-| 1,0 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | NON, pas toutes | 30,6 % |
-| 0,9 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | oui, toutes | 38,2 % |
-| 0,8 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | NON, pas toutes | 25,0 % |
-| 0,7 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | oui, toutes | 29,1 % |
-| 0,6 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 46,1 % |
-| 0,5 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 53,2 % |
-| 0,4 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 57,0 % |
-| 0,3 | RobStride (RS05 → RS02 → RS06) | NON, pas toutes | 57,0 % |
+| 1,0 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 34,2 % |
+| 0,9 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 40,7 % |
+| 0,8 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 44,5 % |
+| 0,7 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 48,1 % |
+| 0,6 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 52,6 % |
+| 0,5 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 55,1 % |
+| 0,4 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 55,1 % |
+| 0,3 | RobStride, variante S = RS00 (RS00 → RS02 → RS06) | oui, toutes | 55,1 % |
 
-**Verdict à k = 1,0.** **Aux poids décidés par Jeremy : RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)** — il **ne tient que 11 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 30,6 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 34,7 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+**Verdict à k = 1,0.** **Aux poids décidés par Jeremy : RobStride, variante S = RS00 (RS00 → RS02 → RS06)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 34,2 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 27,4 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
-**Verdict à la borne basse (k = 0,3).** **Aux poids décidés par Jeremy : RobStride (RS05 → RS02 → RS06)** — il **ne tient que 17 variations ±50 % sur 18**. Sur 1 000 jeux de poids **quelconques**, il gagne 57,0 % des tirages ; « CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) » en gagne 20,2 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
+**Verdict à la borne basse (k = 0,3).** **Aux poids décidés par Jeremy : RobStride, variante S = RS00 (RS00 → RS02 → RS06)** — il **tient toutes les variations ±50 %**. Sur 1 000 jeux de poids **quelconques**, il gagne 55,1 % des tirages ; « RobStride (RS05 → RS02 → RS06) » en gagne 18,1 %. Cette dernière mesure dit seulement qu'**un autre principe de pondération** que celui de Jeremy choisirait autrement : elle n'affaiblit pas le choix fait avec le sien.
 
 
-**Seuil de bascule : RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) gagne jusqu'à k = 0,68 ; RobStride (RS05 → RS02 → RS06) gagne dès k = 0,67.**
-
-En clair : le classement dépend du rapport entre le couple continu **réel** des actionneurs « condition non précisée » et leur nominal publié. **C'est ce rapport que le banc doit mesurer**, dans une condition identique pour les deux finalistes (`docs/comparatif-banc.md`).
+**Aucune bascule entre k = 1,0 et 0,5** : le vainqueur ne dépend pas de l'hypothèse k.
 
 ---
 
@@ -188,9 +229,10 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 | RobStride RS02 | 6,0 | 7,0 | **0,857** |
 | RobStride RS06 | 8,0 | 11,0 | **0,727** |
 | RobStride RS03 | 13,0 | 21,0 | **0,619** |
-| **moyenne** | | | **0,738** |
+| RobStride RS00 | 3,6 | 5,0 | **0,720** |
+| **moyenne** | | | **0,735** |
 
-**Position par rapport au seuil de bascule (k ≈ 0,68) : la moyenne RobStride, 0,738, est AU-DESSUS du seuil.** Si les actionneurs sans valeur en blocage se comportaient comme ceux de RobStride, le vainqueur serait « RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) » — mais l'écart entre les quatre rapports (0,619 à 0,857) couvre le seuil : **les données constructeur ne tranchent pas, le banc tranchera.**
+**Aucune bascule entre k = 1,0 et 0,5** : quelle que soit la valeur de k dans cette plage, le vainqueur ne change pas.
 
 *Réserve* : ces rapports sont ceux d'un fabricant, pour une condition de blocage qu'il définit. Rien ne garantit qu'un Damiao ou un CubeMars se comporte pareil.
 
@@ -198,53 +240,47 @@ Un seul fabricant publie à la fois un couple nominal (en rotation, sur plaque) 
 
 L'estimation thermique (`scripts/estimation_thermique.py`, lue à la source) donne, **en rotation** à 120 rpm et 24 V, dans la condition de l'essai constructeur, **au seuil thermique du protocole (90 °C : protection 100 °C − 10 °C du protocole)**, **k ≈ 0,86–0,95**. Un robot debout travaille près du blocage. En décotant cette estimation par les rapports blocage / nominal de RobStride ci-dessus (0,619 à 0,857), le k du J4310 **au blocage** serait de l'ordre de **0,53–0,81** (0,86 × 0,619 à 0,95 × 0,857).
 
-**La bascule (k ≈ 0,67) n'oppose pas la famille de cet actionneur** : situer cette fourchette par rapport à elle ne décide rien. Elle reste une information sur le J4310, pas un argument de choix.
-
 ---
 
 ## 3 ter — k en deux dimensions : information, ne change pas le verdict
 
-*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* Le balayage du § 3 applique **le même k** à tous les actionneurs sans valeur en blocage. Ici, **k du J4310 (lignes) et k de l'EduLite 05 (colonnes)** sont balayés séparément, de 1,0 à 0,5 par pas de 0,05. Le RS05 garde sa valeur en blocage publiée. Lettre = famille gagnante aux poids décidés : **D** Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1), **E** RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06), **R** RobStride (RS05 → RS02 → RS06), **C** CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3), **M** MyActuator (X2-7 → [trou] → X4-36).
+*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* Le balayage du § 3 applique **le même k** à tous les actionneurs sans valeur en blocage. Ici, **k du J4310 (lignes) et k de l'EduLite 05 (colonnes)** sont balayés séparément, de 1,0 à 0,5 par pas de 0,05. Le RS05 garde sa valeur en blocage publiée. Lettre = famille gagnante aux poids décidés : **D** Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1), **E** RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06), **R** RobStride (RS05 → RS02 → RS06), **C** CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3), **M** MyActuator (X2-7 → [trou] → X4-36), **Z** RobStride, variante S = RS00 (RS00 → RS02 → RS06), **H** HighTorque (HTDW-4438-30 → HTDW-5036-02 → HTDW-6036-02).
 
 **Les autres candidats sans valeur en blocage suivent le plus petit des deux k.**
 
 | k J4310 \ k EL05 | 1,00 | 0,95 | 0,90 | 0,85 | 0,80 | 0,75 | 0,70 | 0,65 | 0,60 | 0,55 | 0,50 |
 | ---: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 1,00 | E | E | E | E | D | D | D | D | D | D | D |
-| 0,95 | E | E | E | E | D | D | D | D | D | D | D |
-| 0,90 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,85 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,80 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,75 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,70 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,65 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,60 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,55 | E | E | E | E | E | E | E | R | R | R | R |
-| 0,50 | E | E | E | E | E | E | E | R | R | R | R |
+| 1,00 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,95 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,90 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,85 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,80 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,75 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,70 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,65 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,60 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,55 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,50 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
 
 **Les autres candidats sans valeur en blocage restent à k = 1,0 (leur cas le plus favorable).**
 
 | k J4310 \ k EL05 | 1,00 | 0,95 | 0,90 | 0,85 | 0,80 | 0,75 | 0,70 | 0,65 | 0,60 | 0,55 | 0,50 |
 | ---: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 1,00 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,95 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,90 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,85 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,80 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,75 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,70 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,65 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,60 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,55 | E | E | E | E | C | C | C | C | C | C | C |
-| 0,50 | E | E | E | E | C | C | C | C | C | C | C |
+| 1,00 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,95 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,90 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,85 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,80 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,75 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,70 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,65 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,60 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,55 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
+| 0,50 | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z | Z |
 
 **Lecture, par rapport à la borne basse plausible de k (0,619).** La carte « min » est la lecture prudente. La carte « 1,0 » montre ce que donnerait l'hypothèse la plus favorable accordée aux autres fabricants : un **artefact** de cette hypothèse, pas un résultat.
 
-- **Damiao** gagne sur 14 cases sur 121 : k J4310 de 0,95 à 1,00, k EL05 de 0,50 à 0,80.
-- **RobStride avec RS05** gagne sur 36 cases sur 121 : k J4310 de 0,50 à 0,90, k EL05 de 0,50 à 0,65.
-- **RobStride avec EduLite 05** gagne sur 71 cases sur 121 : k J4310 de 0,50 à 1,00, k EL05 de 0,70 à 1,00.
-- À k J4310 = 0,80 : le gagnant passe de RobStride avec EduLite 05 à RobStride avec RS05 entre k EL05 = 0,70 et 0,65, **AU-DESSUS de la borne plausible 0,619** : dans la plage plausible, k de l'EduLite 05 change la décision.
-- **Damiao ne gagne qu'à k J4310 ≥ 0,95.** L'estimation thermique (au seuil de 90 °C) donne 0,86–0,95 **en rotation**, et 0,53–0,81 **au blocage** (hypothèse sur hypothèse). La zone Damiao est donc à la limite haute, ou au-delà, de ce que les données laissent attendre.
+- **RobStride avec RS00** gagne sur 121 cases sur 121 : k J4310 de 0,50 à 1,00, k EL05 de 0,50 à 1,00.
 
 ---
 
@@ -257,12 +293,12 @@ L'estimation thermique (`scripts/estimation_thermique.py`, lue à la source) don
 
 | k | Classement technique | Classement approvisionnement |
 | ---: | --- | --- |
-| 1,0 | CubeMars 4,16 > Damiao 3,90 > MyActuator 3,30 > RobStride, variante S = EduLite 05 EL05 3,13 > RobStride 2,92 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
-| 0,9 | CubeMars 3,87 > Damiao 3,62 > RobStride, variante S = EduLite 05 EL05 3,13 > MyActuator 3,02 > RobStride 2,92 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
-| 0,8 | CubeMars 3,87 > Damiao 3,62 > MyActuator 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
-| 0,7 | CubeMars 3,59 > Damiao 3,33 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 > MyActuator 2,73 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
-| 0,6 | CubeMars 3,30 > Damiao 3,05 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,44 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
-| 0,5 | Damiao 3,05 > CubeMars 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,16 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 1,0 | CubeMars 4,16 > Damiao 3,90 > RobStride, variante S = RS00 3,90 > MyActuator 3,30 > RobStride, variante S = EduLite 05 EL05 3,13 > RobStride 2,92 > HighTorque 2,84 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
+| 0,9 | RobStride, variante S = RS00 3,90 > CubeMars 3,87 > Damiao 3,62 > RobStride, variante S = EduLite 05 EL05 3,13 > MyActuator 3,02 > RobStride 2,92 > HighTorque 2,56 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
+| 0,8 | RobStride, variante S = RS00 3,90 > CubeMars 3,87 > Damiao 3,62 > MyActuator 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 > HighTorque 2,56 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
+| 0,7 | RobStride, variante S = RS00 3,90 > CubeMars 3,59 > Damiao 3,33 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 > MyActuator 2,73 > HighTorque 2,27 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
+| 0,6 | RobStride, variante S = RS00 3,90 > CubeMars 3,30 > Damiao 3,05 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,44 > HighTorque 2,27 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
+| 0,5 | RobStride, variante S = RS00 3,90 > Damiao 3,05 > CubeMars 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,16 > HighTorque 1,98 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > RobStride, variante S = RS00 3,00 > MyActuator 1,81 > Damiao 1,78 > HighTorque 1,78 > CubeMars 1,59 |
 
 L'approvisionnement ne dépend pas de k : ses notes ne lisent ni la capacité ni la thermique. Une famille en tête des deux classements à la fois est robuste à la séparation ; sinon, le choix dépend du poids relatif des deux groupes, qui n'est pas décidé.
 
@@ -272,14 +308,20 @@ L'approvisionnement ne dépend pas de k : ses notes ne lisent ni la capacité ni
 
 | Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |
 | --- | --- | --- | ---: | --- |
+| RobStride RS00 | RobStride Dynamics RS00 · rév. non publiée · 48 V · firmware non publié | 0,67–0,75 m | 3,57 | admis |
 | RobStride EduLite 05 | RobStride Dynamics EduLite 05 (EL05) · rév. non publiée · 48 V · firmware non publié | 0,54–0,54 m | 3,23 | admis |
 | Damiao DM-J4310-2EC V1.2 | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 24 V · firmware non publié | 0,67–0,67 m | 3,05 | admis |
 | RobStride RS05 | RobStride Dynamics RS05 · rév. non publiée · 48 V · firmware non publié | 0,48–0,54 m | 2,95 | admis |
 | Damiao DM-J4310-2EC V1.2 (48 V) | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 48 V · firmware non publié | 0,67–0,67 m | 2,76 | admis |
 | MyActuator RMD-X2-P28-7-E (« X2-7 ») | MyActuator RMD-X2-P28-7-E · rév. non publiée · 24 V · firmware non publié | 0,61–0,61 m | 2,75 | admis |
+| CubeMars AK40-10 V3.0 KV170 (référence) | CubeMars AK40-10 KV170 · rév. V3.0 · 24 V · firmware non publié | 0,50–0,50 m | 2,68 | admis (référence) |
 | CubeMars AK45-10 V3.0 KV75 | CubeMars AK45-10 KV75 · rév. V3.0 · 24 V · firmware non publié | 0,61–0,61 m | 2,67 | admis |
+| Xiaomi CyberGear (référence) | Xiaomi CyberGear · rév. non publiée · 24 V · firmware non publié | 0,70–0,70 m | 2,62 | admis (référence) |
 | SteadyWin GIM4310-10 (driver GDZ34) | SteadyWin GIM4310-10 (driver GDZ34) · rév. non publiée · 24 V · firmware non publié | 0,53–0,53 m | 2,41 | admis |
+| HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | HighTorque Robotics HTDW-4438-30-NE · rév. non publiée · 24 V · firmware non publié | 0,57–0,57 m | 2,27 | admis |
+| HighTorque HTDW-5047-36-NE | HighTorque Robotics HTDW-5047-36-NE · rév. non publiée · 24 V · firmware non publié | 0,70–0,70 m | 2,14 | admis |
 | Dynamixel XM430-W210 (référence) | ROBOTIS XM430-W210 · rév. non publiée · 12 V · firmware non publié | 0,53–0,53 m | 1,55 | admis (référence) |
+| Dynamixel XM430-W350 (référence) | ROBOTIS XM430-W350-T / -R · rév. non publiée · 12 V · firmware non publié | 0,58–0,58 m | 1,55 | admis (référence) |
 | Feetech STS3250 | Feetech STS3250 · rév. non publiée · 12 V · firmware non publié | 0,60–0,60 m | 1,48 | admis |
 
 Leur continuité est celle de la v2 (intrinsèque) seulement s'ils appartiennent à une famille ; les autres (Feetech STS3250, SteadyWin GIM4310-10, Dynamixel XM430) sont listés pour mémoire.
