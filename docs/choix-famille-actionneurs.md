@@ -21,7 +21,7 @@ Poids : **décidés par Jeremy le 2026-09-30 (~23 h)**, validés tels quels apr�
 | RobStride (RS05 → RS02 → RS06) | 0,48–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 846 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
 | RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06) | 0,27–0,54 m | 0,79–0,80 m | 0,81–0,91 m | ≥ 1 472 | ≥ 2 481 | ≥ 3 091 | 5/5 | — |
 | Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1) | 0,38–0,67 m | 0,47–0,80 m | 0,66–0,99 m | ≥ 2 469 | ≥ 3 141 | ≥ 2 543 | 5/5 | — |
-| CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,33–0,61 m | 0,53–0,84 m | 0,60–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
+| CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3) | 0,33–0,61 m | 0,53–0,78 m | 0,60–1,03 m | ≥ 2 417 | ≥ 6 452 | ≥ 9 179 | 5/5 | — |
 | MyActuator (X2-7 → [trou] → X4-36) | 0,33–0,61 m | **TROU** | 0,62–0,95 m | ≥ 4 717 | — | ≥ 5 457 | 2/5 | M |
 
 Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « Prudent » est calculé à la borne basse de l'hypothèse k ; pour RobStride, c'est la valeur **en blocage** publiée, qui ne dépend pas de k. Jambes = phase `jambes_v1` de `params/budget.yaml` (12 actionneurs, électronique connue, imprévus et TVA) ; « ≥ » : la structure n'est pas chiffrée.
@@ -39,7 +39,7 @@ Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « P
 
 **RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06)**
 
-- S : RobStride EduLite 05 — clé : RobStride Dynamics EduLite 05 (EL05) · rév. non publiée · 48 V · firmware non publié — pointe 6,0 N·m ; continu optimiste 1,80 N·m, prudent 1,80 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 48 V, plage (48, 48)
+- S : RobStride EduLite 05 — clé : RobStride Dynamics EduLite 05 (EL05) · rév. non publiée · 48 V · firmware non publié — pointe 5,5 N·m ; continu optimiste 1,80 N·m, prudent 1,80 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 48 V, plage (48, 48)
 - M : RobStride RS02 — clé : RobStride Dynamics RS02 · rév. non publiée · 48 V · firmware non publié — pointe 17,0 N·m ; continu optimiste 7,00 N·m, prudent 6,00 N·m (en blocage (publié)) ; 48 V, plage (15, 60)
 - L : RobStride RS06 — clé : RobStride Dynamics RS06 · rév. non publiée · 48 V · firmware non publié — pointe 36,0 N·m ; continu optimiste 11,00 N·m, prudent 8,00 N·m (en blocage (publié)) ; 48 V, plage (15, 60)
 - continuité : bus CAN sur les 3 ; protocole commun oui ; tension commune 48 V ; trous : aucun
@@ -57,7 +57,7 @@ Tailles en mètres, à marge 1,5, configuration homogène de chaque membre. « P
 **CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3)**
 
 - S : CubeMars AK45-10 V3.0 KV75 — clé : CubeMars AK45-10 KV75 · rév. V3.0 · 24 V · firmware non publié — pointe 7,0 N·m ; continu optimiste 2,50 N·m, prudent 2,50 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 24 V, plage (24, 24)
-- M : CubeMars AK80-9 V3.0 KV100 — clé : CubeMars AK80-9 KV100 · rév. V3.0 · 48 V · firmware non publié — pointe 22,0 N·m ; continu optimiste 9,00 N·m, prudent 9,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 48 V, plage (18, 52)
+- M : CubeMars AK80-9 V3.0 KV100 — clé : CubeMars AK80-9 KV100 · rév. V3.0 · 48 V · firmware non publié — pointe 18,0 N·m ; continu optimiste 9,00 N·m, prudent 9,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 48 V, plage (18, 52)
 - L : CubeMars AK10-9 V3.0 KV60 — clé : CubeMars AK10-9 KV60 · rév. V3.0 · 48 V · firmware non publié — pointe 53,0 N·m ; continu optimiste 18,00 N·m, prudent 18,00 N·m (aucune valeur en blocage publiée : nominal × k (1,0)) ; 48 V, plage (18, 52)
 - alternatives : L = ak70_9_v3
 - continuité : bus CAN sur les 3 ; protocole commun oui ; tension commune 24 V ; trous : aucun

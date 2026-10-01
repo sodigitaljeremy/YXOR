@@ -155,7 +155,7 @@ du 17-09) et du RS03 (20 retenu, 21 à la p. 19) sont discutées dans
 | Configuration (marge 1,5) | Continu / pointe (N·m) | Taille maximale | Masse convergée | Articulation limitante |
 | --- | --- | ---: | ---: | --- |
 | homogène Feetech STS3250 | STS3250 1,6 / 4,9 | 0,60 m | 4,2 kg | hip_roll |
-| homogène RobStride EduLite 05 | EduLite 05 1,8 / 6,0 | 0,54 m | 5,4 kg | hip_roll |
+| homogène RobStride EduLite 05 | EduLite 05 1,8 / 5,5 | 0,54 m | 5,4 kg | hip_roll |
 | homogène RobStride RS05 | RS05 1,6 / 5,5 | 0,54 m | 4,8 kg | hip_roll |
 | homogène RobStride RS02 | RS02 6,0 / 17,0 | 0,79 m | 12,2 kg | hip_roll |
 | homogène RobStride RS06 | RS06 11,0 / 36,0 | 0,91 m | 19,4 kg | hip_roll |

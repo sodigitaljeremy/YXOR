@@ -91,11 +91,16 @@ candidats:
       condition: "à 100 rpm, plaque de dissipation aluminium 70 × 70 mm, 25 °C, 48 V, enroulement limité à 135 °C"
       plaque_mm: 70
       note: "était null le matin du 2026-09-30 (lu seulement dans un titre de recherche) ; désormais lu dans le manuel constructeur"
+    # MODIFIÉ le 2026-10-01 (lot G). Ancien texte : valeur 6.0, source Seeed,
+    # note « Revendeur. Corroboré par la limite logicielle ±6 N·m du dépôt
+    # constructeur EDULITE_A3 (README). »
     couple_pointe_Nm:
-      valeur: 6.0
-      source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html"
-      consulte_le: "2026-09-30"
-      note: "Revendeur. Corroboré par la limite logicielle ±6 N·m du dépôt constructeur EDULITE_A3 (README)."
+      valeur: 5.5
+      source: "manuel EL05 260713, p. 56 (exemple de code : T_MIN/T_MAX ±5,5 N·m)"
+      consulte_le: "2026-10-01"
+      note: "règle de la fiche 0064 : la valeur la plus défavorable à la marge (une limite à ne pas dépasser : la plus basse), précision validée par Jeremy, lot G du 2026-10-01. En cas de doute sur ce qui compte comme valeur publiée, la prudente est retenue et notée : l'exemple de code est peut-être une copie du RS05."
+      autres_valeurs:
+        - {valeur: 6.0, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur ; aussi ±6 N·m dans les tables du manuel EL05 (p. 41, 47, 48, 71, 73) et la limite logicielle du dépôt EDULITE_A3 (README) — non retenue (0064)"}
     vitesse_a_vide_rpm: {valeur: 430, source: "manuel EL05 260713, p. 10", consulte_le: "2026-09-30", note: "± 10 % ; était null, désormais lu dans le manuel constructeur"}
     masse_g: {valeur: 242, source: "https://www.seeedstudio.com/Robostride-05-Edulite-Actuator-p-6667.html", consulte_le: "2026-09-30", note: "revendeur"}
     dimensions_mm: {valeur: null, source: null, consulte_le: "2026-09-30", non_verifie: "46 × 46 × 44 mm dans un titre de résultat de recherche"}
@@ -134,6 +139,15 @@ candidats:
       autres_conditions:
         - {valeur: 1.2, plaque_mm: null, condition: "EN BLOCAGE (rotor immobile), tableau de surcharge", source: "PDF RobStride 2026-09-17, p. 29", consulte_le: "2026-09-30"}
     couple_pointe_Nm: {valeur: 5.5, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
+    # Ajouté le 2026-10-01 (lot G) : deux limites publiées, la plus BASSE est
+    # retenue (fiche 0064, une limite). Lu par docs/protocole-banc.md § 1.5 (135 °C).
+    protection_thermique_C:
+      valeur: 135
+      source: "manuel RS05 260713, p. 34 et 50 (défaut de surchauffe, thermistance > 135 °C)"
+      consulte_le: "2026-10-01"
+      note: "règle de la fiche 0064 : la valeur la plus défavorable à la marge (une limite à ne pas dépasser : la plus basse), précision validée par Jeremy, lot G du 2026-10-01"
+      autres_valeurs:
+        - {valeur: 145, source: "manuel RS05 260713, p. 12", consulte_le: "2026-10-01", note: "« limite bobinage 145 °C (contrainte ; réelle 180 °C) » — non retenue : la plus haute des deux limites (0064)"}
     vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "± 10 % ; tension de mesure non précisée (nominale 48 V)"}
     masse_g: {valeur: 191, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     dimensions_mm: {valeur: "Ø46 × 44", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
@@ -418,7 +432,15 @@ candidats:
     tension_plage_V: {valeur: [18, 52], source: "manuel AK V3.2.0, p. 7 (pilotes 48 V AK60-4820 et AK80-4830)", consulte_le: "2026-09-30"}
     reduction: {valeur: 9, source: "page produit", consulte_le: "2026-09-30"}
     couple_continu_Nm: {valeur: 9.0, source: "page produit", consulte_le: "2026-09-30", condition: "non précisée", plaque_mm: null}
-    couple_pointe_Nm: {valeur: 22.0, source: "page produit", consulte_le: "2026-09-30", note: "⚠ le manuel V3.2.0, p. 42, borne le mode MIT à ±18 N·m"}
+    # MODIFIÉ le 2026-10-01 (lot G). Ancien texte : valeur 22.0, source « page
+    # produit », note « ⚠ le manuel V3.2.0, p. 42, borne le mode MIT à ±18 N·m ».
+    couple_pointe_Nm:
+      valeur: 18.0
+      source: "manuel AK V3.2.0, p. 42 (borne du couple en mode MIT, ±18 N·m)"
+      consulte_le: "2026-10-01"
+      note: "règle de la fiche 0064 : la valeur la plus défavorable à la marge (une limite à ne pas dépasser : la plus basse), précision validée par Jeremy, lot G du 2026-10-01. En cas de doute sur ce qui compte comme valeur publiée (une borne de protocole), la prudente est retenue et notée."
+      autres_valeurs:
+        - {valeur: 22.0, source: "page produit https://www.cubemars.com/product/ak80-9-v3-0-robotic-actuator.html", consulte_le: "2026-09-30", note: "couple de pointe publié — non retenu : le plus haut des deux (0064)"}
     vitesse_a_vide_rpm: {valeur: 570, source: "page produit", consulte_le: "2026-09-30", note: "tension de mesure non précisée"}
     masse_g: {valeur: 490, source: "page produit", consulte_le: "2026-09-30"}
     prix: {valeur: 479.90, devise: USD, tva_incluse: 0.0, vendeur: CubeMars, source: "https://www.cubemars.com/product/ak80-9-v3-0-robotic-actuator.html", consulte_le: "2026-09-30"}
