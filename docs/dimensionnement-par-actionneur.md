@@ -87,7 +87,7 @@ vérifiée est notée à côté.
   (ils étaient `null` à 17 h 07, vus seulement dans des résumés).
 ³ RS05 : **1,6 N·m retenu** (manuel 260713, plaque 70 × 70 mm), la plus basse
   de deux valeurs publiées ; 1,8 N·m (PDF du 17-09, plaque 150 × 150 mm) est
-  gardé en `autres_valeurs` (consigne de Jeremy, 2026-09-30, 22 h 30).
+  gardé en `autres_valeurs` (fiche 0064 : la valeur la plus prudente).
 ⁴ RS02 : 6 N·m sur un prompt relayé par Jeremy, auteur non établi ; le PDF constructeur dit 7 (§ 0).
 ⁵ RS03 : contradiction interne au PDF, 21 à la p. 19 et 20 à la p. 38 : la
   plus basse est retenue.

@@ -88,5 +88,6 @@ lisent quand leur question se pose.
 | [0061](0061-licence-amont-deux-familles.md) | Trois familles de licences ; la conception de ToddlerBot est dans deux | gouvernante | appliquée | 2026-09-30 |  |  |
 | [0062](0062-dimensionnement-thermique-applique.md) | Dimensionner au couple efficace et au seuil thermique : ce qui est appliqué | gouvernante | appliquée | 2026-09-30 |  |  |
 | [0063](0063-aucune-licence-pour-l-instant.md) | Aucune licence pour l'instant | gouvernante | appliquée | 2026-09-30 |  |  |
+| [0064](0064-valeur-la-plus-prudente.md) | Deux valeurs publiées : retenir la plus prudente | gouvernante | acceptée | 2026-10-01 |  |  |
 
-**63 fiches.** 8 remplacée(s) : 0001, 0004, 0005, 0011, 0014, 0015, 0029, 0038. 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.
+**64 fiches.** 8 remplacée(s) : 0001, 0004, 0005, 0011, 0014, 0015, 0029, 0038. 9 amendée(s) par une autre : 0005, 0009, 0010, 0015, 0016, 0019, 0021, 0022, 0026.

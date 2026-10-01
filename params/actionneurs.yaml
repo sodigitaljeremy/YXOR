@@ -110,8 +110,10 @@ candidats:
     tension_V: {valeur: 48, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "plage 15–60 V"}
     tension_plage_V: {valeur: [15, 60], source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     reduction: {valeur: 7.75, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
-    # MODIFIÉ le 2026-09-30 (22 h 30), consigne de Jeremy : deux valeurs
-    # nominales publiées, la PLUS BASSE est retenue. Ancien texte :
+    # MODIFIÉ le 2026-09-30 (22 h 30) : deux valeurs nominales publiées, la
+    # PLUS BASSE est retenue — règle de la fiche 0064 (valeur la plus
+    # prudente, décidée par Jeremy le 2026-10-01). Le renvoi disait
+    # « consigne de Jeremy » jusqu'au 2026-10-01 (lot F). Ancien texte :
     #   valeur: 1.8, source « PDF RobStride 2026-09-17, p. 27 »,
     #   condition « à 100 rpm, plaque 150 × 150 mm », plaque_mm: 150,
     #   et 1,6 N·m (70 × 70 mm) en `autres_conditions`.

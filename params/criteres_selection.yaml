@@ -216,7 +216,7 @@ modifications:
       VÉRIFICATION, pas de départage »).
     ancien_texte: "blocage_edulite et rs05_contre_edulite : toujours décisives (« toujours comptée »)"
   - date: "2026-09-30"
-    moment: "22 h 30 ; écrit AVANT le recalcul ; consigne de Jeremy (prompt P1 de docs/arbitrage-2026-09-30.md)"
+    moment: "22 h 30 ; écrit AVANT le recalcul ; prompt P1 de docs/arbitrage-2026-09-30.md (PROPOSÉ par Claude, lancé par Jeremy) ; RS05 à la plus basse : fiche 0064"   # avant le lot F : « consigne de Jeremy (prompt P1 …) »
     objet: "RECALCUL EN 48 V : membre S de Damiao = J4310 V1.2 48 V ; RS05 à 1,6 N·m ; critère d'abandon à un seul seuil thermique"
     raison: >
       Constat K1 de docs/etat-des-lieux-2026-09-30.md : la famille Damiao
