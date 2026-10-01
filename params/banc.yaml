@@ -21,6 +21,11 @@
 #   @S_finaliste_B  membre S de la famille gagnante en dessous
 # (les deux finalistes sont pris à une MÊME tension, 48 V de préférence,
 # variante 48 V comprise).
+#
+# La TENSION d'une configuration n'est pas déclarée ici : le générateur la
+# CALCULE comme la tension commune des plages publiées de ses modèles
+# (lot F, 2026-10-01, après le bug du lot E qui annonçait 12 V pour une
+# paire 48 V). tests/test_tension_banc.py le vérifie.
 
 banc:
   statut: "composition NON DÉCIDÉE"
@@ -43,13 +48,11 @@ banc:
       statut: "composition NON DÉCIDÉE"
     qualification:
       modeles: {dm_j4310_48v: 1, edulite05: 1, rs05: 1}
-      tension_V: 48
       comparatif: true
       statut: "composition NON DÉCIDÉE"
       origine: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ"
     feetech:
       modeles: {sts3250: 2}
-      tension_V: 12
       comparatif: true
       libelle: "banc d'apprentissage"
       statut: "composition NON DÉCIDÉE"
@@ -60,7 +63,6 @@ banc:
       note: "chiffrage historique de la phase `banc` du budget (cadrage D, 2026-09-30)"
     verification_j4310_x2:
       modeles: {dm_j4310_48v: 2}
-      tension_V: 48
       comparatif: false
       statut: "composition NON DÉCIDÉE"
       note: "option « vérification » du budget (2026-09-30, nuit), proposée quand Damiao était en tête ; Damiao ne gagne plus depuis le recalcul en 48 V"

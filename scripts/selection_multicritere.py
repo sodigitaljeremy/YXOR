@@ -477,7 +477,12 @@ def options_banc(r):
             continue          # pas de paire de finalistes à une même tension
         modeles = {resolus.get(m, m): q for m, q in cf["modeles"].items()}
         ids = [m for m, q in modeles.items() for _ in range(q)]
-        tension = cf.get("tension_V") or (tension_paire if oid == "deux_finalistes" else info(ids[0])["tension"])
+        # Tension CALCULÉE : la tension commune des plages publiées de ses
+        # modèles (48 V de préférence). Jamais déclarée, jamais par défaut
+        # (bug du lot E : 12 V annoncés pour une paire 48 V ; lot F).
+        tension = tension_commune([info(m)["plage"] for m in modeles])
+        if tension is None:
+            continue          # modèles sans tension commune : configuration impossible, non affichée
         nom = " + ".join(f"{q} × {info(m)['nom']}" for m, q in modeles.items())
         if oid == "deux_finalistes":
             nom += f" ({tension} V)"
@@ -559,7 +564,7 @@ def options_banc(r):
         o["etat"], o["reference"] = "admis", False
     pb = {k: v["poids"] for k, v in b["ponderes"].items()}
     r["_inconnues"] = decisives
-    return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension)
+    return opts, pb, sensibilite(opts, pb, crit["classe_S"]["sensibilite"]), (fa, fb, SA, SB, paire, tension_paire)
 
 
 # L'estimation thermique du J4310 n'est plus recopiée ici (2026-09-30, 22 h 30) :
@@ -840,7 +845,7 @@ def carte_k2(cat, crit, bud, analyse, ref, poids, autres: str) -> list:
     return out
 
 
-def calculer():
+def calculer(cartes: bool = True):
     cat = D.charger_catalogue()
     crit = yaml.safe_load(CRITERES.read_text(encoding="utf-8"))
     bud = yaml.safe_load(D.BUDGET.read_text(encoding="utf-8"))
@@ -888,7 +893,9 @@ def calculer():
                        seuil_bas=round(fam_seuil["k"] * nominal_ab, 2),
                        t_lim=estimation["t_lim"], t_lim_source=estimation["t_lim_source"],
                        statut=ca_cfg["statut"])
-    cartes_k2 = {a_: carte_k2(cat, crit, bud, analyse, ref, poids, a_) for a_ in ("min", "1.0")}
+    # `cartes=False` : les tests s'en passent (deux fois 121 évaluations).
+    cartes_k2 = ({a_: carte_k2(cat, crit, bud, analyse, ref, poids, a_) for a_ in ("min", "1.0")}
+                 if cartes else {})
     return dict(cartes_k2=cartes_k2, estimation=estimation, critere=critere, cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
                 cands=cands, sens=sens, S_id=sens["nominal"], balayage=balayage,
                 bascule=bascule, seuil_fin=seuil_fin, fam_balayage=fam_balayage,

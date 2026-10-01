@@ -21,7 +21,7 @@ Coût TTC = (actionneurs + adaptateur + alimentation) × (1 + imprévus 15 %, pr
 
 **Adaptateur USB-CAN** : candleLight de Linux Automation (54,74 € TTC, vérifié), **prototype non conforme CE** selon son fabricant. **Alternative : CANable 2.0** (Openlight Labs), 35 USD **non vérifié** (page inaccessible), conformité CE **inconnue** ; livré avec le firmware slcan (**GPL-3.0**), compatible candleLight_fw (**MIT**) mais **sans CAN FD** sur la 2.0 ; licence du matériel non nommée.
 
-**L'option à deux finalistes** tourne à **12 V**, pour une seule alimentation : RobStride EduLite 05 ; RobStride RS05. 
+**L'option à deux finalistes** tourne à **48 V**, pour une seule alimentation : RobStride EduLite 05 ; RobStride RS05. 
 
 **Les inconnues décisives** (règles écrites avant le calcul, `criteres_selection.yaml`) :
 
