@@ -56,13 +56,31 @@ machines:
     pilotage: numerique
     puissance_W: null        # à relever sur la machine du fablab
 
+  # MODIFIÉ le 2026-10-01 (20 h 52). Ancien texte : `nom: null  # jet d'eau ?
+  # laser ? plasma ? À ÉTABLIR`, et la note « Le moyen exact n'est pas connu ».
+  # Le moyen est désormais DÉCLARÉ par l'opérateur : une découpe laser.
+  # Toutes les valeurs ci-dessous sont des DÉCLARATIONS, non mesurées.
   decoupe_operateur_cn:
-    nom: null                # jet d'eau ? laser ? plasma ? À ÉTABLIR
+    nom: "découpe laser (opérateur CN)"
     lieu: "chez un proche opérateur CN"
     pilotage: numerique
+    capacites_declarees:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      materiaux: [aluminium, laiton, titane, inox, ceramique]
+      epaisseurs_mm: {valeur: [1, 6], a_confirmer: "« 1 à 10 » aussi annoncé : À CONFIRMER"}
+      tolerance_contour_mm: {valeur: 0.5, note: "± 0,5 mm"}
+      ecart_min_entre_pieces_mm: 10
+      tole_max_mm: {valeur: 2000, note: "« 2 m ou plus » : borne basse"}
+      pliage: {possible: true, rayon_interieur_min_mm: 5}
+      formats: {valeur: [DXF, SVG, dpr], a_confirmer: "« dpr » : format non identifié, À CONFIRMER"}
+      alesage_apres_decoupe: true
+      cinq_axes: {valeur: true, a_confirmer: "« 5 axes possibles » : fraisage ou laser ? À CONFIRMER"}
+      chutes_et_toles_pleines: true
     note: >
-      Le moyen exact n'est pas connu. Tant qu'il ne l'est pas, aucune
-      pièce destinée à cette machine ne peut être finalisée.
+      Le dépôt ne connaît pas encore les rayons d'outil d'un éventuel
+      fraisage ; seule la découpe laser est déclarée.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  PROCÉDÉS — le VERBE, vocabulaire DIN 8580:2022-12 (fiche 0026)
@@ -150,6 +168,24 @@ materiaux:
 
   aluminium:
     anisotrope: false
+    source: null
+
+  # Ajoutés le 2026-10-01 : matériaux déclarés par l'opérateur CN. Anisotropie
+  # non renseignée (aucune source lue).
+  laiton:
+    anisotrope: null
+    source: null
+
+  titane:
+    anisotrope: null
+    source: null
+
+  inox:
+    anisotrope: null
+    source: null
+
+  ceramique:
+    anisotrope: null
     source: null
 
 # ═════════════════════════════════════════════════════════════════════════
@@ -252,6 +288,36 @@ matieres:
     epaisseur_mesuree: null
     masse_surfacique: null
 
+  # Ajoutées le 2026-10-01 : tôles proposées par l'opérateur CN. L'ÉPAISSEUR
+  # n'est pas choisie : 1 à 6 mm déclarés. Une matière se précise à l'achat.
+  laiton_tole:
+    materiau: laiton
+    forme: tole
+    epaisseur: null          # à choisir, 1 à 6 mm déclarés
+    epaisseur_mesuree: null
+    masse_surfacique: null
+
+  titane_tole:
+    materiau: titane
+    forme: tole
+    epaisseur: null          # à choisir, 1 à 6 mm déclarés
+    epaisseur_mesuree: null
+    masse_surfacique: null
+
+  inox_tole:
+    materiau: inox
+    forme: tole
+    epaisseur: null          # à choisir, 1 à 6 mm déclarés
+    epaisseur_mesuree: null
+    masse_surfacique: null
+
+  ceramique_plaque:
+    materiau: ceramique
+    forme: plaque
+    epaisseur: null          # à choisir, 1 à 6 mm déclarés
+    epaisseur_mesuree: null
+    masse_surfacique: null
+
 # ═════════════════════════════════════════════════════════════════════════
 #  RÉGLAGES — le croisement machine x procédé x matière, et LES MESURES
 #
@@ -318,16 +384,110 @@ reglages:
     fixation: "vis traversante + écrou"
     source_saignee: null
 
+  # MODIFIÉ le 2026-10-01 (20 h 52) : le moyen est une découpe LASER (déclaré).
+  # Ancien texte : procede abtragen_jet, saignee null (« varie de 0,2 à 1,5
+  # selon le moyen »), rayon_interieur_min null (« dépend du moyen »).
+  # `rayon_interieur_min` reste la règle de MATIÈRE de CLAUDE.md (0,5 x
+  # épaisseur), que vérifie procedes.controler_rayon ; la limite de MACHINE
+  # déclarée est à part (`declarations.rayon_interieur_min_machine_mm`). Le
+  # rayon effectif d'une pièce est le plus grand des deux.
   - id: operateur_cn_alu_3
     machine: decoupe_operateur_cn
-    procede: abtragen_jet
+    procede: abtragen_thermique
     matiere: alu_tole_3
     valide: true
-    saignee: null            # varie de 0,2 à 1,5 selon le moyen
-    rayon_interieur_min: null # dépend du moyen, donc de `machines.decoupe_operateur_cn.nom`
+    saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
+    rayon_interieur_min: 1.5 # = 0,5 x 3 mm (règle de matière, CLAUDE.md) ; machine : 2,0 déclaré
     voile_min: null
-    fixation: "vis traversante + écrou, taraudage possible"
-    source_saignee: null
+    fixation: "vis traversante + écrou"
+    source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
+    declarations:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      saignee_mm: 0.5
+      saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
+      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
+      tolerance_contour_mm: 0.5
+
+  # Ajoutés le 2026-10-01 : un réglage par matière déclarée. Épaisseur non
+  # choisie, donc rayon de matière indéterminé (le contrôle les saute).
+  - id: operateur_cn_laser_laiton
+    machine: decoupe_operateur_cn
+    procede: abtragen_thermique
+    matiere: laiton_tole
+    valide: true
+    saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
+    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    voile_min: null
+    fixation: "vis traversante + écrou"
+    source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
+    declarations:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      saignee_mm: 0.5
+      saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
+      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
+      tolerance_contour_mm: 0.5
+
+  - id: operateur_cn_laser_titane
+    machine: decoupe_operateur_cn
+    procede: abtragen_thermique
+    matiere: titane_tole
+    valide: true
+    saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
+    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    voile_min: null
+    fixation: "vis traversante + écrou"
+    source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
+    declarations:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      saignee_mm: 0.5
+      saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
+      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
+      tolerance_contour_mm: 0.5
+
+  - id: operateur_cn_laser_inox
+    machine: decoupe_operateur_cn
+    procede: abtragen_thermique
+    matiere: inox_tole
+    valide: true
+    saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
+    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    voile_min: null
+    fixation: "vis traversante + écrou"
+    source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
+    declarations:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      saignee_mm: 0.5
+      saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
+      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
+      tolerance_contour_mm: 0.5
+
+  - id: operateur_cn_laser_ceramique
+    machine: decoupe_operateur_cn
+    procede: abtragen_thermique
+    matiere: ceramique_plaque
+    valide: true
+    saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
+    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    voile_min: null
+    fixation: "vis traversante + écrou"
+    source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
+    declarations:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
+      date: 2026-10-01
+      saignee_mm: 0.5
+      saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
+      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
+      tolerance_contour_mm: 0.5
+
 
   # ── Réglages IMPOSSIBLES, déclarés comme tels ──────────────────────
   # Sans ces lignes, leur absence se lirait « pas encore instruit ».

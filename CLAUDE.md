@@ -95,9 +95,14 @@ cote.
 - **L'épaisseur et la saignée sont des paramètres, jamais des constantes.**
   Un même modèle génère un DXF par couple machine-matériau. La saignée se
   mesure sur une pièce d'essai, elle ne se suppose pas.
-- **Pièce usinée** : les rayons d'outil, les matières et le format de
-  fichier de l'opérateur CN ne sont **pas connus** (question 6 du cadrage archivé, `archive/docs/cadrage-2026-09-30.md` § 13).
-  Ne pas les supposer.
+- **Pièce chez l'opérateur CN** : ce qu'il a DÉCLARÉ le 2026-10-01
+  (découpe laser, saignée 0,5 mm compensée par lui, rayon de machine
+  2,0 mm, tolérance ± 0,5 mm, matières, pliage, formats) est dans
+  `params/hardware.yaml` (`machines.decoupe_operateur_cn`, réglages
+  `operateur_cn_*`). Ce sont des déclarations, non mesurées. **À
+  CONFIRMER** : épaisseurs jusqu'à 10 mm (1 à 6 mm retenus), le format
+  « dpr », et les « 5 axes » (fraisage ou laser). Les rayons d'outil d'un
+  fraisage restent **inconnus** : ne pas les supposer.
 - Aucun logement de roulement obtenu directement par le procédé : prévoir
   un palier rapporté ou un alésage repris.
 - Assemblage démontable, aucun collage structurel. Pas de filetage dans le
