@@ -400,6 +400,18 @@ reglages:
     rayon_interieur_min: 2.0 # = max(0,5 x 3 ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01 : « peut-être moins, partons sur 2 mm »
     voile_min: null
+    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+      provenance: litterature
+      regle: "0,5 x épaisseur (trou et pont)"
+      valeur_mm: 1.5
+      source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
+      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
+    rayon_pliage_min_litterature:   # aluminium 3 mm, par alliage — NON LU
+      provenance: litterature
+      source: "metallservice.ch, « Mechanische Kennwerte für walzblankes Aluminium-Halbzeug » (params/sources.yaml : metallservice_kennwerte_alu)"
+      en_aw_5754_h111_mm: null   # non lu : site inaccessible le 2026-10-01
+      en_aw_6061_t6_mm: null     # non lu : site inaccessible le 2026-10-01
+      note: "aucune valeur recopiée sans lecture de la page (prompt du 2026-10-01)"
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:
@@ -421,6 +433,12 @@ reglages:
     rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
+    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+      provenance: litterature
+      regle: "0,5 x épaisseur (trou et pont)"
+      valeur_mm: null   # épaisseur non choisie
+      source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
+      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:
@@ -440,6 +458,12 @@ reglages:
     rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
+    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+      provenance: litterature
+      regle: "0,5 x épaisseur (trou et pont)"
+      valeur_mm: null   # épaisseur non choisie
+      source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
+      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:
@@ -459,6 +483,12 @@ reglages:
     rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
+    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+      provenance: litterature
+      regle: "0,5 x épaisseur (trou et pont)"
+      valeur_mm: null   # épaisseur non choisie
+      source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
+      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:
@@ -478,6 +508,12 @@ reglages:
     rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
+    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+      provenance: litterature
+      regle: "0,5 x épaisseur (trou et pont)"
+      valeur_mm: null   # épaisseur non choisie
+      source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
+      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:

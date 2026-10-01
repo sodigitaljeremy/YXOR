@@ -176,3 +176,84 @@ sources:
     lu: "recherche plein texte (masse, batterie, calculateur) : p. 1, 2, 4-6, 13, 14 ; téléchargé le 2026-10-01 depuis export.arxiv.org"
     pourquoi: >
       M0 de ToddlerBot comprend-il son calculateur et sa batterie (refonte R3, params/exigences_S.yaml) ?
+
+  # ── Fabrication en tôle : garde-fous de littérature (2026-10-01, 21 h 14) ──
+  # Ils servent de GARDE-FOU provisoire là où l'opérateur CN n'a rien
+  # déclaré, jamais de remplacement à ses déclarations (params/hardware.yaml).
+  # Pages web lues par Claude Code le 2026-10-01 ; empreinte du HTML
+  # téléchargé (une page dynamique peut changer à chaque téléchargement).
+  sendcutsend_dfm_5_2:
+    auteurs: "SendCutSend, Inc."
+    titre: "SendCutSend Education, chapitre 5 « From CAD to Cut », leçon 2 : How to Design Parts That Pass DFM"
+    editeur: "SendCutSend (blog, documentation de fabricant)"
+    annee: null
+    identifiant_perenne: "https://sendcutsend.com/blog/from-cad-to-cut-designing-for-sheet-metal/"
+    pages: "web"
+    empreinte: "sha256:18e8dba5a7ffe9d24af2446ee0b07a218c5c2ecb4c09b90950958b91a2c79956"
+    octets: 282474
+    droits: >
+      Page commerciale, lecture libre. Valeurs citées avec leur source, aucun texte reproduit au-delà de courtes citations.
+    lecture: partiel
+    lu: "2026-10-01 : résumé de la leçon 2 (« Keep holes and bridge gaps at least 50% of the material thickness », minimums « through real-world testing ») et de la leçon 7 (largeur de dégagement de pli ≈ 50 % de l'épaisseur). La vidéo n'est pas vue."
+    pourquoi: >
+      Voile (pont) et trou minimaux en découpe laser : garde-fou du voile minimal tant que l'opérateur CN ne l'a pas déclaré.
+  sendcutsend_faq_geometrie:
+    auteurs: "SendCutSend, Inc."
+    titre: "FAQ : What are best practices for minimum geometry?"
+    editeur: "SendCutSend"
+    annee: null
+    identifiant_perenne: "https://sendcutsend.com/faq/what-are-best-practices-for-minimum-geometry/"
+    pages: "web"
+    empreinte: "sha256:13292a8935efea75515879582cfbe692d4948d28eb217c54a16a50a8fe14da7c"
+    octets: 238587
+    droits: >
+      Page commerciale, lecture libre.
+    lecture: lu
+    lu: "2026-10-01 : « any holes or cuts are 50% of your material thickness or greater » ; « No geometry should ever be smaller than .015” » ; minimums propres à chaque matière dans ses tableaux (non lus). La FAQ ne dit rien des ponts : c'est la leçon 5.2 qui les couvre."
+    pourquoi: >
+      Trou minimal en découpe laser, en fraction de l'épaisseur.
+  protolabs_tole:
+    auteurs: "Protolabs"
+    titre: "Design Guidelines for Sheet Metal Fabrication"
+    editeur: "Protolabs (documentation de fabricant)"
+    annee: null
+    identifiant_perenne: "https://www.protolabs.com/services/sheet-metal-fabrication/design-guidelines/"
+    pages: "web"
+    empreinte: "sha256:f404b5b5975940e40f0dc96527703c1b59eac3c7f1f42bb4d30139b7cbf55d59"
+    octets: 156012
+    droits: >
+      Page commerciale, lecture libre.
+    lecture: partiel
+    lu: "2026-10-01 : bord plié ≥ 4 × épaisseur ; trou ≥ épaisseur ; un élément à moins de 4 × épaisseur d'un pli risque la déformation ; trou à ≥ 3,175 mm du bord au-delà de 0,914 mm d'épaisseur ; languette ≥ 2 × épaisseur. Les tableaux de tolérances ne sont pas relus."
+    pourquoi: >
+      Règles de pliage (bord plié, distance trou-pli) : l'opérateur CN déclare le pliage, pas ses règles.
+  metallservice_kennwerte_alu:
+    auteurs: "Debrunner Metallservice AG"
+    titre: "Mechanische Kennwerte für walzblankes Aluminium-Halbzeug"
+    editeur: "metallservice.ch (documentation de fournisseur, PDF)"
+    annee: null
+    identifiant_perenne: "https://www.metallservice.ch/msm/msm-home/services/metall-lexion/mechanische-kennwerte-f%C3%BCr-walzblankes-aluminium-halbzeug.pdf"
+    pages: "—"
+    empreinte: null
+    octets: null
+    droits: >
+      Documentation de fournisseur ; conditions non relevées. Le fichier n'entre pas dans le dépôt (fiche 0030).
+    lecture: non_lu
+    lu: "NON LU : le 2026-10-01 (21 h 15-21 h 25), le site ne répond pas depuis cette machine (connexion expirée en https et en http, quatre essais) et l'outil de lecture web renvoie ECONNRESET. Un résumé de moteur de recherche le dit porteur d'un « Biegeradiusfaktor F » à 90° : non retenu, puisque non lu."
+    pourquoi: >
+      Rayons de pliage minimaux par alliage (5754 H111, 6061 T6) pour l'aluminium de 3 mm.
+  iso_9013_2017:
+    auteurs: "ISO"
+    titre: "ISO 9013:2017 — Coupage thermique : classification des coupes thermiques, spécification géométrique des produits et tolérances de qualité"
+    editeur: "ISO"
+    annee: 2017
+    identifiant_perenne: "ISO 9013:2017"
+    pages: "—"
+    empreinte: null
+    octets: null
+    droits: >
+      SOUS DROITS, payante. Aucune valeur n'en est tirée.
+    lecture: non_lu
+    lu: null
+    pourquoi: >
+      Référence de VOCABULAIRE seulement (tolérances de coupe thermique, dont le laser). La norme n'a pas été lue.
