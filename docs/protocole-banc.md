@@ -185,6 +185,14 @@ plus sur rien. Détail : `journal/2026-09-30.md`, « Recalcul en 48 V ».
 
 ## 2 ter — Dispersion entre deux exemplaires
 
+> **Renvoi du 2026-10-01** (lot E, PROPOSÉ par Claude, arbitrage) : les
+> compositions de banc étudiées, avec le **nombre d'exemplaires par
+> modèle**, sont dans **`params/banc.yaml`**, la source unique ; leur
+> composition n'est **pas décidée**. La dispersion exige **au moins 2
+> exemplaires d'un même modèle** : trois modèles à un exemplaire n'en
+> mesurent aucune. Le générateur du comparatif la calcule depuis ces
+> nombres. Le texte ci-dessous est inchangé.
+
 **Pourquoi** : une mesure sur un seul exemplaire ne dit pas si l'on a
 mesuré le modèle ou l'exemplaire. Deux exemplaires du même modèle
 (option « vérification » du budget : 2 × J4310) donnent un premier

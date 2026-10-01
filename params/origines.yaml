@@ -581,6 +581,25 @@ fichiers:
   #  budget.yaml — chiffrage par phase (2026-09-30)
   # ═══════════════════════════════════════════════════════════════════════
   #  Un prix n'est pas une cote : nature `sans_objet`.
+  # ═══════════════════════════════════════════════════════════════════════
+  #  banc.yaml — configurations du banc, source unique (2026-10-01)
+  # ═══════════════════════════════════════════════════════════════════════
+  #  Des choix de comparaison PROPOSÉS, pas des cotes : nature `sans_objet`.
+  banc.yaml:
+    regles:
+      - motif: "banc.statut"
+        origine: propre
+        nature: sans_objet
+        source: "statut de la composition : non décidée"
+      - motif: "banc.configurations.*.modeles.*"
+        origine: propre
+        nature: sans_objet
+        source: "nombre d'exemplaires par modèle d'une configuration étudiée (PROPOSÉ, lot E du 2026-10-01)"
+      - motif: "banc.configurations.*.*"
+        origine: propre
+        nature: sans_objet
+        source: "description d'une configuration étudiée (statut, tension, rattachement au comparatif ou au budget)"
+
   budget.yaml:
     regles:
       - motif: "consultation"

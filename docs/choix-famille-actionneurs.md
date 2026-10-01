@@ -1,6 +1,6 @@
 # Choix de la famille d'actionneurs — comparatif multicritère v2
 
-**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le 2026-09-30. Ne pas éditer à la main. **C'est le document de décision** : il remplace `docs/choix-classe-S.md` (v1, conservé, méthode corrigée). Aucune fiche, aucun achat proposé (CLAUDE.md, règle d'achat c) : il prépare un choix de Jeremy.
+**Engendré** par `.venv/bin/python scripts/selection_multicritere.py --ecrire`, le 2026-10-01. Ne pas éditer à la main. **C'est le document de décision** : il remplace `docs/choix-classe-S.md` (v1, conservé, méthode corrigée). Aucune fiche, aucun achat proposé (CLAUDE.md, règle d'achat c) : il prépare un choix de Jeremy.
 
 **Ce qui a changé depuis la v1** (relecture externe du 30-09-2026 ; chaque changement est daté dans `params/criteres_selection.yaml`, section `modifications`) :
 

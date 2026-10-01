@@ -271,6 +271,19 @@ modifications:
       nouveau calcul de famille.
     ancien_texte: "statut « PROPOSÉ, appliqué, NON validé par Jeremy (réponse du 2026-09-30) »"
     nouveau_texte: "statut « DÉCIDÉ par Jeremy le 2026-09-30 (~23 h), en réponse à docs/arbitrage-2026-09-30.md »"
+  - date: "2026-10-01"
+    moment: "lot E, point 1 ; PROPOSÉ par Claude (arbitrage), d'après l'audit externe ChatGPT du 2026-10-01"
+    objet: "banc : configurations en SOURCE UNIQUE (params/banc.yaml) ; dispersion = au moins 2 exemplaires d'un même modèle"
+    raison: >
+      Les options du banc étaient construites à la main dans le script, et
+      la dispersion déclarée par option (« n ≥ 3 et même modèle »). L'audit
+      relève que trois MODÈLES ne sont pas trois EXEMPLAIRES. La dispersion
+      se calcule désormais depuis le nombre d'exemplaires PAR modèle
+      (params/banc.yaml) : elle est acquise dès 2 exemplaires d'un même
+      modèle. Effet : l'option « 2 × vainqueur » gagne l'apprentissage
+      « dispersion ». Poids du banc inchangés (proposés).
+    ancien_texte: "dispersion : n ≥ 3 et même modèle (selection_multicritere.py, appr)"
+    nouveau_texte: "dispersion : max(exemplaires par modèle) ≥ 2"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Choix de la classe d'actionneur de S
@@ -448,7 +461,7 @@ banc:
     thermique: "mesurer l'échauffement réel au couple continu"
     bus_multi_adresses: "faire parler au moins deux adresses sur un même bus"
     segment_2ddl: "monter le segment à 2 degrés de liberté de l'échelon 1 (cadrage § 10)"
-    dispersion: "mesurer l'écart entre exemplaires d'un même modèle (≥ 3)"
+    dispersion: "mesurer l'écart entre exemplaires d'un même modèle (≥ 2 exemplaires d'un même modèle ; calculé depuis params/banc.yaml)"   # avant le 2026-10-01 : « (≥ 3) »
 
   # Critère d'abandon (docs/protocole-banc.md § 2 bis) — PROPOSÉ, calculé
   # depuis le 2026-09-30 (22 h 30). Seuil : garde de la bascule du

@@ -82,6 +82,7 @@ import analyser_marche as AM  # noqa: E402
 REPO = Path(__file__).resolve().parents[1]
 CATALOGUE = REPO / "params" / "actionneurs.yaml"
 BUDGET = REPO / "params" / "budget.yaml"
+BANC = REPO / "params" / "banc.yaml"          # configurations du banc, source unique (2026-10-01)
 
 JAMBE = ("hip_pitch", "hip_roll", "hip_yaw_drive", "knee", "ankle_pitch", "ankle_roll")
 H_BAS, H_HAUT, TOL = 0.05, 5.0, 1e-4
@@ -341,9 +342,17 @@ def couts(cat: dict, bud: dict, config: dict) -> dict:
     a_chiffrer = [(pid, ph) for pid, ph in bud["phases"].items()]
     a_chiffrer += [(f"{pid}:{oid}", o) for pid, ph in bud["phases"].items()
                    for oid, o in (ph.get("options") or {}).items()]
+    banc_confs = (yaml.safe_load(BANC.read_text(encoding="utf-8"))["banc"]["configurations"]
+                  if BANC.exists() else {})
     for pid, ph in a_chiffrer:
         total, inconnus = 0.0, []
-        for p in ph["postes"]:
+        postes = list(ph["postes"])
+        # `configuration` : les actionneurs viennent de params/banc.yaml, la
+        # source unique des compositions de banc (2026-10-01).
+        if ph.get("configuration"):
+            cf = banc_confs[ph["configuration"]]
+            postes = [{"poste": f"actionneur:{m}", "quantite": q} for m, q in cf["modeles"].items()] + postes
+        for p in postes:
             q = p["quantite"]
             if p["poste"].startswith("actionneur:"):
                 quel = p["poste"].split(":", 1)[1]

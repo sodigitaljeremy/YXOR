@@ -113,8 +113,10 @@ phases:
       2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration
       étudiée : thermique réelle, deux adresses sur un même bus, segment à
       2 DDL de l'échelon 1, et une rechange.
+    # Actionneurs LUS dans params/banc.yaml (source unique, 2026-10-01) ;
+    # ancien texte : postes « actionneur:rs05 » × 2 et adaptateur_can × 1.
+    configuration: rs05_x2
     postes:
-      - {poste: "actionneur:rs05", quantite: 2}
       - {poste: adaptateur_can, quantite: 1}
     options:
       verification:
@@ -126,8 +128,10 @@ phases:
           critère d'abandon (docs/protocole-banc.md § 2 bis) et mesure la
           dispersion entre deux exemplaires (§ 2 ter). Aucun achat n'est
           proposé : c'est un chiffrage, pour la décision de Jeremy.
+        # Actionneurs LUS dans params/banc.yaml ; ancien texte :
+        # « actionneur:dm_j4310_48v » × 2 et adaptateur_can × 1.
+        configuration: verification_j4310_x2
         postes:
-          - {poste: "actionneur:dm_j4310_48v", quantite: 2}
           - {poste: adaptateur_can, quantite: 1}
         non_chiffre: "alimentation du banc : un OUTILLAGE (limitation de courant réglable), décision de Jeremy (règle d'achat b)"
         incertitudes_prix: >

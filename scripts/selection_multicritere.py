@@ -60,6 +60,7 @@ CRITERES = REPO / "params" / "criteres_selection.yaml"
 DOC_S_V1 = REPO / "docs" / "choix-classe-S.md"          # v1, figé : n'est plus régénéré
 DOC_FAMILLE = REPO / "docs" / "choix-famille-actionneurs.md"
 DOC_BANC = REPO / "docs" / "comparatif-banc.md"
+BANC = REPO / "params" / "banc.yaml"          # configurations du banc, source unique
 
 val = D.val
 
@@ -421,56 +422,76 @@ def options_banc(r):
         # coût se prend sur le PREMIER pays ; les autres sont affichés.
         return {pays: ht * (1 + imp) * (1 + tva_de(pays)) for pays in pays_liv}, manquants
 
-    def appr(n, meme_modele, meme_bus):
+    def appr(modeles: dict):
+        """Apprentissages, CALCULÉS depuis les exemplaires par modèle (params/banc.yaml).
+
+        Corrigé le 2026-10-01 (audit externe) : la dispersion entre
+        exemplaires exige AU MOINS 2 exemplaires d'un MÊME modèle ; trois
+        modèles à un exemplaire n'en mesurent aucune. Avant : « n ≥ 3 et
+        même modèle », déclaré à la main par option.
+        """
+        n = sum(modeles.values())
+        bus = {("CAN" if info(m)["can"] else "TTL") for m in modeles}
+        meme_bus = len(bus) == 1
         pts = {"protocole": True, "thermique": True,
                "bus_multi_adresses": n >= 2 and meme_bus,
                "segment_2ddl": n >= 2 and meme_bus,
-               "dispersion": n >= 3 and meme_modele}
+               "dispersion": max(modeles.values()) >= 2}
         return sum(pts.values()), [k for k, v in pts.items() if v]
 
-    opts = []
-    vs = info(S_id)
-    t_v = tension_commune([vs["plage"]]) or vs["tension"]
-    for n, cle in ((1, "un_vainqueur"), (2, "deux_vainqueurs"), (3, "trois_vainqueurs")):
-        opts.append(dict(id=cle, nom=f"{n} × {vs['nom']}", ids=[S_id] * n, tension=vs["tension"],
-                         appr=appr(n, True, True), transfert=3,
-                         transfert_j=(f"JUGEMENT : 5 si k ≥ {f(seuil)} (sa famille gagne), 1 sinon ; "
-                                      "k inconnu tant que le banc ne l'a pas mesuré → 3")
-                                     if seuil else "exactement le modèle retenu pour S → 5"))
-        if not seuil:
-            opts[-1]["transfert"] = 5
-    # 1 × finaliste A + 1 × finaliste B, MÊME TENSION (48 V de préférence)
+    # Configurations LUES dans params/banc.yaml (source unique, 2026-10-01).
+    confs = yaml.safe_load(BANC.read_text(encoding="utf-8"))["banc"]["configurations"]
     SA, SB = cat_fam[fa]["S"], cat_fam[fb]["S"]
     choix = []
     for fid, sid in ((fa, SA), (fb, SB)):
         var = cat_fam[fid].get("S_variante_48V")
         choix.append([sid] + ([var] if var else []))
-    paire, tension = None, None
+    paire, tension_paire = None, None
     for cible in (48, 24):
         a_ = next((x for x in choix[0] if (pl := info(x)["plage"]) and pl[0] <= cible <= pl[1]), None)
         b_ = next((x for x in choix[1] if (pl := info(x)["plage"]) and pl[0] <= cible <= pl[1]), None)
         if a_ and b_:
-            paire, tension = [a_, b_], cible
+            paire, tension_paire = [a_, b_], cible
             break
+    resolus = {"@S_gagnant": S_id}
     if paire:
-        opts.append(dict(id="deux_finalistes",
-                         nom=f"1 × {info(paire[0])['nom']} + 1 × {info(paire[1])['nom']} ({tension} V)",
-                         ids=paire, tension=tension, appr=appr(2, False, True), transfert=5,
-                         transfert_j=("JUGEMENT : quel que soit k, le modèle S de la famille gagnante est "
-                                      "sur le banc → 5"),
-                         finalistes=True))
-    # « qualification » (prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ) : les trois modèles
-    # qui départagent les familles, à 48 V, une seule alimentation.
-    qual = ["dm_j4310_48v", "edulite05", "rs05"]
-    if all(q in cat["candidats"] for q in qual):
-        opts.append(dict(id="qualification",
-                         nom="qualification : 1 × " + " + 1 × ".join(info(q)["nom"] for q in qual) + " (48 V)",
-                         ids=qual, tension=48, appr=appr(3, False, True), transfert=5,
-                         transfert_j=("JUGEMENT : les modèles S des deux familles en tête sont sur le "
-                                      "banc, quel que soit k → 5")))
-    opts.append(dict(id="feetech", nom="2 × Feetech STS3250 (banc d'apprentissage)",
-                     ids=["sts3250", "sts3250"], tension=12, appr=appr(2, True, True), transfert=1,
-                     transfert_j="autre fabricant, autre bus (TTL) que tous les finalistes → 1"))
+        resolus.update({"@S_finaliste_A": paire[0], "@S_finaliste_B": paire[1]})
+    vs = info(S_id)
+    opts = []
+    for oid, cf in confs.items():
+        if not cf.get("comparatif"):
+            continue
+        if any(m.startswith("@") and m not in resolus for m in cf["modeles"]):
+            continue          # pas de paire de finalistes à une même tension
+        modeles = {resolus.get(m, m): q for m, q in cf["modeles"].items()}
+        ids = [m for m, q in modeles.items() for _ in range(q)]
+        tension = cf.get("tension_V") or (tension_paire if oid == "deux_finalistes" else info(ids[0])["tension"])
+        nom = " + ".join(f"{q} × {info(m)['nom']}" for m, q in modeles.items())
+        if oid == "deux_finalistes":
+            nom += f" ({tension} V)"
+        elif oid == "qualification":
+            nom = f"qualification : {nom} (48 V)"
+        elif cf.get("libelle"):
+            nom += f" ({cf['libelle']})"
+        o = dict(id=oid, nom=nom, ids=ids, modeles=modeles, tension=tension, appr=appr(modeles),
+                 statut=cf.get("statut"))
+        # Notes de transfert : JUGEMENT, inchangées (2026-09-30).
+        if oid in ("un_vainqueur", "deux_vainqueurs", "trois_vainqueurs"):
+            o.update(transfert=3 if seuil else 5,
+                     transfert_j=(f"JUGEMENT : 5 si k ≥ {f(seuil)} (sa famille gagne), 1 sinon ; "
+                                  "k inconnu tant que le banc ne l'a pas mesuré → 3")
+                                 if seuil else "exactement le modèle retenu pour S → 5")
+        elif oid == "deux_finalistes":
+            o.update(transfert=5, finalistes=True,
+                     transfert_j="JUGEMENT : quel que soit k, le modèle S de la famille gagnante est sur le banc → 5")
+        elif oid == "qualification":
+            o.update(transfert=5, transfert_j=("JUGEMENT : les modèles S des deux familles en tête sont sur le "
+                                               "banc, quel que soit k → 5"))
+        elif oid == "feetech":
+            o.update(transfert=1, transfert_j="autre fabricant, autre bus (TTL) que tous les finalistes → 1")
+        else:
+            o.update(transfert=1, transfert_j="configuration sans jugement de transfert écrit → 1 par prudence")
+        opts.append(o)
     inc_toutes = b.get("inconnues_decisives") or {}
     # Une inconnue « decisive_si: bascule_dans_la_plage_plausible » ne compte que
     # si la bascule de k tombe au-dessus du plus petit rapport blocage / nominal
@@ -755,8 +776,11 @@ def doc_banc(r, opts, pb, sb, finalistes, date) -> str:
       "inconnu.")
     A("- La mesure au rotor bloqué ne dit rien du rendement en rotation ; elle compare les deux "
       "finalistes entre eux, dans la même condition.")
-    A("- Le banc à trois exemplaires répond à la demande de l'étude externe (« au moins 3 », § 15.2) "
-      "pour la dispersion entre exemplaires.")
+    A("- **La dispersion entre exemplaires** exige au moins **2 exemplaires d'un même modèle** : trois "
+      "modèles à un exemplaire n'en mesurent aucune (corrigé le 2026-10-01, audit externe). Deux "
+      "exemplaires donnent un ordre de grandeur (`docs/protocole-banc.md` § 2 ter) ; l'étude externe du "
+      "30-09 en demandait au moins 3 (§ 15.2). Configurations : `params/banc.yaml`, composition **non "
+      "décidée**.")
     return "\n".join(L) + "\n"
 
 

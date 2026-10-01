@@ -1,0 +1,66 @@
+# Configurations du banc — SOURCE UNIQUE (2026-10-01, lot E, point 1)
+#
+# PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe
+# ChatGPT du 2026-10-01. La composition du banc n'est PAS décidée.
+#
+# Lu par :
+#   scripts/selection_multicritere.py  options du comparatif (comparatif: true)
+#   scripts/dimensionnement.py         phases `banc` de params/budget.yaml (champ `configuration`)
+# Renvoi depuis : docs/protocole-banc.md § 2 ter (dispersion).
+#
+# `modeles` donne, PAR MODÈLE, le NOMBRE D'EXEMPLAIRES. Trois modèles à
+# un exemplaire ne sont pas trois exemplaires : la DISPERSION entre
+# exemplaires exige au moins 2 exemplaires d'un même modèle. Le
+# générateur la calcule depuis ces nombres ; elle n'est plus déclarée.
+#
+# Un modèle « @… » est résolu par selection_multicritere.py depuis le
+# classement des familles du jour (rien n'est figé ici qui dépende du
+# classement) :
+#   @S_gagnant      membre S de la famille gagnante à k = 1,0
+#   @S_finaliste_A  membre S de la famille gagnante au-dessus de la bascule
+#   @S_finaliste_B  membre S de la famille gagnante en dessous
+# (les deux finalistes sont pris à une MÊME tension, 48 V de préférence,
+# variante 48 V comprise).
+
+banc:
+  statut: "composition NON DÉCIDÉE"
+  configurations:
+    un_vainqueur:
+      modeles: {"@S_gagnant": 1}
+      comparatif: true
+      statut: "composition NON DÉCIDÉE"
+    deux_vainqueurs:
+      modeles: {"@S_gagnant": 2}
+      comparatif: true
+      statut: "composition NON DÉCIDÉE"
+    trois_vainqueurs:
+      modeles: {"@S_gagnant": 3}
+      comparatif: true
+      statut: "composition NON DÉCIDÉE"
+    deux_finalistes:
+      modeles: {"@S_finaliste_A": 1, "@S_finaliste_B": 1}
+      comparatif: true
+      statut: "composition NON DÉCIDÉE"
+    qualification:
+      modeles: {dm_j4310_48v: 1, edulite05: 1, rs05: 1}
+      tension_V: 48
+      comparatif: true
+      statut: "composition NON DÉCIDÉE"
+      origine: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ"
+    feetech:
+      modeles: {sts3250: 2}
+      tension_V: 12
+      comparatif: true
+      libelle: "banc d'apprentissage"
+      statut: "composition NON DÉCIDÉE"
+    rs05_x2:
+      modeles: {rs05: 2}
+      comparatif: false
+      statut: "composition NON DÉCIDÉE"
+      note: "chiffrage historique de la phase `banc` du budget (cadrage D, 2026-09-30)"
+    verification_j4310_x2:
+      modeles: {dm_j4310_48v: 2}
+      tension_V: 48
+      comparatif: false
+      statut: "composition NON DÉCIDÉE"
+      note: "option « vérification » du budget (2026-09-30, nuit), proposée quand Damiao était en tête ; Damiao ne gagne plus depuis le recalcul en 48 V"
