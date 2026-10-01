@@ -4,6 +4,7 @@ Date : 2026-09-29
 Espèce : close
 État : appliquée
 Statut : **acceptée** le 2026-09-29 — appliquée.
+Confirmée par : Jeremy, le 2026-10-01 — ses mots : « c'est bon je valide, moi c'est bien accès au site depuis mon navigateur : mobile iphone (safari) et mon pcportable (google) ». Vérification faite par Jeremy sur iPhone (Safari) et PC portable (Google). En-tête seulement (fiche 0054) ; le corps est inchangé.
 
 Deux lecteurs : vous sur votre téléphone, votre cousin sur le sien, à
 l'atelier. Référence de travail : **390 px de large**.
