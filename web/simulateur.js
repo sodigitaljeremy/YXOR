@@ -30,7 +30,10 @@
     var r_ext = r4(W * p.coins);
     var prof = r4((W - W * p.resserrement) / 2);
     var e = r4(L * p.etendue);
-    var r_int = r4(0.5 * p.ep);
+    /* rayon intérieur minimal : max(0,5 x épaisseur, limite de machine du
+       réglage). La limite arrive dans les données de la page (ref.fixes) ;
+       absente, elle est ignorée. Même règle que procedes.rayon_interieur_min. */
+    var r_int = r4(Math.max(0.5 * p.ep, p.r_int_machine || 0));
     var R = prof > 0 ? r4((e * e / 4 + prof * prof) / (2 * prof)) : 0;
     return { L: L, W: W, r_ext: r_ext, profondeur: prof, etendue: e, R: R,
              r_int: r_int, ep: p.ep, largeur_creux: r4(W * p.resserrement) };
@@ -227,10 +230,18 @@
   }
 
   /* ── auto-contrôle : retrouve-t-on la référence Python ? ─────────── */
+  /* Les données fixes (non réglables) de la page, ajoutées aux paramètres. */
+  function avecFixes(p, ref) {
+    var k, f = ref.fixes || {};
+    for (k in f) if (f.hasOwnProperty(k)) p[k] = f[k];
+    return p;
+  }
+
   function verifier(ref, tol) {
     var p = {}, i;
     for (i = 0; i < ref.parametres.length; i++)
       p[ref.parametres[i].nom] = ref.parametres[i].valeur;
+    avecFixes(p, ref);
     var d = cotes(p), pire = 0, cle;
     for (cle in ref.reference.cotes) {
       if (!ref.reference.cotes.hasOwnProperty(cle)) continue;
@@ -268,6 +279,7 @@
     var etat = {}, i;
     for (i = 0; i < ref.parametres.length; i++)
       etat[ref.parametres[i].nom] = ref.parametres[i].valeur;
+    avecFixes(etat, ref);
     var depart = JSON.parse(JSON.stringify(etat));
 
     var html = ['<div class="simbandeau" id="simb"></div><div class="reglages">'];

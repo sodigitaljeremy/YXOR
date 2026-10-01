@@ -162,7 +162,12 @@ def construire(c: Cotes, taille: str, resserrement: float, proc: str,
     L = c.echelle("pied_longueur", H)
     W = c.echelle("pied_largeur", H)
     ep = c.reglage(proc, "epaisseur")
-    r_int = c.reglage(proc, "rayon_interieur_min")
+    # Le rayon INSCRIT au réglage est relevé (provenance) ; le rayon appliqué
+    # est celui de LA règle, max(0,5 x épaisseur, limite de machine) :
+    # procedes.rayon_interieur_min, seul endroit qui la calcule (2026-10-01).
+    c.reglage(proc, "rayon_interieur_min")
+    r_machine = PROC.reglage(proc, c.hw).get("rayon_interieur_min_machine")
+    r_int = round(PROC.rayon_interieur_min(ep, r_machine), 4)
     rc = c.choix("ratio_coins", ratio_coins,
                  "choix libre : aucune règle ne contraint un congé convexe")
     r_ext = round(W * rc, 4)
@@ -197,7 +202,10 @@ def construire(c: Cotes, taille: str, resserrement: float, proc: str,
 
     return piece.part, dict(H=H, L=L, W=W, ep=ep, r_int=r_int, r_ext=r_ext,
                             ratio=ratio, profondeur=profondeur, R=R,
-                            largeur_creux=round(W * ratio, 4))
+                            largeur_creux=round(W * ratio, 4), r_machine=r_machine,
+                            # plus petit rayon RENTRANT dessiné : le creux R, et les
+                            # congés r_int posés « au minimum du procédé » (prudent)
+                            rayon_rentrant_min=min(R, r_int))
 
 
 # ──────────────────────────────────────────────────────────────── sorties
@@ -281,17 +289,17 @@ def main(argv=None) -> int:
     # vérifie qu'aucun morceau n'a été oublié.
     an_d = profil.cotes(d["H"], c.anthro["ratios"]["pied_longueur"]["valeur"],
                         c.anthro["ratios"]["pied_largeur"]["valeur"],
-                        a.resserrement, a.coins, a.etendue, d["ep"])
+                        a.resserrement, a.coins, a.etendue, d["ep"], d["r_machine"])
     # non-cote: même seuil d'égalité numérique
     ecarts_cotes = [(k, d[k], an_d[k]) for k in ("L", "W", "r_ext", "R",
                                                  "profondeur", "largeur_creux")
                     if abs(d[k] - an_d[k]) > 1e-4]
-    # Le simulateur applique la règle « rayon intérieur = 0,5 x épaisseur »
-    # (CLAUDE.md). Si la donnée du procédé ne la suit pas, le navigateur
-    # dessinerait autre chose que la pièce. On le dit ici, pas plus tard.
+    # Le simulateur applique la même règle, max(0,5 x épaisseur, limite de
+    # machine), avec la limite que la page lui passe (`fixes`). Si la pièce
+    # ne la suivait pas, le navigateur dessinerait autre chose. On le dit ici.
     # non-cote: 1e-4 est le seuil d'égalité de deux nombres, pas une cote
     if abs(an_d["r_int"] - d["r_int"]) > 1e-4:
-        ecarts_cotes.append(("r_int (0,5 x épaisseur)", d["r_int"], an_d["r_int"]))
+        ecarts_cotes.append(("r_int (max(0,5 x épaisseur, machine))", d["r_int"], an_d["r_int"]))
     # non-cote: finesse d'échantillonnage de la confrontation
     an_c = profil.contour(an_d, n_arc=400)
     ecart = max(profil.hausdorff(an_c, contours[0]),
@@ -429,6 +437,8 @@ def main(argv=None) -> int:
               f"  materiau: {proc['materiau']}",
               f"  epaisseur_mm: {d['ep']}",
               f"  rayon_interieur_min_mm: {d['r_int']}",
+              f"  rayon_interieur_min_machine_mm: {d['r_machine'] if d['r_machine'] is not None else 'null'}",
+              f"  rayon_rentrant_min_mm: {d['rayon_rentrant_min']}",
               f"  saignee_mm: {proc['saignee'] if proc['saignee'] is not None else 'null'}",
               f"  voile_min_mm: {proc['voile_min'] if proc['voile_min'] is not None else 'null'}",
               f"  fixation: \"{proc['fixation']}\"",
@@ -503,6 +513,9 @@ def main(argv=None) -> int:
     ]
     lignes += ["", "simulation:",
                "  tolerance_mm: " + str(profil.TOLERANCE_MM),
+               # Données FIXES de la page, non réglables : la limite de machine
+               # du réglage voyage ici, jamais en dur dans le JavaScript.
+               "  fixes: " + json.dumps({"r_int_machine": d["r_machine"]}),
                "  parametres:"]
     for pa in parametres:
         lignes.append("    - " + json.dumps(pa, ensure_ascii=False))

@@ -46,25 +46,33 @@ Deux longueurs se déduisent, et il vaut la peine de voir d'où :
 """
 from __future__ import annotations
 import math
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import procedes  # noqa: E402  (la règle du rayon intérieur minimal)
 
 TOLERANCE_MM = 0.05          # écart maximal admis avec build123d
 
 
 def cotes(H_m: float, r_pied_long: float, r_pied_larg: float,
           ratio_resserrement: float, ratio_coins: float,
-          ratio_etendue: float, epaisseur: float) -> dict:
+          ratio_etendue: float, epaisseur: float,
+          r_int_machine: float | None = None) -> dict:
     """Toutes les cotes, depuis H et les ratios. Millimètres.
 
     Une seule règle de nature `procede` est appliquée ici : le rayon
-    intérieur minimal vaut 0,5 x l'épaisseur (CLAUDE.md). Les autres
-    cotes sont de nature `echelle` et dérivent de H (règle 1).
+    intérieur minimal, max(0,5 x épaisseur, limite de machine du réglage).
+    Elle n'est PAS calculée ici : procedes.rayon_interieur_min est son seul
+    endroit (2026-10-01). Les autres cotes sont de nature `echelle` et
+    dérivent de H (règle 1).
     """
     L = round(H_m * 1000.0 * r_pied_long, 4)
     W = round(H_m * 1000.0 * r_pied_larg, 4)
     r_ext = round(W * ratio_coins, 4)
     p = round((W - W * ratio_resserrement) / 2.0, 4)      # par flanc
     e = round(L * ratio_etendue, 4)
-    r_int = round(0.5 * epaisseur, 4)
+    r_int = round(procedes.rayon_interieur_min(epaisseur, r_int_machine), 4)
     R = round((e ** 2 / 4.0 + p ** 2) / (2.0 * p), 4) if p > 0 else 0.0
     return dict(L=L, W=W, r_ext=r_ext, profondeur=p, etendue=e,
                 R=R, r_int=r_int, ep=epaisseur,

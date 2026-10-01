@@ -387,17 +387,18 @@ reglages:
   # MODIFIÉ le 2026-10-01 (20 h 52) : le moyen est une découpe LASER (déclaré).
   # Ancien texte : procede abtragen_jet, saignee null (« varie de 0,2 à 1,5
   # selon le moyen »), rayon_interieur_min null (« dépend du moyen »).
-  # `rayon_interieur_min` reste la règle de MATIÈRE de CLAUDE.md (0,5 x
-  # épaisseur), que vérifie procedes.controler_rayon ; la limite de MACHINE
-  # déclarée est à part (`declarations.rayon_interieur_min_machine_mm`). Le
-  # rayon effectif d'une pièce est le plus grand des deux.
+  # Rayon intérieur minimal : max(0,5 x épaisseur, `rayon_interieur_min_machine`),
+  # calculé par procedes.rayon_interieur_min et vérifié par controler_rayon.
   - id: operateur_cn_alu_3
     machine: decoupe_operateur_cn
     procede: abtragen_thermique
     matiere: alu_tole_3
     valide: true
     saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
-    rayon_interieur_min: 1.5 # = 0,5 x 3 mm (règle de matière, CLAUDE.md) ; machine : 2,0 déclaré
+    # MODIFIÉ le 2026-10-01 (21 h) : était 1.5 (= 0,5 x 3 mm). La règle est
+    # désormais max(0,5 x épaisseur, limite de machine) : procedes.rayon_interieur_min.
+    rayon_interieur_min: 2.0 # = max(0,5 x 3 ; 2,0 machine)
+    rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01 : « peut-être moins, partons sur 2 mm »
     voile_min: null
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
@@ -407,7 +408,6 @@ reglages:
       date: 2026-10-01
       saignee_mm: 0.5
       saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
-      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
       tolerance_contour_mm: 0.5
 
   # Ajoutés le 2026-10-01 : un réglage par matière déclarée. Épaisseur non
@@ -418,7 +418,8 @@ reglages:
     matiere: laiton_tole
     valide: true
     saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
-    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
+    rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
@@ -428,7 +429,6 @@ reglages:
       date: 2026-10-01
       saignee_mm: 0.5
       saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
-      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
       tolerance_contour_mm: 0.5
 
   - id: operateur_cn_laser_titane
@@ -437,7 +437,8 @@ reglages:
     matiere: titane_tole
     valide: true
     saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
-    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
+    rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
@@ -447,7 +448,6 @@ reglages:
       date: 2026-10-01
       saignee_mm: 0.5
       saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
-      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
       tolerance_contour_mm: 0.5
 
   - id: operateur_cn_laser_inox
@@ -456,7 +456,8 @@ reglages:
     matiere: inox_tole
     valide: true
     saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
-    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
+    rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
@@ -466,7 +467,6 @@ reglages:
       date: 2026-10-01
       saignee_mm: 0.5
       saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
-      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
       tolerance_contour_mm: 0.5
 
   - id: operateur_cn_laser_ceramique
@@ -475,7 +475,8 @@ reglages:
     matiere: ceramique_plaque
     valide: true
     saignee: 0.5             # DÉCLARÉE, compensée par l'opérateur : ne pas compenser (voir `declarations`)
-    rayon_interieur_min: null # = 0,5 x épaisseur, à choisir ; machine : 2,0 déclaré
+    rayon_interieur_min: null # = max(0,5 x épaisseur à choisir ; 2,0 machine)
+    rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01
     voile_min: null
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
@@ -485,7 +486,6 @@ reglages:
       date: 2026-10-01
       saignee_mm: 0.5
       saignee_compensee_par: operateur   # nos fichiers donnent la COTE FINALE ; l'outillage ne compense PAS
-      rayon_interieur_min_machine_mm: 2.0  # « peut-être moins, partons sur 2 mm »
       tolerance_contour_mm: 0.5
 
 

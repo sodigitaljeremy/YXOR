@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `23902d291780`, le 2026-10-01 ; 185 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `b9dbdf47f0dd`, le 2026-10-01 ; 186 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -208,7 +208,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (11)
+## tests/ (12)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_construction_deterministe.py
@@ -219,6 +219,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_empreinte
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer_index.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
 

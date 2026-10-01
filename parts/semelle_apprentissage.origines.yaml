@@ -15,6 +15,8 @@ piece:
   materiau: carton_plume
   epaisseur_mm: 5.0
   rayon_interieur_min_mm: 2.5
+  rayon_interieur_min_machine_mm: null
+  rayon_rentrant_min_mm: 2.5
   saignee_mm: null
   voile_min_mm: null
   fixation: "vis traversante + rondelles larges des deux côtés"
@@ -73,6 +75,7 @@ cotes_schema:
 
 simulation:
   tolerance_mm: 0.05
+  fixes: {"r_int_machine": null}
   parametres:
     - {"nom": "H", "libelle": "taille du robot", "unite": " m", "valeur": 0.9, "mini": 0.3, "maxi": 2.0, "pas": 0.01, "cible": "params/anthropometry.yaml  ->  tailles.L.H_m"}
     - {"nom": "r_pied_long", "libelle": "ratio longueur de pied", "unite": "", "valeur": 0.1534, "mini": 0.1, "maxi": 0.22, "pas": 0.001, "cible": "params/anthropometry.yaml  ->  ratios.pied_longueur.valeur"}

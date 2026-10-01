@@ -118,27 +118,68 @@ def defaut(hw: dict | None = None) -> str:
     return hw.get("reglage_defaut") or ""
 
 
-def controler_rayon() -> list[str]:
-    """`rayon_interieur_min == 0,5 x epaisseur`, sur TOUTE la table (CLAUDE.md).
+def rayon_interieur_min(epaisseur: float | None, limite_machine: float | None = None) -> float | None:
+    """LA règle du rayon intérieur minimal — seul endroit qui la calcule en Python.
 
-    Déplacé le 2026-10-01 (refonte R4) depuis scripts/controle_regles.py,
-    archivé : ce contrôle-là protège les pièces, il est gardé. Un réglage
-    IMPOSSIBLE est sauté (ses cotes n'ont pas de sens), comme un réglage
-    dont l'épaisseur ou le rayon est inconnu : la règle ne dit rien tant
-    qu'un de ses membres manque.
+    max(0,5 x épaisseur (règle de matière, CLAUDE.md), limite de machine du
+    réglage). Une limite absente est ignorée. Épaisseur inconnue : None.
+    Ajoutée le 2026-10-01 (21 h) : la limite de machine déclarée par
+    l'opérateur CN (2,0 mm) n'était lue par aucun code.
+    Appelée par scripts/profil.py (géométrie et simulateur), par la pièce,
+    et par les deux contrôles ci-dessous.
+    """
+    if epaisseur is None:
+        return None
+    return max(0.5 * epaisseur, limite_machine or 0.0)
+
+
+def controler_rayon(hw: dict | None = None) -> list[str]:
+    """Pour chaque réglage : rayon_interieur_min >= rayon_interieur_min(...).
+
+    Jusqu'au 2026-10-01 (21 h), le contrôle exigeait l'ÉGALITÉ avec 0,5 x
+    épaisseur, ce qui interdisait d'inscrire une limite de machine plus
+    forte. Un réglage IMPOSSIBLE est sauté, comme un réglage dont
+    l'épaisseur ou le rayon est inconnu : la règle ne dit rien tant qu'un
+    de ses membres manque.
     """
     fautes = []
-    for rid, r in reglages().items():
+    for rid, r in reglages(hw).items():
         if r.get("valide") is False:
             continue
         ep, ri = r.get("epaisseur"), r.get("rayon_interieur_min")
-        if ep is None or ri is None:
+        attendu = rayon_interieur_min(ep, r.get("rayon_interieur_min_machine"))
+        if attendu is None or ri is None:
             continue
-        if abs(ri - 0.5 * ep) > 1e-9:
+        if ri < attendu - 1e-9:
             fautes.append(
-                f"hardware.yaml / {rid} : rayon_interieur_min = {ri} mm, "
-                f"or 0,5 x epaisseur = {0.5 * ep} mm (CLAUDE.md). "
-                f"Un rayon rentrant trop faible déchire la matière.")
+                f"hardware.yaml / {rid} : rayon_interieur_min = {ri} mm, sous le minimum "
+                f"{attendu} mm = max(0,5 x {ep}, machine {r.get('rayon_interieur_min_machine')}). "
+                f"Un rayon rentrant trop faible déchire la matière ou ne se découpe pas.")
+    return fautes
+
+
+def controler_pieces(pieces: list[dict], hw: dict | None = None) -> list[str]:
+    """Pour chaque pièce : son plus petit rayon rentrant réel >= le minimum de son réglage.
+
+    La pièce DÉCLARE `rayon_rentrant_min_mm` dans son relevé ; le minimum
+    est le plus grand de la règle et du rayon inscrit au réglage.
+    """
+    tous, fautes = reglages(hw), []
+    for p in pieces:
+        nom, rid = p.get("nom"), p.get("reglage")
+        if rid not in tous:
+            fautes.append(f"pièce {nom} : réglage « {rid} » inconnu")
+            continue
+        r = tous[rid]
+        regle = rayon_interieur_min(r.get("epaisseur"), r.get("rayon_interieur_min_machine"))
+        minimum = max(x for x in (regle, r.get("rayon_interieur_min"), 0.0) if x is not None)
+        rr = p.get("rayon_rentrant_min_mm")
+        if rr is None:
+            fautes.append(f"pièce {nom} : ne déclare pas son plus petit rayon rentrant "
+                          "(`rayon_rentrant_min_mm` du relevé)")
+        elif rr < minimum - 1e-9:
+            fautes.append(f"pièce {nom} : plus petit rayon rentrant {rr} mm, sous le minimum "
+                          f"{minimum} mm du réglage {rid}")
     return fautes
 
 

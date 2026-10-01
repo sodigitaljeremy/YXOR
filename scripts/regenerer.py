@@ -392,13 +392,16 @@ def main(argv=None) -> int:
         return 1
     if controle_articulations.main() != 0:
         return 1
-    rayon = PROC.controler_rayon()
+    # Rayon intérieur minimal = max(0,5 x épaisseur, limite de machine) :
+    # sur chaque réglage, puis sur le plus petit rayon rentrant de chaque pièce.
+    rayon = PROC.controler_rayon() + PROC.controler_pieces(pieces)
     if rayon:
         print("\n✗ RAYON INTÉRIEUR MINIMAL :")
         for r_ in rayon:
             print(f"   {r_}")
         return 1
-    print(f"   rayon intérieur minimal conforme sur {len(PROC.reglages())} réglages")
+    print(f"   rayon intérieur minimal conforme sur {len(PROC.reglages())} réglages "
+          f"et {len(pieces)} pièce(s)")
     # L'index des fiches (index_fiches.py) est archivé depuis la refonte
     # R2 du 2026-10-01 : archive/scripts/index_fiches.py.
 
