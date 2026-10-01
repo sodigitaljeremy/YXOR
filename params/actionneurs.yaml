@@ -1034,6 +1034,30 @@ familles:
       plus, sans annonce d'arrêt trouvée ; « remplacé par X8-32 » n'est
       écrit nulle part (l'étude externe l'affirmait). Le X8-25 (V2, 48 V,
       25 N·m) est encore présenté mais absent du catalogue 2026.
+  # Ajoutée le 2026-10-01 (lot H, PROPOSÉ par Claude, arbitrage) : seul le
+  # membre S change.
+  robstride_rs00:
+    nom: "RobStride, variante S = RS00 (RS00 → RS02 → RS06)"
+    S: rs00
+    M: rs02
+    L: rs06
+    protocole_commun: {valeur: true, source: "manuel RS00 260713, p. 37-47 : mêmes types de trame et même table de paramètres (0x7028…) que les manuels RS05 et EL05"}
+    note: "variante de la famille RobStride : seul le membre S change. RS00 (pointe 14 N·m) est plus proche de la plage M que de la plage S visée (5-7 N·m)"
+  # Ajoutée le 2026-10-01 (lot H, PROPOSÉ par Claude, arbitrage) : une
+  # gamme M et L existe SI le couple de blocage publié est lu comme pointe.
+  hightorque:
+    nom: "HighTorque (HTDW-4438-30 → HTDW-5036-02 → HTDW-6036-02)"
+    S: htdw_4438_30
+    M: htdw_5036_02_dne
+    L: htdw_6036_02_dne
+    alternatives: {S: [htdw_5047_36]}
+    protocole_commun: {valeur: null, source: null, non_verifie: "DÉDUIT, pas déclaré : toutes les fiches lues donnent « CANFD/CAN » à 5 Mbit/s et renvoient au même document de protocole (illisible) ; le SDK constructeur n'a qu'un pilote, les types ne diffèrent que par un coefficient de couple"}
+    note: >
+      M et L classés sur leur couple de BLOCAGE momentané (21 et 36 N·m),
+      seul publié : ce n'est pas une pointe au sens des autres familles.
+      HTDW-5047-36 (fiche 2024, absente du site constructeur) en S
+      alternatif. D'autres membres existent (5036-02-CNE, 6036-02-CNE,
+      HTPU-6035-04-CNE, 5022-02-DNE) ; non portés.
 
 # ═════════════════════════════════════════════════════════════════════════
 #  COLLECTE, NON NOTÉE — critères manquants (2026-10-01)

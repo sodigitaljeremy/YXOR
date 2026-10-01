@@ -822,7 +822,8 @@ def _seuil_fin(evalue, balayage, cle_nominal):
 GROUPE_TECH = ("capacite", "continuite", "robustesse", "masse", "ouverture", "tension_securite")
 GROUPE_APPRO = ("cout", "fiabilite_fournisseur", "disponibilite")
 K2_PAS = [round(1.0 - 0.05 * i, 2) for i in range(11)]          # 1,00 → 0,50
-K2_CODES = {"damiao": "D", "robstride_el05": "E", "robstride": "R", "cubemars": "C", "myactuator": "M"}
+K2_CODES = {"damiao": "D", "robstride_el05": "E", "robstride": "R", "cubemars": "C", "myactuator": "M",
+            "robstride_rs00": "Z", "hightorque": "H"}       # Z et H : lot H, 2026-10-01
 
 
 def carte_k2(cat, crit, bud, analyse, ref, poids, autres: str) -> list:
@@ -931,7 +932,8 @@ def frontieres_k2(carte, borne) -> str:
     """Décrit, en phrases calculées, où le gagnant change sur la carte « min »."""
     lignes = []
     noms = {"damiao": "Damiao", "robstride_el05": "RobStride avec EduLite 05", "robstride": "RobStride avec RS05",
-            "cubemars": "CubeMars", "myactuator": "MyActuator"}
+            "cubemars": "CubeMars", "myactuator": "MyActuator", "robstride_rs00": "RobStride avec RS00",
+            "hightorque": "HighTorque"}
     for fam in sorted({w for l in carte for w in l}):
         cases = [(kj, ke) for kj, l in zip(K2_PAS, carte) for ke, w in zip(K2_PAS, l) if w == fam]
         kj_min, kj_max = min(c[0] for c in cases), max(c[0] for c in cases)
