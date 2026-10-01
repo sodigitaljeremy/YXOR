@@ -3,7 +3,7 @@
 > Étude fournisseurs rédigée par ChatGPT le 30-09-2026, versée telle quelle
 > le même jour. Le texte ci-dessous n'est ni corrigé ni reformulé. Les
 > écarts avec `params/actionneurs.yaml` sont relevés au journal du
-> 2026-09-30, pas ici. Synthèse : `docs/cadrage.md`, § 9.
+> 2026-09-30, pas ici. Synthèse : `archive/docs/cadrage-2026-09-30.md`, § 9.
 
 ---
 

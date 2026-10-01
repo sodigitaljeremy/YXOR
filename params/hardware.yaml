@@ -400,7 +400,9 @@ actionneurs:
 #
 #  ── Au 2026-09-28, il n'y a pas d'imprimante 3D (fiche 0014) ──
 #  Redevient valable le jour où une imprimante est acquise ET vérifiée.
-#  ⚠ Jeremy en achète une cette semaine (fiche 0027) : à RÉOUVRIR.
+#  Aucune imprimante vérifiée au 2026-10-01 (fiche 0059). L'outillage relève
+#  de la seule décision de Jeremy (fiche 0066, b). Corrigé à la refonte R5 :
+#  ce commentaire disait « Jeremy en achète une cette semaine (fiche 0027) ».
 #
 #  vis:
 #    M2:  { insert_diametre: 3.2, insert_profondeur: 4.0 }

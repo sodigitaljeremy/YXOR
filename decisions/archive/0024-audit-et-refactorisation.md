@@ -2,7 +2,7 @@
 
 Date : 2026-09-29
 Espèce : close
-État : appliquée
+État : close — remplacée par la refonte du 2026-10-01 (verdict de Jeremy, R5)
 Statut : **acceptée** le 2026-09-29 — **rang 1 appliqué en entier (7/7)**.
 Rangs 2 et 3 non entamés, à la demande de Jeremy.
 

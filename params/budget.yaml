@@ -29,7 +29,7 @@ livraison: [CH, FR]
 
 tva_fr:
   valeur: 0.20
-  source: "taux normal français ; cadrage § 7.1 (non revérifié ici sur une page officielle)"
+  source: "taux normal français ; cadrage § 5 (non revérifié ici sur une page officielle)"
   consulte_le: "2026-09-30"
 
 marge_imprevus:
@@ -93,7 +93,9 @@ electronique:
     note: "⚠ 30 V au plus : suffit pour un banc Feetech, pas pour un actionneur 48 V à pleine vitesse."
 
 structure:
-  article: "plaques et entretoises découpées (fiche 0015)"
+  # MODIFIÉ le 2026-10-01 (refonte R5). Ancien texte : « plaques et entretoises
+  # découpées (fiche 0015) » ; la 0015 est remplacée par la 0060.
+  article: "structure, procédé choisi pièce par pièce (fabrication séquencée, fiches 0050 et 0060)"
   prix: {valeur: null, devise: null, vendeur: null, source: null, consulte_le: "2026-09-30"}
   note: "null tant que l'opérateur CN n'a pas chiffré la découpe métal."
 
@@ -108,7 +110,7 @@ structure:
 #  Poste `adaptateur_bus` : TTL si toutes les classes sont Feetech, CAN sinon.
 phases:
   banc:
-    statut: "OPTION, en attente du comparatif (archive/docs/comparatif-banc.md ; cadrage § 6 et § 13)"
+    statut: "OPTION, en attente du comparatif (archive/docs/comparatif-banc.md ; cadrage archivé du 2026-09-30, § 6 et § 13)"
     description: >
       2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration
       étudiée : thermique réelle, deux adresses sur un même bus, segment à

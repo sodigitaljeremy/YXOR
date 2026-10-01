@@ -421,7 +421,7 @@ def configurations(cat: dict) -> list[tuple[str, dict]]:
 
 
 def configurations_nommees(cat: dict) -> list[tuple[str, str, dict]]:
-    """Les configurations nommées du catalogue (publiées au cadrage § 5)."""
+    """Les configurations nommées du catalogue (publiées au cadrage archivé du 2026-09-30, § 5)."""
     out = []
     for cid, c in (cat.get("configurations_nommees") or {}).items():
         lourde = classe_catalogue(cat, c["lourde"])
@@ -504,7 +504,7 @@ def _classes_de(conf) -> str:
 
 
 def imprimer_cadrage(lignes, nommees, marge):
-    """Le tableau du cadrage § 5 — engendré, jamais recopié à la main."""
+    """Le tableau du cadrage archivé du 2026-09-30, § 5 — engendré, jamais recopié à la main."""
     print("\n### TABLEAU_CADRAGE\n")
     print(f"| Configuration (marge {f(marge, 1)}) | Continu / pointe (N·m) | Taille maximale | "
           "Masse convergée | Articulation limitante |")

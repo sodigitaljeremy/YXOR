@@ -91,7 +91,7 @@ cotes:
     valeur: 0.9
     origine: propre
     nature: echelle
-    source: "ordre de grandeur du cadrage § 6 (fiches 0048 et 0055)"
+    source: "ordre de grandeur du cadrage § 4 (fiches 0048 et 0055)"
   - cle: ratios.pied_longueur
     valeur: 138.06
     origine: litterature

@@ -2,7 +2,7 @@
 
 **Rédigé le 2026-09-30.** Statut : **proposé**, pas décidé : rien n'est
 acheté, rien n'est mesuré. Aucune fiche. Ce protocole sert le banc de
-qualification (cadrage, § 13, question 12 ; `archive/docs/comparatif-banc.md`) :
+qualification (cadrage archivé du 2026-09-30, § 13, question 12 ; `archive/docs/comparatif-banc.md`) :
 **mesurer avant d'acheter en quantité**.
 
 Le banc, tel que le comparatif le place en tête : **1 × Damiao J4310 V1.2

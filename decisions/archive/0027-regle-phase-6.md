@@ -2,7 +2,8 @@
 
 Date : 2026-09-29
 Espèce : close
-État : appliquée
+État : remplacée
+Remplacée par : `../0066-regle-d-achat.md` — volet (a) reformulé : un achat pour le robot suit une décision écrite et la vérification de la référence exacte, plus le verdict « coupable » d'une pièce découpée (2026-10-01).
 Statut : **acceptée** le 2026-09-29 — option B retenue par Jeremy, **avec
 une correction de sa main** : le défaut que j'avais signalé (l'outillage
 n'est lié à aucune pièce) est comblé par une troisième branche. La règle

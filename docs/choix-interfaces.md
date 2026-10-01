@@ -2,7 +2,7 @@
 
 **Rédigé le 2026-09-30.** Il n'y a pas de score : c'est une comparaison
 écrite, qui prépare une décision de Jeremy sans la prendre. Elle
-complète le cadrage, § 8 bis (interfaces, *proposé*) et § 9 (étude
+complète le cadrage, § 7 (interfaces, *proposé*), et le § 9 du cadrage archivé (étude
 fournisseurs). Aucune fiche.
 
 Statuts : **V** = vérifié dans le dépôt ou à la source citée ; **Déd** =
@@ -42,7 +42,7 @@ l'intégration. Ce point pèse sur l'interface logicielle.
 | **Masse et rigidité** | les meilleures : un seul assemblage | une pièce et un assemblage boulonné de plus. Jeu et souplesse possibles, à mesurer | à concevoir ; rien n'est acquis |
 | **Temps de développement** | le plus court | court : l'interface une fois, puis un adaptateur par modèle | le plus long, et hors chemin critique par décision (0052) |
 | **Liberté fournisseur** | nulle : changer de modèle, c'est redessiner la jambe | élevée : changer de modèle, c'est une plaque | totale |
-| **Apprentissage** | faible | concevoir une interface stable | maximal : c'est un projet en soi (cadrage § 8) |
+| **Apprentissage** | faible | concevoir une interface stable | maximal : c'est un projet en soi (cadrage § 6) |
 | **Réversibilité** | faible | élevée | élevée, mais au prix de tout le développement |
 | **Dissipation thermique** | la pièce de jambe fait office de plaque : sa matière et sa surface fixent le continu réel | **l'adaptateur peut servir de dissipateur** : en aluminium usiné, il se rapproche de la condition de la fiche | à concevoir, comme le reste |
 
@@ -68,7 +68,7 @@ l'intégration. Ce point pèse sur l'interface logicielle.
 
 | | **1 — couche propre à YXOR** | **2 — ros2_control** | **3 — couche propre alignée sur les concepts de ros2_control** |
 | --- | --- | --- | --- |
-| **Principe** | `joint.command(position, vitesse, couple)`, un backend par fabricant, un backend MuJoCo (cadrage § 8 bis) | le cadre de commande de ROS 2 : composants matériels, interfaces de commande et d'état, contrôleurs (CG) | la couche 1, mais avec le vocabulaire de ros2_control : interfaces `position` / `velocity` / `effort`, séparation composant matériel / contrôleur |
+| **Principe** | `joint.command(position, vitesse, couple)`, un backend par fabricant, un backend MuJoCo (cadrage § 7) | le cadre de commande de ROS 2 : composants matériels, interfaces de commande et d'état, contrôleurs (CG) | la couche 1, mais avec le vocabulaire de ros2_control : interfaces `position` / `velocity` / `effort`, séparation composant matériel / contrôleur |
 | **Coût** | nul en licence ; du temps de développement | nul en licence ; une pile lourde à installer et à faire tourner sur le calculateur embarqué (CG) | comme 1 |
 | **Temps de développement** | un pilote par fabricant à écrire et à tester sur le matériel | contrôleurs existants ; mais un *hardware interface* par actionneur à trouver ou à écrire, de qualité variable (CG) | comme 1, plus un peu de discipline de conception ; passer à 2 plus tard ne demande qu'une couche mince |
 | **Liberté fournisseur** | totale : un backend de plus | totale en principe ; en pratique, dépend des interfaces existantes | totale |
@@ -80,7 +80,7 @@ l'intégration. Ce point pèse sur l'interface logicielle.
 
 - **Le cas LeRobot ne condamne pas les intermédiaires : il condamne le
   fait de ne pas vérifier.** Quelle que soit l'option, le premier usage
-  du banc (échelon 0, cadrage § 10) est de vérifier que le pilote
+  du banc (échelon 0, cadrage § 8) est de vérifier que le pilote
   envoie et relit ce que la fiche dit.
 - **2 apporte des contrôleurs et un écosystème**, au prix d'une pile
   lourde et d'un apprentissage qui passe par le cadre avant le robot.

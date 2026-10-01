@@ -2,7 +2,7 @@
 
 Date : 2026-09-29
 Espèce : veille
-État : veille
+État : close — remplacée par les comparatifs à venir (verdict de Jeremy, R5, 2026-10-01)
 Statut : **veille** — aucune n'est adoptée, aucune n'est écartée.
 
 > **Trois des quatre premiers déclencheurs sont le même fait :

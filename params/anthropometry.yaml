@@ -47,7 +47,7 @@ H: 0.56                  # mètres — taille de ToddlerBot, RÉFÉRENCE du calc
 #     P2: 0.90               # propre — choix de projet
 #     P3: 1.70               # propre — choix de projet
 #
-# Tailles : ORDRE DE GRANDEUR du cadrage § 6, que dimensionnement.py affine
+# Tailles : ORDRE DE GRANDEUR du cadrage § 4, que dimensionnement.py affine
 # (fiche 0047). Une pièce ne se dessine qu'à une taille qui a une valeur unique.
 #
 # MODIFIÉ le 2026-10-01 (refonte R3, fiche 0065, décidée par Jeremy). Ancien

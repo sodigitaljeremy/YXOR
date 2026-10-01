@@ -5,7 +5,8 @@ Une ligne par terme. À enrichir à chaque fois qu'un mot inconnu apparaît.
 ## Structure du robot
 
 **Degré de liberté (DDL)** — Un mouvement indépendant possible. Une charnière
-de porte a 1 DDL. YXOR en a 30 : chaque DDL correspond à un moteur.
+de porte a 1 DDL. Chaque DDL correspond à un moteur. YXOR en a **12 en v1**
+(6 par jambe, sans bras) et 18 à 20 en v2 (bras et cou) ; ToddlerBot en a 30.
 
 **Liaison / joint** — L'articulation entre deux pièces. Porte un nom, un axe
 de rotation et deux butées.

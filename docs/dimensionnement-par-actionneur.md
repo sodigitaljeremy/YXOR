@@ -266,7 +266,7 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
   ajoutée par la classe lourde. Résultat : mixte RS03 / STS3250 =
   **0,48 m**, contre 0,60 m en STS3250 homogène.
 - **Le lacet de hanche dans le groupe lourd** a été calculé depuis pour L
-  (configuration nommée `L_rs06_rs02`, cadrage § 5) : 0,92 m, contre 0,91 m
+  (configuration nommée `L_rs06_rs02`, cadrage archivé du 2026-09-30, § 5) : 0,92 m, contre 0,91 m
   en RS06 homogène. Les autres paires restent à calculer (cadrage,
   question 3).
 - La contrainte de vitesse ne borne presque rien. Seuls le STS3250 et les
@@ -371,7 +371,6 @@ aujourd'hui, puisque la structure n'est pas chiffrée.
   cyclique de la marche (fiche 0038).
 - **Une autre allure que la marche droite à 0,10 m/s** : ni virage, ni
   relevé, ni perturbation.
-- **Un choix.** Les tailles sont décidées par classe (fiche 0048), mais
-  les paliers d'`anthropometry.yaml` ne sont pas encore remplacés (cadrage,
-  question 8). La famille d'actionneurs de S n'est pas décidée
-  (`archive/docs/choix-famille-actionneurs.md`).
+- **Un choix.** Ce calcul dit jusqu'où porte chaque classe ; il ne choisit
+  pas. Les tailles ont remplacé les paliers (fiches 0048 et 0055), et S
+  est décidé par la fiche 0065 (`docs/choix-actionneurs.md`).

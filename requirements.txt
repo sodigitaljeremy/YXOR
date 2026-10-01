@@ -1,4 +1,6 @@
-# Phase 1 — simulation seulement. Ni torch ni jax avant décision.
+# Dépendances du code YXOR (venv du projet, `.venv/`). Ni torch ni jax avant
+# décision. (L'en-tête disait « Phase 1 — simulation seulement » : les phases
+# n'existent pas, fiche 0027 ; corrigé à la refonte R5.)
 #
 # Environnement de référence (mesuré le 2026-09-20, voir journal) :
 #   Ubuntu 26.04.1 LTS « Resolute Raccoon » sous WSL2 (noyau 6.18.33.2)

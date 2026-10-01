@@ -146,7 +146,7 @@ def calculer(H: float) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--taille", type=float, default=0.55,
-                    help="taille H en mètres (défaut 0,55 : bas de la fourchette de S, cadrage § 6)")
+                    help="taille H en mètres (défaut 0,55 : hauteur de repli de S, fiche 0065)")
     a = ap.parse_args(argv)
     if not AM.SERIE.exists():
         print(f"série absente : {AM.SERIE} — la régénérer avec sim/upstream/enregistrer_marche.py")

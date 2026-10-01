@@ -157,7 +157,7 @@ def construire(c: Cotes, taille: str, resserrement: float, proc: str,
         raise ValueError(f"la taille {taille} n'a pas de hauteur unique ({h}) : "
                          "on ne dessine pas à une taille non fixée")
     H = c._note(f"tailles.{taille}.H_m", h, "propre", "echelle",
-                "ordre de grandeur du cadrage § 6 (fiches 0048 et 0055)")
+                "ordre de grandeur du cadrage § 4 (fiches 0048 et 0055)")
 
     L = c.echelle("pied_longueur", H)
     W = c.echelle("pied_largeur", H)
