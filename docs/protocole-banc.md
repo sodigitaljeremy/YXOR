@@ -185,8 +185,13 @@ Jeremy travaille seul : ces sept mesures remplacent la seconde personne.
   image, sans condition écrite.
 - **L'essai en rotation**, lui, est fait à 25 °C, sur un dissipateur en
   alliage d'aluminium de 90 × 85 mm, à 100 rpm (manuel, p. 8-9).
-- **Proposé** : mesurer sur une plaque d'aluminium de 90 × 85 mm, la
-  seule condition publiée par le manuel, et noter l'ambiante.
+- **Plaque de mesure : aluminium de 90 × 85 mm**, la seule condition
+  d'essai publiée par le manuel (p. 8-9).
+  - Proposée par Claude Code (R6) et recommandée par Claude (arbitrage) ;
+    Jeremy la valide en lançant le prompt du 2026-10-01 sans
+    modification.
+  - **À chaque session, on relève l'alliage, l'épaisseur de la plaque et
+    la température ambiante.**
 - **Courant de phase au blocage : non publié.** Sont publiés le courant
   de phase nominal, 4,7 Apk, et le courant maximal, 15,5 Apk (p. 9 et
   11). La mesure 6 le relève.
@@ -194,17 +199,23 @@ Jeremy travaille seul : ces sept mesures remplacent la seconde personne.
 ## § 4 — Critère, écrit AVANT la mesure
 
 1. La **valeur mesurée au blocage remplace la valeur publiée** (3,6 N·m),
-   puis la grille de `docs/choix-actionneurs.md` est relancée.
+   puis la grille de `docs/choix-actionneurs.md` est relancée. La valeur
+   publiée reste au catalogue, intacte ; la mesure s'affiche à côté.
 2. Avec deux exemplaires, on retient **le plus faible**.
-3. Verdict à la relance :
+3. Verdict à la relance, sur T1, T2, T4 et T5 (charge utile comprise,
+   borne haute de T4 incluse) :
    - **PASS à 0,60 m** : S confirmé.
    - **FAIL à 0,60 m, mais PASS à 0,55 m** : repli à 0,55 m (fiche 0065,
      condition a).
    - **FAIL à 0,55 m** : la famille est **rouverte**.
-4. *À outiller avant la première mesure* : `scripts/choix_actionneurs.py`
-   marque aujourd'hui TESTED dès qu'une mesure de `params/mesures.yaml`
-   porte `actionneur: rs00`, mais il ne substitue pas encore la valeur
-   mesurée.
+4. **Outillé le 2026-10-01, avant toute mesure** :
+   `.venv/bin/python scripts/choix_actionneurs.py --ecrire` écrit le
+   verdict au § 6 de `docs/choix-actionneurs.md`.
+   - Le test `tests/test_critere_banc.py` produit les trois verdicts à
+     partir de mesures fictives écrites dans un fichier temporaire.
+   - Ordres de grandeur, avec les hypothèses actuelles : S est confirmé
+     au-dessus d'environ 3,1 N·m ; repli entre environ 2,6 et 3,0 N·m ;
+     famille rouverte à 2,5 N·m et en dessous.
 
 ## § 5 — Consignation
 
@@ -217,9 +228,12 @@ de la fiche 0041 :
 - `instrument`, `n`, `date`, `alimente`, `note` ;
 - plus `actionneur: rs00` et le **numéro de série** de l'exemplaire.
 
-L'incertitude se porte avec la valeur, jamais après coup. L'ambiante, la
-plaque, la longueur du bras et la position du thermocouple vont en
-`note`.
+Un continu au blocage n'est lu par le critère du § 4 que si son
+`alimente` contient `candidats.rs00.couple_continu_Nm.blocage`.
+
+L'incertitude se porte avec la valeur, jamais après coup. Vont en
+`note` : l'ambiante, la plaque (alliage, épaisseur), la longueur du bras
+et la position du thermocouple.
 
 ## § 6 — Ce que le banc ne mesure pas
 
@@ -242,6 +256,6 @@ la seule décision de Jeremy, et Claude ne propose pas d'achat
 | Fusible | DC, à la tension du bus, au plus près de la source |
 | Mesure d'effort | dynamomètre ou balance, étendue au-delà de l'effort au bout du bras pour 14 N·m ; résolution notée ; vérifiable avec une masse connue |
 | Thermocouple | lecture jusqu'à 150 °C au moins ; fixation thermique décrite |
-| Plaque | aluminium de 90 × 85 mm (la condition publiée), épaisseur notée |
+| Plaque | aluminium de 90 × 85 mm (la condition publiée, validée le 2026-10-01) ; alliage et épaisseur relevés |
 | Adaptateur CAN | CAN 2.0 à 1 Mbit/s ; masse commune possible. **candleLight n'est pas conforme CE** selon son fabricant |
 | Sécurité | extincteur CO₂ ou poudre ; détecteur de fumée ; lunettes de protection ; multimètre pour Vbus et la polarité |

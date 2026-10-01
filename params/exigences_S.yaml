@@ -92,4 +92,4 @@ exigences:
     A2: "revendeur en Suisse ou dans l'UE identifié (sinon UNKNOWN : livraison non vérifiée)"
     A3: "garantie écrite du constructeur ≥ 12 mois"
     A4: "stock vérifié (« en stock » relevé sur la page du vendeur) ; sinon UNKNOWN"
-  tested: "TESTED remplace un verdict quand une mesure de banc existe dans params/mesures.yaml pour ce candidat (aucune à ce jour)"
+  tested: "TESTED (T1) : quand params/mesures.yaml porte un continu au blocage MESURÉ pour ce candidat (`alimente` : candidats.<id>.couple_continu_Nm.blocage), le plus faible remplace la valeur publiée ; T1 vaut TESTED s'il passe, FAIL sinon. Critère du banc : docs/protocole-banc.md § 4 (aucune mesure à ce jour)"

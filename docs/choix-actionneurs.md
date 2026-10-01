@@ -142,7 +142,14 @@ Tailles maximales en configuration homogène, avec la charge utile de 1,2 kg. La
 | CubeMars AK40-10 V3.0 KV170 (référence) | 135,90 USD | CubeMars | 2026-10-01 | — | 12 |
 | Dynamixel XM430-W350 (référence) | 264,50 EUR | Generation Robots (FR) | 2026-10-01 | Generation Robots (FR), Reichelt (DE) | — |
 
-## 6 — Ce que ce document ne dit pas
+## 6 — Banc : le critère du § 4 du protocole
+
+Écrit AVANT la mesure (`docs/protocole-banc.md`, § 4). Le plus faible des continus au blocage MESURÉS du RS00 remplace la valeur publiée ; T1, T2, T4 et T5 sont relancés à H_S puis à la hauteur de repli. Verdict : « S confirmé », « repli à 0,55 m » ou « famille rouverte ». La valeur publiée reste au catalogue, intacte.
+
+**Aucune mesure au blocage du RS00 dans `params/mesures.yaml` : pas de verdict.** Valeur publiée : 3,6 N·m (PDF RobStride du 2026-09-17, p. 5).
+
+
+## 7 — Ce que ce document ne dit pas
 
 - **Les besoins de couple viennent de la marche de ToddlerBot**, dont plusieurs articulations touchaient leur borne : ce sont des **minimums**.
 - **La charge utile est une hypothèse** (PROPOSÉ par Claude (arbitrage), prompt R3 du 2026-10-01 : ordre de grandeur, à remplacer par les composants réels).

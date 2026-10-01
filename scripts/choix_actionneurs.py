@@ -13,7 +13,7 @@ Lit :
   params/actionneurs.yaml     catalogue, faits du comparatif, collecte (lu, jamais écrit)
   params/exigences_S.yaml     exigences, charge utile, hypothèses du relevé
   params/anthropometry.yaml   H_S (tailles.S), longueurs de segments
-  params/mesures.yaml         mesures de banc (TESTED)
+  params/mesures.yaml         mesures de banc : continu au blocage mesuré (TESTED, § 4 du protocole)
   exports/actionneurs/marche_15s.csv, via analyser_marche.py
 
 Le dimensionnement reste dans scripts/dimensionnement.py : ce script
@@ -84,13 +84,32 @@ def familles_de(cat: dict, cid: str) -> list:
 
 # ─────────────────────────── verdicts ────────────────────────────────────
 
-def verdict_couple(cat, cid, H, ref_c, besoins, marge, kb):
-    """T1 et T2, à la hauteur H, avec la référence chargée ref_c."""
+def mesures_blocage(cid: str, chemin: Path = MESURES) -> list[dict]:
+    """Les continus au blocage MESURÉS au banc pour `cid` (protocole, § 5).
+
+    Une entrée de params/mesures.yaml compte si elle porte `actionneur: cid`
+    et si son `alimente` désigne `candidats.<cid>.couple_continu_Nm.blocage`.
+    Le catalogue n'est jamais réécrit : la mesure s'affiche à côté.
+    """
+    mes = ((yaml.safe_load(chemin.read_text(encoding="utf-8")) if chemin.exists() else {}) or {}).get("mesures") or {}
+    cible = f"candidats.{cid}.couple_continu_Nm.blocage"
+    return [dict(m, id=k) for k, m in mes.items()
+            if (m or {}).get("actionneur") == cid and cible in (m.get("alimente") or [])]
+
+
+def verdict_couple(cat, cid, H, ref_c, besoins, marge, kb, blocage_mesure=None):
+    """T1 et T2, à la hauteur H, avec la référence chargée ref_c.
+
+    `blocage_mesure` (N·m) remplace le continu prudent publié : T1 vaut
+    alors TESTED s'il passe avec la mesure, FAIL sinon (protocole, § 4).
+    """
     cl = D.classe_catalogue(cat, cid)
     cp = couples(cat["candidats"][cid])
     if cl["pointe"] is None or cl["masse"] is None:
         return dict(T1="UNKNOWN", T2="UNKNOWN", masse=None, detail="pointe ou masse inconnue")
     prud = cp["blocage"] if cp["blocage"] is not None else (cp["nominal"] * kb if cp["nominal"] else None)
+    if blocage_mesure is not None:
+        prud = blocage_mesure
 
     def tient(continu, quoi):
         conf = D.config_homogene(dict(cl, continu=continu))
@@ -99,7 +118,9 @@ def verdict_couple(cat, cid, H, ref_c, besoins, marge, kb):
             return all(x["rms"] is not None and x["rms"] <= 1 for x in r.values())
         return all(x["pointe"] <= 1 for x in r.values())
 
-    if cp["nominal"] is None:
+    if blocage_mesure is not None:
+        t1 = "TESTED" if tient(prud, "rms") else "FAIL"
+    elif cp["nominal"] is None:
         t1 = "UNKNOWN"
     elif tient(prud, "rms"):
         t1 = "PASS"
@@ -110,7 +131,8 @@ def verdict_couple(cat, cid, H, ref_c, besoins, marge, kb):
     t2 = "PASS" if tient(cp["nominal"] or 1.0, "pointe") else "FAIL"
     conf = D.config_homogene(dict(cl, continu=prud))
     return dict(T1=t1, T2=t2, masse=D.masse(H, ref_c, conf, besoins), prudent=prud,
-                base="blocage publié" if cp["blocage"] is not None else f"nominal × k_bas ({f(kb, 3)})",
+                base=("blocage MESURÉ" if blocage_mesure is not None else
+                      "blocage publié" if cp["blocage"] is not None else f"nominal × k_bas ({f(kb, 3)})"),
                 h_min_vit=D.h_min_vitesse(ref_c, conf, besoins) if cl["vitesse"] else None,
                 vitesse_publiee=cl["vitesse"] is not None)
 
@@ -127,10 +149,9 @@ def releve(m_kg, H, anthro, rel, angle_deg):
                 bras_genou=bras_genou, bras_hanche=bras_hanche)
 
 
-def evaluer(H: float, charge: float) -> dict:
+def evaluer(H: float, charge: float, mesures: Path = MESURES) -> dict:
     cat = D.charger_catalogue()
     ex, an = lire(EXIGENCES), lire(ANTHRO)
-    mes = (lire(MESURES) or {}).get("mesures") or {}
     analyse = AM.analyser(AM.SERIE)
     besoins = D.besoins_p1(analyse)
     ref = D.reference(cat, analyse)
@@ -147,17 +168,20 @@ def evaluer(H: float, charge: float) -> dict:
         c, fs = cat["candidats"][cid], cs[cid]
         v = {}
         ref_c = D.reference_charge(ref, m_el, charge)
-        dc = verdict_couple(cat, cid, H, ref_c, besoins, marge, kb)
+        mb = mesures_blocage(cid, mesures)
+        bm = min(m["valeur"] for m in mb) if mb else None      # le plus faible des exemplaires
+        dc = verdict_couple(cat, cid, H, ref_c, besoins, marge, kb, bm)
         v["T1"], v["T2"] = dc["T1"], dc["T2"]
         if dc.get("vitesse_publiee"):
             v["T3"] = "PASS" if dc["h_min_vit"] <= H else "FAIL"
         else:
             v["T3"] = "UNKNOWN"
-        dh = verdict_couple(cat, cid, H, D.reference_charge(ref, m_el, haut), besoins, marge, kb)
+        dh = verdict_couple(cat, cid, H, D.reference_charge(ref, m_el, haut), besoins, marge, kb, bm)
+        ok = ("PASS", "TESTED")
         if "FAIL" in (v["T1"], v["T2"]) or "UNKNOWN" in (v["T1"], v["T2"]):
             v["T4"] = "FAIL" if "FAIL" in (v["T1"], v["T2"]) else "UNKNOWN"
         else:
-            v["T4"] = "PASS" if (dh["T1"], dh["T2"]) == ("PASS", "PASS") else "UNKNOWN"
+            v["T4"] = "PASS" if dh["T1"] in ok and dh["T2"] in ok else "UNKNOWN"
         pointe = val(c["couple_pointe_Nm"])
         if dc["masse"] is None or pointe is None:
             v["T5"], rv = "UNKNOWN", None
@@ -190,14 +214,37 @@ def evaluer(H: float, charge: float) -> dict:
         v["A3"] = "UNKNOWN" if gm is None else ("PASS" if gm >= 12 else "FAIL")
         texte = " ".join(str(x.get("note") or "") for x in (fs.get("prix_revendeur") or {}, c.get("prix") or {}))
         v["A4"] = "PASS" if re.search(r"en stock|in stock", texte, re.I) else "UNKNOWN"
-        # TESTED : une mesure de banc pour ce candidat
-        if any((m or {}).get("actionneur") == cid for m in mes.values()):
-            v["T1"] = "TESTED"
-        lignes.append(dict(id=cid, nom=c["nom"], reference=bool(c.get("reference")), v=v, dc=dc,
+        lignes.append(dict(id=cid, nom=c["nom"], reference=bool(c.get("reference")), v=v, dc=dc, mesures=mb,
                            releve=rv, pointe=pointe, prix=pr, distribution=d, garantie=gm,
                            cle=D.cle_revision(c), familles=[fid for fid, _ in fams]))
     return dict(H=H, charge=charge, lignes=lignes, kb=kb, rapports=rapports, marge=marge, m_el=m_el,
                 ref=ref, cat=cat, ex=ex, an=an, besoins=besoins)
+
+
+VERDICTS_BANC = ("S confirmé", "repli à 0,55 m", "famille rouverte")
+
+
+def verdict_banc(mesures: Path = MESURES, cid: str = "rs00") -> dict:
+    """Le critère du § 4 du protocole de banc, écrit AVANT la mesure.
+
+    Sans mesure au blocage : pas de verdict. Avec : la plus faible des
+    mesures remplace la valeur publiée ; T1, T2, T4 et T5 sont relancés à
+    H_S puis à la hauteur de repli (params/anthropometry.yaml).
+    """
+    mb = mesures_blocage(cid, mesures)
+    if not mb:
+        return dict(verdict=None, mesures=[], par_hauteur={})
+    an, ex = lire(ANTHRO), lire(EXIGENCES)
+    S = an["tailles"]["S"]
+    ok = ("PASS", "TESTED")
+    par_h = {}
+    for H in (S["H_m"], S["H_m_repli"]):
+        x = next(y for y in evaluer(H, ex["charge_utile"]["valeur_kg"], mesures)["lignes"] if y["id"] == cid)
+        par_h[H] = {k: x["v"][k] for k in ("T1", "T2", "T4", "T5")}
+    tient = {H: all(v in ok for v in t.values()) for H, t in par_h.items()}
+    verdict = (VERDICTS_BANC[0] if tient[S["H_m"]] else
+               VERDICTS_BANC[1] if tient[S["H_m_repli"]] else VERDICTS_BANC[2])
+    return dict(verdict=verdict, mesures=mb, retenu=min(m["valeur"] for m in mb), par_hauteur=par_h)
 
 
 def h_max_charge(r: dict, cid: str, continu: float | None) -> float | None:
@@ -223,7 +270,7 @@ def grille(r: dict, codes: list[str]) -> list[str]:
     return L
 
 
-def doc(r: dict, r_rep: dict | None, masses: list, date: str) -> str:
+def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = None) -> str:
     ex, an, cat = r["ex"], r["an"], r["cat"]
     rel = ex["releve"]
     L = []
@@ -311,7 +358,30 @@ def doc(r: dict, r_rep: dict | None, masses: list, date: str) -> str:
         p, d = x["prix"], x["distribution"]
         A(f"| {x['nom']} | {f(p.get('valeur'))} {p.get('devise') or ''} | {p.get('vendeur') or '—'} | "
           f"{p.get('consulte_le') or '—'} | {d.get('suisse') or d.get('ue') or '—'} | {f(x['garantie'], 0)} |")
-    A("\n## 6 — Ce que ce document ne dit pas\n")
+    A("\n## 6 — Banc : le critère du § 4 du protocole\n")
+    A("Écrit AVANT la mesure (`docs/protocole-banc.md`, § 4). Le plus faible des continus au blocage "
+      "MESURÉS du RS00 remplace la valeur publiée ; T1, T2, T4 et T5 sont relancés à H_S puis à la "
+      "hauteur de repli. Verdict : « S confirmé », « repli à 0,55 m » ou « famille rouverte ». "
+      "La valeur publiée reste au catalogue, intacte.\n")
+    cp = couples(cat["candidats"]["rs00"])
+    if not vb or not vb.get("verdict"):
+        A(f"**Aucune mesure au blocage du RS00 dans `params/mesures.yaml` : pas de verdict.** "
+          f"Valeur publiée : {f(cp['blocage'], 1)} N·m (PDF RobStride du 2026-09-17, p. 5).\n")
+    else:
+        A("| Source | Valeur (N·m) | Incertitude | Instrument | Date | Note |")
+        A("| --- | ---: | --- | --- | --- | --- |")
+        A(f"| publiée (catalogue) | {f(cp['blocage'], 2)} | — | — | — | PDF RobStride 2026-09-17, p. 5 |")
+        for m in vb["mesures"]:
+            A(f"| mesure `{m['id']}` | {f(m['valeur'], 2)} | ± {f(m.get('incertitude'), 2)} "
+              f"({m.get('type_incertitude') or '—'}) | {m.get('instrument') or '—'} | {m.get('date') or '—'} | "
+              f"{' '.join(str(m.get('note') or '').split())[:120]} |")
+        A(f"\n**Retenu : {f(vb['retenu'], 2)} N·m** (le plus faible).\n")
+        A("| Hauteur | T1 | T2 | T4 | T5 |")
+        A("| ---: | :-: | :-: | :-: | :-: |")
+        for H, t in vb["par_hauteur"].items():
+            A(f"| {f(H)} m | {t['T1']} | {t['T2']} | {t['T4']} | {t['T5']} |")
+        A(f"\n**Verdict du § 4 : {vb['verdict']}.**\n")
+    A("\n## 7 — Ce que ce document ne dit pas\n")
     A("- **Les besoins de couple viennent de la marche de ToddlerBot**, dont plusieurs articulations "
       "touchaient leur borne : ce sont des **minimums**.")
     A("- **La charge utile est une hypothèse** (" + ex["charge_utile"]["statut"] + ").")
@@ -347,8 +417,10 @@ def main(argv=None) -> int:
         print(f"  RS00, charge {c_} kg : masse {m:.2f} kg — T1 {v['T1']}, T2 {v['T2']}, T5 {v['T5']}")
     if r_rep:
         print(f"  FAIL du RS00 à {H} m : repli calculé à {H_rep} m")
+    vb = verdict_banc()
+    print(f"  banc, critère du § 4 : {vb['verdict'] or 'aucune mesure au blocage du RS00, pas de verdict'}")
     if a.ecrire:
-        DOC.write_text(doc(r, r_rep, masses, datetime.date.today().isoformat()), encoding="utf-8")
+        DOC.write_text(doc(r, r_rep, masses, datetime.date.today().isoformat(), vb), encoding="utf-8")
         print(f"  -> {DOC.relative_to(REPO)}")
     return 0
 
