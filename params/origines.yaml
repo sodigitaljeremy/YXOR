@@ -1,754 +1,97 @@
-# Déclaration d'origine des cotes — voir decisions/archive/0010-origine-des-cotes.md
+# Provenance des valeurs d'origine ToddlerBot (amont) — lu par scripts/provenance_amont.py
 #
-# Associe des motifs de chemins de clés à une origine. Toute clé non couverte
-# ressort en `non_qualifie` dans scripts/audit_origines.py : la dérive est
-# détectée, jamais silencieuse.
+# RÉDUIT le 2026-10-01 (refonte R4, décision 4 de Jeremy : « oui à tout »).
+# Ce fichier qualifiait TOUTES les valeurs de params/ (origine et nature) pour
+# l'audit complet, archivé avec lui : archive/params/origines.yaml et
+# archive/scripts/audit_origines.py. N'y restent que les règles qui
+# concernent l'AMONT, et, pour joints.yaml, les règles `propre` qui en
+# EXCEPTENT des valeurs (la première règle qui correspond l'emporte).
 #
-# DEUX AXES, indépendants (fiches 0010, 0011, 0013) :
+# Pourquoi l'amont seul : la mécanique de ToddlerBot est sous CC BY-NC-SA 4.0
+# (fiche 0061) ; la portée de la licence sur des valeurs numériques n'est
+# pas tranchée (fiche 0010 § 4). L'inventaire reste tenu.
 #
-#   origine — D'OÙ VIENT le nombre
-#             propre | catalogue | litterature | amont | mesure | ambigu
-#
-#   nature  — CE QUI LE DÉTERMINE, donc quelle règle s'applique
-#             echelle   -> règle 1 (dérive de H)   | tenue     -> note de calcul
-#             interface -> règle 2 (quincaillerie) | procede   -> fabrication
-#             sans_objet -> la valeur n'est pas une cote
-#
-# Confondre les deux était la faille : une cote peut être `litterature`
-# d'origine et `echelle` de nature.
-#
-# `motif` : chemin de clé, `*` joker sur un segment, `**` sur plusieurs.
-# L'ordre compte : le PREMIER motif qui correspond gagne. Les motifs les
-# plus spécifiques doivent donc venir en premier.
+# `motif` : chemin de clé, `*` = un segment, `**` = zéro ou plusieurs.
 
 fichiers:
-
-  # ═══════════════════════════════════════════════════════════════════════
   anthropometry.yaml:
     regles:
-      - motif: "H"
-        origine: amont
-        nature: echelle
-        source: >
-          Taille hors-tout publiée de ToddlerBot (fiche 0001 : « ToddlerBot
-          (Stanford). 0,56 m »). Depuis le 2026-09-30 : référence du
-          dimensionnement inversé, plus un palier (fiche 0055).
-        note: >
-          RACINE DE TOUTE LA CHAÎNE `propre`. Chaque cote dérivée de H en P1
-          est une fraction d'un nombre venu de ToddlerBot. La portée
-          juridique de ce fait n'est PAS tranchée (fiche 0010 §4).
+    - motif: H
+      origine: amont
+      source: 'Taille hors-tout publiée de ToddlerBot (fiche 0001 : « ToddlerBot (Stanford). 0,56 m »).
+        Depuis le 2026-09-30 : référence du dimensionnement inversé, plus un palier (fiche 0055).
 
-      # Paliers P1/P2/P3 remplacés par les tailles le 2026-09-30 (fiche 0055).
-      - motif: "tailles.*.H_m"
-        origine: propre
-        nature: echelle
-        source: "ordre de grandeur du cadrage § 6 (fiche 0048), affiné par dimensionnement.py (fiche 0047)"
-      - motif: "tailles.*.H_m_repli"
-        origine: propre
-        nature: echelle
-        source: "hauteur de repli de S si la marge ne tient pas à 0,60 m (fiche 0065, condition a, décidée par Jeremy le 2026-10-01)"
-      - motif: "tailles.*.H_m_min"
-        origine: propre
-        nature: echelle
-        source: "cadrage § 6 : XL au-delà de 1 m (fiche 0048)"
-      - motif: "tailles.*.classe"
-        origine: propre
-        nature: sans_objet
-        source: "classe d'actionneur de jambe de la taille (fiche 0048)"
+        '
+      note: 'RACINE DE TOUTE LA CHAÎNE `propre`. Chaque cote dérivée de H en P1 est une fraction d''un
+        nombre venu de ToddlerBot. La portée juridique de ce fait n''est PAS tranchée (fiche 0010 §4).
 
-      # Les champs de MÉTHODE d'un ratio — effectif, écart-type, source,
-      # vérification, note — ne sont pas des cotes. Les laisser au
-      # fourre-tout faisait déclarer `effectif: 6068` de nature ECHELLE,
-      # donc « dérive de H » : un effectif qui grandirait avec le robot.
-      - motif: "ratios.*.effectif"
-        origine: litterature
-        nature: sans_objet
-        source: "nombre de sujets du relevé ANSUR II, pas une cote"
-      - motif: "ratios.*.ecart_type"
-        origine: litterature
-        nature: sans_objet
-        source: >
-          dispersion des PROPORTIONS entre sujets. Décrit la population,
-          ne dimensionne rien.
-      - motif: "ratios.*.verifie"
-        origine: propre
-        nature: sans_objet
-        source: "état de vérification de la ligne, pas une cote"
-      - motif: "ratios.*.source"
-        origine: propre
-        nature: sans_objet
-        source: "citation de la source, pas une cote"
-      - motif: "ratios.*.note"
-        origine: propre
-        nature: sans_objet
-        source: "prose explicative"
-      - motif: "ratios.**"
-        origine: litterature
-        nature: echelle
-        source: "Drillis & Contini, ratios anthropométriques (biomécanique)"
-        note: >
-          Fiche 0011. Antérieur de plusieurs décennies à ToddlerBot :
-          aucun risque de licence amont. CITATION COMPLÈTE À FOURNIR
-          (année, revue, table) — une cote `litterature` sans citation
-          exploitable est un défaut.
-
-      - motif: "masses.**"
-        origine: litterature
-        nature: echelle
-        source: "fractions de masse segmentaire, même source que les ratios"
-        note: "même source que ratios.* — citation à fournir"
-
-  # ═══════════════════════════════════════════════════════════════════════
-  hardware.yaml:
-    regles:
-      - motif: "reglage_defaut"
-        origine: propre
-        nature: sans_objet
-        source: "choix de projet — quel réglage les pièces emploient par défaut"
-        note: >
-          Ce n'est pas une cote mais un SÉLECTEUR : il nomme un réglage,
-          il ne mesure rien. Déplacé du code vers les données le
-          2026-09-28 pour qu'un changement de matériau reste une
-          modification de donnée.
-
-      # --- quatre tables, réécrites le 2026-09-29, fiches 0026 et 0033 ---
-      # Les motifs `procedes.**` et `materiaux.**` d'avant couvraient une
-      # table unique qui fondait machine et matière. Ils sont remplacés,
-      # pas élargis : un joker trop large rendrait `non_qualifie`
-      # impossible à atteindre, et l'audit cesserait de mordre.
-
-      # MACHINES — des faits à constater, pas des cotes
-      - motif: "machines.*.nom"
-        origine: propre
-        nature: sans_objet
-        source: "désignation de l'appareil, pas une cote"
-      - motif: "machines.*.lieu"
-        origine: propre
-        nature: sans_objet
-        source: "où se trouve la machine, pas une cote"
-      - motif: "machines.*.pilotage"
-        origine: propre
-        nature: sans_objet
-        source: "manuel ou numérique — un fait, pas une mesure"
-      - motif: "machines.**"
-        origine: mesure
-        nature: procede
-        source: null
-        note: "caractéristique de l'appareil, à relever sur la machine"
-
-      # PROCÉDÉS — vocabulaire DIN 8580, aucun calcul n'en dépend
-      - motif: "procedes.*.din"
-        origine: litterature
-        nature: sans_objet
-        source: >
-          DIN 8580:2022-12, Fertigungsverfahren — Begriffe, Einteilung.
-          NORME NON LUE (payante) : existence, date et classement vérifiés
-          sur sources secondaires concordantes. Fiche 0026.
-      - motif: "procedes.**"
-        origine: propre
-        nature: sans_objet
-        source: "vocabulaire de classement, ne dimensionne rien"
-
-      # ── RETIRÉ le 2026-09-29 ────────────────────────────────────────
-      # Un motif `**.mesures_suspendues` a existé une journée, le temps
-      # d'une suspension. La suspension levée, le champ a disparu et le
-      # motif ne correspondait plus à rien — donc MORT, et le contrôle
-      # des règles l'a dit.
-      #
-      # Il n'est pas conservé « au cas où » : une règle qui ne
-      # correspond à rien est un garde-fou qu'on croit avoir. Le jour où
-      # un champ `mesures_suspendues` réapparaîtra, l'audit le signalera
-      # `non_qualifie` et forcera à réécrire le motif sciemment. C'est
-      # l'audit qui fait son travail, pas une friction à éviter.
-      # Mécanisme décrit dans la fiche 0043.
-
-      # MATIÈRES — ce qu'on achète : matériau x forme x épaisseur
-      - motif: "matieres.*.materiau"
-        origine: propre
-        nature: sans_objet
-        source: "référence vers la table des matériaux"
-      - motif: "matieres.*.forme"
-        origine: propre
-        nature: sans_objet
-        source: "plaque, tôle, barre — un fait d'approvisionnement"
-      # Une exception PRÉCISE, avant le joker : l'ondulé double est un
-      # carton de récupération, sans catalogue. Son épaisseur nominale
-      # EST la mesurée (hardware.yaml : « nominale retenue = la
-      # mesurée »). Le joker la classait `catalogue`, à tort — audit de
-      # la nuit du 2026-09-29, passation point 3. Corrigé le 2026-09-30.
-      - motif: "matieres.carton_ondule_double.epaisseur"
-        origine: mesure
-        nature: procede
-        source: "params/mesures.yaml, carton_ondule_double_epaisseur_2026_09_29"
-        note: "relevée à la règle, ±0,5 mm ; aucune épaisseur annoncée n'existe"
-      - motif: "matieres.*.epaisseur"
-        origine: catalogue
-        nature: procede
-        source: null
-        note: "épaisseur ANNONCÉE du stock ; la réelle est `epaisseur_mesuree`"
-      - motif: "matieres.**"
-        origine: mesure
-        nature: procede
-        source: null
-        note: >
-          Protocole au journal du 2026-09-28. `masse_surfacique` est la
-          grandeur à privilégier : elle contourne la dispersion de
-          l'épaisseur, qui domine l'erreur.
-
-      # MATÉRIAUX — propriétés intrinsèques
-      - motif: "materiaux.*.anisotrope"
-        origine: litterature
-        nature: sans_objet
-        source: "propriété structurelle du matériau, pas une cote"
-      - motif: "materiaux.**"
-        origine: mesure
-        nature: procede
-        source: null
-
-      # RÉGLAGES — le croisement, et LES MESURES
-      - motif: "reglages.*.id"
-        origine: propre
-        nature: sans_objet
-        source: "identifiant écrit à la main (fiche 0026)"
-      - motif: "reglages.*.machine"
-        origine: propre
-        nature: sans_objet
-        source: "référence vers la table des machines"
-      - motif: "reglages.*.procede"
-        origine: propre
-        nature: sans_objet
-        source: "référence vers la table des procédés"
-      - motif: "reglages.*.matiere"
-        origine: propre
-        nature: sans_objet
-        source: "référence vers la table des matières"
-      - motif: "reglages.*.valide"
-        origine: propre
-        nature: sans_objet
-        source: "le couple est-il possible — un fait constaté, pas une cote"
-      - motif: "reglages.*.fixation"
-        origine: propre
-        nature: sans_objet
-        source: "mode d'assemblage retenu, pas une cote"
-      - motif: "reglages.**"
-        origine: mesure
-        nature: procede
-        source: null
-        note: >
-          À MESURER sur pièce d'essai, réglage par réglage. Les valeurs à
-          `null` sont des trous déclarés, pas des oublis : une saignée
-          supposée fausse toutes les cotes d'assemblage.
-
-      # --- quincaillerie : inchangée ---
-      - motif: "vis.*.diametre"
-        origine: litterature
-        nature: interface
-        source: "diamètre nominal ISO métrique"
-        note: >
-          Fiche 0011 : une norme est du savoir public que personne ne
-          possède. RÉFÉRENCE DE NORME À CITER.
-      - motif: "vis.*.passage"
-        origine: litterature
-        nature: interface
-        source: "trou de passage, série normalisée"
-        note: "norme à citer, comme vis.*.diametre"
-      - motif: "vis.*.tete_diametre"
-        origine: litterature
-        nature: interface
-        source: "diamètre de tête, vis à six pans creux"
-        note: "norme à citer (ISO 4762 probable, NON VÉRIFIÉ)"
-
-      - motif: "roulements.**"
-        origine: catalogue
-        nature: interface
-        source: "désignation normalisée du roulement (MR85, 623, 688)"
-        note: >
-          La désignation vaut référence, mais aucun constructeur n'est
-          cité. Cotes à confirmer sur fiche technique avant usage.
-
-      - motif: "actionneurs.**"
-        origine: catalogue
-        nature: interface
-        source: null
-        note: >
-          Toutes valeurs à `null`. Le fichier prescrit : « ne rien
-          inventer ici : les cotes viennent de la fiche constructeur ».
-
-  # ═══════════════════════════════════════════════════════════════════════
+        '
   joints.yaml:
     regles:
-      - motif: "**.fonction"
-        origine: propre
-        nature: sans_objet
-        source: "description rédigée pour YXOR"
-        note: "prose, pas une cote — sans portée dimensionnelle"
+    - motif: '**.fonction'
+      origine: propre
+      source: description rédigée pour YXOR
+      note: prose, pas une cote — sans portée dimensionnelle
+    - motif: convention.**
+      origine: propre
+      source: conventions de repère et d'unités propres au projet
+    - motif: symetrie.**
+      origine: amont
+      source: 'Propriété de symétrie constatée sur le modèle amont et vérifiée par scripts/import_upstream_limits.py.
 
-      - motif: "convention.**"
-        origine: propre
-        nature: sans_objet
-        source: "conventions de repère et d'unités propres au projet"
-      - motif: "symetrie.**"
-        origine: amont
-        nature: sans_objet
-        source: >
-          Propriété de symétrie constatée sur le modèle amont et vérifiée
-          par scripts/import_upstream_limits.py.
+        '
+    - motif: '**.articulation.**'
+      origine: amont
+      source: params/upstream_joints.generated.yaml, section articulations
+      note: axes, sens ET BUTÉES — entièrement extraits du modèle amont
+    - motif: '**.actionnement.**'
+      origine: amont
+      source: params/upstream_joints.generated.yaml, section actionneurs
+    - motif: '**.recoupement.**'
+      origine: amont
+      source: rapports de transmission lus dans le MJCF amont
+    - motif: '**.modele.**'
+      origine: amont
+      source: MJCF amont au commit épinglé
+    - motif: '**.materiel.**'
+      origine: amont
+      source: documentation matérielle amont, ou déduction du modèle amont
+    - motif: '**.nom'
+      origine: amont
+      source: 'Nomenclature adoptée de ToddlerBot par la fiche 0005 (topologie P1). Ce ne sont pas des
+        cotes, mais l''origine est amont.
 
-      - motif: "**.articulation.**"
-        origine: amont
-        nature: interface
-        source: "params/upstream_joints.generated.yaml, section articulations"
-        note: "axes, sens ET BUTÉES — entièrement extraits du modèle amont"
-      - motif: "**.actionnement.**"
-        origine: amont
-        nature: interface
-        source: "params/upstream_joints.generated.yaml, section actionneurs"
-      - motif: "**.recoupement.**"
-        origine: amont
-        nature: interface
-        source: "rapports de transmission lus dans le MJCF amont"
-      - motif: "**.modele.**"
-        origine: amont
-        nature: interface
-        source: "MJCF amont au commit épinglé"
-      - motif: "**.materiel.**"
-        origine: amont
-        nature: interface
-        source: "documentation matérielle amont, ou déduction du modèle amont"
-      - motif: "**.nom"
-        origine: amont
-        nature: sans_objet
-        source: >
-          Nomenclature adoptée de ToddlerBot par la fiche 0005 (topologie
-          P1). Ce ne sont pas des cotes, mais l'origine est amont.
-      - motif: "particularites.**"
-        origine: amont
-        nature: sans_objet
-        source: "constats établis sur le modèle et la documentation amont"
-
-  # ═══════════════════════════════════════════════════════════════════════
+        '
+    - motif: particularites.**
+      origine: amont
+      source: constats établis sur le modèle et la documentation amont
   upstream_joints.generated.yaml:
     regles:
-      - motif: "**"
-        fourre_tout: true
-        origine: amont
-        nature: interface
-        source: >
-          Fichier généré par extraction du MJCF amont au commit
-          e337f3b177b4b53abff70b31d1695a7b66cc6d2e. Amont par construction,
-          intégralement, sans exception.
+    - motif: '**'
+      fourre_tout: true
+      origine: amont
+      source: 'Fichier généré par extraction du MJCF amont au commit e337f3b177b4b53abff70b31d1695a7b66cc6d2e.
+        Amont par construction, intégralement, sans exception.
 
-  # ═══════════════════════════════════════════════════════════════════════
+        '
   ckpts.manifest.yaml:
     regles:
-      - motif: "**"
-        fourre_tout: true
-        origine: amont
-        nature: interface
-        source: "empreintes et identifiants des poids ToddlerBot (fiche 0003)"
-        note: >
-          Ce ne sont pas des cotes mécaniques : aucune portée
-          dimensionnelle. Listé pour l'exhaustivité de l'inventaire.
+    - motif: '**'
+      fourre_tout: true
+      origine: amont
+      source: empreintes et identifiants des poids ToddlerBot (fiche 0003)
+      note: 'Ce ne sont pas des cotes mécaniques : aucune portée dimensionnelle. Listé pour l''exhaustivité
+        de l''inventaire.
 
-  # ═══════════════════════════════════════════════════════════════════════
-  #  actionneurs.yaml — catalogue des candidats (2026-09-30)
-  # ═══════════════════════════════════════════════════════════════════════
-  #  Les VALEURS sont `catalogue` (fiche constructeur ou revendeur) et de
-  #  nature `interface` : un actionneur est une pièce achetée, il ne suit
-  #  jamais H (règle 2). Les champs de méthode — source, date, note —
-  #  ne sont pas des cotes.
+        '
   actionneurs.yaml:
     regles:
-      - motif: "consultation"
-        origine: propre
-        nature: sans_objet
-        source: "date de consultation des sources"
-      - motif: "dimensionnement.marge"
-        origine: propre
-        nature: tenue
-        source: "décidé par Jeremy le 2026-09-30 (fiche 0051) — pas une norme"
-      - motif: "dimensionnement.tolerance_coherence_m"
-        origine: propre
-        nature: sans_objet
-        source: "tolérance numérique du contrôle de cohérence"
-      - motif: "dimensionnement.articulations_lourdes"
-        origine: propre
-        nature: sans_objet
-        source: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ : configuration mixte"
-
-      # --- référence ToddlerBot : ses nombres viennent de l'amont ---
-      - motif: "reference_toddlerbot.hauteur_m.valeur"
-        origine: amont
-        nature: echelle
-        source: "taille publiée de ToddlerBot (fiche 0001)"
-      - motif: "reference_toddlerbot.masse_totale_kg.valeur"
-        origine: amont
-        nature: tenue
-        source: "somme des body_mass du MJCF amont épinglé"
-      - motif: "reference_toddlerbot.masse_dynamixel_g.*.valeur"
-        origine: catalogue
-        nature: interface
-        source: "e-Manual ROBOTIS, masse par axe"
-      - motif: "controle_coherence.toddlerbot.hauteur_m.valeur"
-        origine: amont
-        nature: echelle
-        source: "taille publiée de ToddlerBot (fiche 0001)"
-      - motif: "controle_coherence.zeroth01.hauteur_m.valeur"
-        origine: ambigu
-        nature: echelle
-        source: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ ; introuvable dans les sources consultées"
-        note: "0,48 m déclaré, ~0,40 m lu dans deux sources — voir la note du fichier"
-      - motif: "controle_coherence.zeroth01.hauteur_m.autres_valeurs.valeur"
-        origine: litterature
-        nature: echelle
-        source: "README public d'un constructeur indépendant de Zeroth-01"
-      - motif: "controle_coherence.*.classe"
-        origine: propre
-        nature: sans_objet
-        source: "rattachement du robot de référence à une classe du catalogue"
-
-      # --- configurations nommées : des choix de calcul, pas des cotes ---
-      - motif: "configurations_nommees.**"
-        origine: propre
-        nature: sans_objet
-        source: "configurations demandées par Jeremy le 2026-09-30"
-
-      # --- candidats ---
-      - motif: "candidats.*.fiche.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "version et empreinte du document constructeur lu"
-      - motif: "candidats.*.*.autres_valeurs.valeur"
-        origine: catalogue
-        nature: interface
-        source: "valeur constructeur non retenue, portée pour mémoire"
-      - motif: "candidats.*.*.valeur"
-        origine: catalogue
-        nature: interface
-        source: "fiche constructeur ou revendeur, URL dans le champ `source`"
-      - motif: "candidats.*.nom"
-        origine: catalogue
-        nature: sans_objet
-        source: "désignation commerciale"
-      - motif: "candidats.*.fabricant"
-        origine: catalogue
-        nature: sans_objet
-        source: "désignation commerciale"
-      - motif: "candidats.*.revision.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "modèle, révision matérielle et firmware lus dans le document constructeur (2026-09-30) ; null = non publié"
-      - motif: "candidats.*.bus"
-        origine: catalogue
-        nature: interface
-        source: "fiche constructeur"
-      - motif: "candidats.*.prix.devise"
-        origine: catalogue
-        nature: sans_objet
-        source: "devise du prix relevé"
-      - motif: "candidats.*.prix.vendeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "vendeur du prix relevé"
-
-      # --- conditions de mesure et autres conditions du couple continu ---
-      - motif: "candidats.*.couple_continu_Nm.autres_conditions.valeur"
-        origine: catalogue
-        nature: interface
-        source: "couple continu constructeur dans une autre condition de mesure"
-      - motif: "candidats.*.couple_continu_Nm.autres_conditions.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "condition de mesure publiée par le constructeur"
-      - motif: "candidats.*.couple_continu_Nm.condition"
-        origine: catalogue
-        nature: sans_objet
-        source: "condition de mesure publiée par le constructeur"
-      - motif: "candidats.*.couple_continu_Nm.plaque_mm"
-        origine: catalogue
-        nature: sans_objet
-        source: "plaque de dissipation de la mesure constructeur"
-      - motif: "candidats.*.prix_revendeur.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "prix revendeur relevé (devise, vendeur, TVA, source)"
-      - motif: "candidats.*.prix.tva_incluse"
-        origine: catalogue
-        nature: sans_objet
-        source: "taux de TVA contenu dans le prix relevé"
-      - motif: "candidats.*.comparatif_seulement"
-        origine: propre
-        nature: sans_objet
-        source: "rattachement au seul comparatif S"
-      - motif: "candidats.*.reference"
-        origine: propre
-        nature: sans_objet
-        source: "candidat de référence, hors classement"
-
-      # --- collecte des critères manquants (2026-10-01) : NON NOTÉE ---
-      - motif: "collecte_criteres_manquants.statut"
-        origine: propre
-        nature: sans_objet
-        source: "statut de la collecte (docs/criteres-manquants.md)"
-      - motif: "collecte_criteres_manquants.date"
-        origine: propre
-        nature: sans_objet
-        source: "date de la collecte"
-      - motif: "collecte_criteres_manquants.proposition"
-        origine: propre
-        nature: sans_objet
-        source: "renvoi au document de proposition"
-      - motif: "collecte_criteres_manquants.documents.*"
-        origine: propre
-        nature: sans_objet
-        source: "correspondance nom court → entrée de params/fournisseurs.yaml"
-      - motif: "collecte_criteres_manquants.candidats.*.*.valeur"
-        origine: catalogue
-        nature: interface
-        source: "document constructeur au registre, page citée dans le champ `source` ; null = non trouvé"
-
-      # --- plages de tension et familles (2026-09-30, soir) ---
-      - motif: "familles.*.protocole_commun.valeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "documentation constructeur de la gamme"
-      - motif: "familles.**"
-        origine: propre
-        nature: sans_objet
-        source: "composition des familles S → M → L, choix de comparaison du 2026-09-30"
-
-      # --- comparatif de la classe S : faits constructeur et revendeur ---
-      - motif: "comparatif_S.candidats"
-        origine: propre
-        nature: sans_objet
-        source: "liste des candidats du comparatif S"
-      - motif: "comparatif_S.references"
-        origine: propre
-        nature: sans_objet
-        source: "liste des références du comparatif S"
-      - motif: "comparatif_S.*.famille_protocole"
-        origine: propre
-        nature: sans_objet
-        source: "classement du protocole, pour le critère de continuité"
-      - motif: "comparatif_S.*.essai_tiers"
-        origine: litterature
-        nature: sans_objet
-        source: "essai publié par un tiers"
-      - motif: "comparatif_S.*.telemetrie.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "protocole ou table mémoire publiés"
-      - motif: "comparatif_S.*.reversibilite.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "fiche constructeur"
-      - motif: "comparatif_S.*.garantie_mois.valeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "manuel constructeur"
-      - motif: "comparatif_S.*.garantie_revendeur.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "politique de garantie publiée par le revendeur, URL et date dans le champ `source` (2026-10-01)"
-      - motif: "comparatif_S.*.disponibilite_revendeur.**"
-        origine: catalogue
-        nature: sans_objet
-        source: "JSON de la boutique du revendeur, consulté le 2026-10-01"
-      - motif: "comparatif_S.*.distribution.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "pages revendeurs relevées"
-      - motif: "comparatif_S.*.prix_revendeur.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "prix revendeur relevé"
-      - motif: "comparatif_S.*.ouverture.*"
-        origine: catalogue
-        nature: sans_objet
-        source: "protocole, SDK et firmware publiés ou non"
-
-      # --- champs de méthode, partout dans le fichier ---
-      - motif: "**.source"
-        origine: propre
-        nature: sans_objet
-        source: "référence de la valeur voisine"
-      - motif: "**.consulte_le"
-        origine: propre
-        nature: sans_objet
-        source: "date de consultation"
-      - motif: "**.note"
-        origine: propre
-        nature: sans_objet
-        source: "commentaire de saisie"
-      - motif: "**.non_verifie"
-        origine: propre
-        nature: sans_objet
-        source: "lecture non vérifiée, gardée pour mémoire"
-      - motif: "**.origine_texte"
-        origine: catalogue
-        nature: sans_objet
-        source: "valeur dans l'unité d'origine du constructeur"
-
-  # ═══════════════════════════════════════════════════════════════════════
-  #  budget.yaml — chiffrage par phase (2026-09-30)
-  # ═══════════════════════════════════════════════════════════════════════
-  #  Un prix n'est pas une cote : nature `sans_objet`.
-  # ═══════════════════════════════════════════════════════════════════════
-  #  banc.yaml — configurations du banc, source unique (2026-10-01)
-  # ═══════════════════════════════════════════════════════════════════════
-  #  Des choix de comparaison PROPOSÉS, pas des cotes : nature `sans_objet`.
-  banc.yaml:
-    regles:
-      - motif: "banc.statut"
-        origine: propre
-        nature: sans_objet
-        source: "statut de la composition : non décidée"
-      - motif: "banc.configurations.*.modeles.*"
-        origine: propre
-        nature: sans_objet
-        source: "nombre d'exemplaires par modèle d'une configuration étudiée (PROPOSÉ, lot E du 2026-10-01)"
-      - motif: "banc.configurations.*.*"
-        origine: propre
-        nature: sans_objet
-        source: "description d'une configuration étudiée (statut, tension, rattachement au comparatif ou au budget)"
-      - motif: "seuil_thermique.ecart_sous_protection_C.valeur"
-        origine: propre
-        nature: sans_objet
-        source: "écart du protocole de banc sous la protection constructeur (docs/protocole-banc.md § 1.5, proposé) ; déplacé de criteres_selection.yaml à la refonte R3"
-      - motif: "seuil_thermique.ecart_sous_protection_C.source"
-        origine: propre
-        nature: sans_objet
-        source: "renvoi au protocole de banc"
-      - motif: "seuil_thermique.*"
-        origine: propre
-        nature: sans_objet
-        source: "statut, actionneur et source du seuil thermique du protocole"
-
-  budget.yaml:
-    regles:
-      - motif: "consultation"
-        origine: propre
-        nature: sans_objet
-        source: "date de consultation des sources"
-      - motif: "tva_ch.valeur"
-        origine: litterature
-        nature: sans_objet
-        source: "taux normal de TVA suisse, droit public"
-      - motif: "tva_fr.valeur"
-        origine: litterature
-        nature: sans_objet
-        source: "taux normal de TVA française, droit public (cadrage § 7.1)"
-      - motif: "livraison"
-        origine: propre
-        nature: sans_objet
-        source: "pays de livraison possibles, Jeremy, 2026-09-30 (~23 h)"
-      - motif: "marge_imprevus.valeur"
-        origine: propre
-        nature: sans_objet
-        source: "paramètre provisoire, à fixer par Jeremy"
-      - motif: "taux_de_change.par_eur.*.valeur"
-        origine: litterature
-        nature: sans_objet
-        source: "taux de référence BCE du 2026-09-30"
-      - motif: "taux_de_change.date_reference"
-        origine: litterature
-        nature: sans_objet
-        source: "date de publication BCE"
-      - motif: "electronique.*.prix.tva_incluse"
-        origine: catalogue
-        nature: sans_objet
-        source: "taux de TVA contenu dans le prix relevé"
-      - motif: "electronique.*.prix.valeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "prix revendeur, URL dans le champ `source`"
-      - motif: "structure.prix.valeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "chiffrage de la découpe, attendu de l'opérateur CN"
-      - motif: "**.prix.devise"
-        origine: catalogue
-        nature: sans_objet
-        source: "devise du prix relevé"
-      - motif: "**.prix.vendeur"
-        origine: catalogue
-        nature: sans_objet
-        source: "vendeur du prix relevé"
-      - motif: "**.article"
-        origine: catalogue
-        nature: sans_objet
-        source: "désignation de l'article chiffré"
-      - motif: "phases.**"
-        origine: propre
-        nature: sans_objet
-        source: "découpage en phases, choix de projet"
-      - motif: "**.source"
-        origine: propre
-        nature: sans_objet
-        source: "référence de la valeur voisine"
-      - motif: "**.consulte_le"
-        origine: propre
-        nature: sans_objet
-        source: "date de consultation"
-      - motif: "**.note"
-        origine: propre
-        nature: sans_objet
-        source: "commentaire de saisie"
-      - motif: "**.non_verifie"
-        origine: propre
-        nature: sans_objet
-        source: "lecture non vérifiée, gardée pour mémoire"
-
-  # criteres_selection.yaml : archivé le 2026-10-01 (refonte R3) dans
-  # archive/params/ ; sa section (un fourre-tout « ** ») est retirée.
-
-  # ═══════════════════════════════════════════════════════════════════════
-  #  exigences_S.yaml — exigences de S, charge utile, relevé (refonte R3)
-  # ═══════════════════════════════════════════════════════════════════════
-  exigences_S.yaml:
-    regles:
-      - motif: "charge_utile.valeur_kg"
-        origine: propre
-        nature: interface
-        source: "hypothèse de travail PROPOSÉE par Claude (arbitrage), prompt R3 du 2026-10-01"
-      - motif: "charge_utile.detail_kg.*"
-        origine: propre
-        nature: interface
-        source: "décomposition de l'hypothèse de charge utile (prompt R3)"
-      - motif: "charge_utile.sensibilite_kg"
-        origine: propre
-        nature: sans_objet
-        source: "bornes de sensibilité de la charge utile (prompt R3)"
-      - motif: "electronique_toddlerbot.masse_kg.valeur"
-        origine: litterature
-        nature: interface
-        source: "arXiv 2502.00893v1, p. 13 (estimation de conception)"
-      - motif: "electronique_toddlerbot.masse_kg.autres_valeurs.valeur"
-        origine: litterature
-        nature: interface
-        source: "arXiv 2502.00893v1, p. 14 (masses de batterie)"
-      - motif: "electronique_toddlerbot.incluse_dans_M0.valeur"
-        origine: litterature
-        nature: sans_objet
-        source: "déduit de arXiv 2502.00893v1, p. 4-6"
-      - motif: "releve.inclinaison_tibia_deg.valeur"
-        origine: propre
-        nature: sans_objet
-        source: "hypothèse de Claude Code, non sourcée (angle, pas une cote)"
-      - motif: "releve.inclinaison_tibia_deg.sensibilite"
-        origine: propre
-        nature: sans_objet
-        source: "bornes de sensibilité de l'angle du tibia"
-      - motif: "releve.repartition_jambes.valeur"
-        origine: propre
-        nature: sans_objet
-        source: "hypothèse d'appui symétrique"
-      - motif: "releve.articulations"
-        origine: propre
-        nature: sans_objet
-        source: "articulations vérifiées au relevé (noms de params/joints.yaml)"
-      - motif: "**"
-        fourre_tout: true
-        origine: propre
-        nature: sans_objet
-        source: "textes : statuts, sources, notes et règles de verdict des exigences (aucune cote)"
+    - motif: reference_toddlerbot.hauteur_m.valeur
+      origine: amont
+      source: taille publiée de ToddlerBot (fiche 0001)
+    - motif: reference_toddlerbot.masse_totale_kg.valeur
+      origine: amont
+      source: somme des body_mass du MJCF amont épinglé
+    - motif: controle_coherence.toddlerbot.hauteur_m.valeur
+      origine: amont
+      source: taille publiée de ToddlerBot (fiche 0001)

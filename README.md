@@ -32,7 +32,7 @@ transmission, masses, hauteur, noms d'articulations, empreintes des poids.
 - `params/joints.yaml` ;
 - `params/ckpts.manifest.yaml` ;
 - dans `params/actionneurs.yaml` et `params/anthropometry.yaml`, les seules
-  entrées d'origine `amont` (`scripts/audit_origines.py --amont` les liste).
+  entrées d'origine `amont` (`scripts/provenance_amont.py` les compte).
 
 Ces valeurs viennent de **ToddlerBot**, de Haochen Shi, Weizhuo Wang, Shuran
 Song et C. Karen Liu (Stanford) : <https://github.com/hshi74/toddlerbot>,
@@ -64,7 +64,8 @@ commande qui échoue quand elle est enfreinte.
 
 ```sh
 .venv/bin/python scripts/regenerer.py          # tout : pièces, site, contrôles
-.venv/bin/python scripts/audit_origines.py --strict   # d'où vient chaque cote
+.venv/bin/python scripts/provenance_amont.py   # valeurs d'origine ToddlerBot
+.venv/bin/python scripts/controle_articulations.py   # mêmes noms partout
 .venv/bin/python scripts/controle_depot.py     # règle 4 : rien de binaire
 .venv/bin/python parts/semelle_apprentissage.py       # une pièce seule
 ```
@@ -81,7 +82,7 @@ l'autre environnement, et il refuse de démarrer sous le mauvais.
 
 ```
 params/     source de vérité dimensionnelle (anthropometry, hardware, joints)
-            + origines.yaml et nullites.yaml, qui DÉCLARENT des règles
+            + origines.yaml, qui déclare la provenance amont
 parts/      pièces paramétriques (Python) et leurs relevés d'origines
 scripts/    régénération, audit, plans de découpe, contrôles
 web/        feuille de style et scripts du site (aucune dépendance, aucun CDN)

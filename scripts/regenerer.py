@@ -50,16 +50,17 @@ EXPORTS = REPO / "exports" / "parts"
 
 
 
-# Fiche 0020 : un `null` a trois sens, pas un. La condition qui les
-# distingue est LUE dans params/nullites.yaml, jamais écrite ici.
+# Refonte R4 (2026-10-01) : l'audit de toutes les valeurs, les règles de
+# nullité et le contrôle des règles déclaratives sont archivés
+# (archive/scripts/). Restent les contrôles qui protègent le robot.
+import controle_articulations
 import controle_depot
-import controle_regles
-import nullites as NU
 import procedes as PROC
+import provenance_amont
 import pages
 from pages import (  # les gabarits vivent dans pages.py (fiche 0024)
     FORMATS, page_piece, page_atelier, page_index, page_etat,
-    page_tracabilite, etat_procede, e, val)
+    page_provenance, etat_procede, e, val)
 
 
 
@@ -179,20 +180,11 @@ def lire_releves() -> list[dict]:
 
 
 
-def lancer_audit() -> dict:
-    sys.path.insert(0, str(REPO / "scripts"))
-    import audit_origines as A
-    cotes = []
-    for s in A.SOURCES:
-        if s.disponible():
-            cotes += s.cotes()
-    o, n = {}, {}
-    for c in cotes:
-        k = c.get("origine") or "non_qualifie"
-        o[k] = o.get(k, 0) + 1
-        k2 = c.get("nature") or "non déclarée"
-        n[k2] = n.get(k2, 0) + 1
-    return {"total": len(cotes), "origines": o, "natures": n}
+def lire_provenance() -> dict:
+    """{fichier: nombre de valeurs amont}, pour les pages ; le contrôle est plus bas."""
+    decl = yaml.safe_load(provenance_amont.DECLARATION.read_text(encoding="utf-8"))
+    comptes, _ = provenance_amont.inventaire(decl, REPO / "params", PARTS)
+    return comptes
 
 
 BALISES_VIDES = {"meta", "link", "br", "hr", "img", "input", "source"}
@@ -334,10 +326,9 @@ def main(argv=None) -> int:
     pieces = lire_releves()
     print(f"   {len(pieces)} pièce(s)")
 
-    print("\n3. Audit d'origine")
-    audit = lancer_audit()
-    print(f"   {audit['total']} valeurs — " +
-          ", ".join(f"{k} {v}" for k, v in sorted(audit["origines"].items(), key=lambda x: -x[1])))
+    print("\n3. Provenance amont")
+    prov = lire_provenance()
+    print(f"   {sum(prov.values())} valeurs d'origine ToddlerBot dans {len(prov)} fichiers")
 
     # contours et procédé : lus une fois, pour le schéma et les voyants
     hw = yaml.safe_load((REPO / "params/hardware.yaml").read_text("utf-8"))
@@ -373,28 +364,36 @@ def main(argv=None) -> int:
             d.mkdir(parents=True)
             (d / "index.html").write_text(gab(p), encoding="utf-8")
 
-    (SITE / "index.html").write_text(page_index(pieces, audit), encoding="utf-8")
+    (SITE / "index.html").write_text(page_index(pieces, prov), encoding="utf-8")
     (SITE / "etat").mkdir()
-    (SITE / "etat" / "index.html").write_text(page_etat(pieces, audit, hw, an, jo),
+    (SITE / "etat" / "index.html").write_text(page_etat(pieces, prov, hw, an, jo),
                                               encoding="utf-8")
-    (SITE / "tracabilite").mkdir()
-    (SITE / "tracabilite" / "index.html").write_text(page_tracabilite(audit), encoding="utf-8")
+    (SITE / "provenance").mkdir()
+    (SITE / "provenance" / "index.html").write_text(page_provenance(prov), encoding="utf-8")
     (SITE / "data" / "pieces.json").write_text(json.dumps(
         [{k: (str(v) if isinstance(v, Path) else
               {kk: str(vv) for kk, vv in v.items()} if k == "fichiers" else v)
           for k, v in p.items() if not k.startswith("_")} for p in pieces],
         ensure_ascii=False, indent=2), encoding="utf-8")
-    (SITE / "data" / "audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2),
-                                              encoding="utf-8")
+    (SITE / "data" / "provenance.json").write_text(json.dumps(prov, ensure_ascii=False, indent=2),
+                                                   encoding="utf-8")
 
     # Règle 4, sur TOUT le dépôt — pas seulement sur les répertoires
     # ignorés. C'est la classe de trou, pas le trou (fiche 0024 §4).
     if controle_depot.main() != 0:
         return 1
-    # Ne lit que params/, qui EST copié dans l'image : ce contrôle vaut
-    # aussi en construction Docker, contrairement aux deux voisins.
-    if controle_regles.main() != 0:
+    # Les trois contrôles qui protègent le robot (refonte R4, 2026-10-01).
+    if provenance_amont.main() != 0:
         return 1
+    if controle_articulations.main() != 0:
+        return 1
+    rayon = PROC.controler_rayon()
+    if rayon:
+        print("\n✗ RAYON INTÉRIEUR MINIMAL :")
+        for r_ in rayon:
+            print(f"   {r_}")
+        return 1
+    print(f"   rayon intérieur minimal conforme sur {len(PROC.reglages())} réglages")
     # L'index des fiches (index_fiches.py) est archivé depuis la refonte
     # R2 du 2026-10-01 : archive/scripts/index_fiches.py.
 

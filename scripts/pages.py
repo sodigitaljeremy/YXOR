@@ -18,8 +18,11 @@ troisième module dont l'unique raison d'être serait de casser un cycle
 d'imports.
 
 Ce module ne lit aucun fichier de `params/` de sa propre initiative,
-à deux exceptions déclarées en tête : les règles de nullité et le
-document matériel, qu'il faut pour résoudre une condition à l'affichage.
+à une exception déclarée en tête : le document matériel.
+
+Refonte R4 (2026-10-01) : les règles de nullité (nullites.py) et l'audit
+de toutes les valeurs sont archivés. Une valeur absente s'affiche
+« non déterminé » ; la page « traçabilité » devient « provenance amont ».
 """
 from __future__ import annotations
 
@@ -34,7 +37,6 @@ SITE = REPO / "site"
 
 sys.path.insert(0, str(REPO / "scripts"))
 from plan_decoupe import ordonner_cotes, svg_schema  # noqa: E402,F401
-import nullites as NU  # noqa: E402
 import procedes as PROC  # noqa: E402
 
 # `ECHECS` est renseigné par regenerer.py avant l'engendrement : le
@@ -98,25 +100,12 @@ LIB_NATURE = {
 FORMATS = [("dxf", "DXF", "découpe 2D"), ("step", "STEP", "échange CAO"),
            ("stl", "STL", "affichage 3D"), ("pdf", "PDF", "plan A4 à imprimer")]
 INDET = '<span class="ind">non déterminé</span>'
-REGLES_NUL = NU.charger()
-# Document complet : les conditions `si: {chemin: ...}` de la fiche
-# 0033 s'y résolvent, la machine n'étant plus une clé sœur.
-HW_DOC = PROC.charger()
 def prose(txt: str) -> str:
-    """Échappe, puis rend `ceci` en <code>ceci</code>.
-
-    Les motifs de nullites.yaml NOMMENT le champ dont ils dépendent : sans
-    cette conversion, le lecteur voit des accents graves au lieu d'un
-    identifiant, et l'identifiant est justement l'information.
-    """
+    """Échappe, puis rend `ceci` en <code>ceci</code>."""
     out, morceaux = [], e(txt).split("`")
     for i, m in enumerate(morceaux):
         out.append(f"<code>{m}</code>" if i % 2 and i < len(morceaux) - 1 else m)
     return "".join(out)
-def nul(etat: str, motif: str = "") -> str:
-    """Une valeur absente se DIT, et dit pourquoi elle est absente."""
-    t = f' title="{e(motif)}"' if motif else ""   # attribut : pas de balise
-    return f'<span class="{NU.CLS[etat]}"{t}>{NU.LIB[etat]}</span>'
 # ── Hiérarchie du tableau d'origines ──────────────────────────────────
 # Pas l'ordre des étiquettes : l'ACTION que chacune appelle. On balaie
 # pour savoir quoi faire, pas pour lire une taxonomie.
@@ -142,39 +131,14 @@ def rang_cote(c) -> int:
     if o == "amont":
         return 2
     return 3
-def _chemin_nul(r: dict, cle: str) -> str:
-    """Le chemin RÉEL de la cote, dans les quatre tables.
+def _manque(p: dict, cles) -> list:
+    """Ce qui MANQUE : toute clé dont la valeur est absente.
 
-    L'épaisseur vient de la matière, la saignée du réglage. Le chargeur
-    les met à plat, mais les motifs de nullites.yaml visent la vraie
-    table : se tromper ici ferait taire une règle sans que rien ne le
-    dise — et la valeur ressortirait en rouge « à mesurer » alors qu'elle
-    se déduit.
+    Jusqu'à la refonte R4 (2026-10-01), nullites.yaml en exceptait les
+    valeurs « sans objet ». Aucune ne l'était parmi ces clés : les verdicts
+    dessinable et coupable sont inchangés (vérifié avant l'archivage).
     """
-    if cle in PROC.CLES_MATIERE:
-        return f"matieres.{r.get('matiere')}.{cle}"
-    return f"reglages.{r.get('id')}.{cle}"
-def _manque(p: dict, cles, prefixe="") -> list:
-    """Ce qui MANQUE, quelle qu'en soit la raison.
-
-    Piège écarté ici : « à mesurer » et « manquant » ne sont pas la même
-    chose. Le rayon intérieur minimal de la découpe métal se déduira du
-    moyen — il n'est donc pas à MESURER — mais il manque quand même, et
-    sans lui on ne peut pas dessiner. Le confondre avec « rien à faire »
-    ferait afficher « dessinable » une pièce qu'on ne peut pas dessiner.
-
-    Seul `sans_objet` sort de la liste : là, il n'y a rien, pas même en
-    attente.
-    """
-    out = []
-    for k in cles:
-        if p.get(k) is not None:
-            continue
-        st = NU.etat(REGLES_NUL.get("hardware.yaml", []),
-                     _chemin_nul(p, k), p, document=HW_DOC)
-        if st["etat"] != NU.SANS_OBJET:
-            out.append((k, st["etat"]))
-    return out
+    return [(k, "ind") for k in cles if p.get(k) is None]
 def etat_procede(p: dict, nom: str = "*", besoins: list | None = None) -> dict:
     """Deux niveaux, jamais un voyant unique.
 
@@ -193,25 +157,18 @@ def etat_procede(p: dict, nom: str = "*", besoins: list | None = None) -> dict:
         k for k in CLES_COUPE if k in besoins)
     mc = _manque(p, cles_coupe)
     if p.get("machine_nom") is None:
-        mc.insert(0, ("moyen de découpe", NU.A_MESURER))
+        mc.insert(0, ("moyen de découpe", "ind"))
     return dict(dessinable=not md, coupable=not (md or mc), impossible=False,
                 manque_dessin=md, manque_coupe=md + mc,
                 sans_besoin=besoins is not None and not mc and bool(
                     _manque(p, CLES_COUPE)))
 def e(x) -> str:
     return html.escape(str(x), quote=True)
-def val(x, unite="", ind=INDET, regles=None, cle="", voisines=None) -> str:
-    """Jamais une case vide : une valeur absente se DIT, et dit pourquoi.
-
-    Sans `regles`, on retombe sur « non déterminé » — le défaut de la
-    fiche 0020 : l'absence de déclaration ressort en rouge.
-    """
+def val(x, unite="", ind=INDET) -> str:
+    """Jamais une case vide : une valeur absente se DIT (« non déterminé »)."""
     if not (x is None or x == "" or x == "null"):
         return f"{e(x)}{unite}"
-    if regles is None:
-        return ind
-    st = NU.etat(regles, cle, voisines or {}, document=HW_DOC)
-    return nul(st["etat"], st["parce_que"])
+    return ind
 def bandeau() -> str:
     """Si l'on publie malgré un échec, la page doit le CRIER.
 
@@ -237,7 +194,7 @@ def ecourter(txt: str, n: int = 240) -> str:
     return txt[:n].rsplit(" ", 1)[0].rstrip(" ,;:.") + "…"
 def page(titre, corps, fil=None, cls="") -> str:
     nav = ('<nav><a href="/">Pièces</a><a href="/etat/">État du projet</a>'
-           '<a href="/tracabilite/">Traçabilité</a></nav>')
+           '<a href="/provenance/">Provenance amont</a></nav>')
     return f"""<!doctype html><html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(titre)} — YXOR</title><link rel="stylesheet" href="/assets/style.css?v={COMMIT}">
@@ -463,10 +420,8 @@ def page_piece(p) -> str:
   <dt>Voile minimal</dt><dd class="num">{val(p.get('voile_min_mm'),' mm')}</dd>
   <dt>Fixation</dt><dd class="txt">{val(p.get('fixation'))}</dd>
   <dt>Anisotrope</dt><dd class="txt">{'oui' if p.get('anisotrope') else 'non'}</dd>
-  <dt>Cannelures</dt><dd class="txt">{val(
-      p.get('orientation_cannelures_deg'), '°',
-      regles=REGLES_NUL.get('piece', []),
-      cle='orientation_cannelures_deg', voisines=p)}</dd>
+  <dt>Cannelures</dt><dd class="txt">{val(p.get('orientation_cannelures_deg'), '°')
+      if p.get('anisotrope') else '<span class="so">sans objet (matière isotrope)</span>'}</dd>
   <dt>Taille</dt><dd class="txt">{val(p.get('taille'))}</dd>
   <dt>Volume</dt><dd class="num">{val(p.get('volume_mm3'),' mm³')}</dd>
 </dl>
@@ -539,7 +494,7 @@ def page_atelier(p) -> str:
 <p class="spec">{val(p.get('fixation'))}</p></div>
 <p style="margin-top:20px"><a href="/piece/{e(p['nom'])}/">← Fiche complète</a></p>
 """, fil="Fiche atelier — découpe", cls="atelier")
-def page_index(pieces, audit) -> str:
+def page_index(pieces, prov) -> str:
     items = "".join(f"""<li data-t="{e((p.get('titre','') + ' ' + p['nom'] + ' ' +
         str(p.get('materiau',''))).lower())}">
       <div class="t"><a href="/piece/{e(p['nom'])}/">{e(p.get('titre') or p['nom'])}</a></div>
@@ -557,35 +512,25 @@ q.addEventListener('input',()=>{{const v=q.value.trim().toLowerCase();
   li.forEach(x=>x.hidden = v && !(x.dataset.t||'').includes(v));}});
 </script>
 <h2>Où en est le projet</h2>
-<p class="sous">{audit['total']} valeurs inventoriées, dont
-{audit['origines'].get('amont', 0)} d'origine amont.</p>
+<p class="sous">{sum(prov.values())} valeurs d'origine ToddlerBot inventoriées.</p>
 <p><a href="/etat/">État du projet — ce qu'il reste à faire →</a></p>
-<p><a href="/tracabilite/">Traçabilité des cotes →</a></p>""")
-def page_tracabilite(audit) -> str:
-    total = max(audit["total"], 1)
-    segs = "".join(
-        f'<div style="width:{100*audit["origines"].get(o,0)/total:.3f}%;'
-        f'background:var(--o-{o})"></div>' for o in ORIGINES if audit["origines"].get(o))
-    lignes = "".join(
-        f"<tr><td>{badge(o)}"
-        + repli("définition", e(LIB_ORIGINE.get(o, (o, ''))[1]))
-        + f"</td><td class='num'>{n}</td>"
-        f"<td class='num'>{100*n/total:.1f} %</td>"
-        f"<td class='src pliable'>{e(LIB_ORIGINE.get(o,(o,''))[1])}</td></tr>"
-        for o, n in sorted(audit["origines"].items(), key=lambda kv: -kv[1]))
-    nat = "".join(f"<tr><td>{e(LIB_NATURE.get(k,k))}</td><td class='num'>{v}</td></tr>"
-                  for k, v in sorted(audit["natures"].items(), key=lambda kv: -kv[1]))
-    return page("Traçabilité des cotes", f"""
-<p class="sous">Toute cote du projet porte une origine — d'où vient le nombre — et une
-nature — ce qui le détermine. Cet inventaire ne dit pas ce qu'il faut en conclure.</p>
-<div class="barre">{segs}</div>
-<div class="carte"><div class="defile"><table><thead><tr><th>Origine</th><th>Valeurs</th><th>Part</th>
-<th class="pliable">Définition</th></tr></thead><tbody>{lignes}</tbody></table></div></div>
-<h2>Par nature</h2>
-<div class="carte"><div class="defile"><table><tbody>{nat}</tbody></table></div></div>
-<div class="note">Les cotes d'origine <b>amont</b> viennent de ToddlerBot, dont la mécanique
-est publiée en licence non commerciale. Leur inventaire est un fait, pas un avis juridique.</div>""")
-def page_etat(pieces, audit, hw, an, jo) -> str:
+<p><a href="/provenance/">Provenance amont →</a></p>""")
+def page_provenance(prov) -> str:
+    """Les valeurs d'origine ToddlerBot, fichier par fichier (refonte R4)."""
+    total = sum(prov.values())
+    lignes = "".join(f"<tr><td><code>{e(f)}</code></td><td class='num'>{n}</td></tr>"
+                     for f, n in prov.items())
+    return page("Provenance amont", f"""
+<p class="sous">{total} valeurs du dépôt viennent de ToddlerBot, dans {len(prov)} fichiers.
+Le compte est tenu par <code>scripts/provenance_amont.py</code>, qui échoue si une
+déclaration ne correspond plus à rien.</p>
+<div class="carte"><div class="defile"><table><thead><tr><th>Fichier</th><th>Valeurs amont</th>
+</tr></thead><tbody>{lignes}</tbody></table></div></div>
+<div class="note">La mécanique de ToddlerBot est publiée sous licence CC BY-NC-SA 4.0 :
+aucune de ses géométries n'entre dans une pièce YXOR. La portée de la licence sur des
+valeurs numériques n'est pas tranchée ; cet inventaire est un fait, pas un avis
+juridique.</div>""")
+def page_etat(pieces, prov, hw, an, jo) -> str:
     # Tout est DÉRIVÉ : les null de hardware.yaml, les verifie:false de
     # anthropometry.yaml, les confiance de joints.yaml. Rien n'est saisi,
     # donc rien ne peut se désynchroniser.
@@ -593,7 +538,7 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
     for nom, pr in PROC.reglages(hw).items():
         st = etat_procede(pr, nom)
         manque = ", ".join(
-            f'<span class="{NU.CLS[et]}">{e(m.replace("_", " "))}</span>'
+            f'<span class="{et}">{e(m.replace("_", " "))}</span>'
             for m, et in st["manque_coupe"]) or "—"
         if st["impossible"]:
             # Ni dessinable ni coupable, mais ce n'est PAS un manque :
@@ -619,48 +564,22 @@ def page_etat(pieces, audit, hw, an, jo) -> str:
             f'{"oui" if st["coupable"] else "non"}</span></td>'
             f'<td class="src pliable">{manque}</td></tr>')
 
-    # Le tri se fait sur la DÉCLARATION de la fiche 0020, plus sur le
-    # préfixe du nom de la clé. L'ancien filtre triait juste pour la
-    # mauvaise raison, et aurait laissé passer tout champ de prose
-    # nommé autrement.
-    par_etat = {NU.A_MESURER: {}, NU.SE_DEDUIRA: {}}
-    # `reglages` est une LISTE indexée par un `id` écrit à la main
-    # (fiche 0026) : elle ne se balaie pas comme les tables. L'oublier
-    # ferait disparaître toutes les saignées du compte « à mesurer » —
-    # le chiffre resterait affiché, simplement faux et rassurant.
+    # Les valeurs ABSENTES de hardware.yaml, groupées par clé. Jusqu'à la
+    # refonte R4, nullites.yaml les séparait en « à mesurer » et « se
+    # déduira » ; cette distinction est archivée avec lui.
+    absentes = {}
     a_balayer = [(f, nom, d) for f in ("machines", "materiaux", "matieres")
                  for nom, d in (hw.get(f) or {}).items()]
     a_balayer += [("reglages", r["id"], r) for r in (hw.get("reglages") or [])]
     for fam, nom, d in a_balayer:
-            for k, v in d.items():
-                if v is not None:
-                    continue
-                st = NU.etat(REGLES_NUL.get("hardware.yaml", []),
-                             f"{fam}.{nom}.{k}", d, document=hw)
-                if st["etat"] == NU.SANS_OBJET:
-                    continue
-                # Groupé par (clé, motif) : deux champs de même nom
-                # peuvent être absents pour des raisons DIFFÉRENTES. Le
-                # rayon intérieur minimal se déduit de l'épaisseur au
-                # cutter, du moyen de découpe au métal. Les fondre
-                # afficherait la mauvaise raison pour l'un des deux.
-                g = (k, st["parce_que"])
-                par_etat[st["etat"]].setdefault(g, []).append(f"{fam}.{nom}")
-
-    def tableau(grp, avec_motif=False):
-        return "".join(
-            f"<tr><td><code>{e(k)}</code>"
-            + (repli("pourquoi", prose(m)) if avec_motif else "")
-            + repli("où", e(', '.join(v)))
-            + f"</td><td class='num'>{len(v)}</td>"
-            + (f"<td class='src pliable'>{prose(m)}</td>" if avec_motif else "")
-            + f"<td class='src pliable'>{e(', '.join(v))}</td></tr>"
-            for (k, m), v in sorted(grp.items(), key=lambda kv: (-len(kv[1]), kv[0])))
-
-    amesurer = [c for v in par_etat[NU.A_MESURER].values() for c in v]
-    deduites = [c for v in par_etat[NU.SE_DEDUIRA].values() for c in v]
-    lm = tableau(par_etat[NU.A_MESURER])
-    ld = tableau(par_etat[NU.SE_DEDUIRA], avec_motif=True)
+        for k, v in d.items():
+            if v is None:
+                absentes.setdefault(k, []).append(f"{fam}.{nom}")
+    la = "".join(
+        f"<tr><td><code>{e(k)}</code>" + repli("où", e(', '.join(v)))
+        + f"</td><td class='num'>{len(v)}</td><td class='src pliable'>{e(', '.join(v))}</td></tr>"
+        for k, v in sorted(absentes.items(), key=lambda kv: (-len(kv[1]), kv[0])))
+    n_abs = sum(len(v) for v in absentes.values())
 
     nv = [k for k, v in an["ratios"].items()
           if isinstance(v, dict) and v.get("verifie") is False]
@@ -684,20 +603,11 @@ Un fichier dessinable mais non coupable a l'air complet : c'est le piège.</p>
 <th>Dessiner</th><th>Couper</th><th class="pliable">Manque pour couper</th></tr></thead>
 <tbody>{"".join(lignes)}</tbody></table></div></div>
 
-<h2>À mesurer <span class="cpt">{len(amesurer)} valeurs</span></h2>
-<p class="sous">Rien ne les empêche : personne ne les a relevées.</p>
+<h2>Valeurs absentes <span class="cpt">{n_abs} valeurs</span></h2>
+<p class="sous">Champs de <code>hardware.yaml</code> encore vides.</p>
 <div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
 <th>Nombre</th><th class="pliable">Où</th></tr></thead>
-<tbody>{lm}</tbody></table></div></div>
-
-<h2>Se déduira <span class="cpt">{len(deduites)} valeurs</span></h2>
-<p class="sous">Absentes, mais <b>pas à mesurer</b> : elles dérivent d'un
-autre champ, lui-même absent. Les compter avec les précédentes gonflerait
-le travail restant de {round(100 * len(deduites) / max(1, len(amesurer) + len(deduites)))} %.</p>
-<div class="carte"><div class="defile"><table><thead><tr><th>Clé</th>
-<th>Nombre</th><th class="pliable">Pourquoi</th>
-<th class="pliable">Où</th></tr></thead>
-<tbody>{ld}</tbody></table></div></div>
+<tbody>{la}</tbody></table></div></div>
 
 <h2>Non vérifié <span class="cpt">{len(nv)} sur {len(an['ratios'])}</span></h2>
 <div class="carte"><p class="src">Ratios de <code>anthropometry.yaml</code> dont
@@ -712,8 +622,7 @@ n'apparaît dans le texte.</p>
 <b>décrit</b> pas. Une confiance déduite du modèle n'est pas une source
 matérielle.</p></div>
 
-<h2>Traçabilité</h2>
-<div class="carte"><p class="src">{audit['total']} valeurs inventoriées,
-dont <b>{audit['origines'].get('amont', 0)}</b> d'origine amont.
-<a href="/tracabilite/">Détail →</a></p></div>
+<h2>Provenance amont</h2>
+<div class="carte"><p class="src"><b>{sum(prov.values())}</b> valeurs d'origine ToddlerBot.
+<a href="/provenance/">Détail →</a></p></div>
 """)

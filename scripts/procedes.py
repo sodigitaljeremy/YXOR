@@ -118,6 +118,30 @@ def defaut(hw: dict | None = None) -> str:
     return hw.get("reglage_defaut") or ""
 
 
+def controler_rayon() -> list[str]:
+    """`rayon_interieur_min == 0,5 x epaisseur`, sur TOUTE la table (CLAUDE.md).
+
+    Déplacé le 2026-10-01 (refonte R4) depuis scripts/controle_regles.py,
+    archivé : ce contrôle-là protège les pièces, il est gardé. Un réglage
+    IMPOSSIBLE est sauté (ses cotes n'ont pas de sens), comme un réglage
+    dont l'épaisseur ou le rayon est inconnu : la règle ne dit rien tant
+    qu'un de ses membres manque.
+    """
+    fautes = []
+    for rid, r in reglages().items():
+        if r.get("valide") is False:
+            continue
+        ep, ri = r.get("epaisseur"), r.get("rayon_interieur_min")
+        if ep is None or ri is None:
+            continue
+        if abs(ri - 0.5 * ep) > 1e-9:
+            fautes.append(
+                f"hardware.yaml / {rid} : rayon_interieur_min = {ri} mm, "
+                f"or 0,5 x epaisseur = {0.5 * ep} mm (CLAUDE.md). "
+                f"Un rayon rentrant trop faible déchire la matière.")
+    return fautes
+
+
 def main() -> int:
     hw = charger()
     tous = reglages(hw)

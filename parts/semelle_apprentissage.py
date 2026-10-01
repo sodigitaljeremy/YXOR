@@ -406,7 +406,7 @@ def main(argv=None) -> int:
                              f"« {cle} », absente du relevé. Clés relevées : "
                              + ", ".join(sorted(connues)))
 
-    # --- relevé, lu par scripts/audit_origines.py ET scripts/regenerer.py ---
+    # --- relevé, lu par scripts/provenance_amont.py ET scripts/regenerer.py ---
     # La pièce publie ses propres métadonnées : elle seule les connaît.
     # L'application ne fait que les lire — elle ne crée aucune donnée.
     proc = reg
