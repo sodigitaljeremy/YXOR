@@ -31,6 +31,11 @@ Les télécharger :
        couple_continu = C_essai × √((T_lim − T_amb) / (T∞ − T_amb))
    et k = couple_continu / 3,5 N·m.
 
+PROPRE AU J4310 (précisé le 2026-10-01, refonte R6). Ce script estime le
+couple continu du Damiao J4310 à partir de ses courbes constructeur ; il
+ne concerne pas le RS00 retenu pour S (fiche 0065). De params/banc.yaml,
+il ne lit que l'écart sous la protection (10 °C).
+
 UN SEUL SEUIL THERMIQUE (2026-09-30, 22 h 30). T_lim est celui du
 protocole de banc : la protection du constructeur (params/actionneurs.yaml,
 dm_j4310_48v.protection_thermique_C, 100 °C) moins l'écart du protocole
@@ -95,7 +100,9 @@ def seuil_thermique() -> tuple[float, str]:
     import yaml
     cat = yaml.safe_load((REPO / "params" / "actionneurs.yaml").read_text(encoding="utf-8"))
     ca = yaml.safe_load((REPO / "params" / "banc.yaml").read_text(encoding="utf-8"))["seuil_thermique"]
-    prot = cat["candidats"][ca["actionneur"]]["protection_thermique_C"]["valeur"]
+    # Les courbes sont celles du J4310 : SA protection (ACTIONNEUR), pas celle
+    # de l'actionneur du banc, le RS00 depuis la refonte R6 (2026-10-01).
+    prot = cat["candidats"][ACTIONNEUR]["protection_thermique_C"]["valeur"]
     ecart = ca["ecart_sous_protection_C"]["valeur"]
     return float(prot - ecart), f"protection {prot:g} °C − {ecart:g} °C du protocole"
 

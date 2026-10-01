@@ -41,8 +41,8 @@ assemblage ni nomenclature.
 
 **Prochaine étape** (PROPOSÉE par Claude Code, non décidée) :
 
-- finir la refonte du dépôt : R6, protocole du banc ; R7, vérification
-  finale ;
+- finir la refonte du dépôt : R7, vérification finale (R6, le protocole
+  du banc v2, est fait : `docs/protocole-banc.md`) ;
 - puis la couche logicielle d'articulation et son backend MuJoCo, sans
   aucun achat ;
 - puis la première pièce de jambe à H_S, et le banc de vérification du

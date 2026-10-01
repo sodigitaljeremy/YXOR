@@ -6,7 +6,7 @@
 # Lu par :
 #   scripts/dimensionnement.py         phases `banc` de params/budget.yaml (champ `configuration`)
 #   scripts/estimation_thermique.py    `seuil_thermique` (écart sous la protection)
-# Renvoi depuis : docs/protocole-banc.md § 2 ter (dispersion).
+# Renvoi depuis : docs/protocole-banc.md § 0 et § 3 (mesure 5, dispersion).
 #
 # `modeles` donne, PAR MODÈLE, le NOMBRE D'EXEMPLAIRES. La DISPERSION entre
 # exemplaires exige au moins 2 exemplaires d'un même modèle.
@@ -21,28 +21,22 @@
 
 banc:
   statut: "composition NON DÉCIDÉE"
+  # MODIFIÉ le 2026-10-01 (refonte R6) : les configurations qui ne servent
+  # plus sont retirées (qualification à trois modèles, feetech, rs05_x2,
+  # verification_j4310_x2) ; historique git. Reste celle du protocole v2.
   configurations:
-    qualification:
-      modeles: {dm_j4310_48v: 1, edulite05: 1, rs05: 1}
+    rs00_x2:
+      modeles: {rs00: 2}
       statut: "composition NON DÉCIDÉE"
-      origine: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ"
-    feetech:
-      modeles: {sts3250: 2}
-      libelle: "banc d'apprentissage"
-      statut: "composition NON DÉCIDÉE"
-    rs05_x2:
-      modeles: {rs05: 2}
-      statut: "composition NON DÉCIDÉE"
-      note: "chiffrage historique de la phase `banc` du budget (cadrage D, 2026-09-30)"
-    verification_j4310_x2:
-      modeles: {dm_j4310_48v: 2}
-      statut: "composition NON DÉCIDÉE"
-      note: "option « vérification » du budget (2026-09-30, nuit), proposée quand Damiao était en tête ; Damiao ne gagne plus depuis le recalcul en 48 V"
+      note: "banc de vérification du RS00 (fiche 0065, condition b ; docs/protocole-banc.md § 0)"
 
 # Écart du protocole sous la protection thermique du constructeur.
 # Déplacé le 2026-10-01 (refonte R3) depuis params/criteres_selection.yaml
 # (banc.critere_abandon), archivé. Valeur et source inchangées.
 seuil_thermique:
   statut: "proposé, à valider par Jeremy"
-  actionneur: dm_j4310_48v      # courbes d'échauffement constructeur lues par estimation_thermique.py
+  # MODIFIÉ le 2026-10-01 (refonte R6) : était dm_j4310_48v. Le banc vérifie
+  # le RS00 : protection 135 °C retenue par la fiche 0064 (catalogue,
+  # rs00.protection_thermique_C), arrêt 10 °C dessous, soit 125 °C.
+  actionneur: rs00
   ecart_sous_protection_C: {valeur: 10, source: "docs/protocole-banc.md § 1.5 (proposé) : un palier s'arrête 10 °C sous la protection du constructeur"}
