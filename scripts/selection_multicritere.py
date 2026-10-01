@@ -812,6 +812,10 @@ def _seuil_fin(evalue, balayage, cle_nominal):
     return bascule, None
 
 
+# Deux scores (PROPOSITION, 2026-10-01) : les mêmes notes, les poids décidés
+# renormalisés dans chaque groupe. Le verdict retenu reste le score unique.
+GROUPE_TECH = ("capacite", "continuite", "robustesse", "masse", "ouverture", "tension_securite")
+GROUPE_APPRO = ("cout", "fiabilite_fournisseur", "disponibilite")
 K2_PAS = [round(1.0 - 0.05 * i, 2) for i in range(11)]          # 1,00 → 0,50
 K2_CODES = {"damiao": "D", "robstride_el05": "E", "robstride": "R", "cubemars": "C", "myactuator": "M"}
 
@@ -941,6 +945,7 @@ def frontieres_k2(carte, borne) -> str:
 
 def doc_familles(r, date) -> str:
     nom_k2 = {fm["id"]: fm["nom"] for fm in r["fams"]}
+    pd = r["poids"]
     poids, crit = r["poids"], r["crit"]
     L = []
     A = L.append
@@ -1126,6 +1131,29 @@ def doc_familles(r, date) -> str:
           f"{f(e2['k_bas'] * rmin2)}–{f(e2['k_haut'] * rmax2)} **au blocage** (hypothèse sur hypothèse). "
           "La zone Damiao est donc à la limite haute, ou au-delà, de ce que les données laissent attendre.")
     A("")
+    A("---\n\n## 3 quater — Deux scores, technique et approvisionnement : PROPOSITION\n")
+    A("*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* "
+      "**Le verdict retenu reste celui du § 3**, au score unique. Ici, les mêmes notes sont séparées en "
+      "deux scores, avec les poids décidés **renormalisés dans chaque groupe** :\n")
+    A("- **technique** : " + ", ".join(f"{k_} {pd[k_]}" for k_ in GROUPE_TECH) + f" (somme {sum(pd[k_] for k_ in GROUPE_TECH)}) ;")
+    A("- **approvisionnement, daté** : " + ", ".join(f"{k_} {pd[k_]}" for k_ in GROUPE_APPRO)
+      + f" (somme {sum(pd[k_] for k_ in GROUPE_APPRO)}). Prix, garanties et revendeurs relevés le 30-09 "
+      "et le 01-10-2026 : ce score **vieillit**, le technique beaucoup moins.\n")
+    A("| k | Classement technique | Classement approvisionnement |")
+    A("| ---: | --- | --- |")
+    nomc = {fm["id"]: fm["nom"].split(" (")[0] + (" EL05" if "el05" in fm["id"] else "") for fm in r["fams"]}
+    for b_ in r["fam_balayage"]:
+        if b_["k"] < 0.5 - 1e-9:
+            continue
+        cl = {}
+        for g_, grp in (("t", GROUPE_TECH), ("a", GROUPE_APPRO)):
+            pg = {k_: pd[k_] for k_ in grp}
+            tri = sorted(b_["fams"], key=lambda x: -score(x["notes"], pg))
+            cl[g_] = " > ".join(f"{nomc[x['id']]} {f(score(x['notes'], pg))}" for x in tri)
+        A(f"| {f(b_['k'], 1)} | {cl['t']} | {cl['a']} |")
+    A("\nL'approvisionnement ne dépend pas de k : ses notes ne lisent ni la capacité ni la thermique. "
+      "Une famille en tête des deux classements à la fois est robuste à la séparation ; sinon, le choix "
+      "dépend du poids relatif des deux groupes, qui n'est pas décidé.\n")
     A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
     A("| Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
     A("| --- | --- | --- | ---: | --- |")

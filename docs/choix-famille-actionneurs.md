@@ -248,6 +248,26 @@ L'estimation thermique (`scripts/estimation_thermique.py`, lue à la source) don
 
 ---
 
+## 3 quater — Deux scores, technique et approvisionnement : PROPOSITION
+
+*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* **Le verdict retenu reste celui du § 3**, au score unique. Ici, les mêmes notes sont séparées en deux scores, avec les poids décidés **renormalisés dans chaque groupe** :
+
+- **technique** : capacite 18, continuite 18, robustesse 12, masse 5, ouverture 5, tension_securite 5 (somme 63) ;
+- **approvisionnement, daté** : cout 15, fiabilite_fournisseur 15, disponibilite 7 (somme 37). Prix, garanties et revendeurs relevés le 30-09 et le 01-10-2026 : ce score **vieillit**, le technique beaucoup moins.
+
+| k | Classement technique | Classement approvisionnement |
+| ---: | --- | --- |
+| 1,0 | CubeMars 4,16 > Damiao 3,90 > MyActuator 3,30 > RobStride, variante S = EduLite 05 EL05 3,13 > RobStride 2,92 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 0,9 | CubeMars 3,87 > Damiao 3,62 > RobStride, variante S = EduLite 05 EL05 3,13 > MyActuator 3,02 > RobStride 2,92 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 0,8 | CubeMars 3,87 > Damiao 3,62 > MyActuator 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 0,7 | CubeMars 3,59 > Damiao 3,33 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,84 > MyActuator 2,73 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 0,6 | CubeMars 3,30 > Damiao 3,05 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,44 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+| 0,5 | Damiao 3,05 > CubeMars 3,02 > RobStride 2,92 > RobStride, variante S = EduLite 05 EL05 2,56 > MyActuator 2,16 | RobStride, variante S = EduLite 05 EL05 3,41 > RobStride 3,00 > MyActuator 1,81 > Damiao 1,78 > CubeMars 1,59 |
+
+L'approvisionnement ne dépend pas de k : ses notes ne lisent ni la capacité ni la thermique. Une famille en tête des deux classements à la fois est robuste à la séparation ; sinon, le choix dépend du poids relatif des deux groupes, qui n'est pas décidé.
+
+---
+
 ## 4 — Les candidats S hors famille, pour mémoire
 
 | Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |
