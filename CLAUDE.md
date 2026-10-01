@@ -133,7 +133,7 @@ information perdue, et rien ne signalerait son retour si une imprimante
 
 ### Deux interpréteurs Python — ne jamais les confondre
 
-Voir `decisions/0002-pin-toddlerbot.md`.
+Voir `decisions/archive/0002-pin-toddlerbot.md`.
 
 | | Code YXOR | Pile ToddlerBot |
 | --- | --- | --- |
@@ -256,7 +256,7 @@ référence précise**, et rien d'autre.
 - Le fichier lui-même **n'entre pas dans le dépôt** et s'inscrit dans
   `params/fournisseurs.yaml` avec ses six champs (fiche 0030).
 
-Voir `decisions/0035-origine-norme.md`.
+Voir `decisions/archive/0035-origine-norme.md`.
 
 ## Ce qu'il ne faut pas faire
 

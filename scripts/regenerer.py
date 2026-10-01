@@ -54,7 +54,6 @@ EXPORTS = REPO / "exports" / "parts"
 # distingue est LUE dans params/nullites.yaml, jamais écrite ici.
 import controle_depot
 import controle_regles
-import index_fiches
 import nullites as NU
 import procedes as PROC
 import pages
@@ -396,10 +395,8 @@ def main(argv=None) -> int:
     # aussi en construction Docker, contrairement aux deux voisins.
     if controle_regles.main() != 0:
         return 1
-    # Son code de retour était ignoré jusqu'au 2026-09-30 (audit de la
-    # nuit, § 8 C3) : une fiche hors convention passait en vert.
-    if index_fiches.main() != 0:
-        return 1
+    # L'index des fiches (index_fiches.py) est archivé depuis la refonte
+    # R2 du 2026-10-01 : archive/scripts/index_fiches.py.
 
     mauvais_css = controler_css()
     if mauvais_css:

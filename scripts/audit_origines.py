@@ -8,7 +8,7 @@
 
 Se lance avec le venv DU PROJET. Ne lit que des fichiers.
 
-Voir decisions/0010-origine-des-cotes.md.
+Voir decisions/archive/0010-origine-des-cotes.md.
 
 ⚠ CE SCRIPT NE REND AUCUN AVIS JURIDIQUE. Il produit un inventaire de ce
   qui vient de l'amont. Ce qu'il faut en conclure n'est pas de son
@@ -404,7 +404,7 @@ def main(argv=None) -> int:
 
     print("\n" + "═" * 78)
     print(" Cet inventaire ne dit pas ce qu'il faut en conclure.")
-    print(" Voir decisions/0010 §4 : la portée juridique n'est pas tranchée ici.")
+    print(" Voir decisions/archive/0010 §4 : la portée juridique n'est pas tranchée ici.")
     print("═" * 78)
 
     return 1 if (args.strict and nq) else 0

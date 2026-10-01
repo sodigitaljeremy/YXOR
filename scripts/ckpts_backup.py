@@ -102,7 +102,7 @@ def cmd_manifest(_):
     L, A = [], None; A = L.append
     A("# Manifeste des poids ToddlerBot — SAUVEGARDE HORS GIT")
     A("#")
-    A("# Généré par scripts/ckpts_backup.py. Voir decisions/0003 et 0008.")
+    A("# Généré par scripts/ckpts_backup.py. Voir decisions/archive/0003 et 0008.")
     A("#")
     A("# Ce fichier ne contient AUCUN binaire (règle 4) : il ne restaure rien.")
     A("# Il permet de DÉTECTER qu'une archive a changé ou a été corrompue.")
@@ -153,7 +153,7 @@ def cmd_verify(_):
     if alterees:
         print("\n⚠ Une empreinte qui diverge signifie que l'amont a republié,")
         print("  ou que l'archive est corrompue. Les mesures qui s'y rapportent")
-        print("  sont invalidées : voir decisions/0003.")
+        print("  sont invalidées : voir decisions/archive/0003.")
     return 1 if (alterees or manquantes) else 0
 
 

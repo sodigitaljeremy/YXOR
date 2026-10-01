@@ -11,7 +11,7 @@ importé — donc ce script n'entre pas dans le carve-out `sim/upstream/`
 de la fiche 0004. Vérifié le 2026-09-28 : MuJoCo 3.13.0 et 3.3.4 rendent
 des axes et des butées identiques sur ce modèle.
 
-Voir `decisions/0006-fichier-genere-commite.md` : le fichier produit est
+Voir `decisions/archive/0006-fichier-genere-commite.md` : le fichier produit est
 commité, par exception au principe de la règle 4, parce qu'il dérive
 d'un dépôt externe et ne serait pas régénérable si celui-ci disparaissait.
 
@@ -223,14 +223,14 @@ def render(actuators, arts, bielles, sha: str, mujoco_version: str) -> str:
     A("# ╚══════════════════════════════════════════════════════════════════╝")
     A("#")
     A(f"# Commit amont : {sha}")
-    A("# Épinglé par  : decisions/0002-pin-toddlerbot.md")
+    A("# Épinglé par  : decisions/archive/0002-pin-toddlerbot.md")
     A(f"# Modèle       : toddlerbot/descriptions/{ROBOT}/scene.xml")
     A(f"# Extrait le   : {now}")
     A(f"# Par          : scripts/import_upstream_limits.py (MuJoCo {mujoco_version})")
     A("#")
     A("# Commité par exception au principe de la règle 4, parce qu'il dérive")
     A("# d'un dépôt externe et ne serait pas régénérable si celui-ci")
-    A("# disparaissait — voir decisions/0006-fichier-genere-commite.md.")
+    A("# disparaissait — voir decisions/archive/0006-fichier-genere-commite.md.")
     A("#")
     A("# ── Deux sections, et il ne faut surtout pas les confondre ──────────")
     A("#")

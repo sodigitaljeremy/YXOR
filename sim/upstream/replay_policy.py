@@ -2,7 +2,7 @@
 """Rejoue une politique ToddlerBot en boucle fermée et écrit une vidéo.
 
 ⚠ S'EXÉCUTE AVEC LE VENV AMONT (Python 3.12 / MuJoCo 3.3.4), pas celui du
-  projet. Voir `decisions/0004-code-amont-dans-le-depot.md`. Le garde-fou
+  projet. Voir `decisions/archive/0004-code-amont-dans-le-depot.md`. Le garde-fou
   de `toddlerbot_fixes.require_upstream_env()` arrête le programme sinon.
 
 Usage :

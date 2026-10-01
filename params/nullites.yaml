@@ -1,4 +1,4 @@
-# Pourquoi telle valeur est absente — voir decisions/0020-nullite-conditionnelle.md
+# Pourquoi telle valeur est absente — voir decisions/archive/0020-nullite-conditionnelle.md
 #
 # Un `null` n'a pas un sens, il en a trois. Les confondre fait annoncer du
 # travail là où il n'y en a pas, ou taire du travail qu'il y a.

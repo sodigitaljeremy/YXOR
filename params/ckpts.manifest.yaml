@@ -1,6 +1,6 @@
 # Manifeste des poids ToddlerBot — SAUVEGARDE HORS GIT
 #
-# Généré par scripts/ckpts_backup.py. Voir decisions/0003 et 0008.
+# Généré par scripts/ckpts_backup.py. Voir decisions/archive/0003 et 0008.
 #
 # Ce fichier ne contient AUCUN binaire (règle 4) : il ne restaure rien.
 # Il permet de DÉTECTER qu'une archive a changé ou a été corrompue.

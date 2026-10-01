@@ -19,7 +19,7 @@ __pycache__/
 # Chemins vers les exemplaires personnels des sources documentaires.
 # Le REGISTRE (params/sources.yaml) est versionné ; les chemins non :
 # ils sont propres à une machine, et le dossier qui les contient abrite
-# aussi des documents personnels. Voir decisions/0040.
+# aussi des documents personnels. Voir decisions/archive/0040.
 sources.local.yaml
 
 # Ajouts du 2026-09-30 avant publication (archive/docs/controle-publication-2026-09-30.md, § 4).

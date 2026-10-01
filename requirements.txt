@@ -16,7 +16,7 @@ mujoco==3.13.0
 #   numpy==2.5.3  PyOpenGL==3.1.10  typing_extensions==4.16.0  zipp==4.1.0
 
 # ─────────────────────────────────────────────────────────────────────────
-# CAO paramétrique — phase 1 étape B. Voir decisions/0009-build123d.md
+# CAO paramétrique — phase 1 étape B. Voir decisions/archive/0009-build123d.md
 #
 # Version ÉPINGLÉE STRICTEMENT, et c'est délibéré : build123d est adossé à
 # OCCT (noyau géométrique C++) via OCP. Une montée de version d'OCCT peut
@@ -53,7 +53,7 @@ build123d==0.13.0
 #   webcolors==24.8.0           wrapt==2.5.0
 
 # ─────────────────────────────────────────────────────────────────────────
-# Outillage — audit d'origine des cotes. Voir decisions/0010.
+# Outillage — audit d'origine des cotes. Voir decisions/archive/0010.
 #
 # Un premier jet de scripts/audit_origines.py lisait les YAML avec un
 # analyseur maison. Il perdait l'imbrication des listes et découpait mal les

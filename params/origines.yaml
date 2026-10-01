@@ -1,4 +1,4 @@
-# Déclaration d'origine des cotes — voir decisions/0010-origine-des-cotes.md
+# Déclaration d'origine des cotes — voir decisions/archive/0010-origine-des-cotes.md
 #
 # Associe des motifs de chemins de clés à une origine. Toute clé non couverte
 # ressort en `non_qualifie` dans scripts/audit_origines.py : la dérive est

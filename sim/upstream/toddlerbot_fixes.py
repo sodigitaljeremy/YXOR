@@ -2,7 +2,7 @@
 """Correctifs nécessaires pour exécuter une politique ToddlerBot en boucle fermée.
 
 ⚠ CE MODULE S'EXÉCUTE AVEC LE VENV AMONT, PAS CELUI DU PROJET.
-   Voir `decisions/0004-code-amont-dans-le-depot.md`.
+   Voir `decisions/archive/0004-code-amont-dans-le-depot.md`.
    Interpréteur attendu : ~/upstream/toddlerbot/.venv/bin/python
    (Python 3.12, MuJoCo 3.3.4). `require_upstream_env()` le vérifie et
    arrête le programme sinon — ne pas contourner ce garde-fou.
@@ -153,7 +153,7 @@ def require_upstream_env(chdir: bool = True) -> Path:
             f"  Ce fichier s'exécute avec le venv AMONT, pas celui du projet.\n"
             f"    correct : {root}/.venv/bin/python <script>\n"
             f"    faux    : .venv/bin/python <script>   (venv YXOR, MuJoCo 3.13.0)\n\n"
-            f"  Voir decisions/0004-code-amont-dans-le-depot.md\n"
+            f"  Voir decisions/archive/0004-code-amont-dans-le-depot.md\n"
         )
 
     if sys.version_info[:2] != EXPECTED_PYTHON:

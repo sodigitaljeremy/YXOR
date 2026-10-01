@@ -89,7 +89,7 @@ site/       engendré — jamais versionné
 exports/    engendré — jamais versionné
 robot/      assemblage, URDF, MJCF
 sim/        environnements et politiques ; sim/upstream/ = venv amont
-decisions/  fiches de décision datées — voir decisions/index.md
+decisions/  fiches de décision, archivées (decisions/archive/) — décisions actives : docs/decisions.md
 journal/    journal de bord
 docs/       glossaire, notes de lecture
 bom/        nomenclature
@@ -100,12 +100,12 @@ bom/        nomenclature
 `yxor.fr` est une **projection du dépôt**, engendrée à chaque déploiement par
 le `Dockerfile` (deux étages : construction puis service). Il ne contient
 aucune donnée propre : chaque valeur affichée vient d'un fichier du dépôt.
-Voir `decisions/0018-application-web.md`.
+Voir `decisions/archive/0018-application-web.md`.
 
 ## Documents
 
 - **[Cadrage](docs/cadrage.md) — LE document à lire en premier**
-- [Index des fiches de décision](decisions/index.md) — engendré
+- [Décisions actives](docs/decisions.md) — les fiches sont archivées dans `decisions/archive/`
 - [État des lieux du 2026-09-29](archive/docs/etat-des-lieux-2026-09-29.md) — inventaire, règles outillées, distance au premier objet
 - [Glossaire](docs/glossaire.md)
 - [Lecture du modèle amont](docs/lecture-modele.md)
