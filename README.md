@@ -39,14 +39,18 @@ liberté est une articulation motorisée.
 **Fabriqué à ce jour** : une pièce d'apprentissage, la semelle. Ni
 assemblage ni nomenclature.
 
+**La refonte du dépôt est terminée** (2026-10-01, étiquettes Git
+`avant-refonte-2026-10-01` et `apres-refonte-2026-10-01`). Le diagnostic
+qui l'a lancée est dans `archive/docs/`.
+
 **Prochaine étape** (PROPOSÉE par Claude Code, non décidée) :
 
-- finir la refonte du dépôt : R7, vérification finale (R6, le protocole
-  du banc v2, est fait : `docs/protocole-banc.md`) ;
-- puis la couche logicielle d'articulation et son backend MuJoCo, sans
-  aucun achat ;
-- puis la première pièce de jambe à H_S, et le banc de vérification du
-  RS00, dont la composition et l'achat se décident selon la fiche 0066.
+- la couche logicielle d'articulation et son backend MuJoCo, sans aucun
+  achat ;
+- puis la première pièce de jambe à H_S ;
+- puis le banc de vérification du RS00 (`docs/protocole-banc.md`, critère
+  outillé), dont la composition et l'achat se décident selon la fiche
+  0066.
 
 ## Provenance et licences — *provisoire*
 
