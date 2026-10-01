@@ -114,7 +114,7 @@ pas corrigé ici : c'est à décider.
 
 *Mise à jour du 2026-09-30, nuit* : **correction validée par Jeremy et
 appliquée** au catalogue, avec l'ancien texte conservé en commentaire
-daté. `docs/choix-classe-S.md` (v1, figé) garde l'ancienne formulation :
+daté. `archive/docs/choix-classe-S.md` (v1, figé) garde l'ancienne formulation :
 c'est une archive.
 
 **Ce que la courbe ne dit pas.**

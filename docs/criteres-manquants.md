@@ -4,7 +4,7 @@
 recalculé, aucun poids n'est changé, aucune fiche n'est créée.
 
 **Ce qui est décidé par Jeremy.** Le 2026-09-30, vers 23 h, il a répondu
-à `docs/arbitrage-2026-09-30.md` :
+à `archive/docs/arbitrage-2026-09-30.md` :
 
 - les **9 poids actuels et la règle de décisivité sont validés** ;
 - **« il manque des critères de comparaison essentiels »** ;

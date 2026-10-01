@@ -50,7 +50,7 @@ correcte sans qu'elle ait été régénérée et regardée.
 
 ## Méthode : la classe d'actionneur fixe la taille
 
-À lire d'abord : `docs/cadrage.md`, puis `docs/arbitrage-2026-09-30.md`.
+À lire d'abord : `docs/cadrage.md`, puis `archive/docs/arbitrage-2026-09-30.md`.
 
 - **La taille est une SORTIE du calcul, pas une entrée** (fiche 0047).
   Pour chaque classe d'actionneur, `scripts/dimensionnement.py` calcule la

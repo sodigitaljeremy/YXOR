@@ -231,7 +231,7 @@ tels qu'écrits en version 1 :
   viennent de revendeurs, et sont à null dans le catalogue. *(Mise à jour
   du 30-09-2026 : ils sont désormais lus dans le manuel constructeur EL05
   — 1,8 N·m sur plaque de 70 × 70 mm, 430 rpm — voir
-  `docs/choix-classe-S.md`.)*
+  `archive/docs/choix-classe-S.md`.)*
 - **STS3250** : le moins cher, mais c'est un écosystème (bus TTL, Feetech)
   qu'on abandonnerait en passant à M. Réducteur 1:345, peu réversible, jeu
   mesuré indépendamment supérieur au jeu annoncé.
@@ -523,13 +523,13 @@ v2 : les bras ne font pas partie de la v1.
 
 ## 14. Sources principales
 
-- `docs/exigences-actionnement-P2.md` : premier chiffrage des couples,
+- `archive/docs/exigences-actionnement-P2.md` : premier chiffrage des couples,
   30-09-2026.
 - `docs/dimensionnement-par-actionneur.md` : dimensionnement inversé,
   30-09-2026.
 - `params/actionneurs.yaml`, `params/budget.yaml` : catalogue et postes,
   chaque valeur sourcée et datée.
-- `docs/etat-des-lieux-2026-09-29-nuit.md` : audit complet du dépôt.
+- `archive/docs/etat-des-lieux-2026-09-29-nuit.md` : audit complet du dépôt.
 - Corpus du projet : thèse Forget (actionneurs, thermique), rapport
   Bennehar (degrés de liberté, ZMP), Kajita.
 - Recherche Claude du 30-09-2026 (comparatif d'actionneurs) et audit

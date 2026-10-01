@@ -22,7 +22,7 @@ Son code est sous licence MIT ; sa conception (fichiers mécaniques) est sous
 ⚠ **Aucune licence pour l'instant : choix délibéré de Jeremy le 2026-09-30 (fiche 0063),
 à rouvrir.** Il n'y a pas de fichier `LICENSE`. Aucun droit n'est donc
 accordé au-delà de ce que permettent les conditions de GitHub. Les options
-étudiées sont dans `docs/controle-publication-2026-09-30.md` § 3.
+étudiées sont dans `archive/docs/controle-publication-2026-09-30.md` § 3.
 
 **Valeurs extraites de ToddlerBot.** Les fichiers ci-dessous contiennent des
 valeurs numériques extraites de ToddlerBot : axes, butées, rapports de
@@ -106,7 +106,7 @@ Voir `decisions/0018-application-web.md`.
 
 - **[Cadrage](docs/cadrage.md) — LE document à lire en premier**
 - [Index des fiches de décision](decisions/index.md) — engendré
-- [État des lieux du 2026-09-29](docs/etat-des-lieux-2026-09-29.md) — inventaire, règles outillées, distance au premier objet
+- [État des lieux du 2026-09-29](archive/docs/etat-des-lieux-2026-09-29.md) — inventaire, règles outillées, distance au premier objet
 - [Glossaire](docs/glossaire.md)
 - [Lecture du modèle amont](docs/lecture-modele.md)
 - [Instructions de travail](CLAUDE.md)

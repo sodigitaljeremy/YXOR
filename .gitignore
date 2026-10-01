@@ -22,7 +22,7 @@ __pycache__/
 # aussi des documents personnels. Voir decisions/0040.
 sources.local.yaml
 
-# Ajouts du 2026-09-30 avant publication (docs/controle-publication-2026-09-30.md, § 4).
+# Ajouts du 2026-09-30 avant publication (archive/docs/controle-publication-2026-09-30.md, § 4).
 # Aucun de ces fichiers n'existe aujourd'hui : c'est de la prévention.
 .env
 .env.*
