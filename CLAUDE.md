@@ -141,6 +141,7 @@ information perdue, et rien ne signalerait son retour si une imprimante
   `.venv/bin/python -m unittest discover -s tests -v`. Ils ne tournent pas
   dans `regenerer.py` : à lancer à chaque clôture.
 - VPS Hetzner : régénération et publication seulement, pas de calcul.
+- **Node v22.22.1** (`.nvmrc`) : tests du JavaScript du site (`tests/test_simulateur.py`), sans navigateur ni dépendance npm. Outillage décidé par Jeremy le 2026-10-01 (« node est très utile et très utilisé, autant l'exploiter »).
 
 ### Deux interpréteurs Python — ne jamais les confondre
 

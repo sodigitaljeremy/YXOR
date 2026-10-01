@@ -1,14 +1,15 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `d0ef96306bb9`, le 2026-10-01 ; 183 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `23902d291780`, le 2026-10-01 ; 185 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
-## racine (9)
+## racine (10)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/.dockerignore
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/.gitignore
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/.nvmrc
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/CLAUDE.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/Dockerfile
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/LIENS-BRUTS.md
@@ -207,7 +208,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (10)
+## tests/ (11)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_construction_deterministe.py
@@ -219,6 +220,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bru
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer_index.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
 
 ## web/ (4)
 

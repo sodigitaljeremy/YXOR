@@ -147,8 +147,11 @@ confirmées par Jeremy (R5).
   l'épaisseur reste un champ du réglage, pas une partie de sa clé.
 - [0023](../decisions/archive/0023-simulation-navigateur.md) : la page
   d'une pièce peut se simuler dans le navigateur, sans rien enregistrer.
-  **Le simulateur n'a jamais été vu tourner dans un navigateur. La pièce
-  à simuler après la semelle est à choisir.**
+  **Vu fonctionner par Jeremy le 2026-10-01** (ses mots : « Je te
+  confirme que le simulateur est fonctionnel »). **Calcul vérifié contre
+  le Python à S, L et 0,55 m** (journal du 2026-10-01). Le test
+  `tests/test_simulateur.py` refait cette comparaison à chaque clôture.
+  **La pièce à simuler après la semelle est à choisir.**
 
 ## C — Closes
 
