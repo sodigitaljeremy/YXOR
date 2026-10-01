@@ -202,6 +202,52 @@ L'estimation thermique (`scripts/estimation_thermique.py`, lue à la source) don
 
 ---
 
+## 3 ter — k en deux dimensions : information, ne change pas le verdict
+
+*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* Le balayage du § 3 applique **le même k** à tous les actionneurs sans valeur en blocage. Ici, **k du J4310 (lignes) et k de l'EduLite 05 (colonnes)** sont balayés séparément, de 1,0 à 0,5 par pas de 0,05. Le RS05 garde sa valeur en blocage publiée. Lettre = famille gagnante aux poids décidés : **D** Damiao (J4310 V1.2 48 V → J8006 V1.1 → J4340 V1.1), **E** RobStride, variante S = EduLite 05 (EL05 → RS02 → RS06), **R** RobStride (RS05 → RS02 → RS06), **C** CubeMars (AK45-10 V3 → AK80-9 V3 → AK10-9 V3), **M** MyActuator (X2-7 → [trou] → X4-36).
+
+**Les autres candidats sans valeur en blocage suivent le plus petit des deux k.**
+
+| k J4310 \ k EL05 | 1,00 | 0,95 | 0,90 | 0,85 | 0,80 | 0,75 | 0,70 | 0,65 | 0,60 | 0,55 | 0,50 |
+| ---: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| 1,00 | E | E | E | E | D | D | D | D | D | D | D |
+| 0,95 | E | E | E | E | D | D | D | D | D | D | D |
+| 0,90 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,85 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,80 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,75 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,70 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,65 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,60 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,55 | E | E | E | E | E | E | E | R | R | R | R |
+| 0,50 | E | E | E | E | E | E | E | R | R | R | R |
+
+**Les autres candidats sans valeur en blocage restent à k = 1,0 (leur cas le plus favorable).**
+
+| k J4310 \ k EL05 | 1,00 | 0,95 | 0,90 | 0,85 | 0,80 | 0,75 | 0,70 | 0,65 | 0,60 | 0,55 | 0,50 |
+| ---: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| 1,00 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,95 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,90 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,85 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,80 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,75 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,70 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,65 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,60 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,55 | E | E | E | E | C | C | C | C | C | C | C |
+| 0,50 | E | E | E | E | C | C | C | C | C | C | C |
+
+**Lecture, par rapport à la borne basse plausible de k (0,619).** La carte « min » est la lecture prudente. La carte « 1,0 » montre ce que donnerait l'hypothèse la plus favorable accordée aux autres fabricants : un **artefact** de cette hypothèse, pas un résultat.
+
+- **Damiao** gagne sur 14 cases sur 121 : k J4310 de 0,95 à 1,00, k EL05 de 0,50 à 0,80.
+- **RobStride avec RS05** gagne sur 36 cases sur 121 : k J4310 de 0,50 à 0,90, k EL05 de 0,50 à 0,65.
+- **RobStride avec EduLite 05** gagne sur 71 cases sur 121 : k J4310 de 0,50 à 1,00, k EL05 de 0,70 à 1,00.
+- À k J4310 = 0,80 : le gagnant passe de RobStride avec EduLite 05 à RobStride avec RS05 entre k EL05 = 0,70 et 0,65, **AU-DESSUS de la borne plausible 0,619** : dans la plage plausible, k de l'EduLite 05 change la décision.
+- **Damiao ne gagne qu'à k J4310 ≥ 0,95.** L'estimation thermique (au seuil de 90 °C) donne 0,86–0,95 **en rotation**, et 0,53–0,81 **au blocage** (hypothèse sur hypothèse). La zone Damiao est donc à la limite haute, ou au-delà, de ce que les données laissent attendre.
+
+---
+
 ## 4 — Les candidats S hors famille, pour mémoire
 
 | Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |

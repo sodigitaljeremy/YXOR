@@ -156,6 +156,18 @@ def prix_chf(cat, cid, bud):
     return D.chf(p, bud["taux_de_change"]), p
 
 
+def k_de(k, cid: str) -> float:
+    """k peut être un nombre (le même pour tous) ou un dict {id: k, "_defaut": k}.
+
+    Le dict sert à la carte en deux dimensions (2026-10-01, information) :
+    k du J4310 et k de l'EduLite 05 balayés séparément. Avec un nombre, le
+    calcul est exactement celui d'avant.
+    """
+    if isinstance(k, dict):
+        return k.get(cid, k.get("_defaut", 1.0))
+    return k
+
+
 def evaluer_S(cat, crit, bud, analyse, ref, k=1.0):
     """Faits, éliminatoires et notes de chaque candidat S (et référence)."""
     marge = val(cat["dimensionnement"]["marge"])
@@ -168,7 +180,7 @@ def evaluer_S(cat, crit, bud, analyse, ref, k=1.0):
     out = []
     for cid in cs["candidats"] + cs["references"]:
         c, fs = cat["candidats"][cid], cs[cid]
-        iv = intervalle_continu(c, k)
+        iv = intervalle_continu(c, k_de(k, cid))
         H, ev = h_max_avec(cat, cid, iv["prudent"], ref, besoins, marge)
         H_opt, _ = h_max_avec(cat, cid, iv["optimiste"], ref, besoins, marge)
         ev = ev or {}
@@ -296,7 +308,7 @@ def evaluer_familles(cat, crit, bud, analyse, ref, cands_S, k):
                 tailles[tl] = None
                 continue
             c = cat["candidats"][mid]
-            iv = intervalle_continu(c, k)
+            iv = intervalle_continu(c, k_de(k, mid))
             Hp, evp = h_max_avec(cat, mid, iv["prudent"], ref, besoins, marge)
             Ho, _ = h_max_avec(cat, mid, iv["optimiste"], ref, besoins, marge)
             # Même base de prix que la note de coût : le prix REVENDEUR s'il
@@ -800,6 +812,30 @@ def _seuil_fin(evalue, balayage, cle_nominal):
     return bascule, None
 
 
+K2_PAS = [round(1.0 - 0.05 * i, 2) for i in range(11)]          # 1,00 → 0,50
+K2_CODES = {"damiao": "D", "robstride_el05": "E", "robstride": "R", "cubemars": "C", "myactuator": "M"}
+
+
+def carte_k2(cat, crit, bud, analyse, ref, poids, autres: str) -> list:
+    """Gagnant des familles pour k_J4310 × k_EL05 balayés SÉPARÉMENT (information).
+
+    2026-10-01, lot E (PROPOSÉ par Claude, arbitrage) : le RS05 garde sa
+    valeur en blocage publiée. Les AUTRES candidats sans valeur en blocage
+    (CubeMars, MyActuator…) suivent `autres` : « min » (le plus petit des
+    deux k : aucun autre n'est supposé meilleur que les deux balayés) ou
+    « 1.0 » (leur cas le plus favorable). Ne change pas le verdict.
+    """
+    out = []
+    for kj in K2_PAS:
+        ligne = []
+        for ke in K2_PAS:
+            k = {"dm_j4310_48v": kj, "edulite05": ke, "_defaut": min(kj, ke) if autres == "min" else 1.0}
+            cs = evaluer_S(cat, crit, bud, analyse, ref, k)
+            ligne.append(vainqueur(evaluer_familles(cat, crit, bud, analyse, ref, cs, k), poids))
+        out.append(ligne)
+    return out
+
+
 def calculer():
     cat = D.charger_catalogue()
     crit = yaml.safe_load(CRITERES.read_text(encoding="utf-8"))
@@ -848,7 +884,8 @@ def calculer():
                        seuil_bas=round(fam_seuil["k"] * nominal_ab, 2),
                        t_lim=estimation["t_lim"], t_lim_source=estimation["t_lim_source"],
                        statut=ca_cfg["statut"])
-    return dict(estimation=estimation, critere=critere, cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
+    cartes_k2 = {a_: carte_k2(cat, crit, bud, analyse, ref, poids, a_) for a_ in ("min", "1.0")}
+    return dict(cartes_k2=cartes_k2, estimation=estimation, critere=critere, cat=cat, crit=crit, bud=bud, ref=ref, analyse=analyse, poids=poids,
                 cands=cands, sens=sens, S_id=sens["nominal"], balayage=balayage,
                 bascule=bascule, seuil_fin=seuil_fin, fam_balayage=fam_balayage,
                 fam_bascule=fam_bascule, fam_seuil=fam_seuil, fams=fam_balayage[0]["fams"],
@@ -879,7 +916,31 @@ def tableau_familles(r) -> list[str]:
     return L
 
 
+def frontieres_k2(carte, borne) -> str:
+    """Décrit, en phrases calculées, où le gagnant change sur la carte « min »."""
+    lignes = []
+    noms = {"damiao": "Damiao", "robstride_el05": "RobStride avec EduLite 05", "robstride": "RobStride avec RS05",
+            "cubemars": "CubeMars", "myactuator": "MyActuator"}
+    for fam in sorted({w for l in carte for w in l}):
+        cases = [(kj, ke) for kj, l in zip(K2_PAS, carte) for ke, w in zip(K2_PAS, l) if w == fam]
+        kj_min, kj_max = min(c[0] for c in cases), max(c[0] for c in cases)
+        ke_min, ke_max = min(c[1] for c in cases), max(c[1] for c in cases)
+        lignes.append(f"- **{noms.get(fam, fam)}** gagne sur {len(cases)} cases sur {len(K2_PAS) ** 2} : "
+                      f"k J4310 de {f(kj_min)} à {f(kj_max)}, k EL05 de {f(ke_min)} à {f(ke_max)}.")
+    # frontière EL05 seule, à k J4310 = 0,80 (milieu de la plage plausible) : où l'EL05 cesse de gagner
+    for kj_ref in (0.80,):
+        l = carte[K2_PAS.index(kj_ref)]
+        chg = [(K2_PAS[i], K2_PAS[i + 1], l[i], l[i + 1]) for i in range(len(l) - 1) if l[i] != l[i + 1]]
+        for k1, k2, w1, w2 in chg:
+            pos = "AU-DESSUS de" if k2 >= borne else ("SOUS" if k1 < borne else "À CHEVAL sur")
+            lignes.append(f"- À k J4310 = {f(kj_ref)} : le gagnant passe de {noms.get(w1, w1)} à {noms.get(w2, w2)} "
+                          f"entre k EL05 = {f(k1)} et {f(k2)}, **{pos} la borne plausible {f(borne, 3)}** : dans "
+                          "la plage plausible, k de l'EduLite 05 change la décision.")
+    return "\n".join(lignes)
+
+
 def doc_familles(r, date) -> str:
+    nom_k2 = {fm["id"]: fm["nom"] for fm in r["fams"]}
     poids, crit = r["poids"], r["crit"]
     L = []
     A = L.append
@@ -1036,6 +1097,35 @@ def doc_familles(r, date) -> str:
               "hypothèse** : une courbe numérisée, puis le comportement d'un autre fabricant. Elle ne "
               "vaut pas une mesure ; elle dit seulement que les deux estimations disponibles vont dans "
               "le même sens que la borne plausible.\n")
+    A("---\n\n## 3 ter — k en deux dimensions : information, ne change pas le verdict\n")
+    A("*PROPOSÉ par Claude (arbitrage, 2026-10-01), d'après l'audit externe ChatGPT du 2026-10-01.* "
+      "Le balayage du § 3 applique **le même k** à tous les actionneurs sans valeur en blocage. Ici, "
+      "**k du J4310 (lignes) et k de l'EduLite 05 (colonnes)** sont balayés séparément, de 1,0 à 0,5 par "
+      "pas de 0,05. Le RS05 garde sa valeur en blocage publiée. Lettre = famille gagnante aux poids "
+      "décidés : " + ", ".join(f"**{v}** {nom_k2.get(k_, k_)}" for k_, v in K2_CODES.items()) + ".\n")
+    for a_, titre in (("min", "Les autres candidats sans valeur en blocage suivent le plus petit des deux k"),
+                      ("1.0", "Les autres candidats sans valeur en blocage restent à k = 1,0 (leur cas le plus favorable)")):
+        A(f"**{titre}.**\n")
+        A("| k J4310 \\ k EL05 | " + " | ".join(f(x) for x in K2_PAS) + " |")
+        A("| ---: | " + " | ".join(":-:" for _ in K2_PAS) + " |")
+        for kj, ligne in zip(K2_PAS, r["cartes_k2"][a_]):
+            A(f"| {f(kj)} | " + " | ".join(K2_CODES.get(w, "?") for w in ligne) + " |")
+        A("")
+    rb2 = rapports_blocage(r["cat"])
+    borne2 = min(x["rapport"] for x in rb2) if rb2 else None
+    A(f"**Lecture, par rapport à la borne basse plausible de k ({f(borne2, 3)}).** La carte « min » "
+      "est la lecture prudente. La carte « 1,0 » montre ce que donnerait l'hypothèse la plus favorable "
+      "accordée aux autres fabricants : un **artefact** de cette hypothèse, pas un résultat.\n")
+    A(frontieres_k2(r["cartes_k2"]["min"], borne2))
+    cases_d = [kj for kj, l in zip(K2_PAS, r["cartes_k2"]["min"]) for w in l if w == "damiao"]
+    if cases_d:
+        e2 = r["estimation"]
+        rmin2, rmax2 = min(x["rapport"] for x in rb2), max(x["rapport"] for x in rb2)
+        A(f"- **Damiao ne gagne qu'à k J4310 ≥ {f(min(cases_d))}.** L'estimation thermique (au seuil "
+          f"de {f(e2['t_lim'], 0)} °C) donne {f(e2['k_bas'])}–{f(e2['k_haut'])} **en rotation**, et "
+          f"{f(e2['k_bas'] * rmin2)}–{f(e2['k_haut'] * rmax2)} **au blocage** (hypothèse sur hypothèse). "
+          "La zone Damiao est donc à la limite haute, ou au-delà, de ce que les données laissent attendre.")
+    A("")
     A("---\n\n## 4 — Les candidats S hors famille, pour mémoire\n")
     A("| Candidat | Clé de révision | Taille prudente – optimiste (k = 1,0) | Score /5 | État |")
     A("| --- | --- | --- | ---: | --- |")
