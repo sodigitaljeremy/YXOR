@@ -603,6 +603,37 @@ comparatif_S:
     telemetrie: {position: true, vitesse: true, couple_ou_courant: true, temperature: true, detail: "position, vitesse, couple, T_MOS (driver), T_Rotor (bobinage), ERR", source: "manuel V1.4, p. 14-15"}
     reversibilite: {reversible: null, detail: "10:1, type d'engrenage non publié", source: "manuel V1.4"}
     garantie_mois: {valeur: null, source: null, non_verifie: "« 3 mois à 1 an » chez des revendeurs (variante 24 V)"}
+    # Garantie du REVENDEUR, distincte de `garantie_mois` (constructeur), que
+    # le score lit seul. Ajoutée le 2026-10-01 (lot E, PROPOSÉ par Claude,
+    # arbitrage) ; NON lue par le comparatif : aucune lecture n'est retenue.
+    garantie_revendeur:
+      valeur: 12
+      unite: mois
+      vendeur: OpenELAB
+      portee: "clients HORS UE (dont la Suisse) : « 12-Month OpenELAB Limited Warranty », depuis la date de LIVRAISON, en plus des droits légaux locaux ; réparation ou remplacement gratuits pour un défaut couvert vérifié. Clients UE : garantie légale de 2 ans minimum, distincte. Exclusions : installation incorrecte, surtension, chute, liquide, modifications (soudure, firmware), réparation par le client, usage contraire à la documentation"
+      depuis: "politique en vigueur depuis le 2026-07-17 (« Effective Date: July 17, 2026 »)"
+      source: "https://openelab.io/policies/refund-policy (lue en JSON : /policies/refund-policy.json)"
+      consulte_le: "2026-10-01"
+    disponibilite_revendeur:
+      sku: "DM-J4310-2EC-48V-V4"
+      prix: {valeur: 140.95, devise: EUR, barre: 172.95}
+      available: true
+      entrepot: null
+      source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310.js (JSON de la boutique), consulté le 2026-10-01 à 13 h 04"
+      note: >
+        La boutique propose V3 et V4, en 24 V et 48 V ; sa description donne
+        V3 = 3 N·m nominal / 7 N·m crête et V4 = 3,5 / 12,5, ce qui concorde
+        avec la V1.2 du manuel (indice, pas une preuve de « V4 = V1.2 »).
+        `available: true` ne distingue PAS stock et précommande : la
+        politique d'expédition dit qu'un article absent des entrepôts
+        locaux « may be marked "Pre-order" » sur la page produit. La page
+        HTML est restée en 429 : l'étiquette n'a pas pu être lue.
+        ENTREPÔT de ce SKU : non publié. La politique d'expédition
+        (https://openelab.io/policies/shipping-policy, lue en JSON le
+        2026-10-01) dit : stocks à Munich, Arlington et Shenzhen ;
+        commandes UE depuis Munich ou, selon le stock, Shenzhen, en DDP ;
+        HORS UE, dont la Suisse : port 19,95 € sous 300 €, droits, taxes et
+        frais de douane à la charge du destinataire.
     distribution: {suisse: null, ue: null, international: "OpenELAB", source: "https://openelab.io/products/damiao-brushless-servo-dm-j4310", non_verifie: "localisation UE d'OpenELAB non vérifiée pour cette référence ; « available » peut signifier précommande ; Eckstein (DE) ne liste que la 24 V", note: "Ajouté le 2026-09-30 (22 h 50), consigne de Jeremy : OpenELAB publie une politique d'expédition UE depuis Munich OU Shenzhen selon le stock, TVA UE encaissée au paiement et droits pris en charge (DDP). Source : pages produit OpenELAB « J4310P-2EC » consultées le 2026-09-30 — leur correspondance avec la référence DM-J4310-2EC-48V-V4 n'est PAS vérifiée. `ue` reste null : le stock de CETTE référence à Munich est inconnu."}
     ouverture: {protocole_public: true, sdk_libre: null, firmware_libre: false, source: "manuel V1.4 ; dépôt dmBots (licence non relevée)"}
 

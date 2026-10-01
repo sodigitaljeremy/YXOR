@@ -542,6 +542,14 @@ fichiers:
         origine: catalogue
         nature: sans_objet
         source: "manuel constructeur"
+      - motif: "comparatif_S.*.garantie_revendeur.*"
+        origine: catalogue
+        nature: sans_objet
+        source: "politique de garantie publiée par le revendeur, URL et date dans le champ `source` (2026-10-01)"
+      - motif: "comparatif_S.*.disponibilite_revendeur.**"
+        origine: catalogue
+        nature: sans_objet
+        source: "JSON de la boutique du revendeur, consulté le 2026-10-01"
       - motif: "comparatif_S.*.distribution.*"
         origine: catalogue
         nature: sans_objet
