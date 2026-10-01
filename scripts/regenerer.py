@@ -55,6 +55,7 @@ EXPORTS = REPO / "exports" / "parts"
 # (archive/scripts/). Restent les contrôles qui protègent le robot.
 import controle_articulations
 import controle_depot
+import liens_bruts
 import procedes as PROC
 import provenance_amont
 import pages
@@ -381,6 +382,10 @@ def main(argv=None) -> int:
     # Règle 4, sur TOUT le dépôt — pas seulement sur les répertoires
     # ignorés. C'est la classe de trou, pas le trou (fiche 0024 §4).
     if controle_depot.main() != 0:
+        return 1
+    # Index des liens bruts GitHub (LIENS-BRUTS.md, 2026-10-01) : réécrit
+    # seulement si la liste des fichiers suivis change.
+    if liens_bruts.main() != 0:
         return 1
     # Les trois contrôles qui protègent le robot (refonte R4, 2026-10-01).
     if provenance_amont.main() != 0:
