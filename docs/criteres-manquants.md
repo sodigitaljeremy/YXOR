@@ -10,7 +10,7 @@ recalculé, aucun poids n'est changé, aucune fiche n'est créée.
 - **« il manque des critères de comparaison essentiels »** ;
 - il en retient **7 familles**, A à G.
 
-Source : son prompt du 2026-10-01. `criteres_selection.yaml` porte la
+Source : son prompt du 2026-10-01. `archive/params/criteres_selection.yaml` porte la
 réserve, au bloc `questions_ouvertes.criteres_manquants`.
 
 **Tout le reste est proposé par Claude Code** : les sous-critères, les

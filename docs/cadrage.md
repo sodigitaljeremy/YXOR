@@ -191,7 +191,7 @@ Constats :
 
 ## 6. Les tailles de YXOR — *décidé le 30-09-2026*
 
-> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`archive/docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
 
 Les tailles sont désormais **définies par classe d'actionneur**. La
 hauteur indiquée est un ordre de grandeur, que le calcul affine.
@@ -205,13 +205,13 @@ hauteur indiquée est un ordre de grandeur, que le calcul affine.
 | **XL** | > 1 m | RS03 et au-delà | horizon, hors programme |
 
 **Composition du banc — *remplacée le 30-09-2026 au soir par le banc de qualification*
-(§ 13, question 12, et `docs/comparatif-banc.md`).** Texte d'origine : deux RS05 et un adaptateur USB-CAN.
+(§ 13, question 12, et `archive/docs/comparatif-banc.md`).** Texte d'origine : deux RS05 et un adaptateur USB-CAN.
 Deux, et non un, pour quatre raisons : mesurer la thermique réelle d'un
 actionneur ; faire parler **deux adresses sur un même bus** ; monter le
 **segment à 2 degrés de liberté** de l'échelon 1 (§ 10) ; garder une
 **rechange**. Chiffré dans `params/budget.yaml`, phase `banc`, marquée
 « option ». **Jeremy choisira sur comparatif rédigé** :
-`docs/comparatif-banc.md`. Pas de fiche d'ici là.
+`archive/docs/comparatif-banc.md`. Pas de fiche d'ici là.
 
 **Premier robot : S** (décision de Jeremy). Justification : c'est la taille
 la moins chère pour franchir toute l'échelle des capacités (§ 10), et celle
@@ -219,7 +219,7 @@ où un actionneur conçu par Jeremy a le plus de chances de fonctionner (§ 8).
 
 **Choix de classe pour S — *entre deux familles, RobStride et Damiao, départagées par
 une mesure* (mise à jour du 30-09-2026, soir).** Le comparatif v3
-(`docs/choix-famille-actionneurs.md`) place la famille Damiao devant, à toutes
+(`archive/docs/choix-famille-actionneurs.md`) place la famille Damiao devant, à toutes
 les hypothèses sur la condition de mesure (k de 1,0 à 0,5), mais d'une marge
 qui fond à 0,10 point quand k baisse, avec RobStride en second. Le banc de
 qualification (§ 13, question 12) mesure ce qui les départage. Arguments d'origine,
@@ -353,7 +353,7 @@ Aucune de ces trois interfaces n'est encore décidée : pas de fiche.
 
 ## 9. Étude des fabricants et fournisseurs — *instruit le 30-09-2026*
 
-> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`archive/docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
 
 Jusqu'ici, on a comparé des **modèles**. Il manque la comparaison des
 **fabricants et distributeurs**, qui pèse autant sur le projet.
@@ -400,7 +400,7 @@ recoupent `params/actionneurs.yaml` sont vérifiés au journal du
   moteur propre à YXOR (§ 8 bis), plutôt que pour un wrapper tiers.
 - **Aucun distributeur suisse** n'a été trouvé, pour aucun fabricant.
 
-**Résultat du comparatif v3** (30-09-2026, `docs/choix-famille-actionneurs.md`) :
+**Résultat du comparatif v3** (30-09-2026, `archive/docs/choix-famille-actionneurs.md`) :
 CubeMars coûte cher en M et L (jambes ≥ 6 452 et ≥ 9 179 CHF) ; MyActuator a un
 **trou en M** (aucun modèle CAN actuel entre 12 et 25 N·m). Le seuil de bascule
 k ≈ 0,70 de la première grille de capacité **a disparu avec la grille corrigée** :
@@ -479,7 +479,7 @@ v2 : les bras ne font pas partie de la v1.
 
 ## 13. Questions ouvertes
 
-> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
+> **Mise à jour 2026-09-30, 22 h 30 :** contredit par le recalcul 48 V (`archive/docs/choix-famille-actionneurs.md`). Famille non décidée ; le banc doit départager.
 
 1. Valider la vision (§ 1). *(La marge du § 4 est décidée : fiche 0051.)*
 2. Classe d'actionneur pour S (§ 6), après l'étude fournisseurs (§ 9).
@@ -501,7 +501,7 @@ v2 : les bras ne font pas partie de la v1.
 11. Les valeurs numériques extraites de ToddlerBot (axes, butées) sont-elles
     couvertes par sa licence ? Question juridique, sans avis ici.
 12. **Banc de qualification : mesurer avant d'acheter en quantité.** Le
-    comparatif du banc (`docs/comparatif-banc.md`, poids **proposés**, pas encore fixés) place
+    comparatif du banc (`archive/docs/comparatif-banc.md`, poids **proposés**, pas encore fixés) place
     en tête l'option « qualification » : 1 × Damiao J4310 V1.2 48 V + 1 × EduLite 05
     + 1 × RS05, une alimentation 48 V, un adaptateur CAN. Protocole *proposé* :
     `docs/protocole-banc.md`. L'ancienne option « 2 × RS05 » n'est plus en tête.

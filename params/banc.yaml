@@ -4,65 +4,45 @@
 # ChatGPT du 2026-10-01. La composition du banc n'est PAS décidée.
 #
 # Lu par :
-#   scripts/selection_multicritere.py  options du comparatif (comparatif: true)
 #   scripts/dimensionnement.py         phases `banc` de params/budget.yaml (champ `configuration`)
+#   scripts/estimation_thermique.py    `seuil_thermique` (écart sous la protection)
 # Renvoi depuis : docs/protocole-banc.md § 2 ter (dispersion).
 #
-# `modeles` donne, PAR MODÈLE, le NOMBRE D'EXEMPLAIRES. Trois modèles à
-# un exemplaire ne sont pas trois exemplaires : la DISPERSION entre
-# exemplaires exige au moins 2 exemplaires d'un même modèle. Le
-# générateur la calcule depuis ces nombres ; elle n'est plus déclarée.
+# `modeles` donne, PAR MODÈLE, le NOMBRE D'EXEMPLAIRES. La DISPERSION entre
+# exemplaires exige au moins 2 exemplaires d'un même modèle.
 #
-# Un modèle « @… » est résolu par selection_multicritere.py depuis le
-# classement des familles du jour (rien n'est figé ici qui dépende du
-# classement) :
-#   @S_gagnant      membre S de la famille gagnante à k = 1,0
-#   @S_finaliste_A  membre S de la famille gagnante au-dessus de la bascule
-#   @S_finaliste_B  membre S de la famille gagnante en dessous
-# (les deux finalistes sont pris à une MÊME tension, 48 V de préférence,
-# variante 48 V comprise).
-#
-# La TENSION d'une configuration n'est pas déclarée ici : le générateur la
-# CALCULE comme la tension commune des plages publiées de ses modèles
-# (lot F, 2026-10-01, après le bug du lot E qui annonçait 12 V pour une
-# paire 48 V). tests/test_tension_banc.py le vérifie.
+# MODIFIÉ le 2026-10-01 (refonte R3). Le comparatif pondéré est archivé
+# (archive/scripts/selection_multicritere.py) : les configurations « @… »
+# qu'il résolvait (un_vainqueur, deux_vainqueurs, trois_vainqueurs,
+# deux_finalistes) et les champs `comparatif` sont retirés. Ancien texte :
+# historique git de ce fichier, et l'étiquette avant-refonte-2026-10-01.
+# Depuis la fiche 0065, le banc VÉRIFIE le RS00 ; sa composition reste
+# NON DÉCIDÉE.
 
 banc:
   statut: "composition NON DÉCIDÉE"
   configurations:
-    un_vainqueur:
-      modeles: {"@S_gagnant": 1}
-      comparatif: true
-      statut: "composition NON DÉCIDÉE"
-    deux_vainqueurs:
-      modeles: {"@S_gagnant": 2}
-      comparatif: true
-      statut: "composition NON DÉCIDÉE"
-    trois_vainqueurs:
-      modeles: {"@S_gagnant": 3}
-      comparatif: true
-      statut: "composition NON DÉCIDÉE"
-    deux_finalistes:
-      modeles: {"@S_finaliste_A": 1, "@S_finaliste_B": 1}
-      comparatif: true
-      statut: "composition NON DÉCIDÉE"
     qualification:
       modeles: {dm_j4310_48v: 1, edulite05: 1, rs05: 1}
-      comparatif: true
       statut: "composition NON DÉCIDÉE"
       origine: "prompt de Claude (arbitrage), 2026-09-30 — PROPOSÉ"
     feetech:
       modeles: {sts3250: 2}
-      comparatif: true
       libelle: "banc d'apprentissage"
       statut: "composition NON DÉCIDÉE"
     rs05_x2:
       modeles: {rs05: 2}
-      comparatif: false
       statut: "composition NON DÉCIDÉE"
       note: "chiffrage historique de la phase `banc` du budget (cadrage D, 2026-09-30)"
     verification_j4310_x2:
       modeles: {dm_j4310_48v: 2}
-      comparatif: false
       statut: "composition NON DÉCIDÉE"
       note: "option « vérification » du budget (2026-09-30, nuit), proposée quand Damiao était en tête ; Damiao ne gagne plus depuis le recalcul en 48 V"
+
+# Écart du protocole sous la protection thermique du constructeur.
+# Déplacé le 2026-10-01 (refonte R3) depuis params/criteres_selection.yaml
+# (banc.critere_abandon), archivé. Valeur et source inchangées.
+seuil_thermique:
+  statut: "proposé, à valider par Jeremy"
+  actionneur: dm_j4310_48v      # courbes d'échauffement constructeur lues par estimation_thermique.py
+  ecart_sous_protection_C: {valeur: 10, source: "docs/protocole-banc.md § 1.5 (proposé) : un palier s'arrête 10 °C sous la protection du constructeur"}

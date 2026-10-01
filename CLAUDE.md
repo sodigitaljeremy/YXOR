@@ -61,8 +61,9 @@ correcte sans qu'elle ait été régénérée et regardée.
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la
   référence du calcul, pas celle de YXOR. On ne dessine qu'à une taille
   qui a une hauteur unique.
-- **La famille d'actionneurs de S n'est pas décidée.** Le banc doit
-  départager (`docs/choix-famille-actionneurs.md`, `docs/comparatif-banc.md`).
+- **S est décidé** (fiche 0065, Jeremy, 2026-10-01) : famille RobStride,
+  RS00 sur les 12 articulations de jambe, H_S = 0,60 m visée. Le banc
+  vérifie le RS00, il ne départage plus. Grille : `docs/choix-actionneurs.md`.
 - **Actionneur maison** : piste parallèle, jamais sur le chemin critique
   (fiche 0052).
 

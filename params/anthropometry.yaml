@@ -48,10 +48,15 @@ H: 0.56                  # mètres — taille de ToddlerBot, RÉFÉRENCE du calc
 #     P3: 1.70               # propre — choix de projet
 #
 # Tailles : ORDRE DE GRANDEUR du cadrage § 6, que dimensionnement.py affine
-# (fiche 0047). S est un intervalle : sa famille d'actionneurs n'est pas
-# choisie. Une pièce ne se dessine qu'à une taille qui a une valeur unique.
+# (fiche 0047). Une pièce ne se dessine qu'à une taille qui a une valeur unique.
+#
+# MODIFIÉ le 2026-10-01 (refonte R3, fiche 0065, décidée par Jeremy). Ancien
+# texte : S {H_m: [0.55, 0.60], classe: "S (EduLite 05, RS05, J4310… —
+# famille non décidée)"}. H_S = 0,60 m est VISÉE : si la marge ne tient pas
+# avec charge utile et relevé (docs/choix-actionneurs.md), on redescend vers
+# `H_m_repli` (fiche 0065, condition a).
 tailles:
-  S:  {H_m: [0.55, 0.60], classe: "S (EduLite 05, RS05, J4310… — famille non décidée)"}
+  S:  {H_m: 0.60, H_m_repli: 0.55, classe: "S (RobStride RS00, 12 articulations de jambe ; fiche 0065)"}
   M:  {H_m: 0.80, classe: "M (RS02 ou équivalent)"}
   L:  {H_m: 0.90, classe: "L (RS06 ou mixte RS06/RS02)"}
   XL: {H_m_min: 1.0, classe: "XL (RS03 et au-delà), hors programme"}

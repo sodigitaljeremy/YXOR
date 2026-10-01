@@ -1,11 +1,12 @@
 # Décisions actives
 
-Les 64 fiches de décision sont **archivées** dans `decisions/archive/`,
-sans avoir été réécrites. Elles portent le détail, les alternatives et
+Les 64 fiches d'avant la refonte sont **archivées** dans
+`decisions/archive/`, sans avoir été réécrites. Les fiches écrites depuis
+sont dans `decisions/`. Elles portent le détail, les alternatives et
 l'historique. Cette page ne liste que ce qui **s'applique aujourd'hui**,
 avec qui l'a décidé.
 
-- **Mis à jour** le 2026-10-01, à la refonte R2.
+- **Mis à jour** le 2026-10-01, à la refonte R3.
 - **Les décisions de la refonte** (documents archivés, notation
   remplacée, contrôles réduits, journal court) ont été décidées par
   Jeremy le 2026-10-01. Ses mots : « Concernant les décisions de la
@@ -47,10 +48,21 @@ avec qui l'a décidé.
 
 ## Actionneurs et fabrication
 
-7. **L'actionneur maison est une piste parallèle**, jamais sur le chemin
+7. **S : famille RobStride, avec le RS00 sur les 12 articulations de
+   jambe en v1, et H_S = 0,60 m.**
+   - Conditions : un recalcul avec charge utile et relevé (sinon on
+     redescend vers 0,55 m) ; le banc vérifie le RS00, il ne départage
+     plus ; la version du RS00 se vérifie à l'achat.
+   - Décidée par Jeremy le 2026-10-01. Ses mots : « Je valide ta
+     recommandation sur S. » La recommandation avait été proposée par
+     Claude (arbitrage).
+   - Fiche : [0065](../decisions/0065-s-robstride-rs00.md). C'est la
+     seule fiche en vigueur hors archive.
+
+8. **L'actionneur maison est une piste parallèle**, jamais sur le chemin
    critique. Décidée par Jeremy le 2026-09-30 (fiche ; journal du
    2026-09-30). Fiche : [0052](../decisions/archive/0052-actionneur-maison.md).
-8. **La fabrication est séquencée** : usinage, puis impression 3D, puis
+9. **La fabrication est séquencée** : usinage, puis impression 3D, puis
    hybride. Le procédé se choisit pièce par pièce. Les plaques ne sont
    plus le procédé unique.
    - Décidée par Jeremy le 2026-09-30 (fiche 0050).
@@ -58,14 +70,14 @@ avec qui l'a décidé.
      (fiche 0060).
    - Fiches : [0050](../decisions/archive/0050-fabrication-sequencee.md),
      [0060](../decisions/archive/0060-fabrication-sequencee-appliquee.md).
-9. **Il n'y a pas d'imprimante 3D aujourd'hui.** L'impression ne
+10. **Il n'y a pas d'imprimante 3D aujourd'hui.** L'impression ne
    s'applique qu'une fois une machine disponible et vérifiée. Validée
    lors du lot de cohérence du 2026-09-30.
    Fiche : [0059](../decisions/archive/0059-imprimante-etape-deux.md).
 
 ## Amont, licences et dépôt
 
-10. **Aucune géométrie ToddlerBot n'entre dans une pièce YXOR.** La
+11. **Aucune géométrie ToddlerBot n'entre dans une pièce YXOR.** La
     mécanique amont est sous CC BY-NC-SA 4.0. Aucune reconstruction (scan,
     IA, photo) n'est permise pour contourner cette licence.
     - 0061 : validée lors du lot de cohérence du 2026-09-30.
@@ -73,13 +85,13 @@ avec qui l'a décidé.
       citée ; **à confirmer par Jeremy**.
     - Fiches : [0061](../decisions/archive/0061-licence-amont-deux-familles.md),
       [0045](../decisions/archive/0045-reconstruction-et-amont.md).
-11. **Aucune licence pour l'instant.** Décidée par Jeremy. Ses mots :
+12. **Aucune licence pour l'instant.** Décidée par Jeremy. Ses mots :
     « aucune pour l'instant » (prompt du 2026-09-30, ~23 h 50).
     Fiche : [0063](../decisions/archive/0063-aucune-licence-pour-l-instant.md).
-12. **Le dépôt passe public.** Décidée par Jeremy le 2026-09-30 (fiche).
+13. **Le dépôt passe public.** Décidée par Jeremy le 2026-09-30 (fiche).
     C'est Jeremy, pas l'assistant, qui change la visibilité.
     Fiche : [0053](../decisions/archive/0053-depot-public.md).
-13. **Deux environnements Python.**
+14. **Deux environnements Python.**
     - ToddlerBot est épinglé au commit `e337f3b`, sous son propre venv.
     - Seul `sim/upstream/` s'exécute sous le venv amont, et seul ce sens
       est vérifié.
@@ -88,12 +100,12 @@ avec qui l'a décidé.
       Jeremy**.
     - Fiches : [0002](../decisions/archive/0002-pin-toddlerbot.md),
       [0056](../decisions/archive/0056-code-amont-un-seul-sens-verifie.md).
-14. **Aucun fichier fournisseur non redistribuable n'entre dans le
+15. **Aucun fichier fournisseur non redistribuable n'entre dans le
     dépôt.** Chaque document obtenu est inscrit à
     `params/fournisseurs.yaml`, avec ses six champs. Attribution non
     établie dans la fiche ; **à confirmer par Jeremy**.
     Fiche : [0030](../decisions/archive/0030-fichiers-fournisseurs.md).
-15. **La CAO se fait sous build123d**, et le site est statique, engendré
+16. **La CAO se fait sous build123d**, et le site est statique, engendré
     par le dépôt. Attribution non établie dans les deux fiches ; **à
     confirmer par Jeremy**.
     Fiches : [0009](../decisions/archive/0009-build123d.md),
@@ -123,9 +135,11 @@ Jeremy**, si l'une doit y entrer :
 
 ## Questions ouvertes à ce jour
 
-- **La famille d'actionneurs de S** n'est pas décidée.
-- **La composition du banc** n'est pas décidée.
-- **La hauteur de calcul de S** sera fixée par Jeremy avant R3.
+- **La composition du banc** n'est pas décidée : le banc vérifie le RS00
+  (fiche 0065, condition b).
+- **La version du RS00** (« ancien » ou « nouveau ») se vérifie au moment
+  d'un éventuel achat.
+- **Les composants réels de la charge utile** remplaceront l'hypothèse de
+  1,2 kg.
 
-Les comparatifs en cours sont dans `docs/choix-famille-actionneurs.md`
-et `docs/comparatif-banc.md`, tous deux remplacés en R3.
+La grille de S est dans `docs/choix-actionneurs.md`.

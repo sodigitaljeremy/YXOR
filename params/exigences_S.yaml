@@ -1,0 +1,95 @@
+# Exigences de S — lues par scripts/choix_actionneurs.py
+#
+# Créé le 2026-10-01 (refonte R3). Remplace la notation pondérée, archivée
+# (archive/scripts/selection_multicritere.py, archive/params/criteres_selection.yaml).
+# Pas de score : chaque exigence donne PASS, FAIL, UNKNOWN ou TESTED par
+# candidat, avec sa règle de lecture écrite ici.
+#
+# La HAUTEUR n'est pas ici : elle est lue dans params/anthropometry.yaml
+# (`tailles.S.H_m`, et `H_m_repli`), sa seule place. La MARGE est lue dans
+# params/actionneurs.yaml (`dimensionnement.marge`, fiche 0051).
+#
+# Origine : exigences T1-T9 et A1-A4 PROPOSÉES par Claude Code (rapport de
+# R2, 2026-10-01), complétées par le prompt R3 (charge utile, relevé),
+# rédigé par Claude (arbitrage) et lancé par Jeremy. Rien ici n'est une
+# décision de Jeremy, sauf ce qui le dit avec sa source.
+
+# ─────────────────────────────────────────────────────────────────────────
+#  Charge utile (T4) — hypothèse de travail
+# ─────────────────────────────────────────────────────────────────────────
+charge_utile:
+  statut: "PROPOSÉ par Claude (arbitrage), prompt R3 du 2026-10-01 : ordre de grandeur, à remplacer par les composants réels"
+  valeur_kg: 1.2
+  detail_kg:
+    calculateur_et_carte_porteuse: 0.3
+    batterie: 0.6
+    imu_can_distribution_cablage: 0.3
+  sensibilite_kg: [0.8, 1.6]
+  note: "masse FIXE : elle ne grandit pas avec H"
+
+# ─────────────────────────────────────────────────────────────────────────
+#  Électronique de ToddlerBot comprise dans M0 — retirée de la part mise à
+#  l'échelle (H³), parce qu'un calculateur et une batterie ne grandissent
+#  pas avec le robot.
+# ─────────────────────────────────────────────────────────────────────────
+electronique_toddlerbot:
+  incluse_dans_M0:
+    valeur: true
+    source: >
+      arXiv 2502.00893v1 (params/sources.yaml, toddlerbot_arxiv) : p. 5,
+      « carefully weigh all components to ensure an accurate weight
+      distribution » (masses du modèle pesées) ; p. 6, masse totale 3 484 g,
+      à comparer aux 3,454 kg du MJCF toddlerbot_2xc.xml @ e337f3b ; p. 4,
+      le calculateur et la batterie logent dans le torse (corps `torso`,
+      1,115 kg au MJCF, l. 36).
+    note: "DÉDUIT, pas lu : aucun document amont ne dit en toutes lettres que le MJCF inclut la batterie et le calculateur"
+  masse_kg:
+    valeur: 0.600
+    source: "arXiv 2502.00893v1, p. 13 : « 600 (computer, battery, camera) » g, estimation de CONCEPTION, pas une pesée"
+    note: >
+      Seule valeur publiée qui couvre calculateur et batterie ensemble.
+      Elle comprend aussi la caméra. Retirer moins rendrait le robot plus
+      lourd ; l'écart à H = 0,60 m est de 0,6 × ((0,60/0,56)³ − 1) ≈ 0,14 kg.
+    autres_valeurs:
+      - {valeur: 0.215, source: "arXiv 2502.00893v1, p. 14 : batterie LiPo 2 000 mAh, 215 g", note: "batterie seule"}
+      - {valeur: 0.330, source: "arXiv 2502.00893v1, p. 14 : batterie 21700 en 4 cellules, 330 g", note: "batterie seule"}
+
+# ─────────────────────────────────────────────────────────────────────────
+#  Relevé après chute (T5) — méthode de Claude Code, validée par le prompt
+#  R3 (cas : v1 sans bras, relevé depuis l'ACCROUPI PROFOND, deux jambes,
+#  quasi statique). Hypothèses PROPOSÉES par Claude Code.
+# ─────────────────────────────────────────────────────────────────────────
+releve:
+  posture: "accroupi profond : pieds à plat, cuisse horizontale, tibia incliné vers l'avant ; centre de masse à la verticale des chevilles (équilibre quasi statique)"
+  inclinaison_tibia_deg:
+    valeur: 40
+    sensibilite: [30, 50]
+    source: "hypothèse de Claude Code, non sourcée : ordre de grandeur d'une flexion dorsale de cheville en accroupi ; à remplacer par les butées articulaires de YXOR"
+  repartition_jambes:
+    valeur: 0.5
+    source: "hypothèse : appui symétrique sur les deux jambes"
+  masse_portee: "la masse TOTALE du robot (prudent : les tibias et les pieds ne chargent pas le genou)"
+  longueurs: "cuisse et tibia = ratios ANSUR II de params/anthropometry.yaml × H_S (plus longs que ceux de ToddlerBot, donc plus défavorables)"
+  articulations: [knee, hip_pitch]
+  verdict: "PASS si marge × couple ≤ couple de pointe ; le couple tenu en continu (blocage ou nominal) est affiché pour information : un relevé dure quelques secondes"
+
+# ─────────────────────────────────────────────────────────────────────────
+#  Les exigences, et la règle de chaque verdict
+# ─────────────────────────────────────────────────────────────────────────
+exigences:
+  technique:
+    T1: "couple efficace des 12 articulations de jambe à H_S, marge, charge utile comprise — PASS avec le couple PRUDENT (en blocage s'il est publié ; sinon nominal × k_bas, le plus petit rapport blocage/nominal publié au catalogue) ; UNKNOWN s'il ne passe qu'avec le nominal ; FAIL sinon ; UNKNOWN si aucun continu n'est publié"
+    T2: "couple de pointe des 12 articulations à H_S, marge, charge utile comprise — PASS ou FAIL"
+    T3: "vitesse requise à H_S — PASS si la taille minimale imposée par la vitesse ≤ H_S (vitesse publiée À VIDE, donc optimiste) ; UNKNOWN si la vitesse n'est pas publiée"
+    T4: "charge utile — PASS si T1 et T2 passent aussi avec la borne haute de la sensibilité ; UNKNOWN s'ils ne passent qu'avec la valeur de travail ; FAIL s'ils ne passent pas avec elle"
+    T5: "relevé depuis l'accroupi profond (section `releve`)"
+    T6: "télémétrie : position, couple ou courant, température (faits du comparatif)"
+    T7: "seuil de protection thermique publié (catalogue `protection_thermique_C`, sinon une température lue dans `collecte_criteres_manquants.E_protections`)"
+    T8: "chien de garde de communication (collecte `E_watchdog`, sinon « TIMEOUT » dans le détail de télémétrie du comparatif)"
+    T9: "bus CAN et protocole commun à une famille S → M → L publiée"
+  approvisionnement:
+    A1: "prix relevé et daté"
+    A2: "revendeur en Suisse ou dans l'UE identifié (sinon UNKNOWN : livraison non vérifiée)"
+    A3: "garantie écrite du constructeur ≥ 12 mois"
+    A4: "stock vérifié (« en stock » relevé sur la page du vendeur) ; sinon UNKNOWN"
+  tested: "TESTED remplace un verdict quand une mesure de banc existe dans params/mesures.yaml pour ce candidat (aucune à ce jour)"

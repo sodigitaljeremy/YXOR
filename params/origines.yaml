@@ -43,6 +43,10 @@ fichiers:
         origine: propre
         nature: echelle
         source: "ordre de grandeur du cadrage § 6 (fiche 0048), affiné par dimensionnement.py (fiche 0047)"
+      - motif: "tailles.*.H_m_repli"
+        origine: propre
+        nature: echelle
+        source: "hauteur de repli de S si la marge ne tient pas à 0,60 m (fiche 0065, condition a, décidée par Jeremy le 2026-10-01)"
       - motif: "tailles.*.H_m_min"
         origine: propre
         nature: echelle
@@ -607,6 +611,18 @@ fichiers:
         origine: propre
         nature: sans_objet
         source: "description d'une configuration étudiée (statut, tension, rattachement au comparatif ou au budget)"
+      - motif: "seuil_thermique.ecart_sous_protection_C.valeur"
+        origine: propre
+        nature: sans_objet
+        source: "écart du protocole de banc sous la protection constructeur (docs/protocole-banc.md § 1.5, proposé) ; déplacé de criteres_selection.yaml à la refonte R3"
+      - motif: "seuil_thermique.ecart_sous_protection_C.source"
+        origine: propre
+        nature: sans_objet
+        source: "renvoi au protocole de banc"
+      - motif: "seuil_thermique.*"
+        origine: propre
+        nature: sans_objet
+        source: "statut, actionneur et source du seuil thermique du protocole"
 
   budget.yaml:
     regles:
@@ -683,17 +699,56 @@ fichiers:
         nature: sans_objet
         source: "lecture non vérifiée, gardée pour mémoire"
 
+  # criteres_selection.yaml : archivé le 2026-10-01 (refonte R3) dans
+  # archive/params/ ; sa section (un fourre-tout « ** ») est retirée.
+
   # ═══════════════════════════════════════════════════════════════════════
-  #  criteres_selection.yaml — grilles, poids et jugements (2026-09-30)
+  #  exigences_S.yaml — exigences de S, charge utile, relevé (refonte R3)
   # ═══════════════════════════════════════════════════════════════════════
-  #  Tout ce fichier est fait de CHOIX DE PROJET : grilles écrites avant
-  #  les notes, poids proposés, jugements justifiés. Aucune de ses valeurs
-  #  n'est une cote. Un fourre-tout est donc le bon motif, et il est
-  #  assumé (CLAUDE.md, règle 2 des contrôles).
-  criteres_selection.yaml:
+  exigences_S.yaml:
     regles:
+      - motif: "charge_utile.valeur_kg"
+        origine: propre
+        nature: interface
+        source: "hypothèse de travail PROPOSÉE par Claude (arbitrage), prompt R3 du 2026-10-01"
+      - motif: "charge_utile.detail_kg.*"
+        origine: propre
+        nature: interface
+        source: "décomposition de l'hypothèse de charge utile (prompt R3)"
+      - motif: "charge_utile.sensibilite_kg"
+        origine: propre
+        nature: sans_objet
+        source: "bornes de sensibilité de la charge utile (prompt R3)"
+      - motif: "electronique_toddlerbot.masse_kg.valeur"
+        origine: litterature
+        nature: interface
+        source: "arXiv 2502.00893v1, p. 13 (estimation de conception)"
+      - motif: "electronique_toddlerbot.masse_kg.autres_valeurs.valeur"
+        origine: litterature
+        nature: interface
+        source: "arXiv 2502.00893v1, p. 14 (masses de batterie)"
+      - motif: "electronique_toddlerbot.incluse_dans_M0.valeur"
+        origine: litterature
+        nature: sans_objet
+        source: "déduit de arXiv 2502.00893v1, p. 4-6"
+      - motif: "releve.inclinaison_tibia_deg.valeur"
+        origine: propre
+        nature: sans_objet
+        source: "hypothèse de Claude Code, non sourcée (angle, pas une cote)"
+      - motif: "releve.inclinaison_tibia_deg.sensibilite"
+        origine: propre
+        nature: sans_objet
+        source: "bornes de sensibilité de l'angle du tibia"
+      - motif: "releve.repartition_jambes.valeur"
+        origine: propre
+        nature: sans_objet
+        source: "hypothèse d'appui symétrique"
+      - motif: "releve.articulations"
+        origine: propre
+        nature: sans_objet
+        source: "articulations vérifiées au relevé (noms de params/joints.yaml)"
       - motif: "**"
         fourre_tout: true
         origine: propre
         nature: sans_objet
-        source: "critères de sélection écrits le 2026-09-30, poids proposés par Claude, à fixer par Jeremy"
+        source: "textes : statuts, sources, notes et règles de verdict des exigences (aucune cote)"

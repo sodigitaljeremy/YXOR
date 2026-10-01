@@ -289,7 +289,7 @@ configuration. ⚠ = données P1 écrêtées, donc plafond optimiste.
 
 | Phase | Contenu |
 | --- | --- |
-| banc | 2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration étudiée : thermique réelle, deux adresses sur un même bus, segment à 2 DDL de l'échelon 1, et une rechange. *Statut : OPTION, en attente du comparatif (docs/comparatif-banc.md ; cadrage § 6 et § 13)* |
+| banc | 2 × RS05 et 1 adaptateur USB-CAN, quelle que soit la configuration étudiée : thermique réelle, deux adresses sur un même bus, segment à 2 DDL de l'échelon 1, et une rechange. *Statut : OPTION, en attente du comparatif (archive/docs/comparatif-banc.md ; cadrage § 6 et § 13)* |
 | jambes_v1 | 12 actionneurs + adaptateur + Raspberry Pi 5 + IMU BNO085 + batterie + structure |
 | haut_du_corps_v2 | 18 actionneurs de la classe légère + structure |
 
@@ -374,4 +374,4 @@ aujourd'hui, puisque la structure n'est pas chiffrée.
 - **Un choix.** Les tailles sont décidées par classe (fiche 0048), mais
   les paliers d'`anthropometry.yaml` ne sont pas encore remplacés (cadrage,
   question 8). La famille d'actionneurs de S n'est pas décidée
-  (`docs/choix-famille-actionneurs.md`).
+  (`archive/docs/choix-famille-actionneurs.md`).

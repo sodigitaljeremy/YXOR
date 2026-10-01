@@ -161,8 +161,13 @@ def type_de(nom: str) -> str:
 # ─────────────────────────────── modèle ─────────────────────────────────
 
 def masse(H: float, ref: dict, config: dict, besoins: dict) -> float:
-    """masse(H) = S0·(H/H0)³ + Σ masse réelle des actionneurs de jambe."""
-    return ref["S0"] * (H / ref["H0"]) ** 3 + sum(config[type_de(n)]["masse"] for n in besoins)
+    """masse(H) = S0·(H/H0)³ + masse fixe + Σ masse réelle des actionneurs de jambe.
+
+    La masse fixe (charge utile : calculateur, batterie, IMU) ne grandit pas
+    avec H. Elle vaut 0 sauf dans une référence de `reference_charge`.
+    """
+    return (ref["S0"] * (H / ref["H0"]) ** 3 + ref.get("m_fixe", 0.0)
+            + sum(config[type_de(n)]["masse"] for n in besoins))
 
 
 def ratios(H: float, ref: dict, config: dict, besoins: dict, marge: float) -> dict:
@@ -251,6 +256,17 @@ def reference(cat: dict, analyse: dict) -> dict:
     masses = rt["masse_dynamixel_g"]
     m_jambes = sum(val(masses[b["modele"]]) for b in besoins.values()) / 1000
     return dict(H0=val(rt["hauteur_m"]), M0=M0, S0=M0 - m_jambes, m_jambes_P1=m_jambes)
+
+
+def reference_charge(ref: dict, m_electronique_amont: float, charge_utile: float) -> dict:
+    """Référence avec une charge utile FIXE (refonte R3, 2026-10-01).
+
+    L'électronique de ToddlerBot, comprise dans M0, est retirée de la part
+    mise à l'échelle ; la charge utile de YXOR est ajoutée en masse fixe
+    (params/exigences_S.yaml). À H0, avec charge_utile = m_electronique_amont,
+    la masse est exactement celle de la référence.
+    """
+    return dict(ref, S0=ref["S0"] - m_electronique_amont, m_fixe=charge_utile)
 
 
 def config_homogene(classe: dict) -> dict:
@@ -390,7 +406,7 @@ def couts(cat: dict, bud: dict, config: dict) -> dict:
 
 def configurations(cat: dict) -> list[tuple[str, dict]]:
     # Les candidats du seul comparatif S (`comparatif_seulement`) sont
-    # traités par scripts/selection_multicritere.py, pas ici.
+    # traités par scripts/choix_actionneurs.py, pas ici.
     ids = [i for i, c in cat["candidats"].items() if not c.get("comparatif_seulement")]
     cls = {i: classe_catalogue(cat, i) for i in ids}
     confs = [(f"homogène {cls[i]['nom']}", config_homogene(cls[i])) for i in ids]

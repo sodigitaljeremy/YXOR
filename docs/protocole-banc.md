@@ -2,7 +2,7 @@
 
 **Rédigé le 2026-09-30.** Statut : **proposé**, pas décidé : rien n'est
 acheté, rien n'est mesuré. Aucune fiche. Ce protocole sert le banc de
-qualification (cadrage, § 13, question 12 ; `docs/comparatif-banc.md`) :
+qualification (cadrage, § 13, question 12 ; `archive/docs/comparatif-banc.md`) :
 **mesurer avant d'acheter en quantité**.
 
 Le banc, tel que le comparatif le place en tête : **1 × Damiao J4310 V1.2
@@ -11,7 +11,7 @@ Le banc, tel que le comparatif le place en tête : **1 × Damiao J4310 V1.2
 
 **Mise à jour du 2026-09-30, nuit.** Avec la règle de décisivité étendue,
 aucune inconnue n'est décisive : c'est un **banc de VÉRIFICATION, pas de
-départage** (`docs/comparatif-banc.md`). Il vérifie une décision de
+départage** (`archive/docs/comparatif-banc.md`). Il vérifie une décision de
 famille que les données publiées portent déjà ; le § 2 bis dit, avant la
 mesure, ce qui la ferait rouvrir. Le § 2 ter ajoute la dispersion entre
 deux exemplaires.
@@ -150,7 +150,7 @@ toute mesure. Un critère écrit après la mesure s'ajuste au résultat ;
 - **D'où vient 1,75 N·m** : 0,5 × 3,5 N·m (nominal publié). Le comparatif
   des familles bascule à **k ≈ 0,50** : Damiao gagne jusqu'à k = 0,50 ;
   RobStride (RS05 → RS02 → RS06) gagne dès k = 0,49
-  (`docs/choix-famille-actionneurs.md`). Sous 1,75 N·m, le k mesuré du
+  (`archive/docs/choix-famille-actionneurs.md`). Sous 1,75 N·m, le k mesuré du
   J4310 est sous la bascule.
 - **« Rouvert », pas « changé »** : la valeur mesurée entre au catalogue
   (§ 3), le comparatif est relancé, et c'est son résultat, lu par
@@ -170,8 +170,8 @@ toute mesure. Un critère écrit après la mesure s'ajuste au résultat ;
 
 *Mise à jour du 2026-09-30, 22 h 30 — le texte ci-dessus est conservé,
 il ne vaut plus.* Le critère est désormais **calculé** par
-`scripts/selection_multicritere.py` (`criteres_selection.yaml`,
-`banc.critere_abandon`) et publié dans `docs/comparatif-banc.md` § 4.
+`archive/scripts/selection_multicritere.py` (`archive/params/criteres_selection.yaml`,
+`banc.critere_abandon`) et publié dans `archive/docs/comparatif-banc.md` § 4.
 Il prend **un seul seuil thermique**, celui du § 1.5 : 90 °C pour le
 Damiao, c'est-à-dire la protection de 100 °C moins 10 °C. L'estimation
 utilise le même seuil.
@@ -239,7 +239,7 @@ avec la valeur, jamais après coup.**
 1. la valeur mesurée entre au catalogue comme une **condition de plus**,
    avec `origine: mesure`, et remplace l'hypothèse k pour cet
    actionneur ;
-2. `scripts/selection_multicritere.py` est relancé : les deux documents
+2. `archive/scripts/selection_multicritere.py` est relancé : les deux documents
    se régénèrent, et l'on voit si le classement des familles tient ;
 3. **alors seulement** se pose la question d'acheter en quantité.
 

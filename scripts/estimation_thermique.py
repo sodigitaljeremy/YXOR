@@ -34,12 +34,13 @@ Les télécharger :
 UN SEUL SEUIL THERMIQUE (2026-09-30, 22 h 30). T_lim est celui du
 protocole de banc : la protection du constructeur (params/actionneurs.yaml,
 dm_j4310_48v.protection_thermique_C, 100 °C) moins l'écart du protocole
-(params/criteres_selection.yaml, banc.critere_abandon, 10 °C), soit 90 °C.
+(params/banc.yaml, seuil_thermique, 10 °C), soit 90 °C. L'écart était dans
+params/criteres_selection.yaml jusqu'à la refonte R3 (2026-10-01).
 Avant, l'estimation prenait 100 °C et le protocole arrêtait à 90 °C : le
 continu mesuré aurait été ~7 % sous l'estimé, par construction.
 
-`estimer()` est lu par scripts/selection_multicritere.py : la fourchette de
-k n'est plus recopiée à la main.
+`estimer()` était lu par scripts/selection_multicritere.py, archivé à la
+refonte R3 (2026-10-01) ; il reste exécutable seul, pour information.
 """
 from __future__ import annotations
 
@@ -93,8 +94,7 @@ def seuil_thermique() -> tuple[float, str]:
     """T_lim du protocole : protection constructeur − écart du protocole. Lu, jamais écrit ici."""
     import yaml
     cat = yaml.safe_load((REPO / "params" / "actionneurs.yaml").read_text(encoding="utf-8"))
-    crit = yaml.safe_load((REPO / "params" / "criteres_selection.yaml").read_text(encoding="utf-8"))
-    ca = crit["banc"]["critere_abandon"]
+    ca = yaml.safe_load((REPO / "params" / "banc.yaml").read_text(encoding="utf-8"))["seuil_thermique"]
     prot = cat["candidats"][ca["actionneur"]]["protection_thermique_C"]["valeur"]
     ecart = ca["ecart_sous_protection_C"]["valeur"]
     return float(prot - ecart), f"protection {prot:g} °C − {ecart:g} °C du protocole"

@@ -161,3 +161,18 @@ sources:
     lu: null
     pourquoi: >
       Programme d'enseignement — aucune valeur de conception n'en est tirée.
+  toddlerbot_arxiv:
+    auteurs: "Shi, Haochen ; Wang, Weizhuo ; Song, Shuran ; Liu, C. Karen"
+    titre: "ToddlerBot: Open-Source ML-Compatible Humanoid Platform for Loco-Manipulation"
+    editeur: "arXiv (Stanford University)"
+    annee: 2025
+    identifiant_perenne: "arXiv:2502.00893v1"
+    pages: 16
+    empreinte: "sha256:42b469a302ee38847440cfdb257edd17d854ab039e0af221a36c533c5d4e6e73"
+    octets: 22721116
+    droits: >
+      Prépublication arXiv ; licence de la prépublication NON relevée. Valeurs citées avec leur page, aucun texte reproduit au-delà de courtes citations.
+    lecture: partiel
+    lu: "recherche plein texte (masse, batterie, calculateur) : p. 1, 2, 4-6, 13, 14 ; téléchargé le 2026-10-01 depuis export.arxiv.org"
+    pourquoi: >
+      M0 de ToddlerBot comprend-il son calculateur et sa batterie (refonte R3, params/exigences_S.yaml) ?

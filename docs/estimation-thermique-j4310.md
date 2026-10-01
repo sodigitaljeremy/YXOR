@@ -15,7 +15,7 @@ Dans le comparatif des familles, **k** est le rapport entre le couple
 continu réel d'un actionneur et son nominal publié. Pour le J4310, la
 condition de mesure du nominal (3,5 N·m) n'est pas publiée : k y est une
 **hypothèse**, balayée de 1,0 à 0,3. La famille Damiao gagne tant que
-**k ≥ 0,50** (`docs/choix-famille-actionneurs.md`).
+**k ≥ 0,50** (`archive/docs/choix-famille-actionneurs.md`).
 
 Peut-on estimer k **sans acheter d'actionneur**, à partir de ce que
 Damiao publie ?
