@@ -99,10 +99,14 @@ cote.
   (découpe laser, saignée 0,5 mm compensée par lui, rayon de machine
   2,0 mm, tolérance ± 0,5 mm, matières, pliage, formats) est dans
   `params/hardware.yaml` (`machines.decoupe_operateur_cn`, réglages
-  `operateur_cn_*`). Ce sont des déclarations, non mesurées. **À
-  CONFIRMER** : épaisseurs jusqu'à 10 mm (1 à 6 mm retenus), le format
-  « dpr », et les « 5 axes » (fraisage ou laser). Les rayons d'outil d'un
-  fraisage restent **inconnus** : ne pas les supposer.
+  `operateur_cn_*`). Ce sont des déclarations, non mesurées. Précisé le
+  2026-10-02 : « 2 mm » est le diamètre de la buse ; aluminium jusqu'à
+  8 mm ; trou minimal 3 mm et voile minimal 6 mm en alu 3 mm ; « 5 axes »
+  = une fraiseuse. **À CONFIRMER** : le rayon intérieur minimal (2,0 mm
+  déclaré, contredit par un trou de 3 mm de diamètre), les épaisseurs des
+  autres matières (« 1 à 10 »), le format « dpr », l'alliage des chutes,
+  la plieuse (vé, bord minimal). Les rayons d'outil de la fraiseuse
+  restent **inconnus** : ne pas les supposer.
 - Aucun logement de roulement obtenu directement par le procédé : prévoir
   un palier rapporté ou un alésage repris.
 - Assemblage démontable, aucun collage structurel. Pas de filetage dans le

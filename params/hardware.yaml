@@ -69,15 +69,26 @@ machines:
       source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-01 vers 20 h 45"
       date: 2026-10-01
       materiaux: [aluminium, laiton, titane, inox, ceramique]
-      epaisseurs_mm: {valeur: [1, 6], a_confirmer: "« 1 à 10 » aussi annoncé : À CONFIRMER"}
+      epaisseurs_mm: {valeur: [1, 6], a_confirmer: "« 1 à 10 » aussi annoncé : À CONFIRMER pour les matières autres que l'aluminium"}
       tolerance_contour_mm: {valeur: 0.5, note: "± 0,5 mm"}
       ecart_min_entre_pieces_mm: 10
       tole_max_mm: {valeur: 2000, note: "« 2 m ou plus » : borne basse"}
       pliage: {possible: true, rayon_interieur_min_mm: 5}
       formats: {valeur: [DXF, SVG, dpr], a_confirmer: "« dpr » : format non identifié, À CONFIRMER"}
       alesage_apres_decoupe: true
-      cinq_axes: {valeur: true, a_confirmer: "« 5 axes possibles » : fraisage ou laser ? À CONFIRMER"}
+      cinq_axes: {valeur: true, a_confirmer: "« 5 axes possibles » : fraisage ou laser ? À CONFIRMER"}   # tranché le 2026-10-02 : voir capacites_declarees_2026_10_02
       chutes_et_toles_pleines: true
+    # Ajouté le 2026-10-02 : précisions de l'opérateur. Les valeurs ci-dessus
+    # restent écrites telles qu'elles ont été déclarées la veille.
+    capacites_declarees_2026_10_02:
+      provenance: declaration_operateur
+      source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-02"
+      date: 2026-10-02
+      buse_diametre_mm: {valeur: 2.0, note: "« 2 mm » est le diamètre de la BUSE : lève l'incohérence entre un faisceau de saignée 0,5 mm et un rayon de 2 mm. Le rayon intérieur minimal de 2,0 mm du 2026-10-01 reste inscrit, non tranché (voir operateur_cn_alu_3.contradiction_trou_rond)"}
+      aluminium_epaisseur_max_mm: {valeur: 8, note: "tranche « 6 ou 10 » pour l'aluminium"}
+      cinq_axes: {valeur: "fraiseuse", rayons_outil_mm: null, note: "rayons d'outil INCONNUS : ne pas les supposer"}
+      alliage_des_chutes: null     # inconnu
+      plieuse: {ve_mm: null, bord_plie_min_mm: null, note: "inconnue"}
     note: >
       Le dépôt ne connaît pas encore les rayons d'outil d'un éventuel
       fraisage ; seule la découpe laser est déclarée.
@@ -399,13 +410,24 @@ reglages:
     # désormais max(0,5 x épaisseur, limite de machine) : procedes.rayon_interieur_min.
     rayon_interieur_min: 2.0 # = max(0,5 x 3 ; 2,0 machine)
     rayon_interieur_min_machine: 2.0   # DÉCLARÉ par l'opérateur CN, 2026-10-01 : « peut-être moins, partons sur 2 mm »
-    voile_min: null
-    voile_min_litterature:   # GARDE-FOU PROVISOIRE, remplacé par la valeur de l'opérateur dès qu'il la donne
+    # MODIFIÉ le 2026-10-02 : était null. DÉCLARÉ par l'opérateur CN
+    # (« plus petite bande de matière 6 mm ») ; il REMPLACE le garde-fou de
+    # littérature ci-dessous, conservé pour mémoire.
+    voile_min: 6.0
+    voile_min_source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-02"
+    trou_decoupe_min: 3.0    # DÉCLARÉ le 2026-10-02 : « 2 ou 3 mm » -> 3 mm, la plus prudente (0064)
+    trou_decoupe_min_source: "réponses de l'opérateur CN à Jeremy, par message, 2026-10-02"
+    contradiction_trou_rond: >
+      CONSIGNÉE, NON RÉSOLUE (2026-10-02) : rayon intérieur minimal déclaré
+      2,0 mm (2026-10-01) contre un trou rond déclaré faisable à 3 mm de
+      diamètre, soit un rayon de 1,5 mm. Le « 2 mm » serait le diamètre de
+      la buse (déclaré le 2026-10-02) ; à confirmer auprès de l'opérateur.
+    voile_min_litterature:   # GARDE-FOU REMPLACÉ le 2026-10-02 par `voile_min` déclaré (6,0)
       provenance: litterature
       regle: "0,5 x épaisseur (trou et pont)"
       valeur_mm: 1.5
       source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
-      note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
+      note: "remplacé pour ce réglage par la déclaration de l'opérateur (voile_min = 6,0)"
     # MODIFIÉ le 2026-10-02 : les rayons de pliage étaient null (metallservice.ch
     # inaccessible le 2026-10-01) ; lus depuis chez Reynolds European.
     rayon_pliage_min_litterature:   # aluminium 3 mm, pliage à 90°, rayon INTÉRIEUR
@@ -419,7 +441,7 @@ reglages:
       provenance: litterature
       statut: "valeurs « retenues par Jeremy » selon le prompt du 2026-10-02, sans ses mots : PROPOSÉ (CLAUDE.md, règle 7). Aucun contrôle ne les lit."
       regle: "la plus prudente des trois rapports (fiche 0064) ; rapports dans docs/sources/dfm-tole-*.md (params/sources.yaml : rapport_dfm_tole_claude, _grok, _chatgpt), secondaires et non vérifiés"
-      trou_decoupe_min_mm: {valeur: 4.5, sources: "Grok « trou fonctionnel 4,5 mm (1,5 t) » ; Claude 3 → 4 mm ; plus prudente des trois (0064)"}
+      trou_decoupe_min_mm: {valeur: 4.5, sources: "Grok « trou fonctionnel 4,5 mm (1,5 t) » ; Claude 3 → 4 mm ; plus prudente des trois (0064)", note: "pour CETTE machine, le trou déclaré par l'opérateur (3,0 mm, `trou_decoupe_min`, 2026-10-02) prime sur cette valeur de littérature"}
       fente_min_mm: {valeur: 4.5, sources: "Grok « fente 4,5 mm » ; plus prudente des trois (0064)"}
       pont_min_mm: {valeur: 6.0, sources: "Grok « voile 6 mm (2 t) » ; Claude 4,5 mm (1,5 e) ; plus prudente des trois (0064)"}
       trou_bord_mm: {valeur: 6.0, sources: "Grok et Claude 6 mm (2 t) ; ChatGPT max(1,5 t ; 3,2) ; plus prudente des trois (0064)"}
