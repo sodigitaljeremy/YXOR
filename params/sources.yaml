@@ -257,3 +257,54 @@ sources:
     lu: null
     pourquoi: >
       Référence de VOCABULAIRE seulement (tolérances de coupe thermique, dont le laser). La norme n'a pas été lue.
+
+  # ── Rapports d'assistants sur le DFM tôle (2026-10-02) ──
+  # PROVENANCE SECONDAIRE, NON VÉRIFIÉE : ce sont des synthèses produites par
+  # des assistants, versées telles quelles dans docs/sources/ par Jeremy le
+  # 2026-10-02. Aucune valeur n'entre dans params/ sur leur seule foi : la
+  # source primaire citée est relue d'abord (journal du 2026-10-02).
+  rapport_dfm_tole_claude:
+    auteurs: "Claude (recherche, rapport d'assistant)"
+    titre: "YXOR : données publiques DFM pour pièces de robot en tôle (alu, inox, titane, laiton, 1–6 mm)"
+    editeur: "rapport d'assistant, docs/sources/dfm-tole-claude-2026-10-01.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/dfm-tole-claude-2026-10-01.md"
+    pages: "384 lignes"
+    empreinte: "sha256:083c9953b6183001d5355debb98eef98d8be5480057ffb44697f626cc6acce67"
+    octets: 41542
+    droits: >
+      Rapport d'assistant ; il cite des sources tierces sous droits, dont il recopie des valeurs.
+    lecture: partiel
+    lu: "2026-10-02 : tableaux de synthèse (l. 261-290) et références des fiches Reynolds (l. 313-314)."
+    pourquoi: >
+      Valeurs DFM prudentes pour l'alu de 3 mm ; source secondaire, non vérifiée.
+  rapport_dfm_tole_grok:
+    auteurs: "Grok (recherche, rapport d'assistant)"
+    titre: "YXOR — Capacités CN, DFM tôle 1–6 mm, valeurs prudentes"
+    editeur: "rapport d'assistant, docs/sources/dfm-tole-grok-2026-10-01.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/dfm-tole-grok-2026-10-01.md"
+    pages: "160 lignes"
+    empreinte: "sha256:8580c354e6408514b961a138d5b555781997575a3ac7d42244831aa00d90e9ee"
+    octets: 15864
+    droits: >
+      Rapport d'assistant.
+    lecture: partiel
+    lu: "2026-10-02 : §§ 1 et 2 (découpe laser, pliage)."
+    pourquoi: >
+      Valeurs DFM prudentes pour l'alu de 3 mm ; source secondaire, non vérifiée.
+  rapport_dfm_tole_chatgpt:
+    auteurs: "ChatGPT (recherche, rapport d'assistant)"
+    titre: "RECHERCHE YXOR — LOTS A et B : procédés, matériaux, tolérances et DFM"
+    editeur: "rapport d'assistant, docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md"
+    pages: "2294 lignes"
+    empreinte: "sha256:3d2274056c04030cc34bb3a46e1b43717d1b765f110233db0a690c7e0522bd0a"
+    octets: 113603
+    droits: >
+      Rapport d'assistant.
+    lecture: partiel
+    lu: "2026-10-02 : tableaux de règles laser (l. 52-107), divergences (l. 883), dégagement (l. 2218)."
+    pourquoi: >
+      Valeurs DFM prudentes ; source secondaire, non vérifiée.

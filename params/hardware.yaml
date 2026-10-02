@@ -406,12 +406,33 @@ reglages:
       valeur_mm: 1.5
       source: "SendCutSend, leçon DFM 5.2 et FAQ « minimum geometry » (params/sources.yaml : sendcutsend_dfm_5_2, sendcutsend_faq_geometrie), lues le 2026-10-01"
       note: "`voile_min` (déclaré par l'opérateur) reste null : celui-ci ne le remplace pas"
-    rayon_pliage_min_litterature:   # aluminium 3 mm, par alliage — NON LU
+    # MODIFIÉ le 2026-10-02 : les rayons de pliage étaient null (metallservice.ch
+    # inaccessible le 2026-10-01) ; lus depuis chez Reynolds European.
+    rayon_pliage_min_litterature:   # aluminium 3 mm, pliage à 90°, rayon INTÉRIEUR
       provenance: litterature
-      source: "metallservice.ch, « Mechanische Kennwerte für walzblankes Aluminium-Halbzeug » (params/sources.yaml : metallservice_kennwerte_alu)"
-      en_aw_5754_h111_mm: null   # non lu : site inaccessible le 2026-10-01
-      en_aw_6061_t6_mm: null     # non lu : site inaccessible le 2026-10-01
-      note: "aucune valeur recopiée sans lecture de la page (prompt du 2026-10-01)"
+      source: "NF EN 485-2 (non lue, payante) reprise par Reynolds European, fiches AW-5754 et AW-6082 (params/fournisseurs.yaml : reynolds_toles_aw_5754, reynolds_toles_aw_6082), lues le 2026-10-02"
+      en_aw_5754_h111_mm: 3.0    # 1,0 x e (O/H111, 1,5-3,0 mm et 3,0-6,0 mm : même valeur) -> R 5 déclaré : PASSE
+      en_aw_6082_t6_mm: 13.5     # 3,0 mm est la borne entre 3,5 x e (1,5-3,0) et 4,5 x e (3,0-6,0) : la plus prudente, 4,5 x 3 (0064) -> R 5 : NE PASSE PAS
+      en_aw_6061_t6_mm: null     # non lu : aucune fiche 6061 lue (metallservice.ch inaccessible)
+      note: "fiche 6082 : une seule colonne de rayon pour l'état T6, lue comme 90° (le 180° n'y est pas donné). À confirmer sur la fiche en image."
+    dfm_litterature:   # PROVISOIRE : remplacé par la valeur de l'opérateur CN dès qu'il la donne
+      provenance: litterature
+      statut: "valeurs « retenues par Jeremy » selon le prompt du 2026-10-02, sans ses mots : PROPOSÉ (CLAUDE.md, règle 7). Aucun contrôle ne les lit."
+      regle: "la plus prudente des trois rapports (fiche 0064) ; rapports dans docs/sources/dfm-tole-*.md (params/sources.yaml : rapport_dfm_tole_claude, _grok, _chatgpt), secondaires et non vérifiés"
+      trou_decoupe_min_mm: {valeur: 4.5, sources: "Grok « trou fonctionnel 4,5 mm (1,5 t) » ; Claude 3 → 4 mm ; plus prudente des trois (0064)"}
+      fente_min_mm: {valeur: 4.5, sources: "Grok « fente 4,5 mm » ; plus prudente des trois (0064)"}
+      pont_min_mm: {valeur: 6.0, sources: "Grok « voile 6 mm (2 t) » ; Claude 4,5 mm (1,5 e) ; plus prudente des trois (0064)"}
+      trou_bord_mm: {valeur: 6.0, sources: "Grok et Claude 6 mm (2 t) ; ChatGPT max(1,5 t ; 3,2) ; plus prudente des trois (0064)"}
+      trou_trou_mm: {valeur: 6.0, sources: "Grok « trou-trou 6 mm » ; plus prudente des trois (0064)"}
+      bord_plie_min_mm: {valeur: 18.0, sources: "Grok, tables air-bend ~6 t (Huaxiao, 3 mm → 18 mm) ; Claude 17 mm (4 t + R) ; plus prudente des trois (0064)"}
+      trou_pli_mm: {valeur: 14.0, sources: "Claude 14 mm (3 t + R, bord du trou à la ligne de pli) ; Grok 2,5 t + R ; plus prudente des trois (0064)"}
+      degagement_pli_mm: {largeur: 4.0, profondeur: 8.5, sources: "Claude 4 × 8,5 mm (247TailorSteel + R 2 de l'opérateur) ; ChatGPT ≥ 8,5 ; plus prudente des trois (0064)"}
+      taraudage_direct_m3_dans_3mm: {valeur: "déconseillé", sources: "Claude (Bossard 01-2025 : engagement 2 d dans l'AlMg3, soit 6 mm > 3 mm) ; plus prudente des trois (0064)"}
+    fixation_m3_lue:   # sources PRIMAIRES relues le 2026-10-02 (params/fournisseurs.yaml)
+      provenance: catalogue
+      passage_iso273_moyen_mm: {valeur: 3.4, source: "ISO 273 (non lue) via Engineering Hardware : M3, série moyenne H13 = 3,4 mm (fine 3,2 ; large 3,6)"}
+      ecrou_aveugle_rivkle_m3_trou_mm: {valeur: 5.0, source: "Böllhoff, page RIVKLE : « M 3 = 5.0 mm » pour les écrous aveugles standard à fût rond (la page ne précise pas la matière)"}
+      ecrou_sertir_pem_cla_m3_1: {trou_mm: 4.75, tolerance_trou_mm: "+0,08", axe_bord_min_mm: 5.6, durete_max_tole: "HRB 50 / HB 89 (page produit) ; HRB 50 / HB 82 (catalogue CL, p. 4) : HB 82 retenu (0064)", source: "PEM, catalogue CL p. 4-5 et page CLA-M3-1"}
     fixation: "vis traversante + écrou"
     source_saignee: "déclaration de l'opérateur CN, 2026-10-01"
     declarations:

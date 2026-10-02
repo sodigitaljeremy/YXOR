@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `b9dbdf47f0dd`, le 2026-10-01 ; 186 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `f946b03b77be`, le 2026-10-02 ; 189 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -124,7 +124,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (12)
+## docs/ (15)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-actionneurs.md
@@ -137,6 +137,9 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/etat-factuel-20
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-claude-2026-10-01.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-grok-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/etude-fournisseurs-chatgpt-2026-09-30.md
 
 ## journal/ (6)

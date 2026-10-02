@@ -479,3 +479,52 @@ fichiers:
       Licence NON relevée (aucune n'a été lue dans le dépôt ou sur la page de téléchargement). Sans licence établie, aucun droit de redistribution n'est présumé. Seules des valeurs numériques en sont extraites, avec leur page, vers params/actionneurs.yaml (CLAUDE.md : « une valeur, jamais le texte »). Ce n'est pas un avis juridique.
     redistribuable: false
     note: "Non lue."
+
+  # ── Sources PRIMAIRES lues le 2026-10-02 pour le DFM tôle ──
+  # Relues par Claude Code avant toute inscription (journal du 2026-10-02).
+  # Aucun de ces fichiers n'est dans le dépôt.
+  reynolds_toles_aw_5754:
+    source: >
+      Reynolds European (distributeur FR), http://www.reynolds-european.fr/wp-content/uploads/2020/04/fiche-toles-alu-AW-5754.pdf
+    reference: "Fiche « Selon Norme NF EN 485-2 — Tôles en aluminium EN AW-5754 », 1 p., mise en ligne 2020-04"
+    date: 2026-10-02
+    empreinte: "sha256:16579176d4ad275a534643f2ce2d70593d7a39e6d7a8cd0de01b77bfd590cde1"
+    conditions: >
+      Conditions non relevées. Reprise de valeurs de la norme EN 485-2 (payante, non lue) : seules des valeurs isolées en sont citées, avec la référence.
+    redistribuable: false
+  reynolds_toles_aw_6082:
+    source: >
+      Reynolds European (distributeur FR), http://www.reynolds-european.fr/wp-content/uploads/2020/04/fiche-toles-alu-AW-6082.pdf
+    reference: "Fiche « Selon Norme NF EN 485-2 — Tôles en aluminium EN AW-6082 », 1 p., mise en ligne 2020-04"
+    date: 2026-10-02
+    empreinte: "sha256:69b578f3ef58120a5511779220573619094137a7121c88f3cdb5f147b0774136"
+    conditions: >
+      Comme reynolds_toles_aw_5754.
+    redistribuable: false
+  pem_cl_catalogue:
+    source: >
+      PennEngineering (PEM), https://www.pemnet.com/wp-content/uploads/sites/9/2022/06/cldata.pdf ; et page produit https://www.pemnet.com/products/product-finder/cla-m3-1/
+    reference: "Catalogue « CL — Self-clinching nuts » (20 p.) et fiche CLA-M3-1"
+    date: 2026-10-02
+    empreinte: "sha256:26ebbb9bbfe1f92e3f737e5b4326c57c88884c38ac4ecc5579a5ca8e64d9da12"
+    conditions: >
+      Documentation commerciale de fabricant ; conditions non relevées. Empreinte du PDF ; page produit : sha256 42f5167b9ec0135693382ceb069cb0a1ae1bcb3abddc4b0af940c5105a290e85.
+    redistribuable: false
+  boellhoff_rivkle_faq:
+    source: >
+      Böllhoff, https://www.boellhoff.com/de-en/products/special-fasteners/rivkle-blind-rivet-nuts-and-blind-rivet-studs/
+    reference: "Page produit RIVKLE, question « How large must the hole for my RIVKLE® blind rivet nut be? »"
+    date: 2026-10-02
+    empreinte: "sha256:e6a7b1b257180bb2754164e2a3e51f7165df4cc2d93635ad390fa34763e33745"
+    conditions: >
+      Page commerciale ; conditions non relevées. Le catalogue PDF (rivkle-de-at-2307.pdf) n'a été reçu que tronqué (7 051 octets) : non lu.
+    redistribuable: false
+  iso273_reprise_engineeringhardware:
+    source: >
+      Engineering Hardware, https://engineeringhardware.com/fastener/clearance-hole-sizes/
+    reference: "Clearance Hole Sizes (ISO 273) — reprise publique du tableau ISO 273 / DIN 406"
+    date: 2026-10-02
+    empreinte: "sha256:3c0d7335d4becda156d4eed8e3da3001e0a3d5b8abeed9d939151d67de5da304"
+    conditions: >
+      Reprise tierce d'une norme payante (ISO 273, non lue) ; une valeur isolée en est citée.
+    redistribuable: false
