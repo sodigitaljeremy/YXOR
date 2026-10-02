@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `f946b03b77be`, le 2026-10-02 ; 189 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `17f52aed7aa5`, le 2026-10-02 ; 190 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -142,7 +142,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tol
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-grok-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/etude-fournisseurs-chatgpt-2026-09-30.md
 
-## journal/ (6)
+## journal/ (7)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-20.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-28.md
@@ -150,6 +150,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-29-n
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-29.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-30.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-01.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-02.md
 
 ## params/ (13)
 
