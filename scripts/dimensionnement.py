@@ -269,6 +269,27 @@ def reference_charge(ref: dict, m_electronique_amont: float, charge_utile: float
     return dict(ref, S0=ref["S0"] - m_electronique_amont, m_fixe=charge_utile)
 
 
+def masse_haut_du_corps_amont(cat: dict, besoins: dict) -> float:
+    """Masse (kg) des servos ToddlerBot HORS jambes, comprise dans S0 : CALCULÉE.
+
+    Ajoutée le 2026-10-02 (fiche 0067) : S0 contenait les 20 servos du haut
+    du corps de ToddlerBot (cou, taille, bras, poignets, pinces), mis à
+    l'échelle en H³. La v1 de YXOR a un buste fixe : choix_actionneurs.py
+    les retire, puis ajoute les actionneurs du haut du corps de chaque
+    scénario en masse fixe. Modèles lus dans default.yml amont, masses par
+    axe dans `reference_toddlerbot.masse_dynamixel_g`.
+    """
+    masses = cat["reference_toddlerbot"]["masse_dynamixel_g"]
+    total = 0.0
+    for nom, (modele, _) in AM.modeles_amont()["moteur"].items():
+        if nom in besoins:
+            continue
+        if modele not in masses:
+            raise KeyError(f"masse du Dynamixel {modele} ({nom}) absente de reference_toddlerbot")
+        total += val(masses[modele])
+    return total / 1000
+
+
 def config_homogene(classe: dict) -> dict:
     return {t: classe for t in JAMBE}
 

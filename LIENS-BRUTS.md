@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `17f52aed7aa5`, le 2026-10-02 ; 190 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `8fcf9b7721b8`, le 2026-10-02 ; 193 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,10 +54,11 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (67)
+## decisions/ (68)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0067-s-jambes-mixtes-rs02-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md
@@ -152,13 +153,14 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-30.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-02.md
 
-## params/ (13)
+## params/ (14)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/banc.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/budget.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/ckpts.manifest.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/configuration_S.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/exigences_S.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/fournisseurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/hardware.yaml
@@ -212,9 +214,10 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (12)
+## tests/ (13)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_construction_deterministe.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_controle_articulations.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_critere_banc.py

@@ -1,0 +1,32 @@
+# Configuration de S : l'actionneur de chaque articulation de jambe.
+# Lu par scripts/choix_actionneurs.py (grille de la configuration retenue)
+# et vérifié par scripts/controle_articulations.py (noms de joints.yaml).
+#
+# DÉCIDÉE par Jeremy le 2026-10-02 (« Je pars sur l'option B. ») :
+# fiche decisions/0067, qui remplace la 0065 (RS00 sur les 12 articulations).
+# Une seule source : aucun autre fichier ne répète cette répartition.
+
+decision: "decisions/0067-s-jambes-mixtes-rs02-rs00.md"
+
+# Articulation de jambe (noms de dimensionnement.JAMBE, sans côté) -> actionneur
+# (identifiant de params/actionneurs.yaml). Les deux jambes sont identiques.
+jambes:
+  hip_roll: rs02
+  hip_pitch: rs02
+  knee: rs02
+  hip_yaw_drive: rs00
+  ankle_pitch: rs00
+  ankle_roll: rs00
+
+# HYPOTHÈSE de la v3, marquée comme telle dans la fiche 0067 : haut du corps
+# en RS05 (bras 2 × 3, poignets 2 × 2, cou 2, taille 2, pinces 2), tâches des
+# bras non définies, couple des bras NON vérifié. Seule sa masse est portée
+# par les jambes.
+hypothese_v3:
+  statut: "hypothèse (fiche 0067), pas une décision"
+  haut_du_corps: {actionneur: rs05, nombre: 16}
+
+# Masse de structure ajoutée par articulation dessinée pour le RS02 (logement
+# Ø78,5 au lieu de Ø57). HYPOTHÈSE du calcul du 2026-10-02 (19 h 38), non
+# calculée sur une CAO : à remplacer par la masse des pièces dessinées.
+structure_rs02_supplement_g: {valeur: 60, statut: "hypothèse, PROPOSÉ par Claude Code (2026-10-02)"}

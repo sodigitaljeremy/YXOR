@@ -57,15 +57,17 @@ avec qui l'a décidé.
 
 ### Actionneurs, achats et fabrication
 
-7. **S : famille RobStride, avec le RS00 sur les 12 articulations de
-   jambe en v1, et H_S = 0,60 m.**
-   - Conditions : un recalcul avec charge utile et relevé (sinon on
-     redescend vers 0,55 m) ; le banc vérifie le RS00, il ne départage
-     plus ; la version du RS00 se vérifie à l'achat.
-   - Décidée par Jeremy le 2026-10-01. Ses mots : « Je valide ta
-     recommandation sur S. » La recommandation avait été proposée par
-     Claude (arbitrage).
-   - Fiche : [0065](../decisions/0065-s-robstride-rs00.md).
+7. **S : famille RobStride, jambes mixtes : RS02 au roulis et au
+   tangage de hanche et au genou, RS00 au lacet de hanche et à la
+   cheville ; H_S = 0,60 m, repli 0,55 m.**
+   - Décidée par Jeremy le 2026-10-02. Ses mots : « Je pars sur l'option
+     B. » (option B du calcul de Claude Code du 2026-10-02, 19 h 38).
+   - Répartition : `params/configuration_S.yaml`, vérifiée par
+     `scripts/choix_actionneurs.py`. Hypothèses : haut du corps de la v3
+     en RS05, une seule marche de référence.
+   - Fiche : [0067](../decisions/0067-s-jambes-mixtes-rs02-rs00.md), qui
+     remplace la [0065](../decisions/0065-s-robstride-rs00.md) (RS00 sur
+     les 12 articulations, Jeremy, 2026-10-01).
 8. **Règle d'achat.**
    - (a) Un achat pour le robot n'a lieu qu'après une décision écrite et
      la vérification de la référence exacte.
@@ -162,8 +164,10 @@ confirmées par Jeremy (R5).
 
 ## Questions ouvertes à ce jour
 
-- **La composition du banc** n'est pas décidée. Le banc vérifie le RS00
-  (fiche 0065, condition b).
+- **La composition du banc** n'est pas décidée ; telle qu'étudiée, elle
+  ne couvre que le RS00, pas le RS02 (fiche 0067).
+- **Une seconde marche de référence avant l'achat des 12 moteurs** :
+  PROPOSÉ, non décidé (fiche 0067).
 - **La version du RS00** (« ancien » ou « nouveau ») se vérifie au
   moment d'un éventuel achat.
 - **Les composants réels de la charge utile** remplaceront l'hypothèse de

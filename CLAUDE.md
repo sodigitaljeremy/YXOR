@@ -71,8 +71,10 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la
   référence du calcul, pas celle de YXOR. On ne dessine qu'à une taille
   qui a une hauteur unique.
-- **S est décidé** (fiche 0065, Jeremy, 2026-10-01) : famille RobStride,
-  RS00 sur les 12 articulations de jambe, H_S = 0,60 m visée. Le banc
+- **S est décidé** (fiche 0067, Jeremy, 2026-10-02, qui remplace la 0065) :
+  famille RobStride, jambes mixtes (RS02 au roulis et au tangage de hanche
+  et au genou, RS00 ailleurs ; `params/configuration_S.yaml`),
+  H_S = 0,60 m visée. Le banc
   vérifie le RS00, il ne départage plus. Grille : `docs/choix-actionneurs.md`.
 - **Actionneur maison** : piste parallèle, jamais sur le chemin critique
   (fiche 0052).

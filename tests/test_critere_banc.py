@@ -38,7 +38,9 @@ class CritereBanc(unittest.TestCase):
         self.assertEqual(C.verdict_banc(fichier(3.4, 3.5))["verdict"], "S confirmé")
 
     def test_repli(self):
-        self.assertEqual(C.verdict_banc(fichier(2.8, 3.5))["verdict"], "repli à 0,55 m")
+        # 2,5 N·m : milieu de la bande de repli (2,35-2,65) depuis le retrait des
+        # servos ToddlerBot du haut du corps (fiche 0067, 2026-10-02) ; était 2,8.
+        self.assertEqual(C.verdict_banc(fichier(2.5, 3.5))["verdict"], "repli à 0,55 m")
 
     def test_famille_rouverte(self):
         self.assertEqual(C.verdict_banc(fichier(2.0, 3.5))["verdict"], "famille rouverte")

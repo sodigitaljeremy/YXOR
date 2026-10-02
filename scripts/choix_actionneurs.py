@@ -38,6 +38,7 @@ REPO = Path(__file__).resolve().parents[1]
 EXIGENCES = REPO / "params" / "exigences_S.yaml"
 ANTHRO = REPO / "params" / "anthropometry.yaml"
 MESURES = REPO / "params" / "mesures.yaml"
+CONFIG = REPO / "params" / "configuration_S.yaml"       # fiche 0067 : actionneur par articulation
 DOC = REPO / "docs" / "choix-actionneurs.md"
 G = 9.81
 val = D.val
@@ -156,6 +157,10 @@ def evaluer(H: float, charge: float, mesures: Path = MESURES) -> dict:
     besoins = D.besoins_p1(analyse)
     ref = D.reference(cat, analyse)
     m_el = ex["electronique_toddlerbot"]["masse_kg"]["valeur"]
+    # Retirés de la part mise à l'échelle : l'électronique ET, depuis la fiche
+    # 0067 (2026-10-02), les 20 servos ToddlerBot du haut du corps (buste fixe).
+    m_haut = D.masse_haut_du_corps_amont(cat, besoins)
+    m_retire = m_el + m_haut
     marge = val(cat["dimensionnement"]["marge"])
     kb, rapports = k_bas(cat)
     cu = ex["charge_utile"]
@@ -167,7 +172,7 @@ def evaluer(H: float, charge: float, mesures: Path = MESURES) -> dict:
     for cid in cs["candidats"] + cs["references"]:
         c, fs = cat["candidats"][cid], cs[cid]
         v = {}
-        ref_c = D.reference_charge(ref, m_el, charge)
+        ref_c = D.reference_charge(ref, m_retire, charge)
         mb = mesures_blocage(cid, mesures)
         bm = min(m["valeur"] for m in mb) if mb else None      # le plus faible des exemplaires
         dc = verdict_couple(cat, cid, H, ref_c, besoins, marge, kb, bm)
@@ -176,7 +181,7 @@ def evaluer(H: float, charge: float, mesures: Path = MESURES) -> dict:
             v["T3"] = "PASS" if dc["h_min_vit"] <= H else "FAIL"
         else:
             v["T3"] = "UNKNOWN"
-        dh = verdict_couple(cat, cid, H, D.reference_charge(ref, m_el, haut), besoins, marge, kb, bm)
+        dh = verdict_couple(cat, cid, H, D.reference_charge(ref, m_retire, haut), besoins, marge, kb, bm)
         ok = ("PASS", "TESTED")
         if "FAIL" in (v["T1"], v["T2"]) or "UNKNOWN" in (v["T1"], v["T2"]):
             v["T4"] = "FAIL" if "FAIL" in (v["T1"], v["T2"]) else "UNKNOWN"
@@ -218,7 +223,73 @@ def evaluer(H: float, charge: float, mesures: Path = MESURES) -> dict:
                            releve=rv, pointe=pointe, prix=pr, distribution=d, garantie=gm,
                            cle=D.cle_revision(c), familles=[fid for fid, _ in fams]))
     return dict(H=H, charge=charge, lignes=lignes, kb=kb, rapports=rapports, marge=marge, m_el=m_el,
-                ref=ref, cat=cat, ex=ex, an=an, besoins=besoins)
+                m_haut=m_haut, ref=ref, cat=cat, ex=ex, an=an, besoins=besoins)
+
+
+def evaluer_configuration(H: float, v3: bool, jambes: dict | None = None) -> dict:
+    """La configuration RETENUE (params/configuration_S.yaml, fiche 0067) à la hauteur H.
+
+    Chaque articulation reçoit son actionneur, au continu prudent (blocage
+    publié, sinon nominal x k_bas). Base v1 : buste fixe (servos ToddlerBot du
+    haut du corps retirés). `v3` ajoute l'hypothèse de haut du corps (masse
+    seulement) et le supplément de structure des logements RS02. `jambes`
+    remplace la répartition, pour les tests.
+    """
+    cat, cfg = D.charger_catalogue(), lire(CONFIG)
+    ex, an = lire(EXIGENCES), lire(ANTHRO)
+    analyse = AM.analyser(AM.SERIE)
+    besoins = D.besoins_p1(analyse)
+    ref = D.reference(cat, analyse)
+    marge = val(cat["dimensionnement"]["marge"])
+    kb, _ = k_bas(cat)
+    rel = ex["releve"]
+    repart = dict(jambes or cfg["jambes"])
+    m_retire = ex["electronique_toddlerbot"]["masse_kg"]["valeur"] + D.masse_haut_du_corps_amont(cat, besoins)
+    sup = val(cfg["structure_rs02_supplement_g"]) / 1000
+    fixe = sup * 2 * sum(1 for a in repart.values() if a == "rs02")
+    h = cfg["hypothese_v3"]["haut_du_corps"]
+    m_haut_sc = h["nombre"] * val(cat["candidats"][h["actionneur"]]["masse_g"]) / 1000 if v3 else 0.0
+
+    def classe(cid, quoi):
+        cl, cp = D.classe_catalogue(cat, cid), couples(cat["candidats"][cid])
+        prud = cp["blocage"] if cp["blocage"] is not None else cp["nominal"] * kb
+        return dict(cl, continu=prud if quoi == "prudent" else cp["nominal"])
+
+    def conf(quoi):
+        return {t: classe(repart[t], quoi) for t in D.JAMBE}
+
+    def tient(rc, cf, quoi):
+        r = D.ratios(H, rc, cf, besoins, marge)
+        return all((x["rms"] is not None and x["rms"] <= 1) if quoi == "rms" else x["pointe"] <= 1
+                   for x in r.values())
+
+    cu = ex["charge_utile"]
+    rc = D.reference_charge(ref, m_retire, cu["valeur_kg"] + m_haut_sc + fixe)
+    rh = D.reference_charge(ref, m_retire, max(cu["sensibilite_kg"]) + m_haut_sc + fixe)
+    cp, cn = conf("prudent"), conf("nominal")
+    v = {"T1": "PASS" if tient(rc, cp, "rms") else ("UNKNOWN" if tient(rc, cn, "rms") else "FAIL"),
+         "T2": "PASS" if tient(rc, cn, "pointe") else "FAIL"}
+    if v["T1"] == "PASS" and v["T2"] == "PASS":
+        v["T4"] = "PASS" if tient(rh, cp, "rms") and tient(rh, cn, "pointe") else "UNKNOWN"
+    else:
+        v["T4"] = "FAIL" if "FAIL" in (v["T1"], v["T2"]) else "UNKNOWN"
+    masse = D.masse(H, rc, cp, besoins)
+    rv = releve(masse, H, an, rel, rel["inclinaison_tibia_deg"]["valeur"])
+    v["T5"] = "PASS" if (marge * rv["knee"] <= cp["knee"]["pointe"]
+                         and marge * rv["hip_pitch"] <= cp["hip_pitch"]["pointe"]) else "FAIL"
+    ev = D.evaluer(rc, cp, besoins, marge)
+    bud = yaml.safe_load(D.BUDGET.read_text(encoding="utf-8"))
+
+    def prix_chf(cid):
+        c = cat["candidats"][cid]
+        pr = c.get("prix_revendeur") or (cat["comparatif_S"].get(cid) or {}).get("prix_revendeur") or c.get("prix")
+        return D.chf(pr, bud["taux_de_change"]) if pr and pr.get("valeur") is not None else None
+
+    achats = [(a, 2) for a in repart.values()] + ([(h["actionneur"], h["nombre"])] if v3 else [])
+    prix = [(prix_chf(cid), n) for cid, n in achats]
+    return dict(H=H, v3=v3, jambes=repart, v=v, masse=masse, H_max=ev["H_max"], limitantes=ev["limitantes"],
+                cout=sum(p * n for p, n in prix if p is not None), cout_incomplet=any(p is None for p, _ in prix),
+                releve=rv, haut=h if v3 else None)
 
 
 VERDICTS_BANC = ("S confirmé", "repli à 0,55 m", "famille rouverte")
@@ -248,7 +319,7 @@ def verdict_banc(mesures: Path = MESURES, cid: str = "rs00") -> dict:
 
 
 def h_max_charge(r: dict, cid: str, continu: float | None) -> float | None:
-    cat, ref = r["cat"], D.reference_charge(r["ref"], r["m_el"], r["charge"])
+    cat, ref = r["cat"], D.reference_charge(r["ref"], r["m_el"] + r["m_haut"], r["charge"])
     cl = D.classe_catalogue(cat, cid)
     if cl["pointe"] is None or cl["masse"] is None:
         return None
@@ -270,7 +341,8 @@ def grille(r: dict, codes: list[str]) -> list[str]:
     return L
 
 
-def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = None) -> str:
+def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = None,
+        conf: list | None = None) -> str:
     ex, an, cat = r["ex"], r["an"], r["cat"]
     rel = ex["releve"]
     L = []
@@ -284,6 +356,19 @@ def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = 
       "famille RobStride, RS00 sur les 12 articulations de jambe, **H_S = "
       f"{f(r['H'])} m visée**. Cette grille en vérifie la condition (a).\n")
     A("---\n")
+    if conf:
+        A("## 0 — Configuration retenue (fiche 0067) : RS02 au roulis et au tangage de hanche et au genou, RS00 ailleurs\n")
+        A("Répartition lue dans `params/configuration_S.yaml`. v1 : buste fixe. v3 : HYPOTHÈSE de haut du corps "
+          "(masse seulement ; couple des bras non vérifié). Supplément de structure des logements RS02 : "
+          "hypothèse, compté dans la masse.\n")
+        A("| Version | H | Masse | T1 | T2 | T4 | T5 | H_max prudent | Limitante | Actionneurs (CHF HT) |")
+        A("| --- | ---: | ---: | :-: | :-: | :-: | :-: | ---: | --- | ---: |")
+        for c in conf:
+            ver = (f"v3, haut {c['haut']['nombre']} × {c['haut']['actionneur']}" if c["v3"] else "v1, buste fixe")
+            A(f"| {ver} | {f(c['H'])} m | {f(c['masse'])} kg | {c['v']['T1']} | {c['v']['T2']} | {c['v']['T4']} | "
+              f"{c['v']['T5']} | {f(c['H_max'], 3)} m | {', '.join(c['limitantes'])} | "
+              f"{'≥ ' if c['cout_incomplet'] else ''}{c['cout']:.0f} |")
+        A("")
     A(f"## 1 — Grille technique à H_S = {f(r['H'])} m, charge utile {f(r['charge'], 1)} kg, marge {f(r['marge'], 1)}\n")
     L.extend(grille(r, CODES))
     A("")
@@ -296,10 +381,12 @@ def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = 
     A("| ---: | ---: | :-: | :-: | :-: |")
     for cu, m, v in masses:
         A(f"| {f(cu, 1)} kg | {f(m, 2)} kg | {v['T1']} | {v['T2']} | {v['T5']} |")
-    A(f"\nModèle : `masse(H) = (S0 − m_élec) · (H/H0)³ + charge utile + Σ actionneurs`. "
+    A(f"\nModèle : `masse(H) = (S0 − m_élec − m_haut) · (H/H0)³ + charge utile + Σ actionneurs`. "
       f"S0 = {f(r['ref']['S0'], 3)} kg (M0 − 12 Dynamixel de jambe) ; m_élec = {f(r['m_el'], 3)} kg, "
-      "l'électronique de ToddlerBot comprise dans M0, retirée de la part mise à l'échelle "
-      "(source : `params/exigences_S.yaml`, `electronique_toddlerbot`).\n")
+      "l'électronique de ToddlerBot comprise dans M0 (`params/exigences_S.yaml`) ; "
+      f"m_haut = {f(r['m_haut'], 3)} kg, ses 20 servos du haut du corps, CALCULÉS depuis le modèle amont "
+      "(`dimensionnement.masse_haut_du_corps_amont`) et retirés depuis la fiche 0067 : la v1 a un buste "
+      "fixe. Tous deux sont retirés de la part mise à l'échelle.\n")
     A("## 3 — Relevé depuis l'accroupi profond (T5)\n")
     A(f"- Posture : {rel['posture']}.")
     A(f"- Tibia incliné de **{rel['inclinaison_tibia_deg']['valeur']}°** vers l'avant ({rel['inclinaison_tibia_deg']['source']}).")
@@ -419,8 +506,13 @@ def main(argv=None) -> int:
         print(f"  FAIL du RS00 à {H} m : repli calculé à {H_rep} m")
     vb = verdict_banc()
     print(f"  banc, critère du § 4 : {vb['verdict'] or 'aucune mesure au blocage du RS00, pas de verdict'}")
+    conf = [evaluer_configuration(h_, v3) for h_ in (H, H_rep) for v3 in (False, True)]
+    for c in conf:
+        print(f"  configuration retenue (0067), {'v3' if c['v3'] else 'v1'} à {c['H']} m : masse {c['masse']:.2f} kg, "
+              + ", ".join(f"{k} {c['v'][k]}" for k in ("T1", "T2", "T4", "T5"))
+              + f", H_max {c['H_max']:.3f} m ({', '.join(c['limitantes'])}), {c['cout']:.0f} CHF HT")
     if a.ecrire:
-        DOC.write_text(doc(r, r_rep, masses, datetime.date.today().isoformat(), vb), encoding="utf-8")
+        DOC.write_text(doc(r, r_rep, masses, datetime.date.today().isoformat(), vb, conf), encoding="utf-8")
         print(f"  -> {DOC.relative_to(REPO)}")
     return 0
 

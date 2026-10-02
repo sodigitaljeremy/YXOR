@@ -183,6 +183,19 @@ candidats:
     vitesse_a_vide_rpm: {valeur: 410, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 10 % ; nominale 48 V"}
     masse_g: {valeur: 380, source: "PDF RobStride 2026-09-17, p. 11", consulte_le: "2026-09-30", note: "± 3 g"}
     dimensions_mm: {valeur: "Ø78,5 × 41,5", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    # Ajouté le 2026-10-02 (fiche 0067) : plan coté du PDF de spécifications,
+    # p. 10 (image), lu par Claude Code. Cotes en mm.
+    cotes_montage:
+      source: "PDF RobStride 2026-09-17, p. 10 (plan coté, image)"
+      consulte_le: "2026-10-02"
+      diametre_bride: 78.5
+      diametre_corps: 65.0
+      longueur: 41.5
+      bossage_avant: {diametre: 43.0, hauteur: 3.5}
+      fixation_boitier: {vis: M3, nombre: 9, profondeur: 8, diametre_percage: 73.0, tolerance: 0.2}
+      sortie: {vis: M4, nombre: 6, profondeur_min: 7, diametre_percage: 24.0, tolerance: 0.2}
+      centrage: {diametre: 4.0, nombre: 3}
+      arriere: null            # non trouvé sur la page lue ; manuel RS02 non lu (absent du registre)
     prix: {valeur: 699, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
     prix_revendeur: {valeur: 160.99, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-02-Actuator-p-6665.html", consulte_le: "2026-09-30", note: "hors taxe (« Net price. VAT & shipping applied at checkout »), en stock ; 152,99 USD dès 10 ; OpenELAB 149,95 € (moteur seul, TVA inconnue)"}
 
@@ -589,6 +602,19 @@ candidats:
       autres_valeurs:
         - {valeur: 310, source: "manuel RS00 260713, p. 11 ; PDF 2026-09-17, p. 3", consulte_le: "2026-10-01", note: "± 3 g, version « ancien » — non retenue (0064)"}
     dimensions_mm: {valeur: "Ø57 × 51", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-10-01"}
+    # Ajouté le 2026-10-02 : plan coté du manuel RS00 260713, p. 8 du PDF
+    # (image), lu par Claude Code. Cotes en mm. Attribution du Ø27 à la
+    # sortie (plutôt que le Ø24,46 voisin) : lecture du dessin, à vérifier.
+    cotes_montage:
+      source: "manuel RS00 260713, p. 8 (plan coté, image)"
+      consulte_le: "2026-10-02"
+      diametre_corps: 57.0
+      longueur: {valeur: 51.0, tolerance: 1.0}
+      bossage_arriere: {diametre: 35.0, hauteur: 1.0}
+      fixation_boitier: {vis: M3, nombre: 6, diametre_percage: 50.0, tolerance: 0.1}
+      sortie: {vis: M3, nombre: 6, profondeur: 5, diametre_percage: 27.0, tolerance: 0.1}
+      centrage: {diametre: 3.0, nombre: 2, profondeur: 5}
+      arriere: {vis: M3, nombre: 4, profondeur: 4, diametre_percage: 38.0, tolerance: 0.1}
     prix: {valeur: 598, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 2", consulte_le: "2026-10-01"}
 
   htdw_4438_30:

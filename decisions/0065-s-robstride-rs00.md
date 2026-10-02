@@ -1,7 +1,8 @@
 # 0065 — S : famille RobStride, RS00 sur les 12 articulations de jambe, H_S = 0,60 m
 
 Date : 2026-10-01
-État : acceptée
+État : remplacée
+Remplacée par : `0067-s-jambes-mixtes-rs02-rs00.md` — configuration des jambes de S : RS02 au roulis et au tangage de hanche et au genou, RS00 ailleurs (Jeremy, 2026-10-02).
 
 Première fiche écrite après la refonte. Selon la règle de la refonte
 (décision 5, 2026-10-01), une fiche n'est écrite que pour une décision

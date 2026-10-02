@@ -87,7 +87,8 @@ def noms_du_code() -> dict[str, list]:
     out = {"dimensionnement.JAMBE": list(D.JAMBE),
            "actionneurs.yaml dimensionnement.articulations_lourdes":
                list(cat["dimensionnement"]["articulations_lourdes"]),
-           "exigences_S.yaml releve.articulations": list(ex["releve"]["articulations"])}
+           "exigences_S.yaml releve.articulations": list(ex["releve"]["articulations"]),
+           "configuration_S.yaml jambes": list(lire("configuration_S.yaml")["jambes"])}
     for cid, c in (cat.get("configurations_nommees") or {}).items():
         if c.get("articulations_lourdes"):
             out[f"configurations_nommees.{cid}"] = list(c["articulations_lourdes"])

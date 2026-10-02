@@ -1,30 +1,41 @@
 # Choix de l'actionneur de S — faits, approvisionnement, exigences
 
-**Engendré** par `.venv/bin/python scripts/choix_actionneurs.py --ecrire`, le 2026-10-01. Ne pas éditer à la main. Aucun score, aucun poids : chaque exigence donne **PASS**, **FAIL**, **UNKNOWN** (l'information manque) ou **TESTED** (mesuré au banc). Les règles de verdict sont dans `params/exigences_S.yaml`.
+**Engendré** par `.venv/bin/python scripts/choix_actionneurs.py --ecrire`, le 2026-10-02. Ne pas éditer à la main. Aucun score, aucun poids : chaque exigence donne **PASS**, **FAIL**, **UNKNOWN** (l'information manque) ou **TESTED** (mesuré au banc). Les règles de verdict sont dans `params/exigences_S.yaml`.
 
 **Décision** (fiche [0065](../decisions/0065-s-robstride-rs00.md), Jeremy, 2026-10-01) : famille RobStride, RS00 sur les 12 articulations de jambe, **H_S = 0,60 m visée**. Cette grille en vérifie la condition (a).
 
 ---
 
+## 0 — Configuration retenue (fiche 0067) : RS02 au roulis et au tangage de hanche et au genou, RS00 ailleurs
+
+Répartition lue dans `params/configuration_S.yaml`. v1 : buste fixe. v3 : HYPOTHÈSE de haut du corps (masse seulement ; couple des bras non vérifié). Supplément de structure des logements RS02 : hypothèse, compté dans la masse.
+
+| Version | H | Masse | T1 | T2 | T4 | T5 | H_max prudent | Limitante | Actionneurs (CHF HT) |
+| --- | ---: | ---: | :-: | :-: | :-: | :-: | ---: | --- | ---: |
+| v1, buste fixe | 0,60 m | 7,41 kg | PASS | PASS | PASS | PASS | 0,778 m | ankle_pitch | 1432 |
+| v3, haut 16 × rs05 | 0,60 m | 10,46 kg | PASS | PASS | PASS | PASS | 0,658 m | ankle_pitch | 2901 |
+| v1, buste fixe | 0,55 m | 7,04 kg | PASS | PASS | PASS | PASS | 0,778 m | ankle_pitch | 1432 |
+| v3, haut 16 × rs05 | 0,55 m | 10,10 kg | PASS | PASS | PASS | PASS | 0,658 m | ankle_pitch | 2901 |
+
 ## 1 — Grille technique à H_S = 0,60 m, charge utile 1,2 kg, marge 1,5
 
 | Candidat | T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 |
 | --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| RobStride RS05 | FAIL | FAIL | PASS | FAIL | PASS | PASS | PASS | PASS | PASS |
+| RobStride RS05 | FAIL | PASS | PASS | FAIL | PASS | PASS | PASS | PASS | PASS |
 | RobStride EduLite 05 | FAIL | FAIL | PASS | FAIL | PASS | PASS | PASS | PASS | PASS |
-| Feetech STS3250 | FAIL | PASS | PASS | FAIL | PASS | PASS | UNKNOWN | UNKNOWN | FAIL |
+| Feetech STS3250 | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | UNKNOWN | FAIL |
 | Damiao DM-J4310-2EC V1.2 | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | UNKNOWN | FAIL |
 | Damiao DM-J4310-2EC V1.2 (48 V) | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | PASS | PASS | PASS |
 | SteadyWin GIM4310-10 (driver GDZ34) | FAIL | PASS | PASS | FAIL | PASS | PASS | UNKNOWN | PASS | FAIL |
-| MyActuator RMD-X2-P28-7-E (« X2-7 ») | FAIL | FAIL | PASS | FAIL | PASS | PASS | PASS | PASS | UNKNOWN |
-| CubeMars AK45-10 V3.0 KV75 | FAIL | FAIL | PASS | FAIL | PASS | PASS | PASS | UNKNOWN | PASS |
+| MyActuator RMD-X2-P28-7-E (« X2-7 ») | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | PASS | PASS | UNKNOWN |
+| CubeMars AK45-10 V3.0 KV75 | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | PASS | UNKNOWN | PASS |
 | RobStride RS00 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | FAIL | PASS | PASS | FAIL | PASS | PASS | UNKNOWN | UNKNOWN | UNKNOWN |
-| HighTorque HTDW-5047-36-NE | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | UNKNOWN | UNKNOWN |
-| Dynamixel XM430-W210 (référence) | UNKNOWN | FAIL | PASS | FAIL | FAIL | PASS | UNKNOWN | UNKNOWN | FAIL |
-| Xiaomi CyberGear (référence) | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | PASS | PASS | FAIL |
+| HighTorque HTDW-5047-36-NE | PASS | PASS | PASS | UNKNOWN | PASS | PASS | UNKNOWN | UNKNOWN | UNKNOWN |
+| Dynamixel XM430-W210 (référence) | UNKNOWN | FAIL | PASS | FAIL | PASS | PASS | UNKNOWN | UNKNOWN | FAIL |
+| Xiaomi CyberGear (référence) | PASS | PASS | PASS | UNKNOWN | PASS | PASS | PASS | PASS | FAIL |
 | CubeMars AK40-10 V3.0 KV170 (référence) | FAIL | FAIL | PASS | FAIL | PASS | PASS | UNKNOWN | UNKNOWN | FAIL |
-| Dynamixel XM430-W350 (référence) | UNKNOWN | FAIL | PASS | FAIL | PASS | PASS | PASS | UNKNOWN | FAIL |
+| Dynamixel XM430-W350 (référence) | UNKNOWN | PASS | PASS | UNKNOWN | PASS | PASS | PASS | UNKNOWN | FAIL |
 
 - **T1** — couple efficace des 12 articulations de jambe à H_S, marge, charge utile comprise — PASS avec le couple PRUDENT (en blocage s'il est publié ; sinon nominal × k_bas, le plus petit rapport blocage/nominal publié au catalogue) ; UNKNOWN s'il ne passe qu'avec le nominal ; FAIL sinon ; UNKNOWN si aucun continu n'est publié
 - **T2** — couple de pointe des 12 articulations à H_S, marge, charge utile comprise — PASS ou FAIL
@@ -42,11 +53,11 @@
 
 | Charge utile | Masse du robot | T1 | T2 | T5 |
 | ---: | ---: | :-: | :-: | :-: |
-| 0,8 kg | 7,40 kg | PASS | PASS | PASS |
-| 1,2 kg | 7,80 kg | PASS | PASS | PASS |
-| 1,6 kg | 8,20 kg | PASS | PASS | PASS |
+| 0,8 kg | 6,35 kg | PASS | PASS | PASS |
+| 1,2 kg | 6,75 kg | PASS | PASS | PASS |
+| 1,6 kg | 7,15 kg | PASS | PASS | PASS |
 
-Modèle : `masse(H) = (S0 − m_élec) · (H/H0)³ + charge utile + Σ actionneurs`. S0 = 2,746 kg (M0 − 12 Dynamixel de jambe) ; m_élec = 0,600 kg, l'électronique de ToddlerBot comprise dans M0, retirée de la part mise à l'échelle (source : `params/exigences_S.yaml`, `electronique_toddlerbot`).
+Modèle : `masse(H) = (S0 − m_élec − m_haut) · (H/H0)³ + charge utile + Σ actionneurs`. S0 = 2,746 kg (M0 − 12 Dynamixel de jambe) ; m_élec = 0,600 kg, l'électronique de ToddlerBot comprise dans M0 (`params/exigences_S.yaml`) ; m_haut = 0,857 kg, ses 20 servos du haut du corps, CALCULÉS depuis le modèle amont (`dimensionnement.masse_haut_du_corps_amont`) et retirés depuis la fiche 0067 : la v1 a un buste fixe. Tous deux sont retirés de la part mise à l'échelle.
 
 ## 3 — Relevé depuis l'accroupi profond (T5)
 
@@ -59,43 +70,43 @@ Modèle : `masse(H) = (S0 − m_élec) · (H/H0)³ + charge utile + Σ actionneu
 
 | Candidat | Masse (kg) | Cuisse / tibia (m) | Genou (N·m) | Hanche (N·m) | Marge × max | Pointe | Continu prudent | T5 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | :-: |
-| RobStride RS05 | 6,13 | 0,149 / 0,136 | 2,63 | 1,84 | 3,94 | 5,5 | 1,20 | PASS |
-| RobStride EduLite 05 | 6,74 | 0,149 / 0,136 | 2,89 | 2,02 | 4,34 | 5,5 | 1,11 | PASS |
-| Feetech STS3250 | 4,73 | 0,149 / 0,136 | 2,03 | 1,42 | 3,04 | 4,9 | 0,97 | PASS |
-| Damiao DM-J4310-2EC V1.2 | 7,51 | 0,149 / 0,136 | 3,22 | 2,25 | 4,83 | 12,5 | 2,17 | PASS |
-| Damiao DM-J4310-2EC V1.2 (48 V) | 7,51 | 0,149 / 0,136 | 3,22 | 2,25 | 4,83 | 12,5 | 2,17 | PASS |
-| SteadyWin GIM4310-10 (driver GDZ34) | 6,56 | 0,149 / 0,136 | 2,81 | 1,97 | 4,22 | 8,0 | 1,01 | PASS |
-| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 6,96 | 0,149 / 0,136 | 2,98 | 2,09 | 4,48 | 7,0 | 1,55 | PASS |
-| CubeMars AK45-10 V3.0 KV75 | 6,98 | 0,149 / 0,136 | 2,99 | 2,09 | 4,49 | 7,0 | 1,55 | PASS |
-| RobStride RS00 | 7,80 | 0,149 / 0,136 | 3,34 | 2,34 | 5,02 | 14,0 | 3,60 | PASS |
-| HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | 6,68 | 0,149 / 0,136 | 2,87 | 2,00 | 4,30 | 10,0 | 1,24 | PASS |
-| HighTorque HTDW-5047-36-NE | 7,50 | 0,149 / 0,136 | 3,22 | 2,25 | 4,82 | 16,0 | 2,48 | PASS |
-| Dynamixel XM430-W210 (référence) | 4,82 | 0,149 / 0,136 | 2,07 | 1,45 | 3,10 | 3,0 | — | FAIL |
-| Xiaomi CyberGear (référence) | 7,64 | 0,149 / 0,136 | 3,28 | 2,29 | 4,92 | 12,0 | 2,48 | PASS |
-| CubeMars AK40-10 V3.0 KV170 (référence) | 6,12 | 0,149 / 0,136 | 2,62 | 1,83 | 3,94 | 4,1 | 0,80 | PASS |
-| Dynamixel XM430-W350 (référence) | 4,82 | 0,149 / 0,136 | 2,07 | 1,45 | 3,10 | 4,1 | — | PASS |
+| RobStride RS05 | 5,08 | 0,149 / 0,136 | 2,18 | 1,52 | 3,27 | 5,5 | 1,20 | PASS |
+| RobStride EduLite 05 | 5,69 | 0,149 / 0,136 | 2,44 | 1,71 | 3,66 | 5,5 | 1,11 | PASS |
+| Feetech STS3250 | 3,68 | 0,149 / 0,136 | 1,58 | 1,10 | 2,37 | 4,9 | 0,97 | PASS |
+| Damiao DM-J4310-2EC V1.2 | 6,46 | 0,149 / 0,136 | 2,77 | 1,94 | 4,15 | 12,5 | 2,17 | PASS |
+| Damiao DM-J4310-2EC V1.2 (48 V) | 6,46 | 0,149 / 0,136 | 2,77 | 1,94 | 4,15 | 12,5 | 2,17 | PASS |
+| SteadyWin GIM4310-10 (driver GDZ34) | 5,51 | 0,149 / 0,136 | 2,36 | 1,65 | 3,54 | 8,0 | 1,01 | PASS |
+| MyActuator RMD-X2-P28-7-E (« X2-7 ») | 5,91 | 0,149 / 0,136 | 2,53 | 1,77 | 3,80 | 7,0 | 1,55 | PASS |
+| CubeMars AK45-10 V3.0 KV75 | 5,93 | 0,149 / 0,136 | 2,54 | 1,78 | 3,81 | 7,0 | 1,55 | PASS |
+| RobStride RS00 | 6,75 | 0,149 / 0,136 | 2,89 | 2,02 | 4,34 | 14,0 | 3,60 | PASS |
+| HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | 5,63 | 0,149 / 0,136 | 2,41 | 1,69 | 3,62 | 10,0 | 1,24 | PASS |
+| HighTorque HTDW-5047-36-NE | 6,45 | 0,149 / 0,136 | 2,76 | 1,93 | 4,15 | 16,0 | 2,48 | PASS |
+| Dynamixel XM430-W210 (référence) | 3,77 | 0,149 / 0,136 | 1,62 | 1,13 | 2,42 | 3,0 | — | PASS |
+| Xiaomi CyberGear (référence) | 6,59 | 0,149 / 0,136 | 2,83 | 1,98 | 4,24 | 12,0 | 2,48 | PASS |
+| CubeMars AK40-10 V3.0 KV170 (référence) | 5,07 | 0,149 / 0,136 | 2,17 | 1,52 | 3,26 | 4,1 | 0,80 | PASS |
+| Dynamixel XM430-W350 (référence) | 3,77 | 0,149 / 0,136 | 1,62 | 1,13 | 2,42 | 4,1 | — | PASS |
 
-Sensibilité à l'angle du tibia, RS00 : 30° → genou 2,60 N·m, hanche 3,08 N·m ; 40° → genou 3,34 N·m, hanche 2,34 N·m ; 50° → genou 3,99 N·m, hanche 1,70 N·m.
+Sensibilité à l'angle du tibia, RS00 : 30° → genou 2,25 N·m, hanche 2,67 N·m ; 40° → genou 2,89 N·m, hanche 2,02 N·m ; 50° → genou 3,45 N·m, hanche 1,47 N·m.
 
 ## 4 — Faits techniques
 
 | Candidat | Clé de révision | Nominal (N·m) | Blocage (N·m) | Pointe (N·m) | Masse (g) | Vitesse à vide (rpm) | Tension / plage (V) | Réduction | Bus | Protection (°C) | Taille max prudente – optimiste (m) |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | ---: | --- | ---: | --- |
-| RobStride RS05 | RobStride Dynamics RS05 · rév. non publiée · 48 V · firmware non publié | 1,60 | 1,20 | 5,5 | 191 | 480 | 48 (15,0–60,0) | 7,75 | CAN 2.0 / CAN FD | 135 | 0,43 – 0,51 |
-| RobStride EduLite 05 | RobStride Dynamics EduLite 05 (EL05) · rév. non publiée · 48 V · firmware non publié | 1,80 | — | 5,5 | 242 | 430 | 48 | 9,00 | CAN 2.0 | — | 0,38 – 0,51 |
-| Feetech STS3250 | Feetech STS3250 · rév. non publiée · 12 V · firmware non publié | 1,57 | — | 4,9 | 74 | 75 | 12 | — | TTL série half-duplex asynchrone | — | 0,47 – 0,57 |
-| Damiao DM-J4310-2EC V1.2 | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 24 V · firmware non publié | 3,50 | — | 12,5 | 306 | 200 | 24 (20,0–28,0) | 10,00 | CAN 2.0B | — | 0,53 – 0,67 |
-| Damiao DM-J4310-2EC V1.2 (48 V) | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 48 V · firmware non publié | 3,50 | — | 12,5 | 306 | 450 | 48 (20,0–58,0) | 10,00 | CAN 2.0B | 100 | 0,53 – 0,67 |
-| SteadyWin GIM4310-10 (driver GDZ34) | SteadyWin GIM4310-10 (driver GDZ34) · rév. non publiée · 24 V · firmware non publié | 1,63 | — | 8,0 | 227 | 212 | 24 | 10,00 | CAN | — | 0,36 – 0,49 |
-| MyActuator RMD-X2-P28-7-E (« X2-7 ») | MyActuator RMD-X2-P28-7-E · rév. non publiée · 24 V · firmware non publié | 2,50 | — | 7,0 | 260 | 178 | 24 (20,0–55,0) | 28,17 | CAN 1 Mbit/s | — | 0,46 – 0,59 |
-| CubeMars AK45-10 V3.0 KV75 | CubeMars AK45-10 KV75 · rév. V3.0 · 24 V · firmware non publié | 2,50 | — | 7,0 | 262 | 180 | 24 | 10,00 | CAN 1 Mbit/s | — | 0,45 – 0,59 |
-| RobStride RS00 | RobStride Dynamics RS00 · rév. non publiée · 48 V · firmware non publié | 5,00 | 3,60 | 14,0 | 330 | 315 | 48 (24,0–60,0) | 10,00 | CAN 2.0 | 135 | 0,66 – 0,76 |
-| HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | HighTorque Robotics HTDW-4438-30-NE · rév. non publiée · 24 V · firmware non publié | 2,00 | — | 10,0 | 237 | 160 | 24 (12,0–50,4) | 30,00 | CAN FD / CAN | — | 0,41 – 0,54 |
-| HighTorque HTDW-5047-36-NE | HighTorque Robotics HTDW-5047-36-NE · rév. non publiée · 24 V · firmware non publié | 4,00 | — | 16,0 | 305 | 60 | 24 (12,0–48,0) | 36,00 | CAN FD / CAN | — | 0,56 – 0,70 |
-| Dynamixel XM430-W210 (référence) | ROBOTIS XM430-W210 · rév. non publiée · 12 V · firmware non publié | — | — | 3,0 | 82 | 77 | 12 | 212,60 | TTL ou RS485 | — | 0,49 – 0,49 |
-| Xiaomi CyberGear (référence) | Xiaomi CyberGear · rév. non publiée · 24 V · firmware non publié | 4,00 | — | 12,0 | 317 | 296 | 24 (16,0–28,0) | 7,75 | CAN 2.0 | 75 | 0,56 – 0,70 |
-| CubeMars AK40-10 V3.0 KV170 (référence) | CubeMars AK40-10 KV170 · rév. V3.0 · 24 V · firmware non publié | 1,30 | — | 4,1 | 190 | 435 | 24 | 10,00 | CAN | — | 0,33 – 0,45 |
-| Dynamixel XM430-W350 (référence) | ROBOTIS XM430-W350-T / -R · rév. non publiée · 12 V · firmware non publié | — | — | 4,1 | 82 | 46 | 12 (10,0–14,8) | 353,50 | TTL ou RS485 | 80 | 0,56 – 0,56 |
+| RobStride RS05 | RobStride Dynamics RS05 · rév. non publiée · 48 V · firmware non publié | 1,60 | 1,20 | 5,5 | 191 | 480 | 48 (15,0–60,0) | 7,75 | CAN 2.0 / CAN FD | 135 | 0,46 – 0,55 |
+| RobStride EduLite 05 | RobStride Dynamics EduLite 05 (EL05) · rév. non publiée · 48 V · firmware non publié | 1,80 | — | 5,5 | 242 | 430 | 48 | 9,00 | CAN 2.0 | — | 0,39 – 0,55 |
+| Feetech STS3250 | Feetech STS3250 · rév. non publiée · 12 V · firmware non publié | 1,57 | — | 4,9 | 74 | 75 | 12 | — | TTL série half-duplex asynchrone | — | 0,51 – 0,64 |
+| Damiao DM-J4310-2EC V1.2 | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 24 V · firmware non publié | 3,50 | — | 12,5 | 306 | 200 | 24 (20,0–28,0) | 10,00 | CAN 2.0B | — | 0,56 – 0,73 |
+| Damiao DM-J4310-2EC V1.2 (48 V) | Damiao (DM) DM-J4310-2EC · rév. V1.2 · 48 V · firmware non publié | 3,50 | — | 12,5 | 306 | 450 | 48 (20,0–58,0) | 10,00 | CAN 2.0B | 100 | 0,56 – 0,73 |
+| SteadyWin GIM4310-10 (driver GDZ34) | SteadyWin GIM4310-10 (driver GDZ34) · rév. non publiée · 24 V · firmware non publié | 1,63 | — | 8,0 | 227 | 212 | 24 | 10,00 | CAN | — | 0,38 – 0,53 |
+| MyActuator RMD-X2-P28-7-E (« X2-7 ») | MyActuator RMD-X2-P28-7-E · rév. non publiée · 24 V · firmware non publié | 2,50 | — | 7,0 | 260 | 178 | 24 (20,0–55,0) | 28,17 | CAN 1 Mbit/s | — | 0,48 – 0,64 |
+| CubeMars AK45-10 V3.0 KV75 | CubeMars AK45-10 KV75 · rév. V3.0 · 24 V · firmware non publié | 2,50 | — | 7,0 | 262 | 180 | 24 | 10,00 | CAN 1 Mbit/s | — | 0,48 – 0,64 |
+| RobStride RS00 | RobStride Dynamics RS00 · rév. non publiée · 48 V · firmware non publié | 5,00 | 3,60 | 14,0 | 330 | 315 | 48 (24,0–60,0) | 10,00 | CAN 2.0 | 135 | 0,73 – 0,84 |
+| HighTorque HTDW-4438-30-NE (HTDW-4530-02-DNE) | HighTorque Robotics HTDW-4438-30-NE · rév. non publiée · 24 V · firmware non publié | 2,00 | — | 10,0 | 237 | 160 | 24 (12,0–50,4) | 30,00 | CAN FD / CAN | — | 0,43 – 0,58 |
+| HighTorque HTDW-5047-36-NE | HighTorque Robotics HTDW-5047-36-NE · rév. non publiée · 24 V · firmware non publié | 4,00 | — | 16,0 | 305 | 60 | 24 (12,0–48,0) | 36,00 | CAN FD / CAN | — | 0,61 – 0,78 |
+| Dynamixel XM430-W210 (référence) | ROBOTIS XM430-W210 · rév. non publiée · 12 V · firmware non publié | — | — | 3,0 | 82 | 77 | 12 | 212,60 | TTL ou RS485 | — | 0,53 – 0,53 |
+| Xiaomi CyberGear (référence) | Xiaomi CyberGear · rév. non publiée · 24 V · firmware non publié | 4,00 | — | 12,0 | 317 | 296 | 24 (16,0–28,0) | 7,75 | CAN 2.0 | 75 | 0,60 – 0,77 |
+| CubeMars AK40-10 V3.0 KV170 (référence) | CubeMars AK40-10 KV170 · rév. V3.0 · 24 V · firmware non publié | 1,30 | — | 4,1 | 190 | 435 | 24 | 10,00 | CAN | — | 0,34 – 0,48 |
+| Dynamixel XM430-W350 (référence) | ROBOTIS XM430-W350-T / -R · rév. non publiée · 12 V · firmware non publié | — | — | 4,1 | 82 | 46 | 12 (10,0–14,8) | 353,50 | TTL ou RS485 | 80 | 0,62 – 0,62 |
 
 Tailles maximales en configuration homogène, avec la charge utile de 1,2 kg. La vitesse est À VIDE ; sous charge, l'actionneur tourne moins vite.
 

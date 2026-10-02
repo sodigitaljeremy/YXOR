@@ -32,6 +32,9 @@ pages citées sont celles du fichier PDF.
 
 - **Vérifier le RS00** retenu pour S (fiche 0065, condition b). Le banc
   **ne départage plus** : il confirme, ou il fait redescendre la taille.
+- **Depuis la fiche 0067 (2026-10-02), S a des jambes mixtes : ce banc ne
+  couvre que le RS00, pas le RS02, et le critère du § 4 a été écrit pour
+  un RS00 homogène. Composition à revoir (fiche 0066).**
 - **Banc : 2 × RS00 identiques**, pour mesurer la dispersion et garder une
   rechange. **La composition reste à décider par Jeremy**
   (`params/banc.yaml`, `rs00_x2`), comme l'achat (fiche 0066).
@@ -213,9 +216,11 @@ Jeremy travaille seul : ces sept mesures remplacent la seconde personne.
    verdict au § 6 de `docs/choix-actionneurs.md`.
    - Le test `tests/test_critere_banc.py` produit les trois verdicts à
      partir de mesures fictives écrites dans un fichier temporaire.
-   - Ordres de grandeur, avec les hypothèses actuelles : S est confirmé
-     au-dessus d'environ 3,1 N·m ; repli entre environ 2,6 et 3,0 N·m ;
-     famille rouverte à 2,5 N·m et en dessous.
+   - Ordres de grandeur pour un RS00 HOMOGÈNE, avec les hypothèses du
+     2026-10-02 (servos ToddlerBot du haut du corps retirés, fiche 0067) :
+     S confirmé à 2,7 N·m et au-dessus ; repli entre 2,35 et 2,65 N·m ;
+     famille rouverte à 2,3 N·m et en dessous. (Le 2026-10-01 : 3,1 ;
+     2,6 à 3,0 ; 2,5.)
 
 ## § 5 — Consignation
 

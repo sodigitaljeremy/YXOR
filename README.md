@@ -14,7 +14,7 @@ marge 1,5). Quatre tailles :
 
 | Taille | H | Actionneur de jambe | Statut |
 | --- | --- | --- | --- |
-| **S** | **0,60 m** (repli 0,55 m) | **RobStride RS00**, sur les 12 articulations | **décidé** (fiche 0065), premier robot |
+| **S** | **0,60 m** (repli 0,55 m) | **RobStride RS02** au roulis et au tangage de hanche et au genou, **RS00** au lacet de hanche et à la cheville | **décidé** (fiche 0067), premier robot |
 | M | ~0,80 m | RS02 ou équivalent | ordre de grandeur |
 | L | ~0,90 m | RS06, ou mixte RS06/RS02 | ordre de grandeur |
 | XL | ≥ 1,0 m | RS03 et au-delà | hors programme |
@@ -24,17 +24,19 @@ Les hauteurs sont dans `params/anthropometry.yaml`.
 **S, la v1 : 12 degrés de liberté**, 6 par jambe, sans bras. Un degré de
 liberté est une articulation motorisée.
 
-- **Masse calculée : 7,8 kg à 0,60 m**, dont 1,2 kg de charge utile.
-  La charge utile (calculateur, batterie, IMU) est une hypothèse de
-  travail.
-- **Toutes les exigences techniques passent à 0,60 m** : couple continu,
-  couple de pointe, vitesse, charge utile, relevé depuis l'accroupi,
-  télémétrie, protection thermique, chien de garde, bus et protocole
-  communs à la gamme. La grille complète et ses hypothèses sont dans
+- **Masse calculée : 7,4 kg à 0,60 m** en v1 (buste fixe), dont 1,2 kg
+  de charge utile ; la jambe porterait jusqu'à 0,78 m. Avec l'hypothèse
+  d'un haut du corps en RS05 (v3, 28 DDL) : 10,5 kg, 0,66 m portés.
+  Actionneurs de jambe : 1 432 CHF HT. La charge utile (calculateur,
+  batterie, IMU) est une hypothèse de travail.
+- **Le couple continu, la pointe, la charge utile et le relevé passent à
+  0,60 m**, en v1 comme en v3 ; l'articulation limitante est le tangage
+  de cheville. Grille et hypothèses :
   [`docs/choix-actionneurs.md`](docs/choix-actionneurs.md).
-- **Restent ouverts** : la composition du banc, qui vérifiera le RS00 ;
-  la version exacte du RS00 (deux sont publiées) ; les composants réels
-  de la charge utile.
+- **Restent ouverts** : la composition du banc, qui ne couvre que le
+  RS00 ; une seconde marche de référence avant l'achat des 12 moteurs
+  (proposé) ; la version exacte du RS00 (deux sont publiées) ; les tâches
+  des bras ; les composants réels de la charge utile.
 
 **Fabriqué à ce jour** : une pièce d'apprentissage, la semelle. Ni
 assemblage ni nomenclature.
