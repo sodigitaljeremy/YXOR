@@ -89,6 +89,11 @@ ecarts_ansur:
     remplace: "ankle_pitch et ankle_roll au même point, à `cheville_hauteur` du sol"
     raison: "encombrement des deux RS00 (fiche 0067) : ils ne peuvent pas partager un point"
     actionneur: rs00
+    # Motif par lequel la liaison tient le STATOR de chaque RS00 : l'arrière
+    # (4 × M3 sur Ø38). La face avant porte la sortie ET la fixation du boîtier
+    # (STEP officiel, lu le 2026-10-03) ; y fixer le stator demanderait une
+    # ouverture pour la sortie. Corrigé le 2026-10-03 : c'était fixation_boitier.
+    motif_stator: arriere
     # La liaison de cheville (parts/jambe_basse.py) met une plaque horizontale
     # entre les deux moteurs ; les plaques sont celles du réglage le PLUS ÉPAIS
     # de cette liste, pour que la même cinématique serve à tous.

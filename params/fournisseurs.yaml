@@ -546,3 +546,21 @@ fichiers:
     conditions: >
       Comme gleich_en_aw_5754.
     redistribuable: false
+  robstride_step_rs00:
+    source: >
+      RobStride, dépôt officiel https://github.com/RobStride/Product_Information, fichier « Product Literature/RS00/RS00.step », commit 3f0cae4986e175337c7b03d891b899247b1f2933
+    reference: "Modèle 3D du RS00, STEP AP242 (horodaté 2025-11-27), 426 942 octets"
+    date: 2026-10-03
+    empreinte: "sha256:4133dea27ccff90d69588dbc37662c9eafeed0bf858fc0a4cee93417e508abfe"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence (API GitHub : license null) : tous droits réservés par défaut. Seules des valeurs isolées (diamètres, angles des trous) en sont citées. Jamais versé dans le dépôt (fiche 0030).
+    redistribuable: false
+  robstride_step_rs02:
+    source: >
+      RobStride, dépôt officiel https://github.com/RobStride/Product_Information, fichier « Product Literature/RS02/rs02.stp », commit 3f0cae4986e175337c7b03d891b899247b1f2933
+    reference: "Modèle 3D du RS02, STEP, 976 163 octets"
+    date: 2026-10-03
+    empreinte: "sha256:c988a3a398986fb6bc1453bf768d25c3198fad72c43af3483b7135d7e7a8f063"
+    conditions: >
+      Comme robstride_step_rs00.
+    redistribuable: false

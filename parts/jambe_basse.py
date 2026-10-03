@@ -55,11 +55,12 @@ qui laisse le tenon carré entrer à fond.
   · le voile et le jeu : squelette.ecarts_cheville (le plus fort des voiles
     déclarés ; jeu PROPOSÉ) ; la largeur d'un tenon : 2 × voile (PROPOSÉ).
 
-HYPOTHÈSES DITES (non lues sur un plan) : la fixation du boîtier du RS00
-(6 × M3 sur Ø50) est sur la face ARRIÈRE, avec les 4 × M3 sur Ø38 ; la
-bride du RS02 est à l'avant (bossage avant) ; la phase angulaire des motifs
-est inconnue, le premier trou est posé à 0° ; les trous de centrage (sans
-diamètre de perçage publié) ne sont pas dessinés.
+FACES ET PHASES (lues le 2026-10-03 dans les STEP officiels, params/
+actionneurs.yaml) : la fixation du boîtier du RS00 est sur la face AVANT,
+avec la sortie ; la liaison tient donc chaque RS00 par l'ARRIÈRE (4 × M3 sur
+Ø38, `motif_stator` du squelette). Le RS02 se fixe par l'avant (9 × M3 sur
+Ø73). L'hypothèse du premier dessin (fixation du RS00 à l'arrière, phases à
+0°) était fausse. Les trous de centrage ne sont pas dessinés.
 
 Un trou plus petit que le minimum découpable du réglage n'est PAS découpé :
 il est MARQUÉ (calque POINTAGE du DXF, croix sur le plan A4), à pointer puis
@@ -135,13 +136,19 @@ def degagement(centres, r):
 
 
 def motif(cm: dict, cle: str, vis: dict, cx=0.0, cy=0.0) -> list[tuple]:
-    """Les trous de passage d'un motif publié (n vis sur un cercle), premier trou à 0°."""
+    """Les trous de passage d'un motif publié (n vis sur un cercle), premier trou à `phase_deg`.
+
+    Phase lue dans le STEP officiel (params/actionneurs.yaml, 2026-10-03) ;
+    0° si elle manque. Une plaque vue de l'autre face voit le motif en miroir :
+    tous les motifs de ce fichier sont posés dans le repère de leur plaque.
+    """
     m = cm.get(cle)
     if not m or "diametre_percage" not in m:
         return []
     r, d = m["diametre_percage"] / 2, vis[m["vis"]]["passage"]
-    return [(cx + r * math.cos(2 * math.pi * i / m["nombre"]),
-             cy + r * math.sin(2 * math.pi * i / m["nombre"]), d) for i in range(m["nombre"])]
+    a0 = math.radians(m.get("phase_deg") or 0.0)
+    return [(cx + r * math.cos(a0 + 2 * math.pi * i / m["nombre"]),
+             cy + r * math.sin(a0 + 2 * math.pi * i / m["nombre"]), d) for i in range(m["nombre"])]
 
 
 def rayon_motif(cm, cle, vis, voile):
@@ -210,7 +217,8 @@ def donnees(rid: str) -> dict:
                 z_r=ec["hauteur_axe_roulis"] * 1000, dec=ec["decalage_tangage_roulis"] * 1000,
                 T=SQ.longueur({"tibia": 1.0}, an["ratios"], H) * 1000, H=H,
                 c0=cat[m_cheville]["cotes_montage"], c2=cat[m_genou]["cotes_montage"],
-                m_cheville=m_cheville, m_genou=m_genou, cat=cat, ec=ec)
+                m_cheville=m_cheville, m_genou=m_genou, cat=cat, ec=ec,
+                ec_brut=lire("squelette.yaml")["ecarts_ansur"]["cheville"])
 
 
 def geometrie(g: dict) -> dict:
@@ -287,8 +295,8 @@ def plaques_structure(g, G) -> list[Plaque]:
 
     # ── liaison de cheville ───────────────────────────────────────────
     r_st, p, Cb, Ch = G["r_st"], G["p"], G["C_bas"], G["C_haut"]
-    trous_stator = lambda cx, cy: (motif(c0, "fixation_boitier", vis, cx, cy)
-                                   + motif(c0, "arriere", vis, cx, cy) + [(cx, cy, axe)])
+    face_stator = g["ec_brut"]["motif_stator"]                 # l'arrière du RS00 (STEP officiel)
+    trous_stator = lambda cx, cy: motif(c0, face_stator, vis, cx, cy) + [(cx, cy, axe)]
     A = disque(0, z_p, r_st) + rect(-r_st, r_st, Ch, z_p)
     A = A - rect(-r_st - 1, r_st + 1, Ch - r_st, Ch)            # coupée au ras de C
     A = A + rect(-p, p, Cb, Ch)                                  # tenon dans l'encoche de C
@@ -369,19 +377,22 @@ def plaques_factices(g, G) -> list[Plaque]:
     ]
     par_nom: dict[str, Plaque] = {}
     for mid, cm, centre, ax, xd, g_st, g_ro in moteurs:
-        L, D = val(cm["longueur"]), cm["diametre_corps"]
-        Df = cm.get("diametre_bride") or D
-        rotor = 2 * rayon_motif(cm, "sortie", vis, g["v"])
+        L = val(cm["longueur"])
+        D = Df = cm.get("diametre_bride") or cm["diametre_corps"]   # boîte à la plus grande section
+        # disque rotor au diamètre RÉEL de la sortie (STEP) ; à défaut, au motif + voile
+        rotor = cm.get("diametre_sortie") or (cm.get("bossage_avant") or {}).get("diametre") \
+            or 2 * rayon_motif(cm, "sortie", vis, g["v"])
+        avant = [k for k in ("fixation_boitier",) if (cm.get(k) or {}).get("face") == "avant"]
+        arriere = [k for k in ("fixation_boitier", "arriere") if (cm.get(k) or {}).get("face") == "arriere"]
         loc = bd.Location(bd.Plane(origin=centre, x_dir=xd, z_dir=ax))
         defs = [
             ("face_avant", rect(-Df / 2, Df / 2, -Df / 2, Df / 2) - disque(0, 0, rotor / 2 + j),
-             [] if cm.get("arriere") is not None else motif(cm, "fixation_boitier", vis),
+             [t for k in avant for t in motif(cm, k, vis)],
              [bd.Location((0, 0, L / 2 - e))], g_st),
             ("disque_rotor", disque(0, 0, rotor / 2), motif(cm, "sortie", vis) + [(0, 0, axe)],
              [bd.Location((0, 0, L / 2 - e))], g_ro),
             ("face_arriere", rect(-D / 2, D / 2, -D / 2, D / 2),
-             ((motif(cm, "fixation_boitier", vis) + motif(cm, "arriere", vis)) if cm.get("arriere") is not None else [])
-             + [(0, 0, axe)], [bd.Location((0, 0, -L / 2))], g_st),
+             [t for k in arriere for t in motif(cm, k, vis)] + [(0, 0, axe)], [bd.Location((0, 0, -L / 2))], g_st),
             ("cote_a", rect(-D / 2, D / 2, -L / 2 + e, L / 2 - e), [], [plan_x(D / 2 - e), plan_x(-D / 2)], g_st),
             ("cote_b", rect(-D / 2 + e, D / 2 - e, -L / 2 + e, L / 2 - e), [],
              [plan_y(D / 2 - e, e), plan_y(-D / 2, e)], g_st),
@@ -403,8 +414,14 @@ def moteurs_cylindres(g, G) -> list[tuple]:
             ("rs00_roulis", g["c0"], (0, 0, G["z_r"]), (1, 0, 0), "liaison"),
             ("rs02_genou", g["c2"], (0, G["y_te"] - G["L2"] / 2, G["z_k"]), (0, 1, 0), "tibia")):
         L, D = val(cm["longueur"]), cm["diametre_corps"]
-        cyl = bd.Cylinder(D / 2, L)
-        out.append((nom, cyl.moved(bd.Location(bd.Plane(origin=centre, z_dir=ax))), grp))
+        loc = bd.Location(bd.Plane(origin=centre, z_dir=ax))
+        lb = cm.get("longueur_bride")
+        if lb:   # RS02 : Ø78,5 sur 28 mm à l'avant, puis le corps (STEP officiel, 2026-10-03)
+            cyl = (bd.Pos(0, 0, L / 2 - lb / 2) * bd.Cylinder(cm["diametre_bride"] / 2, lb)
+                   + bd.Pos(0, 0, -lb / 2) * bd.Cylinder(D / 2, L - lb))
+        else:
+            cyl = bd.Cylinder(D / 2, L)
+        out.append((nom, cyl.moved(loc), grp))
     return out
 
 

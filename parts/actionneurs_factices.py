@@ -76,8 +76,9 @@ def gabarit(cm: dict, vis: dict, ep: float) -> tuple[bd.Part, list[dict]]:
     with bd.BuildPart() as p:
         with bd.BuildSketch():
             bd.Circle(D_ext / 2)
+            a0 = math.radians(fx.get("phase_deg") or 0.0)   # STEP officiel, 2026-10-03
             for i in range(fx["nombre"]):
-                a = 2 * math.pi * i / fx["nombre"]
+                a = a0 + 2 * math.pi * i / fx["nombre"]
                 x, y = r_cercle * math.cos(a), r_cercle * math.sin(a)
                 with bd.Locations((x, y)):
                     bd.Circle(trou / 2, mode=bd.Mode.SUBTRACT)

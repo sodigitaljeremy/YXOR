@@ -65,7 +65,7 @@ def ecarts_cheville() -> dict:
 
     decalage_tangage_roulis = D_RS00 + 2 jeu + e_max : moteur, jeu, plaque, jeu, moteur.
     hauteur_axe_roulis = e_max + jeu + r_plaque : semelle, jeu, plaque du stator du roulis,
-    r_plaque = rayon du cercle de fixation + demi-passage de vis + voile (le plus fort
+    r_plaque = max(rayon du moteur, rayon du motif `motif_stator` + demi-passage de vis + voile) (le plus fort
     des voiles déclarés par ces réglages). Ajouté le 2026-10-03 (PROPOSÉ).
     """
     import procedes as PROC
@@ -78,7 +78,7 @@ def ecarts_cheville() -> dict:
     if not voiles:
         raise ValueError("aucun voile minimal déclaré pour les réglages de la cheville")
     jeu = ec["jeu_mm"]["valeur"]
-    fx = cm["fixation_boitier"]
+    fx = cm[ec["motif_stator"]]
     r_plaque = max(cm["diametre_corps"] / 2,
                    fx["diametre_percage"] / 2 + hw["vis"][fx["vis"]]["passage"] / 2 + max(voiles))
     return dict(decalage_tangage_roulis=(cm["diametre_corps"] + 2 * jeu + e_max) / 1000,

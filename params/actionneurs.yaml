@@ -204,10 +204,18 @@ candidats:
       diametre_corps: 65.0
       longueur: 41.5
       bossage_avant: {diametre: 43.0, hauteur: 3.5}
-      fixation_boitier: {vis: M3, nombre: 9, profondeur: 8, diametre_percage: 73.0, tolerance: 0.2}
-      sortie: {vis: M4, nombre: 6, profondeur_min: 7, diametre_percage: 24.0, tolerance: 0.2}
-      centrage: {diametre: 4.0, nombre: 3}
-      arriere: null            # non trouvé sur la page lue ; manuel RS02 non lu (absent du registre)
+      fixation_boitier: {vis: M3, nombre: 9, profondeur: 8, diametre_percage: 73.0, tolerance: 0.2, face: avant, phase_deg: 6.06}
+      sortie: {vis: M4, nombre: 6, profondeur_min: 7, diametre_percage: 24.0, tolerance: 0.2, face: avant, phase_deg: 0.0}
+      centrage: {diametre: 4.0, nombre: 3, diametre_percage: 24.0, face: avant, phase_deg: 90.0}
+      arriere: null            # aucun taraudage de fixation à l'arrière (STEP officiel, 2026-10-03)
+      # AJOUTÉ le 2026-10-03, lu dans le STEP officiel (params/fournisseurs.yaml :
+      # robstride_step_rs02 ; jamais versé dans le dépôt). PHASES : angle du
+      # premier trou, dans le repère du STEP ; seules les DIFFÉRENCES comptent
+      # (la sortie tourne : sa phase n'a de sens qu'au zéro du moteur).
+      longueur_bride: 28.0     # la partie Ø78,5 n'est PAS une bride mince : 28 mm, puis Ø65 sur 13,4 mm
+      reperes_avant: {nombre: 3, diametre_percage: 73.0, phase_deg: 66.06, note: "entre les vis, à 20° ; 2 × Ø3 et 1 × Ø2,5, profondeur 5 : repérage, fonction non écrite"}
+      arriere_releve: "4 × Ø4 sur Ø52 (premier à 41,66°) et 8 × Ø2 sur Ø63, profondeur ~2 : fonction non établie, non retenus pour une fixation"
+      source_phases: "STEP officiel rs02.stp (RobStride/Product_Information, commit 3f0cae4), lu par Claude Code le 2026-10-03"
     prix: {valeur: 699, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
     prix_revendeur: {valeur: 160.99, devise: USD, tva_incluse: 0.0, vendeur: "Seeed Studio", source: "https://www.seeedstudio.com/Robostride-02-Actuator-p-6665.html", consulte_le: "2026-09-30", note: "hors taxe (« Net price. VAT & shipping applied at checkout »), en stock ; 152,99 USD dès 10 ; OpenELAB 149,95 € (moteur seul, TVA inconnue)"}
 
@@ -623,10 +631,19 @@ candidats:
       diametre_corps: 57.0
       longueur: {valeur: 51.0, tolerance: 1.0}
       bossage_arriere: {diametre: 35.0, hauteur: 1.0}
-      fixation_boitier: {vis: M3, nombre: 6, diametre_percage: 50.0, tolerance: 0.1}
-      sortie: {vis: M3, nombre: 6, profondeur: 5, diametre_percage: 27.0, tolerance: 0.1}
-      centrage: {diametre: 3.0, nombre: 2, profondeur: 5}
-      arriere: {vis: M3, nombre: 4, profondeur: 4, diametre_percage: 38.0, tolerance: 0.1}
+      fixation_boitier: {vis: M3, nombre: 6, diametre_percage: 50.0, tolerance: 0.1, face: avant, phase_deg: 0.0}
+      sortie: {vis: M3, nombre: 6, profondeur: 5, diametre_percage: 27.0, tolerance: 0.1, face: avant, phase_deg: 30.0}
+      centrage: {diametre: 3.0, nombre: 2, profondeur: 5, diametre_percage: 50.0, face: avant, phase_deg: 15.0}
+      arriere: {vis: M3, nombre: 4, profondeur: 4, diametre_percage: 38.0, tolerance: 0.1, face: arriere, phase_deg: 45.0}
+      # AJOUTÉ le 2026-10-03, lu dans le STEP officiel (params/fournisseurs.yaml :
+      # robstride_step_rs00 ; jamais versé dans le dépôt). La fixation du
+      # boîtier est sur la face AVANT, celle de la sortie (hypothèse inverse
+      # du 2026-10-03 au soir, fausse). L'arrière ne porte que 4 × M3 sur Ø38,
+      # taraudés sur 7 mm dans le STEP (le manuel dit 4). Phases : angle du
+      # premier trou dans le repère du STEP ; seules les différences comptent.
+      diametre_sortie: 34.6    # face de sortie (rotor), STEP : elle dépasse de 0,4 mm la face du boîtier
+      reperes_sortie: {nombre: 3, diametre: 3.0, diametre_percage: 24.46, phase_deg: 0.0, note: "sur la sortie : le « Ø24,46 voisin » du plan coté"}
+      source_phases: "STEP officiel RS00.step (RobStride/Product_Information, commit 3f0cae4), lu par Claude Code le 2026-10-03"
     prix: {valeur: 598, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 2", consulte_le: "2026-10-01"}
 
   htdw_4438_30:
