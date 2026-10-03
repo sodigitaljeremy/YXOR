@@ -151,6 +151,18 @@ candidats:
     vitesse_a_vide_rpm: {valeur: 480, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30", note: "± 10 % ; tension de mesure non précisée (nominale 48 V)"}
     masse_g: {valeur: 191, source: "PDF RobStride 2026-09-17, p. 27", consulte_le: "2026-09-30"}
     dimensions_mm: {valeur: "Ø46 × 44", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
+    # Ajouté le 2026-10-03 : plan coté du manuel RS05 260713, p. 10 (image),
+    # relu par Claude Code ; concorde avec la collecte du 2026-10-01 (A_bride_sortie).
+    cotes_montage:
+      source: "manuel RS05 260713, p. 10 (plan coté, image)"
+      consulte_le: "2026-10-03"
+      diametre_corps: 46.0
+      longueur: {valeur: 44.0, tolerance: 0.5}
+      bossage_avant: {diametre: 35.0, hauteur: 0.5}
+      fixation_boitier: {vis: M3, nombre: 8, profondeur: 7, diametre_percage: 41.5, tolerance: 0.1}
+      sortie: {vis: M4, nombre: 6, profondeur: 3.5, diametre_percage: 24.0, tolerance: 0.1}
+      centrage: {diametre: 4.0, nombre: 3, diametre_percage: 19.0}
+      arriere: {vis: M3, nombre: 4, profondeur: 10, diametre_percage: 38.5, tolerance: 0.1}
     prix: {valeur: 499, devise: CNY, vendeur: "RobStride (prix constructeur)", source: "PDF RobStride 2026-09-17, p. 38", consulte_le: "2026-09-30"}
 
   rs02:

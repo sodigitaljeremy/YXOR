@@ -95,6 +95,23 @@ def noms_du_code() -> dict[str, list]:
     return out
 
 
+def controler_squelette(joints: dict, squelette: dict) -> tuple[str, list]:
+    """Les articulations de params/squelette.yaml portent les noms de joints.yaml (règle 3).
+
+    Un nom absent de joints.yaml n'est admis que marqué `nom_provisoire`, et il
+    est ANNONCÉ (2026-10-03 : la pince n'a pas encore de nom stable).
+    """
+    noms = {j["nom"] for g in GROUPES for j in joints.get(g, [])}
+    arts = squelette.get("articulations") or []
+    prov = [a["nom"] for a in arts if a.get("nom_provisoire")]
+    fautes = [f"squelette.yaml : « {a['nom']} » absent de joints.yaml (et non marqué nom_provisoire)"
+              for a in arts if a["nom"] not in noms and not a.get("nom_provisoire")]
+    if not arts:
+        fautes.append("squelette.yaml : aucune articulation")
+    return (f"squelette.yaml : {len(arts)} articulations décrites (côté gauche et centre), "
+            f"dont {len(prov)} à nom provisoire ({', '.join(prov) or '—'})"), fautes
+
+
 def noms_serie() -> list | None:
     import analyser_marche as AM
     if not AM.SERIE.exists():
@@ -106,6 +123,9 @@ def noms_serie() -> list | None:
 def main(argv=None) -> int:
     lignes, fautes = comparer(lire("joints.yaml"), lire("upstream_joints.generated.yaml"),
                               noms_du_code(), noms_serie())
+    l_sq, f_sq = controler_squelette(lire("joints.yaml"), lire("squelette.yaml"))
+    lignes.append(l_sq)
+    fautes += f_sq
     print("   noms d'articulations — " + " ; ".join(lignes))
     if fautes:
         print("\n✗ NOMS D'ARTICULATIONS INCOHÉRENTS :")

@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `8fcf9b7721b8`, le 2026-10-02 ; 193 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `589b32cebe1e`, le 2026-10-03 ; 199 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -125,7 +125,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (15)
+## docs/ (16)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-actionneurs.md
@@ -135,6 +135,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/decisions.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/dimensionnement-par-actionneur.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/estimation-thermique-j4310.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/etat-factuel-2026-10-01.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/faisabilite-2d-2026-10-03.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
@@ -143,7 +144,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tol
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-grok-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/etude-fournisseurs-chatgpt-2026-09-30.md
 
-## journal/ (7)
+## journal/ (8)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-20.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-28.md
@@ -152,8 +153,9 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-29.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-30.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-02.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-03.md
 
-## params/ (14)
+## params/ (15)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
@@ -168,11 +170,13 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/joints.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/mesures.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/origines.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/sources.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/squelette.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/upstream_joints.generated.yaml
 
-## parts/ (3)
+## parts/ (4)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/.gitkeep
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/actionneurs_factices.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_apprentissage.origines.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_apprentissage.py
 
@@ -180,7 +184,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (21)
+## scripts/ (22)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -203,6 +207,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/provenance_a
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/regenerer.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/source.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/squelette.py
 
 ## sim/ (7)
 
@@ -214,7 +219,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (13)
+## tests/ (14)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
@@ -229,6 +234,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_an
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer_index.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_squelette.py
 
 ## web/ (4)
 

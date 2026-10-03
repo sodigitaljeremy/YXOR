@@ -42,5 +42,17 @@ class NomsArticulations(unittest.TestCase):
         self.assertTrue(fautes)
 
 
+class NomsSquelette(unittest.TestCase):
+    def test_squelette_reel(self):
+        _, fautes = C.controler_squelette(C.lire("joints.yaml"), C.lire("squelette.yaml"))
+        self.assertEqual(fautes, [])
+
+    def test_nom_inconnu_refuse(self):
+        sq = copy.deepcopy(C.lire("squelette.yaml"))
+        sq["articulations"][3]["nom"] = "genou"
+        _, fautes = C.controler_squelette(C.lire("joints.yaml"), sq)
+        self.assertTrue(any("genou" in f for f in fautes), fautes)
+
+
 if __name__ == "__main__":
     unittest.main()

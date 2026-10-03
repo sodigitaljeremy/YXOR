@@ -1,0 +1,67 @@
+# Squelette de YXOR S, version v3 (28 DDL) — lu par scripts/squelette.py
+#
+# Créé le 2026-10-03. Intention de Jeremy (2026-10-02, ses mots) : « je veux
+# absolument que l'on passe à la pratique et que l'on commence à modéliser
+# et concevoir le robot complet (jambes, tronc, bras, cou, tête) ». Ce n'est
+# PAS une décision d'architecture.
+#
+# HYPOTHÈSE DE TRAVAIL, marquée comme telle : la répartition v3 (12 jambes,
+# taille 2, bras 2 × 3, poignets 2 × 2, cou 2, pinces 2), les axes et les
+# actionneurs du haut du corps (RS05, configuration_S.yaml : hypothese_v3).
+# Jambes : configuration DÉCIDÉE (fiche 0067, configuration_S.yaml).
+#
+# AUCUNE COTE ICI (règle 1) : chaque longueur est un NOM DE RATIO de
+# params/anthropometry.yaml, multiplié par H_S (tailles.S.H_m) dans le code.
+# Les positions s'écrivent comme une somme de termes {ratio: coefficient}.
+# Les axes sont ceux de params/joints.yaml (noms identiques, règle 3) ; ce
+# sont des DIRECTIONS (convention ToddlerBot, 1123 valeurs amont comptées par
+# provenance_amont.py), aucune géométrie amont.
+#
+# Aucune géométrie ToddlerBot : les corps du MJCF engendré sont des boîtes et
+# des cylindres simplifiés, dimensionnés par les ratios ANSUR.
+
+hypothese: "v3, 28 DDL — hypothèse de travail (2026-10-03), pas une décision"
+
+# Corps (segments). `forme` : boite | capsule ; `dims` : ratios (× H_S).
+# `masse_winter` : fraction de masse de structure (params/anthropometry.yaml,
+# masses), répartie sur la part « structure » de la masse du modèle de S.
+segments:
+  bassin:      {forme: boite,   dims: {x: {pied_largeur: 1.0}, y: {largeur_bassin: 1.0}, z: {cheville_hauteur: 1.0}}, masse_winter: {tronc: 0.3}}
+  tronc:       {forme: boite,   dims: {x: {pied_largeur: 1.5}, y: {largeur_epaules: 0.8}, z: {tronc_hauteur: 1.0}}, masse_winter: {tronc: 0.7}, porte_charge_utile: true}
+  cuisse:      {forme: capsule, longueur: {cuisse: 1.0}, rayon: {pied_largeur: 0.3}, masse_winter: {cuisse: 1.0}}
+  tibia:       {forme: capsule, longueur: {tibia: 1.0}, rayon: {pied_largeur: 0.25}, masse_winter: {tibia: 1.0}}
+  pied:        {forme: boite,   dims: {x: {pied_longueur: 1.0}, y: {pied_largeur: 1.0}, z: {cheville_hauteur: 0.5}}, masse_winter: {pied: 1.0}}
+  bras:        {forme: capsule, longueur: {bras: 1.0}, rayon: {pied_largeur: 0.2}, masse_winter: {bras: 1.0}}
+  avant_bras:  {forme: capsule, longueur: {avant_bras: 1.0}, rayon: {pied_largeur: 0.18}, masse_winter: {avant_bras: 1.0}}
+  main:        {forme: boite,   dims: {x: {pied_largeur: 0.5}, y: {pied_largeur: 0.3}, z: {main_longueur: 1.0}}, masse_winter: {main: 1.0}}
+  tete:        {forme: boite,   dims: {x: {tete_hauteur: 0.9}, y: {tete_hauteur: 0.8}, z: {tete_hauteur: 1.0}}, masse_winter: {tete_et_cou: 1.0}}
+
+# Articulations, dans l'ordre de la chaîne. `parent` : corps ou articulation
+# précédente ; `position` : décalage depuis le parent (ratios × H_S, x avant,
+# y gauche, z haut) ; `actionneur` : `config` = params/configuration_S.yaml
+# (jambes, nom de configuration entre crochets), `v3` = hypothese_v3 ;
+# `vers` : le segment que l'articulation porte (le dernier axe d'un groupe).
+# Les jambes et les bras sont décrits côté gauche ; le droit est le miroir
+# (y -> -y), engendré par le code.
+articulations:
+  # ── jambe (6) ─────────────────────────────────────────────────────────
+  - {nom: hip_yaw,     parent: bassin,     position: {y: {largeur_bassin: 0.5}, z: {cheville_hauteur: -0.5}}, actionneur: {config: hip_yaw_drive}, cote: true}
+  - {nom: hip_roll,    parent: hip_yaw,    position: {},                                                      actionneur: {config: hip_roll}, cote: true}
+  - {nom: hip_pitch,   parent: hip_roll,   position: {}, vers: cuisse,                                        actionneur: {config: hip_pitch}, cote: true}
+  - {nom: knee,        parent: hip_pitch,  position: {z: {cuisse: -1.0}}, vers: tibia,                        actionneur: {config: knee}, cote: true}
+  - {nom: ankle_pitch, parent: knee,       position: {z: {tibia: -1.0}},                                      actionneur: {config: ankle_pitch}, cote: true}
+  - {nom: ankle_roll,  parent: ankle_pitch, position: {}, vers: pied,                                         actionneur: {config: ankle_roll}, cote: true}
+  # ── taille (2) ────────────────────────────────────────────────────────
+  - {nom: waist_yaw,   parent: bassin,     position: {z: {cheville_hauteur: 0.5}},                            actionneur: {v3: true}}
+  - {nom: waist_roll,  parent: waist_yaw,  position: {}, vers: tronc,                                         actionneur: {v3: true}}
+  # ── bras (3) et poignet (2), côté gauche ──────────────────────────────
+  - {nom: shoulder_pitch, parent: waist_roll, position: {y: {largeur_epaules: 0.5}, z: {tronc_hauteur: 0.9}}, actionneur: {v3: true}, cote: true}
+  - {nom: shoulder_roll,  parent: shoulder_pitch, position: {}, vers: bras,                                   actionneur: {v3: true}, cote: true}
+  - {nom: elbow_roll,     parent: shoulder_roll, position: {z: {bras: -1.0}}, vers: avant_bras,               actionneur: {v3: true}, cote: true}
+  - {nom: wrist_pitch,    parent: elbow_roll, position: {z: {avant_bras: -1.0}},                              actionneur: {v3: true}, cote: true}
+  - {nom: wrist_roll,     parent: wrist_pitch, position: {}, vers: main,                                      actionneur: {v3: true}, cote: true}
+  # ── pince (1), côté gauche : NOM PROVISOIRE, absent de params/joints.yaml ─
+  - {nom: gripper,        parent: wrist_roll, position: {z: {main_longueur: -0.5}}, axe: y,                   actionneur: {v3: true}, cote: true, nom_provisoire: true}
+  # ── cou (2) ───────────────────────────────────────────────────────────
+  - {nom: neck_yaw,    parent: waist_roll, position: {z: {tronc_hauteur: 1.0}},                               actionneur: {v3: true}}
+  - {nom: neck_pitch,  parent: neck_yaw,   position: {z: {cou_hauteur: 1.0}}, vers: tete,                     actionneur: {v3: true}}
