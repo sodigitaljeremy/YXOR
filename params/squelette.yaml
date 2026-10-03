@@ -50,7 +50,8 @@ articulations:
   - {nom: hip_pitch,   parent: hip_roll,   position: {}, vers: cuisse,                                        actionneur: {config: hip_pitch}, cote: true}
   - {nom: knee,        parent: hip_pitch,  position: {z: {cuisse: -1.0}}, vers: tibia,                        actionneur: {config: knee}, cote: true}
   - {nom: ankle_pitch, parent: knee,       position: {z: {tibia: -1.0}},                                      actionneur: {config: ankle_pitch}, cote: true}
-  - {nom: ankle_roll,  parent: ankle_pitch, position: {}, vers: pied,                                         actionneur: {config: ankle_roll}, cote: true}
+  # Écart ANSUR (bloc `ecarts_ansur.cheville` ci-dessous) : roulis SOUS le tangage.
+  - {nom: ankle_roll,  parent: ankle_pitch, position: {z: {ecart.decalage_tangage_roulis: -1.0}}, vers: pied, actionneur: {config: ankle_roll}, cote: true}
   # ── taille (2) ────────────────────────────────────────────────────────
   - {nom: waist_yaw,   parent: bassin,     position: {z: {cheville_hauteur: 0.5}},                            actionneur: {v3: true}}
   - {nom: waist_roll,  parent: waist_yaw,  position: {}, vers: tronc,                                         actionneur: {v3: true}}
@@ -65,3 +66,41 @@ articulations:
   # ── cou (2) ───────────────────────────────────────────────────────────
   - {nom: neck_yaw,    parent: waist_roll, position: {z: {tronc_hauteur: 1.0}},                               actionneur: {v3: true}}
   - {nom: neck_pitch,  parent: neck_yaw,   position: {z: {cou_hauteur: 1.0}}, vers: tete,                     actionneur: {v3: true}}
+
+# ═════════════════════════════════════════════════════════════════════════
+# ÉCARTS AUX PROPORTIONS ANSUR — chacun avec sa raison.
+#
+# Ajouté le 2026-10-03 (lot « jambe basse en carton »). PROPOSÉ par Claude,
+# non décidé : il ne touche ni la hanche ni les bras.
+#
+# Raison commune : l'ENCOMBREMENT DES MOTEURS. Chez l'humain, les axes de
+# tangage et de roulis de la cheville se croisent presque, à la hauteur de la
+# malléole (ratio `cheville_hauteur`, 24 mm à 0,60 m). Deux RS00 de Ø57 mm ne
+# peuvent pas avoir leurs axes au même point (169 contacts au repos dans le
+# squelette du 2026-10-03), et un RS00 de rayon 28,5 mm ne tient pas sous une
+# malléole à 24 mm du sol.
+#
+# Les écarts sont CALCULÉS par scripts/squelette.py (ecarts_cheville), jamais
+# écrits en millimètres : ils dérivent des cotes du RS00 (params/actionneurs.yaml,
+# règle 2), de l'épaisseur des plaques (params/hardware.yaml) et d'un jeu.
+# ═════════════════════════════════════════════════════════════════════════
+ecarts_ansur:
+  cheville:
+    remplace: "ankle_pitch et ankle_roll au même point, à `cheville_hauteur` du sol"
+    raison: "encombrement des deux RS00 (fiche 0067) : ils ne peuvent pas partager un point"
+    actionneur: rs00
+    # La liaison de cheville (parts/jambe_basse.py) met une plaque horizontale
+    # entre les deux moteurs ; les plaques sont celles du réglage le PLUS ÉPAIS
+    # de cette liste, pour que la même cinématique serve à tous.
+    reglages: [cutter_cartonplume_5, operateur_cn_alu_3]
+    jeu_mm:
+      valeur: 2.0
+      statut: "PROPOSÉ (Claude, 2026-10-03), choix de projet"
+      motif: "jeu de fonctionnement entre une pièce fixe et une pièce mobile ; supérieur à la tolérance de contour déclarée par l'opérateur CN (± 0,5 mm)"
+    # Les deux écarts, tels que les calcule le code :
+    #   decalage_tangage_roulis = D_RS00 + 2 jeu + e_max
+    #       (moteur du tangage, jeu, plaque, jeu, moteur du roulis)
+    #   hauteur_axe_roulis = e_max + jeu + r_plaque_stator
+    #       (semelle, jeu, puis la plaque qui porte le moteur du roulis :
+    #        rayon du cercle de fixation + demi-passage de vis + voile)
+    # À H = 0,60 m, la jambe s'allonge de leur somme, moins `cheville_hauteur`.

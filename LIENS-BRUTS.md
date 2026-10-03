@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `589b32cebe1e`, le 2026-10-03 ; 199 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `384d5963eed6`, le 2026-10-03 ; 201 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -173,10 +173,11 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/sources.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/squelette.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/upstream_joints.generated.yaml
 
-## parts/ (4)
+## parts/ (5)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/.gitkeep
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/actionneurs_factices.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_apprentissage.origines.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_apprentissage.py
 
@@ -219,7 +220,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (14)
+## tests/ (15)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
@@ -228,6 +229,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_controle_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_critere_banc.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_dimensionnement_coherence.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_empreinte.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py

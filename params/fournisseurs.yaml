@@ -528,3 +528,21 @@ fichiers:
     conditions: >
       Reprise tierce d'une norme payante (ISO 273, non lue) ; une valeur isolée en est citée.
     redistribuable: false
+  gleich_en_aw_5754:
+    source: >
+      GLEICH Aluminium GmbH, https://gleich.de/wp-content/uploads/2023/12/Data-Sheet-EN-AW-5754.pdf
+    reference: "« AL rolled plates EN AW-5754 — Technical data sheet », 1 p., datée du 18.10.2023"
+    date: 2026-10-03
+    empreinte: "sha256:04064fdad812526360b55d7367e3143bccef3f772cc243c329465079f58cd040"
+    conditions: >
+      Fiche commerciale du fabricant ; conditions non relevées. Une valeur isolée en est citée (masse volumique).
+    redistribuable: false
+  gleich_en_aw_6082:
+    source: >
+      GLEICH Aluminium GmbH, https://gleich.de/wp-content/uploads/2021/03/en_en_aw_6082.pdf
+    reference: "« AL rolled plates EN AW-6082 — Technical data sheet », 1 p., datée du 03.05.2024"
+    date: 2026-10-03
+    empreinte: "sha256:ff5361239e4973f9e58613b42bc87e2ae69d7dd632f8091a48fa74aa94cc21b0"
+    conditions: >
+      Comme gleich_en_aw_5754.
+    redistribuable: false

@@ -49,9 +49,41 @@ def lire(nom: str) -> dict:
     return yaml.safe_load((P / nom).read_text(encoding="utf-8"))
 
 
-def longueur(expr: dict, ratios: dict, H: float) -> float:
-    """Σ ratio × coefficient × H, en mètres."""
-    return sum(ratios[k]["valeur"] * c for k, c in (expr or {}).items()) * H
+def longueur(expr: dict, ratios: dict, H: float, ecarts: dict | None = None) -> float:
+    """Σ ratio × coefficient × H, en mètres ; un terme `ecart.<nom>` vaut l'écart calculé (m)."""
+    total = 0.0
+    for k, c in (expr or {}).items():
+        if k.startswith("ecart."):
+            total += (ecarts or ecarts_cheville())[k.split(".", 1)[1]] * c
+        else:
+            total += ratios[k]["valeur"] * c * H
+    return total
+
+
+def ecarts_cheville() -> dict:
+    """Les écarts ANSUR de la cheville (params/squelette.yaml, ecarts_ansur), en mètres.
+
+    decalage_tangage_roulis = D_RS00 + 2 jeu + e_max : moteur, jeu, plaque, jeu, moteur.
+    hauteur_axe_roulis = e_max + jeu + r_plaque : semelle, jeu, plaque du stator du roulis,
+    r_plaque = rayon du cercle de fixation + demi-passage de vis + voile (le plus fort
+    des voiles déclarés par ces réglages). Ajouté le 2026-10-03 (PROPOSÉ).
+    """
+    import procedes as PROC
+    ec = lire("squelette.yaml")["ecarts_ansur"]["cheville"]
+    cm = D.charger_catalogue()["candidats"][ec["actionneur"]]["cotes_montage"]
+    hw = PROC.charger()
+    regs = [PROC.reglage(r, hw) for r in ec["reglages"]]
+    e_max = max(r["epaisseur"] for r in regs)
+    voiles = [r["voile_min"] for r in regs if r.get("voile_min") is not None]
+    if not voiles:
+        raise ValueError("aucun voile minimal déclaré pour les réglages de la cheville")
+    jeu = ec["jeu_mm"]["valeur"]
+    fx = cm["fixation_boitier"]
+    r_plaque = max(cm["diametre_corps"] / 2,
+                   fx["diametre_percage"] / 2 + hw["vis"][fx["vis"]]["passage"] / 2 + max(voiles))
+    return dict(decalage_tangage_roulis=(cm["diametre_corps"] + 2 * jeu + e_max) / 1000,
+                hauteur_axe_roulis=(e_max + jeu + r_plaque) / 1000,
+                e_max_mm=e_max, jeu_mm=jeu, r_plaque_mm=r_plaque, voile_mm=max(voiles))
 
 
 def construire(H: float | None = None) -> dict:
@@ -60,6 +92,7 @@ def construire(H: float | None = None) -> dict:
     cfg, cat = lire("configuration_S.yaml"), D.charger_catalogue()
     H = H or an["tailles"]["S"]["H_m"]
     R = an["ratios"]
+    EC = ecarts_cheville()
     axes = {j["nom"]: j["articulation"]["axe"] for g in ("jambes", "bras", "taille", "nuque") for j in jo[g]}
     masse_totale = C.evaluer_configuration(H, True)["masse"]
     v3 = cfg["hypothese_v3"]["haut_du_corps"]
@@ -79,7 +112,7 @@ def construire(H: float | None = None) -> dict:
             if par not in sq["segments"]:                       # parent = une articulation
                 pa = next(x for x in sq["articulations"] if x["nom"] == par)
                 par = f"{c}_{par}" if (c and pa.get("cote")) else par
-            pos = [longueur(a["position"].get(k), R, H) for k in "xyz"]
+            pos = [longueur(a["position"].get(k), R, H, EC) for k in "xyz"]
             if c == "right":
                 pos[1] = -pos[1]
             ax = {"x": [1, 0, 0], "y": [0, 1, 0], "z": [0, 0, 1]}[a.get("axe") or axes[a["nom"]]]
@@ -107,7 +140,7 @@ def construire(H: float | None = None) -> dict:
         for c in (list(COTES) if double else [None]):
             segs[f"{c}_{nom}" if c else nom] = dict(base=nom, spec=s, cote=c,
                                                    masse=m_struct * frac + (charge if s.get("porte_charge_utile") else 0.0))
-    return dict(H=H, arts=arts, segs=segs, R=R, cat=cat, masse_totale=masse_totale,
+    return dict(H=H, arts=arts, segs=segs, R=R, cat=cat, ecarts=EC, masse_totale=masse_totale,
                 m_act=m_act, m_sup=m_sup, m_struct=m_struct, charge=charge, sup_rs02=sup_rs02)
 
 
@@ -126,8 +159,9 @@ def mjcf(sq: dict) -> str:
             L, r = longueur(sp["longueur"], R, H), longueur(sp["rayon"], R, H)
             return f'<geom type="capsule" fromto="0 0 0 0 0 {f(-L)}" size="{f(r)}" mass="{f(m)}" rgba=".75 .75 .8 1"/>'
         d = {k: longueur(sp["dims"][k], R, H) for k in "xyz"}
+        # pied : semelle posée au sol, sous l'axe du roulis (écart ANSUR, squelette.yaml)
         cz = {"tronc": d["z"] / 2, "tete": d["z"] / 2, "main": -d["z"] / 2,
-              "pied": -longueur({"cheville_hauteur": 0.75}, R, H)}.get(s["base"], 0.0)
+              "pied": -sq["ecarts"]["hauteur_axe_roulis"] + d["z"] / 2}.get(s["base"], 0.0)
         cx = longueur({"pied_longueur": 0.25}, R, H) if s["base"] == "pied" else 0.0
         return (f'<geom type="box" pos="{f(cx)} 0 {f(cz)}" size="{f(d["x"]/2)} {f(d["y"]/2)} {f(d["z"]/2)}" '
                 f'mass="{f(m)}" rgba=".75 .75 .8 1"/>')
@@ -155,7 +189,11 @@ def mjcf(sq: dict) -> str:
         lignes.append(f"{ind}</body>")
         return lignes
 
-    z0 = longueur({"hauteur_hanche": 1.0, "cheville_hauteur": 0.5}, R, H)
+    # bassin : hanche (0,5 cheville_hauteur sous le bassin), cuisse, tibia, puis
+    # les deux écarts de la cheville à la place de `cheville_hauteur` (ANSUR)
+    ec = sq["ecarts"]
+    z0 = (longueur({"cuisse": 1.0, "tibia": 1.0, "cheville_hauteur": 0.5}, R, H)
+          + ec["decalage_tangage_roulis"] + ec["hauteur_axe_roulis"])
     corps_lignes = []
     for e in enfants.get("bassin", []):
         corps_lignes += corps(e, "      ")
@@ -208,6 +246,11 @@ def main(argv=None) -> int:
           f" = actionneurs {sq['m_act']:.3f} + supplément RS02 {sq['m_sup']:.3f} + charge utile {sq['charge']:.3f}"
           f" + structure {sq['m_struct']:.3f}")
     print(f"  -> {xml.relative_to(REPO)}")
+    ec, ch = sq["ecarts"], longueur({"cheville_hauteur": 1.0}, sq["R"], sq["H"])
+    allong = ec["decalage_tangage_roulis"] + ec["hauteur_axe_roulis"] - ch
+    print(f"  écart ANSUR à la cheville : tangage -> roulis {ec['decalage_tangage_roulis']*1000:.1f} mm, "
+          f"axe du roulis à {ec['hauteur_axe_roulis']*1000:.1f} mm du sol (ANSUR : {ch*1000:.1f} mm, axes confondus) ; "
+          f"jambe allongée de {allong*1000:.1f} mm, hauteur {sq['H'] + allong:.3f} m au lieu de {sq['H']} m")
     print("| Articulation | Actionneur | Segment porté | Longueur (m) |")
     print("| --- | --- | --- | ---: |")
     for x in sq["arts"]:

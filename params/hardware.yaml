@@ -292,7 +292,16 @@ matieres:
     masse_surfacique: null
 
   alu_tole_3:
-    densite: null            # se déduira de masse_surfacique / epaisseur
+    # MODIFIÉ le 2026-10-03 : était null. mg/mm3 (= g/cm3). L'alliage des tôles
+    # de l'opérateur est À CONFIRMER : la plus haute des deux valeurs lues
+    # (fiche 0064, la plus prudente pour une masse). LITTÉRATURE, non mesurée.
+    densite: 2.70
+    densite_source: >
+      GLEICH Aluminium, fiches techniques « AL rolled plates » EN AW-6082 T651
+      (2,70 g/cm3, datée du 03.05.2024) et EN AW-5754 H111 (2,67 g/cm3, datée
+      du 18.10.2023), lues le 2026-10-03 (params/fournisseurs.yaml :
+      gleich_en_aw_6082, gleich_en_aw_5754). Les fiches Reynolds (déjà au
+      registre) étaient inaccessibles ce jour-là.
     materiau: aluminium
     forme: tole
     epaisseur: 3.0

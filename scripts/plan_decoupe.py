@@ -331,3 +331,105 @@ def svg_schema(contours, cotes, largeur_px=560, valeurs=None) -> str:
     o.append("".join(lignes_txt))
     o.append("</svg>")
     return "".join(o)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  PLANCHES A4 — plusieurs pièces, plusieurs feuilles, un seul PDF
+# ═══════════════════════════════════════════════════════════════════════
+#
+#  Ajouté le 2026-10-03 (jambe basse en carton). `ecrire_plan_a4` pose UNE
+#  pièce sous un bandeau de 52 mm : une plaque de tibia de 201 mm n'y tient
+#  pas. Ici le bandeau est réduit, chaque feuille porte son réglet de
+#  100 mm, et la zone utile est publiée (ZONE_PLANCHE) pour que l'appelant
+#  range ses pièces dedans. Les traits sont des traits de COUPE ; les croix
+#  de pointage sont des segments ouverts, plus fins, et la légende le dit.
+
+MARGE_PLANCHE = 10.0                    # mm, bord de feuille
+BANDEAU_PLANCHE = 38.0                  # mm, titre + 2 lignes d'information
+PIED_PLANCHE = 36.0                     # mm, réglet et sa légende
+ZONE_PLANCHE = (A4_L - 2 * MARGE_PLANCHE,
+                A4_H - 2 * MARGE_PLANCHE - BANDEAU_PLANCHE - PIED_PLANCHE)
+
+
+def ecrire_planches_a4(feuilles, chemin, titre, lignes_info):
+    """Un PDF de N pages A4. `feuilles` : liste de dict
+
+        traits      polylignes fermées, à COUPER (mm, origine en bas à gauche
+                    de la zone utile, ZONE_PLANCHE)
+        croix       segments [(x1, y1), (x2, y2)] : à POINTER puis percer
+        etiquettes  [(x, y, texte)]
+
+    Lève si un point sort de la zone utile : une pièce rognée à l'impression
+    serait une pièce fausse sans que rien ne le signale.
+    """
+    zx0, zy0 = MARGE_PLANCHE, MARGE_PLANCHE + PIED_PLANCHE
+    zl, zh = ZONE_PLANCHE
+    pages = []
+    n = len(feuilles)
+    for k, f in enumerate(feuilles, 1):
+        for c in f.get("traits", []) + f.get("croix", []):
+            for x, y in c:
+                if not (-1e-6 <= x <= zl + 1e-6 and -1e-6 <= y <= zh + 1e-6):
+                    raise ValueError(f"feuille {k} : point ({x:.1f}, {y:.1f}) hors de la zone "
+                                     f"utile {zl:.0f} x {zh:.0f} mm")
+        ops = ["1 J 1 j"]
+
+        def txt(x, y, s, taille=9):
+            ops.append("BT /F1 %.1f Tf %.4f %.4f Td (%s) Tj ET"
+                       % (taille, x * MM, y * MM, _echap(s)))
+
+        ops.append("0 0 0 RG 0.6 w")
+        for c in f.get("traits", []):
+            ops.append(f"{(c[0][0]+zx0)*MM:.4f} {(c[0][1]+zy0)*MM:.4f} m")
+            for x, y in c[1:]:
+                ops.append(f"{(x+zx0)*MM:.4f} {(y+zy0)*MM:.4f} l")
+            ops.append("h S")
+        ops.append("0.35 w")
+        for (x1, y1), (x2, y2) in f.get("croix", []):
+            ops.append(f"{(x1+zx0)*MM:.4f} {(y1+zy0)*MM:.4f} m {(x2+zx0)*MM:.4f} {(y2+zy0)*MM:.4f} l S")
+        for x, y, s in f.get("etiquettes", []):
+            txt(x + zx0, y + zy0, s, 6.5)
+        # réglet de contrôle, 100 mm, comme ecrire_plan_a4
+        y0 = MARGE_PLANCHE + 20
+        x0 = (A4_L - 100.0) / 2
+        ops.append("0.4 w")
+        ops.append(f"{x0*MM:.4f} {y0*MM:.4f} m {(x0+100)*MM:.4f} {y0*MM:.4f} l S")
+        for i in range(11):
+            h = 4.0 if i % 5 == 0 else 2.0
+            x = x0 + i * 10.0
+            ops.append(f"{x*MM:.4f} {y0*MM:.4f} m {x*MM:.4f} {(y0+h)*MM:.4f} l S")
+        txt(x0, y0 - 7, "REGLET DE CONTROLE — doit mesurer exactement 100,0 mm ; "
+            "sinon reimprimer a 100 %", 7.5)
+        txt(x0, y0 - 14, "Trait plein : couper.  Croix : pointer, puis percer au foret.", 7.5)
+        txt(MARGE_PLANCHE, A4_H - MARGE_PLANCHE - 6, f"{titre} — feuille {k}/{n}", 12)
+        y = A4_H - MARGE_PLANCHE - 17
+        for l in lignes_info:
+            txt(MARGE_PLANCHE, y, l, 7.5)
+            y -= 8.5
+        pages.append(zlib.compress(_latin("\n".join(ops))))
+
+    # objets : 1 catalogue, 2 pages, 3 police, puis (page, contenu) par feuille
+    objs = [b"<< /Type /Catalog /Pages 2 0 R >>",
+            b"<< /Type /Pages /Kids [%s] /Count %d >>"
+            % (b" ".join(b"%d 0 R" % (4 + 2 * i) for i in range(n)), n),
+            b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"]
+    for i, flux in enumerate(pages):
+        objs.append(b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.4f %.4f] "
+                    b"/Resources << /Font << /F1 3 0 R >> >> /Contents %d 0 R >>"
+                    % (A4_L * MM, A4_H * MM, 5 + 2 * i))
+        objs.append(b"<< /Length %d /Filter /FlateDecode >>\nstream\n" % len(flux)
+                    + flux + b"\nendstream")
+    out = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
+    pos = []
+    for i, o in enumerate(objs, 1):
+        pos.append(len(out))
+        out += b"%d 0 obj\n" % i + o + b"\nendobj\n"
+    xref = len(out)
+    out += b"xref\n0 %d\n0000000000 65535 f \n" % (len(objs) + 1)
+    for p in pos:
+        out += b"%010d 00000 n \n" % p
+    out += (b"trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n"
+            % (len(objs) + 1, xref))
+    Path(chemin).parent.mkdir(parents=True, exist_ok=True)
+    Path(chemin).write_bytes(bytes(out))
+    return n
