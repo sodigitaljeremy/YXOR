@@ -732,13 +732,18 @@ def main(argv=None) -> int:
                     for grp in pl.groupes:
                         m_seg[grp] = m_seg.get(grp, 0) + pl.solide.volume * dens / 1000
             bilan["masse"] = (m, m_seg)
-            sq = SQ.construire()
-            part = sq["segs"]["left_tibia"]["masse"] + sq["segs"]["left_pied"]["masse"]
             print(f"     masse des plaques (densité {dens} g/cm³) : {m:.0f} g par jambe basse — "
                   + ", ".join(f"{k} {v:.0f} g" for k, v in m_seg.items()))
-            print(f"     part du modèle de S pour le tibia et le pied (Winter × structure "
-                  f"{sq['m_struct']:.3f} kg) : {part * 1000:.0f} g ; rapport {m / (part * 1000):.1f}")
-            bilan["part"] = part * 1000
+            import analyser_marche as AM
+            if not AM.SERIE.exists():
+                # construction Docker : exports/ n'y est pas ; le DIRE plutôt que planter
+                print(f"     comparaison au modèle de S SAUTÉE : série de marche absente ({AM.SERIE.name})")
+            else:
+                sq = SQ.construire()
+                part = sq["segs"]["left_tibia"]["masse"] + sq["segs"]["left_pied"]["masse"]
+                print(f"     part du modèle de S pour le tibia et le pied (Winter × structure "
+                      f"{sq['m_struct']:.3f} kg) : {part * 1000:.0f} g ; rapport {m / (part * 1000):.1f}")
+                bilan["part"] = part * 1000
         if a.collisions:
             t0 = time.time()
             res = balayer(solides, G, butees)
