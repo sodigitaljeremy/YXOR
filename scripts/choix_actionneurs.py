@@ -357,10 +357,14 @@ def doc(r: dict, r_rep: dict | None, masses: list, date: str, vb: dict | None = 
       f"{f(r['H'])} m visée**. Cette grille en vérifie la condition (a).\n")
     A("---\n")
     if conf:
-        A("## 0 — Configuration retenue (fiche 0067) : RS02 au roulis et au tangage de hanche et au genou, RS00 ailleurs\n")
+        A("## 0 — Configuration retenue (fiches 0067 et 0068) : RS02 au roulis et au tangage de hanche et au genou, "
+          "RS00 au lacet de hanche et à la cheville ; 5 axes par jambe\n")
+        ec = D.besoins_ecartes(AM.analyser(AM.SERIE))
         A("Répartition lue dans `params/configuration_S.yaml`. v1 : buste fixe. v3 : HYPOTHÈSE de haut du corps "
           "(masse seulement ; couple des bras non vérifié). Supplément de structure des logements RS02 : "
-          "hypothèse, compté dans la masse.\n")
+          "hypothèse, compté dans la masse. "
+          + (f"**Besoins écartés** de la marche de référence (fiche 0068) : {', '.join(ec)} ; leur effort "
+             "n'est reporté sur aucun autre axe (hypothèse non vérifiée).\n" if ec else "\n"))
         A("| Version | H | Masse | T1 | T2 | T4 | T5 | H_max prudent | Limitante | Actionneurs (CHF HT) |")
         A("| --- | ---: | ---: | :-: | :-: | :-: | :-: | ---: | --- | ---: |")
         for c in conf:
@@ -498,6 +502,9 @@ def main(argv=None) -> int:
     echec = any(rs["v"][k] == "FAIL" for k in ("T1", "T2", "T5"))
     r_rep = evaluer(H_rep, cu["valeur_kg"]) if echec and H_rep else None
     print(f"  H_S = {H} m, charge {cu['valeur_kg']} kg, marge {r['marge']}, k_bas {r['kb']:.3f}")
+    ec = D.besoins_ecartes(AM.analyser(AM.SERIE))
+    if ec:
+        print(f"  besoins ÉCARTÉS de la marche de référence (fiche 0068) : {', '.join(ec)} — effort non reporté (hypothèse)")
     for x in r["lignes"]:
         print(f"  {x['nom'][:44]:44s} " + " ".join(f"{k}:{x['v'][k][:4]:4s}" for k in CODES + APPRO))
     for c_, m, v in masses:
@@ -508,7 +515,7 @@ def main(argv=None) -> int:
     print(f"  banc, critère du § 4 : {vb['verdict'] or 'aucune mesure au blocage du RS00, pas de verdict'}")
     conf = [evaluer_configuration(h_, v3) for h_ in (H, H_rep) for v3 in (False, True)]
     for c in conf:
-        print(f"  configuration retenue (0067), {'v3' if c['v3'] else 'v1'} à {c['H']} m : masse {c['masse']:.2f} kg, "
+        print(f"  configuration retenue (0067, 0068), {'v3' if c['v3'] else 'v1'} à {c['H']} m : masse {c['masse']:.2f} kg, "
               + ", ".join(f"{k} {c['v'][k]}" for k in ("T1", "T2", "T4", "T5"))
               + f", H_max {c['H_max']:.3f} m ({', '.join(c['limitantes'])}), {c['cout']:.0f} CHF HT")
     if a.ecrire:

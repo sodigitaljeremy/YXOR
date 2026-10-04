@@ -55,7 +55,7 @@ symetrie:
   verifie_par: scripts/import_upstream_limits.py
   verifie_le: 2026-09-28
 
-jambes:          # 6 DDL par jambe
+jambes:          # 5 DDL par jambe (fiche 0068 : ankle_roll retiré de S, 2026-10-04)
   - nom: hip_yaw
     fonction: >
       Rotation de la jambe autour de son axe vertical : oriente le pied vers l'intérieur ou l'extérieur.
@@ -198,36 +198,6 @@ jambes:          # 6 DDL par jambe
         Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
         NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
         Onshape ponctuellement (fiche 0007) et consigner la date.
-  - nom: ankle_roll
-    fonction: >
-      Bascule latérale du pied ; encaisse les défauts de planéité du sol.
-    articulation:
-      axe: x
-      sens: +1
-      min: -70.0
-      max: 70.0
-      source: upstream_joints.generated.yaml#articulations/left_ankle_roll
-    actionnement:
-      moteurs: [left_ankle_roll]
-      transmission: directe
-      rapport: 1.0
-      source: upstream_joints.generated.yaml#actionneurs/left_ankle_roll
-    recoupement:
-      methode: null
-      resultat: sans_objet   # moteur et articulation confondus
-    modele:
-      representation: articulation_directe
-      source: "MJCF toddlerbot_2xc.xml @ e337f3b1"
-    materiel:
-      transmission: directe
-      version: "ToddlerBot 2.0.0"
-      confiance: deduite_du_modele
-      source: null
-      note: >
-        Aucune source matérielle. La doc amont ne décrit pas ce mécanisme.
-        NE PAS dessiner de support moteur sur la foi de ce bloc : ouvrir
-        Onshape ponctuellement (fiche 0007) et consigner la date.
-
 bras:          # 7 DDL par bras
   - nom: shoulder_pitch
     fonction: >
@@ -566,6 +536,19 @@ nuque:          # 2 DDL
         Onshape ponctuellement (fiche 0007) et consigner la date.
 
 # Total : 6×2 + 7×2 + 2 + 2 = 30 DDL actifs.
+
+# ── Articulations du MODÈLE AMONT que YXOR ne retient pas ─────────────────
+# Ajouté le 2026-10-04 (fiche 0068, décision de Jeremy). Elles existent dans
+# le MJCF de ToddlerBot et dans sa marche de référence, pas dans S. Le
+# contrôle des noms (scripts/controle_articulations.py) les retire de la
+# comparaison avec le MJCF ET LES ANNONCE ; le dimensionnement écarte leurs
+# besoins (dimensionnement.besoins_ecartes) et le dit.
+amont_non_retenus:
+  - nom: ankle_roll
+    moteurs: [left_ankle_roll]
+    articulation: left_ankle_roll
+    fiche: 0068
+    motif: "5 axes par jambe : masse faible au bout de la jambe (Jeremy, 2026-10-04)"
 
 particularites:
   elbow_roll: >

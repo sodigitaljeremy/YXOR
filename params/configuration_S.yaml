@@ -16,7 +16,7 @@ jambes:
   knee: rs02
   hip_yaw_drive: rs00
   ankle_pitch: rs00
-  ankle_roll: rs00
+  # ankle_roll : retiré le 2026-10-04 (fiche 0068, 5 axes par jambe)
 
 # HYPOTHÈSE de la v3, marquée comme telle dans la fiche 0067 : haut du corps
 # en RS05 (bras 2 × 3, poignets 2 × 2, cou 2, taille 2, pinces 2), tâches des

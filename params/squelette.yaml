@@ -1,4 +1,4 @@
-# Squelette de YXOR S, version v3 (28 DDL) — lu par scripts/squelette.py
+# Squelette de YXOR S, version v3 (26 DDL depuis la fiche 0068) — lu par scripts/squelette.py
 #
 # Créé le 2026-10-03. Intention de Jeremy (2026-10-02, ses mots) : « je veux
 # absolument que l'on passe à la pratique et que l'on commence à modéliser
@@ -20,7 +20,7 @@
 # Aucune géométrie ToddlerBot : les corps du MJCF engendré sont des boîtes et
 # des cylindres simplifiés, dimensionnés par les ratios ANSUR.
 
-hypothese: "v3, 28 DDL — hypothèse de travail (2026-10-03), pas une décision"
+hypothese: "v3, 26 DDL (5 par jambe, fiche 0068) — hypothèse de travail (2026-10-03), pas une décision"
 
 # Corps (segments). `forme` : boite | capsule ; `dims` : ratios (× H_S).
 # `masse_winter` : fraction de masse de structure (params/anthropometry.yaml,
@@ -49,9 +49,8 @@ articulations:
   - {nom: hip_roll,    parent: hip_yaw,    position: {},                                                      actionneur: {config: hip_roll}, cote: true}
   - {nom: hip_pitch,   parent: hip_roll,   position: {}, vers: cuisse,                                        actionneur: {config: hip_pitch}, cote: true}
   - {nom: knee,        parent: hip_pitch,  position: {z: {cuisse: -1.0}}, vers: tibia,                        actionneur: {config: knee}, cote: true}
-  - {nom: ankle_pitch, parent: knee,       position: {z: {tibia: -1.0}},                                      actionneur: {config: ankle_pitch}, cote: true}
-  # Écart ANSUR (bloc `ecarts_ansur.cheville` ci-dessous) : roulis SOUS le tangage.
-  - {nom: ankle_roll,  parent: ankle_pitch, position: {z: {ecart.decalage_tangage_roulis: -1.0}}, vers: pied, actionneur: {config: ankle_roll}, cote: true}
+  # ankle_roll RETIRÉ le 2026-10-04 (fiche 0068) : 5 axes par jambe.
+  - {nom: ankle_pitch, parent: knee,       position: {z: {tibia: -1.0}}, vers: pied,                          actionneur: {config: ankle_pitch}, cote: true}
   # ── taille (2) ────────────────────────────────────────────────────────
   - {nom: waist_yaw,   parent: bassin,     position: {z: {cheville_hauteur: 0.5}},                            actionneur: {v3: true}}
   - {nom: waist_roll,  parent: waist_yaw,  position: {}, vers: tronc,                                         actionneur: {v3: true}}
@@ -85,27 +84,28 @@ articulations:
 # règle 2), de l'épaisseur des plaques (params/hardware.yaml) et d'un jeu.
 # ═════════════════════════════════════════════════════════════════════════
 ecarts_ansur:
+  # MODIFIÉ le 2026-10-04 (fiche 0068, cheville sans roulis). Le bloc du
+  # 2026-10-03 décalait le roulis de 66 mm sous le tangage ; il n'y a plus de
+  # roulis. Restent deux écarts, chacun avec sa raison.
   cheville:
-    remplace: "ankle_pitch et ankle_roll au même point, à `cheville_hauteur` du sol"
-    raison: "encombrement des deux RS00 (fiche 0067) : ils ne peuvent pas partager un point"
+    remplace: "axe de cheville à `cheville_hauteur` du sol (24 mm à 0,60 m)"
+    raison: "encombrement du RS00 du tangage : la plaque du tibia qui le tient tourne au-dessus de la semelle"
     actionneur: rs00
-    # Motif par lequel la liaison tient le STATOR de chaque RS00 : l'arrière
-    # (4 × M3 sur Ø38). La face avant porte la sortie ET la fixation du boîtier
-    # (STEP officiel, lu le 2026-10-03) ; y fixer le stator demanderait une
-    # ouverture pour la sortie. Corrigé le 2026-10-03 : c'était fixation_boitier.
+    # Le tibia tient le STATOR par l'arrière (4 × M3 sur Ø38, STEP officiel) ;
+    # sa plaque extérieure a une ouverture pour l'entretoise de sortie.
     motif_stator: arriere
-    # La liaison de cheville (parts/jambe_basse.py) met une plaque horizontale
-    # entre les deux moteurs ; les plaques sont celles du réglage le PLUS ÉPAIS
-    # de cette liste, pour que la même cinématique serve à tous.
+    # La même cinématique pour tous ces réglages : épaisseur la plus forte.
     reglages: [cutter_cartonplume_5, operateur_cn_alu_3]
     jeu_mm:
       valeur: 2.0
       statut: "PROPOSÉ (Claude, 2026-10-03), choix de projet"
       motif: "jeu de fonctionnement entre une pièce fixe et une pièce mobile ; supérieur à la tolérance de contour déclarée par l'opérateur CN (± 0,5 mm)"
-    # Les deux écarts, tels que les calcule le code :
-    #   decalage_tangage_roulis = D_RS00 + 2 jeu + e_max
-    #       (moteur du tangage, jeu, plaque, jeu, moteur du roulis)
-    #   hauteur_axe_roulis = e_max + jeu + r_plaque_stator
-    #       (semelle, jeu, puis la plaque qui porte le moteur du roulis :
-    #        rayon du cercle de fixation + demi-passage de vis + voile)
-    # À H = 0,60 m, la jambe s'allonge de leur somme, moins `cheville_hauteur`.
+    # Calculé par scripts/squelette.py (ecarts_cheville) :
+    #   hauteur_axe_cheville = e_max + jeu + r_plaque_tibia
+    #   r_plaque_tibia = max(rayon du RS00 ; motif_stator + demi-passage + voile ;
+    #                        entretoise de sortie + jeu + voile)
+  pied_largeur:
+    remplace: "largeur du pied `pied_largeur` (34,6 mm à 0,60 m)"
+    raison: "la chape du pied enjambe le tibia (comme celle du genou) : ses deux montants sont à l'extérieur des plaques du tibia"
+    # Calculé par scripts/squelette.py : 2 × (montant extérieur + jeu + voile),
+    # à l'épaisseur la plus forte des réglages ci-dessus.

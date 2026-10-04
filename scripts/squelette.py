@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Squelette de YXOR S (v3, 28 DDL) : un MJCF minimal engendré depuis params/.
+"""Squelette de YXOR S (v3, 26 DDL depuis la fiche 0068) : un MJCF minimal engendré depuis params/.
 
     .venv/bin/python scripts/squelette.py            # MJCF + tableau
     .venv/bin/python scripts/squelette.py --rendu    # + image de contrôle (EGL, hors écran)
@@ -61,29 +61,36 @@ def longueur(expr: dict, ratios: dict, H: float, ecarts: dict | None = None) -> 
 
 
 def ecarts_cheville() -> dict:
-    """Les écarts ANSUR de la cheville (params/squelette.yaml, ecarts_ansur), en mètres.
+    """Les écarts ANSUR de la cheville et du pied (params/squelette.yaml, ecarts_ansur), en mètres.
 
-    decalage_tangage_roulis = D_RS00 + 2 jeu + e_max : moteur, jeu, plaque, jeu, moteur.
-    hauteur_axe_roulis = e_max + jeu + r_plaque : semelle, jeu, plaque du stator du roulis,
-    r_plaque = max(rayon du moteur, rayon du motif `motif_stator` + demi-passage de vis + voile) (le plus fort
-    des voiles déclarés par ces réglages). Ajouté le 2026-10-03 (PROPOSÉ).
+    MODIFIÉ le 2026-10-04 (fiche 0068, cheville sans roulis). Le tibia tient le
+    stator du RS00 du tangage ; la chape du pied (sortie) l'enjambe :
+      r_plaque_tibia = max(R0 ; motif_stator + demi-passage + voile ;
+                           entretoise de sortie + jeu + voile)
+      hauteur_axe_cheville = e_max + jeu + r_plaque_tibia
+      largeur_pied = 2 × (face extérieure du montant + rayon rentrant + voile)
+    à l'épaisseur la plus forte des réglages listés.
     """
     import procedes as PROC
-    ec = lire("squelette.yaml")["ecarts_ansur"]["cheville"]
+    ea = lire("squelette.yaml")["ecarts_ansur"]
+    ec = ea["cheville"]
     cm = D.charger_catalogue()["candidats"][ec["actionneur"]]["cotes_montage"]
     hw = PROC.charger()
     regs = [PROC.reglage(r, hw) for r in ec["reglages"]]
     e_max = max(r["epaisseur"] for r in regs)
+    r_rent = max(PROC.rayon_interieur_min(r["epaisseur"], r.get("rayon_interieur_min_machine")) for r in regs)
     voiles = [r["voile_min"] for r in regs if r.get("voile_min") is not None]
     if not voiles:
         raise ValueError("aucun voile minimal déclaré pour les réglages de la cheville")
-    jeu = ec["jeu_mm"]["valeur"]
-    fx = cm[ec["motif_stator"]]
-    r_plaque = max(cm["diametre_corps"] / 2,
-                   fx["diametre_percage"] / 2 + hw["vis"][fx["vis"]]["passage"] / 2 + max(voiles))
-    return dict(decalage_tangage_roulis=(cm["diametre_corps"] + 2 * jeu + e_max) / 1000,
-                hauteur_axe_roulis=(e_max + jeu + r_plaque) / 1000,
-                e_max_mm=e_max, jeu_mm=jeu, r_plaque_mm=r_plaque, voile_mm=max(voiles))
+    v, jeu = max(voiles), ec["jeu_mm"]["valeur"]
+    pas = lambda m: cm[m]["diametre_percage"] / 2 + hw["vis"][cm[m]["vis"]]["passage"] / 2 + v
+    r_sortie = pas("sortie")                                     # entretoise et montant sur la sortie
+    R0, L0 = cm["diametre_corps"] / 2, D.val(cm["longueur"])
+    r_plaque = max(R0, pas(ec["motif_stator"]), r_sortie + jeu + v)
+    y_montant = L0 / 2 + 2 * jeu + 2 * e_max                     # face extérieure du montant extérieur
+    largeur = 2 * (y_montant + r_rent + v)
+    return dict(hauteur_axe_cheville=(e_max + jeu + r_plaque) / 1000, largeur_pied=largeur / 1000,
+                e_max_mm=e_max, jeu_mm=jeu, r_plaque_mm=r_plaque, r_sortie_mm=r_sortie, voile_mm=v)
 
 
 def construire(H: float | None = None) -> dict:
@@ -161,7 +168,9 @@ def mjcf(sq: dict) -> str:
         d = {k: longueur(sp["dims"][k], R, H) for k in "xyz"}
         # pied : semelle posée au sol, sous l'axe du roulis (écart ANSUR, squelette.yaml)
         cz = {"tronc": d["z"] / 2, "tete": d["z"] / 2, "main": -d["z"] / 2,
-              "pied": -sq["ecarts"]["hauteur_axe_roulis"] + d["z"] / 2}.get(s["base"], 0.0)
+              "pied": -sq["ecarts"]["hauteur_axe_cheville"] + d["z"] / 2}.get(s["base"], 0.0)
+        if s["base"] == "pied":                    # écart ANSUR : la chape du pied enjambe le tibia
+            d["y"] = sq["ecarts"]["largeur_pied"]
         cx = longueur({"pied_longueur": 0.25}, R, H) if s["base"] == "pied" else 0.0
         return (f'<geom type="box" pos="{f(cx)} 0 {f(cz)}" size="{f(d["x"]/2)} {f(d["y"]/2)} {f(d["z"]/2)}" '
                 f'mass="{f(m)}" rgba=".75 .75 .8 1"/>')
@@ -193,7 +202,7 @@ def mjcf(sq: dict) -> str:
     # les deux écarts de la cheville à la place de `cheville_hauteur` (ANSUR)
     ec = sq["ecarts"]
     z0 = (longueur({"cuisse": 1.0, "tibia": 1.0, "cheville_hauteur": 0.5}, R, H)
-          + ec["decalage_tangage_roulis"] + ec["hauteur_axe_roulis"])
+          + ec["hauteur_axe_cheville"])
     corps_lignes = []
     for e in enfants.get("bassin", []):
         corps_lignes += corps(e, "      ")
@@ -247,10 +256,10 @@ def main(argv=None) -> int:
           f" + structure {sq['m_struct']:.3f}")
     print(f"  -> {xml.relative_to(REPO)}")
     ec, ch = sq["ecarts"], longueur({"cheville_hauteur": 1.0}, sq["R"], sq["H"])
-    allong = ec["decalage_tangage_roulis"] + ec["hauteur_axe_roulis"] - ch
-    print(f"  écart ANSUR à la cheville : tangage -> roulis {ec['decalage_tangage_roulis']*1000:.1f} mm, "
-          f"axe du roulis à {ec['hauteur_axe_roulis']*1000:.1f} mm du sol (ANSUR : {ch*1000:.1f} mm, axes confondus) ; "
-          f"jambe allongée de {allong*1000:.1f} mm, hauteur {sq['H'] + allong:.3f} m au lieu de {sq['H']} m")
+    allong = ec["hauteur_axe_cheville"] - ch
+    print(f"  écart ANSUR à la cheville : axe à {ec['hauteur_axe_cheville']*1000:.1f} mm du sol (ANSUR : {ch*1000:.1f} mm) ; "
+          f"jambe allongée de {allong*1000:.1f} mm, hauteur {sq['H'] + allong:.3f} m au lieu de {sq['H']} m ; "
+          f"pied large de {ec['largeur_pied']*1000:.1f} mm (ANSUR {longueur({'pied_largeur': 1.0}, sq['R'], sq['H'])*1000:.1f})")
     print("| Articulation | Actionneur | Segment porté | Longueur (m) |")
     print("| --- | --- | --- | ---: |")
     for x in sq["arts"]:

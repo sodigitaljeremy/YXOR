@@ -29,9 +29,15 @@ class ConfigurationS(unittest.TestCase):
             with self.subTest(v3=v3):
                 self.assertTrue(tient(C.evaluer_configuration(self.H, v3), self.H))
 
-    def test_rs00_au_roulis_de_hanche_tombe_en_v3(self):
+    def test_rs00_au_roulis_de_hanche_limite_la_v3(self):
+        # Jusqu'au 2026-10-03 la v3 TOMBAIT à 0,60 m avec un RS00 au roulis de
+        # hanche. Sans roulis de cheville (fiche 0068, 2 RS00 de moins), elle
+        # tient tout juste (H_max 0,603 m) : le roulis de hanche devient
+        # limitant, et B garde 8 cm de marge de plus.
         j = dict(C.lire(C.CONFIG)["jambes"], hip_roll="rs00")
-        self.assertFalse(tient(C.evaluer_configuration(self.H, True, j), self.H))
+        a, b = C.evaluer_configuration(self.H, True, j), C.evaluer_configuration(self.H, True)
+        self.assertEqual(a["limitantes"], ["hip_roll"])
+        self.assertGreater(b["H_max"] - a["H_max"], 0.05)
 
 
 if __name__ == "__main__":

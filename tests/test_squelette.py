@@ -1,4 +1,4 @@
-"""Le squelette de S (v3) se charge dans MuJoCo, compte 28 articulations et pèse la masse du modèle de S.
+"""Le squelette de S (v3) se charge dans MuJoCo, compte 26 articulations (5 par jambe, fiche 0068) et pèse la masse du modèle de S.
 
     .venv/bin/python -m unittest tests.test_squelette -v
 
@@ -25,7 +25,7 @@ class Squelette(unittest.TestCase):
 
     def test_28_articulations(self):
         charnieres = [i for i in range(self.m.njnt) if self.m.jnt_type[i] == self.mujoco.mjtJoint.mjJNT_HINGE]
-        self.assertEqual(len(charnieres), 28)
+        self.assertEqual(len(charnieres), 26)
 
     def test_masse_du_modele_de_S(self):
         self.assertAlmostEqual(sum(self.m.body_mass), self.sq["masse_totale"], delta=0.01 * self.sq["masse_totale"])

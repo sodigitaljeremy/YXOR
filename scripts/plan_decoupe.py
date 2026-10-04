@@ -345,8 +345,10 @@ def svg_schema(contours, cotes, largeur_px=560, valeurs=None) -> str:
 #  de pointage sont des segments ouverts, plus fins, et la légende le dit.
 
 MARGE_PLANCHE = 10.0                    # mm, bord de feuille
-BANDEAU_PLANCHE = 38.0                  # mm, titre + 2 lignes d'information
-PIED_PLANCHE = 36.0                     # mm, réglet et sa légende
+# Resserrés le 2026-10-04 : la plaque de tibia de la cheville sans roulis
+# (fiche 0068) mesure 209,4 mm ; la zone utile passe de 203 à 215 mm.
+BANDEAU_PLANCHE = 32.0                  # mm, titre + 3 lignes d'information
+PIED_PLANCHE = 30.0                     # mm, réglet et sa légende
 ZONE_PLANCHE = (A4_L - 2 * MARGE_PLANCHE,
                 A4_H - 2 * MARGE_PLANCHE - BANDEAU_PLANCHE - PIED_PLANCHE)
 
@@ -402,10 +404,10 @@ def ecrire_planches_a4(feuilles, chemin, titre, lignes_info):
             "sinon reimprimer a 100 %", 7.5)
         txt(x0, y0 - 14, "Trait plein : couper.  Croix : pointer, puis percer au foret.", 7.5)
         txt(MARGE_PLANCHE, A4_H - MARGE_PLANCHE - 6, f"{titre} — feuille {k}/{n}", 12)
-        y = A4_H - MARGE_PLANCHE - 17
+        y = A4_H - MARGE_PLANCHE - 15
         for l in lignes_info:
             txt(MARGE_PLANCHE, y, l, 7.5)
-            y -= 8.5
+            y -= 7.5
         pages.append(zlib.compress(_latin("\n".join(ops))))
 
     # objets : 1 catalogue, 2 pages, 3 police, puis (page, contenu) par feuille

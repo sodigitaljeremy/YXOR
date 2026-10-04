@@ -51,8 +51,18 @@ def comparer(joints: dict, amont: dict, code: dict[str, list], serie: list | Non
     lignes, fautes = [], []
     mot = miroir([m for g in GROUPES for j in joints.get(g, []) for m in j["actionnement"]["moteurs"]])
     art = miroir([j["articulation"]["source"].split("/")[-1] for g in GROUPES for j in joints.get(g, [])])
-    u_act = {a["nom"] for a in amont.get("actionneurs", [])}
-    u_art = {a["nom"] for a in amont.get("articulations", [])}
+    # articulations amont que YXOR ne retient pas (fiche 0068) : retirées de la
+    # comparaison, et ANNONCÉES
+    nr = joints.get("amont_non_retenus") or []
+    nr_mot = miroir([m for x in nr for m in x["moteurs"]])
+    nr_art = miroir([x["articulation"] for x in nr])
+    u_act = {a["nom"] for a in amont.get("actionneurs", [])} - nr_mot
+    u_art = {a["nom"] for a in amont.get("articulations", [])} - nr_art
+    if nr:
+        lignes.append(f"amont non retenus : {len(nr_mot)} moteurs ({', '.join(sorted(nr_mot))}), fiche "
+                      + ", ".join(sorted({str(x['fiche']).zfill(4) for x in nr})))
+    for n in sorted(mot & nr_mot):
+        fautes.append(f"« {n} » est à la fois dans joints.yaml et dans amont_non_retenus")
     jambe = {sans_cote(m) for j in joints.get("jambes", []) for m in j["actionnement"]["moteurs"]}
     for titre, a, b in (("moteurs joints.yaml / actionneurs MJCF", mot, u_act),
                         ("articulations joints.yaml / articulations MJCF", art, u_art)):
@@ -76,7 +86,7 @@ def comparer(joints: dict, amont: dict, code: dict[str, list], serie: list | Non
     else:
         lignes.append(f"série de simulation : {len(serie)} actionneurs")
         for n in serie:
-            if n not in u_act:
+            if n not in u_act | nr_mot:
                 fautes.append(f"série de simulation : « {n} » absent du MJCF")
     return lignes, fautes
 

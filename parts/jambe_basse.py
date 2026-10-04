@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Jambe basse de S en plaques planes : pied, cheville (2 axes), tibia, genou.
+"""Jambe basse de S en plaques planes : pied, cheville (1 axe, fiche 0068), tibia, genou.
 
     .venv/bin/python parts/jambe_basse.py                 # pièces, DXF, plans A4, STEP, contrôles, masse
     .venv/bin/python parts/jambe_basse.py --collisions    # + balayage des butées (lent, ~1 min)
@@ -14,19 +14,16 @@ en 2D ».
  CE QUE LE CODE DESSINE (jambe GAUCHE ; x avant, y gauche, z haut)
 ═══════════════════════════════════════════════════════════════════════
 
-  pied        la semelle d'apprentissage à la taille S (parts/semelle_
-              apprentissage.py), plus deux MONTANTS (plaques ⟂ x) tenonnés
-              dans la semelle : l'avant boulonné sur la sortie du RS00 du
-              roulis, l'arrière en pivot sur l'axe.
-  cheville    la LIAISON à 90° : plaque A (⟂ y) qui porte le stator du RS00
-              du tangage, plaque B (⟂ x) qui porte celui du roulis, plaque C
-              (horizontale) entre les deux moteurs. A et B s'emboîtent dans
-              des ENCOCHES de C par des tenons.
+  pied        (fiche 0068 : cheville SANS roulis, 5 axes par jambe) une
+              semelle élargie (écart ANSUR du squelette) et une CHAPE qui
+              enjambe le tibia, comme celle du genou : une entretoise sur la
+              sortie du RS00, un montant extérieur boulonné dessus, un montant
+              intérieur en pivot, tous deux tenonnés dans la semelle.
   tibia       CAISSON : deux plaques latérales (⟂ y) et deux parois (⟂ x)
-              tenonnées dans des mortaises. La plaque extérieure est
-              boulonnée sur la sortie du RS00 du tangage en bas et porte la
-              bride du RS02 du genou en haut ; l'intérieure pivote sur les
-              deux axes.
+              tenonnées dans des mortaises. La plaque intérieure tient le
+              STATOR du RS00 de la cheville par l'arrière ; l'extérieure a une
+              ouverture pour sa sortie en bas et porte la bride du RS02 du
+              genou en haut.
   genou       la CHAPE du RS02 : une entretoise sur la sortie, une plaque
               avant boulonnée dessus, une plaque arrière en pivot, et un
               dessus tenonné qui recevra la cuisse.
@@ -59,10 +56,9 @@ qui laisse le tenon carré entrer à fond.
 
 FACES ET PHASES (lues le 2026-10-03 dans les STEP officiels, params/
 actionneurs.yaml) : la fixation du boîtier du RS00 est sur la face AVANT,
-avec la sortie ; la liaison tient donc chaque RS00 par l'ARRIÈRE (4 × M3 sur
-Ø38, `motif_stator` du squelette). Le RS02 se fixe par l'avant (9 × M3 sur
-Ø73). L'hypothèse du premier dessin (fixation du RS00 à l'arrière, phases à
-0°) était fausse. Les trous de centrage ne sont pas dessinés.
+avec la sortie ; le tibia tient donc le RS00 par l'ARRIÈRE (4 × M3 sur Ø38,
+`motif_stator` du squelette). Le RS02 se fixe par l'avant (9 × M3 sur Ø73).
+Les trous de centrage ne sont pas dessinés.
 
 Un trou plus petit que le minimum découpable du réglage n'est PAS découpé :
 il est MARQUÉ (calque POINTAGE du DXF, croix sur le plan A4), à pointer puis
@@ -214,11 +210,9 @@ def donnees(rid: str) -> dict:
     cat = lire("actionneurs.yaml")["candidats"]
     cfg = lire("configuration_S.yaml")["jambes"]
     m_cheville, m_genou = cfg["ankle_pitch"], cfg["knee"]
-    if cfg["ankle_roll"] != m_cheville:
-        raise ValueError("la liaison de cheville suppose le même actionneur au tangage et au roulis")
     return dict(rid=rid, reg=r, hw=hw, vis=hw["vis"], e=e, r=r_min, d_min=d_min,
                 v=ec["voile_mm"], j=ec["jeu_mm"], t=2 * ec["voile_mm"],
-                z_r=ec["hauteur_axe_roulis"] * 1000, dec=ec["decalage_tangage_roulis"] * 1000,
+                z_p=ec["hauteur_axe_cheville"] * 1000, W_pied=ec["largeur_pied"] * 1000,
                 T=SQ.longueur({"tibia": 1.0}, an["ratios"], H) * 1000, H=H,
                 c0=cat[m_cheville]["cotes_montage"], c2=cat[m_genou]["cotes_montage"],
                 m_cheville=m_cheville, m_genou=m_genou, cat=cat, ec=ec,
@@ -226,33 +220,26 @@ def donnees(rid: str) -> dict:
 
 
 def geometrie(g: dict) -> dict:
-    """Les grandeurs dérivées, en mm, nommées une fois."""
+    """Les grandeurs dérivées, en mm, nommées une fois. Cheville sans roulis (fiche 0068)."""
     e, j, v, r, t = g["e"], g["j"], g["v"], g["r"], g["t"]
     c0, c2, vis = g["c0"], g["c2"], g["vis"]
     L0, R0 = val(c0["longueur"]), c0["diametre_corps"] / 2
     L2, R2 = val(c2["longueur"]), c2["diametre_corps"] / 2
     Rb2 = (c2.get("diametre_bride") or c2["diametre_corps"]) / 2
-    z_r, z_p = g["z_r"], g["z_r"] + g["dec"]
+    z_p = g["z_p"]
     z_k = z_p + g["T"]
-    r_st = g["ec"]["r_plaque_mm"]                       # plaque de stator du RS00
-    r_so0 = rayon_motif(c0, "sortie", vis, v)            # plaque sur la sortie du RS00
+    r_so0 = rayon_motif(c0, "sortie", vis, v)            # entretoise et montant sur la sortie du RS00
     r_so2 = rayon_motif(c2, "sortie", vis, v)            # idem RS02
     r_br2 = rayon_motif(c2, "fixation_boitier", vis, v)  # plaque sous la bride du RS02
-    # C au milieu de l'espace entre les deux moteurs : en alu 3 mm, posée sur le
-    # roulis, elle rapprochait un tenon de B d'un trou de fixation (voile 5,3 mm)
-    C_bas = (z_r + z_p - e) / 2
-    # A et B : UN tenon central de largeur 2t. Deux tenons de largeur t laissaient
-    # 2 mm entre leurs dégagements, et ceux de A et de B se gênaient dans le coin
-    # de C (contrôle du voile, 2026-10-03).
-    p = t                                                # demi-largeur du tenon de A et de B
-    G = dict(L0=L0, R0=R0, L2=L2, R2=R2, Rb2=Rb2, z_r=z_r, z_p=z_p, z_k=z_k,
-             r_st=r_st, r_so0=r_so0, r_so2=r_so2, r_br2=r_br2, C_bas=C_bas, C_haut=C_bas + e, p=p,
+    G = dict(L0=L0, R0=R0, L2=L2, R2=R2, Rb2=Rb2, z_p=z_p, z_k=z_k,
+             r_tb=g["ec"]["r_plaque_mm"],               # bas des plaques du tibia, autour du tangage
+             r_so0=r_so0, r_so2=r_so2, r_br2=r_br2,
              rotor0=2 * r_so0, rotor2=2 * r_so2,
              y_te=L0 / 2 + j,                            # face intérieure de la plaque extérieure du tibia
-             y_ti=-L0 / 2 - e - j - e,                   # plaque intérieure du tibia : [y_ti, y_ti + e]
+             y_ti=-L0 / 2 - e,                           # plaque intérieure = plaque du STATOR du RS00
              h_dessus=max(r_br2, Rb2) + j)
-    # parois du caisson : entre le stator du tangage (et la plaque A) et la bride du genou
-    G["zw0"] = z_p + max(r_st, R0) + j
+    # parois du caisson : entre le RS00 du tangage (fixe dans le tibia) et la bride du genou
+    G["zw0"] = z_p + R0 + j
     G["zw1"] = z_k - Rb2 - j
     Hw = G["zw1"] - G["zw0"]
     marge = t / 2 + 2 * r + v                            # du centre d'un tenon au bord de la paroi
@@ -260,7 +247,7 @@ def geometrie(g: dict) -> dict:
     if Hw < 2 * marge + t:
         raise ValueError(f"paroi du tibia trop courte ({Hw:.1f} mm) pour deux tenons")
     z_bas_mortaise = G["zm"][0] - t / 2 - r
-    demi_largeur = r_so0 + (r_br2 - r_so0) * (z_bas_mortaise - z_p) / g["T"]   # tangente intérieure : prudent
+    demi_largeur = G["r_tb"] + (r_br2 - G["r_tb"]) * (z_bas_mortaise - z_p) / g["T"]   # tangente intérieure : prudent
     G["x_w"] = demi_largeur - v - r - e / 2
     return G
 
@@ -268,73 +255,55 @@ def geometrie(g: dict) -> dict:
 def plaques_structure(g, G) -> list[Plaque]:
     e, j, v, r, t, vis = g["e"], g["j"], g["v"], g["r"], g["t"], g["vis"]
     c0, c2 = g["c0"], g["c2"]
-    L0, R0, z_r, z_p, z_k = G["L0"], G["R0"], G["z_r"], G["z_p"], G["z_k"]
+    L0, R0, z_p, z_k = G["L0"], G["R0"], G["z_p"], G["z_k"]
     axe = vis["M3"]["passage"]           # axe de maquette : une vis M3 traversante
     P = []
 
-    # ── pied ──────────────────────────────────────────────────────────
-    spec = importlib.util.spec_from_file_location("semelle", REPO / "parts" / "semelle_apprentissage.py")
-    sem = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(sem)
-    piece, _ = sem.construire(sem.Cotes(), "S", 0.70, g["rid"], 0.25, 0.50)
-    # la face du DESSUS, ramenée à z = 0 : sa normale est +Z. La face du dessous
-    # (normale -Z) s'extrudait sous le sol (constaté au rendu, 2026-10-03).
-    semelle = bd.Sketch() + piece.faces().sort_by(bd.Axis.Z)[-1].moved(bd.Location((0, 0, -e)))
-    xs = {"avant": (L0 / 2 + j, L0 / 2 + j + e), "arriere": (-L0 / 2 - 2 * e - j, -L0 / 2 - e - j)}
-    for x0, x1 in xs.values():
-        semelle = semelle - rect(x0, x1, -t / 2, t / 2) - os_de_chien(
-            [(x0, -t / 2), (x0, t / 2), (x1, -t / 2), (x1, t / 2)], r)
-    P.append(Plaque("pied_semelle", semelle, [], [plan_z(0)], "pied", "semelle (S), deux mortaises"))
+    # ── pied : une CHAPE qui enjambe le tibia (fiche 0068) ───────────────
+    # Semelle : longueur ANSUR, largeur = écart ANSUR du squelette (la chape
+    # enjambe le tibia), axe de cheville à 25 % de la longueur depuis le talon
+    # (HYPOTHÈSE, malléole humaine), coins arrondis au quart de la largeur
+    # ANSUR (choix, comme la semelle d'apprentissage). Plus de creux : il
+    # croiserait les mortaises des montants.
+    an = lire("anthropometry.yaml")
+    Lp = SQ.longueur({"pied_longueur": 1.0}, an["ratios"], g["H"]) * 1000
+    Wa = SQ.longueur({"pied_largeur": 1.0}, an["ratios"], g["H"]) * 1000
+    W = g["W_pied"]
+    semelle = bd.Sketch() + bd.Pos(Lp / 4, 0) * bd.RectangleRounded(Lp, W, 0.25 * Wa)
+    y_me = G["y_te"] + e + j                                    # montant extérieur : [y_me, y_me + e]
+    y_mi = G["y_ti"] - j - e                                    # montant intérieur (pivot)
+    for y0 in (y_me, y_mi):
+        semelle = semelle - rect(-t / 2, t / 2, y0, y0 + e) - os_de_chien(
+            [(-t / 2, y0), (t / 2, y0), (-t / 2, y0 + e), (t / 2, y0 + e)], r)
+    P.append(Plaque("pied_semelle", semelle, [], [plan_z(0)], "pied", "semelle élargie (écart ANSUR), deux mortaises"))
 
-    def montant(trous):
-        s = disque(0, z_r, G["r_so0"]) + rect(-G["r_so0"], G["r_so0"], e, z_r)
+    def montant():
+        s = disque(0, z_p, G["r_so0"]) + rect(-G["r_so0"], G["r_so0"], e, z_p)
         s = s + rect(-t / 2, t / 2, 0, e)                       # tenon vers la semelle
-        s = s - degagement([(-t / 2 - r, e), (t / 2 + r, e)], r)
-        return s
-    P.append(Plaque("pied_montant_avant", montant(None),
-                    motif(c0, "sortie", vis, 0, z_r) + [(0, z_r, axe)],
-                    [plan_x(xs["avant"][0])], "pied", "sur la sortie du RS00 du roulis"))
-    P.append(Plaque("pied_montant_arriere", montant(None), [(0, z_r, axe)],
-                    [plan_x(xs["arriere"][0])], "pied", "pivot du roulis (palier à reprendre)"))
-
-    # ── liaison de cheville ───────────────────────────────────────────
-    r_st, p, Cb, Ch = G["r_st"], G["p"], G["C_bas"], G["C_haut"]
-    face_stator = g["ec_brut"]["motif_stator"]                 # l'arrière du RS00 (STEP officiel)
-    trous_stator = lambda cx, cy: motif(c0, face_stator, vis, cx, cy) + [(cx, cy, axe)]
-    A = disque(0, z_p, r_st) + rect(-r_st, r_st, Ch, z_p)
-    A = A - rect(-r_st - 1, r_st + 1, Ch - r_st, Ch)            # coupée au ras de C
-    A = A + rect(-p, p, Cb, Ch)                                  # tenon dans l'encoche de C
-    A = A - degagement([(-p - r, Ch), (p + r, Ch)], r)
-    P.append(Plaque("cheville_A", A, trous_stator(0, z_p), [plan_y(-L0 / 2 - e, e)], "liaison",
-                    "stator du RS00 du tangage"))
-    B = disque(0, z_r, r_st) + rect(-r_st, r_st, z_r, Cb)
-    B = B - rect(-r_st - 1, r_st + 1, Cb, Cb + r_st)
-    B = B + rect(-p, p, Cb, Ch)
-    B = B - degagement([(-p - r, Cb), (p + r, Cb)], r)
-    P.append(Plaque("cheville_B", B, trous_stator(0, z_r), [plan_x(-L0 / 2 - e)], "liaison",
-                    "stator du RS00 du roulis"))
-    bord = -L0 / 2 - e
-    loin = p + r + v
-    C = rect(bord, loin, bord, loin)
-    # encoche de A sur le bord -y, de B sur le bord -x
-    C = C - rect(-p, p, bord - 1, -L0 / 2) - degagement([(-p, -L0 / 2 + r), (p, -L0 / 2 + r)], r)
-    C = C - rect(bord - 1, -L0 / 2, -p, p) - degagement([(-L0 / 2 + r, -p), (-L0 / 2 + r, p)], r)
-    P.append(Plaque("cheville_C", C, [], [plan_z(Cb)], "liaison", "entre les deux moteurs, encoches"))
+        return s - degagement([(-t / 2 - r, e), (t / 2 + r, e)], r)
+    P.append(Plaque("pied_entretoise", disque(0, z_p, G["r_so0"]),
+                    motif(c0, "sortie", vis, 0, z_p) + [(0, z_p, axe)],
+                    [plan_y(G["y_te"], e)], "pied", "sur la sortie du RS00, dans l'ouverture du tibia"))
+    P.append(Plaque("pied_montant_exterieur", montant(), motif(c0, "sortie", vis, 0, z_p) + [(0, z_p, axe)],
+                    [plan_y(y_me, e)], "pied", "sur l'entretoise (rondelles : jeu axial)"))
+    P.append(Plaque("pied_montant_interieur", montant(), [(0, z_p, axe)],
+                    [plan_y(y_mi, e)], "pied", "pivot de la cheville (palier à reprendre)"))
 
     # ── tibia ─────────────────────────────────────────────────────────
-    profil = bd.Sketch() + bd.make_hull((disque(0, z_p, G["r_so0"]) + disque(0, z_k, G["r_br2"])).edges())
+    profil = bd.Sketch() + bd.make_hull((disque(0, z_p, G["r_tb"]) + disque(0, z_k, G["r_br2"])).edges())
     mort = None
     for xw in (-G["x_w"], G["x_w"]):
         for zm in G["zm"]:
             x0, x1, y0, y1 = xw - e / 2, xw + e / 2, zm - t / 2, zm + t / 2
             m = rect(x0, x1, y0, y1) + os_de_chien([(x0, y0), (x0, y1), (x1, y0), (x1, y1)], r)
             mort = m if mort is None else mort + m
-    ext = profil - mort - disque(0, z_k, G["rotor2"] / 2 + j)
-    P.append(Plaque("tibia_exterieur", ext,
-                    motif(c0, "sortie", vis, 0, z_p) + [(0, z_p, axe)] + motif(c2, "fixation_boitier", vis, 0, z_k),
-                    [plan_y(G["y_te"], e)], "tibia", "sortie du tangage en bas, bride du RS02 en haut"))
-    P.append(Plaque("tibia_interieur", profil - mort, [(0, z_p, axe), (0, z_k, axe)],
-                    [plan_y(G["y_ti"], e)], "tibia", "pivots du tangage et du genou"))
+    ext = profil - mort - disque(0, z_k, G["rotor2"] / 2 + j) - disque(0, z_p, G["rotor0"] / 2 + j)
+    P.append(Plaque("tibia_exterieur", ext, motif(c2, "fixation_boitier", vis, 0, z_k),
+                    [plan_y(G["y_te"], e)], "tibia", "ouverture de la cheville en bas, bride du RS02 en haut"))
+    face_stator = g["ec_brut"]["motif_stator"]                 # l'arrière du RS00 (STEP officiel)
+    P.append(Plaque("tibia_interieur", profil - mort,
+                    motif(c0, face_stator, vis, 0, z_p) + [(0, z_p, axe), (0, z_k, axe)],
+                    [plan_y(G["y_ti"], e)], "tibia", "stator du RS00 de la cheville ; pivot du genou"))
     ya, yb = G["y_ti"] + e, G["y_te"]                            # faces intérieures du caisson
     paroi = rect(ya, yb, G["zw0"], G["zw1"])
     for zm in G["zm"]:
@@ -407,8 +376,7 @@ def plaques_factices(g, G) -> list[Plaque]:
     axe = vis["M3"]["passage"]
     zl, _ = ZONE_PLANCHE
     moteurs = [  # (id, cotes, centre, axe, x_dir, groupe stator, groupe rotor)
-        (g["m_cheville"], g["c0"], (0, 0, G["z_p"]), (0, 1, 0), (1, 0, 0), "liaison", "tibia"),
-        (g["m_cheville"], g["c0"], (0, 0, G["z_r"]), (1, 0, 0), (0, 1, 0), "liaison", "pied"),
+        (g["m_cheville"], g["c0"], (0, 0, G["z_p"]), (0, 1, 0), (1, 0, 0), "tibia", "pied"),
         (g["m_genou"], g["c2"], (0, G["y_te"] - G["L2"] / 2, G["z_k"]), (0, 1, 0), (1, 0, 0), "tibia", "cuisse"),
     ]
     par_nom: dict[str, Plaque] = {}
@@ -458,8 +426,7 @@ def moteurs_cylindres(g, G) -> list[tuple]:
     """Volumes réels (cylindres aux cotes publiées) : (nom, solide, groupe)."""
     out = []
     for nom, cm, centre, ax, grp in (
-            ("rs00_tangage", g["c0"], (0, 0, G["z_p"]), (0, 1, 0), "liaison"),
-            ("rs00_roulis", g["c0"], (0, 0, G["z_r"]), (1, 0, 0), "liaison"),
+            ("rs00_cheville", g["c0"], (0, 0, G["z_p"]), (0, 1, 0), "tibia"),
             ("rs02_genou", g["c2"], (0, G["y_te"] - G["L2"] / 2, G["z_k"]), (0, 1, 0), "tibia")):
         L, D = val(cm["longueur"]), cm["diametre_corps"]
         loc = bd.Location(bd.Plane(origin=centre, z_dir=ax))
@@ -628,10 +595,11 @@ def balayer(solides: list[tuple], G: dict, butees: dict) -> dict:
     première collision de chaque côté.
     """
     axes = {"knee": (bd.Axis((0, 0, G["z_k"]), (0, 1, 0)), -1, {"cuisse"}),
-            "ankle_pitch": (bd.Axis((0, 0, G["z_p"]), (0, 1, 0)), -1, {"tibia", "cuisse"}),
-            "ankle_roll": (bd.Axis((0, 0, G["z_r"]), (1, 0, 0)), +1, {"pied"})}
+            "ankle_pitch": (bd.Axis((0, 0, G["z_p"]), (0, 1, 0)), -1, {"tibia", "cuisse"})}
     out = {}
     for art, (axe, signe, mobiles) in axes.items():
+        if art not in butees:
+            continue
         lo, hi = butees[art]
         mob = [s for s in solides if s[2] in mobiles]
         fix = [s for s in solides if s[2] not in mobiles]
@@ -721,7 +689,7 @@ def main(argv=None) -> int:
     SORTIE.mkdir(parents=True, exist_ok=True)
     jo = lire("joints.yaml")
     butees = {j["nom"]: (j["articulation"]["min"], j["articulation"]["max"]) for j in jo["jambes"]
-              if j["nom"] in ("knee", "ankle_pitch", "ankle_roll")}
+              if j["nom"] in ("knee", "ankle_pitch")}
     bilan = {}
     code = 0
     for rid in REGLAGES:
@@ -735,7 +703,7 @@ def main(argv=None) -> int:
         print(f"\n  ── réglage {rid} : épaisseur {g['e']} mm, rayon rentrant {g['r']} mm, "
               f"trou découpable ≥ Ø{g['d_min']:g}, voile {g['reg'].get('voile_min') or 'non déclaré'}"
               f"{'' if g['reg'].get('voile_min') else ' (non contrôlé)'}")
-        print(f"     axes : roulis à {G['z_r']:.1f} mm du sol, tangage à {G['z_p']:.1f}, genou à {G['z_k']:.1f}")
+        print(f"     axes : cheville à {G['z_p']:.1f} mm du sol, genou à {G['z_k']:.1f} ; pied {g['W_pied']:.1f} mm de large")
         print("     | Pièce | Qté | Dimensions (mm) | Trous découpés | Trous marqués | Rôle |")
         print("     | --- | ---: | --- | ---: | ---: | --- |")
         fautes_tot = {}

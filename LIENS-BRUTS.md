@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `ebaefd7206bb`, le 2026-10-04 ; 202 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `0b5e304424ee`, le 2026-10-04 ; 203 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,11 +54,12 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (68)
+## decisions/ (69)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0067-s-jambes-mixtes-rs02-rs00.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0068-s-cheville-sans-roulis.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md

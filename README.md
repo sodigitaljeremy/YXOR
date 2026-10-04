@@ -14,20 +14,22 @@ marge 1,5). Quatre tailles :
 
 | Taille | H | Actionneur de jambe | Statut |
 | --- | --- | --- | --- |
-| **S** | **0,60 m** (repli 0,55 m) | **RobStride RS02** au roulis et au tangage de hanche et au genou, **RS00** au lacet de hanche et à la cheville | **décidé** (fiche 0067), premier robot |
+| **S** | **0,60 m** (repli 0,55 m) | **RobStride RS02** au roulis et au tangage de hanche et au genou, **RS00** au lacet de hanche et au tangage de cheville ; 5 axes par jambe | **décidé** (fiches 0067 et 0068), premier robot |
 | M | ~0,80 m | RS02 ou équivalent | ordre de grandeur |
 | L | ~0,90 m | RS06, ou mixte RS06/RS02 | ordre de grandeur |
 | XL | ≥ 1,0 m | RS03 et au-delà | hors programme |
 
 Les hauteurs sont dans `params/anthropometry.yaml`.
 
-**S, la v1 : 12 degrés de liberté**, 6 par jambe, sans bras. Un degré de
-liberté est une articulation motorisée.
+**S, la v1 : 10 degrés de liberté**, 5 par jambe, sans bras : pas de
+roulis de cheville (fiche 0068, Jeremy, 2026-10-04). Un degré de liberté
+est une articulation motorisée.
 
-- **Masse calculée : 7,4 kg à 0,60 m** en v1 (buste fixe), dont 1,2 kg
-  de charge utile ; la jambe porterait jusqu'à 0,78 m. Avec l'hypothèse
-  d'un haut du corps en RS05 (v3, 28 DDL) : 10,5 kg, 0,66 m portés.
-  Actionneurs de jambe : 1 432 CHF HT. La charge utile (calculateur,
+- **Masse calculée : 6,75 kg à 0,60 m** en v1 (buste fixe), dont 1,2 kg
+  de charge utile ; la jambe porterait jusqu'à 0,80 m. Avec l'hypothèse
+  d'un haut du corps en RS05 (v3, 26 DDL) : 9,8 kg, 0,68 m portés.
+  Actionneurs de jambe : 1 224 CHF HT. L'effort de roulis de cheville de
+  la marche de référence est écarté, non reporté : hypothèse non vérifiée. La charge utile (calculateur,
   batterie, IMU) est une hypothèse de travail.
 - **Le couple continu, la pointe, la charge utile et le relevé passent à
   0,60 m**, en v1 comme en v3 ; l'articulation limitante est le tangage

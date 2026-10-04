@@ -85,25 +85,34 @@ class TrousSuiventLeReglage(unittest.TestCase):
 
     def test_meme_cinematique_pour_les_deux_reglages(self):
         Gs = [self.p[r][1] for r in JB.REGLAGES]
-        for k in ("z_r", "z_p", "z_k"):
+        for k in ("z_p", "z_k"):
             self.assertAlmostEqual(Gs[0][k], Gs[1][k], places=6, msg=k)
 
     def test_aucune_collision_au_repos(self):
         g, G, P = self.p["operateur_cn_alu_3"]
         sol = [s for pl in P for s in JB.placer(pl)] + JB.moteurs_cylindres(g, G)
-        res = JB.balayer(sol, G, {"knee": (0, 0), "ankle_pitch": (0, 0), "ankle_roll": (0, 0)})
+        res = JB.balayer(sol, G, {"knee": (0, 0), "ankle_pitch": (0, 0)})
         for art, r in res.items():
             self.assertEqual(r["repos"], [], art)
 
 
 class Cheville(unittest.TestCase):
-    def test_axes_separes_au_moins_d_un_diametre(self):
+    """Cheville sans roulis (fiche 0068) : un seul axe, au-dessus de la semelle."""
+
+    def test_plus_de_roulis(self):
+        jo = JB.lire("joints.yaml")
+        self.assertNotIn("ankle_roll", {j["nom"] for j in jo["jambes"]})
+        self.assertNotIn("ankle_roll", JB.lire("configuration_S.yaml")["jambes"])
+        self.assertIn("ankle_roll", {x["nom"] for x in jo["amont_non_retenus"]})
+
+    def test_plaque_du_tibia_passe_au_dessus_de_la_semelle(self):
         import squelette as SQ
         ec = SQ.ecarts_cheville()
         mid = JB.lire("squelette.yaml")["ecarts_ansur"]["cheville"]["actionneur"]
         cm = JB.lire("actionneurs.yaml")["candidats"][mid]["cotes_montage"]
-        self.assertGreaterEqual(ec["decalage_tangage_roulis"] * 1000, cm["diametre_corps"])
-        self.assertGreaterEqual(ec["hauteur_axe_roulis"] * 1000, cm["diametre_corps"] / 2)
+        self.assertGreaterEqual(ec["r_plaque_mm"], cm["diametre_corps"] / 2)
+        self.assertAlmostEqual(ec["hauteur_axe_cheville"] * 1000,
+                               ec["e_max_mm"] + ec["jeu_mm"] + ec["r_plaque_mm"], places=6)
 
 
 if __name__ == "__main__":

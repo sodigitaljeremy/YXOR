@@ -74,8 +74,10 @@ La vision et la méthode sont dans `docs/cadrage.md`.
 - **S est décidé** (fiche 0067, Jeremy, 2026-10-02, qui remplace la 0065) :
   famille RobStride, jambes mixtes (RS02 au roulis et au tangage de hanche
   et au genou, RS00 ailleurs ; `params/configuration_S.yaml`),
-  H_S = 0,60 m visée. Le banc
-  vérifie le RS00, il ne départage plus. Grille : `docs/choix-actionneurs.md`.
+  H_S = 0,60 m visée. **Cheville sans roulis, 5 axes par jambe** (fiche
+  0068, Jeremy, 2026-10-04) : `ankle_roll` n'existe plus pour S ; il reste
+  dans le modèle amont, déclaré dans `joints.yaml` (`amont_non_retenus`).
+  Le banc vérifie le RS00, il ne départage plus. Grille : `docs/choix-actionneurs.md`.
 - **Actionneur maison** : piste parallèle, jamais sur le chemin critique
   (fiche 0052).
 

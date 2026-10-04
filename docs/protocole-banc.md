@@ -217,10 +217,10 @@ Jeremy travaille seul : ces sept mesures remplacent la seconde personne.
    - Le test `tests/test_critere_banc.py` produit les trois verdicts à
      partir de mesures fictives écrites dans un fichier temporaire.
    - Ordres de grandeur pour un RS00 HOMOGÈNE, avec les hypothèses du
-     2026-10-02 (servos ToddlerBot du haut du corps retirés, fiche 0067) :
-     S confirmé à 2,7 N·m et au-dessus ; repli entre 2,35 et 2,65 N·m ;
-     famille rouverte à 2,3 N·m et en dessous. (Le 2026-10-01 : 3,1 ;
-     2,6 à 3,0 ; 2,5.)
+     2026-10-04 (5 axes par jambe, roulis de cheville retiré, fiche 0068) :
+     S confirmé à 2,45 N·m et au-dessus ; repli entre 2,10 et 2,40 N·m ;
+     famille rouverte à 2,05 N·m et en dessous. (Le 2026-10-02 : 2,7 ;
+     2,35 à 2,65 ; 2,3. Le 2026-10-01 : 3,1 ; 2,6 à 3,0 ; 2,5.)
 
 ## § 5 — Consignation
 

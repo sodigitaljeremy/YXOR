@@ -68,6 +68,16 @@ avec qui l'a décidé.
    - Fiche : [0067](../decisions/0067-s-jambes-mixtes-rs02-rs00.md), qui
      remplace la [0065](../decisions/0065-s-robstride-rs00.md) (RS00 sur
      les 12 articulations, Jeremy, 2026-10-01).
+7 bis. **S : cheville sans roulis, 5 axes par jambe.** `ankle_roll` est
+   retiré de S (10 actionneurs de jambe, v3 à 26 axes).
+   - Décidée par Jeremy le 2026-10-04. Ses mots : « Une masse faible au
+     bout de la jambe compte beaucoup pour bien marcher. Des robots comme
+     l'Unitree H1 ou MEVITA marchent avec 5 axes par jambe. Option c »
+     (option c du tableau de Claude Code du 2026-10-04, 20 h 14).
+   - Hypothèse non vérifiée : l'effort de roulis de la marche de référence
+     (6 axes) est écarté, pas reporté.
+   - Fiche : [0068](../decisions/0068-s-cheville-sans-roulis.md), qui
+     complète la [0067](../decisions/0067-s-jambes-mixtes-rs02-rs00.md).
 8. **Règle d'achat.**
    - (a) Un achat pour le robot n'a lieu qu'après une décision écrite et
      la vérification de la référence exacte.

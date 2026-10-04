@@ -27,7 +27,8 @@ classe et chaque configuration, jusqu'où elle porte.
 Référence : ToddlerBot, H0 = 0,56 m, M0 = sa masse (lue dans le MJCF).
 
   masse(H)       = S0 · (H/H0)³  +  Σ masse réelle des 12 actionneurs de jambe
-                   S0 = M0 − masse des 12 Dynamixel de jambe de ToddlerBot
+                   S0 = M0 − masse des Dynamixel de jambe RETENUS de ToddlerBot
+                   (10 depuis la fiche 0068 : ceux du roulis de cheville restent dans S0)
                    (tout le reste — structure, haut du corps, électronique —
                    est mis à l'échelle en similitude géométrique)
   couple(H)      = couple_P1 · masse(H)/M0 · H/H0
@@ -84,7 +85,10 @@ CATALOGUE = REPO / "params" / "actionneurs.yaml"
 BUDGET = REPO / "params" / "budget.yaml"
 BANC = REPO / "params" / "banc.yaml"          # configurations du banc, source unique (2026-10-01)
 
-JAMBE = ("hip_pitch", "hip_roll", "hip_yaw_drive", "knee", "ankle_pitch", "ankle_roll")
+# 5 axes par jambe depuis le 2026-10-04 (fiche 0068) : ankle_roll retiré de S.
+# La marche de référence (ToddlerBot) en a 6 : besoins_ecartes() dit lesquels
+# sont laissés de côté.
+JAMBE = ("hip_pitch", "hip_roll", "hip_yaw_drive", "knee", "ankle_pitch")
 H_BAS, H_HAUT, TOL = 0.05, 5.0, 1e-4
 
 
@@ -150,8 +154,18 @@ def classes_dynamixel(analyse: dict, cat: dict) -> dict:
 
 
 def besoins_p1(analyse: dict) -> dict:
-    """Par actionneur de jambe : pointe, RMS, vitesse, écrêtage, modèle P1."""
-    return {a["nom"]: a for a in analyse["actionneurs"] if a["zone"] == "jambes"}
+    """Par actionneur de jambe RETENU (type dans JAMBE) : pointe, RMS, vitesse, écrêtage, modèle P1."""
+    return {a["nom"]: a for a in analyse["actionneurs"] if a["zone"] == "jambes" and type_de(a["nom"]) in JAMBE}
+
+
+def besoins_ecartes(analyse: dict) -> list[str]:
+    """Actionneurs de jambe de la marche de référence que YXOR n'a pas (fiche 0068).
+
+    Leur effort n'est ni compté ni reporté sur un autre axe : c'est une
+    HYPOTHÈSE NON VÉRIFIÉE, qu'un calcul doit annoncer en s'en servant.
+    """
+    return sorted(a["nom"] for a in analyse["actionneurs"]
+                  if a["zone"] == "jambes" and type_de(a["nom"]) not in JAMBE)
 
 
 def type_de(nom: str) -> str:
@@ -473,8 +487,10 @@ def main(argv=None) -> int:
     marge = a.marge if a.marge is not None else val(cat["dimensionnement"]["marge"])
 
     echecs = controle_coherence(cat, analyse, ref)
-    print(f"  référence : H0 {ref['H0']} m, M0 {ref['M0']:.3f} kg, dont 12 Dynamixel de jambe "
+    print(f"  référence : H0 {ref['H0']} m, M0 {ref['M0']:.3f} kg, dont {len(besoins_p1(analyse))} Dynamixel de jambe retenus "
           f"{ref['m_jambes_P1']:.3f} kg -> S0 {ref['S0']:.3f} kg")
+    if besoins_ecartes(analyse):
+        print(f"  besoins ÉCARTÉS (fiche 0068) : {', '.join(besoins_ecartes(analyse))} — effort non reporté (hypothèse)")
     print(f"  contrôle de cohérence ({len(cat['controle_coherence'])} robots, marge 1) :")
     for rid, H_ref, ev in controle_coherence.rapport:
         print(f"    {rid:12s} attendu {H_ref:.2f} m -> H_max {f(ev['H_max'], 3)} m, "
