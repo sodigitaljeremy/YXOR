@@ -30,9 +30,11 @@ en 2D ».
   genou       la CHAPE du RS02 : une entretoise sur la sortie, une plaque
               avant boulonnée dessus, une plaque arrière en pivot, et un
               dessus tenonné qui recevra la cuisse.
-  factices    (carton seulement) des BOÎTES aux cotes des RS00 et RS02 :
-              faces avant et arrière percées, quatre côtés, un DISQUE ROTOR
-              libre dans la face avant, tenu par un axe M3 traversant.
+  factices    (carton seulement) des factices RONDS aux cotes des RS00 et RS02
+              (STEP officiels) : disques avant et arrière percés, un DISQUE
+              ROTOR libre dans la face avant, tenu par un axe M3 traversant,
+              et une BANDE de papier fort enroulée sur les disques. Les
+              boîtes carrées du 2026-10-03 limitaient la maquette à ±5°.
 
 Un TENON est une languette qui dépasse du bord d'une plaque ; une MORTAISE
 est la fente qui le reçoit ; une ENCOCHE est une mortaise ouverte sur un
@@ -96,6 +98,8 @@ CROIX = 1.5               # non-cote: demi-branche d'une croix de pointage
 VOL_MIN = 0.5             # non-cote: mm³ ; une intersection plus petite est un artefact numérique
 PAS_DEG = 5               # non-cote: pas du balayage des butées
 DELTA = 0.05              # non-cote: mm ; rayon de sondage autour d'un sommet
+EP_BANDE = 0.3            # non-cote: représentation 3D du papier de la bande, sans effet sur les plans
+RECOUVREMENT = 10.0       # non-cote: languette de recouvrement d'une bande de papier, collée ou scotchée
 
 
 def lire(nom: str) -> dict:
@@ -366,43 +370,87 @@ def plaques_structure(g, G) -> list[Plaque]:
     return P
 
 
+class Bande(Plaque):
+    """Bande de papier fort enroulée sur les disques d'un factice : plate sur le plan,
+    demi-cylindre (ou cylindre) dans l'assemblage. Matière non inscrite à hardware.yaml :
+    c'est un gabarit de forme, sans effort ; il n'a ni rayon rentrant ni voile à tenir."""
+
+    def __init__(self, nom, longueur, largeur, r, angle, poses, groupes, role):
+        super().__init__(nom, rect(0, longueur, 0, largeur), [], poses, groupes, role, factice=True)
+        self.r, self.angle, self.largeur = r, angle, largeur
+
+    def finir(self, e, d_min):
+        self.coupes, self.marques, self.face = [], [], self.esq
+        bb = self.esq.faces()[0].bounding_box()
+        self.dims = (bb.size.X, bb.size.Y, EP_BANDE)
+        coque = bd.Cylinder(self.r + EP_BANDE, self.largeur) - bd.Cylinder(self.r, self.largeur)
+        if self.angle < 360:
+            coque = coque & bd.Pos(0, self.r * 2, 0) * bd.Box(self.r * 4, self.r * 4, self.largeur * 2)
+        self.solide = coque
+        return self
+
+
 def plaques_factices(g, G) -> list[Plaque]:
-    """Boîtes de carton aux cotes réelles des RS00 (×2) et du RS02."""
+    """Factices RONDS des RS00 (×2) et du RS02 : disques aux diamètres réels + bandes enroulées.
+
+    Remplace le 2026-10-04 les boîtes carrées, dont les coins (rayon √2 fois celui
+    du moteur) limitaient la maquette à ±5° au tangage et au roulis.
+      face_avant    anneau au diamètre de la face avant, motif du boîtier s'il y est ;
+      disque_rotor  la sortie, à son diamètre réel (STEP), libre dans l'anneau,
+                    tenue par l'axe M3 ;
+      epaulement    (RS02) disque au changement de diamètre (Ø78,5 -> Ø65) ;
+      face_arriere  disque arrière, motif arrière et axe ;
+      bande_*       papier fort, enroulé sur les disques ; coupé en deux s'il est
+                    plus long que la planche A4.
+    """
     e, j, vis = g["e"], g["j"], g["vis"]
     axe = vis["M3"]["passage"]
+    zl, _ = ZONE_PLANCHE
     moteurs = [  # (id, cotes, centre, axe, x_dir, groupe stator, groupe rotor)
         (g["m_cheville"], g["c0"], (0, 0, G["z_p"]), (0, 1, 0), (1, 0, 0), "liaison", "tibia"),
         (g["m_cheville"], g["c0"], (0, 0, G["z_r"]), (1, 0, 0), (0, 1, 0), "liaison", "pied"),
         (g["m_genou"], g["c2"], (0, G["y_te"] - G["L2"] / 2, G["z_k"]), (0, 1, 0), (1, 0, 0), "tibia", "cuisse"),
     ]
     par_nom: dict[str, Plaque] = {}
+
+    def ajouter(pl, poses, grp):
+        if pl.nom not in par_nom:
+            par_nom[pl.nom] = pl
+        par_nom[pl.nom].poses += poses
+        par_nom[pl.nom].groupes += [grp] * len(poses)
+
     for mid, cm, centre, ax, xd, g_st, g_ro in moteurs:
         L = val(cm["longueur"])
-        D = Df = cm.get("diametre_bride") or cm["diametre_corps"]   # boîte à la plus grande section
-        # disque rotor au diamètre RÉEL de la sortie (STEP) ; à défaut, au motif + voile
+        Dav = cm.get("diametre_bride") or cm["diametre_corps"]          # section avant
+        Dar = cm["diametre_corps"]                                       # section arrière
+        lav = cm.get("longueur_bride") or L                              # longueur de la section avant
         rotor = cm.get("diametre_sortie") or (cm.get("bossage_avant") or {}).get("diametre") \
             or 2 * rayon_motif(cm, "sortie", vis, g["v"])
-        avant = [k for k in ("fixation_boitier",) if (cm.get(k) or {}).get("face") == "avant"]
-        arriere = [k for k in ("fixation_boitier", "arriere") if (cm.get(k) or {}).get("face") == "arriere"]
+        avant = [t for k in ("fixation_boitier",) if (cm.get(k) or {}).get("face") == "avant"
+                 for t in motif(cm, k, vis)]
+        arriere = [t for k in ("fixation_boitier", "arriere") if (cm.get(k) or {}).get("face") == "arriere"
+                   for t in motif(cm, k, vis)]
         loc = bd.Location(bd.Plane(origin=centre, x_dir=xd, z_dir=ax))
-        defs = [
-            ("face_avant", rect(-Df / 2, Df / 2, -Df / 2, Df / 2) - disque(0, 0, rotor / 2 + j),
-             [t for k in avant for t in motif(cm, k, vis)],
-             [bd.Location((0, 0, L / 2 - e))], g_st),
-            ("disque_rotor", disque(0, 0, rotor / 2), motif(cm, "sortie", vis) + [(0, 0, axe)],
-             [bd.Location((0, 0, L / 2 - e))], g_ro),
-            ("face_arriere", rect(-D / 2, D / 2, -D / 2, D / 2),
-             [t for k in arriere for t in motif(cm, k, vis)] + [(0, 0, axe)], [bd.Location((0, 0, -L / 2))], g_st),
-            ("cote_a", rect(-D / 2, D / 2, -L / 2 + e, L / 2 - e), [], [plan_x(D / 2 - e), plan_x(-D / 2)], g_st),
-            ("cote_b", rect(-D / 2 + e, D / 2 - e, -L / 2 + e, L / 2 - e), [],
-             [plan_y(D / 2 - e, e), plan_y(-D / 2, e)], g_st),
-        ]
-        for nom, esq, trous, poses, grp in defs:
-            n = f"factice_{mid}_{nom}"
-            if n not in par_nom:
-                par_nom[n] = Plaque(n, esq, trous, [], [], f"boîte factice {mid.upper()}", factice=True)
-            par_nom[n].poses += [loc * p for p in poses]
-            par_nom[n].groupes += [grp] * len(poses)
+        P = lambda nom, esq, trous: Plaque(f"factice_{mid}_{nom}", esq, trous, [], [], f"factice rond {mid.upper()}", factice=True)
+        ajouter(P("face_avant", disque(0, 0, Dav / 2) - disque(0, 0, rotor / 2 + j), avant),
+                [loc * bd.Location((0, 0, L / 2 - e))], g_st)
+        ajouter(P("disque_rotor", disque(0, 0, rotor / 2), motif(cm, "sortie", vis) + [(0, 0, axe)]),
+                [loc * bd.Location((0, 0, L / 2 - e))], g_ro)
+        ajouter(P("face_arriere", disque(0, 0, Dar / 2), arriere + [(0, 0, axe)]),
+                [loc * bd.Location((0, 0, -L / 2))], g_st)
+        troncons = [(Dav, lav, L / 2 - lav / 2, "avant")]
+        if lav < L - 1e-6:
+            ajouter(P("epaulement", disque(0, 0, Dav / 2), [(0, 0, axe)]),
+                    [loc * bd.Location((0, 0, L / 2 - lav))], g_st)
+            troncons.append((Dar, L - lav, -lav / 2, "arriere"))
+        for D, larg, zc, quoi in troncons:
+            tour = math.pi * D
+            n = 1 if tour + RECOUVREMENT <= zl - 2 else 2
+            for i in range(n):
+                b = Bande(f"factice_{mid}_bande_{quoi}" + (f"_{i + 1}" if n > 1 else ""),
+                          tour / n + RECOUVREMENT, larg, D / 2, 360 / n, [], [], f"bande, papier fort ({mid.upper()})")
+                rot = bd.Location((0, 0, 0), (0, 0, 1), 180 * i)
+                ajouter(b, [loc * bd.Location((0, 0, zc)) * rot], g_st)
     return list(par_nom.values())
 
 
@@ -699,7 +747,7 @@ def main(argv=None) -> int:
             if unites != 4:
                 print(f"     ✗ {pl.nom} : DXF sans millimètres ($INSUNITS = {unites})")
                 code = 1
-            f = controler(pl, g)
+            f = [] if isinstance(pl, Bande) else controler(pl, g)   # papier : ni rayon ni voile
             if f:
                 fautes_tot[pl.nom] = f
         n_struct = sum(len(p.poses) for p in P if not p.factice)
@@ -736,7 +784,9 @@ def main(argv=None) -> int:
                                    [f"{len(pieces)} pieces (structure et factices), echelle 1:1. "
                                     f"Commit {_emp()} : verifier avant de couper.",
                                     "Maquette de FORME : ne jamais la mettre sous tension. "
-                                    "Assemblage : tenons, vis M3 traversantes, rondelles."])
+                                    "Assemblage : tenons, vis M3 traversantes, rondelles.",
+                                    "BANDES des factices : papier fort (pas de carton plume), "
+                                    "enroulees sur les disques, languette de 10 mm."])
             print(f"     -> {NOM}_{rid}_planA4.pdf : {n} feuilles A4 ({len(pieces)} pièces)")
             bilan["feuilles"] = n
         # masse (aluminium)
