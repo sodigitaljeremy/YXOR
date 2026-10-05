@@ -1,0 +1,195 @@
+# Capacités de YXOR → tâches mesurables, en NIVEAUX à balayer — lu par scripts/capacites.py
+#
+# Créé le 2026-10-05 (phase 2 de la stratégie de la fiche 0069). DONNÉES
+# SEULEMENT : rien n'est chiffré ici, aucune décision.
+#
+# PRINCIPE de Jeremy (2026-10-05, ses mots, prompt du jour) : « Je ne veux
+# plus "fixer" de budget, je veux calculer le budget en fonction des
+# contraintes et de ce qu'il est réellement possible de faire » ; « je veux
+# arbitrer avec des vrais chiffres et non des estimations ». Budget et masse
+# sont donc des SORTIES de l'explorateur, jamais des filtres.
+#
+# STATUT DES ÉLÉMENTS (règles 6 et 7) :
+#   · les CAPACITÉS sont celles de la fiche 0069 (cochées par Jeremy le
+#     2026-10-04 selon le prompt ; la liste n'est pas dans ses mots) ;
+#   · les NIVEAUX sont PROPOSÉS par Claude (prompt du 2026-10-05), à
+#     BALAYER, pas à choisir ; ceux marqués `ajoute_dans_ce_lot` ne figuraient
+#     pas dans le prompt : ils comblent une capacité cochée sans niveau ;
+#   · les MÉTHODES (phase 3) et les articulations sollicitées sont PROPOSÉES
+#     par Claude.
+#
+# ARTICULATIONS : noms de params/joints.yaml (règle 3). Un nom qui n'y est
+# pas encore est déclaré dans `noms_a_creer` (PROPOSÉ, provisoire) et ANNONCÉ
+# par scripts/capacites.py ; il n'entre dans joints.yaml que par décision.
+#
+# MÉTHODES (phase 3, rien n'est encore chiffré) :
+#   simulation   MuJoCo : couples, vitesses, contacts sur une trajectoire ;
+#   statique     équilibre des moments dans la posture la plus défavorable ;
+#   energie      bilan d'énergie (m·g·h, ½·m·v², ½·I·ω²).
+
+methodes:
+  simulation: "simulation MuJoCo de la tâche (trajectoire ou politique), relevé des couples, vitesses et puissances par articulation"
+  statique: "équilibre statique dans la posture la plus défavorable : couple = force × bras de levier, par articulation"
+  energie: "bilan d'énergie : potentielle m·g·h, cinétique ½·m·v² ou ½·I·ω², puissance = énergie / durée"
+
+noms_a_creer:
+  ankle_roll: {groupe: jambes, note: "existe dans le modèle amont ; déclaré `amont_non_retenus` par la fiche 0068 (à revoir, fiche 0069)"}
+  waist_pitch: {groupe: taille, note: "tangage du buste (buste à 3 axes)"}
+  neck_roll: {groupe: nuque, note: "roulis de la tête (tête à 3 axes)"}
+  doigts: {groupe: mains, note: "6, 12 ou 17 axes par main selon le niveau ; noms un à un à créer"}
+  pince: {groupe: mains, note: "« gripper » du squelette, nom provisoire (squelette.yaml)"}
+  visage: {groupe: tete, note: "4 à 10 micro-servos selon le niveau ; noms à créer"}
+
+# Groupes d'articulations (abréviations des tableaux)
+groupes:
+  jambes: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll]
+  bras: [shoulder_pitch, shoulder_roll, shoulder_yaw, elbow_roll, elbow_yaw, wrist_pitch, wrist_roll]
+  buste: [waist_yaw, waist_roll, waist_pitch]
+  tete: [neck_yaw, neck_pitch, neck_roll]
+
+taches:
+  # ── locomotion ──────────────────────────────────────────────────────
+  marche_sol_plat:
+    capacite: "marche sur sol plat"
+    grandeur: "vitesse de marche"
+    unite: "m/s"
+    niveaux: [0.3, 0.6, 1.0]
+    sollicite: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll]
+    methode: simulation
+    note: "la marche de référence actuelle (ToddlerBot) sert de première trajectoire, mise à l'échelle"
+
+  sol_irregulier:
+    capacite: "marche sur sol irrégulier"
+    grandeur: "hauteur de marche franchie"
+    unite: "cm"
+    niveaux: [2, 4]
+    sollicite: [hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll]
+    methode: simulation
+
+  pente:
+    capacite: "marche en pente"
+    grandeur: "pente"
+    unite: "°"
+    niveaux: [5, 10]
+    sollicite: [hip_pitch, knee, ankle_pitch, ankle_roll]
+    methode: simulation
+
+  releve:
+    capacite: "relevé après une chute"
+    grandeur: "position de départ"
+    unite: "—"
+    niveaux: ["depuis le dos", "depuis le ventre"]
+    sollicite: [hip_pitch, knee, ankle_pitch, shoulder_pitch, elbow_roll, waist_yaw, waist_pitch]
+    methode: simulation
+    note: "le calcul statique actuel du relevé (T5, accroupi profond) en est un cas particulier"
+
+  course:
+    capacite: "course"
+    grandeur: "vitesse de course"
+    unite: "m/s"
+    niveaux: [1.5, 2.5]
+    sollicite: [hip_roll, hip_pitch, knee, ankle_pitch, ankle_roll]
+    methode: simulation
+
+  saut_vertical:
+    capacite: "saut"
+    grandeur: "hauteur du saut (centre de gravité)"
+    unite: "cm"
+    niveaux: [5, 10, 20, 30]
+    sollicite: [hip_pitch, knee, ankle_pitch]
+    methode: energie
+    note: "énergie m·g·h fournie pendant la poussée ; la puissance crête se vérifie ensuite en simulation"
+
+  # ── bras et mains ───────────────────────────────────────────────────
+  gestes_pointage:
+    capacite: "gestes et pointage"
+    grandeur: "vitesse du bout du bras (geste rapide)"
+    unite: "m/s"
+    niveaux: [0.5, 1.0, 2.0]
+    ajoute_dans_ce_lot: true
+    sollicite: [shoulder_pitch, shoulder_roll, shoulder_yaw, elbow_roll, wrist_pitch]
+    methode: energie
+    note: "niveaux absents du prompt, PROPOSÉS ; énergie cinétique du bras à cette vitesse (voir sorties)"
+
+  saisie:
+    capacite: "saisie et port de petits objets"
+    grandeur: "masse de l'objet tenu bras tendu"
+    unite: "kg"
+    niveaux: [0.2, 0.5, 1.0]
+    sollicite: [shoulder_pitch, elbow_roll, wrist_pitch, wrist_roll, pince]
+    methode: statique
+
+  charge_lourde:
+    capacite: "port de charges lourdes"
+    grandeur: "masse portée, bras à 30 cm du torse"
+    unite: "kg"
+    niveaux: [2, 5, 10]
+    sollicite: [shoulder_pitch, elbow_roll, waist_pitch, hip_pitch, knee, ankle_pitch]
+    methode: statique
+    note: "la charge déplace le centre de gravité : les jambes et le buste sont sollicités, pas seulement les bras"
+
+  poussee:
+    capacite: "poussée de charges lourdes"
+    grandeur: "force horizontale de poussée"
+    unite: "N"
+    niveaux: [20, 50, 100]
+    ajoute_dans_ce_lot: true
+    sollicite: [shoulder_pitch, elbow_roll, waist_pitch, hip_pitch, knee, ankle_pitch]
+    methode: statique
+    note: "niveaux absents du prompt, PROPOSÉS ; la poussée exige aussi du frottement au sol (à vérifier)"
+
+  mains_a_doigts:
+    capacite: "manipulation fine (mains à doigts)"
+    grandeur: "nombre d'axes par main"
+    unite: "axes"
+    niveaux: [6, 12, 17]
+    sollicite: [doigts, wrist_pitch, wrist_roll]
+    methode: statique
+    note: "chaque niveau ajoute des actionneurs (petits axes) : masse et coût au bout du bras"
+
+  # ── buste et tête ───────────────────────────────────────────────────
+  buste:
+    capacite: "rotation et inclinaison du buste"
+    grandeur: "axes du buste"
+    unite: "—"
+    niveaux: ["lacet seul", "lacet + roulis + tangage"]
+    sollicite: [waist_yaw, waist_roll, waist_pitch]
+    methode: statique
+    note: "le tronc porte la charge utile et le haut du corps : couple statique en inclinaison"
+
+  tete:
+    capacite: "orientation de la tête"
+    grandeur: "axes du cou"
+    unite: "axes"
+    niveaux: [2, 3]
+    sollicite: [neck_yaw, neck_pitch, neck_roll]
+    methode: statique
+
+  visage:
+    capacite: "expressions du visage"
+    grandeur: "moyen d'expression"
+    unite: "—"
+    niveaux: ["écran", "4 micro-servos", "10 micro-servos"]
+    sollicite: [visage]
+    methode: statique
+    note: "« 4 à 10 micro-servos » du prompt balayé à ses deux bornes"
+
+# ═════════════════════════════════════════════════════════════════════════
+#  Sorties prévues de l'explorateur, POUR CHAQUE SOLUTION (phase 3)
+# ═════════════════════════════════════════════════════════════════════════
+# Ce sont des SORTIES, jamais des filtres (principe de Jeremy, en tête).
+sorties_explorateur:
+  cout:
+    unite: "CHF HT"
+    formule: "Σ prix des actionneurs (catalogue, taux BCE de params/budget.yaml) + structure, quand son prix sera connu"
+  masse:
+    unite: "kg"
+    formule: "Σ actionneurs + structure (plaques réelles, CAO) + charge utile"
+  energie_chute:
+    unite: "J"
+    formule: "m · g · h_cg : masse totale × 9,81 × hauteur du centre de gravité debout"
+    note: "ordre de grandeur de ce que la structure et le sol absorbent dans une chute ; sert à comparer, pas à dimensionner"
+  energie_cinetique_membre:
+    unite: "J"
+    formule: "½ · I · ω_max² par membre (I autour de l'articulation proximale, ω_max = vitesse à vide de son actionneur)"
+    note: "ce qu'un bras ou une jambe peut porter dans un choc à pleine vitesse : sécurité pour les personnes autour"

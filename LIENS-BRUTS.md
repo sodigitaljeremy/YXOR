@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `2057e05b98b5`, le 2026-10-05 ; 209 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `401c789187d2`, le 2026-10-05 ; 213 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -127,9 +127,10 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (18)
+## docs/ (19)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-actionneurs.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-interfaces.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/criteres-manquants.md
@@ -161,12 +162,13 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-03.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-04.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.md
 
-## params/ (15)
+## params/ (16)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/banc.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/budget.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/capacites.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/ckpts.manifest.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/configuration_S.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/exigences_S.yaml
@@ -191,10 +193,11 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (23)
+## scripts/ (24)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/check_cad_toolchain.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/choix_actionneurs.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/ckpts_backup.py
@@ -227,8 +230,9 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (16)
+## tests/ (17)
 
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_construction_deterministe.py
