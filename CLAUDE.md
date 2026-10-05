@@ -66,7 +66,13 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   Pour chaque classe d'actionneur, `scripts/dimensionnement.py` calcule la
   taille maximale qu'elle porte, à **marge 1,5** (fiche 0051, à revoir
   après le banc).
-- **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048).
+- ⚠ **Fiche 0069 (Jeremy, 2026-10-04) : la gamme S/M/L/XL est
+  ABANDONNÉE**, au profit de deux robots, YXOR Lab (apprentissage) et
+  YXOR (final), et de pièces hybrides dès maintenant. Le code et les
+  paramètres parlent encore de « S » : inventaire du 2026-10-05, à
+  appliquer. Les lignes ci-dessous décrivent l'état du code, pas la
+  direction.
+- **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la
   référence du calcul, pas celle de YXOR. On ne dessine qu'à une taille

@@ -29,9 +29,19 @@ avec qui l'a décidé.
    - Décidée par Jeremy le 2026-09-30 (fiche ; journal du 2026-09-30,
      tableau des fiches).
    - Fiche : [0047](../decisions/archive/0047-demarche-inversee.md).
-2. **Tailles Banc, S, M, L, XL. Le premier robot est S.**
-   - Décidée par Jeremy le 2026-09-30 (fiche ; journal du 2026-09-30).
-   - Fiche : [0048](../decisions/archive/0048-tailles-par-classe.md).
+2. **Deux robots : YXOR Lab (apprentissage) et YXOR (final) ; la gamme
+   S/M/L/XL est abandonnée ; pièces hybrides dès maintenant.** Noms
+   provisoires. L'ensemble d'axes et la hauteur du Lab ne sont PAS
+   décidés ; la 0068 est à revoir à ce moment-là.
+   - Décidée par Jeremy le 2026-10-04. Ses mots : « Ok l'option c me
+     semble très bien 👍 » et « et l'on peut d'ailleurs directement opter
+     pour la stratégie de conception et de modélisation via des pièces
+     hybrides » (prompt du 2026-10-05). Le contenu détaillé de l'option C
+     est de Claude, accepté par ces mots.
+   - Fiche : [0069](../decisions/0069-deux-robots-lab-et-final.md), qui
+     remplace la [0048](../decisions/archive/0048-tailles-par-classe.md)
+     (tailles Banc, S, M, L, XL ; Jeremy, 2026-09-30) et, pour l'ordre
+     des procédés, la [0050](../decisions/archive/0050-fabrication-sequencee.md).
 3. **ToddlerBot sert de référence de calcul**, avec H0 = 0,56 m. Les
    tailles remplacent les paliers P1, P2 et P3.
    - Validée par Jeremy lors du lot de cohérence du 2026-09-30 (~23 h),
@@ -92,7 +102,7 @@ avec qui l'a décidé.
    - Décidée par Jeremy le 2026-09-30 (fiche ; journal du 2026-09-30).
    - Fiche : [0052](../decisions/archive/0052-actionneur-maison.md).
 10. **La fabrication est séquencée** : usinage, puis impression 3D, puis
-    hybride. Le procédé se choisit pièce par pièce. Les plaques ne sont
+    hybride. ⚠ L'ordre est remplacé par la 0069 (hybride dès maintenant). Le procédé se choisit pièce par pièce. Les plaques ne sont
     plus le procédé unique.
     - Décidée par Jeremy le 2026-09-30 (fiche 0050).
     - Le remplacement a été validé lors du lot de cohérence du 2026-09-30
