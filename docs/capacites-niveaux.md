@@ -47,4 +47,4 @@ Les capacités sont celles de la fiche 0069. Les **niveaux**, les articulations 
 | energie chute | J | m · g · h_cg : masse totale × 9,81 × hauteur du centre de gravité debout |
 | energie cinetique membre | J | ½ · I · ω_max² par membre (I autour de l'articulation proximale, ω_max = vitesse à vide de son actionneur) |
 
-Balayage complet : 14 tâches  produit des niveaux = 559 872 combinaisons de capacités (avant le choix des axes et des actionneurs).
+Balayage complet : 14 tâches, produit des niveaux = 559 872 combinaisons de capacités (avant le choix des axes et des actionneurs).

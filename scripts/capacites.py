@@ -88,8 +88,9 @@ def doc(cap: dict) -> str:
     n = 1
     for t in cap["taches"].values():
         n *= len(t["niveaux"])
-    L += ["", f"Balayage complet : {len(cap['taches'])} tâches, produit des niveaux = {n:,} combinaisons "
-          "de capacités (avant le choix des axes et des actionneurs).".replace(",", " ")]
+    n_txt = f"{n:,}".replace(",", " ")                  # séparateur de milliers à la française
+    L += ["", f"Balayage complet : {len(cap['taches'])} tâches, produit des niveaux = {n_txt} combinaisons "
+          "de capacités (avant le choix des axes et des actionneurs)."]
     return "\n".join(L) + "\n"
 
 
