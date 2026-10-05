@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `1e56161167d0`, le 2026-10-05 ; 205 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `2057e05b98b5`, le 2026-10-05 ; 209 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -127,7 +127,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (16)
+## docs/ (18)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-actionneurs.md
@@ -140,6 +140,8 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/etat-factuel-20
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/faisabilite-2d-2026-10-03.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-claude-2026-10-01.md
@@ -189,7 +191,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (22)
+## scripts/ (23)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -203,6 +205,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/empreinte.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/estimation_thermique.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstream_limits.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_actionneurs.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/pages.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/pertes_cuivre.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/plan_decoupe.py
@@ -224,7 +227,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (15)
+## tests/ (16)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
@@ -235,6 +238,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_dimension
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_empreinte.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_actionneurs.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py

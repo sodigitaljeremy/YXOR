@@ -564,3 +564,2771 @@ fichiers:
     conditions: >
       Comme robstride_step_rs00.
     redistribuable: false
+  # ── Marché des actionneurs, 2026-10-05 : fichiers lus par les agents de collecte, jamais versés ──
+  marche_robstride_specs_20260917:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/%E7%81%B5%E8%B6%B3%E6%97%B6%E4%BB%A3RS%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E8%A7%84%E6%A0%BC%E4%BB%8B%E7%BB%8D%282026.09.17%29.pdf
+    reference: 灵足时代RS系列产品规格介绍(2026.09.17), 38 p. (RS00, RS01, RS02, RS02-IP67, RS03, RS04, RS05, RS06, 10P ; comparatif p. 38)
+    date: '2026-10-05'
+    empreinte: sha256:76c85c3c11f15bf3adc1676d6a4b8c931ffd9c18cec41221f8ea5a8b54e22ea1
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 7616895
+  marche_robstride_manuel_rs00:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS00/RS00User%20Manual260713.pdf
+    reference: RS00User Manual260713, 79 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:47d0ae5c909df2d989b0485c870d36900b9e17c72e608efeb3e13b6e98953832
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1946711
+  marche_robstride_manuel_rs01:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS01/RS01User%20Manual260713.pdf
+    reference: RS01User Manual260713, 79 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:36d14711d7835a335d14b6c8e8e8da4666207f0e2f981dd9959cfde457ab6123
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2114942
+  marche_robstride_manuel_rs02:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/RS02User%20Manual260713.pdf
+    reference: RS02User Manual260713, 80 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:87baa04792996978d1d4edc4176cd583e695e8bc09a65f97fc982b2e0a7f71b7
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2119490
+  marche_robstride_manuel_rs02_ip67:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/RS02-IP67User%20Manual260713.pdf
+    reference: RS02-IP67User Manual260713, 81 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:3895a00f74495589c551993e1051c04860569f70dc3f33403475fa44d985a8e3
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2266061
+  marche_robstride_manuel_rs03:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS03/RS03User%20Manual260713.pdf
+    reference: RS03User Manual260713, 84 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:07f3801991b2e59194add6f71d3c85a0ab629b10a1f2b94b6ff928d0bcb5c245
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2006448
+  marche_robstride_manuel_rs04:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS04/RS04User%20Manual260713.pdf
+    reference: RS04User Manual260713, 86 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:6782bf105cf4cc945142e65356bd7a21a9fc007b008ec3616307956030d72b31
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2061083
+  marche_robstride_manuel_rs05:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS05/RS05User%20Manual260713.pdf
+    reference: RS05User Manual260713, 86 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:1b2c61a6daa8331b9a348455005d10d6e425165c22e6f64c39cbca33f6360e82
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1964100
+  marche_robstride_manuel_rs06:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS06/RS06User%20Manual260713.pdf
+    reference: RS06User Manual260713, 84 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:f2790b989d7aa3f1ecee321b0ca773db18f07a7b1da647b38cb714d361d32b2f
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1942996
+  marche_robstride_manuel_el05:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/EL05/EL05User%20Manual260713.pdf
+    reference: EL05User Manual260713, 80 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:0497aae0b068d9b13444e1c12464a7613ee3db103adfbc95ca1710e310cbae26
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1709727
+  marche_robstride_manuel_rs10p:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/10P/RS10PUser%20Manual260907.pdf
+    reference: RS10PUser Manual260907, 79 p. (anglais)
+    date: '2026-10-05'
+    empreinte: sha256:7fbd3a5964be63ab2eabf39fa9149d6729a8bf124c45413c506930d4eddc4bff
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1882508
+  marche_robstride_manuel_rs10p_cn:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/10P/RS10P%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6260907.pdf
+    reference: RS10P使用说明书260907, 60 p. (chinois ; téléchargé, non exploité)
+    date: '2026-10-05'
+    empreinte: sha256:d5ad12358c7ef4108184d1c52097b05be21c30cf1fb14d3acd7304d90cb35f56
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1741216
+  marche_robstride_step_rs00:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS00/RS00.step
+    reference: STEP officiel RS00.step
+    date: '2026-10-05'
+    empreinte: sha256:4133dea27ccff90d69588dbc37662c9eafeed0bf858fc0a4cee93417e508abfe
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 426942
+  marche_robstride_step_rs01:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS01/RS01.stp
+    reference: STEP officiel RS01.stp
+    date: '2026-10-05'
+    empreinte: sha256:de32c796c9ef41d06dad599a59dc2087c5ce0cd9c88546f4b0c637d56ae09b9e
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2919314
+  marche_robstride_step_rs02:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/rs02.stp
+    reference: STEP officiel rs02.stp
+    date: '2026-10-05'
+    empreinte: sha256:c988a3a398986fb6bc1453bf768d25c3198fad72c43af3483b7135d7e7a8f063
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 976163
+  marche_robstride_step_rs02_ip67:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/RS02-ip67.STEP
+    reference: STEP officiel RS02-ip67.STEP
+    date: '2026-10-05'
+    empreinte: sha256:aa393bb9c93bbc60da1cdce69696c293ef301fd97c960bded36fca4e30cceeac
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 1069067
+  marche_robstride_step_rs03:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS03/RS03.stp
+    reference: STEP officiel RS03.stp
+    date: '2026-10-05'
+    empreinte: sha256:8eccaf6291e395d8622300396289df898ab18a1648193a5cd327cfbd2bf72500
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 4063847
+  marche_robstride_step_rs04:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS04/RS04.stp
+    reference: STEP officiel RS04.stp
+    date: '2026-10-05'
+    empreinte: sha256:841f5deaa15575e98bdca3a6d0b69f4207c305f56f1743f0a7122a42366996b1
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 8856745
+  marche_robstride_step_rs05:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS05/RS05.STEP
+    reference: STEP officiel RS05.STEP
+    date: '2026-10-05'
+    empreinte: sha256:35a143d7e04d84eeda8664591e33626a1802f614a5b76ac29f465620dec81792
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 6809653
+  marche_robstride_step_rs06:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS06/RS06-new.step
+    reference: STEP officiel RS06-new.step
+    date: '2026-10-05'
+    empreinte: sha256:ee6af519b6ef8d4a22e7e1f3d2196e1d60af0780e2c7cb78ba6118dd9b185d0e
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 564528
+  marche_robstride_step_rs06_ancien:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS06/RS06.STEP
+    reference: STEP officiel RS06.STEP
+    date: '2026-10-05'
+    empreinte: sha256:bb3fe7b10c3fde9e591264d91ee8ec469d4a92b60e369c6e31062ba650d3e014
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 4578386
+  marche_robstride_step_rs10p:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/10P/RS10.stp
+    reference: STEP officiel RS10.stp
+    date: '2026-10-05'
+    empreinte: sha256:19f3e3ad8201c9bd0d107db828ec66e76e421c831f6995fe1749076f087ab93b
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 3297246
+  marche_robstride_step_edulite05:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/EL05/el05.stp
+    reference: STEP officiel el05.stp
+    date: '2026-10-05'
+    empreinte: sha256:3c970be58644420e97a332473e9b1d806601125c9e95c95743ddeb0c99e27ee3
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 2430955
+  marche_robstride_readme:
+    source: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/README.md
+    reference: README du dépôt (tableau de sélection daté 2026-07-13)
+    date: '2026-10-05'
+    empreinte: sha256:0f3ab39fdd9507152083143e9ca008c4d1efe674d852109b200d43dda60de329
+    conditions: 'aucune licence déclarée pour le dépôt (API GitHub : license = null) ; manuel : mentions légales p. 1–2 (« Legal Statement ») sans clause de redistribution
+      ; non redistribuable par défaut'
+    redistribuable: false
+    taille_octets: 10618
+  marche_dm_j3507_2ec__dm_j3507_2ec_gear_motor_user_manual_v1_1_2026_04_16_pdf:
+    source: https://github.com/dmBots/DM-J3507-2EC/blob/master/manual/DM-J3507-2EC%20Gear%20Motor%20User%20Manual%20V1.1%202026-04-16.pdf
+    reference: manual/DM-J3507-2EC Gear Motor User Manual V1.1 2026-04-16.pdf
+    date: '2026-10-05'
+    empreinte: sha256:59c20cc87b434c6908a6671550cb25c7c263b8f19515fe97eeecd4a3545692d7
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 12845857
+  marche_dm_j3507_2ec__dm_3508_7_____pdf:
+    source: https://github.com/dmBots/DM-J3507-2EC/blob/master/drawings/2d/DM%203508-7%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA.PDF
+    reference: drawings/2d/DM 3508-7减速电机.PDF
+    date: '2026-10-05'
+    empreinte: sha256:eb5fd4007c61ce1f65d1ed9e58f44f1736c1ad712973b647007d457c661aaf99
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 114938
+  marche_dm_j3507_2ec__dm_3507_3d_241021_step:
+    source: https://github.com/dmBots/DM-J3507-2EC/blob/master/models/3d/dm_3507_3d-241021.STEP
+    reference: models/3d/dm_3507_3d-241021.STEP
+    date: '2026-10-05'
+    empreinte: sha256:583b499c3a9331614956861780ea5259597d39582d91ad0310fe0e447049d1db
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 4440459
+  marche_dm_j4310_2ec__dm_j4310_2ec_v1_1_geared_motor_user_manual_v1_3_2026_09_14_pdf:
+    source: https://github.com/dmBots/DM-J4310-2EC/blob/master/manual/DM-J4310-2EC%20V1.1%20Geared%20Motor%20User%20Manual%20V1.3%202026-09-14.pdf
+    reference: manual/DM-J4310-2EC V1.1 Geared Motor User Manual V1.3 2026-09-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:7bbc021b6c0839702a783e2cc445778701748103819847053360afa416cfb341
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16869769
+  marche_dm_j4310_2ec__dm_j4310_2ec_v1_2_geared_motor_user_manual_v1_4_2026_09_14_pdf:
+    source: https://github.com/dmBots/DM-J4310-2EC/blob/master/manual/DM-J4310-2EC%20V1.2%20Geared%20Motor%20User%20Manual%20V1.4%202026-09-14.pdf
+    reference: manual/DM-J4310-2EC V1.2 Geared Motor User Manual V1.4 2026-09-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:4d4646b7b56538d323e846c510d547b95ca9e59b2f656fc0752911993f30b245
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16645838
+  marche_dm_j4310_2ec__dm_j4310_v1_1______ver_b20230904_pdf:
+    source: https://github.com/dmBots/DM-J4310-2EC/blob/master/drawings/2d/DM_J4310_V1.1%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%20Ver.B20230904.PDF
+    reference: drawings/2d/DM_J4310_V1.1 减速电机 Ver.B20230904.PDF
+    date: '2026-10-05'
+    empreinte: sha256:d58268e0aab310e941f5e7d431b2b36593bca8d41fe3fa962b6c9469e47134aa
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 115374
+  marche_dm_j4310_2ec__dm_j4310_v1_1_________pdf:
+    source: https://github.com/dmBots/DM-J4310-2EC/blob/master/drawings/2d/DM_J4310_V1.1%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%20%E6%A0%87%E6%B3%A8.PDF
+    reference: drawings/2d/DM_J4310_V1.1 减速电机 标注.PDF
+    date: '2026-10-05'
+    empreinte: sha256:74e51a06ef012ccf0e03b9f9d76e12a849388c37c93ecb4a38459759f3a22a03
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 112770
+  marche_dm_j4310_2ec__dm_j4310_2ec_v1_1_3d_20260228_1_stp:
+    source: https://github.com/dmBots/DM-J4310-2EC/blob/master/models/3d/DM-J4310-2EC-V1.1_3d_20260228_1.stp
+    reference: models/3d/DM-J4310-2EC-V1.1_3d_20260228_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:596fdb1d78232f4f4a30676451b2d03ee25be044e1de78c9396e3a454d86675e
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16884136
+  marche_dm_j4310p_2ec__dm_j4310p_2ec_geared_motor_user_manual_v1_3_2026_09_14_pdf:
+    source: https://github.com/dmBots/DM-J4310P-2EC/blob/master/manual/DM-J4310P-2EC%20Geared%20Motor%20User%20Manual%20V1.3%202026-09-14.pdf
+    reference: manual/DM-J4310P-2EC Geared Motor User Manual V1.3 2026-09-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:13af8312706a6da571cd15c3096600162e02adc22df7e0bfd7be6bb15cfef13e
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16636929
+  marche_dm_j4310p_2ec__4310______rau_3505_2250717_pdf:
+    source: https://github.com/dmBots/DM-J4310P-2EC/blob/master/drawings/2d/4310%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA-rau%203505-2250717.PDF
+    reference: drawings/2d/4310 减速电机-rau 3505-2250717.PDF
+    date: '2026-10-05'
+    empreinte: sha256:875aa37a11302d75ba83c4df9cfc244c14fe55d35a048f0d2f0814659690071a
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 144189
+  marche_dm_j4310p_2ec__dm_j4310p_2ec_v1_1_3d_20260228_1_stp:
+    source: https://github.com/dmBots/DM-J4310P-2EC/blob/master/models/3d/DM-J4310P-2EC-V1.1_3d_20260228_1.stp
+    reference: models/3d/DM-J4310P-2EC-V1.1_3d_20260228_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:0483db3f60cae5b41a441c766760493b18f6a1aa7164e6fcf76ddc1d66f5e08a
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 35313678
+  marche_dm_j4340_2ec__dm_j4340_2ec__geared_motor_user_manual_v1_1_2026_09_08_pdf:
+    source: https://github.com/dmBots/DM-J4340-2EC/blob/master/manual/DM-J4340-2EC%20%20Geared%20Motor%20User%20Manual%20V1.1%202026-09-08.pdf
+    reference: manual/DM-J4340-2EC  Geared Motor User Manual V1.1 2026-09-08.pdf
+    date: '2026-10-05'
+    empreinte: sha256:1137924421c61fefa6b2c6d16bb7816c3dfb3b81086b60e29eb4a027f5722b4b
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16608039
+  marche_dm_j4340_2ec__dm_j4340_2ec__v1_1_geared_motor_user_manual_v1_3_2026_08_13_pdf:
+    source: https://github.com/dmBots/DM-J4340-2EC/blob/master/manual/DM-J4340-2EC%20%20V1.1%20Geared%20Motor%20User%20Manual%20V1.3%202026-08-13.pdf
+    reference: manual/DM-J4340-2EC  V1.1 Geared Motor User Manual V1.3 2026-08-13.pdf
+    date: '2026-10-05'
+    empreinte: sha256:fc144601d78d6169f73f4c87bc326a46d402782445f478a59acf38c3174e0351
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16791679
+  marche_dm_j4340_2ec__dm4340_____20251110_pdf:
+    source: https://github.com/dmBots/DM-J4340-2EC/blob/master/drawings/2d/DM4340%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA20251110.PDF
+    reference: drawings/2d/DM4340 减速电机20251110.PDF
+    date: '2026-10-05'
+    empreinte: sha256:df6a9a6e3206b87b03240abf3efe6c4778ce5e4840d2470e11946749e8fea504
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 159079
+  marche_dm_j4340_2ec__dm_j4340_2ec_v1_1_3d_20260325_1_stp:
+    source: https://github.com/dmBots/DM-J4340-2EC/blob/master/models/3d/DM-J4340-2EC-V1.1_3d_20260325_1.stp
+    reference: models/3d/DM-J4340-2EC-V1.1_3d_20260325_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:16094ac866da08d562bad12c2e4b91c0e569611a494045e319b18c5d3d793dd5
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 7633467
+  marche_dm_j4340p_2ec__dm_j4340p_2ec_geared_motor_user_manual_v1_2_2026_09_14_pdf:
+    source: https://github.com/dmBots/DM-J4340P-2EC/blob/master/manual/DM-J4340P-2EC%20Geared%20Motor%20User%20Manual%20V1.2%202026-09-14.pdf
+    reference: manual/DM-J4340P-2EC Geared Motor User Manual V1.2 2026-09-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:68cb2a0ea3ddace1018aabcc039f68befc14d9d1739157906e4171b076b7e76b
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16661030
+  marche_dm_j4340p_2ec__dm_j4340p_2ec_v1_1_geared_motor_user_manual_v1_4_2026_09_14_pdf:
+    source: https://github.com/dmBots/DM-J4340P-2EC/blob/master/manual/DM-J4340P-2EC%20V1.1%20Geared%20Motor%20User%20Manual%20V1.4%202026-09-14.pdf
+    reference: manual/DM-J4340P-2EC V1.1 Geared Motor User Manual V1.4 2026-09-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:99c9104563cbd57f88160d47745425e7e4692b292f8c0ede12538a0f5ef047cb
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16819961
+  marche_dm_j4340p_2ec__dm_4340p_20250728______pdf:
+    source: https://github.com/dmBots/DM-J4340P-2EC/blob/master/drawings/2d/DM%204340P%2020250728-%E6%A0%87%E6%B3%A8%E5%85%AC%E5%B7%AE.PDF
+    reference: drawings/2d/DM 4340P 20250728-标注公差.PDF
+    date: '2026-10-05'
+    empreinte: sha256:86e168a9dcf2853c6cb87d7ef5122a56648116283a4298bc6414693641c627c7
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 297734
+  marche_dm_j4340p_2ec__dm_j4340p_2ec_v1_1_3d_20260228_1_stp:
+    source: https://github.com/dmBots/DM-J4340P-2EC/blob/master/models/3d/DM-J4340P-2EC-V1.1_3d_20260228_1.stp
+    reference: models/3d/DM-J4340P-2EC-V1.1_3d_20260228_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:c6bf33a22a40b5882386ec7e62fb3ebe44bf44f6aa544736cd2ac52e684c4829
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 5139346
+  marche_dm_j6006_2ec__dm_j6006_2ec_______v1_0_pdf:
+    source: https://github.com/dmBots/DM-J6006-2EC/blob/master/manual/DM-J6006-2EC%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6V1.0.pdf
+    reference: manual/DM-J6006-2EC减速电机说明书V1.0.pdf
+    date: '2026-10-05'
+    empreinte: sha256:4dd5aca1fcb01313b8e56654115255452c3cf35805e58d9639c28fba60de1075
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 406513
+  marche_dm_j6006_2ec__dm_j6006_20250219_1_pdf:
+    source: https://github.com/dmBots/DM-J6006-2EC/blob/master/drawings/2d/DM-J6006-20250219-1.pdf
+    reference: drawings/2d/DM-J6006-20250219-1.pdf
+    date: '2026-10-05'
+    empreinte: sha256:d7c1ffbd445108e4f6dfce222f147300ad7452d0cc542851c49a0b30bfd1e1d7
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 133495
+  marche_dm_j6006_2ec__dm_j6006_2ec_20240822_1_stp:
+    source: https://github.com/dmBots/DM-J6006-2EC/blob/master/models/3d/DM-J6006-2EC_20240822_1.stp
+    reference: models/3d/DM-J6006-2EC_20240822_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:7a04a933153f064acd7d9dfe3d19b3f65f72f30bbea9a920e0c724476b033299
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 2800379
+  marche_dm_j6216l_2ec__dm_j6216l_2ec_gear_motor_user_manual_v1_0_2026_09_02_pdf:
+    source: https://github.com/dmBots/DM-J6216L-2EC/blob/master/manual/DM-J6216L-2EC%20Gear%20Motor%20User%20Manual%20V1.0%202026-09-02.pdf
+    reference: manual/DM-J6216L-2EC Gear Motor User Manual V1.0 2026-09-02.pdf
+    date: '2026-10-05'
+    empreinte: sha256:d7b6c07a6a1d28d6a7bbc23343f89589f267a6238d69282d1b486405590cb162
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 11780525
+  marche_dm_j6216l_2ec__dm_j6216l_2ec_________20260915_pdf:
+    source: https://github.com/dmBots/DM-J6216L-2EC/blob/master/drawings/2d/DM-J6216L-2EC%E5%AF%B9%E5%A4%96%E5%9B%BE%E7%BA%B8%28%E8%8B%B1%E6%96%87%29_20260915.pdf
+    reference: drawings/2d/DM-J6216L-2EC对外图纸(英文)_20260915.pdf
+    date: '2026-10-05'
+    empreinte: sha256:49f34d1b84c56b0cf89c50e0f469e22c580373a51a68f6657ddf0cf2736e9933
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 165676
+  marche_dm_j6216l_2ec__dm_j6216l_2ec_3d_model_step:
+    source: https://github.com/dmBots/DM-J6216L-2EC/blob/master/models/3d/DM-J6216L-2EC%203D%20Model.STEP
+    reference: models/3d/DM-J6216L-2EC 3D Model.STEP
+    date: '2026-10-05'
+    empreinte: sha256:8dd8d7314c4e1038717e36dd6b4aea74226a80ca2902e71e4426ceb1f1cebedf
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 28045582
+  marche_dm_j6216p_2ec__dm_j6216p_2ec_gear_motor_user_manual_v1_0_2026_09_02_pdf:
+    source: https://github.com/dmBots/DM-J6216P-2EC/blob/master/manual/DM-J6216P-2EC%20Gear%20Motor%20User%20Manual%20V1.0%202026-09-02.pdf
+    reference: manual/DM-J6216P-2EC Gear Motor User Manual V1.0 2026-09-02.pdf
+    date: '2026-10-05'
+    empreinte: sha256:28a0ce7f19e1fbbf78a0d138a007fe04b2453f3a0b56e55c703fe8f46100ab16
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 11762485
+  marche_dm_j6216p_2ec__dm_j6216p_2ec_________20260915_pdf:
+    source: https://github.com/dmBots/DM-J6216P-2EC/blob/master/drawings/2d/DM-J6216P-2EC%E5%AF%B9%E5%A4%96%E5%9B%BE%E7%BA%B8%28%E8%8B%B1%E6%96%87%29_20260915.pdf
+    reference: drawings/2d/DM-J6216P-2EC对外图纸(英文)_20260915.pdf
+    date: '2026-10-05'
+    empreinte: sha256:c82b2aac41b878be1d116144a7b86ee45697e4c710aec5b3f1d233ba9cb0263f
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 142603
+  marche_dm_j6216p_2ec__dm_j6216p_2ec_3d_model_step:
+    source: https://github.com/dmBots/DM-J6216P-2EC/blob/master/models/3d/DM-J6216P-2EC%203D%20Model.STEP
+    reference: models/3d/DM-J6216P-2EC 3D Model.STEP
+    date: '2026-10-05'
+    empreinte: sha256:97340f7542050dc84980e85b67d209bddd69964926bf7106ea048e83219a4851
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 21949905
+  marche_dm_j6248p_2ec__dm_j6248p_2ec_gear_motor_user_manual_v1_1_2026_04_13_1__pdf:
+    source: https://github.com/dmBots/DM-J6248P-2EC/blob/master/manual/DM-J6248P-2EC%20Gear%20Motor%20User%20Manual%20V1.1%202026-04-13%281%29.pdf
+    reference: manual/DM-J6248P-2EC Gear Motor User Manual V1.1 2026-04-13(1).pdf
+    date: '2026-10-05'
+    empreinte: sha256:523ec5bfaeb4dd57246a6b5c47ea2e56cd0f3355243f7f40a6e088b3365507f4
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 12571814
+  marche_dm_j6248p_2ec__dm_6248p_____20250920________pdf:
+    source: https://github.com/dmBots/DM-J6248P-2EC/blob/master/drawings/2d/DM%206248P%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA20250920-%E6%A0%87%E6%B3%A8%E5%85%AC%E5%B7%AE%E6%95%B0%E6%8D%AE.PDF
+    reference: drawings/2d/DM 6248P 减速电机20250920-标注公差数据.PDF
+    date: '2026-10-05'
+    empreinte: sha256:1515224ede7e20cc275a102916b5ae8c2787b1607a1a011a6e3009ca76e5c155
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 270745
+  marche_dm_j6248p_2ec__dm_6248_____20250717_1_stp:
+    source: https://github.com/dmBots/DM-J6248P-2EC/blob/master/models/3d/DM%206248%20%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA20250717_1.stp
+    reference: models/3d/DM 6248 减速电机20250717_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:b76f813cc687ae02d60fbf0285e29c2397510fbbddaaa309c9249e096569d79e
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 6668537
+  marche_dm_j8006_2ec__dm_j8006_2ec_v1_1_______v1_0_pdf:
+    source: https://github.com/dmBots/DM-J8006-2EC/blob/master/manual/DM-J8006-2EC%20V1.1%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6V1.0.pdf
+    reference: manual/DM-J8006-2EC V1.1减速电机说明书V1.0.pdf
+    date: '2026-10-05'
+    empreinte: sha256:a1b7b0a74aded1f07333f3e1caae2dbe5854e953ff111ade96847f7991f68111
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 633279
+  marche_dm_j8006_2ec______dm_j8006_v1_1_3d_20241207_pdf:
+    source: https://github.com/dmBots/DM-J8006-2EC/blob/master/drawings/2d/%28%E5%9C%A8%E5%94%AE%29dm-j8006_v1_1-3d_20241207.pdf
+    reference: drawings/2d/(在售)dm-j8006_v1_1-3d_20241207.pdf
+    date: '2026-10-05'
+    empreinte: sha256:94cfa7aafee0d15e55ce770c68300930b134f83ba2b6fb15861ab9ee39733b11
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 358107
+  marche_dm_j8006_2ec____2d___dm_j8006_2ec_v1_1_3d_20241127_stp:
+    source: https://github.com/dmBots/DM-J8006-2EC/blob/master/models/3d/%EF%BC%88%E4%BB%A52D%E4%B8%BA%E5%87%86%EF%BC%89dm_j8006-2ec_V1.1-3d_20241127.stp
+    reference: models/3d/（以2D为准）dm_j8006-2ec_V1.1-3d_20241127.stp
+    date: '2026-10-05'
+    empreinte: sha256:c41d32a292f37492f16b56bcd7c367933c707e960533ff1e10da56751c2ce3fa
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 2464217
+  marche_dm_j8009_2ec__dm_j8009_2ec_gear_motor_user_manual_v1_1_4__pdf:
+    source: https://github.com/dmBots/DM-J8009-2EC/blob/master/manual/DM-J8009-2EC%20Gear%20Motor%20User%20Manual%20V1.1%284%29.pdf
+    reference: manual/DM-J8009-2EC Gear Motor User Manual V1.1(4).pdf
+    date: '2026-10-05'
+    empreinte: sha256:1aa825763d55b301c71769fd56170151c64ad8e5883f0f84000c0d84c3435961
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 13298012
+  marche_dm_j8009_2ec__dm8009____20240116b_pdf:
+    source: https://github.com/dmBots/DM-J8009-2EC/blob/master/drawings/2d/DM8009%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA20240116B.PDF
+    reference: drawings/2d/DM8009减速电机20240116B.PDF
+    date: '2026-10-05'
+    empreinte: sha256:79295c8515416227806571f65bf63bc4100d63ff0d42c8f904e324cc99840cfb
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 147536
+  marche_dm_j8009_2ec__dm8009_20240822_stp:
+    source: https://github.com/dmBots/DM-J8009-2EC/blob/master/models/3d/dm8009-20240822.stp
+    reference: models/3d/dm8009-20240822.stp
+    date: '2026-10-05'
+    empreinte: sha256:2428ff0a27188c173a43bf13e437dd6ca2940f11e0dd347960915421cddb46dd
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 3076919
+  marche_dm_j8009p_2ec__dm_j8009p_2ec_gear_motor_user_manual_v1_3_2026_09_10_pdf:
+    source: https://github.com/dmBots/DM-J8009P-2EC/blob/master/manual/DM-J8009P-2EC%20Gear%20Motor%20User%20Manual%20V1.3%202026-09-10.pdf
+    reference: manual/DM-J8009P-2EC Gear Motor User Manual V1.3 2026-09-10.pdf
+    date: '2026-10-05'
+    empreinte: sha256:95a7a7b7db60bf0927ceda6000faeb5cfc7e68529c05e1c586fb57fd7f0588c4
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 12854714
+  marche_dm_j8009p_2ec__dm_j8009p_2ec_v1_1_gear_motor_user_manual_v1_0_2026_09_10_pdf:
+    source: https://github.com/dmBots/DM-J8009P-2EC/blob/master/manual/DM-J8009P-2EC%20V1.1%20Gear%20Motor%20User%20Manual%20V1.0%202026-09-10.pdf
+    reference: manual/DM-J8009P-2EC V1.1 Gear Motor User Manual V1.0 2026-09-10.pdf
+    date: '2026-10-05'
+    empreinte: sha256:5ef6eb2c516bb935f924faec91a0d92b36f542d0733b7d2b6deb425f8c497378
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 13012005
+  marche_dm_j8009p_2ec__8009_rau_5005_20240809_pdf:
+    source: https://github.com/dmBots/DM-J8009P-2EC/blob/master/drawings/2d/8009-rau%205005-20240809.PDF
+    reference: drawings/2d/8009-rau 5005-20240809.PDF
+    date: '2026-10-05'
+    empreinte: sha256:fd3541583f47542bd4cd239bf5f3f09606c58fcb832fb1961f7a4ef775e20128
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 192171
+  marche_dm_j8009p_2ec__8009_rau_5005______20240809_stp:
+    source: https://github.com/dmBots/DM-J8009P-2EC/blob/master/models/3d/8009-RAU_5005_%E5%A4%96%E5%BD%A2%E5%B0%BA%E5%AF%B8-20240809.stp
+    reference: models/3d/8009-RAU_5005_外形尺寸-20240809.stp
+    date: '2026-10-05'
+    empreinte: sha256:506a681106bb3e0511d457076fbf3f2fa83edfdf6a8cf57dfd39335756b837c4
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 1411107
+  marche_dm_j8520p_2ec__8520_____pdf:
+    source: https://github.com/dmBots/DM-J8520P-2EC/blob/master/drawings/2d/8520%20%E5%A4%96%E5%BD%A2%E5%9B%BE.pdf
+    reference: drawings/2d/8520 外形图.pdf
+    date: '2026-10-05'
+    empreinte: sha256:7ae57712afccdde1f411100da2eb892cb501145fbda1d89d06eb8929032ddb9e
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 201037
+  marche_dm_j8520p_2ec_______8520a_stp:
+    source: https://github.com/dmBots/DM-J8520P-2EC/blob/master/models/3d/%E5%A4%96%E5%BD%A2%E6%A8%A1%E5%9E%8B-8520A.stp
+    reference: models/3d/外形模型-8520A.stp
+    date: '2026-10-05'
+    empreinte: sha256:24d9277cea67c7a8259105c9a58d151d4eb14426193cff908ca7efe1770ba5ca
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 6392183
+  marche_dm_j10010_2ec__dm_j10010_2ec_______v1_0_pdf:
+    source: https://github.com/dmBots/DM-J10010-2EC/blob/master/manual/DM-J10010-2EC%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6V1.0.pdf
+    reference: manual/DM-J10010-2EC减速电机说明书V1.0.pdf
+    date: '2026-10-05'
+    empreinte: sha256:7c14d5f78bd604cdc9747c5c4ac3be5c28b6a20899fd8131d6653adee27c0650
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 581136
+  marche_dm_j10010_2ec__dm_10010____20240823_pdf:
+    source: https://github.com/dmBots/DM-J10010-2EC/blob/master/drawings/2d/DM_10010%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA20240823.pdf
+    reference: drawings/2d/DM_10010减速电机20240823.pdf
+    date: '2026-10-05'
+    empreinte: sha256:b1f4aa21c1c77bc7a0b64ead15c46628e88f72b7d61d1fde690871157d0c9145
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 1653036
+  marche_dm_j10010_2ec__dm_j10010_2ec_3d20240822_1_stp:
+    source: https://github.com/dmBots/DM-J10010-2EC/blob/master/models/3d/DM-J10010-2EC_3d20240822_1.stp
+    reference: models/3d/DM-J10010-2EC_3d20240822_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:5e5d515993c421e98faf26be52380e497a950e3ffab8a6bc31019736e8a329c5
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 27387250
+  marche_dm_j10010l_2ec__dm_j10010l_2ec_______v1_1_pdf:
+    source: https://github.com/dmBots/DM-J10010L-2EC/blob/master/manual/DM-J10010L-2EC%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6V1.1.pdf
+    reference: manual/DM-J10010L-2EC减速电机说明书V1.1.pdf
+    date: '2026-10-05'
+    empreinte: sha256:b367bbb2797336bf71c74c05f1c3ce29653ee614ee8e202773228bd5150403b5
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 831251
+  marche_dm_j10010l_2ec__dm_j10010l_2ec_2d____pdf:
+    source: https://github.com/dmBots/DM-J10010L-2EC/blob/master/drawings/2d/dm-j10010l-2ec-2D%E5%B0%BA%E5%AF%B8%E5%9B%BE.pdf
+    reference: drawings/2d/dm-j10010l-2ec-2D尺寸图.pdf
+    date: '2026-10-05'
+    empreinte: sha256:4f677c3c93ed2de699f96ed8110e464bdda9c719e37d61645503513835532263
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 354827
+  marche_dm_j10010l_2ec__dm_j10010l_0730_1_step:
+    source: https://github.com/dmBots/DM-J10010L-2EC/blob/master/models/3d/dm-j10010l-0730_1.STEP
+    reference: models/3d/dm-j10010l-0730_1.STEP
+    date: '2026-10-05'
+    empreinte: sha256:c9df4b76899ec5a236807b730850aad79093ced8f75c1c0446defe10879ed57a
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 25400688
+  marche_dm_j10422p_2ec__dm_j10422p_2ec_gear_motor_user_manual_v1_1_2026_04_16_pdf:
+    source: https://github.com/dmBots/DM-J10422P-2EC/blob/master/manual/DM-J10422P-2EC%20Gear%20Motor%20User%20Manual%20V1.1%202026-04-16.pdf
+    reference: manual/DM-J10422P-2EC Gear Motor User Manual V1.1 2026-04-16.pdf
+    date: '2026-10-05'
+    empreinte: sha256:8e6635cfe4979c01b8d7a516e88d99b1bab125c7f8cf6856097697a50674ef4c
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 13457276
+  marche_dm_j10422p_2ec__dm_j10422p_2ec_____20251215_pdf:
+    source: https://github.com/dmBots/DM-J10422P-2EC/blob/master/drawings/2d/DM-J10422P-2EC%20%E5%A4%96%E5%BD%A2%E5%9B%BE-20251215.pdf
+    reference: drawings/2d/DM-J10422P-2EC 外形图-20251215.pdf
+    date: '2026-10-05'
+    empreinte: sha256:8715cfa6f405db50e4ed7fb2f62384808fd7219ebb7135064c4ae15ed9eaa019
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 144133
+  marche_dm_j10422p_2ec__dm_j10422p_2ec____20251231_step:
+    source: https://github.com/dmBots/DM-J10422P-2EC/blob/master/models/3d/DM-J10422P-2EC%E5%A4%96%E5%BD%A2%E5%9B%BE-20251231.STEP
+    reference: models/3d/DM-J10422P-2EC外形图-20251231.STEP
+    date: '2026-10-05'
+    empreinte: sha256:952510250af71691000145a26faf28a5d3c228abbaae84023323eff6c45bb259
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 14848761
+  marche_dm_jh11_51_101_2ec__dm_jh11_51_101_2ec_gear_motor__user_manual_v1_1_2025_11_24_pdf:
+    source: https://github.com/dmBots/DM-JH11-51_101-2EC/blob/master/manual/DM-JH11-51%26101-2EC%20Gear%20Motor%20%20User%20Manual%20V1.1%202025-11-24.pdf
+    reference: manual/DM-JH11-51&101-2EC Gear Motor  User Manual V1.1 2025-11-24.pdf
+    date: '2026-10-05'
+    empreinte: sha256:10edf626f3f5b2430bc1b0bed8e5001817c0f22d0284d2b39be52f4667d82478
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 16273620
+  marche_dm_jh11_51_101_2ec__dm_jh11_2ec_20260515_pdf:
+    source: https://github.com/dmBots/DM-JH11-51_101-2EC/blob/master/drawings/2d/DM-JH11-2EC-20260515.pdf
+    reference: drawings/2d/DM-JH11-2EC-20260515.pdf
+    date: '2026-10-05'
+    empreinte: sha256:92d254561d80eb62e6732c05763965938eba4a23b5f9ac96ce48da815accff99
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 222874
+  marche_dm_jh11_51_101_2ec__dm_jh11_2ec_20251015_step:
+    source: https://github.com/dmBots/DM-JH11-51_101-2EC/blob/master/models/3d/DM-JH11-2EC-20251015.STEP
+    reference: models/3d/DM-JH11-2EC-20251015.STEP
+    date: '2026-10-05'
+    empreinte: sha256:ffbd968716f4379a7207087088b648e555a532e9bde2762d8504e1dc02e09c27
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 13100602
+  marche_dm_jh14_51_101_2ec__dm_jh14_51_101_2ec_gear_motor__user_manual_v1_0_2026_01_03_pdf:
+    source: https://github.com/dmBots/DM-JH14-51_101-2EC/blob/master/manual/DM-JH14-51%26101-2EC%20Gear%20Motor%20%20User%20Manual%20V1.0%202026-01-03.pdf
+    reference: manual/DM-JH14-51&101-2EC Gear Motor  User Manual V1.0 2026-01-03.pdf
+    date: '2026-10-05'
+    empreinte: sha256:bcc795d60467584745a596bfc5924f1c7c4531e3e0b2216d3b3dc8126c2e40c8
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 14409612
+  marche_dm_jh14_51_101_2ec__dm_jh14_2ec_20260615_pdf:
+    source: https://github.com/dmBots/DM-JH14-51_101-2EC/blob/master/drawings/2d/DM-JH14-2EC-20260615.pdf
+    reference: drawings/2d/DM-JH14-2EC-20260615.pdf
+    date: '2026-10-05'
+    empreinte: sha256:4b7fb0d81ae2e18ba9913876fa57cf2964a8339b4124ee121de0ce9cf1a7d727
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 332927
+  marche_dm_jh14_51_101_2ec__dm_jh14_2ec_20260108_step:
+    source: https://github.com/dmBots/DM-JH14-51_101-2EC/blob/master/models/3d/DM-JH14-2EC-20260108.STEP
+    reference: models/3d/DM-JH14-2EC-20260108.STEP
+    date: '2026-10-05'
+    empreinte: sha256:bf847edac25d56e7cea25076f0ff0436049abf06a90e407c3dbe54eb905eb89c
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 18970100
+  marche_dm_jh17_51_101_2ec__dm_jh17_51_101_2ec_gear_motor__user_manual_v1_0_2026_05_14_pdf:
+    source: https://github.com/dmBots/DM-JH17-51_101-2EC/blob/master/manual/DM-JH17-51%26101-2EC%20Gear%20Motor%20%20User%20Manual%20V1.0%202026-05-14.pdf
+    reference: manual/DM-JH17-51&101-2EC Gear Motor  User Manual V1.0 2026-05-14.pdf
+    date: '2026-10-05'
+    empreinte: sha256:eb44ed68c19ce1972d9555e331ecb2a86ac7257e365b0c0e69c4699877a219fe
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 14269671
+  marche_dm_jh17_51_101_2ec__dm_jh17_20260515_pdf:
+    source: https://github.com/dmBots/DM-JH17-51_101-2EC/blob/master/drawings/2d/DM-JH17-20260515.pdf
+    reference: drawings/2d/DM-JH17-20260515.pdf
+    date: '2026-10-05'
+    empreinte: sha256:2271e77a8342b7e034ad23f76ef818e476818081bdebf93d8cb53cd63dd788a5
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 270121
+  marche_dm_jh17_51_101_2ec__dm_jh17_2ec_20260302_step:
+    source: https://github.com/dmBots/DM-JH17-51_101-2EC/blob/master/models/3d/DM-JH17-2EC-20260302.STEP
+    reference: models/3d/DM-JH17-2EC-20260302.STEP
+    date: '2026-10-05'
+    empreinte: sha256:632f575949cef7c2934f8753c2dc203cb357bfec5ac47dd06d5199a12093d96a
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 18513578
+  marche_dm_h3510__dm_h3510________pdf:
+    source: https://github.com/dmBots/DM-H3510/blob/master/manual/DM-H3510%E8%BD%AE%E6%AF%82%E7%94%B5%E6%9C%BA%E8%AF%B4%E6%98%8E%E4%B9%A6.pdf
+    reference: manual/DM-H3510轮毂电机说明书.pdf
+    date: '2026-10-05'
+    empreinte: sha256:7353a1e69a508510aec30571d26aa54c93128835b778bfb66e113aadcf948032
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 1054489
+  marche_dm_h3510__3510______241112_pdf:
+    source: https://github.com/dmBots/DM-H3510/blob/master/drawings/2d/3510%20%E8%BD%AE%E6%AF%82%E7%94%B5%E6%9C%BA-241112.pdf
+    reference: drawings/2d/3510 轮毂电机-241112.pdf
+    date: '2026-10-05'
+    empreinte: sha256:6cc6af5c761d7fc832b8c34ac6ff3a7ca94977a420ead5da34290e0e4846be41
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 87332
+  marche_dm_h3510__dm3510_20250206_1_stp:
+    source: https://github.com/dmBots/DM-H3510/blob/master/models/3d/DM3510-20250206_1.stp
+    reference: models/3d/DM3510-20250206_1.stp
+    date: '2026-10-05'
+    empreinte: sha256:23bee5e567e2e4980e0096e9fa068350c75c5da02ec7bbc203d903f6b1f936fe
+    conditions: 'dépôt GitHub dmBots sans fichier de licence (tous droits réservés par défaut) ; manuels : « No part of this document may be reproduced … without prior
+      written permission »'
+    redistribuable: false
+    taille_octets: 3971652
+  marche_steadywin__gim3505_8__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg7py7xQYoqJnB3wY.STEP?f=GIM3505-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25071501.STEP
+    reference: GIM3505-8安装尺寸图_25071501.STEP
+    date: '2026-10-05'
+    empreinte: sha256:0b524cbecf79b392ee560f2f291a484b08316d11927b720ea3c717f7c2b03d14
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 912844
+  marche_steadywin__gim3505_8__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg0Zy7xQYo9-X6Rw.pdf?f=GIM3505-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM3505-8安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:12f842ff68f505333270df93c87389ec258d500007a1c43a7e3d457a244cd023
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 175082
+  marche_steadywin__gim3505_9__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgmPyOxgYowO3kggI.stp?f=3505-9%E5%8F%8C%E7%BC%96-%E6%97%A0%E9%A9%B1%E5%8A%A8%E7%9B%96.stp
+    reference: 3505-9双编-无驱动盖.stp
+    date: '2026-10-05'
+    empreinte: sha256:cb1ccb0e9bf62c2e09a886f9395797f0463920c931f0f3aa7a1dc0e9a96d5a55
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 758378
+  marche_steadywin__gim3505_9__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgi4vDxgYorILnyAQ.pdf?f=3505-9%E5%8F%8C%E7%BC%96-%E6%97%A0%E9%A9%B1%E5%8A%A8%E7%9B%96-%E5%AE%89%E8%A3%85%E5%9B%BE-20250916.pdf
+    reference: 3505-9双编-无驱动盖-安装图-20250916.pdf
+    date: '2026-10-05'
+    empreinte: sha256:65666b2f9d8bd99dad2c8bc38386ff96b8d93689a9dcf542cfae9b1d55ad06d7
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 100022
+  marche_steadywin__gim3505_36__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgq-2OxgYoxND7zwU.stp?f=3505-36%E5%8F%8C%E7%BC%96-%E6%97%A0%E9%A9%B1%E5%8A%A8%E7%9B%96.stp
+    reference: 3505-36双编-无驱动盖.stp
+    date: '2026-10-05'
+    empreinte: sha256:25311ff0bf33834f5f6ba7f13fc8460b359b760dffb8caba6dbf713756a627ed
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 798742
+  marche_steadywin__gim3505_36__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg3YrDxgYo6q60rAE.pdf?f=3505-36%E5%8F%8C%E7%BC%96-%E6%97%A0%E9%A9%B1%E5%8A%A8%E7%9B%96-%E5%AE%89%E8%A3%85%E5%9B%BE-20250922.pdf
+    reference: 3505-36双编-无驱动盖-安装图-20250922.pdf
+    date: '2026-10-05'
+    empreinte: sha256:f4c359e9633f3569431544c29c2f8c172443fb95bfc0ce9577c3e5f8ad1b79f9
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 103367
+  marche_steadywin__gim3510_8__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg16nMuQYoxqrI5AM.stp?f=3510-8%E5%AE%89%E8%A3%85%E5%9B%BE.stp
+    reference: 3510-8安装图.stp
+    date: '2026-10-05'
+    empreinte: sha256:7af2aa66c124c9b155e0365e632b64f040c79db3b65e6a73e0b6e7e7e2cf1876
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1510025
+  marche_steadywin__gim3510_8__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgo7PAxQYo-LuFygQ.pdf?f=GIM3510-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM3510-8安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:53810e5dab95c14c330185a5e00d9394ff90ab960c40b695baa9b1fd5d25f765
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 114423
+  marche_steadywin__gim3510_64__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgvZX-ugYo9Ya53AY.stp?f=3510-64%E5%AE%89%E8%A3%85%E5%9B%BE.stp
+    reference: 3510-64安装图.stp
+    date: '2026-10-05'
+    empreinte: sha256:8c165760fdbaabb602a643ad517cf44489b55c3181b625d3ec7fdf443330d034
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1889011
+  marche_steadywin__gim3510_64__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg7rTAxQYo0e3mjgc.pdf?f=GIM3510-64%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM3510-64安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:d48be9b70a66067dacdf1ee7df2474a6549fbe4231c41183421ea403c7a5bcaa
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 114144
+  marche_steadywin__gim4305_10__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg_7fAxQYoxarhjQI.STEP?f=GIM4305-10_GDS34%E5%AE%89%E8%A3%85%E5%9B%BE%20_25071701.STEP
+    reference: GIM4305-10_GDS34安装图 _25071701.STEP
+    date: '2026-10-05'
+    empreinte: sha256:a4bb4850470bcb9a7ec1f56e7f41514b229d877e34b8faa4d59596dbebecc997
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1064727
+  marche_steadywin__gim4305_10__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg1rfAxQYo4P63Xg.pdf?f=GIM4305-10_GDS34%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM4305-10_GDS34安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:37716a6da41c78096d411348ad2c9a7f6030dfce70013bb22187a765e923e334
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 159837
+  marche_steadywin__gim4310_10__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAggL-tuAYoyYXA1wY.stp?f=4310-10SHS%E5%AE%89%E8%A3%85%E5%9B%BE.stp
+    reference: 4310-10SHS安装图.stp
+    date: '2026-10-05'
+    empreinte: sha256:e389ff16c0426e0305f31a267eaacd6c9d684b97cfb5b35c6571b576d4a1211f
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 455236
+  marche_steadywin__gim4310_10__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg57zAxQYooo_e9QM.pdf?f=GIM4310-10%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM4310-10安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:87e426c17dc844a448e5d5aabea4e91a51652860a22eb3f16a2cc9ff81f097d7
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 142279
+  marche_steadywin__gim4310_36__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg58DAxQYokcS_0wY.STEP?f=GIM4310-36%E7%94%B5%E6%9C%BA_25071001.STEP
+    reference: GIM4310-36电机_25071001.STEP
+    date: '2026-10-05'
+    empreinte: sha256:f8f45184082562b8d36a892f8d758a1b6324753babe7c7e7d22f37234e5af2d1
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2572801
+  marche_steadywin__gim4310_36__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg1cDAxQYowLTMfg.pdf?f=GIM4310-36%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM4310-36安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:7e2e23dfe070873d7131a11103e781a0ddee53b401471082c441d39521cd8212
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 128176
+  marche_steadywin__gim4310_40__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgyJPHxAYooPWDoAM.stp?f=4310-40%E5%AE%89%E8%A3%85%E5%9B%BE.stp
+    reference: 4310-40安装图.stp
+    date: '2026-10-05'
+    empreinte: sha256:9016da015ffdb01422a006c2548d40c93a875bf47fc9572a2a21cdd82e79f48e
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1025271
+  marche_steadywin__gim4310_40__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgypLHxAYo9qub0AU.pdf?f=4310-40%E5%AE%89%E8%A3%85%E5%9B%BE.pdf
+    reference: 4310-40安装图.pdf
+    date: '2026-10-05'
+    empreinte: sha256:88c4eb4db028371dfa2ca5efae24f7030c66114c856b20f1ca4b91088c7009d3
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 151035
+  marche_steadywin__gim4315_8__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg2oL9uwYonY73NA.stp?f=4315-8%E5%AE%89%E8%A3%85%E5%9B%BE-241227.stp
+    reference: 4315-8安装图-241227.stp
+    date: '2026-10-05'
+    empreinte: sha256:8cbc22c4b39d5ae91e317cbc4a987fdda74e67ff454be851e43d533982c1558a
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1465597
+  marche_steadywin__gim4315_8__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgi8TAxQYo5NrWWQ.pdf?f=GIM4315-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM4315-8安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:0c472fc65104b47baf438b43b6036cb284d240a00900054012c0867670c2c32b
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 114571
+  marche_steadywin__gim6010_6__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgmYvevwYooN_MwAI.STEP?f=GIM6010-6%20_25032701.STEP
+    reference: GIM6010-6 _25032701.STEP
+    date: '2026-10-05'
+    empreinte: sha256:65960ac4a0e97bf0c6b90b6010bd2fd7c4fdc2c3330b5df6fb66c690b43cd0d7
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2790188
+  marche_steadywin__gim6010_6__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg7MfAxQYo5umP4wY.pdf?f=GIM6010-6%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM6010-6安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:41fd058d716e3109007af6b2adc00a130a36bad694747bb3239ec5ef70bb80ac
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 120298
+  marche_steadywin__gim6010_8__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgjJnprwYon6erHw.stp?f=6010-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE20240313.stp
+    reference: 6010-8安装尺寸图20240313.stp
+    date: '2026-10-05'
+    empreinte: sha256:813edb29802b0b93d09e1dc44090cfa22f18baebe534db3f99e2d2bcd041adff
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2523234
+  marche_steadywin__gim6010_8__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgt87AxQYolOC2pAE.pdf?f=GIM6010-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM6010-8安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:b475f3e185b79963751e95eead83e626ba10ad9f7b4133d0d918cb6660a31aed
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 131543
+  marche_steadywin__gim6010_36__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg-OXhqQYou-ny8gE.stp?f=6010-36%E5%AE%89%E8%A3%85%E5%9B%BE.stp
+    reference: 6010-36安装图.stp
+    date: '2026-10-05'
+    empreinte: sha256:132f6724158e8649a9ba91660ae2b3528c7bdb5eb48286159dd2c87a0d5f706c
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2040311
+  marche_steadywin__gim6010_36__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgy9DAxQYo_5alsgM.pdf?f=GIM6010-36%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM6010-36安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:de12e197479f178a7380df014e2748017af49021ee932cd0c30d7007f2615ac0
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 120957
+  marche_steadywin__gim6010_48__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg2tHAxQYo6-WnEg.STEP?f=GIM6010-48_2025072201.STEP
+    reference: GIM6010-48_2025072201.STEP
+    date: '2026-10-05'
+    empreinte: sha256:2d25035ef8b8050cfd887bbcfb91e32626bcf50c64b7383414f3a7da01cb2910
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 4444656
+  marche_steadywin__gim6010_48__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgztHAxQYotNLCmQM.pdf?f=GIM6010-48%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM6010-48安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:45181f479a7737f7cabbae2678fa31477943ccba816aa37e2d5a91ad3c5f378e
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 135799
+  marche_steadywin__gim8108_6__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgt_PSogYozOGcCg.STEP?f=GIM8108-6.STEP
+    reference: GIM8108-6.STEP
+    date: '2026-10-05'
+    empreinte: sha256:07bbd6cdf6406afe042e8bfc65f19657626df33eb8ffe5de058e29386d9fe7a1
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 3230920
+  marche_steadywin__gim8108_6__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAglvD5xQYo3qS-Xw.pdf?f=GIM8108-6%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8108-6安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:2781ef2a9b28d5e1f4dc8a49bff97a7b98c365e4fb6ebd03c7e64a6ec864b0d5
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 196523
+  marche_steadywin__gim8108_8__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg7PH5xQYoiLDc8AQ.STEP?f=GIM8108-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072201.STEP
+    reference: GIM8108-8安装尺寸图_25072201.STEP
+    date: '2026-10-05'
+    empreinte: sha256:2ed2b421bb11bb3284e6c6540db5de666942533a22efefafdc7bfdb6ee208380
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2183826
+  marche_steadywin__gim8108_8__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg-fH5xQYo8Kn63AI.pdf?f=GIM8108-8%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8108-8安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:e00b94a5452eae8b8420ea92f42b280dd419a34c2df101548c5d6725e3e9607e
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 125720
+  marche_steadywin__gim8108_9__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgtY3evwYokMfEygY.STEP?f=GIM8108-9%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B_25032802.STEP
+    reference: GIM8108-9三维模型_25032802.STEP
+    date: '2026-10-05'
+    empreinte: sha256:cca07fe23073cd584ab75e578172f7722b9b3003937fa472d260f863a6d645d6
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1949510
+  marche_steadywin__gim8108_9__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg1vP5xQYozOyjlwE.pdf?f=GIM8108-9%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8108-9安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:3463855ab25582846a915e85ccd6376e2432f81818dc40ad468ea2d5aff23e9b
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 189595
+  marche_steadywin__gim8108_36__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg7OLSogYojq3_FA.STEP?f=GIM8108-36.STEP
+    reference: GIM8108-36.STEP
+    date: '2026-10-05'
+    empreinte: sha256:0498d99479d1152b50caef1de0b23140b20e20da4a7febcc9692e0831b09fc95
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 3203011
+  marche_steadywin__gim8108_36__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgt-T5xQYow9iJhwY.pdf?f=GIM8108-36%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8108-36安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:b9bb0874174fa0ffd17448468879c9fc14df3e01c64f603d59509d4654b76492
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 182327
+  marche_steadywin__gim8108_48__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAgnfX5xQYo4umh2QI.STEP?f=GIM8108-48%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072201.STEP
+    reference: GIM8108-48安装尺寸图_25072201.STEP
+    date: '2026-10-05'
+    empreinte: sha256:cb3d75d52b9a1ed63a4b39e18785c7fc01c626a925e0d6e9df47c48b40637e42
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2246787
+  marche_steadywin__gim8108_48__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg_fT5xQYoio-5pwM.pdf?f=GIM8108-48%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8108-48安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:d4cb60a7dc37c9fed17f61d014fbc7158a1d8654a5c064d01cc13e2586338126
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 129495
+  marche_steadywin__gim8115_6__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAgyursqQYo_NTAdw.stp?f=8115-6%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE.stp
+    reference: 8115-6安装尺寸图.stp
+    date: '2026-10-05'
+    empreinte: sha256:e7f06929ff4dc087c8387873bcc5e3781b3a6f69adb0cea12900ea7adacdee02
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 1203481
+  marche_steadywin__gim8115_6__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgoPb5xQYowNH56wU.pdf?f=GIM8115-6%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8115-6安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:cb50da1bc9449bcfdc19aaffc534ef5fb553f8a76ad7e3fa77aecd011cf448f4
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 196348
+  marche_steadywin__gim8115_9__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABBrGAAg5fb5xQYo08bV_wc.STEP?f=GIM8115-9%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072201.STEP
+    reference: GIM8115-9安装尺寸图_25072201.STEP
+    date: '2026-10-05'
+    empreinte: sha256:1d9aaa70346cecf81fda554697d3b4e753a53d2d37e36ea0944f0fcb86ed7e55
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 3732959
+  marche_steadywin__gim8115_9__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAg1fb5xQYohtCq_wQ.pdf?f=GIM8115-9%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8115-9安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:1c2bff919838bbed667abfa3320dc528ba168dcee1870856c9da2ff32c161646
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 189898
+  marche_steadywin__gim8115_36__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg1_HSogYo8Mby7QE.STEP?f=GIM8115-36.STEP
+    reference: GIM8115-36.STEP
+    date: '2026-10-05'
+    empreinte: sha256:3e3724219bd6c8176af29efa4589c8926c12b0c3f54caf87558bfebcff4fb9e6
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 3203097
+  marche_steadywin__gim8115_36__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgzPf5xQYo_Lv3kQQ.pdf?f=GIM8115-36%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM8115-36安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:9ee793a3e24b606570b48286c73d008302b10f6b39fa32df7081800fdad6f238
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 180576
+  marche_steadywin__gim10015_9__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg0r_RqwYo1Z2xaA.stp?f=GIM10015-9.stp
+    reference: GIM10015-9.stp
+    date: '2026-10-05'
+    empreinte: sha256:e3b6d6dcbad9a30b3dcd15e8c93d1cf3c3273e663280ef7510864cf3dd446bf4
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 2299509
+  marche_steadywin__gim10015_9__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgg-j5xQYol97NKQ.pdf?f=GIM10015-9%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM10015-9安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:5f5b1b581c7ed570dde71d0fd2a305a1da613785be9a37e6ee22f4015dd31733
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 145996
+  marche_steadywin__gim10015_10__step:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABAAGAAg6-enpgYoiOi1nwU.STEP?f=GIM10015-10.STEP
+    reference: GIM10015-10.STEP
+    date: '2026-10-05'
+    empreinte: sha256:a41b0e7cab763466a9833cd15361fad91b837f1aaf87f6dd065314ba8d140793
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 8691871
+  marche_steadywin__gim10015_10__pdf:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgtvj5xQYooILdoQc.pdf?f=GIM10015-10%E5%AE%89%E8%A3%85%E5%B0%BA%E5%AF%B8%E5%9B%BE_25072401.pdf
+    reference: GIM10015-10安装尺寸图_25072401.pdf
+    date: '2026-10-05'
+    empreinte: sha256:dd0d8fe5dd2b15d9456a57bbcef3394b66a601c3c6bd15d6ff53dc94e5038832
+    conditions: téléchargement public depuis la fiche produit steadywin.cn ; aucune licence affichée (tous droits réservés par défaut)
+    redistribuable: false
+    taille_octets: 132161
+  marche_steadywin__gim6010_8_manual_rev2_2:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAghZu6wQYo7L6lVw.pdf?f=SteadyWin%20GIM6010-8%20Motor%20Manual_rev2.2.pdf
+    reference: GIM6010-8 微电机使用说明书 rev2.2 (2025-05-20), 96 p.
+    date: '2026-10-05'
+    empreinte: sha256:a65b510ee38ea063251c971ac99ff42a001a7ee9f74f5c2f0c3e45afeb543521
+    conditions: lien de la page Support de steadywin.cn (https://steadywin.cn/en/col.jsp?id=124) ; aucune licence affichée
+    redistribuable: false
+    taille_octets: 3056121
+  marche_steadywin__gim_motor_driver_protocol_specification:
+    source: https://download.s21i.co99.net/14180476/0/0/ABUIABA9GAAgqPvVqgYo-uLA7Ac.pdf?f=GIM%20Motor%20Driver%20Protocol%20Specification.pdf
+    reference: SteadyWin Motor Driver Protocol Specification rev2.2, 16 p.
+    date: '2026-10-05'
+    empreinte: sha256:b3438782fc2559d3636f6ebb1b5608cf6efbf1a5d519aed106886a489cfea699
+    conditions: lien de la page Support de steadywin.cn (https://steadywin.cn/en/col.jsp?id=124) ; aucune licence affichée
+    redistribuable: false
+    taille_octets: 258847
+  marche_cubemars_manuel_ak_v3_2_0:
+    source: https://www.cubemars.com/data/cms/202602/ak-series-prodcut-manual-v3-2-0-for-ak-3-0-robotic-actuator.pdf
+    reference: AK Series Module Product Manual V3.2.0 (2026-01-17), 58 p.
+    date: '2026-10-05'
+    empreinte: sha256:ab1b62b94c3c00693259a6acc00df5a44040d748a702918f4562986d420ea225
+    conditions: « No copying or reprinting is allowed without permission » (manuel) ; téléchargement libre sur cubemars.com, aucune licence de réutilisation
+    redistribuable: false
+    taille_octets: 3543220
+  marche_cubemars_manuel_driver_ak2_v1_0_18:
+    source: https://www.cubemars.com/data/cms/202605/ak-series-driver-manual-v1-0-18-for-ak-2-0-robotic-actuator.pdf
+    reference: AK Series Module Driver Manual V1.0.18 (génération AK 2.0), 71 p.
+    date: '2026-10-05'
+    empreinte: sha256:4c82e46a5d286010b0526b558e734a0695a1cede6cdaba56e217971b6db24bef
+    conditions: « No copying or reprinting is allowed without permission » (manuel) ; téléchargement libre sur cubemars.com, aucune licence de réutilisation
+    redistribuable: false
+    taille_octets: 2009302
+  marche_cubemars_manuel_aka_v3_0_0:
+    source: https://www.cubemars.com/data/cms/202602/aka-series-actuator-product-manual-v3-0-0.pdf
+    reference: AKA Series Actuator Product Manual V3.0.0, 51 p.
+    date: '2026-10-05'
+    empreinte: sha256:0de26957898535c6bc0253ee9a8d18b9e4c235a22b93da99287b2994d281819f
+    conditions: « No copying or reprinting is allowed without permission » (manuel) ; téléchargement libre sur cubemars.com, aucune licence de réutilisation
+    redistribuable: false
+    taille_octets: 1020215
+  marche_cubemars_driver_ak60_4820_2d_a2:
+    source: https://www.cubemars.com/data/cms/202607/ak60-4820-2d-a2-driver-manual-v1-0-0.pdf
+    reference: AK60-4820-2D-A2 Driver Manual V1.0.0 (AK70-9 V3.0), 13 p.
+    date: '2026-10-05'
+    empreinte: sha256:2f5a9e7cf79e5595d9ff614f0c302af9fa26c34ab21f567fe31ecae792bf597c
+    conditions: « No copying or reprinting is allowed without permission » (manuel) ; téléchargement libre sur cubemars.com, aucune licence de réutilisation
+    redistribuable: false
+    taille_octets: 719813
+  marche_cubemars_driver_ak70_4820_2d_a3:
+    source: https://www.cubemars.com/data/cms/202605/ak70-4820-2d-a3-driver-manual.pdf
+    reference: AK70-4820-2D-A3 Driver Manual (AKH70-16/48), 13 p.
+    date: '2026-10-05'
+    empreinte: sha256:f1100cc4cfafbc60317835e2337ddd7fd72396895d01d2850946430bba3ab376
+    conditions: « No copying or reprinting is allowed without permission » (manuel) ; téléchargement libre sur cubemars.com, aucune licence de réutilisation
+    redistribuable: false
+    taille_octets: 812954
+  marche_cubemars_plan2d_ak10_9_v2:
+    source: https://www.cubemars.com/data/cms/202602/ak10-9-v2-0-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK10-9-V2 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:3c29f0374e03f8a12aa9597eb0d2a6831f728420bd50ee35f78f4bf495f6e37f
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 57856
+  marche_cubemars_plan2d_ak10_9_v3:
+    source: https://www.cubemars.com/data/cms/202602/ak10-9-v3-0-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK10-9-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:f6a7bc5107bfef41494e2d83855a50953818f341056413cda1e460e21a0d954a
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 77539
+  marche_cubemars_plan2d_ak40_10:
+    source: https://www.cubemars.com/data/cms/202602/ak40-10-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK40-10 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:29f8cd275c3de90a812bb922d0bd659b732216d8781960f31606352803967de6
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 44461
+  marche_cubemars_plan2d_ak40_10_v3:
+    source: https://www.cubemars.com/data/cms/202607/ak40-10-v3-0-kv170-2d-drawing.pdf
+    reference: plan 2D officiel AK40-10-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:7603775322b2b8c1d7dac3edfea9f6d32d60ce751923365d1beaddedeed23278
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 154509
+  marche_cubemars_plan2d_ak45_10:
+    source: https://www.cubemars.com/data/cms/202602/ak45-10-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK45-10 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:6c02c6cf8adaeb5b364d6fdacdd1c76cb8efff320f5a03b9fda2ea13f4669e32
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 81575
+  marche_cubemars_plan2d_ak45_10_v3:
+    source: https://www.cubemars.com/data/cms/202607/ak45-10-v3-0-kv75-2d-drawing.pdf
+    reference: plan 2D officiel AK45-10-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:dc20a903543a31c18e039e2aabc81dd38434ac92c0e54b065ad4609eae01e55d
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 141897
+  marche_cubemars_plan2d_ak45_36:
+    source: https://www.cubemars.com/data/cms/202602/ak45-36-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK45-36 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:85772cc55de6e6fbfb51fc4eff72e724396e1d8f067c1d65fd0c488b4e872635
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 90496
+  marche_cubemars_plan2d_ak45_36_v3:
+    source: https://www.cubemars.com/data/cms/202607/ak45-36-v3-0-kv80-2d-drawing.pdf
+    reference: plan 2D officiel AK45-36-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:51a75c8881ea3881641e5bf00292533b4cdd761981695c62c624f72b2269071b
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 159224
+  marche_cubemars_plan2d_ak60_39_v3:
+    source: https://www.cubemars.com/data/cms/202602/ak60-39-v3-0-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK60-39-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:fd615d4fa9f04e7fbc6efb8f6c95daa8858b365a666976829c033c0b37858f6f
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 109702
+  marche_cubemars_plan2d_ak60_6_v1_1:
+    source: https://www.cubemars.com/data/cms/202602/ak60-6-v1-1-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK60-6-V1-1 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:52663e9a7bd9b29bbacb35c25344862d860f16402dcf7490648e9d87db58a951
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 38622
+  marche_cubemars_plan2d_ak60_6_v3:
+    source: https://www.cubemars.com/data/cms/202602/ak60-6-v3-0-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK60-6-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:a93171f048e1f4ae4aca8d37d5dda30ea76adea3acd433741cc151d4b58e86bc
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 69049
+  marche_cubemars_plan2d_ak70_10:
+    source: https://www.cubemars.com/data/cms/202602/ak70-10-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK70-10 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:d98ef17b176bfad0c663ff437bfd391787baa0e586dd49da34aafa8db4476056
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 68012
+  marche_cubemars_plan2d_ak70_9_v3:
+    source: https://www.cubemars.com/data/cms/202607/ak70-9-v3-0-kv60-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK70-9-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:5b69f5d8ee8633d3a857b03b650706131e6293bf7426b86b07b5a384c4eb9e5e
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 151623
+  marche_cubemars_plan2d_ak80_6:
+    source: https://www.cubemars.com/data/cms/202602/ak80-6-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK80-6 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:9b0f3f8f112235cf8a83f5db9e5d218953d13c9b0976b538ae0876c031694165
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 70092
+  marche_cubemars_plan2d_ak80_64:
+    source: https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK80-64 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:d10c81bd1b560904a4c4bb5b1707fbfafd0e12b774910eac3f90b82e0bf5380e
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 48529
+  marche_cubemars_plan2d_ak80_8:
+    source: https://www.cubemars.com/data/cms/202602/ak80-8-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK80-8 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:f5a34357fd8083c3c56c9862c1a07016196b3f257ebbb21d109d92aa3b3d8721
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 72820
+  marche_cubemars_plan2d_ak80_9_v3:
+    source: https://www.cubemars.com/data/cms/202602/ak80-9-v3-0-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AK80-9-V3 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:1b543f880fd2b35ab501ef9bb3d45b3099536927487f805e67d983a333d86a5f
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 106725
+  marche_cubemars_plan2d_aka10_9:
+    source: https://www.cubemars.com/data/cms/202602/aka10-9-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AKA10-9 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:30d8657adacbf6ec0802396b2e22bfd450bbb284dee49451c57279008b35060c
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 215376
+  marche_cubemars_plan2d_aka60_6:
+    source: https://www.cubemars.com/data/cms/202602/aka60-6-robotic-actuator-2d-drawing.pdf
+    reference: plan 2D officiel AKA60-6 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:122c7f75c7022c7d566502847a7abd01bb2fd93bb8a03f4355a9c6a265857ccb
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 144038
+  marche_cubemars_plan2d_akh70_16:
+    source: https://www.cubemars.com/data/cms/202605/akh70-16-v-1-0-robotic-atuator-2d-drawing.pdf
+    reference: plan 2D officiel AKH70-16 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:97e101b58a9edf980b11f1d53cf5418a01721411aef3471a490bc62ee4157cf6
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 227691
+  marche_cubemars_plan2d_akh70_48:
+    source: https://www.cubemars.com/data/cms/202605/akh70-48-v-1-0-robotic-atuator-2d-drawing.pdf
+    reference: plan 2D officiel AKH70-48 (1 p.)
+    date: '2026-10-05'
+    empreinte: sha256:9630a9a3567fd2f546a8e00f6a6356794a2f530c2653df0145a801b8d4e11f67
+    conditions: plan marqué « PROPRIETARY AND CONFIDENTIAL … ANY REPRODUCTION … WITHOUT THE WRITTEN PERMISSION … IS PROHIBITED » (ou sans mention) ; téléchargement
+      libre, aucune licence
+    redistribuable: false
+    taille_octets: 211072
+  marche_cubemars_step_ak10_9_v2_0:
+    source: https://www.cubemars.com/data/cms/202602/ak10-9-v2-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:36f04ad05e440de9adb223f9ba431aec1f24c0f60eb96f8d51996743cd407518
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 316543
+  marche_cubemars_step_ak10_9_v3_0:
+    source: https://www.cubemars.com/data/cms/202608/ak10-9-v3-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP + Parasolid)
+    date: '2026-10-05'
+    empreinte: sha256:7e6e634a275107edff6b064628791976d01c8799822a695ca94e7236c05626f1
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 3615744
+  marche_cubemars_step_ak40_10:
+    source: https://www.cubemars.com/data/cms/202602/ak40-10-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:54baf4203d05f86ec94d7553bb7d7fd1a98963b6e63c3b76e87c679ea3bbf2f3
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 564150
+  marche_cubemars_step_ak40_10_v3_0_kv170:
+    source: https://www.cubemars.com/data/cms/202607/ak40-10-v3-0-kv170-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:1a7090ce25cbea37de41530a893f9dedf2e47a40edecf70d337421cd40bf3073
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 275977
+  marche_cubemars_step_ak45_10:
+    source: https://www.cubemars.com/data/cms/202602/ak45-10-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:32e134360469cc883e8ffe6d4faebe85a31c2c052c5b110a1f5cd224e4d6c1e9
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 17723816
+  marche_cubemars_step_ak45_10_v3_0_kv75:
+    source: https://www.cubemars.com/data/cms/202607/ak45-10-v3-0-kv75-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:7639ad40acc1c2d14217e7dd48f71ae9476ea2f1fec35298d0c3138652126e95
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 325564
+  marche_cubemars_step_ak45_36:
+    source: https://www.cubemars.com/data/cms/202602/ak45-36-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:ec53febc3637eec929779a5a597ab15ea6adcdf546691d9932a4f51962a68b3b
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 394280
+  marche_cubemars_step_ak45_36_v3_0_kv80:
+    source: https://www.cubemars.com/data/cms/202607/ak45-36-v3-0-kv80-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:5d018ba8378ba1c0e4d74ce4deaf117d3050a8b8e3a2c1021c84bdeb2619b92f
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 316652
+  marche_cubemars_step_ak60_39_v3_0:
+    source: https://www.cubemars.com/data/cms/202602/ak60-39-v3-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:84252ff987bdab330e90fbff717daaadcea69c9fa98f437cf5daee0f45682a66
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 1482937
+  marche_cubemars_step_ak60_6_v1_1:
+    source: https://www.cubemars.com/data/cms/202602/ak60-6-v1-1-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:019f13d23f6adc8d058f1a7744946d2f27f1173e169ac1b2b1077a9573c5ed9d
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 25096
+  marche_cubemars_step_ak60_6_v3_0:
+    source: https://www.cubemars.com/data/cms/202602/ak60-6-v3-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:80ca376209837288a0687711620f212413dce8990367aad8adfc38d890c66ac8
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 829971
+  marche_cubemars_step_ak70_10:
+    source: https://www.cubemars.com/data/cms/202607/ak70-10-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:c5f9163bfcd1f0ef1e3f6c23ecc04e9e282dcb117143e43a3e19e2a46fc0a7a8
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 421863
+  marche_cubemars_step_ak70_9_v3_0:
+    source: https://www.cubemars.com/data/cms/202608/ak70-9-v3-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP + Parasolid)
+    date: '2026-10-05'
+    empreinte: sha256:64c7fd41dda29e292b71feced488c59548714e4a612596d1d5b69b751e88a28a
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 627618
+  marche_cubemars_step_ak80_6:
+    source: https://www.cubemars.com/data/cms/202602/ak80-6-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:bf81da651a48040814ecc7f61918fdf65d225ed0cd9def91bb3ad6995dce5004
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 19066
+  marche_cubemars_step_ak80_64:
+    source: https://www.cubemars.com/data/cms/202602/ak80-64-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:8679c522af66c1870b5dfd67fd2e470a86af4d27f3faba45f09b45f957ab6776
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 20367
+  marche_cubemars_step_ak80_8:
+    source: https://www.cubemars.com/data/cms/202602/ak80-8-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:b85d0f7e06e27d0438501629cbc09ec0d47235f1cddc8732fb879f8e08ec2dee
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 22627
+  marche_cubemars_step_ak80_9_v3_0:
+    source: https://www.cubemars.com/data/cms/202602/ak80-9-v3-0-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:05444c7e066ade5bdd00e80c8c00a89a2ac05432dd731c6119908a9b5c9d9ede
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 2081643
+  marche_cubemars_step_aka10_9:
+    source: https://www.cubemars.com/data/cms/202602/aka10-9-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:8d13f0d50b53bd0937549a76ea56e2d547103ef793be27df9f5345e2468ad9c8
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 926953
+  marche_cubemars_step_aka60_6:
+    source: https://www.cubemars.com/data/cms/202602/aka60-6-robotic-actuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP)
+    date: '2026-10-05'
+    empreinte: sha256:16e4a29280e0589bd0cd41fe95e9aba8a077416743381ebf02760cfc728e4cf8
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 786085
+  marche_cubemars_step_akh70_16_v_1_0:
+    source: https://www.cubemars.com/data/cms/202608/akh70-16-v-1-0-robotic-atuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP + Parasolid)
+    date: '2026-10-05'
+    empreinte: sha256:08a0ef1d8d0004a3f6fe961a55d862cbb71acad153a39aa4255c7dcf890bd6ec
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 1781781
+  marche_cubemars_step_akh70_48_v_1_0:
+    source: https://www.cubemars.com/data/cms/202608/akh70-48-v-1-0-robotic-atuator-3d-drawing.zip
+    reference: archive du modèle 3D officiel (STEP + Parasolid)
+    date: '2026-10-05'
+    empreinte: sha256:588698e692e3a2ea345e006dda6aa7fa2aa07d7864a56687abf295216c3a9090
+    conditions: 'modèle 3D téléchargé librement sur la page produit ; aucune licence publiée ; usage : encombrement et interface, ne pas verser au dépôt'
+    redistribuable: false
+    taille_octets: 1734651
+  marche_myactuator_catalogue_2026:
+    source: https://www.myactuator.com/_files/archives/cab28a_8cabe41e7f5f4b26ad38d5ec100e8f32.zip?dn=(X-V4.1)%20Protocol%20and%20manual%20of%20V4-260820.zip
+    reference: 2026 Catalog EN-260806
+    date: '2026-10-05'
+    empreinte: sha256:0faddc544b3e2f2590f52fad68073a9fb283d21f846ae790f3ab730dd87801a1
+    conditions: Licence non relevée (aucune lue sur la page de téléchargement ni dans le document ; le catalogue 2026 interdit la copie sans autorisation). Valeurs
+      numériques seules, avec leur page. Archive sha256:375e0d68338a8ea0dd3c6d420aa64db282bb78e76a69b871d3df05aab3a4ebcd
+    redistribuable: false
+  marche_myactuator_manuel_x_v4_260920:
+    source: https://www.myactuator.com/_files/archives/cab28a_3c574913978243a99767646da75afa3c.zip?dn=(X-V4)%20Protocol%20and%20manual%20of%20V4%20260920.zip
+    reference: X Series-V4 product manual 260920
+    date: '2026-10-05'
+    empreinte: sha256:f6b92b1b23a4b333f956e374cc22ac66b71cce7d7e3d209cc8b017d1ca89b8d9
+    conditions: Licence non relevée (aucune lue sur la page de téléchargement ni dans le document ; le catalogue 2026 interdit la copie sans autorisation). Valeurs
+      numériques seules, avec leur page. Archive sha256:ec609f259b28b40edcba5a005f45dde6d037a9174ef7fb2dd504273d209f2d22
+    redistribuable: false
+  marche_myactuator_manuel_utilisateur_x_v1_1:
+    source: https://www.myactuator.com/_files/archives/cab28a_3c574913978243a99767646da75afa3c.zip?dn=(X-V4)%20Protocol%20and%20manual%20of%20V4%20260920.zip
+    reference: User Manual for X Series Products V1.1-250516
+    date: '2026-10-05'
+    empreinte: sha256:6a5fa939bf34038785c4772be7193143fb942e7651195eb450b54192f679c6f5
+    conditions: Licence non relevée (aucune lue sur la page de téléchargement ni dans le document ; le catalogue 2026 interdit la copie sans autorisation). Valeurs
+      numériques seules, avec leur page. Archive sha256:ec609f259b28b40edcba5a005f45dde6d037a9174ef7fb2dd504273d209f2d22
+    redistribuable: false
+  marche_myactuator_can_protocol_v4_4:
+    source: https://www.myactuator.com/_files/archives/cab28a_3c574913978243a99767646da75afa3c.zip?dn=(X-V4)%20Protocol%20and%20manual%20of%20V4%20260920.zip
+    reference: CAN BUS Motor Motion Protocol V4.4 260425
+    date: '2026-10-05'
+    empreinte: sha256:2e0e73a994cf3b15209b9c592654af9724c03bc4c991c3744fab3c08dfd5eecd
+    conditions: Licence non relevée (aucune lue sur la page de téléchargement ni dans le document ; le catalogue 2026 interdit la copie sans autorisation). Valeurs
+      numériques seules, avec leur page. Archive sha256:ec609f259b28b40edcba5a005f45dde6d037a9174ef7fb2dd504273d209f2d22
+    redistribuable: false
+  marche_myactuator_ethercat_v2_0:
+    source: https://www.myactuator.com/_files/archives/cab28a_3c574913978243a99767646da75afa3c.zip?dn=(X-V4)%20Protocol%20and%20manual%20of%20V4%20260920.zip
+    reference: EtherCAT control protocol V2.0_260425
+    date: '2026-10-05'
+    empreinte: sha256:9ae3fb9cb851fc5c588b571190976a52fecbf916c903c45398ff9ca998be95dd
+    conditions: Licence non relevée (aucune lue sur la page de téléchargement ni dans le document ; le catalogue 2026 interdit la copie sans autorisation). Valeurs
+      numériques seules, avec leur page. Archive sha256:ec609f259b28b40edcba5a005f45dde6d037a9174ef7fb2dd504273d209f2d22
+    redistribuable: false
+  marche_myactuator_x4_10_param_260920:
+    source: https://www.myactuator.com/_files/archives/cab28a_50c5251d50b24345bc0c05c2cfcda7b6.zip?dn=X4-10%20Motor%20Parameter%20260920.zip
+    reference: X4-10 Motor Parameter 260920
+    date: '2026-10-05'
+    empreinte: sha256:b105704be098ac2cb8d0699f03d83e0e9e566ce503d7a92cfa1224cf9cb6adbf
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:30b24b69cc4c121850e4e075377d8fed97ef4f7e1dfce650fa5a14487cb2b255
+    redistribuable: false
+  marche_myactuator_x6_60_param_260903:
+    source: https://www.myactuator.com/_files/archives/cab28a_4231acdf891b41f3a56bb690f4c1d312.zip?dn=RMD-X6-P20-60%20260920.zip
+    reference: X6-60 Motor Parameter 260903
+    date: '2026-10-05'
+    empreinte: sha256:421836cfee9c20996c14ba099b8b77b8f4e861acefa8b3c56a8b59615f873e1d
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:187e10e14faff52a98c6caa9b938fcea059aa1d6ea87e339fc60a163aef09e79
+    redistribuable: false
+  marche_myactuator_x8_32_param_260903:
+    source: https://www.myactuator.com/_files/archives/cab28a_ed908b1ce0ce4602a49c8de1047646e5.zip?dn=RMD-X8-32%20260920.zip
+    reference: RMD-X8-32 Motor Parameter 260903
+    date: '2026-10-05'
+    empreinte: sha256:b70dae2d8d4205e3d2f784bc4bf8dc11d282fb1dae6f0d43bdb5ec63c40e7318
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:5f21557b9656fe9c575d8956bb5ace0ade3f490f38ba19ae173bbfb3575de7e0
+    redistribuable: false
+  marche_myactuator_x8_120_param_260903:
+    source: https://www.myactuator.com/_files/archives/cab28a_2f52d96407934978a1b0e6c98b33a928.zip?dn=X8-120%20Motor%20Parameter%20260920.zip
+    reference: X8-120 Motor Parameter 260903
+    date: '2026-10-05'
+    empreinte: sha256:0be41d77be9f259ead8a8e7bb0fc0d55dd15228c38eac40f9d32f2da0737e8f9
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:555af3e05ac881194e1de20c4fba9736be66e5a1f417b5038f7b09bd680bb690
+    redistribuable: false
+  marche_myactuator_x12_320_param_260903:
+    source: https://www.myactuator.com/_files/archives/cab28a_1808ef64304b40cc9faf10e2a876ae32.zip?dn=X12-320%20Motor%20Parameter%20260920.zip
+    reference: X12-320 Motor Parameter 260903
+    date: '2026-10-05'
+    empreinte: sha256:78978db7532e25548ca185d7506e1e97d87a36d59f0c3e0e0a25bbacf198a7e8
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:40d2df75fba9213210f7fb3ad202ed87923005fd6f0c7aa7d48e14e5bc873c4c
+    redistribuable: false
+  marche_myactuator_x15_450_param_260903:
+    source: https://www.myactuator.com/_files/archives/cab28a_7763f7a2fc454e4ab2daeb361542c8d9.zip?dn=RMD-X15-P20-450%20260920.zip
+    reference: X15-450 Motor Parameter 260903
+    date: '2026-10-05'
+    empreinte: sha256:6f770d7884f59c38d8ed00d7e76d7457ae1c780d4aff88b257e834a76262e880
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:bf09b0b637cc22c24bbc3a26458e9895e2d25c88e9f72ec8e840e75a3f221992
+    redistribuable: false
+  marche_myactuator_x4_10_l_param_260924:
+    source: https://www.myactuator.com/_files/archives/cab28a_ccc06c8e306e46c1b09191dd93032829.zip?dn=RMD-X4-P12-10-E-L%20260920.zip
+    reference: X4-10-L Motor Parameter  260924
+    date: '2026-10-05'
+    empreinte: sha256:f86beca6fef9cc6a4d9c0cf35427091f1fb594e354feae5504771b68612096c1
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:63efd3a16256f6186d70092cc93e3c22e2b194eb1d6a8513ecc3f9828aaa1738
+    redistribuable: false
+  marche_myactuator_x4_36_l_param_260820:
+    source: https://www.myactuator.com/_files/archives/cab28a_3244fcc4cab94781995e655e3cb6bda9.zip?dn=RMD-X4-P36-36-E-L%20260920.zip
+    reference: X4-36-L Motor Parameter  260820
+    date: '2026-10-05'
+    empreinte: sha256:e411f04bc8b18a744783dd34d421fe1a5c818c68ea04bc442ad492848687390a
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:1ad2598d0fb0d0806b303b9b1bc984bb3b92fa72d9d3536db6dc06760a14dd35
+    redistribuable: false
+  marche_myactuator_x4_36_l_spec_v1_0:
+    source: https://www.myactuator.com/_files/archives/cab28a_3244fcc4cab94781995e655e3cb6bda9.zip?dn=RMD-X4-P36-36-E-L%20260920.zip
+    reference: RMD-X4-P36-36-E-L-中英文产品规格书 V1.0
+    date: '2026-10-05'
+    empreinte: sha256:151d6cfc286e95899e7d2009677fedbc37d65af804aa17be21021acfd68cbd8b
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:1ad2598d0fb0d0806b303b9b1bc984bb3b92fa72d9d3536db6dc06760a14dd35
+    redistribuable: false
+  marche_myactuator_x6_50_l_param_260924:
+    source: https://www.myactuator.com/_files/archives/cab28a_395a011ea54e461ea4697ffc610bb76a.zip?dn=RMD-X6-P20-50-E-L%20%20260924.zip
+    reference: X6-50-L Motor Parameter  260924
+    date: '2026-10-05'
+    empreinte: sha256:7a367feb112fdd2de53e0cfddb3be321189a1061971cbecb3e9657b273a0e71d
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:6f3698d9fde4e184de5d32febd6d06314b2da03fa874814f5c05cd58ddf442d2
+    redistribuable: false
+  marche_myactuator_x6_50_l_spec_v1_0:
+    source: https://www.myactuator.com/_files/archives/cab28a_395a011ea54e461ea4697ffc610bb76a.zip?dn=RMD-X6-P20-50-E-L%20%20260924.zip
+    reference: RMD-X6-P20-50-E-L-中英文产品规格书 V1.0
+    date: '2026-10-05'
+    empreinte: sha256:a7ff8729610e18dae25f313ae448775957a7b1cbe7846a5e0b9dd4d4c5017c6f
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:6f3698d9fde4e184de5d32febd6d06314b2da03fa874814f5c05cd58ddf442d2
+    redistribuable: false
+  marche_myactuator_x8_150_param_260820:
+    source: https://www.myactuator.com/_files/archives/cab28a_8d855def8bc84e318cea8983d2665b58.zip?dn=RMD-X8-P20-150-E%20260920.zip
+    reference: X8-150 Motor Parameter  260820
+    date: '2026-10-05'
+    empreinte: sha256:40fe75d739e8241343487dc903d2bf75ffce9f0500c32d9b9c22fdf253835b87
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:cafea6f8c92b1fe7c65d26a052d0768c5ebd52631a0f651f49541217291a5981
+    redistribuable: false
+  marche_myactuator_x8_150_spec_v1_0:
+    source: https://www.myactuator.com/_files/archives/cab28a_8d855def8bc84e318cea8983d2665b58.zip?dn=RMD-X8-P20-150-E%20260920.zip
+    reference: RMD-X8-P20-150-E-03-中英文产品规格书 V1.0
+    date: '2026-10-05'
+    empreinte: sha256:0163ee622c9ea51ee13db863beb31f010e8de336ee06e7125c69c7b564942a89
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:cafea6f8c92b1fe7c65d26a052d0768c5ebd52631a0f651f49541217291a5981
+    redistribuable: false
+  marche_myactuator_x10_200_param_260820:
+    source: https://www.myactuator.com/_files/archives/cab28a_42e41abf73914f2dac51dcf8decf200b.zip?dn=RMD-X10-P20-200-E%20V4.1%20260920.zip
+    reference: X10-200 Motor Parameter  260820
+    date: '2026-10-05'
+    empreinte: sha256:b86a24bd120cd78205ccd8519d54d9e074facf98f5cab2b868824fa4ed17ab5b
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:385962dd12fef0d850831c4f780fe0076655220cb9df50335c9b6732225b4bca
+    redistribuable: false
+  marche_myactuator_x10_200_spec_v1_0:
+    source: https://www.myactuator.com/_files/archives/cab28a_42e41abf73914f2dac51dcf8decf200b.zip?dn=RMD-X10-P20-200-E%20V4.1%20260920.zip
+    reference: RMD-X10-P20-200-E-产品规格书 V1.0
+    date: '2026-10-05'
+    empreinte: sha256:eb118aea610f56d5bfa073bb17b951c2b11fed1dd5ff60f41f151af5cf4a690d
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:385962dd12fef0d850831c4f780fe0076655220cb9df50335c9b6732225b4bca
+    redistribuable: false
+  marche_myactuator_x6_8_param_240403:
+    source: https://www.myactuator.com/_files/archives/cab28a_dea91bce3ce54bb79854e78cc7f79afc.zip?dn=X6-8-240403.zip
+    reference: X6-8(RMD-X6 1ú║8 V3)
+    date: '2026-10-05'
+    empreinte: sha256:d6ece2f9be4928fe49f75c0070982dfa068ea94dd440afc72a9831bddfce42aa
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:e21522fd1d4ae873428bc7353e4aa9fb9e7c55a2fd2dd7badff52d83b29e2945
+    redistribuable: false
+  marche_myactuator_x10_40_param_240403:
+    source: https://www.myactuator.com/_files/archives/cab28a_3b056e2d89b0455fab5e14164e82937b.zip?dn=X10-40-240403.zip
+    reference: X10-40(RMD-X10 1ú║7 V3)
+    date: '2026-10-05'
+    empreinte: sha256:e21e6761451bdda7093fa32079ebe70cfa6bd7efbd06d00348c2f12e6931c70f
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:0c6f3d0ae1959fb2cfd94b9ead007a2b2e355d81abab36df0c0d16dc2658e398
+    redistribuable: false
+  marche_myactuator_x10_40_param_240220:
+    source: https://www.myactuator.com/_files/archives/cab28a_3b056e2d89b0455fab5e14164e82937b.zip?dn=X10-40-240403.zip
+    reference: RMD-X10 1ú║7 V3
+    date: '2026-10-05'
+    empreinte: sha256:908102263750cfbe190d8dbb49fe540a3f70095228b9e13039a6810fec0dc7c5
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:0c6f3d0ae1959fb2cfd94b9ead007a2b2e355d81abab36df0c0d16dc2658e398
+    redistribuable: false
+  marche_myactuator_x10_100_param_240403:
+    source: https://www.myactuator.com/_files/archives/cab28a_ec7248117963481faafbb6fdf7185e5e.zip?dn=X10-100-240403.zip
+    reference: X10-100(RMD-X10-S2 V3)
+    date: '2026-10-05'
+    empreinte: sha256:836eefa66c2228b64cc8146a6d8d7efe42cfb1487741e00556cd9b7acbba38a5
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:844f359170c5354e829fa5efc41c4778a0c4e1e2d62bee64a33f52ce2594f0db
+    redistribuable: false
+  marche_myactuator_x10_100_param_240220:
+    source: https://www.myactuator.com/_files/archives/cab28a_ec7248117963481faafbb6fdf7185e5e.zip?dn=X10-100-240403.zip
+    reference: RMD-X10-S2 V3
+    date: '2026-10-05'
+    empreinte: sha256:402af7bd0ac9424c86265824be51ae479aabc9fcf9e601a66e6c24792f7ca8db
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:844f359170c5354e829fa5efc41c4778a0c4e1e2d62bee64a33f52ce2594f0db
+    redistribuable: false
+  marche_myactuator_x6_7_param_240403:
+    source: https://www.myactuator.com/_files/archives/cab28a_f7b799404a994b8c92b31f93e56f9210.zip?dn=X6-7-240403.zip
+    reference: X6-7(RMD-X6 1ú║6 V2)
+    date: '2026-10-05'
+    empreinte: sha256:8e6372e1719d44bb425a4592bddc3278cef509cf3141b42ec19a456633cb8f20
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:7a0b0c1f72431974e9ccb17087a04747d5bc7bf07e17b3a0814fe9cfb89ddf0f
+    redistribuable: false
+  marche_myactuator_x6_7_param_240220:
+    source: https://www.myactuator.com/_files/archives/cab28a_f7b799404a994b8c92b31f93e56f9210.zip?dn=X6-7-240403.zip
+    reference: RMD-X6 1ú║6 V2
+    date: '2026-10-05'
+    empreinte: sha256:fca84f85e2ce51e9e46312c2b983e9df5ac8fbc4f875b35bdbe81224a6a72d5f
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:7a0b0c1f72431974e9ccb17087a04747d5bc7bf07e17b3a0814fe9cfb89ddf0f
+    redistribuable: false
+  marche_myactuator_x6_40_param_240403:
+    source: https://www.myactuator.com/_files/archives/cab28a_339d07f8f12849e19115516ec2ee69b5.zip?dn=X6-40-240403.zip
+    reference: X6-40 (RMD-X6-S2 1ú║36 V2)
+    date: '2026-10-05'
+    empreinte: sha256:c6e338e1f8c5e4c095f76479990d302bb793211527795d59f2ee5c1ce7fa5956
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:598c787769308d80998f8907164b4c682600ed6bc1e9106cf099589dace9a377
+    redistribuable: false
+  marche_myactuator_x6_40_param_240220:
+    source: https://www.myactuator.com/_files/archives/cab28a_339d07f8f12849e19115516ec2ee69b5.zip?dn=X6-40-240403.zip
+    reference: RMD-X6-S2 1ú║36 V2
+    date: '2026-10-05'
+    empreinte: sha256:b266eb1d42357efda879671f3cf47608132cda7570dfcbca0adffe30143ffe14
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:598c787769308d80998f8907164b4c682600ed6bc1e9106cf099589dace9a377
+    redistribuable: false
+  marche_myactuator_x8_25_param_240814:
+    source: https://www.myactuator.com/_files/archives/cab28a_85824a1893de4b058080c363664a1c9f.zip?dn=X8-25%20%20240814.zip
+    reference: X8-25 (RMD-X8 Pro1：9 V2)
+    date: '2026-10-05'
+    empreinte: sha256:34bf6549ad588f3f876a337784b7199618c47ce17740431cc353b576eb30ebb7
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:59ed611db63fc4f39ca86b4c7eff0d01bdc1954a358e5fd6a13c442815ff01be
+    redistribuable: false
+  marche_myactuator_rh_14_manuel_260805:
+    source: https://www.myactuator.com/_files/archives/cab28a_bcc022d169b448ff82894171aa9ae1ce.zip?dn=RH-14-100-E-B-D%20260805%20.zip
+    reference: RH-14 product manual 260805
+    date: '2026-10-05'
+    empreinte: sha256:089f349bbba52094aba5027e5cf96f0b7c86cdf0d9a5880ed77c3da7d469b65e
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:fa7f9c74eadffdc14f781fe7681b0fe4d2110d36026e5613b1bd5b572c0be672
+    redistribuable: false
+  marche_myactuator_rh_17_manuel_260805:
+    source: https://www.myactuator.com/_files/archives/cab28a_e83c5096831240dbb0f680b9f6b2cfeb.zip?dn=RH-17-100-E-B-D%20260805.zip
+    reference: RH-17 product manual 260805
+    date: '2026-10-05'
+    empreinte: sha256:1a7ac7d8a50714ac815747e70f5677b6ec8d9808ae02749ba9b53c67247e112c
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:191a25ef0734ee5d81ad7b7fb13f3af86f5e134d5e2610f779fa8a3dba08f654
+    redistribuable: false
+  marche_myactuator_rh_20_manuel_260805:
+    source: https://www.myactuator.com/_files/archives/cab28a_5ebf837a05c14a718f4c6611666c03ad.zip?dn=RH-20-100-E-B-D%20260805.zip
+    reference: RH-20 product manual 260805
+    date: '2026-10-05'
+    empreinte: sha256:dbb80f671e4d7f66aecb3e9caf63ab0919775e9c42d7bd7b80e85af8c1795e0f
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:442ccaafa11fb9f8c16540dc0eb1b0cc88d48d2b50f41d2cad97f5ac243f6f40
+    redistribuable: false
+  marche_myactuator_rh_25_manuel_260805:
+    source: https://www.myactuator.com/_files/archives/cab28a_bc732701dadf4512a0d917ecaab12747.zip?dn=RH-25-100-E-B-D%20260805.zip
+    reference: RH-25 product manual  260805
+    date: '2026-10-05'
+    empreinte: sha256:536975fd838cfb16bfd9b36cb382c3d3fc4dfbcc950f81e1869cd495fc1a5bac
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:36e957e11ed19d715f2d7fdf086e4da36f467c017ecbc20e0735d6db69fd5936
+    redistribuable: false
+  marche_myactuator_rh_32_manuel_260805:
+    source: https://www.myactuator.com/_files/archives/cab28a_60073a382e7844e087edb3d98549776e.zip?dn=RH-32-100-E-B-D%20260805.zip
+    reference: RH-32 product manual 260805
+    date: '2026-10-05'
+    empreinte: sha256:960f9082219ebdbb8d0bba4e51780215805e010e2dd2a89405600590dc3b47bf
+    conditions: Licence non relevée ; valeurs numériques seules, avec leur page. Archive sha256:9431a32842957fc2590c4b551e12ed4d3aef9d2052cf7bcfb940aeabdc215a99
+    redistribuable: false
+  marche_hightorque_module0602e_02:
+    source: https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_02.png
+    reference: fiche constructeur HighTorque Module0602E_02.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:9016ed4df5dad4e2bd1f081b47198a51d2042860347c52522a49523e987686a2
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1566775
+  marche_hightorque_module0602e_03:
+    source: https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_03.png
+    reference: fiche constructeur HighTorque Module0602E_03.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:98ddc3ad5e495c407710810fe06dafbc13ba1cfcffc573b31b96b81b14eaa3e1
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1744463
+  marche_hightorque_module0602e_04:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_04.png
+    reference: fiche constructeur HighTorque Module0602E_04.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:e2b3f514613583f37b4b4c36e334baa0311baea568afcbcd47263932bf9226db
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1609502
+  marche_hightorque_module0602e_05:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_05.png
+    reference: fiche constructeur HighTorque Module0602E_05.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:fa6d4fe6c3f5e7a96b03db586e43c0f9ec5035b1cb0901f55a91f1f0612c2fc4
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1558873
+  marche_hightorque_module0602e_06:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_06.png
+    reference: fiche constructeur HighTorque Module0602E_06.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:c6e93b40780ff2d7cadb0a94a81ed904b0aa7b79e377e73b317c08c2e55bb2a9
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1810994
+  marche_hightorque_module0602e_07:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_07.png
+    reference: fiche constructeur HighTorque Module0602E_07.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:905ee2e0880d5a79a147211684cef0df86d6c2f2076c02da3abf9cbc548a19b6
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1584188
+  marche_hightorque_module0602e_08:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0602E_08.png
+    reference: fiche constructeur HighTorque Module0602E_08.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:34d3ca4bf31be8c631a209686e888141e34df9ae14cf4e0f7313a21a0b719541
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1643888
+  marche_hightorque_module0603e_09:
+    source: https://hightorque.cn/en/wp-content/uploads/2026/03/Module0603E_09.png
+    reference: fiche constructeur HighTorque Module0603E_09.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:a7270e0d05bc9ef2e56a96d89cf727fe3750e1db41db914cded830a77c9c25ff
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 2079811
+  marche_hightorque_module0603e_10:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/Module0603E_10.png
+    reference: fiche constructeur HighTorque Module0603E_10.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:d464e1468da8730fd095f2624948959285ea1f9120d2bbafca3e7eda45d5538e
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1898387
+  marche_hightorque_module0602e_11:
+    source: https://hightorque.cn/en/wp-content/uploads/2025/07/Module0602E_11.png
+    reference: fiche constructeur HighTorque Module0602E_11.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:e69d8ac77bd6b0373cf7f83cc7bf656689cbeccb09bc983cd548890ab9e9b80f
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1768219
+  marche_hightorque_module0602e_12:
+    source: https://hightorque.cn/en/wp-content/uploads/2025/07/Module0602E_12.png
+    reference: fiche constructeur HighTorque Module0602E_12.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:f3188dfe0c65c27dfbd9ec9c025c35749a9f8e625808cdea44cc592bb6ec164f
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1615343
+  marche_hightorque_module0603e_13:
+    source: https://hightorque.cn/en/wp-content/uploads/2026/03/Module0603E_13.png
+    reference: fiche constructeur HighTorque Module0603E_13.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:4e26599a1cd31add389dbfd5121474596551105fd71f042faf890a5a54bd8c46
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1612349
+  marche_hightorque_module0602e_14:
+    source: https://hightorque.cn/en/wp-content/uploads/2026/03/Module0602E_14.png
+    reference: fiche constructeur HighTorque Module0602E_14.png (image PNG 5594 × 3969)
+    date: '2026-10-05'
+    empreinte: sha256:dafe1f3c0d84fd5d3c286ccfc0cb5e49ab58fa2a2f9897ed6f3a905b2272b770
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1617666
+  marche_hightorque_step_htdw_4530_02_cne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-4530-02-CNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-4530-02-CNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:23d982c91ff2b9d3fe0b3056272699899ccd9b22d2c4415d260d8507499d8475
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1515721
+  marche_hightorque_step_htdw_4530_02_dne_1:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-4530-02-DNE-1.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-4530-02-DNE-1.zip
+    date: '2026-10-05'
+    empreinte: sha256:9e79faf612a12c6594420fe630235ac92208b562436564391e99e6b3bdd711f0
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1485262
+  marche_hightorque_step_htdw_5022_02_dne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-5022-02-DNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-5022-02-DNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:35f2be7d2861cf02bc42f41998cb3ecc72aa5679671c57b895bb21914a9bc817
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1076905
+  marche_hightorque_step_htdw_5036_02_dne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-5036-02-DNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-5036-02-DNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:b2878feba1ee3f3d498de4dccd2a16c9c51fffeb9c145d94259e241a518a2ca6
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1077578
+  marche_hightorque_step_5036_02_jc__:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/5036-02-JC模型.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) 5036-02-JC模型.zip
+    date: '2026-10-05'
+    empreinte: sha256:d9eda20039b6f3e2498aa4e00415163c2851987213ab7efed4d1ae0439425ea4
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1169104
+  marche_hightorque_step_htdw_6036_02_cne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-6036-02-CNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-6036-02-CNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:56bc53b0f4ee2a9c184aa57f8685224176d85dabcb36900d21e277c3c5805ee9
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 2118986
+  marche_hightorque_step_htdw_6036_02_dne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-6036-02-DNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-6036-02-DNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:9a4f89a0e98f2e75859c881d45dd1434749fb2b2df5e6b192a37056d134cbd6b
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 2140071
+  marche_hightorque_step_htdw_7535_02_cne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTDW-7535-02-CNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTDW-7535-02-CNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:edebe16b32e2e29b61a4e92de6c9c44f6a99c4370eb9cb60da52bb291ddc3269
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1144676
+  marche_hightorque_step_htpu_6035_04_cne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTPU-6035-04-CNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTPU-6035-04-CNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:10326e01d7c34f8cdde23ce887e06e6513096ceddab6b2640d295d137ad559ad
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 432613
+  marche_hightorque_step_htpu_7033_04_cne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTPU-7033-04-CNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTPU-7033-04-CNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:e1cd73d77ebe596de459df6113a81bd2764a2ee7cbda36a33741e50ff8b5ce64
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 493326
+  marche_hightorque_step_htpw_7507_02_dne:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTPW-7507-02-DNE.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTPW-7507-02-DNE.zip
+    date: '2026-10-05'
+    empreinte: sha256:87162933b6ad165c71e4fe20ec2e7de2b182b4f2d1c2dcf6a67236603e271aca
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1667861
+  marche_hightorque_step_htcp_4531_06_cyc:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTCP-4531-06-CYC.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTCP-4531-06-CYC.zip
+    date: '2026-10-05'
+    empreinte: sha256:cd0aca03a330e634aff0dd054920b57176e2dce3e1d14b8941b09988ff296ff5
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 909034
+  marche_hightorque_step_htcp_5031_06_cyc_____:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/HTCP-5031-06-CYC-正装模型.zip
+    reference: modèle 3D officiel (archive ZIP contenant un STEP) HTCP-5031-06-CYC-正装模型.zip
+    date: '2026-10-05'
+    empreinte: sha256:59685c307d212af81fea1794f45fabf6281ee30c408692b2701ad3e047828d56
+    conditions: aucune licence déclarée ; droits du constructeur
+    redistribuable: false
+    taille_octets: 1202731
+  marche_hightorque_plan_5036_02_jc:
+    source: https://hightorque.cn/en/wp-content/uploads/2023/07/5036-02-JC模型.pdf
+    reference: plan d'ingénierie HTDW-5036-02-CNE, 1 p., SolidWorks, 2026-09-07
+    date: '2026-10-05'
+    empreinte: sha256:a6430c153aac649e1184b42ead90aad17f6c82d327c6650875f9b8369199d03c
+    conditions: aucune licence déclarée
+    redistribuable: false
+    taille_octets: 153060
+  marche_seeed_htdw_5047_36_ne_pdf:
+    source: https://files.seeedstudio.com/wiki/robotics/Actuator/hightorque/HTDW-5047-36-NE.pdf
+    reference: fiche HTDW-5047-36-NE, 1 p. (déjà au registre du catalogue)
+    date: '2026-10-05'
+    empreinte: sha256:0607b8bd4ea777a3081469bb0161a679c3125bb4b069e1eccf04d93b7eb46e5a
+    conditions: hébergée par Seeed
+    redistribuable: false
+    taille_octets: 586867
+  marche_encos_step_ec_a10020_p1_12:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A10020-P1-12-3DModel.STEP
+    reference: STEP EC-A10020-P1-12-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:c65b0eedbf44b6e479877c43552bf930bcc7fd8b54be9488628cacc3d646dccf
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 13926172
+  marche_encos_plan_ec_a10020_p1_12:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A10020-P1-12-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A10020-P1-12-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:db244f386d8474e74801a88027fc9550b044e3950bdea78ebc48403fd0efbce6
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 220720
+  marche_encos_step_ec_a10020_p2_24:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A10020-P2-24-3DModel.STEP
+    reference: STEP EC-A10020-P2-24-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:57c394c9dfe4dfef4741894774fdf85d7f75b2bc48646a5e60e3f4146b5c52c0
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 8425616
+  marche_encos_plan_ec_a10020_p2_24:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A10020-P2-24-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A10020-P2-24-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:c1b3eadad1954dd19e070f8d957845197ea5696468e87caea64bcf0eb77260ed
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 148161
+  marche_encos_step_ec_a13715_p1_12_67:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A13715-P1-12.67-3DModel.STEP
+    reference: STEP EC-A13715-P1-12.67-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:31d986bf6a10c1142afb5826e573020e0da8c93c90f526dc83f6d4b4c89d4ece
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 10427372
+  marche_encos_plan_ec_a13715_p1_12_67:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A13715-P1-12.67-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A13715-P1-12.67-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:6d7adb8bde34ef6b57b18d192996466885150455d078e109e69bf526b2ee8c3f
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 132658
+  marche_encos_step_ec_a13720_p1_11_4:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A13720-P1-11.4-3DModel.STEP
+    reference: STEP EC-A13720-P1-11.4-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:1cabfbb41e2908c0364a4a6040b7d627ce7c1de943d1e3f38f62e3c8bb12bfb3
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 10834212
+  marche_encos_plan_ec_a13720_p1_11_4:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A13720-P1-11.4-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A13720-P1-11.4-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:05c663f41b7e89e388ff7c32d1abd16dfc9ed20521e5d7fe0c87364b7058dd1e
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 129312
+  marche_encos_step_ec_a2806_p2_36:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A2806-P2-36-3DModel.STEP
+    reference: STEP EC-A2806-P2-36-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:1a8fb75f4ae490f7d84c4d61e467bddef717235b1ecaf209f2490cfb02d66e5d
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 3650396
+  marche_encos_plan_ec_a2806_p2_36:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A2806-P2-36-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A2806-P2-36-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:5fe36f2b4a9cd972cf8ab35b0cba971953cb34aca49b29eda2b9d8af1d717385
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 138690
+  marche_encos_step_ec_a3814_h14_107:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A3814-H14-107-3DModel.STEP
+    reference: STEP EC-A3814-H14-107-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:4fc9efcf11d393d4bd3687756765ba2733083251bd3373f10ba1e7ce2a49f786
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 3041938
+  marche_encos_plan_ec_a3814_h14_107:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A3814-H14-107-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A3814-H14-107-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:a3921b6477a46cbc52b08acbb9560a1c61c2664fad403707656aed1de119c639
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 127622
+  marche_encos_step_ec_a4310_p2_36:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A4310-P2-36-3DModel.STEP
+    reference: STEP EC-A4310-P2-36-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:8da66961e030516ce4c3d849f43c15bc600b4c1484bb5e01fa31f47347e20993
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 3573375
+  marche_encos_plan_ec_a4310_p2_36:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A4310-P2-36-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A4310-P2-36-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:145bf73fa9d51d260d13cc315cbbb73c5c54df138fe3b5c0cb20ffc4400635a5
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 190829
+  marche_encos_step_ec_a4310_p2_36h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A4310-P2-36H-3DModel.STEP
+    reference: STEP EC-A4310-P2-36H-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:17e2c3a4e5a8f2b6e68bc6e2bad7e6b73bef4fffc6ee5e12a6325a8c714d5412
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 3029768
+  marche_encos_plan_ec_a4310_p2_36h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A4310-P2-36H-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A4310-P2-36H-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:db93001197dccbd0098a814864c1a1d77de28adbbb8e2b139538cf170e661bd8
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 102150
+  marche_encos_step_ec_a4315_p2_36:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A4315-P2-36-3D-Model.STEP
+    reference: STEP EC-A4315-P2-36-3D-Model.STEP
+    date: '2026-10-05'
+    empreinte: sha256:80edd0ceadcb6f7a7960808d5826c8ead431fd6332d8431aaac7c9d4803a4c0c
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 2841795
+  marche_encos_step_ec_a5013_h17_100:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A5013-H17-100-3DModel.STEP
+    reference: STEP EC-A5013-H17-100-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:3c06dcd5c2ea01b7a0d466752f452cd8d8b923acccddfdc4f196fcbabdbb62dc
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 2448573
+  marche_encos_plan_ec_a5013_h17_100:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A5013-H17-100-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A5013-H17-100-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:3ef9369a82f637dcf60d7509eec7ffbd18a0cac65aea69db3530c1098a46de50
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 146161
+  marche_encos_step_ec_a6013_h20_100:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6013-H20-100-3DModel.STEP
+    reference: STEP EC-A6013-H20-100-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:789cc955d6492add82d8bd52c33afa2d686f571dba5f781b793ff09c1207daf5
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 2360763
+  marche_encos_plan_ec_a6013_h20_100:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6013-H20-100-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A6013-H20-100-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:431fba43d6da7b6e1e793a3fc09f6d1889a383549ec696b9a83685c622983492
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 86041
+  marche_encos_step_ec_a6408_p2_25:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6408-P2-25-3DModel.STEP
+    reference: STEP EC-A6408-P2-25-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:dc2cff20b85eba0250d46a3390f4ad70da4e7309e86acd64b41c943aafe4c412
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 5274650
+  marche_encos_plan_ec_a6408_p2_25:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6408-P2-25-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A6408-P2-25-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:813ac25a1ce565ba1d1d79e74acc1f89ec42a24cade788ea7d46b4c85d6cc7f4
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 200810
+  marche_encos_plan_ec_a6408_p2_30_25h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6408-P2-30.25H-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A6408-P2-30.25H-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:4bd0e3c1e39adae74939a0042b3d28088a69e32691a62fdadeb8e6b49de055f1
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 829347
+  marche_encos_step_ec_a6408_p2_30_25h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6408-P2-30.25H3DModel.STEP
+    reference: STEP EC-A6408-P2-30.25H3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:6588c06b66a5059f045c878bb8f1029f55bd5ba31e18d4d2d52e626df0fc825c
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 7893382
+  marche_encos_step_ec_a6416_p2_25:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6416-P2-25-3D-Model.STEP
+    reference: STEP EC-A6416-P2-25-3D-Model.STEP
+    date: '2026-10-05'
+    empreinte: sha256:aa20e1e01b97d6f2fe44f46bac85afede3d1569310fd78fab03ab2525cc7c4e9
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 6038907
+  marche_encos_plan_ec_a6416_p2_25:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6416-P2-25-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A6416-P2-25-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:c8724bfee4faae9406d5f357e4dd5a9e2ac40523402175c177a133dc94b72d27
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 328911
+  marche_encos_plan_ec_a6416_p2_30_25h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A6416-P2-30.25H-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A6416-P2-30.25H-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:060c0b644edce2ef01de430524f3aebf63676c275d228171ccd9e3b8cb2f5ed5
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 215832
+  marche_encos_step_ec_a8112_p1_18:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8112-P1-18-3DModel.STEP
+    reference: STEP EC-A8112-P1-18-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:205ad5001696ad28c3c02fe2afc36c57d206b2734454e621af3516e0f3f6c0f3
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 8009940
+  marche_encos_plan_ec_a8112_p1_18:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8112-P1-18-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A8112-P1-18-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:4c91dc56569cc98b34e3e0b88e3f6dff3a552ada256d23d107d6e0a8e2c8dc6f
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 123915
+  marche_encos_step_ec_a8112_p1_18h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8112-P1-18H-3DModel.STEP
+    reference: STEP EC-A8112-P1-18H-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:928364b4c912c25a94107677919aba6f66c34539c6139cef6d0ecc628eb0dc2a
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 7779612
+  marche_encos_step_ec_a8116_p1_18:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8116-P1-18-3D-Model.STEP
+    reference: STEP EC-A8116-P1-18-3D-Model.STEP
+    date: '2026-10-05'
+    empreinte: sha256:62761a356a18455ec2ad13836a4e09e34a518d18a45c9e5a5d516269cbe6b70f
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 6143470
+  marche_encos_plan_ec_a8116_p1_18:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8116-P1-18-Product_instalation_drawing-PDF.pdf
+    reference: plan d'installation Encos EC-A8116-P1-18-Product_instalation_drawing-PDF.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:fdea642ca5039f048ef7e5396bdf04eaea1a611e1799bf19dd4f5f77b3c4ae41
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 117846
+  marche_encos_step_ec_a8116_p1_18h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8116-P1-18H-3DModel.STEP
+    reference: STEP EC-A8116-P1-18H-3DModel.STEP
+    date: '2026-10-05'
+    empreinte: sha256:75b52e62057d4212fd7cc0bbe5245866e81f4b9d363a88aabbf748226a7aaf78
+    conditions: hébergé par un REVENDEUR ; provenance constructeur non attestée ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 6081592
+  marche_encos_plan_ec_a8116_p1_18h:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/EC-A8116-P1-18H-Product_instalation_drawing-PDF_238f7053-c28d-454a-af67-cb35d41f4159.pdf
+    reference: plan d'installation Encos EC-A8116-P1-18H-Product_instalation_drawing-PDF_238f7053-c28d-454a-af67-cb35d41f4159.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:42715c65f44aa360237cc6f9e9620b701ea0eb09178b738b706cfd7c8b69601f
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 117815
+  marche_encos_plan_ec_a4315_p2_36_v2_0:
+    source: CDN Shopify AIFitLab https://cdn.shopify.com/s/files/1/0673/6848/5000/files/ENCOS_EC-A4315-P2-36-V2.0.pdf
+    reference: plan d'installation Encos ENCOS_EC-A4315-P2-36-V2.0.pdf (cartouche 南京因克斯智能科技有限公司 quand présent)
+    date: '2026-10-05'
+    empreinte: sha256:342ddf8006064d42e5ef3cd391ef1e2b22a5d68ee310af8ddc992c73dc68a12a
+    conditions: hébergé par un REVENDEUR ; aucune licence déclarée
+    redistribuable: false
+    taille_octets: 74278
+  marche_encos_motor_models_csv:
+    source: https://raw.githubusercontent.com/EncosTech/encos_driver/HEAD/src/motor/motor_models.csv
+    reference: 'table des modèles du pilote officiel (commit 468c8811, 2026-09-23) : bornes de mise à l''échelle MIT, PAS des caractéristiques'
+    date: '2026-10-05'
+    empreinte: sha256:e1b6721cc7a93618594b3c53cd5d1e8f1d80879de3f410c4c4573a793c12bab8
+    conditions: MIT (encos_driver)
+    redistribuable: true
+    taille_octets: 5314
+  marche_aifitlab_encos_products_json:
+    source: https://aifitlab.com/collections/encos-motor/products.json?limit=250
+    reference: instantané des 14 fiches produit Encos du revendeur (prix USD, tableaux)
+    date: '2026-10-05'
+    empreinte: sha256:bb4f795f335bcb174048fc39d7f4fc95924461fe94b4c064f80c8cbe02d720c7
+    conditions: page commerciale
+    redistribuable: false
+    taille_octets: 237034
+  marche_hightorque_store_products_json:
+    source: https://store.hightorque.cn/products.json?limit=250
+    reference: instantané de la boutique officielle HighTorque (16 produits, USD)
+    date: '2026-10-05'
+    empreinte: sha256:76339e214a0ba1f7e2d095ae7ec2e8b66638d067be29d64b3951d086af0954a4
+    conditions: page commerciale
+    redistribuable: false
+    taille_octets: 41101
+  marche_unitree_shop_products_json:
+    source: https://shop.unitree.com/products.json?limit=250
+    reference: instantané de la boutique officielle Unitree (32 produits)
+    date: '2026-10-05'
+    empreinte: sha256:6df31aa18c969d6a24674bf969d2a5c5a4c33294fd01a9532836dacddf6c6129
+    conditions: page commerciale
+    redistribuable: false
+    taille_octets: 112611
+  marche_unitree_page_go1_motor:
+    source: https://www.unitree.com/mobile/go1/motor/
+    reference: page produit Unitree (HTML rendu côté serveur)
+    date: '2026-10-05'
+    empreinte: sha256:594885ad81274e9796aa8ac1eb4f868baf3d78ef0ed694c698c4bdc85f85da41
+    conditions: page commerciale ; l'empreinte varie avec le rendu
+    redistribuable: false
+    taille_octets: 57569
+  marche_unitree_page_a1_motor:
+    source: https://www.unitree.com/mobile/a1/motor/
+    reference: page produit Unitree (HTML rendu côté serveur)
+    date: '2026-10-05'
+    empreinte: sha256:f0331ec2d6846ef3dbfdefff5b3f643632c1bb9aba0da9e9a58f4d37a491fdb4
+    conditions: page commerciale ; l'empreinte varie avec le rendu
+    redistribuable: false
+    taille_octets: 57757
+  marche_unitree_page_b1_16:
+    source: https://www.unitree.com/mobile/b1-16/
+    reference: page produit Unitree (HTML rendu côté serveur)
+    date: '2026-10-05'
+    empreinte: sha256:eb7a579b66d442fbdbc094edcfc287127ffa4cc2cad3b31433057b7b7f180a87
+    conditions: page commerciale ; l'empreinte varie avec le rendu
+    redistribuable: false
+    taille_octets: 53783
+  marche_unitree_page_im6014:
+    source: https://www.unitree.com/mobile/IM6014/
+    reference: page produit Unitree (HTML rendu côté serveur)
+    date: '2026-10-05'
+    empreinte: sha256:f92a6bbeb35e2c5d922d05df1301edfa4d7b286f3a9b039c40fd046fe3be12b3
+    conditions: page commerciale ; l'empreinte varie avec le rendu
+    redistribuable: false
+    taille_octets: 63903
+  marche_unitree_page_digitalservo:
+    source: https://www.unitree.com/mobile/DigitalServo/
+    reference: page produit Unitree (HTML rendu côté serveur)
+    date: '2026-10-05'
+    empreinte: sha256:124b5bcaeb9d9ce8417941e8916c99bad2809458631af74f1f1d41c488ff0f3b
+    conditions: page commerciale ; l'empreinte varie avec le rendu
+    redistribuable: false
+    taille_octets: 66406
+  marche_openelab_htdw_4438_30_json:
+    source: https://openelab.io/products/seeed-hightorque-htdw-4438-30.json
+    reference: fiche revendeur OpenELAB (EUR)
+    date: '2026-10-05'
+    empreinte: sha256:01cc402784c50c753c92cffe1382ea5787f3183dbfb7b32193680ee91c1bdb78
+    conditions: page commerciale
+    redistribuable: false
+    taille_octets: 17800
+  marche_emanual_xl330_m077:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xl330-m077/
+    reference: ROBOTIS e-Manual, page XL330-M077-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:967898feb737c6cce1009f492f427fafe81ce9cffbdc8fa7187e45e152237392
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xl330_m288:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/
+    reference: ROBOTIS e-Manual, page XL330-M288-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:a336b9e3333295355870c48ccd99736596d175e61cf9b52f5b4602b0f67806b7
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc330_m181:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc330-m181/
+    reference: ROBOTIS e-Manual, page XC330-M181-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:d748b2b1f4676f0ad40e8f5695fe833fce988f022d4e6b2f42c7c227f0e9aa60
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc330_m288:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc330-m288/
+    reference: ROBOTIS e-Manual, page XC330-M288-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:c70b353ef9ee9091b290b14c307210dad3075e281818975e999278e145fc644d
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc330_t181:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc330-t181/
+    reference: ROBOTIS e-Manual, page XC330-T181-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:0100e3f15fa77d6da372c481fb8eb6fbd3afeb681274d936c33a5ec6c9511b33
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc330_t288:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/
+    reference: ROBOTIS e-Manual, page XC330-T288-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:188ca69b42c357a7b353e485b1e6a097dfff745a901ae06f01981a9b11318f39
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xm335_t323:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xm335-t323/
+    reference: ROBOTIS e-Manual, page XM335-T323-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:47cdfda12bf149171e62bb4336bae4bef7ba8a73f2daf15ed0e28edae20a0bb3
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xl430_w250:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/
+    reference: ROBOTIS e-Manual, page XL430-W250-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:49fed82a3b39539c8c65ee8be23013f06541a209adbeda28612cf269a6d4d52a
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc430_w150:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc430-w150/
+    reference: ROBOTIS e-Manual, page XC430-W150-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:c7173a09b5d4abdad6c18b0be02d422d7af9f9cc7687a5cd6fa63e09220fc868
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xc430_w240:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xc430-w240/
+    reference: ROBOTIS e-Manual, page XC430-W240-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:4e5a8f616bac3e847d0950a503c1fa27fe435779768e4663185a0cc871ce42f4
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_2xl430_w250:
+    source: https://emanual.robotis.com/docs/en/dxl/x/2xl430-w250/
+    reference: ROBOTIS e-Manual, page 2XL430-W250-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:b0726acf35e2b6b5e6ef462e14959d961556292bdbd59b3226c111faaf0dcf28
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_2xc430_w250:
+    source: https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/
+    reference: ROBOTIS e-Manual, page 2XC430-W250-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:f7c2bbf2e75d301bfe98e8ee43c8a49a41f80a87348d8eb473c9b00b3eea31e1
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xh430_w210:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xh430-w210/
+    reference: ROBOTIS e-Manual, page XH430-W210-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:5f34d07d2ab002c7bea69753970fa6b476bc5aef756908ed30f7125765536931
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xh430_w350:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xh430-w350/
+    reference: ROBOTIS e-Manual, page XH430-W350-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:99af748e4f4bcf45bdf2ea6fc98ebfb2738f0f794de85416189af02b89e360fc
+    conditions: © ROBOTIS ; page web consultable, aucune licence de redistribution lue. Le site annonce sa migration vers docs.robotis.com.
+    redistribuable: false
+  marche_emanual_xm430_w210:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/
+    reference: ROBOTIS e-Manual, page XM430-W210-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:78adf2f040510eff30cd898bc3bb45b7d0b92e1d41e4365c8b702f0ede496f89
+    conditions: © ROBOTIS ; idem.
+    redistribuable: false
+  marche_emanual_xm430_w350:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/
+    reference: ROBOTIS e-Manual, page XM430-W350-T (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:38038f5b32cbbb7e3c26570658855986be33589b06eb6d15e6259db338caafd3
+    conditions: © ROBOTIS ; idem.
+    redistribuable: false
+  marche_feetech_pdf_sts3215_c018:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772519923113075854851.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3215-C018.pdf (2023-7-20, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:d0a735a8ddc23585dd7fef40bf7ed87359b6234436103e00bb6e992b5ffe9f39
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_sts3215_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772523943436695270694.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3215-C001.pdf (2020-04-10, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:707da810d6443597bb7877fc191251915bf01a3d3594ee77b1e0f8ef8b45d017
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_sts3032_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772539739757769932408.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3032-C001.pdf (2020-06-08, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:e136ae8377a4903a7ebb2b3445a9845c4b4f1c0e4e36ca9a0a4ca5009bc9ea93
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_sts3032_c036:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772535103966341968672.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3032-C036.pdf (2024-01-12, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:0aafa390fef454ba7cee3cd4f63111428a873495745844012be25e1d1c96a674
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_sts3036_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772527252817758682392.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3036-C001.pdf (2025-07-26, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:e3c112070ad3fe826bd7406a21b08414d4f13cd2a7f99e355de8e6469156f002
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs0009_c013:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771868598044632953633.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-0090-C013.pdf (2022-04-11, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:b313230efc2a01675f33566437aa0f58ce7ccfc43dba706ca7a0dda320b7952c
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs15_c022:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771845929831597900239.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-1500-C022.pdf (2022-10-25, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:4021fd7a4fddd41456f4c0d2b9c3928abc79efe4c2701cc0a61aae9c52fee56d
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs2332_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771864516788879652765.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-2332-C001.pdf (2020-06-08, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:48fed1f6f73235964697411757eb7862be8a2fa9390b6e722bc85ee71edb051b
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_hl2915_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260623/6391782995369048295663730.pdf
+    reference: Feetech, PRODUCT SPECIFICATION HL-2915-C001.pdf (2026-1-18, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:92f0af30f17c606ee226a932e6778bca9f7243a0ec07b1c226005af4553aa20b
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs0002_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771886009025053412379.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-0002-C001.pdf (2025-9-7, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:11a1bd412a140281686587e84e1fb9cb3d8cd17f6518722acc3670e64858fbea
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs0037_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771882565263995959110.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-0037-C001.pdf (2025-9-7, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:eb8cae5967c52740afd33b7f196d70d4bff2481a43ad279f2d5375098c22e822
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs0043_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771879618382454421537.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-0043-C001.pdf (2025-9-7, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:42517dabea2b30aeeb2ecc7d2f51a860e287a1cda73644199468df9adf4ed793
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_scs0005_c001:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771876679316899843221.pdf
+    reference: Feetech, PRODUCT SPECIFICATION SC-0005-C001.pdf (2025-9-7, édition A/0)
+    date: '2026-10-05'
+    empreinte: sha256:4c4b4d84cfa34f3285a92ff30e0a9244a7a2d0d695b7952577729e7fab6fa4f8
+    conditions: © Feetech ; document constructeur, aucune licence de redistribution lue.
+    redistribuable: false
+  marche_feetech_pdf_sts3250:
+    source: https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772424007467984928587.pdf
+    reference: Feetech, PRODUCT SPECIFICATION ST-3250-C001.pdf (2024-01-16)
+    date: '2026-10-05'
+    empreinte: sha256:92926b0571809316d17f0d9cb3d8da8924a7f234f950c7eabc7330be0665c2d7
+    conditions: © Feetech.
+    redistribuable: false
+  marche_eckstein_feetech:
+    source: https://eckstein-shop.de/FEETECH-Marken-EN
+    reference: Eckstein, liste marque FEETECH (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:209aa28c8fcaca11508f131956865dd5ca5d09ba3c7eb0d041e089acb7444503
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_gr_x_p1:
+    source: https://www.generationrobots.com/en/355-dynamixel-x-serie
+    reference: Generation Robots, catégorie Dynamixel X, page 1
+    date: '2026-10-05'
+    empreinte: sha256:8cc3d998a3b34c995f18fab40cb8e5683f655794c3b4661005055d24161aa6ce
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_gr_x_p2:
+    source: https://www.generationrobots.com/en/355-dynamixel-x-serie?page=2
+    reference: Generation Robots, catégorie Dynamixel X, page 2
+    date: '2026-10-05'
+    empreinte: sha256:b3027827069f6da4e7e530ddeaf1eccf33659b5ab4ac27cf0834a03056a3d0ea
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xl330_m077:
+    source: https://robotis.us/products/dynamixel-xl330-m077-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:1c02711a6406dbdc6767c0d68b5a9467dc7149202c1d2ed15e78742ed72b27de
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xl330_m288:
+    source: https://robotis.us/products/dynamixel-xl330-m288-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:070db656a039e6af1d7c6f6cb00e47bc0baba246ae9bf411949924ff4810fef8
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc330_m181:
+    source: https://robotis.us/products/dynamixel-xc330-m181-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:56791332c0f138364399842ef5823d0fc05b328bec8985f68abe35e8d2354433
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc330_m288:
+    source: https://robotis.us/products/dynamixel-xc330-m288-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:f0deeac15146afcf782e5de64742d2a706f80dbd936db1cfe4cb249f8cfe7c40
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc330_t181:
+    source: https://robotis.us/products/dynamixel-xc330-t181-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:8c5c5e8e62ca707bda4b8abe07242b70a579f4aa11f52900bb43fc2a5288ad91
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc330_t288:
+    source: https://robotis.us/products/dynamixel-xc330-t288-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:ae06b0e13c296eae6c94d65307cf2d7144b9cb5f5ef7e4cec7da2a7a1969f7fa
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xl430_w250:
+    source: https://robotis.us/products/dynamixel-xl430-w250-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:d6da65482c0a2719d87e2d898b5e2dbe80d8505fec34788f8f2e1d56a9fe2431
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc430_w150:
+    source: https://robotis.us/products/dynamixel-xc430-w150-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:5961bd79c8e8165fae21e2c2a3e5d935731bfab06d6832eba565902eb229543b
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xc430_w240:
+    source: https://robotis.us/products/dynamixel-xc430-w240-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:240c919b197447dcb922e70ae86b980448e9a6652d6a895fd129ea0a11958d92
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_2xl430_w250:
+    source: https://robotis.us/products/dynamixel-2xl430-w250-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:e448618d7f584c3f77f08f6da60f09d7741dd91cabd25082923bf8a162bc02ae
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_2xc430_w250:
+    source: https://robotis.us/products/dynamixel-2xc430-w250-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:0377fc094cc0c4efacf485bacd909ddddcf6805d145dcd700ed147a98ee41726
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xh430_w210:
+    source: https://robotis.us/products/dynamixel-xh430-w210-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:6eedbfa96fd4c6194f2d08450f5681020ef64183b6bd85fae3b66f9b0585259e
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xh430_w350:
+    source: https://robotis.us/products/dynamixel-xh430-w350-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:854777a00e0d552b4b803ad3a08fa7eac2b156a82d49bad1f0627227d6e62b71
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xm430_w210:
+    source: https://robotis.us/products/dynamixel-xm430-w210-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:850b1df6a51c7be7a3194f1c49c16abe510a06a4c3e6fdc13b961258cf55ab8a
+    conditions: Page commerciale.
+    redistribuable: false
+  marche_robotis_us_xm430_w350:
+    source: https://robotis.us/products/dynamixel-xm430-w350-t
+    reference: ROBOTIS US, fiche boutique (HTML)
+    date: '2026-10-05'
+    empreinte: sha256:9ab3325e266d22ee8c81ece7d70d0a9c5e0fa878a66cc4e61382067fee7ef46e
+    conditions: Page commerciale.
+    redistribuable: false
