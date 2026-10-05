@@ -1,0 +1,296 @@
+# Références simulables pour la marche et la course — lu par scripts/exigences_physiques.py
+#
+# Créé le 2026-10-05 (phase 3a de la stratégie de la fiche 0069). Inventaire
+# lu par un agent de Claude Code (licences dans les fichiers LICENSE,
+# fichiers de poids VUS dans l'arborescence des dépôts) ; `detail` garde ses
+# sources et ce qu'il n'a pas vérifié. Aucun entraînement lancé.
+# CONSTAT : aucune politique de COURSE n'existe dans ces références ; toutes
+# marchent au plus à 1 m/s. Faire tourner une politique : CPU ; entraîner :
+# GPU NVIDIA (machine distante, CLAUDE.md).
+# LICENCES : Berkeley Humanoid Lite est en CC BY-SA 4.0 (réciproque) : hors du
+# cœur du projet (CLAUDE.md, copyleft fort) ; aucune géométrie amont n'entre
+# dans une pièce YXOR (fiches 0055 et 0061).
+references:
+- nom: ToddlerBot 2XC (Stanford)
+  licence: MJCF et code MIT ; mécanique CC BY-NC-SA 4.0
+  politique: 'oui, marche (+ ramper, grimper, se relever) : model_best.onnx, déjà dans ~/upstream (ckpts.manifest.yaml) ; licence des poids non
+    déclarée'
+  inference: oui, vérifié ici le 2026-09-28 (0,102 m/s)
+  entrainement: GPU (MJX/JAX, 4096 env., 1e9 pas) ; durée non publiée
+  detail:
+    nom: ToddlerBot 2XC (Stanford)
+    modele_source: 'https://github.com/hshi74/toddlerbot (copie locale ~/upstream/toddlerbot, commit e337f3b) ; MJCF aussi dans Menagerie : https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/toddlerbot_2xc/toddlerbot_2xc.xml'
+    licence_modele:
+      valeur: 'MJCF et code : MIT (Copyright 2023 Haochen Shi). Conception mécanique (Onshape, STL) : CC BY-NC-SA 4.0 (README amont, section License).'
+      source: ~/upstream/toddlerbot/LICENSE et README.md (section License) ; https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/toddlerbot_2xc/LICENSE
+    politique:
+      existe: true
+      type: marche (pas de course ; aussi ramper, grimper, se relever)
+      fichiers:
+      - Google Drive, dossier https://drive.google.com/drive/u/1/folders/1d0UGRc3-3wxMcqrZSlqRXkSnwFSC8Xk- , archive toddlerbot_2xc_walk_rsl_20251226_114612.zip
+        (Drive id 1Rcfhsw1fbqpW7CkMiqRhF2uGixuJxDtn) -> model_best.onnx
+      - 'DÉJÀ PRÉSENTE localement : ~/upstream/toddlerbot/ckpts/toddlerbot_2xc_walk_rsl_20251226_114612/model_best.onnx (+ 9 autres archives :
+        climb_*, crawl_*, get_up), empreintes SHA-256 dans /home/jeremy/yxor/params/ckpts.manifest.yaml (10 archives, 29,5 Mo)'
+      licence: non déclarée pour les poids eux-mêmes ; le dépôt de code est MIT, la conception CC BY-NC-SA
+      source: ~/upstream/toddlerbot/README.md:64 (lien Drive) ; params/ckpts.manifest.yaml
+      note: 'Les poids ne sont pas dans l''arborescence Git du dépôt amont : ils viennent d''un Google Drive. Vitesse commandée en x dans walk.gin
+        : plage [-0.1, 0.1] (index 5 de command_range). Rejouée ici : 0,1023 m/s, aucune chute (journal/2026-09-28.md), avec les deux correctifs
+        de sim/upstream/toddlerbot_fixes.py.'
+    inference:
+      valeur: 'CPU suffit, VÉRIFIÉ SUR CETTE MACHINE : sim/upstream/replay_policy.py (venv amont, MuJoCo 3.3.4) rejoue la marche, physique ×2,24
+        temps réel. Sur le robot réel : CPU du Jetson Orin NX à 50 Hz.'
+      source: 'journal/2026-09-28.md (lignes ~80-95) ; arXiv 2502.00893, annexe RL : « During inference, the RL policy runs on the CPU of Jetson
+        Orin NX 16GB, achieving a 50 Hz control loop. »'
+    entrainement:
+      valeur: 'GPU pratiquement exigé : MJX/JAX + rsl_rl, 4096 environnements par défaut, 1e9 pas pour walk.gin (le papier annonçait 3e8 pas et
+        1024 environnements). Le repli CPU existe dans le code (torch ''cuda:0'' sinon ''cpu'') mais n''est pas un usage prévu. Aucune durée d''entraînement
+        publiée trouvée.'
+      source: ~/upstream/toddlerbot/toddlerbot/locomotion/walk.gin:2, ppo_config.py:42, train_mjx.py:76 ; arXiv 2502.00893 Table 5
+    hauteur_m:
+      valeur: 0.56
+      source: 'arXiv 2502.00893, Table 1 et §1 : « (0.56 m, 3.4 kg) »'
+    masse_kg:
+      valeur: 3.4
+      source: arXiv 2502.00893 (3.4 kg ; 3484 g au §manipulation) ; somme des <inertial mass> du MJCF Menagerie toddlerbot_2xc.xml = 3,454 kg
+        (calculée ici)
+    axes_par_jambe:
+      valeur: 6
+      source: 'MJCF toddlerbot_2xc.xml : hip_pitch, hip_roll, hip_yaw (paire drive/driven = 1 axe actionné), knee, ankle_pitch, ankle_roll ; 30
+        DDL actifs au total (papier, Table 1)'
+    non_verifie:
+    - licence propre des poids Drive (aucun fichier LICENSE à côté)
+    - 'durée d''entraînement : non publiée dans le papier ni le README'
+    - 'sens exact de la plage [-0.1, 0.1] de command_range (m/s ou unité normalisée) : déduit de la mesure 0,10 m/s, pas lu dans le code'
+- nom: Booster T1 (Booster Robotics)
+  licence: Apache-2.0
+  politique: 'oui, marche : t1_policy.onnx (Playground) ; T1.pt (booster_gym, SDK Booster)'
+  inference: oui (onnxruntime)
+  entrainement: 'GPU : < 30 min sur 2 × RTX 4090 (papier Playground) ; booster_gym : Isaac Gym, CUDA'
+  detail:
+    nom: Booster T1 (Booster Robotics)
+    modele_source: https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/booster_t1/t1.xml (dérivé de https://github.com/BoosterRobotics/booster_gym/blob/da396a0/resources/T1/T1_serial.urdf)
+    licence_modele:
+      valeur: Apache-2.0 (Menagerie et booster_gym, « Copyright [2024] Booster Robotics »)
+      source: https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/booster_t1/LICENSE ; https://github.com/BoosterRobotics/booster_gym/blob/da396a0/LICENSE
+    politique:
+      existe: true
+      type: marche (commande lin_vel_x dans [-1, 1] m/s ; aucune politique de course)
+      fichiers:
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/t1_policy.onnx (860 343
+        octets, joué par play_t1_joystick.py dans MuJoCo C)
+      - 'https://github.com/BoosterRobotics/booster_gym/blob/da396a0/deploy/models/T1.pt (263 398 octets, TorchScript, pour le SDK Booster : Webots
+        ou robot réel)'
+      licence: Apache-2.0 (licence du dépôt qui contient chaque fichier ; aucune licence distincte pour les poids)
+      source: arborescences git/trees des deux dépôts ; https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/play_t1_joystick.py
+        ; booster_gym deploy/configs/T1.yaml (policy_path ./models/T1.pt)
+      note: 'T1.pt n''est pas branché sur MuJoCo dans booster_gym (play_mujoco.py charge un .pth issu de l''entraînement) : la voie MuJoCo prête
+        est t1_policy.onnx de Playground. Le T1 de Playground utilise le MJCF Menagerie.'
+    inference:
+      valeur: 'CPU suffit : onnxruntime avec providers=[''CPUExecutionProvider''] (Playground) ; torch.jit.load sans .cuda (booster_gym deploy).
+        Non exécuté ici. Machine ici : Ryzen 7 4700U, 8 cœurs, WSL2, sans GPU.'
+      source: https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/play_t1_joystick.py:47
+        ; booster_gym deploy/utils/policy.py:9
+    entrainement:
+      valeur: 'GPU exigé. Playground : moins de 30 min sur 2 × RTX 4090 (sol plat). booster_gym : Isaac Gym + PyTorch CUDA, 4096 environnements,
+        10 000 itérations max ; pas de durée annoncée.'
+      source: 'arXiv 2502.08844 (MuJoCo Playground), §Humanoid Locomotion, c) Training, lu dans le PDF : « Training on flat ground lasts under
+        15 minutes for the Berkeley Humanoid, and under 30 minutes for the Unitree G1 and the Booster T1 on two RTX 4090. » ; https://github.com/BoosterRobotics/booster_gym/blob/da396a0/envs/T1.yaml
+        (num_envs 4096, max_iterations 10000) et README (installation pytorch-cuda, Isaac Gym)'
+    hauteur_m:
+      valeur: 1.18
+      source: revendeurs seulement (generationrobots.com, humanoza.com…), page officielle boosterobotics.com injoignable le 2026-10-05
+    masse_kg:
+      valeur: ~30 (revendeurs) ; 31,61 dans le MJCF Menagerie (somme des masses, calculée ici)
+      source: https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/booster_t1/t1.xml
+    axes_par_jambe:
+      valeur: 6
+      source: 't1.xml : Hip_Pitch, Hip_Roll, Hip_Yaw, Knee_Pitch, Ankle_Pitch, Ankle_Roll ; 23 DDL au total (aussi arXiv 2502.08844 : « Booster
+        T1, a small-scale humanoid robot with 23 Dof »)'
+    non_verifie:
+    - hauteur et masse officielles (site constructeur injoignable)
+    - t1_policy.onnx et T1.pt non exécutés ici
+    - compatibilité de T1.pt avec le MJCF Menagerie (observations, ordre des axes)
+- nom: Unitree G1
+  licence: BSD-3-Clause
+  politique: 'oui, marche : motion.pt (unitree_rl_gym, BSD-3), g1_policy.onnx (Playground), GR00T (licence NVIDIA, non lue en entier), Holosoma
+    (sans licence déclarée)'
+  inference: oui
+  entrainement: 'GPU : < 30 min sur 2 × RTX 4090 (Playground) ; unitree_rl_gym : Isaac Gym'
+  detail:
+    nom: Unitree G1
+    modele_source: 'https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/unitree_g1/g1.xml (dérivé de unitree_ros g1_29dof_rev_1_0.xml)
+      ; variante 12 axes (jambes seules) : https://github.com/unitreerobotics/unitree_rl_gym/blob/276801e/resources/robots/g1_description/g1_12dof.xml'
+    licence_modele:
+      valeur: BSD-3-Clause (« Copyright (c) 2016-2023 HangZhou YuShu TECHNOLOGY CO.,LTD. »)
+      source: https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/unitree_g1/LICENSE ; https://github.com/unitreerobotics/unitree_rl_gym/blob/276801e/LICENSE
+    politique:
+      existe: true
+      type: marche (lin_vel_x dans [-1, 1] m/s ; aucune politique de course trouvée)
+      fichiers:
+      - https://github.com/unitreerobotics/unitree_rl_gym/blob/276801e/deploy/pre_train/g1/motion.pt (145 745 octets, TorchScript LSTM, 12 axes
+        de jambe ; joué par deploy/deploy_mujoco/deploy_mujoco.py g1.yaml)
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/g1_policy.onnx (903 543
+        octets)
+      - 'https://huggingface.co/nepyope/GR00T-WholeBodyControl_g1 : GR00T-WholeBodyControl-Walk.onnx et -Balance.onnx (repris de https://github.com/NVlabs/GR00T-WholeBodyControl/tree/b042411/decoupled_wbc/sim2mujoco/resources/robots/g1/policy)'
+      - 'https://huggingface.co/nepyope/holosoma_locomotion : ppo_g1_29dof.onnx et fastsac_g1_29dof.onnx'
+      licence: 'unitree_rl_gym : BSD-3-Clause ; Playground : Apache-2.0 ; GR00T : poids sous « NVIDIA Open Model License » (le code est Apache-2.0)
+        ; dépôts Hugging Face nepyope/* : aucune licence déclarée (cardData vide), amont holosoma (amazon-far/holosoma) Apache-2.0'
+      source: arborescences git/trees ; API https://huggingface.co/api/models/nepyope/... ; https://github.com/NVlabs/GR00T-WholeBodyControl/blob/b042411/LICENSE
+        (DUAL LICENSE NOTICE)
+      note: Le G1 est le robot le mieux fourni en politiques prêtes. LeRobot les charge via HolosomaLocomotionController et GrootLocomotionController.
+    inference:
+      valeur: 'CPU suffit : torch.jit.load sans .cuda (deploy_mujoco.py:77), onnxruntime CPU (Playground). Non exécuté ici. Machine ici : Ryzen
+        7 4700U, 8 cœurs, WSL2, sans GPU.'
+      source: https://github.com/unitreerobotics/unitree_rl_gym/blob/276801e/deploy/deploy_mujoco/deploy_mujoco.py ; https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/play_g1_joystick.py
+    entrainement:
+      valeur: 'GPU exigé. Playground : moins de 30 min sur 2 × RTX 4090 (sol plat). unitree_rl_gym : Isaac Gym, « GPU: Nvidia GPU, driver 525
+        or later », 4096 environnements, 10 000 itérations ; pas de durée annoncée.'
+      source: 'arXiv 2502.08844 (MuJoCo Playground), §Humanoid Locomotion, c) Training, lu dans le PDF : « Training on flat ground lasts under
+        15 minutes for the Berkeley Humanoid, and under 30 minutes for the Unitree G1 and the Booster T1 on two RTX 4090. » ; https://github.com/unitreerobotics/unitree_rl_gym/blob/276801e/doc/setup_en.md
+        ; legged_gym/envs/g1/g1_config.py (max_iterations 10000)'
+    hauteur_m:
+      valeur: 1.32
+      source: revendeurs et reprises de la fiche officielle (« 1320 mm ») ; unitree.com/g1 injoignable le 2026-10-05
+    masse_kg:
+      valeur: ~35 (fiche officielle, citée par revendeurs) ; 33,34 dans g1.xml Menagerie (somme calculée ici)
+      source: https://github.com/google-deepmind/mujoco_menagerie/blob/4d038b3/unitree_g1/g1.xml
+    axes_par_jambe:
+      valeur: 6
+      source: 'g1.xml : hip_pitch, hip_roll, hip_yaw, knee, ankle_pitch, ankle_roll (29 DDL au total) ; motion.pt commande 12 axes (kps à 12 valeurs
+        dans deploy_mujoco/configs/g1.yaml)'
+    non_verifie:
+    - hauteur/masse officielles (site injoignable)
+    - politiques non exécutées ici
+    - conditions exactes de la NVIDIA Open Model License (lue seulement l'en-tête)
+    - licence des copies Hugging Face nepyope/*
+- nom: Berkeley Humanoid Lite
+  licence: modèle CC BY-SA 4.0 (réciproque) ; code MIT
+  politique: 'oui, marche : policy_biped_50hz.onnx et 5 autres ; licence des poids indéterminée'
+  inference: oui (Intel N95 à 25 Hz sur le robot)
+  entrainement: GPU (Isaac Gym / Lab) ; durée non publiée
+  detail:
+    nom: Berkeley Humanoid Lite
+    modele_source: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets/blob/fc90fed/data/robots/berkeley_humanoid/berkeley_humanoid_lite/mjcf/berkeley_humanoid_lite_biped.xml
+      (et berkeley_humanoid_lite.xml, 22 axes) ; sous-module de https://github.com/HybridRobotics/Berkeley-Humanoid-Lite
+    licence_modele:
+      valeur: 'CC BY-SA 4.0 pour le dépôt Assets (MJCF, URDF, CAO) — ShareAlike : vente permise, réciprocité imposée (famille « copyleft » de
+        CLAUDE.md). Code : MIT.'
+      source: https://github.com/HybridRobotics/Berkeley-Humanoid-Lite-Assets/blob/fc90fed/LICENCE (SPDX CC-BY-SA-4.0 par l'API GitHub) ; https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/LICENCE
+        (MIT) et README §License
+    politique:
+      existe: true
+      type: marche (bipède et humanoïde complet ; aucune course)
+      fichiers:
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_biped_50hz.onnx
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_biped_25hz_a.onnx
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_biped_25hz_b.onnx
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_humanoid.onnx
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_humanoid_legs.onnx
+      - https://github.com/HybridRobotics/Berkeley-Humanoid-Lite/blob/984741a/checkpoints/policy_video.onnx
+      licence: 'ambiguë : le README met le « code » sous MIT et les « other assets » sous CC BY-SA 4.0 ; les .onnx ne sont classés nulle part'
+      source: arborescence git/trees du dépôt ; configs/policy_*.yaml ; README §License
+      note: 'Rejeu MuJoCo prévu : scripts/sim2sim/play_mujoco.py. Ne pas confondre avec le « Berkeley Humanoid » (non Lite) de Menagerie (BSD-3-Clause,
+        16,06 kg dans le MJCF) dont Playground fournit bh_policy.onnx.'
+    inference:
+      valeur: 'CPU suffit : sur le robot, la politique MLP tourne à 25 Hz sur un mini-PC Intel N95. Non exécuté ici. Machine ici : Ryzen 7 4700U,
+        8 cœurs, WSL2, sans GPU.'
+      source: arXiv 2504.17249 §V-A (« runs onboard the robot at 25 Hz ») et §III (« An Intel N95 mini PC … serves as the low-level control computer
+        »)
+    entrainement:
+      valeur: GPU exigé (Isaac Lab / Isaac Gym, PPO). Aucune durée annoncée dans le papier.
+      source: README du dépôt (convention Isaac Lab) ; arXiv 2504.17249 §V-A (« Isaac Gym-trained policy »)
+    hauteur_m:
+      valeur: 0.8
+      source: 'arXiv 2504.17249 §III-A : « The robot weighs 16 kg and stands 0.8 m tall »'
+    masse_kg:
+      valeur: 16
+      source: arXiv 2504.17249 §III-A ; MJCF complet 16,33 kg, MJCF bipède 11,34 kg (sommes calculées ici)
+    axes_par_jambe:
+      valeur: 6
+      source: 'configs/policy_biped_50hz.yaml : hip_roll, hip_yaw, hip_pitch, knee_pitch, ankle_pitch, ankle_roll (num_joints 12)'
+    non_verifie:
+    - licence applicable aux .onnx
+    - durée d'entraînement
+    - politiques non exécutées ici
+    - documentation gitbook non lue
+- nom: « LeRobot Humanoid » (Hugging Face LeRobot)
+  licence: code Apache-2.0
+  politique: 'non : aucun humanoïde LeRobot qui marche (HopeJR : bras et main)'
+  inference: —
+  entrainement: —
+  detail:
+    nom: « LeRobot Humanoid » (Hugging Face LeRobot)
+    modele_source: https://github.com/huggingface/lerobot/tree/8c920c4/src/lerobot/robots (hope_jr, unitree_g1)
+    licence_modele:
+      valeur: 'Code LeRobot : Apache-2.0. Pas de modèle d''humanoïde propre à LeRobot.'
+      source: https://github.com/huggingface/lerobot/blob/8c920c4/LICENSE
+    politique:
+      existe: false
+      type: aucun humanoïde LeRobot qui marche
+      fichiers: []
+      licence: sans objet
+      source: recherche dans l'arborescence (1358 entrées) des chemins contenant humanoid, hope, biped, unitree, g1, walk, loco
+      note: 'Rien ne s''appelle « LeRobot Humanoid ». HopeJR (TheRobotStudio) n''a que bras, main, gant et exosquelette (hope_jr_arm.py, hope_jr_hand.py)
+        : pas de jambes. LeRobot pilote en revanche le Unitree G1 (simulation MuJoCo https://huggingface.co/lerobot/unitree-g1-mujoco) avec des
+        politiques de marche tierces : voir l''entrée Unitree G1 (GR00T, Holosoma).'
+    inference:
+      valeur: 'sans objet (pour le G1 via LeRobot : onnxruntime, voir l''entrée G1)'
+      source: src/lerobot/robots/unitree_g1/controllers/*.py
+    entrainement:
+      valeur: sans objet
+      source: —
+    hauteur_m:
+      valeur: null
+      source: —
+    masse_kg:
+      valeur: null
+      source: —
+    axes_par_jambe:
+      valeur: null
+      source: —
+    non_verifie:
+    - projets communautaires hors du dépôt huggingface/lerobot non cherchés
+- nom: MuJoCo Playground (google-deepmind)
+  licence: Apache-2.0 ; chaque robot garde sa licence Menagerie
+  politique: 'oui, marche au joystick : T1, G1, Berkeley Humanoid (pas la Lite), Apollo ; pas de ToddlerBot'
+  inference: oui (scripts sur CPU)
+  entrainement: 'GPU (JAX CUDA 12) : 15 à 30 min sur 2 × RTX 4090'
+  detail:
+    nom: MuJoCo Playground (google-deepmind)
+    modele_source: https://github.com/google-deepmind/mujoco_playground/tree/ef4fefc/mujoco_playground/_src/locomotion (modèles tirés de Menagerie)
+    licence_modele:
+      valeur: 'Apache-2.0 (texture de terrain : CC0) ; chaque robot garde la licence de son dossier Menagerie'
+      source: https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/LICENSE et README §License and Disclaimer
+    politique:
+      existe: true
+      type: marche au joystick (lin_vel_x dans [-1, 1] m/s pour G1, T1 et Berkeley Humanoid) ; pas de course
+      fichiers:
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/t1_policy.onnx
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/g1_policy.onnx
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/bh_policy.onnx (Berkeley
+        Humanoid, non Lite)
+      - https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/onnx/apollo_policy.onnx
+      licence: Apache-2.0
+      source: arborescence git/trees ; _src/locomotion/__init__.py (T1/G1/BerkeleyHumanoid JoystickFlatTerrain et RoughTerrain, H1, Op3, Apollo)
+      note: Aucun environnement ToddlerBot dans Playground (ToddlerBot a son propre code MJX). Aucun pour Berkeley Humanoid Lite.
+    inference:
+      valeur: 'CPU : les scripts sim2sim forcent CPUExecutionProvider dans MuJoCo C. Non exécuté ici.'
+      source: https://github.com/google-deepmind/mujoco_playground/blob/ef4fefc/mujoco_playground/experimental/sim2sim/play_t1_joystick.py:47
+    entrainement:
+      valeur: 'GPU exigé (JAX CUDA 12, MJX ou MuJoCo Warp). Humanoïdes, sol plat : < 15 min (Berkeley Humanoid), < 30 min (G1, T1) sur 2 × RTX
+        4090.'
+      source: 'arXiv 2502.08844 (MuJoCo Playground), §Humanoid Locomotion, c) Training, lu dans le PDF : « Training on flat ground lasts under
+        15 minutes for the Berkeley Humanoid, and under 30 minutes for the Unitree G1 and the Booster T1 on two RTX 4090. » ; README (installation
+        jax[cuda12])'
+    hauteur_m:
+      valeur: null
+      source: voir chaque robot
+    masse_kg:
+      valeur: null
+      source: voir chaque robot
+    axes_par_jambe:
+      valeur: null
+      source: voir chaque robot
+    non_verifie:
+    - rapports d'onnx Playground non exécutés ici
+    - onnxruntime absent des deux venvs non vérifié

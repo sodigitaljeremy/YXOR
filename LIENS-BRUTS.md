@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `401c789187d2`, le 2026-10-05 ; 213 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `dd4b2c6754d3`, le 2026-10-05 ; 218 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -127,7 +127,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (19)
+## docs/ (21)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -138,6 +138,8 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/decisions.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/dimensionnement-par-actionneur.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/estimation-thermique-j4310.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/etat-factuel-2026-10-01.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/exigences-physiques-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/exigences-physiques-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/faisabilite-2d-2026-10-03.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
@@ -162,7 +164,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-03.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-04.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.md
 
-## params/ (16)
+## params/ (17)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
@@ -177,6 +179,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/hardware.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/joints.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/mesures.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/origines.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/references_simulables.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/sources.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/squelette.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/upstream_joints.generated.yaml
@@ -193,7 +196,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (24)
+## scripts/ (25)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -206,6 +209,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/controle_dep
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/dimensionnement.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/empreinte.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/estimation_thermique.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/exigences_physiques.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstream_limits.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_actionneurs.py
@@ -230,7 +234,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (17)
+## tests/ (18)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -240,6 +244,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_controle_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_critere_banc.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_dimensionnement_coherence.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_empreinte.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_exigences_physiques.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_actionneurs.py

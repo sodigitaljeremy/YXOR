@@ -68,9 +68,10 @@ def doc(cap: dict) -> str:
          "calculer le budget en fonction des contraintes et de ce qu'il est réellement possible de faire » ; "
          "« je veux arbitrer avec des vrais chiffres et non des estimations ». Budget et masse sont des "
          "SORTIES de l'explorateur, jamais des filtres.", "",
-         "Les capacités sont celles de la fiche 0069. Les **niveaux**, les articulations sollicitées et les "
-         "méthodes sont **PROPOSÉS par Claude** ; † = niveaux absents du prompt, ajoutés dans ce lot pour une "
-         "capacité cochée qui n'en avait pas. *En italique* : un axe qui n'existe pas encore dans "
+         "Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS par Jeremy le "
+         "2026-10-05**, ses mots : « Je confirme la stratégie telle que reformulée par Claude, les capacités que j'ai cochées, et les niveaux proposés dans params/capacites.yaml ». Les articulations sollicitées et les méthodes restent **PROPOSÉES "
+         "par Claude** ; † = niveaux ajoutés par Claude le 2026-10-05 pour une capacité cochée qui n'en avait "
+         "pas (confirmés avec les autres). *En italique* : un axe qui n'existe pas encore dans "
          "`params/joints.yaml` (nom à créer).", "",
          "| Tâche | Grandeur | Niveaux à balayer | Articulations sollicitées | Méthode (phase 3) |",
          "| --- | --- | --- | --- | --- |"]

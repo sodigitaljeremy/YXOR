@@ -9,7 +9,13 @@
 # arbitrer avec des vrais chiffres et non des estimations ». Budget et masse
 # sont donc des SORTIES de l'explorateur, jamais des filtres.
 #
-# STATUT DES ÉLÉMENTS (règles 6 et 7) :
+# CONFIRMÉ PAR JEREMY le 2026-10-05, ses mots (message du jour) :
+#   « Je confirme la stratégie telle que reformulée par Claude, les capacités que j'ai cochées, et les niveaux proposés dans params/capacites.yaml ».
+#   Les capacités et TOUS les niveaux ci-dessous (y compris ceux marqués
+#   `ajoute_dans_ce_lot`) sont donc confirmés. Les articulations sollicitées
+#   et les méthodes restent PROPOSÉES par Claude.
+#
+# STATUT D'ORIGINE (avant confirmation ; règles 6 et 7) :
 #   · les CAPACITÉS sont celles de la fiche 0069 (cochées par Jeremy le
 #     2026-10-04 selon le prompt ; la liste n'est pas dans ses mots) ;
 #   · les NIVEAUX sont PROPOSÉS par Claude (prompt du 2026-10-05), à
