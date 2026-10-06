@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `dd4b2c6754d3`, le 2026-10-05 ; 218 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `df3dda8aaa07`, le 2026-10-06 ; 224 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -127,7 +127,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (21)
+## docs/ (23)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -146,12 +146,14 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-claude-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-grok-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/etude-fournisseurs-chatgpt-2026-09-30.md
 
-## journal/ (10)
+## journal/ (11)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-20.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-28.md
@@ -163,6 +165,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-02.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-03.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-04.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
 
 ## params/ (17)
 
@@ -196,7 +199,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (25)
+## scripts/ (26)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -221,20 +224,22 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/profil.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/regenerer.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/simulations_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/source.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/squelette.py
 
-## sim/ (7)
+## sim/ (8)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/.gitkeep
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/models/humanoid.xml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/render.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/enregistrer_marche.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/enregistrer_releve.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_policy.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (18)
+## tests/ (19)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -253,6 +258,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_an
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer_index.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulations_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_squelette.py
 
 ## web/ (4)

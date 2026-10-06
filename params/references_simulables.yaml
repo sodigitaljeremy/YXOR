@@ -213,43 +213,43 @@ references:
     - durée d'entraînement
     - politiques non exécutées ici
     - documentation gitbook non lue
-- nom: « LeRobot Humanoid » (Hugging Face LeRobot)
-  licence: code Apache-2.0
-  politique: 'non : aucun humanoïde LeRobot qui marche (HopeJR : bras et main)'
-  inference: —
-  entrainement: —
+- nom: LeRobot Humanoid (Hugging Face)
+  licence: Apache-2.0 (dépôts hardware, model, runtime) ; dépôt de tête sans licence déclarée
+  politique: 'oui, marche : 15 dossiers control/policy/*/policy.onnx (tâche mjlab de suivi de vitesse, lin_vel_x ∈ [−1, 1] m/s) ; sur le robot
+    réel, le billet ne montre qu''une politique debout'
+  inference: oui (onnxruntime ; runtime prévu sur Raspberry Pi 5)
+  entrainement: GPU (mjlab, MuJoCo Warp) ; durée non publiée
   detail:
-    nom: « LeRobot Humanoid » (Hugging Face LeRobot)
-    modele_source: https://github.com/huggingface/lerobot/tree/8c920c4/src/lerobot/robots (hope_jr, unitree_g1)
-    licence_modele:
-      valeur: 'Code LeRobot : Apache-2.0. Pas de modèle d''humanoïde propre à LeRobot.'
-      source: https://github.com/huggingface/lerobot/blob/8c920c4/LICENSE
-    politique:
-      existe: false
-      type: aucun humanoïde LeRobot qui marche
-      fichiers: []
-      licence: sans objet
-      source: recherche dans l'arborescence (1358 entrées) des chemins contenant humanoid, hope, biped, unitree, g1, walk, loco
-      note: 'Rien ne s''appelle « LeRobot Humanoid ». HopeJR (TheRobotStudio) n''a que bras, main, gant et exosquelette (hope_jr_arm.py, hope_jr_hand.py)
-        : pas de jambes. LeRobot pilote en revanche le Unitree G1 (simulation MuJoCo https://huggingface.co/lerobot/unitree-g1-mujoco) avec des
-        politiques de marche tierces : voir l''entrée Unitree G1 (GR00T, Holosoma).'
-    inference:
-      valeur: 'sans objet (pour le G1 via LeRobot : onnxruntime, voir l''entrée G1)'
-      source: src/lerobot/robots/unitree_g1/controllers/*.py
-    entrainement:
-      valeur: sans objet
-      source: —
-    hauteur_m:
-      valeur: null
-      source: —
+    corrige_le: '2026-10-05'
+    correction: 'L''inventaire du 2026-10-05 (agent) disait « n''existe pas » : FAUX. Vérifié par Claude Code le même jour (API GitHub, billet
+      ouvert).'
+    depots:
+      huggingface/lerobot-humanoid: tête de l'espace de travail, licence non déclarée, poussé le 2026-08-10
+      huggingface/lerobot-humanoid-hardware: Apache-2.0 ; nomenclature hardware/bom/bom_buy.md
+      huggingface/lerobot-humanoid-model: Apache-2.0 ; MJCF models/bipedal_plateform/mjcf/robot.xml (sha256 3d7b9e8d2d8c1bc2…)
+      huggingface/lerobot-humanoid-runtime: Apache-2.0 ; politiques control/policy/*/policy.onnx
+      huggingface/lerobot-humanoid-design, -identification: Apache-2.0
+    billet:
+      url: https://huggingface.co/blog/VirgileBatto/lerobot-humanoid
+      titre: 'LeRobot Humanoid: An Open, Low-Cost, 3D-Printed Humanoid for Robot Learning'
+      date: '2026-05-21'
+      note: renvoie aux dépôts Virgileboat/* (les mêmes, avant transfert vers huggingface/) ; vidéo « early sim-to-real standing policy »
+    axes:
+      valeur: '12 (6 par jambe : hipz, hipx, hipy, knee, ankley, anklex)'
+      source: MJCF robot.xml, articulations
+    actionneurs:
+      valeur: 'RobStride : 2 × RS00 (torse, roulis de hanche « hipx »), 2 × RS02 (lacet « hipz »), 4 × RS03 (cuisse : tangage de hanche et genou
+        par mécanisme), 4 × RS05 (tibia : cheville en LIAISON PARALLÈLE, 8 rotules Norelem 27628-01-05)'
+      source: hardware/bom/bom_buy.md et bom.md ; photos docs/assembly (ankle_mechanism, knee_mechanism)
     masse_kg:
-      valeur: null
-      source: —
-    axes_par_jambe:
-      valeur: null
-      source: —
-    non_verifie:
-    - projets communautaires hors du dépôt huggingface/lerobot non cherchés
+      valeur: 19.4
+      source: somme des <inertial mass> du MJCF robot.xml
+    hauteur_m: null
+    cout:
+      valeur: < 5 000 USD de matériel (objectif)
+      source: README de huggingface/lerobot-humanoid
+    interet_pour_yxor: précédent LU de l'option (b) de cheville (deux RobStride dans le tibia, bielles et rotules) et du genou commandé depuis
+      la cuisse ; même famille d'actionneurs que S
 - nom: MuJoCo Playground (google-deepmind)
   licence: Apache-2.0 ; chaque robot garde sa licence Menagerie
   politique: 'oui, marche au joystick : T1, G1, Berkeley Humanoid (pas la Lite), Apollo ; pas de ToddlerBot'

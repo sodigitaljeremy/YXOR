@@ -101,6 +101,13 @@ def main(argv=None) -> int:
     gears = sorted(set(sim.model.actuator_gear[:, 0].tolist()))
     print(f"gear des actionneurs : {gears}")
     print(f"-> {sortie}")
+    # métadonnées à côté de la série (ajouté le 2026-10-06, phase 3b) : ce qui se
+    # calcule ici ne se recopie pas à la main dans l'analyse
+    import json
+    json.dump(dict(robot=a.robot, politique=a.ckpt, vx_commande=a.vx,
+                   v=float((P[-1, 0] - P[0, 0]) / duree), chute=bool(zmin < 0.20), z_min=zmin,
+                   M=float(sim.model.body_mass[1:].sum())),
+              sortie.with_suffix(".json").open("w", encoding="utf-8"))
     return 1 if zmin < 0.20 else 0
 
 
