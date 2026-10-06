@@ -325,3 +325,66 @@ sources:
     lu: "2026-10-06 : le RÉSUMÉ seulement (page arXiv). Article complet non lu."
     pourquoi: >
       Masse des bipèdes ∝ L² plutôt que L³ ; couple de marche ∝ m·L, obtenu sur deux bipèdes QUASI PASSIFS en simulation (réserve écrite dans docs/loi-masse-2026-10.md).
+  # Rapports de méthodologie (prompt commun, 2026-10-06), déposés par Jeremy. SECONDAIRES :
+  # aucune affirmation n'en sort sans relecture de la source primaire qu'il cite.
+  # Commités le 2026-10-06 (ed82d3b) AVANT d'être lus et inscrits : écart de Claude, corrigé au lot suivant.
+  rapport_methodologie_chatgpt:
+    auteurs: "ChatGPT (rapport d'assistant)"
+    titre: "YXOR : méthodes d'ingénierie, rapport de ChatGPT"
+    editeur: "rapport d'assistant, docs/sources/methodologie-chatgpt-2026-10-06.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/methodologie-chatgpt-2026-10-06.md"
+    pages: "709 lignes"
+    empreinte: "sha256:f92555e9f2e5db996e0c465b89d5acc7d8d4c0dbd89ad6cf7ef8b77b40067e48"
+    octets: 56103
+    droits: >
+      Rapport d'assistant ; cite des normes et articles sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-06 (contrôle de droits) ; affirmations NON revérifiées, sauf celles que recoupe le rapport de Claude."
+    pourquoi: >
+      Cadre ISO 15288 + VDI 2206 allégés, traçabilité exigence → test, ISO 18646-5:2026 citée ; sécurité par dangers, pas par seuil de masse. Contient 133 marqueurs d'interface « :chatgpt-content-reference{…} » sans lien : leurs sources ne sont PAS récupérables.
+  rapport_methodologie_claude:
+    auteurs: "Claude (claude.ai, recherche web) (rapport d'assistant)"
+    titre: "YXOR : méthodes d'ingénierie, rapport de Claude"
+    editeur: "rapport d'assistant, docs/sources/methodologie-claude-2026-10-06.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/methodologie-claude-2026-10-06.md"
+    pages: "154 lignes"
+    empreinte: "sha256:3e5eba56fed04ee84c01ec1142333eb5305ec0219da42a97b78092a73d9ce341"
+    octets: 16051
+    droits: >
+      Rapport d'assistant ; cite des normes et articles sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-06. Se dit VÉRIFIÉ sur Oke et al., ISO 18646-5, Booster Lab, BRIDGE, SysML v2, ISO 13482 (liens au § 9) ; seul Oke et al. a été relu ici (résumé, entrée oke2026)."
+    pourquoi: >
+      Arbitre les trois autres rapports. Écart relevé : il donne masse ∝ L^2,12 (R² 0,87), notre ajustement donne 1,995 [1,814 ; 2,176] sur 31 bipèdes (docs/loi-masse-2026-10.md) ; il donne build123d 0.12.0 alors que le venv a la 0.13.0 (ChatGPT avait raison).
+  rapport_methodologie_gemini:
+    auteurs: "Gemini (rapport d'assistant)"
+    titre: "YXOR : méthodes d'ingénierie, rapport de Gemini"
+    editeur: "rapport d'assistant, docs/sources/methodologie-gemini-2026-10-06.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/methodologie-gemini-2026-10-06.md"
+    pages: "26 lignes"
+    empreinte: "sha256:31be11c656c37460bbe9b0f7d66d07ede92600f5bd4ff7690e94e5489b282af8"
+    octets: 5434
+    droits: >
+      Rapport d'assistant ; cite des normes et articles sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-06."
+    pourquoi: >
+      Ne traite que Capella contre SysML v2 (« gagnant incontesté ») ; sources : blogs d'éditeurs et vidéos. Le plus mince des quatre.
+  rapport_methodologie_grok:
+    auteurs: "Grok (rapport d'assistant)"
+    titre: "YXOR : méthodes d'ingénierie, rapport de Grok"
+    editeur: "rapport d'assistant, docs/sources/methodologie-grok-2026-10-06.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/methodologie-grok-2026-10-06.md"
+    pages: "147 lignes"
+    empreinte: "sha256:29ff2ab824c8e930b773986cb3b9995cde49d273674685288a96eb45c98826b6"
+    octets: 18675
+    droits: >
+      Rapport d'assistant ; cite des normes et articles sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-06 (contrôle de droits) ; affirmations NON revérifiées."
+    pourquoi: >
+      Cycle en V mécatronique, actionneur figé tôt puis caractérisé (Berkeley, MIT, ODRI, ToddlerBot) ; cite Oke et al. (m ∝ L², τ ∝ m·L).
