@@ -180,7 +180,9 @@ def masse(H: float, ref: dict, config: dict, besoins: dict) -> float:
     La masse fixe (charge utile : calculateur, batterie, IMU) ne grandit pas
     avec H. Elle vaut 0 sauf dans une référence de `reference_charge`.
     """
-    return (ref["S0"] * (H / ref["H0"]) ** 3 + ref.get("m_fixe", 0.0)
+    # `exposant` : VARIANTE (2026-10-06, params/lois_masse.yaml). Absent = 3, la loi
+    # isométrique de tous les calculs existants ; rien n'est remplacé.
+    return (ref["S0"] * (H / ref["H0"]) ** ref.get("exposant", 3.0) + ref.get("m_fixe", 0.0)
             + sum(config[type_de(n)]["masse"] for n in besoins))
 
 

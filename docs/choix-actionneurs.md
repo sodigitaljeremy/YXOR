@@ -1,8 +1,8 @@
 # Choix de l'actionneur de S — faits, approvisionnement, exigences
 
-**Engendré** par `.venv/bin/python scripts/choix_actionneurs.py --ecrire`, le 2026-10-04. Ne pas éditer à la main. Aucun score, aucun poids : chaque exigence donne **PASS**, **FAIL**, **UNKNOWN** (l'information manque) ou **TESTED** (mesuré au banc). Les règles de verdict sont dans `params/exigences_S.yaml`.
+**Engendré** par `.venv/bin/python scripts/choix_actionneurs.py --ecrire`, le 2026-10-06. Ne pas éditer à la main. Aucun score, aucun poids : chaque exigence donne **PASS**, **FAIL**, **UNKNOWN** (l'information manque) ou **TESTED** (mesuré au banc). Les règles de verdict sont dans `params/exigences_S.yaml`.
 
-**Décision** (fiche [0065](../decisions/0065-s-robstride-rs00.md), Jeremy, 2026-10-01) : famille RobStride, RS00 sur les 12 articulations de jambe, **H_S = 0,60 m visée**. Cette grille en vérifie la condition (a).
+**Décision** (fiches [0067](../decisions/0067-s-jambes-mixtes-rs02-rs00.md) et [0068](../decisions/0068-s-cheville-sans-roulis.md), Jeremy, 2026-10-02 et 2026-10-04) : famille RobStride, jambes mixtes (RS02 au roulis et au tangage de hanche et au genou, RS00 ailleurs), 5 axes par jambe, **H_S = 0,60 m visée**. Elles remplacent la 0065 (tout-RS00). La fiche 0069 abandonne la gamme : cette grille décrit S tel qu'il est au code. Elle vérifie la condition (a) de la 0065, reprise par la 0067.
 
 ---
 

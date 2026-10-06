@@ -308,3 +308,20 @@ sources:
     lu: "2026-10-02 : tableaux de règles laser (l. 52-107), divergences (l. 883), dégagement (l. 2218)."
     pourquoi: >
       Valeurs DFM prudentes ; source secondaire, non vérifiée.
+
+  # ── Loi de masse (2026-10-06) ──
+  oke2026:
+    auteurs: "Naomi Oke, Aja M. Carter, Ben Gu, Steven Man, Cordelia Pride, Sarah Bergbreiter, Aaron M. Johnson"
+    titre: "Allometric Scaling Laws for Bipedal Robots"
+    editeur: "arXiv"
+    annee: 2026
+    identifiant_perenne: "arXiv:2603.22560 (v5, 2026-09-21)"
+    pages: null
+    empreinte: null
+    octets: null
+    droits: >
+      Article sous droits d'auteur ; seules des valeurs et une phrase du résumé en sont citées.
+    lecture: partiel
+    lu: "2026-10-06 : le RÉSUMÉ seulement (page arXiv). Article complet non lu."
+    pourquoi: >
+      Masse des bipèdes ∝ L² plutôt que L³ ; couple de marche ∝ m·L, obtenu sur deux bipèdes QUASI PASSIFS en simulation (réserve écrite dans docs/loi-masse-2026-10.md).

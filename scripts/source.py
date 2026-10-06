@@ -127,7 +127,7 @@ def cmd_liste() -> int:
     for sid, d in reg.items():
         dispo = "" if sid in ch and Path(ch[sid]).exists() else "  ⚠ exemplaire absent"
         print(f"  {sid:<20} {etats.get(d.get('lecture'), '?'):<9} "
-              f"{d.get('pages', '?'):>5}  {d.get('titre', '')[:44]}{dispo}")
+              f"{d.get('pages') or '?':>5}  {(d.get('titre') or '')[:44]}{dispo}")
         if d.get("lu"):
             print(f"  {'':<20} {'':<9} {'':>5}  lu : {d['lu']}")
     print("\n  Un `non lu` est une information, pas un oubli : aucune")

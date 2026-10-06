@@ -1,0 +1,29 @@
+# Lois de masse du robot selon sa taille — VARIANTES, aucune ne remplace l'autre
+#
+# Créé le 2026-10-06. Aucune décision : la variante « isometrique » (masse ∝ H³)
+# reste celle de tous les calculs existants (dimensionnement.masse, grille de S,
+# exigences). La variante « allometrique » (masse ∝ H^b) s'y ajoute ; un calcul
+# ne change de méthode que sous forme de VARIANTE (prompt de Jeremy du 2026-10-06).
+#
+# b est CALCULÉ par scripts/loi_masse.py (moindres carrés en log-log, IC 95 % de
+# Student) sur le jeu de données robomechanics/robot-dataset, BIPÈDES seulement.
+# Le CSV n'est pas dans le dépôt (aucune licence déclarée) : registre
+# params/fournisseurs.yaml (robot_dataset_csv), copie locale dans
+# exports/sources/ (ignoré). Le test tests/test_loi_masse.py vérifie que ces
+# valeurs sont celles que l'ajustement redonne, quand le CSV est là.
+
+variantes:
+  isometrique:
+    exposant: 3.0
+    source: "similitude géométrique (toutes les longueurs × k, masse × k³) ; loi actuelle du modèle (dimensionnement.masse)"
+  allometrique:
+    selection: "bipèdes : types « full biped » et « lower biped » ; Tesla Optimus (« biped ») exclu par les auteurs, hybrides drone exclus"
+    variable: "total_length_inm (longueur totale du corps, assimilée à H)"
+    n: 31
+    exposant: {bas: 1.814, central: 1.995, haut: 2.176}
+    A_kg: 17.74
+    R2: 0.946
+    sous_ensemble_humanoides_complets: {n: 21, exposant: {bas: 1.750, central: 2.273, haut: 2.796}, R2: 0.813}
+    source: "robomechanics/robot-dataset @ 3699af27, robot_scaling_dataset.csv (sha256 aee79261…), ajusté par Claude Code le 2026-10-06"
+    comparaison_auteurs: "fit_summary_powerlaw.txt du même dépôt : full biped b = 2,265 (n = 17), lower biped b = 1,957 (n = 10) ; leurs n diffèrent des nôtres (lignes exclues faute de données)"
+    article: "Oke et al., « Allometric Scaling Laws for Bipedal Robots », arXiv:2603.22560 (v5, 2026-09-21) : « bipedal robot mass generally scales with the length squared »"

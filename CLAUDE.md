@@ -206,6 +206,7 @@ des règles déclaratives et l'index des fiches sont dans `archive/`.
 | rayon minimal | rayon intérieur = 0,5 × épaisseur, sur tous les réglages | `procedes.controler_rayon` |
 | CAO reproductible | même pièce, même empreinte, à deux dates | `tests/test_construction_deterministe.py` |
 | empreinte | le site sert bien le dépôt | `scripts/empreinte.py` |
+| liens et contradictions | aucun lien relatif mort ; aucune affirmation périmée dans les fichiers vivants (versés le 2026-10-06, décision de Jeremy) | `scripts/controle_liens.py`, `scripts/controle_contradictions.py` (dans les tests) |
 
 Les quatre premiers et le rayon tournent dans `regenerer.py` ; les tests
 non (à lancer à chaque clôture).

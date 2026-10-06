@@ -3332,3 +3332,31 @@ fichiers:
     empreinte: sha256:9ab3325e266d22ee8c81ece7d70d0a9c5e0fa878a66cc4e61382067fee7ef46e
     conditions: Page commerciale.
     redistribuable: false
+  # ── Loi de masse, 2026-10-06 : jeu de données lu, jamais versé (aucune licence déclarée) ──
+  robot_dataset_csv:
+    source: >
+      robomechanics/robot-dataset, https://github.com/robomechanics/robot-dataset, fichier robot_scaling_dataset.csv, commit 3699af27dd3edd7f9434d528eee91dce5259575e
+    reference: "Jeu de données de l'article « Allometric Scaling Laws for Bipedal Robots » (Oke et al., arXiv:2603.22560), 60 lignes, 12 949 octets"
+    date: 2026-10-06
+    empreinte: "sha256:aee792619e4343983dc6813ec8c7a02d608b87219572d06eb2e9722972bb6ad5"
+    conditions: >
+      Le dépôt ne déclare AUCUNE licence (API GitHub : license null) : tous droits réservés par défaut. Copie de travail dans exports/sources/ (ignoré) ; des valeurs calculées (b, IC, n) en sont tirées.
+    redistribuable: false
+  robot_dataset_fit:
+    source: >
+      robomechanics/robot-dataset, fichier fit_summary_powerlaw.txt, commit 3699af27dd3edd7f9434d528eee91dce5259575e
+    reference: "Résumé des ajustements des auteurs (A, b, R², n par type), 2 306 octets"
+    date: 2026-10-06
+    empreinte: "sha256:7772b66c4288d5c6a4f8c517fc08a9b19f8ec4f07a6b4ea794ae01fd6231ce1f"
+    conditions: >
+      Comme robot_dataset_csv.
+    redistribuable: false
+  robot_dataset_readme:
+    source: >
+      robomechanics/robot-dataset, fichier README.md, commit 3699af27dd3edd7f9434d528eee91dce5259575e
+    reference: "Description des colonnes et des types de robots, 3 202 octets"
+    date: 2026-10-06
+    empreinte: "sha256:10dff3e5c1fffd8bd8075b6b182927132a21b814024cb5c29c0827d0ed6d5561"
+    conditions: >
+      Comme robot_dataset_csv.
+    redistribuable: false

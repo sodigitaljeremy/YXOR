@@ -1,0 +1,26 @@
+Capella et SysML v2 sont les deux piliers majeurs de l'Ingénierie Système Basée sur les Modèles (MBSE). Pour votre projet de robot humanoïde, ils interviennent tout au début de la chaîne : avant de dessiner des pièces en 3D, ils permettent de cartographier le "cerveau", les fonctions et l'architecture logique du robot. [1] (https://mbse-capella.org/), [2] (https://blogs.sw.siemens.com/teamcenter/sysml-v2-guide/), [3] (https://mbse-capella.org/what_is_mbse.html), [4] (https://mbse-capella.org/capella_days_2026.html)
+Bien qu'ils poursuivent le même but, leurs philosophies et leurs fonctionnements sont très différents :
+1. Capella : L'outil "clé en main" guidé par la méthode (Open Source)
+Eclipse Capella n'est pas qu'un langage de modélisation, c'est un logiciel complet créé par Thales qui intègre nativement une méthodologie d'ingénierie système éprouvée appelée Arcadia. [1] (https://www.incose.org/resource/integrating-arcadia-and-capella-with-sysml-v2/), [2] (https://mbse-capella.org/)
+• La philosophie : Capella vous prend par la main. Il vous force à suivre des étapes logiques :
+	1. Analyse opérationnelle : Que doit faire le robot dans son environnement (marcher, attraper des objets, interagir) ?
+	2. Analyse système : Quelles sont les fonctions principales du robot pour y parvenir ?
+	3. Architecture logique : Comment ces fonctions se regroupent (ex: isoler les fonctions de l'IA de celles des moteurs).
+	4. Architecture physique : Quels composants matériels réels vont exécuter ces tâches (les servomoteurs précis, le mini-PC embarqué). [1] (https://mbse-capella.org/arcadia_capella_sysml_tool.html), [2] (https://www.mdpi.com/2079-8954/11/8/429), [3] (https://mbse-capella.org/capella_days_2026.html)
+• Le point fort pour votre humanoïde : Il est très visuel, gratuit, et évite de faire des erreurs de logique architecturale grâce à ses règles strictes. [1] (https://www.mdpi.com/2079-8954/11/8/429), [2] (https://mbse-capella.org/arcadia_capella_sysml_tool.html)
+2. SysML v2 : Le langage standard universel (Propulsé par le code)
+SysML v2 (développé par l'OMG) est la toute nouvelle génération du langage standard mondial de l'ingénierie système. Contrairement à la version v1 qui reposait sur des diagrammes graphiques lourds issus du développement logiciel (UML), la v2 est une révolution totale. [1] (https://community.ibm.com/community/user/blogs/tom-hollowell/2024/08/09/sysml-v2-a-streamlined-language-for-systems-engine), [2] (https://www.ptc.com/en/blogs/alm/guide-to-sysml-v2), [3] (https://www.youtube.com/watch?v=4iCZVyo2Ceo&t=10)
+• La philosophie : SysML v2 est neutre, il n'impose aucune méthode de travail. Sa force incroyable réside dans son double visage graphique ET textuel. Vous pouvez modéliser votre robot en écrivant du code (une syntaxe proche d'un script Python) dans votre terminal. [1] (https://blog.obeosoft.com/extending-syson-to-support-the-arcadia-method-a-first-experiment), [2] (https://www.youtube.com/watch?v=4iCZVyo2Ceo&t=10), [3] (https://www.youtube.com/watch?v=380_fWyAr_o&t=748), [4] (https://www.youtube.com/watch?v=yi_XnxI3riw)
+• L'intégration API & Jumeau Numérique : Il intègre une API standardisée (REST). C'est l'outil parfait pour créer la "colonne vertébrale" numérique (Digital Thread) de votre robot. [1] (https://blogs.sw.siemens.com/teamcenter/sysml-v2-guide/), [2] (https://www.ptc.com/en/blogs/alm/guide-to-sysml-v2), [3] (https://www.youtube.com/watch?v=dluFHYVomAE&t=1108), [4] (https://www.youtube.com/watch?v=4iCZVyo2Ceo&t=10)
+Le Match pour votre projet Humanoïde sur WSL
+Critère	Capella (Arcadia)	SysML v2
+Nature	Logiciel de bureau complet avec méthode intégrée	Langage standard avec syntaxe textuelle et graphique
+Prise en main	Plus facile, guidée par l'interface et la méthode	Plus abstraite, nécessite de définir sa propre logique
+Compatibilité IA (Claude Code)	Faible (format de fichiers XML complexes sous interface graphique)	Maximale (La syntaxe textuelle est nativement comprise par l'IA)
+Intégration WSL	Nécessite un serveur graphique (X11/Wayland) sous Linux	Parfaite (Fonctionne en pur terminal ou via des notebooks Jupyter)
+La bonne nouvelle : Ils fusionnent
+Vous n'avez plus forcément à choisir. Des initiatives open source majeures permettent désormais de formaliser la méthode Arcadia (de Capella) directement en SysML v2. Des outils web comme SysON permettent de manipuler des modèles SysML v2 en conservant les représentations graphiques claires de Capella. [1] (https://blog.obeosoft.com/capella-for-syson), [2] (https://blog.obeosoft.com/introducing-methodology-support-for-sysmlv2-with-syson)
+Le Verdict pour votre Humanoïde + Claude Code
+Pour votre objectif spécifique d'automatisation par l'IA sous WSL, SysML v2 est le gagnant incontesté.
+Parce qu'il dispose d'une syntaxe textuelle, vous pouvez demander à Claude Code : « Rédige-moi le modèle SysML v2 du système de gestion des articulations des jambes du robot, incluant les contraintes de latence et le capteur d'inclinaison ». L'IA va vous générer un fichier texte structuré parfait, ce qu'elle serait incapable de faire nativement dans l'interface graphique de Capella.
+Voulez-vous voir à quoi ressemble un exemple de code SysML v2 décrivant l'architecture d'un membre du robot, ou préférez-vous que l'on configure l'outil open-source SysON dans votre environnement WSL ?
