@@ -29,14 +29,15 @@ Front de Pareto (tri maison, sans dépendance : réponse de Jeremy du
 de capacités tenues et nombre de capacités VOULUES couvertes, parmi les
 solutions faisables.
 
-PROFIL CIBLE (phase 4a bis) : les capacités voulues (par défaut, toutes celles
-de la fiche 0069). Un ensemble sans les axes d'une capacité voulue est marqué
+PROFIL CIBLE : les capacités voulues, `profils` de params/capacites.yaml (`lab`,
+DÉCIDÉ par Jeremy le 2026-10-07, par défaut ; `final` avec --profil final). Un ensemble sans les axes d'une capacité voulue est marqué
 « ne couvre pas » (la capacité est listée) au lieu d'être comparé à égalité ;
 une capacité voulue mais non calculée reste INCONNUE, listée.
 
 Révisé le 2026-10-07 après-midi (phase 4a bis) : place et structure par les
 études reconstruites (scripts/taille_minimale.py, scripts/structure_plaques.py) ;
-profil cible ; H de 0,50 à 0,90 m.
+profil cible ; H de 0,50 à 0,90 m. Puis (phase 4a ter) : profil lab décidé ;
+couples, masse et centre de gravité à la HAUTEUR RÉELLE, par itération.
 
 HYPOTHÈSES, toutes PROPOSÉES par Claude et écrites ici (aucune cachée) :
   · ENSEMBLES : 26 = squelette v3 ; 27 et 29 = ceux calculés le 2026-10-04
@@ -45,8 +46,7 @@ HYPOTHÈSES, toutes PROPOSÉES par Claude et écrites ici (aucune cachée) :
   · PLACE : taille minimale géométrique (scripts/taille_minimale.py), lecture
     AVEC ÉCARTS : la hauteur réelle vaut H + dépassements des chaînes
     verticales ; la lecture ANSUR stricte est rapportée (tient / ne tient pas).
-    Couples et masses restent calculés à H (le tronc allongé n'y change rien :
-    hypothèse) ;
+    couples, masse et centre de gravité à la hauteur réelle (itération) ;
   · STRUCTURE : segment par segment (scripts/structure_plaques.py), à H_S,
     selon l'ensemble, puis × (H / H_S)^b ;
   · RÉGIME : les tâches tenues (charge, saisie, poussée, buste, tête) se
@@ -118,26 +118,30 @@ SANS_CALCUL = {
     "mains_a_doigts": "aucun ensemble du Lab n'a de doigts",
     "visage": "masse, prix et place d'un écran ou de micro-servos : non relevés",
 }
-TOUTES = ["marche_sol_plat", "sol_irregulier", "pente", "releve", "course", "saut_vertical", "gestes_pointage",
-          "saisie", "charge_lourde", "poussee", "mains_a_doigts", "buste", "tete", "visage"]
 # Axes qu'une capacité VOULUE exige au-delà de son calcul. PROPOSÉ par Claude (2026-10-07) : le roulis de
 # cheville pour le sol irrégulier (exemple du prompt) ; des doigts pour la main. La pente et la course n'en
 # exigent pas (des robots à 5 axes par jambe courent : fiche 0068, H1).
 AXES_CIBLE = {"sol_irregulier": ["ankle_roll"], "mains_a_doigts": ["doigts"]}
 
 
-def cible_defaut(cap) -> dict:
-    """Toutes les capacités de la fiche 0069 au niveau le plus bas, sauf le buste : « rotation ET inclinaison »
-    (fiche 0069) demande le niveau à 3 axes. PROPOSÉ par Claude, à confirmer."""
-    c = {t: cap["taches"][t]["niveaux"][0] for t in TOUTES}
-    c["buste"] = cap["taches"]["buste"]["niveaux"][-1]
-    return c
+def cible_defaut(cap, profil="lab") -> dict:
+    """Le profil cible de params/capacites.yaml (`profils`). `lab` : DÉCIDÉ par Jeremy le 2026-10-07 ; `final` :
+    fiche 0069, niveaux non fixés (null) pris ici au plus bas, à balayer en phase 4b."""
+    t = cap["profils"][profil]["taches"]
+    return {k: (v if v is not None else cap["taches"][k]["niveaux"][0]) for k, v in t.items()}
 
 
 def non_couvertes(axes, cible) -> list[str]:
     """Capacités voulues dont l'ensemble n'a pas les axes."""
-    return [t for t, niv in cible.items()
-            if any(a not in axes for a in axes_requis(t, niv) + AXES_CIBLE.get(t, []))]
+    return sorted({t for t, niv in paires(cible) if any(a not in axes for a in axes_requis(t, niv) + AXES_CIBLE.get(t, []))},
+                  key=list(cible).index)
+
+
+def paires(profil):
+    """(tâche, niveau) d'un profil ; un niveau peut être une LISTE (le relevé du profil lab : dos et ventre)."""
+    for t, v in profil.items():
+        for n in (v if isinstance(v, list) else [v]):
+            yield t, n
 
 
 def axes_requis(tache, niveau):
@@ -202,7 +206,7 @@ def table_besoins(lignes_ep, marches, releve, cap) -> dict:
 def besoins(T, H, profil, M, combine=max) -> dict:
     """Par axe : pointe, continu, vitesse = le MAXIMUM des tâches du profil, à la masse M."""
     out = {}
-    for t, niv in profil.items():
+    for t, niv in paires(profil):
         for ax, e in T.get((round(H, 2), t, niv), {}).items():
             o = out.setdefault(ax, dict(pk=0.0, c=0.0, w=0.0))
             for k in ("pk", "c"):
@@ -216,9 +220,9 @@ def besoins(T, H, profil, M, combine=max) -> dict:
 def verifier_maximum(bes, T, H, profil, M) -> list[str]:
     """Contrôle INDÉPENDANT de `besoins` : chaque valeur doit être le maximum des entrées brutes."""
     ecarts = []
-    axes = {ax for t, niv in profil.items() for ax in T.get((round(H, 2), t, niv), {})} | set(bes)
+    axes = {ax for t, niv in paires(profil) for ax in T.get((round(H, 2), t, niv), {})} | set(bes)
     for ax in axes:
-        ent = [T.get((round(H, 2), t, niv), {}).get(ax) for t, niv in profil.items()]
+        ent = [T.get((round(H, 2), t, niv), {}).get(ax) for t, niv in paires(profil)]
         ent = [e for e in ent if e]
         for k in ("pk", "c", "w"):
             vals = [w for e in ent for w in e["w"]] if k == "w" else [a * M + b for e in ent for a, b in e[k]]
@@ -324,7 +328,7 @@ def structures() -> dict:
     return dict(par_ensemble=out, H_S=m["H_S"], modele=m, charge=lire("exigences_S.yaml")["charge_utile"]["valeur_kg"])
 
 
-def contexte(struct=None, cible=None) -> dict:
+def contexte(struct=None, cible=None, profil="lab") -> dict:
     import simulations_marche as SM
     cap, an, lignes = EP.tout()
     marches, releve, manque = SM.charger()
@@ -334,9 +338,9 @@ def contexte(struct=None, cible=None) -> dict:
     sq = lire("squelette.yaml")
     import taille_minimale as TM
     return dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()}, cv=TM.conventions(),
-                cible=cible or cible_defaut(cap),
+                cible=cible or cible_defaut(cap, profil), profil=profil,
                 T=table_besoins(lignes, marches, releve, cap), manque=manque,
-                C={H: EP.contraintes(H, cap, an) for H in H_LAB}, ex=ex, decision=lm.get("retenue"),
+                C={H: EP.contraintes(H, cap, an) for H in EP.HS}, ex=ex, decision=lm.get("retenue"),
                 act=par, ecartes=ecartes, fams=fams, struct=struct or structures(),
                 marge=lire("actionneurs.yaml")["dimensionnement"]["marge"],
                 jeu=sq["ecarts_ansur"]["cheville"]["jeu_mm"]["valeur"],
@@ -371,57 +375,78 @@ def place(ctx, axes, choix, H):
 
 
 # ─────────────────────────────── évaluation ─────────────────────────────
+def grille_haut(H):
+    """Le pas de la grille des besoins (exigences_physiques.HS) immédiatement au-dessus de H : prudent."""
+    return next((h for h in EP.HS if h >= H - 1e-9), None)
+
+
+def grille_bas(H):
+    return max((h for h in EP.HS if h <= H + 1e-9), default=EP.HS[0])
+
+
 def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
-    """Une solution. None si le profil demande un axe que l'ensemble n'a pas (capacité sans objet)."""
+    """Une solution. None si le profil demande un axe que l'ensemble n'a pas (capacité sans objet).
+
+    H fixe les PROPORTIONS (ANSUR) ; la place peut allonger des chaînes : la hauteur RÉELLE H_r ≥ H. Les
+    couples sont lus à la hauteur réelle (pas supérieur de la grille, Ht), la structure grandit avec H_r, et
+    l'on recommence (choix → place → H_r) jusqu'à ce que Ht ne bouge plus (phase 4a ter)."""
     axes = ENSEMBLES[ens]["axes"]
-    for t, niv in profil.items():
+    for t, niv in paires(profil):
         if any(a not in axes for a in axes_requis(t, niv)):
             return None
     fam_de = {a: (fp if a in PETITS_AXES else fc) for a in axes}
     acts = {a: ctx["act"].get(fam_de[a], []) for a in axes}
-    inconnues, violees = [], []
-    for t, niv in profil.items():
-        if (round(H, 2), t, niv) not in ctx["T"]:
-            inconnues.append(f"{t} {niv} : aucun besoin calculé à H = {f1(H, 2)} m"
-                             + (" (Froude au-delà des marches simulées)" if t == "marche_sol_plat" else ""))
-    for a in axes:
-        if not acts[a]:
-            violees.append(f"{a} : famille {fam_de[a]} vide au catalogue")
+    violees = [f"{a} : famille {fam_de[a]} vide au catalogue" for a in axes if not acts[a]]
     if violees:
-        return dict(statut="infaisable", violees=violees, inconnues=inconnues)
-    mfix = lambda b, c="central": masse_structure(ctx, ens, H, ctx["ex"][b], c) + ctx["struct"]["charge"]
+        return dict(statut="infaisable", violees=violees, inconnues=[])
     idx = {a: 0 for a in axes}
-    M = {}
-    for _ in range(40):                                      # point fixe : masse ↔ choix
-        change = False
-        for b, c in CAS:
-            M[(b, c)] = mfix(b, c) + sum(n * (acts[a][idx[a]]["masse"] or 0.0) for a, n in axes.items())
-            bes = besoins(ctx["T"], H, profil, M[(b, c)])
-            for a in axes:
-                need = bes.get(a, dict(pk=0.0, c=0.0, w=0.0))
-                cle = (fam_de[a], idx[a], round(need["pk"], 3), round(need["c"], 3), round(need["w"], 2))
-                if cle not in ctx["memo"]:
-                    ctx["memo"][cle] = choisir(acts[a], need, ctx["marge"], idx[a], True)
-                i = ctx["memo"][cle]
-                if i is None:
-                    violees.append(f"{a} : aucun {fam_de[a]} ne tient (pointe {need['pk']:.2f}, continu "
-                                   f"{need['c']:.2f} N·m, ω {need['w']:.1f} rad/s, b {b}, structure {c}, "
-                                   f"marge {ctx['marge']})")
-                    return dict(statut="infaisable", violees=violees, inconnues=inconnues)
-                if i > idx[a]:
-                    idx[a], change = i, True
-        if not change:
+    Ht, Hr, pl, manque_place, iterations = H, H, None, [], 0
+    for iterations in range(1, 12):                          # hauteur réelle ↔ couples ↔ choix ↔ place
+        mfix = lambda b, c="central", Hm=Hr: masse_structure(ctx, ens, Hm, ctx["ex"][b], c) + ctx["struct"]["charge"]
+        M = {}
+        for _ in range(40):                                  # point fixe : masse ↔ choix, à Ht
+            change = False
+            for b, c in CAS:
+                M[(b, c)] = mfix(b, c) + sum(n * (acts[a][idx[a]]["masse"] or 0.0) for a, n in axes.items())
+                bes = besoins(ctx["T"], Ht, profil, M[(b, c)])
+                for a in axes:
+                    need = bes.get(a, dict(pk=0.0, c=0.0, w=0.0))
+                    cle = (fam_de[a], idx[a], round(need["pk"], 3), round(need["c"], 3), round(need["w"], 2))
+                    if cle not in ctx["memo"]:
+                        ctx["memo"][cle] = choisir(acts[a], need, ctx["marge"], idx[a], True)
+                    i = ctx["memo"][cle]
+                    if i is None:
+                        violees.append(f"{a} : aucun {fam_de[a]} ne tient (pointe {need['pk']:.2f}, continu "
+                                       f"{need['c']:.2f} N·m, ω {need['w']:.1f} rad/s, b {b}, structure {c}, "
+                                       f"hauteur réelle {f1(Hr, 3)} m, marge {ctx['marge']})")
+                        return dict(statut="infaisable", violees=violees, inconnues=[])
+                    if i > idx[a]:
+                        idx[a], change = i, True
+            if not change:
+                break
+        choix = {a: acts[a][idx[a]] for a in axes}
+        pl, manque_place = place(ctx, axes, choix, H)        # taille minimale géométrique, aux proportions de H
+        Hr = pl["H_reel"] if pl else H
+        Ht_n = grille_haut(Hr)
+        if Ht_n is None:
+            return dict(statut="infaisable", inconnues=[],
+                        violees=[f"hauteur réelle {f1(Hr, 3)} m au-delà de la grille des besoins ({EP.HS[-1]} m)"])
+        if abs(Ht_n - Ht) < 1e-9:
             break
-    choix = {a: acts[a][idx[a]] for a in axes}
-    bes = {k: besoins(ctx["T"], H, profil, M[k]) for k in CAS}
+        Ht = Ht_n
+    inconnues = list(manque_place)
+    for t, niv in paires(profil):
+        if (round(Ht, 2), t, niv) not in ctx["T"]:
+            inconnues.append(f"{t} {niv} : aucun besoin calculé à {f1(Ht, 2)} m"
+                             + (" (Froude au-delà des marches simulées)" if t == "marche_sol_plat" else ""))
+    bes = {k: besoins(ctx["T"], Ht, profil, M[k]) for k in CAS}
+    Hc = grille_bas(Hr)
     for k in CAS:                                             # masses minimales (équilibre, frottement)
-        for t, niv in profil.items():
-            mmin = ctx["C"].get(H, {}).get((t, niv))
+        for t, niv in paires(profil):
+            mmin = ctx["C"].get(Hc, {}).get((t, niv))
             if mmin and M[k] < mmin:
                 violees.append(f"{t} {niv} : M = {M[k]:.1f} kg < {mmin:.1f} kg (équilibre ou frottement, "
                                f"b {k[0]}, structure {k[1]})")
-    pl, manque = place(ctx, axes, choix, H)                   # taille minimale géométrique
-    inconnues += manque
     for a, c in choix.items():
         need = {k: max(bes[x].get(a, {}).get(k, 0.0) for x in CAS) for k in ("pk", "c", "w")}
         inconnues += inconnues_de(c, need)
@@ -431,17 +456,17 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
     # borne pessimiste H³ : le même choix tient-il ?
     mc = M[("central", "central")]
     M_iso = mfix("iso") + mc - mfix("central")
-    b_iso = besoins(ctx["T"], H, profil, M_iso)
+    b_iso = besoins(ctx["T"], Ht, profil, M_iso)
     tient_iso = all(c["pointe"] >= ctx["marge"] * b_iso.get(a, {}).get("pk", 0)
                     and (c["continu"] is None or c["continu"] >= ctx["marge"] * b_iso.get(a, {}).get("c", 0))
                     for a, c in choix.items())
     statut = "infaisable" if violees else ("INCONNU" if inconnues else "faisable")
-    H_reel = pl["H_reel"] if pl else None
     nc = non_couvertes(axes, ctx["cible"])
     return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=mc,
                 M_bande=(min(M.values()), max(M.values())), M_iso=M_iso, tient_iso=tient_iso, cout=cout,
-                E=mc * G * ctx["R"]["hauteur_hanche"] * (H_reel or H), ncap=len(profil),
-                H_reel=H_reel, place=pl, non_couvertes=nc, n_couvertes=len(ctx["cible"]) - len(nc),
+                E=mc * G * ctx["R"]["hauteur_hanche"] * Hr, ncap=len(profil),
+                H_reel=Hr if pl else None, H_couples=Ht, iterations=iterations, place=pl, non_couvertes=nc,
+                n_couvertes=len(ctx["cible"]) - len(nc),
                 cap_inconnues=[t for t in ctx["cible"] if t in SANS_CALCUL and t not in nc],
                 n_axes=sum(axes.values()), besoins=bes[("central", "central")])
 
@@ -520,17 +545,21 @@ def meilleure(ctx, profil):
 
 
 def cout_capacites(ctx):
-    """Pour chaque tâche et niveau : la meilleure solution, et l'écart au niveau inférieur (0 = tâche absente)."""
-    cap = ctx["cap"]
-    base = {"marche_sol_plat": niveau_bas(cap, "marche_sol_plat")}
+    """Pour chaque tâche CALCULÉE du profil cible, chaque niveau jusqu'au niveau visé : la meilleure solution, et
+    l'écart au niveau inférieur (au premier niveau : la marche seule, au niveau du profil)."""
+    cap, cible = ctx["cap"], ctx["cible"]
+    base = {"marche_sol_plat": cible.get("marche_sol_plat", niveau_bas(cap, "marche_sol_plat"))}
     ref = meilleure(ctx, base)
     out = []
-    for t in ["marche_sol_plat"] + OPTIONNELLES:
+    for t in ["marche_sol_plat"] + [x for x in OPTIONNELLES if x in cible]:
+        niv = cap["taches"][t]["niveaux"]
+        vise = cible[t] if isinstance(cible[t], list) else [cible[t]]
+        haut = max(niv.index(v) for v in vise)
         prec = None if t == "marche_sol_plat" else ref
-        for niv in cap["taches"][t]["niveaux"]:
-            profil = dict(base, **{t: niv})
+        for n in niv[:haut + 1]:
+            profil = ({"marche_sol_plat": n} if t == "marche_sol_plat" else dict(base, **{t: n}))
             r = meilleure(ctx, profil)
-            out.append(dict(tache=t, niveau=niv, res=r, prec=prec))
+            out.append(dict(tache=t, niveau=n, res=r, prec=prec))
             prec = r
     return ref, out
 
@@ -629,9 +658,12 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
          f"central, structure centrale ; la bande couvre les six cas. H³ (b = {ex['iso']:g}) est rapporté comme "
          "borne pessimiste, sans filtrer.", "",
          "## Profil cible", "",
-         "Capacités VOULUES (par défaut : toutes celles de la fiche 0069 ; niveau le plus bas, sauf le buste à 3 axes, "
-         "« rotation et inclinaison » : PROPOSÉ) : "
-         + ", ".join(f"{t} {n}" for t, n in ctx["cible"].items()) + ". Axes exigés au-delà du calcul (PROPOSÉ) : "
+         (f"Profil **{ctx['profil']}** de `params/capacites.yaml`"
+          + (" : DÉCIDÉ par Jeremy le 2026-10-07 (ses mots y sont cités). " if ctx["profil"] == "lab" else
+             " (fiche 0069 ; niveaux non fixés pris au plus bas). "))
+         + "Capacités voulues : "
+         + ", ".join(f"{t} {' et '.join(map(str, n)) if isinstance(n, list) else n}" for t, n in ctx["cible"].items())
+         + ". Axes exigés au-delà du calcul (PROPOSÉ) : "
          + ", ".join(f"{t} → {', '.join(a)}" for t, a in AXES_CIBLE.items()) + ".", "",
          "| Ensemble | Ne couvre pas | Voulues non calculées (INCONNUES) |", "| ---: | --- | --- |"]
     for k, e in ENSEMBLES.items():
@@ -654,8 +686,12 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
          "couple de **pointe** ; la marche aux deux.",
          "- Place : taille minimale géométrique (`scripts/taille_minimale.py`, reconstruction de l'étude du "
          "2026-10-04), lecture AVEC ÉCARTS : les chaînes verticales qui débordent (jambe, tronc, cou et tête) "
-         "s'allongent, la hauteur RÉELLE vaut H + dépassements ; la lecture ANSUR stricte est rapportée. Les couples "
-         "et la masse restent calculés à H (hypothèse). Cheville à 2 axes : la meilleure des options (a), (b), (d).",
+         "s'allongent, la hauteur RÉELLE vaut H + dépassements ; la lecture ANSUR stricte est rapportée. **Couples à "
+         "la hauteur réelle** (phase 4a ter) : lus au pas supérieur de la grille (5 cm, prudent) au-dessus de la "
+         "hauteur réelle, structure à la hauteur réelle, masse minimale au pas inférieur ; itération (choix → place → "
+         "hauteur) jusqu'à stabilité. Le robot allongé est traité comme un robot proportionné à sa hauteur réelle : "
+         "centre de gravité et bras de levier y grandissent tous, ce qui majore les couples (prudent). Cheville à 2 "
+         "axes : la meilleure des options (a), (b), (d).",
          "- Un axe absent de l'ensemble est rigide. Coût = actionneurs seuls (CHF HT, taux BCE de `budget.yaml`). "
          "Énergie de chute = M·g·(hauteur de hanche ANSUR × hauteur réelle).",
          f"- Actionneurs sans aucun couple publié, écartés : {len(ctx['ecartes'])}.", "",
@@ -683,19 +719,10 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
           "moins cher, puis le plus léger, parmi le front. H = échelle des proportions ; « réelle » = avec les écarts.", ""]
     top = classement(front)[:5]
     L += table_top(top, detail=True)
-    longs = [(x, x["place"]["depassements"].get("tronc", 0.0) / (ctx["R"]["tronc_hauteur"] * x["H"] * 1000))
-             for x in top if x.get("place")]
-    pire = max(longs, key=lambda t: t[1], default=(None, 0.0))
-    if pire[1] > 0.5:
-        L += ["", f"**Réserve** : le tronc de ces solutions dépasse ANSUR jusqu'à {pire[1]:.0%} de sa longueur "
-              f"(ensemble {pire[0]['ens']}, H {f1(pire[0]['H'], 2)} m). La lecture « avec écarts » l'autorise, mais les "
-              "couples sont calculés aux proportions de H : pour un tronc aussi long, le centre de gravité est plus haut "
-              "et les couples sont SOUS-estimés. C'est la taille à plusieurs axes empilés qui allonge le tronc "
-              "(constat déjà fait le 2026-10-04)."]
     L += ["", "## Coût de chaque capacité", "",
-          "Pour chaque tâche et chaque niveau : la solution faisable la moins chère sur tout l'espace (ensembles, H, "
-          "familles), avec la marche au niveau le plus bas ; l'écart est pris au niveau inférieur (au premier "
-          "niveau : à la marche seule). « H min » = la plus petite hauteur RÉELLE où une solution est faisable.", "",
+          "Pour chaque tâche calculée du profil, et chaque niveau jusqu'au niveau visé : la solution faisable la moins "
+          "chère sur tout l'espace (ensembles, H, familles), avec la marche au niveau du profil ; l'écart est pris au "
+          "niveau inférieur (au premier niveau : à la marche seule). « H min » = la plus petite hauteur RÉELLE où une solution est faisable.", "",
           "**Lecture** : « le plus petit actionneur » est le plus LÉGER, pas le moins cher. Un niveau plus exigeant "
           "peut donc coûter MOINS (un actionneur plus lourd mais meilleur marché devient le plus petit qui passe) : "
           "un écart négatif n'est pas une erreur de calcul, c'est le prix de la légèreté.", ""]
@@ -769,13 +796,14 @@ def table_caps(ref, caps):
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ecrire", action="store_true")
-    ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (défaut : toutes celles de la fiche 0069)")
+    ap.add_argument("--profil", default="lab", choices=["lab", "final"], help="profil de params/capacites.yaml")
+    ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (remplace le profil)")
     a = ap.parse_args(argv)
     t0 = time.time()
     cible = None
     if a.cible:
         cap = lire("capacites.yaml")
-        defaut = cible_defaut(cap)
+        defaut = cible_defaut(cap, a.profil)
         cible = {}
         for x in a.cible.split(","):
             t, _, n = x.strip().partition("=")
@@ -783,7 +811,7 @@ def main(argv=None) -> int:
             cible[t] = next((v for v in niv if str(v) == n), None) if n else defaut[t]
             if cible[t] is None:
                 ap.error(f"niveau « {n} » inconnu pour {t} : {niv}")
-    ctx = contexte(cible=cible)
+    ctx = contexte(cible=cible, profil=a.profil)
     if not ctx["T"]:
         print("  explorateur SAUTÉ : aucune table de besoins")
         return 0
@@ -793,7 +821,7 @@ def main(argv=None) -> int:
     nverif, fautes = 0, []
     for s in front + [x for x in sols if x["statut"] != "infaisable"][:: 97]:
         if "besoins" in s:
-            fautes += verifier_maximum(s["besoins"], ctx["T"], s["H"], s["profil"], s["M"])
+            fautes += verifier_maximum(s["besoins"], ctx["T"], s["H_couples"], s["profil"], s["M"])
             nverif += 1
     ref, caps = cout_capacites(ctx)
     stat = Counter(s["statut"] for s in sols)

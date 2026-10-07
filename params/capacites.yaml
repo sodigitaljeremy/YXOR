@@ -181,6 +181,55 @@ taches:
     note: "« 4 à 10 micro-servos » du prompt balayé à ses deux bornes"
 
 # ═════════════════════════════════════════════════════════════════════════
+#  PROFILS CIBLES : ce que chaque robot doit savoir faire (phase 4a ter)
+# ═════════════════════════════════════════════════════════════════════════
+# `lab` : DÉCIDÉ PAR JEREMY le 2026-10-07, ses mots (réponse à la question de
+# Claude, phase 4a ter) :
+#   « Je retiens pour YXOR Lab : marche sur sol plat 0,6 m/s, sol irrégulier
+#   2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes
+#   2 m/s, saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes,
+#   visage sur écran. Réservé au final : inclinaison du buste, port de charges
+#   lourdes, course, mains à doigts. »
+# `final` : les capacités de la fiche 0069 (cochées par Jeremy le 2026-10-04,
+# selon le prompt). Niveaux NON fixés (null = à balayer, phase 4b), sauf le
+# buste : « inclinaison du buste », réservée au final par Jeremy, est le niveau
+# à 3 axes. Un niveau peut être une LISTE (le relevé : les deux positions).
+# Contrôlé par scripts/capacites.py : tâches et niveaux existants, lab ⊂ final.
+profils:
+  lab:
+    decide: "Jeremy, 2026-10-07, réponse à la question de Claude (phase 4a ter)"
+    taches:
+      marche_sol_plat: 0.6
+      sol_irregulier: 2
+      pente: 5
+      releve: ["depuis le dos", "depuis le ventre"]
+      saut_vertical: 10
+      gestes_pointage: 2.0
+      saisie: 0.2
+      poussee: 20
+      buste: "lacet seul"
+      tete: 2
+      visage: "écran"
+    reserve_au_final: {buste: "lacet + roulis + tangage", charge_lourde: null, course: null, mains_a_doigts: null}
+  final:
+    decide: "fiche 0069 (capacités cochées par Jeremy le 2026-10-04) ; niveaux à balayer en phase 4b"
+    taches:
+      marche_sol_plat: null
+      sol_irregulier: null
+      pente: null
+      releve: null
+      course: null
+      saut_vertical: null
+      gestes_pointage: null
+      saisie: null
+      charge_lourde: null
+      poussee: null
+      mains_a_doigts: null
+      buste: "lacet + roulis + tangage"
+      tete: null
+      visage: null
+
+# ═════════════════════════════════════════════════════════════════════════
 #  Sorties prévues de l'explorateur, POUR CHAQUE SOLUTION (phase 3)
 # ═════════════════════════════════════════════════════════════════════════
 # Ce sont des SORTIES, jamais des filtres (principe de Jeremy, en tête).

@@ -46,6 +46,14 @@ class TailleMinimale(unittest.TestCase):
         r = self.ev(26, jb)
         self.assertGreater(r["H_reel"], TM.ATTENDU_0410[26][0] + 0.005)
 
+    def test_taille_concourante(self):
+        # ajouté le 2026-10-07 (phase 4a ter) : 3 axes concourants raccourcissent le tronc de 2 R + jeu + plaque
+        g = {x["ensemble"]: x for x in TM.gain_taille_concourante(self.cv, self.RA)}
+        self.assertAlmostEqual(g[29]["H_empile"], 0.715, delta=0.0006)          # chiffre du 2026-10-04
+        R05 = TM.moteurs_robstride(TM.JAMBE_0410[27], self.cv)["tronc"]["R"]           # enveloppe, bride comprise
+        self.assertAlmostEqual(g[29]["gain"], 2 * R05 + self.cv["j"] + self.cv["e"], delta=0.01)
+        self.assertLess(g[26]["gain"], g[29]["gain"])
+
     def test_lecture_des_cotes(self):
         self.assertEqual(TM.moteur_dims("Ø57 × 51", self.cv)["R"], 28.5)
         self.assertEqual(TM.moteur_dims("45,2 × 24,7 × 35", self.cv)["L"], 45.2)

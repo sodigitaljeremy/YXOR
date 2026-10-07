@@ -117,7 +117,16 @@ def chaines(ens: dict, A: dict, opt: str, RA: dict, cv: dict) -> dict:
     d_pr = P["R"] + Rr["R"] + 2 * j + e                      # tangage -> roulis de hanche
     hanche = d_pr + Rr["R"] + j + e + Y["L"] + e             # roulis -> lacet vertical -> plaque du bassin
     n_t = ens["taille"]
-    taille = (Ut["L"] + j + e + (n_t - 1) * (2 * Ut["R"] + j + e)) if n_t else 0.0
+    if not n_t:
+        taille = 0.0
+    elif ens.get("taille_concourante"):
+        # VARIANTE (phase 4a ter, PROPOSÉE) : axes CONCOURANTS, comme la cheville (d). Les moteurs des axes
+        # horizontaux (roulis, tangage) sont déportés le long de LEURS axes, de part et d'autre du point de
+        # concours : ils occupent UN étage (2 R + jeu + plaque) au lieu d'en empiler un par axe ; le lacet reste
+        # vertical, sous eux. Il faut en échange de la LARGEUR et de la PROFONDEUR dans le tronc (non vérifiées).
+        taille = Ut["L"] + j + e + ((2 * Ut["R"] + j + e) if n_t > 1 else 0.0)   # un seul étage, plaque comprise
+    else:                                                    # empilée (2026-10-04)
+        taille = Ut["L"] + j + e + (n_t - 1) * (2 * Ut["R"] + j + e)
     bassin_taille = max(hanche, d_pr + Rr["R"] + j + taille)
     epaule_haut = Ut["R"] + j + e                            # moteur de tangage d'épaule sous l'acromion
     tronc = bassin_taille + e + epaule_haut
@@ -185,6 +194,20 @@ def moteurs_robstride(jambe: dict, cv: dict) -> dict:
     return A
 
 
+def gain_taille_concourante(cv, RA, H=0.60) -> list[dict]:
+    """Tronc et hauteur réelle, taille empilée ou concourante, pour les ensembles à taille de 2 ou 3 axes."""
+    out = []
+    for k, jb in ((29, JAMBE_0410[27]), (33, JAMBE_0410[27]), (26, JAMBE_0410[26])):
+        ens = ENSEMBLES_0410[k]
+        A = moteurs_robstride(jb, cv)
+        r_e = evaluer(ens, A, H, RA, cv)
+        r_c = evaluer(dict(ens, taille_concourante=True), A, H, RA, cv)
+        te, tc = r_e["chaines"]["tronc"][0], r_c["chaines"]["tronc"][0]
+        out.append(dict(ensemble=k, taille=ens["taille"], tronc_empile=te, tronc_concourant=tc, gain=te - tc,
+                        H_empile=r_e["H_reel"], H_concourant=r_c["H_reel"], ansur=RA["tronc_hauteur"] * H * 1000))
+    return out
+
+
 def main() -> int:
     cv = conventions()
     RA = {k: x["valeur"] for k, x in lire("anthropometry.yaml")["ratios"].items()}
@@ -199,6 +222,12 @@ def main() -> int:
               f"{', '.join(f'{a} +{x:.0f}' for a, x in r['depassements'].items()) or '—'} | "
               f"{r['H_min_ansur']:.3f} m ({r['limitante_ansur']}) |"
               + (f" 2026-10-04 : {ATTENDU_0410[k][0]} / {ATTENDU_0410[k][1]} m" if k in ATTENDU_0410 else ""))
+    print("\n  Taille à axes CONCOURANTS (variante PROPOSÉE, pour le final) : tronc nécessaire (mm), RS05 au buste")
+    print("  | Ensemble | Axes de taille | Empilée | Concourante | Gain | Hauteur réelle à 0,60 : empilée → concourante |")
+    print("  | ---: | ---: | ---: | ---: | ---: | --- |")
+    for g in gain_taille_concourante(cv, RA):
+        print(f"  | {g['ensemble']} | {g['taille']} | {g['tronc_empile']:.0f} | {g['tronc_concourant']:.0f} | "
+              f"−{g['gain']:.0f} | {g['H_empile']:.3f} → {g['H_concourant']:.3f} m (ANSUR {g['ansur']:.0f} mm) |")
     return 0
 
 

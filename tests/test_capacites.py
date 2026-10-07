@@ -35,6 +35,16 @@ class Capacites(unittest.TestCase):
         fautes, _ = CA.controler(c, self.joints)
         self.assertEqual(len(fautes), 3, fautes)
 
+    def test_profils_defauts_vus(self):
+        # ajouté le 2026-10-07 (profils lab et final) : niveau inexistant, tâche hors du final, réservé retenu
+        c = copy.deepcopy(self.cap)
+        c["profils"]["lab"]["taches"]["saut_vertical"] = 15
+        c["profils"]["lab"]["taches"]["charge_lourde"] = 2
+        del c["profils"]["final"]["taches"]["pente"]
+        fautes = CA.controler_profils(c)
+        self.assertEqual(len(fautes), 3, fautes)
+        self.assertEqual(CA.controler_profils(self.cap), [])
+
     def test_rapport_a_jour(self):
         self.assertEqual(CA.doc(self.cap), CA.DOC.read_text(encoding="utf-8"),
                          "relancer : scripts/capacites.py --ecrire")

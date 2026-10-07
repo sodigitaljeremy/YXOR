@@ -52,7 +52,37 @@ def controler(cap: dict, joints: set) -> tuple[list[str], list[str]]:
                 employes.add(n)
             else:
                 fautes.append(f"{tid} : « {n} » n'est ni dans joints.yaml ni dans noms_a_creer (règle 3)")
+    fautes += controler_profils(cap)
     return fautes, sorted(employes)
+
+
+def niveaux_de(v) -> list:
+    """Un niveau de profil : une valeur, une liste de valeurs, ou null (à balayer)."""
+    return [] if v is None else (list(v) if isinstance(v, list) else [v])
+
+
+def controler_profils(cap: dict) -> list[str]:
+    """Profils (ajouté le 2026-10-07) : tâches et niveaux existants ; lab ⊂ final ; réservé au final hors du lab."""
+    fautes, taches = [], cap.get("taches") or {}
+    pr = cap.get("profils") or {}
+    for nom in ("lab", "final"):
+        if nom not in pr:
+            fautes.append(f"profil « {nom} » absent")
+    for nom, p in pr.items():
+        for t, v in {**(p.get("taches") or {}), **(p.get("reserve_au_final") or {})}.items():
+            if t not in taches:
+                fautes.append(f"profil {nom} : tâche « {t} » inconnue")
+                continue
+            for n in niveaux_de(v):
+                if n not in taches[t]["niveaux"]:
+                    fautes.append(f"profil {nom} : niveau « {n} » inconnu pour {t} ({taches[t]['niveaux']})")
+    if "lab" in pr and "final" in pr:
+        lab, fin = pr["lab"].get("taches") or {}, pr["final"].get("taches") or {}
+        fautes += [f"profil lab : {t} absent du final (le Lab est un sous-ensemble)" for t in lab if t not in fin]
+        for t, v in (pr["lab"].get("reserve_au_final") or {}).items():
+            if t in lab and (v is None or set(niveaux_de(v)) & set(niveaux_de(lab[t]))):   # null : la tâche entière
+                fautes.append(f"profil lab : {t} {v} est réservé au final mais retenu pour le Lab")
+    return fautes
 
 
 def doc(cap: dict) -> str:
@@ -80,6 +110,21 @@ def doc(cap: dict) -> str:
         arts = ", ".join(n if n in joints else f"*{n}*" for n in t["sollicite"])
         L.append(f"| {t['capacite']}{' †' if t.get('ajoute_dans_ce_lot') else ''} | {t['grandeur']} | "
                  f"{niv(t)} | {arts} | {t['methode']} |")
+    pr = cap.get("profils") or {}
+    if pr:
+        f = lambda v: "à balayer" if v is None else " et ".join(str(x) for x in niveaux_de(v))
+        L += ["", "## Profils cibles", "",
+              "**YXOR Lab : DÉCIDÉ par Jeremy le 2026-10-07**, ses mots : « Je retiens pour YXOR Lab : marche sur sol "
+              "plat 0,6 m/s, sol irrégulier 2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes 2 m/s, "
+              "saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes, visage sur écran. Réservé au final : "
+              "inclinaison du buste, port de charges lourdes, course, mains à doigts. » YXOR (final) : les capacités de "
+              "la fiche 0069, niveaux à balayer (phase 4b).", "",
+              "| Tâche | YXOR Lab | YXOR (final) |", "| --- | --- | --- |"]
+        lab, fin = pr["lab"]["taches"], pr["final"]["taches"]
+        res = pr["lab"].get("reserve_au_final") or {}
+        for t in cap["taches"]:
+            l_ = f(lab[t]) if t in lab else ("réservé au final" if t in res else "—")
+            L.append(f"| {t.replace('_', ' ')} | {l_} | {f(fin[t]) if t in fin else '—'} |")
     L += ["", "## Méthodes", ""] + [f"- **{k}** : {v}." for k, v in cap["methodes"].items()]
     L += ["", "## Noms d'axes à créer (PROPOSÉS, hors de `joints.yaml`)", ""]
     L += [f"- *{k}* ({v['groupe']}) : {v['note']}." for k, v in cap["noms_a_creer"].items()]

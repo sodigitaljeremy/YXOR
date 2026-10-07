@@ -23,6 +23,27 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | orientation de la tête | axes du cou | 2 / 3 axes | neck_yaw, neck_pitch, *neck_roll* | statique |
 | expressions du visage | moyen d'expression | écran / 4 micro-servos / 10 micro-servos | *visage* | statique |
 
+## Profils cibles
+
+**YXOR Lab : DÉCIDÉ par Jeremy le 2026-10-07**, ses mots : « Je retiens pour YXOR Lab : marche sur sol plat 0,6 m/s, sol irrégulier 2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes 2 m/s, saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes, visage sur écran. Réservé au final : inclinaison du buste, port de charges lourdes, course, mains à doigts. » YXOR (final) : les capacités de la fiche 0069, niveaux à balayer (phase 4b).
+
+| Tâche | YXOR Lab | YXOR (final) |
+| --- | --- | --- |
+| marche sol plat | 0.6 | à balayer |
+| sol irregulier | 2 | à balayer |
+| pente | 5 | à balayer |
+| releve | depuis le dos et depuis le ventre | à balayer |
+| course | réservé au final | à balayer |
+| saut vertical | 10 | à balayer |
+| gestes pointage | 2.0 | à balayer |
+| saisie | 0.2 | à balayer |
+| charge lourde | réservé au final | à balayer |
+| poussee | 20 | à balayer |
+| mains a doigts | réservé au final | à balayer |
+| buste | lacet seul | lacet + roulis + tangage |
+| tete | 2 | à balayer |
+| visage | écran | à balayer |
+
 ## Méthodes
 
 - **simulation** : simulation MuJoCo de la tâche (trajectoire ou politique), relevé des couples, vitesses et puissances par articulation.

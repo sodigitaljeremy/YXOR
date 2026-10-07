@@ -105,6 +105,23 @@ class Evaluation(Base):
         r = X.evaluer(ctx([act("a", 0.1, 100.0, 100.0)], mmin={("saut_vertical", 5): 50.0}), ENS_TEST, H, "f", "p", PROFIL)
         self.assertEqual(r["statut"], "infaisable")
 
+    def test_couples_a_la_hauteur_reelle(self):
+        # gros moteurs : le tronc s'allonge ; les couples doivent être lus au-dessus de la hauteur réelle
+        gros = TM.moteur_dims("Ø120 × 60", CV)
+        c = ctx([act("a", 0.1, 100.0, 100.0, geo=gros)])
+        c["T"] = {(round(h, 2), t, n): v for h in X.EP.HS for (_, t, n), v in T.items()}
+        r = X.evaluer(c, ENS_TEST, H, "f", "p", PROFIL)
+        self.assertGreaterEqual(r["H_couples"], r["H_reel"] - 1e-9)
+        self.assertGreater(r["H_couples"], H)
+        self.assertGreaterEqual(r["iterations"], 2)
+        # et un actionneur qui tient à H mais pas à la hauteur réelle devient infaisable
+        T4 = {(round(h, 2), "marche_sol_plat", 0.3): {"knee": dict(pk=[(10.0 * h, 0.0)], c=[], w=[])} for h in X.EP.HS}
+        juste = 1.5 * 10.0 * H * (1.0 + 0.1 * 10 + 0.0) + 0.5               # tient à H, pas au-dessus
+        c2 = ctx([act("a", 0.1, juste, 100.0, geo=gros)])
+        c2["T"] = T4
+        r2 = X.evaluer(c2, ENS_TEST, H, "f", "p", {"marche_sol_plat": 0.3})
+        self.assertEqual(r2["statut"], "infaisable", r2.get("violees"))
+
     def test_place_gros_moteurs_allongent(self):
         gros = TM.moteur_dims("Ø120 × 60", CV)
         r = X.evaluer(ctx([act("a", 0.1, 100.0, 100.0, geo=gros)]), ENS_TEST, H, "f", "p", PROFIL)
@@ -113,14 +130,28 @@ class Evaluation(Base):
 
 
 class Cible(unittest.TestCase):
-    def test_ne_couvre_pas(self):
+    def test_profil_lab(self):
         cap = X.lire("capacites.yaml")
-        c = X.cible_defaut(cap)
+        c = X.cible_defaut(cap, "lab")
+        self.assertEqual(c["releve"], ["depuis le dos", "depuis le ventre"])
+        self.assertNotIn("charge_lourde", c)                  # réservé au final (Jeremy, 2026-10-07)
         nc = {k: X.non_couvertes(e["axes"], c) for k, e in X.ENSEMBLES.items() if k != ENS_TEST}
-        self.assertIn("sol_irregulier", nc[26])
-        self.assertIn("buste", nc[27])                       # taille à 1 axe : pas d'inclinaison
-        self.assertEqual(nc[29], ["mains_a_doigts"])
-        self.assertNotIn("sol_irregulier", nc[27])
+        self.assertEqual(nc[25], ["sol_irregulier"])          # pas de roulis de cheville
+        self.assertEqual(nc[27], [])
+        self.assertEqual(nc[29], [])
+
+    def test_profil_final(self):
+        cap = X.lire("capacites.yaml")
+        nc = X.non_couvertes(X.ENSEMBLES[27]["axes"], X.cible_defaut(cap, "final"))
+        self.assertEqual(nc, ["mains_a_doigts", "buste"])
+
+    def test_niveaux_en_liste(self):
+        T3 = dict(T)
+        T3[(H, "releve", "dos")] = {"knee": dict(pk=[(0.1, 0.0)], c=[], w=[])}
+        T3[(H, "releve", "ventre")] = {"knee": dict(pk=[(0.9, 0.0)], c=[], w=[])}
+        b = X.besoins(T3, H, {"releve": ["dos", "ventre"]}, 10.0)
+        self.assertAlmostEqual(b["knee"]["pk"], 9.0)          # le maximum des deux positions
+        self.assertEqual(X.verifier_maximum(b, T3, H, {"releve": ["dos", "ventre"]}, 10.0), [])
 
     def test_pareto_ne_compare_pas_a_egalite(self):
         s = lambda c, nc: dict(statut="faisable", cout=c, M=c, E=c, ncap=1, n_couvertes=nc)
