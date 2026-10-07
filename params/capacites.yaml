@@ -37,6 +37,7 @@ methodes:
   simulation: "simulation MuJoCo de la tâche (trajectoire ou politique), relevé des couples, vitesses et puissances par articulation"
   statique: "équilibre statique dans la posture la plus défavorable : couple = force × bras de levier, par articulation"
   energie: "bilan d'énergie : potentielle m·g·h, cinétique ½·m·v² ou ½·I·ω², puissance = énergie / durée"
+  composants: "inventaire : puissance, masse et volume des composants (calculateur, accélérateur, capteurs), relevés au marché (docs/marche-calculateurs-2026-10.md)"
 
 noms_a_creer:
   ankle_roll: {groupe: jambes, note: "existe dans le modèle amont ; déclaré `amont_non_retenus` par la fiche 0068 (à revoir, fiche 0069)"}
@@ -179,6 +180,34 @@ taches:
     sollicite: [visage]
     methode: statique
     note: "« 4 à 10 micro-servos » du prompt balayé à ses deux bornes"
+
+  # ── énergie et calcul : PROPOSÉES par Claude le 2026-10-07 (prompt du jour), À CONFIRMER par Jeremy ──
+  # Ajoutées après la confirmation du 2026-10-05 : elles n'en font PAS partie.
+  # Le contexte est DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : les deux robots
+  # fonctionnent entièrement sur batterie.
+  autonomie:
+    capacite: "autonomie sur batterie"
+    grandeur: "durée d'un enchaînement de cycles « marche + pauses », batterie pleine jusqu'au seuil d'arrêt"
+    unite: "min"
+    niveaux: [10, 20, 30, 60]
+    proposee: true
+    sollicite: []
+    methode: energie
+    cycle:
+      definition: "1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien)"
+      statut: "PROPOSÉ par Claude (2026-10-07), à confirmer par Jeremy : part de marche, durée, niveau de marche"
+      energie: "E_cycle = 40 s × P_marche + 20 s × P_debout + 60 s × P_calcul ; P_marche et P_debout depuis les puissances mécaniques des simulations (phase 3b) divisées par le rendement des actionneurs (non publié uniformément : INCONNU) ; P_calcul : marché des calculateurs"
+    note: "autonomie = énergie utile de la batterie (au seuil d'arrêt, pas à 0 %) / puissance moyenne du cycle"
+
+  ia_embarquee:
+    capacite: "IA embarquée"
+    grandeur: "ce que le calculateur fait tourner à bord"
+    unite: "—"
+    niveaux: ["commande seule", "+ vision", "+ vision et voix", "+ modèle de langage local"]
+    proposee: true
+    sollicite: []
+    methode: composants
+    note: "chaque niveau ajoute de la puissance, de la masse et des TOPS ; les TOPS publiés ne sont pas toujours comparables (INT8 dense, sparse, FP4) : docs/marche-calculateurs-2026-10.md"
 
 # ═════════════════════════════════════════════════════════════════════════
 #  PROFILS CIBLES : ce que chaque robot doit savoir faire (phase 4a ter)

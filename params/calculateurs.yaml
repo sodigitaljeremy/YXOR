@@ -1,0 +1,3292 @@
+# Marché des calculateurs — lu par scripts/marche_composants.py
+#
+# DONNÉES SEULEMENT (2026-10-07) : aucune intégration à l'explorateur, aucun achat (fiche 0066).
+# Contexte DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : « Les deux robots, YXOR Lab et YXOR, fonctionnent
+# entièrement sur batterie. Je préfère NVIDIA Jetson, mais je veux une comparaison chiffrée avec le
+# Raspberry Pi 5 et ses cartes d'IA. »
+#
+# Même méthode que le marché des actionneurs : une valeur non lue est null ; deux sources qui divergent,
+# la plus prudente (fiche 0064), l'autre en note. Relevé par quatre agents de Claude Code le 2026-10-07 ;
+# chaque source est TÉLÉCHARGÉE (hors du dépôt) et inscrite au registre params/fournisseurs.yaml sous
+# la clé citée ici (marche_<domaine>_<id>), redistribuable: false. Les valeurs dérivées (énergie non
+# publiée, volume, densités, CHF HT, TOPS/W, canaux CAN) sont CALCULÉES par scripts/marche_composants.py,
+# jamais déclarées ici.
+#
+# TOPS : un chiffre « AI Performance » n'est comparable qu'en INT8 DENSE ; voir meta.mises_en_garde_tops.
+
+meta:
+  perimetre: C — calculateurs embarqués (Jetson, Raspberry Pi et IA), relevé du 2026-10-07
+  conventions:
+  - valeur null = non lue dans une source téléchargée ; aucune estimation.
+  - 'tva_incluse : false si la source dit HT ; un taux (0.20) quand il se déduit des prix TTC et HT affichés ; true
+    si la source dit TTC sans taux ; null si la source ne dit rien (prix MSRP NVIDIA et prix de liste Raspberry
+    Pi).'
+  - 'Deux sources divergentes : valeur la plus prudente retenue, l''autre en note.'
+  - Fichiers sources dans fichiers/ ; empreinte sha256 et taille calculées au moment de la génération.
+  mises_en_garde_tops:
+  - 'NVIDIA Orin : « AI Performance » = INT8 SPARSE, GPU + DLA additionnés. Le dense vaut la moitié ; GPU seul en
+    INT8 dense : Nano 4GB 17, Nano 8GB 33, NX 38, AGX 32GB 54, AGX 64GB 85, Industrial 78.'
+  - La page du kit Orin Nano Super écrit « 67 INT8 TOPS » sans le mot sparse ; le fiche J401 de Seeed donne encore
+    les TOPS d'avant Super (20/40/70/100).
+  - 'NVIDIA Thor (T2000–T5000) : TFLOPS FP4 SPARSE seulement, aucune valeur INT8 publiée sur les pages lues ; «
+    7.5x AGX Orin » compare FP4 sparse à INT8 sparse.'
+  - 'AI HAT+ 2 (Hailo-10H) : 40 TOPS en INT4 ; vision « comparable » à l''AI HAT+ 26 TOPS.'
+  - 'Hailo-8 / 8L (AI HAT+) : précision et parcimonie non publiées par Raspberry Pi.'
+  - 'AGX Orin 32GB : la même page NVIDIA donne 241 puis 200 TOPS : 200 retenu.'
+  contexte_marche_2026:
+  - Hausse NVIDIA de juillet 2026 (jusqu'à +101 %), ex. kit Orin Nano Super 249 $ → 399 $ (nv_faq, cnx_prix).
+  - Fin de vie accélérée des Jetson LPDDR4 (TX2 NX, TX2i, AGX Xavier, Xavier NX), dernière livraison 15/07/2027
+    (cnx_lpddr4_eol).
+  - 'Nouveautés 2026 : T4000 (en vente), T3000 et T2000 annoncés pour T1 2027 ; AI HAT+ 2 (Hailo-10H) ; brief RPi
+    5 d''octobre 2026 (16GB à 305 $).'
+  - 'Raspberry Pi AI Kit : fin de production.'
+  trous:
+  - 'Masses des modules Jetson et des kits NVIDIA : non publiées sur les pages lues (fiches techniques derrière
+    inscription).'
+  - 'Consommation au repos et typique : aucune valeur fabricant pour Jetson ni Raspberry Pi (seulement des plages
+    de modes).'
+  - 'Hailo-8 M.2 seul et pages hailo.ai : bloquées (403), non relevées.'
+  - 'Pages raspberrypi.com, pi-shop.ch, digitec.ch, connecttech.com : protection anti-robot, non téléchargées. Aucun
+    prix suisse relevé.'
+  - 'ONNX Runtime : non vérifié. Tensions d''entrée des kits NVIDIA : non lues.'
+marche:
+  sources:
+    marche_calc_nv_modules:
+      titre: Jetson Modules, Support, Ecosystem, and Lineup
+      url: https://developer.nvidia.com/embedded/jetson-modules
+      editeur: NVIDIA
+      date: &id001 2026-10-07
+      empreinte: sha256:d5e31fa0611f0f7cbab9e222c9b3f01ef50786dfc1c0a8a50684954e6cb49bd1
+      octets: 34616
+      conditions: non lues
+      fichier: fichiers/jetson_modules.html
+    marche_calc_nv_orin:
+      titre: NVIDIA Jetson Orin (tableaux de spécifications)
+      url: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:67811971d65f01881f361b5dac7337d5662155b1d90b553cf522688e95840055
+      octets: 638077
+      conditions: non lues
+      fichier: fichiers/jetson_orin.html
+      note: 'Deux tableaux sur la page. Le 1er donne 241 TOPS pour l''AGX Orin 32GB, le 2e 200 SPARSE INT8 TOPS
+        : 200 retenu (prudent).'
+    marche_calc_nv_thor:
+      titre: NVIDIA Jetson Thor
+      url: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:078f3e464733f3e04b6f3cb0bba1ff1adc57452e37f4c71f5d21a8ebb102aac4
+      octets: 548031
+      conditions: non lues
+      fichier: fichiers/jetson_thor.html
+    marche_calc_nv_nano_super_kit:
+      titre: Jetson Orin Nano Super Developer Kit
+      url: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/nano-super-developer-kit/
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:fa20c4200706785a33e67da605164e3a1a0e42fb4016670a8cad00b02b8239ad
+      octets: 289429
+      conditions: non lues
+      fichier: fichiers/orin_nano_super_kit.html
+      note: Écrit « 67 INT8 TOPS » sans préciser sparse ; la page nv_orin précise « 67 SPARSE INT8 TOPS ».
+    marche_calc_nv_faq:
+      titre: Jetson FAQ (prix MSRP, origine, régions, durée de vie)
+      url: https://developer.nvidia.com/embedded/faq
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:fb0108976da1cbf4a2965f1ab7c163ec7181bc9f5731dec29e7150c5e98dbbfd
+      octets: 101873
+      conditions: non lues
+      fichier: fichiers/jetson_faq.html
+      note: Prix « volume suggested pricing at 1KU+ » pour les modules ; « EU » inclut la Suisse dans la liste des
+        régions de vente.
+    marche_calc_nv_jetpack:
+      titre: JetPack SDK
+      url: https://developer.nvidia.com/embedded/jetpack
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:e950ec4d52810f4eb19d80c4bccb5d552706affdbf79b46ff39854d9b3ad9cc0
+      octets: 46608
+      conditions: non lues
+      fichier: fichiers/jetpack.html
+    marche_calc_nv_blog_super:
+      titre: NVIDIA Jetson Orin Nano Developer Kit Gets a “Super” Boost
+      url: https://developer.nvidia.com/blog/nvidia-jetson-orin-nano-developer-kit-gets-a-super-boost/
+      editeur: NVIDIA
+      date: *id001
+      empreinte: sha256:7b9f67000ffdd0565b4c6e7787c2845b3f5cd0f7f61be86159e64e76ee23276b
+      octets: 310447
+      conditions: non lues
+      fichier: fichiers/blog_super_boost.html
+      note: 'Billet de décembre 2024 (prix 249 $ périmé). Tableau original/Super : 40→67 TOPS sparse, 20→33 dense.'
+    marche_calc_cnx_prix:
+      titre: NVIDIA increases the price of Jetson modules and devkits by up to 101%
+      url: https://www.cnx-software.com/2026/07/22/nvidia-increases-the-price-of-jetson-modules-and-devkits-by-up-to-101/
+      editeur: CNX Software
+      date: *id001
+      empreinte: sha256:654d7d805a9edd03dd8d64356606f01bca83afcb817239db3be06467a2511b5c
+      octets: 238456
+      conditions: non lues
+      fichier: fichiers/cnx_prix_jetson_2026.html
+      note: Secondaire (22/07/2026). Anciens et nouveaux prix ; concorde avec nv_faq.
+    marche_calc_cnx_t2000_t3000:
+      titre: NVIDIA launches smaller, mainstream Jetson T2000 and T3000 modules
+      url: https://www.cnx-software.com/2026/07/16/nvidia-jetson-t2000-and-t3000-modules-for-edge-ai-and-robotics-applications/
+      editeur: CNX Software
+      date: *id001
+      empreinte: sha256:070478052f709f2a211bf2a9299724026b574dc1ee48785e540f23f369dd7d3b
+      octets: 234908
+      conditions: non lues
+      fichier: fichiers/cnx_t2000_t3000.html
+      note: 'Secondaire, préliminaire selon l''auteur ; T4000 donné 40–75 W (NVIDIA : 40–70 W).'
+    marche_calc_cnx_lpddr4_eol:
+      titre: NVIDIA phases out several Jetson modules due to high LPDDR4 RAM prices
+      url: https://www.cnx-software.com/2026/04/30/nvidia-phases-out-several-jetson-modules-due-to-high-lpddr4-ram-prices-and-tight-supplies/
+      editeur: CNX Software
+      date: *id001
+      empreinte: sha256:f6cf2b83566e7216c7119bfc4b75d92d88aaf1e378e4b3d6fb9d57e41fd7cbf5
+      octets: 234578
+      conditions: non lues
+      fichier: fichiers/cnx_lpddr4_eol.html
+      note: Fin de vie TX2 NX, TX2i, AGX Xavier, Xavier NX (dernière livraison 15/07/2027). Aucune Orin ni Thor
+        concernée.
+    marche_calc_openzeka_nano_kit_ds:
+      titre: NVIDIA Jetson Orin Nano Super Developer Kit (fiche technique, copie revendeur)
+      url: https://openzeka.com/en/wp-content/uploads/2024/12/jetson-super-orin-nano-developer-kit-datasheet.pdf
+      editeur: NVIDIA (hébergé par OpenZeka)
+      date: *id001
+      empreinte: sha256:275521a387396ce5274ae89b7b859134ca3aec991e89d11b5b2d5636e2fca57f
+      octets: 479318
+      conditions: non lues
+      fichier: fichiers/openzeka_orin_nano_super_kit_ds.pdf
+      note: Donne 103 × 90,5 × 34,77 mm pour le kit (la page NVIDIA donne 100 × 79 × 21 mm).
+    marche_calc_shd_kit_nano_super:
+      titre: NVIDIA Jetson Orin Nano Super Developer Kit 945-13766-0005-000
+      url: https://www.siliconhighwaydirect.com/product-p/945-13766-0005-000.htm
+      editeur: Silicon Highway Direct (distributeur UK/UE)
+      date: *id001
+      empreinte: sha256:c93dcfa591928d126601158b167d65de7ad76e3aca7561eede57d94a39834488
+      octets: 99571
+      conditions: non lues
+      fichier: fichiers/shd_945-13766-0005-000.html
+      note: Prix HT ; expédie en Suisse en DAP (droits à la charge de l'acheteur). Stock non affiché.
+    marche_calc_shd_agx_kit:
+      titre: NVIDIA Jetson AGX Orin development kit (64GB) 945-13730-0055-000
+      url: https://www.siliconhighwaydirect.com/product-p/945-13730-0055-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:afc2b4f6c7d80e281e55b88e2ea1b06a06815b5f838b908b6a04409b4f0ab361
+      octets: 109895
+      conditions: non lues
+      fichier: fichiers/shd_945-13730-0055-000.html
+    marche_calc_shd_thor_kit:
+      titre: NVIDIA Jetson AGX Thor Developer Kit 945-14070-0085-000
+      url: https://www.siliconhighwaydirect.com/product-p/945-14070-0085-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:922177e74463feb511435d619997150768e4b475b606346a594df2d72a17c371
+      octets: 98964
+      conditions: non lues
+      fichier: fichiers/shd_945-14070-0085-000.html
+    marche_calc_shd_nx16:
+      titre: NVIDIA Jetson Orin NX 16GB 900-13767-0000-001
+      url: https://www.siliconhighwaydirect.com/product-p/900-13767-0000-001.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:7ef311bbff23bdb6a609bcd45c636865ed58beef4138c1466c2e34574999aa25
+      octets: 113335
+      conditions: non lues
+      fichier: fichiers/shd_900-13767-0000-001.html
+    marche_calc_shd_nx8:
+      titre: NVIDIA Jetson Orin NX 8GB 900-13767-0010-001
+      url: https://www.siliconhighwaydirect.com/product-p/900-13767-0010-001.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:65cba0bf5c414c342609ae3b431b3030ec2f2bb1014a6229e3dc84e0f3be8d2d
+      octets: 113172
+      conditions: non lues
+      fichier: fichiers/shd_900-13767-0010-001.html
+    marche_calc_shd_nano8:
+      titre: NVIDIA Jetson Orin Nano 8GB 900-13767-0030-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13767-0030-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:7f73acce6e311c7559758d9a2fbde75b37bc648b659e4193ed86c3e6e140834c
+      octets: 106001
+      conditions: non lues
+      fichier: fichiers/shd_900-13767-0030-000.html
+    marche_calc_shd_nano4:
+      titre: NVIDIA Jetson Orin Nano 4GB 900-13767-0040-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13767-0040-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:03076cd539565a7ff0cd557fcb809a9f46f9f05040025588cf498e237aec8254
+      octets: 106927
+      conditions: non lues
+      fichier: fichiers/shd_900-13767-0040-000.html
+    marche_calc_shd_agx32:
+      titre: NVIDIA Jetson AGX Orin 32GB 900-13701-0040-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13701-0040-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:9e71266a93ba5df87534f7fd64fd677025ff089ee5293d7331ddfdc8055a4bbe
+      octets: 116979
+      conditions: non lues
+      fichier: fichiers/shd_900-13701-0040-000.html
+    marche_calc_shd_agx64:
+      titre: NVIDIA Jetson AGX Orin 64GB 900-13701-0050-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13701-0050-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:dd280dac0af862ce495f135b14236f0c159d8088f055b0b468952eb68d196303
+      octets: 117808
+      conditions: non lues
+      fichier: fichiers/shd_900-13701-0050-000.html
+    marche_calc_shd_agxind:
+      titre: NVIDIA Jetson AGX Orin Industrial 900-13701-0080-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13701-0080-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:d4e556438036372f523a81ad26edd3964758e95ad849c155279e38ba84731569
+      octets: 112942
+      conditions: non lues
+      fichier: fichiers/shd_900-13701-0080-000.html
+    marche_calc_shd_t5000:
+      titre: NVIDIA Jetson T5000 900-13834-0080-001
+      url: https://www.siliconhighwaydirect.com/product-p/900-13834-0080-001.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:a56fd5b9bb4dfff3424cba9a2cd3cc7df5320a3ab16484cab41e87f75d2a874b
+      octets: 96764
+      conditions: non lues
+      fichier: fichiers/shd_900-13834-0080-001.html
+    marche_calc_shd_t4000:
+      titre: NVIDIA Jetson T4000 900-13834-0000-000
+      url: https://www.siliconhighwaydirect.com/product-p/900-13834-0000-000.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:8aca18bc40066c879af144d13edeeedf23e9fbffce9764172ed68f3e0ebd2ad7
+      octets: 93528
+      conditions: non lues
+      fichier: fichiers/shd_t4000.html
+      note: Page affiche le code produit 900-13834-0000-001.
+    marche_calc_kiwi_nano_super:
+      titre: NVIDIA Jetson Orin Nano Super Developer Kit (KW-3185)
+      url: https://www.kiwi-electronics.com/en/nvidia-jetson-orin-nano-super-developer-kit-11461
+      editeur: Kiwi Electronics (Pays-Bas)
+      date: *id001
+      empreinte: sha256:752234ce701a637572a6b273580fa944aa8d85b19f7c9d091e65a62ada964986
+      octets: 301718
+      conditions: non lues
+      fichier: fichiers/kiwi_orin_nano_super.html
+      note: Rupture de stock, pas de commande en attente.
+    marche_calc_genrobots_nano_super:
+      titre: NVIDIA Jetson Orin Nano Super Developer Kit
+      url: https://www.generationrobots.com/en/404303-nvidia-jetson-orin-nano-super-developer-kit.html
+      editeur: Generation Robots (France)
+      date: *id001
+      empreinte: sha256:03e787fda8c5d9ca81d538c89d3acca2978211a0ab1f7b1238dd42204ded9de6
+      octets: 250937
+      conditions: non lues
+      fichier: fichiers/genrobots_orin_nano_super.html
+      note: Délai annoncé 6 à 8 semaines.
+    marche_calc_berrybase_nano_kit:
+      titre: NVIDIA Jetson Orin Nano Developer Kit, 8GB (NVI-JET-ON)
+      url: https://www.berrybase.de/en/nvidia-jetson-orin-nano-developer-kit-8gb
+      editeur: BerryBase (Allemagne)
+      date: *id001
+      empreinte: sha256:f32aeeb9ac8497890c8eef0daea70155cfbbc5cfd3c99c9faf48be644e2555c7
+      octets: 2017688
+      conditions: non lues
+      fichier: fichiers/berrybase_orin_nano.html
+      note: 489,90 € TTC, « Currently not available ».
+    marche_calc_waveshare_nano_kit:
+      titre: Jetson Orin Nano Super Developer Kit (Waveshare SKU 30211)
+      url: https://www.waveshare.com/jetson-orin-nano-super-developer-kit.htm
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:74534546705f5690eab0d31d5dbff926a0a063eb8758161a565dad4da1946e50
+      octets: 203530
+      conditions: non lues
+      fichier: fichiers/waveshare_orin_nano_super_kit.html
+      note: '634,99 $ ; « Weight: 0.89 kg », probablement le colis (non précisé).'
+    marche_calc_seeed_j401:
+      titre: reComputer J401 carrier board datasheet
+      url: https://files.seeedstudio.com/wiki/reComputer-J4012/Carrier-Board-J401/J401-datasheet.pdf
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:ebac79b0bb31eff277768586095b02c3f2c45d30c84fcf085d34255b4f608356
+      octets: 1872109
+      conditions: non lues
+      fichier: fichiers/seeed_j401_datasheet.pdf
+      note: Donne encore les TOPS d'avant Super (20/40/70/100).
+    marche_calc_seeed_super_manual:
+      titre: reComputer Super User Manual
+      url: https://files.seeedstudio.com/products/NVIDIA-Jetson/reComputer_super_user_manual.pdf
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:8dda6e84e67b4df852eb8926e3488295d28fbbbab9212b8e8139d205a496e6ec
+      octets: 4577814
+      conditions: non lues
+      fichier: fichiers/seeed_recomputer_super_manual.pdf
+      note: Tableau 3, p. 9 ; températures p. 10.
+    marche_calc_seeed_mini_wiki:
+      titre: Getting Started with reComputer Mini
+      url: https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:e4fd57e7be7a62e55b0d3894df3ba524611ccf77c77ad409419a9d46ebe213d8
+      octets: 83445
+      conditions: non lues
+      fichier: fichiers/seeed_recomputer_mini_wiki.html
+    marche_calc_shd_hadron:
+      titre: Connect Tech Hadron Carrier for Jetson Orin NX/Nano (NGX012)
+      url: https://www.siliconhighwaydirect.com/product-p/ngx012.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:19598b23c4a06d80278e1430005dbc89f9bcdc9493998bd02c47fc640df2318a
+      octets: 102704
+      conditions: non lues
+      fichier: fichiers/shd_ngx012_hadron.html
+      note: Page fabricant connecttech.com bloquée (non téléchargée).
+    marche_calc_shd_boson:
+      titre: Connect Tech Boson for FRAMOS Carrier (NGX020)
+      url: https://www.siliconhighwaydirect.com/product-p/ngx020.htm
+      editeur: Silicon Highway Direct
+      date: *id001
+      empreinte: sha256:a2cfe88dd8bd64c7b9e0297ed42ea495906298cac5403829146a7adb58ac054f
+      octets: 116207
+      conditions: non lues
+      fichier: fichiers/shd_ngx020_boson.html
+      note: Page fabricant connecttech.com bloquée (non téléchargée).
+    marche_calc_auvidea_jnx120:
+      titre: JNX120 carrier board for NVIDIA Jetson Orin Nano/NX
+      url: https://auvidea.eu/product/jnx120-carrier-board-for-nvidia-jetson-orin-nano-nx/
+      editeur: Auvidea GmbH (Allemagne)
+      date: *id001
+      empreinte: sha256:1dc516590bcef6a605c250e6e4ef9b99c2ee80d9affb1dff27660667bf03e753
+      octets: 311956
+      conditions: non lues
+      fichier: fichiers/auvidea_jnx120.html
+      note: '« Delivery Time: currently not available » ; tableau comparatif JNX110/120S/120M/120 (disponibilité
+        « samples now », « January 2026 »).'
+    marche_calc_rpi5_brief:
+      titre: Raspberry Pi 5 Product Brief (publié octobre 2026)
+      url: https://pip.raspberrypi.com/documents/RP-008348-DS-raspberry-pi-5-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:944fc1d70da50f0b8d5947dd4263078f698c79586f29c07f35fcd4b87077dd3f
+      octets: 52948347
+      conditions: non lues
+      fichier: fichiers/RP-008348-DS-raspberry-pi-5-product-brief.pdf
+    marche_calc_rpi5_meca:
+      titre: Raspberry Pi 5 mechanical drawing
+      url: https://pip.raspberrypi.com/documents/RP-008347-DS-1-raspberry-pi-5-mechanical-drawing.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:5dd680d6c1f5e7aa9c7b020695e315d04aac862df82ff01d4e9041cd0668d7f2
+      octets: 174949
+      conditions: non lues
+      fichier: fichiers/RP-008347-DS-1-raspberry-pi-5-mechanical-drawing.pdf
+      note: 'Cotes lues dans le texte extrait du plan (85 ; 56 ; 58 × 49 entraxes) : à confirmer sur le plan.'
+    marche_calc_rpi5_page:
+      titre: Buy a Raspberry Pi 5
+      url: https://www.raspberrypi.com/products/raspberry-pi-5/
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: non téléchargée. Protection Cloudflare ; lue via WebFetch seulement (16GB 305 $, production jusqu'à
+        janvier 2036). Valeurs reprises du brief rpi5_brief.
+    marche_calc_cm5_brief:
+      titre: Raspberry Pi Compute Module 5 Product Brief (publié septembre 2026)
+      url: https://datasheets.raspberrypi.com/cm5/cm5-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:489051021cc3ffe643a7c9e57e373e15bcc21553fd39834984dc13d6915246c0
+      octets: 13857161
+      conditions: non lues
+      fichier: fichiers/cm5-product-brief.pdf
+    marche_calc_aihat_brief:
+      titre: Raspberry Pi AI HAT+ Product Brief (publié octobre 2024)
+      url: https://datasheets.raspberrypi.com/ai-hat-plus/raspberry-pi-ai-hat-plus-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:433d7494ec6d1c8396f991fc74bea7080a7cade398a67420a0adf9efbb6008af
+      octets: 757248
+      conditions: non lues
+      fichier: fichiers/raspberry-pi-ai-hat-plus-product-brief.pdf
+      note: 'Prix de liste de 2024 (70 $ / 110 $) : possiblement périmés.'
+    marche_calc_aihat2_brief:
+      titre: Raspberry Pi AI HAT+ 2 Product Brief (publié juillet 2026)
+      url: https://pip.raspberrypi.com/documents/RP-009655-MM-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:eb01bea592ef6e39e526c617ffdb41786d479dd455924fc74ea4eb832ca60f37
+      octets: 4336862
+      conditions: non lues
+      fichier: fichiers/RP-009655-MM-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+    marche_calc_aikit_page:
+      titre: Raspberry Pi AI Kit
+      url: https://www.raspberrypi.com/products/ai-kit/
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée. Protection Cloudflare ; lue via WebFetch : « no longer in production. New customers
+        should instead purchase the Raspberry Pi AI HAT+ ».'
+    marche_calc_aicam_brief:
+      titre: Raspberry Pi AI Camera Product Brief (publié septembre 2024)
+      url: https://datasheets.raspberrypi.com/camera/ai-camera-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: *id001
+      empreinte: sha256:aa1d70c5d6ed7f30c55ec7d959948d6aededb83b44eb3092af2dec4b769e4e9a
+      octets: 972837
+      conditions: non lues
+      fichier: fichiers/ai-camera-product-brief.pdf
+    marche_calc_berrybase_rpi5_4:
+      titre: Raspberry Pi 5, 4GB RAM (RPI5-4GB)
+      url: https://www.berrybase.de/en/raspberry-pi-5-4gb-ram
+      editeur: BerryBase (Allemagne)
+      date: *id001
+      empreinte: sha256:96d19db67ebd82b89ebb770984ad75ffcb75e7127a3abed5e8bcaf12787da9d1
+      octets: 2384940
+      conditions: non lues
+      fichier: fichiers/berrybase_rpi5_4gb.html
+    marche_calc_berrybase_rpi5_8:
+      titre: Raspberry Pi 5, 8GB RAM (RPI5-8GB)
+      url: https://www.berrybase.de/en/raspberry-pi-5-8gb-ram
+      editeur: BerryBase (Allemagne)
+      date: *id001
+      empreinte: sha256:a26be3174a18b2d75c169f61eac22e936f9b69e5637440ae2c2af6ec69abf509
+      octets: 2328794
+      conditions: non lues
+      fichier: fichiers/berrybase_rpi5_8gb.html
+    marche_calc_berrybase_rpi5_16:
+      titre: Raspberry Pi 5, 16GB RAM (RPI5-16GB)
+      url: https://www.berrybase.de/en/raspberry-pi-5-16gb-ram
+      editeur: BerryBase (Allemagne)
+      date: *id001
+      empreinte: sha256:89827d204e30d705142a6b5588c3aef850f484904f4ee1956c8ec2a37ff679ad
+      octets: 2384479
+      conditions: non lues
+      fichier: fichiers/berrybase_rpi5_16gb.html
+    marche_calc_botland_aihat2:
+      titre: Raspberry Pi AI HAT+ 2 (Hailo-10H)
+      url: https://botland.store/raspberry-pi-5-gpio-extensions-and-hat/27755-raspberry-pi-ai-hat-2-40-tops-ai-accelerator-hat-with-hailo-10h-for-raspberry-pi-5-5056561805955.html
+      editeur: Botland (Pologne)
+      date: *id001
+      empreinte: sha256:9b3b651599625c4d2b421251fd0e7056ef3197b7cea7de23ecb61652ed3b4248
+      octets: 776369
+      conditions: non lues
+      fichier: fichiers/botland_aihat2.html
+      note: 210,50 € TTC / 176,89 € HT ; « Available, shipping in 24 hours » ; mention « store available only to
+        registered B2B customers ».
+    marche_calc_pishop_us_aihat2:
+      titre: Raspberry Pi AI HAT+ 2 - PiShop.us
+      url: https://www.pishop.us/product/raspberry-pi-ai-hat-2/
+      editeur: PiShop.us (États-Unis)
+      date: *id001
+      empreinte: sha256:13c2296eb846d19112a608a2e3ecd6febdaa11dbaa9c7c938ae6c686fb476ddb
+      octets: 175421
+      conditions: non lues
+      fichier: fichiers/pishop_aihat2.html
+      note: '200 $ en stock ; produits liés : AI HAT+ 26 TOPS 119,95 $, 13 TOPS 76,95 $.'
+    marche_calc_seeed_aihat2:
+      titre: Raspberry Pi AI HAT+ 2 (Seeed)
+      url: https://www.seeedstudio.com/Raspberry-Pi-Al-HAT-2-p-6648.html
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:7a9bb41812e500ca73bc653c83b09872abf9fabf2c65cce45859c6e9519b7879
+      octets: 913692
+      conditions: non lues
+      fichier: fichiers/seeed_aihat2.html
+      note: 200 $ « In stock » (entrepôt Chine).
+    marche_calc_cnx_rpi5_power:
+      titre: Raspberry Pi 5 review - Part 2 (consommation)
+      url: https://www.cnx-software.com/2023/11/05/raspberry-pi-5-review-raspberry-pi-os-bookworm-benchmarks-power-consumption/
+      editeur: CNX Software
+      date: *id001
+      empreinte: sha256:03d01e9d7b7710caf2a3b2a49a6bd31e457da9f0a348303e10e752c13ee1552d
+      octets: 985332
+      conditions: non lues
+      fichier: fichiers/cnx_rpi5_review_power.html
+      note: 'Secondaire, 2023. Seules lues : valeurs PMIC des journaux sbc-bench (2,6–3,6 W au repos). Le paragraphe
+        de synthèse n''a pas été retrouvé dans le texte extrait.'
+  produits:
+    jetson_orin_nano_4gb:
+      famille: jetson_module
+      nom: Jetson Orin Nano 4GB (Super)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 260-pin SO-DIMM
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 25
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 7W - 10W - 25W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 6-core Arm Cortex-A78AE v8.2 @ 1.7 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: 512-core NVIDIA Ampere, 16 Tensor Cores @ 1020 MHz ; pas de DLA
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 34
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 17
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 34 TOPS en sparse
+      memoire:
+        valeur: 4GB 64-bit LPDDR5, 51 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 3x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: 1 x4 + 3 x1 PCIe Gen3
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 4 caméras (8 en canaux virtuels), 8 voies MIPI CSI-2 D-PHY 2.1
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 349
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 355.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_nano4
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13767-0040-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_nano4
+    jetson_orin_nano_8gb:
+      famille: jetson_module
+      nom: Jetson Orin Nano 8GB (Super)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 260-pin SO-DIMM
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 25
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 7W - 15W - 25W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 6-core Arm Cortex-A78AE v8.2 @ 1.7 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: 1024-core NVIDIA Ampere, 32 Tensor Cores @ 1020 MHz ; pas de DLA
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 67
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 33
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 67 TOPS en sparse
+      memoire:
+        valeur: 8GB 128-bit LPDDR5, 102 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 3x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: 1 x4 + 3 x1 PCIe Gen3
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 4 caméras (8 en canaux virtuels), 8 voies MIPI CSI-2 D-PHY 2.1
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 399
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 399.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_nano8
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13767-0030-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_nano8
+    jetson_orin_nx_8gb:
+      famille: jetson_module
+      nom: Jetson Orin NX 8GB (Super)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 260-pin SO-DIMM
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 40
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 10W - 15W - 25W - 40W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 6-core Arm Cortex-A78AE v8.2 @ 2 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: '1024-core NVIDIA Ampere, 32 Tensor Cores @ 1173 MHz ; DLA : 1x NVDLA v2'
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 117
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 38
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 77 TOPS en sparse
+      memoire:
+        valeur: 8GB 128-bit LPDDR5, 102.4 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 3x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: 1 x4 + 3 x1 PCIe Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 4 caméras (8 en canaux virtuels), 8 voies MIPI CSI-2 D-PHY 2.1
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 649
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 648.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_nx8
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13767-0010-001.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_nx8
+      note: 'DLA : 40 TOPS sparse / 20 dense (1 DLA).'
+    jetson_orin_nx_16gb:
+      famille: jetson_module
+      nom: Jetson Orin NX 16GB (Super)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 260-pin SO-DIMM
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 40
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 10W - 15W - 25W - 40W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 8-core Arm Cortex-A78AE v8.2 @ 2 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: '1024-core NVIDIA Ampere, 32 Tensor Cores @ 1173 MHz ; DLA : 2x NVDLA v2'
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 157
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 38
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 77 TOPS en sparse
+      memoire:
+        valeur: 16GB 128-bit LPDDR5, 102.4 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 3x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: 1 x4 + 3 x1 PCIe Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 4 caméras (8 en canaux virtuels), 8 voies MIPI CSI-2 D-PHY 2.1
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 999
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 977.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_nx16
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13767-0000-001.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_nx16
+      note: 'DLA : 80 TOPS sparse / 40 dense.'
+    jetson_agx_orin_32gb:
+      famille: jetson_module
+      nom: Jetson AGX Orin 32GB
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 699-pin Molex Mirror Mezz, plaque de transfert thermique intégrée
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 60
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 15W - 60W (tableau NVIDIA)
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 8-core Arm Cortex-A78AE v8.2 @ 2.2 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: '1792-core NVIDIA Ampere, 56 Tensor Cores @ 1.3 GHz ; DLA : 2x NVDLA v2 (1.4 GHz)'
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 200
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 54
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 108 TOPS en sparse
+      memoire:
+        valeur: 32GB 256-bit LPDDR5, 204.8 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 4x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: jusqu'à 2 x8 + 1 x4 + 2 x1 PCIe Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE, 1x 10GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 6 caméras (16 en canaux virtuels), 16 voies MIPI CSI-2
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 1799
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 1776.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_agx32
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13701-0040-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_agx32
+      note: 'Tableau 1 de nv_orin : 241 TOPS (incohérent) ; tableau 2 : 200 SPARSE INT8 TOPS retenu. Plage de puissance
+        « 15W - 60W » lue telle quelle dans le tableau (colonne possiblement décalée).'
+    jetson_agx_orin_64gb:
+      famille: jetson_module
+      nom: Jetson AGX Orin 64GB
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 699-pin Molex Mirror Mezz, plaque de transfert thermique intégrée
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 60
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 15W - 60W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 12-core Arm Cortex-A78AE v8.2 @ 2.2 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: '2048-core NVIDIA Ampere, 64 Tensor Cores @ 1.3 GHz ; DLA : 2x NVDLA v2'
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 275
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 85
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 170 TOPS en sparse
+      memoire:
+        valeur: 64GB 256-bit LPDDR5, 204.8 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 4x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: jusqu'à 2 x8 + 1 x4 + 2 x1 PCIe Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE, 1x 10GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 6 caméras (16 en canaux virtuels), 16 voies MIPI CSI-2
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 2999
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 2842.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_agx64
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13701-0050-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_agx64
+      note: 'DLA : 105 TOPS sparse / 52.5 dense.'
+    jetson_agx_orin_industrial:
+      famille: jetson_module
+      nom: Jetson AGX Orin Industrial (64GB, ECC)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_orin
+        note: 699-pin Molex Mirror Mezz, plaque de transfert thermique intégrée
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: Voir les produits de famille porteuse.
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues (fiche technique NVIDIA derrière inscription).
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 75
+          unite: W
+          source: marche_calc_nv_orin
+          note: borne haute de la plage de modes
+        modes:
+          valeur: 15W - 75W
+          unite: W
+          source: marche_calc_nv_orin
+          note: modes de puissance publiés (MAXN SUPER = le plus haut pour Orin Nano/NX)
+      cpu:
+        valeur: 12-core Arm Cortex-A78AE v8.2 @ 2.0 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: '2048-core NVIDIA Ampere, 64 Tensor Cores @ 1.2 GHz ; DLA : 2x NVDLA v2'
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 248
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: « AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu'aux réseaux compatibles DLA.
+      tops_gpu_int8_dense:
+        valeur: 78
+        unite: TOPS
+        source: marche_calc_nv_orin
+        note: GPU Tensor Core seul ; 156 TOPS en sparse
+      memoire:
+        valeur: 64GB 256-bit LPDDR5 (+ ECC), 204.8 GB/s
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2 Gen2, 4x USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: jusqu'à 2 x8 + 1 x4 + 2 x1 PCIe Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE, 1x 10GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: jusqu'à 6 caméras (16 en canaux virtuels), 16 voies MIPI CSI-2
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_nv_orin
+        note: contrôleur(s) CAN dans le module ; transceiver et connecteur à fournir par la carte porteuse
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8) annoncé « full support » Orin et Thor ; CUDA, TensorRT via JetPack
+          ; Isaac ROS (paquets ROS 2)
+        source: marche_calc_nv_jetpack
+        note: 'ONNX Runtime : non vérifié dans les sources lues.'
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 3199
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Prix de volume par 1000, en hausse depuis juillet 2026 (cnx_prix) ; TVA non mentionnée.
+      prix_ue:
+        valeur: 3020.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_agxind
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13701-0080-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué ; expédition CH en DAP'
+        source: marche_calc_shd_agxind
+      note: -40 à 85 °C au TTP ; 10 ans de durée de vie ; choc en fonctionnement 50G (nv_orin, nv_faq).
+    jetson_t5000:
+      famille: jetson_module
+      nom: Jetson T5000 (Jetson AGX Thor)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_thor
+        note: 699-pin B2B, TTP intégrée avec caloduc
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues.
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 130
+          unite: W
+          source: marche_calc_nv_thor
+        modes:
+          valeur: 40 W–130 W (configurable)
+          unite: W
+          source: marche_calc_nv_thor
+      cpu:
+        valeur: 14-core Arm Neoverse-V3AE, 2.6 GHz max
+        source: marche_calc_nv_thor
+      gpu_ou_accelerateur:
+        valeur: 2560-core NVIDIA Blackwell, Tensor Cores 5e gén., MIG 10 TPC ; 1x PVA v3
+        source: marche_calc_nv_thor
+      tops:
+        valeur: 2070
+        precision: FP4 sparse (TFLOPS)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_thor
+        note: 'NVIDIA ne publie sur cette page ni INT8 dense ni INT8 sparse : FP4 sparse n''est PAS comparable aux
+          TOPS INT8 des Orin. « 7.5x higher AI compute than AGX Orin » (nv_modules) compare du FP4 sparse à de l''INT8
+          sparse.'
+      memoire:
+        valeur: 128 GB 256-bit LPDDR5X, 273 GB/s
+        source: marche_calc_nv_thor
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2, 4x USB 2.0
+          source: marche_calc_nv_thor
+        pcie:
+          valeur: jusqu'à Gen5 (x8) ; C1 x1, C3 x2 root ; C2 x1, C4 x8, C5 x4 root ou endpoint
+          source: marche_calc_nv_thor
+        ethernet:
+          valeur: 4x 25GbE
+          source: marche_calc_nv_thor
+        mipi_csi:
+          valeur: jusqu'à 6 caméras sur 16 voies MIPI CSI-2 (32 en canaux virtuels) ; jusqu'à 20 caméras via Holoscan
+            Sensor Bridge
+          source: marche_calc_nv_thor
+      can_integre:
+        valeur: true
+        canaux: 4
+        source: marche_calc_nv_thor
+        note: « 4x CAN » listé dans Other I/O.
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8, pile SBSA, CUDA 13.0), MIG
+        source: marche_calc_nv_jetpack
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 4999
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Hausse de juillet 2026 (cnx_prix).
+      prix_ue:
+        valeur: 4708.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_t5000
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13834-0080-001.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué'
+        source: marche_calc_shd_t5000
+    jetson_t4000:
+      famille: jetson_module
+      nom: Jetson T4000
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_thor
+        note: 699-pin B2B, TTP intégrée avec caloduc
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+        note: Non publiée sur les pages lues.
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 75
+          unite: W
+          source: marche_calc_cnx_t2000_t3000
+          note: NVIDIA nv_thor donne 70 W
+        modes:
+          valeur: 40 W–70 W (NVIDIA) ; 40 W–75 W (CNX)
+          unite: W
+          source: marche_calc_nv_thor
+      cpu:
+        valeur: 12-core Arm Neoverse-V3AE, 2.6 GHz max
+        source: marche_calc_nv_thor
+      gpu_ou_accelerateur:
+        valeur: 1536-core NVIDIA Blackwell, Tensor Cores 5e gén., MIG 6 TPC ; 1x PVA v3
+        source: marche_calc_nv_thor
+      tops:
+        valeur: 1200
+        precision: FP4 sparse (TFLOPS)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_thor
+        note: 'NVIDIA ne publie sur cette page ni INT8 dense ni INT8 sparse : FP4 sparse n''est PAS comparable aux
+          TOPS INT8 des Orin. « 7.5x higher AI compute than AGX Orin » (nv_modules) compare du FP4 sparse à de l''INT8
+          sparse.'
+      memoire:
+        valeur: 64 GB 256-bit LPDDR5X, 273 GB/s
+        source: marche_calc_nv_thor
+      interfaces:
+        usb:
+          valeur: 3x USB 3.2, 4x USB 2.0
+          source: marche_calc_nv_thor
+        pcie:
+          valeur: jusqu'à Gen5 (x8) ; C1 x1, C3 x2 root ; C2 x1, C4 x8, C5 x4 root ou endpoint
+          source: marche_calc_nv_thor
+        ethernet:
+          valeur: 3x 25GbE
+          source: marche_calc_nv_thor
+        mipi_csi:
+          valeur: jusqu'à 6 caméras sur 16 voies MIPI CSI-2 (32 en canaux virtuels) ; jusqu'à 20 caméras via Holoscan
+            Sensor Bridge
+          source: marche_calc_nv_thor
+      can_integre:
+        valeur: null
+        canaux: null
+        source: marche_calc_nv_thor
+        note: 'CAN absent de la liste Other I/O du T4000 (renvoi « ** » non lu) : à vérifier.'
+      logiciel:
+        valeur: JetPack 7 (Ubuntu 24.04, noyau 6.8, pile SBSA, CUDA 13.0), MIG
+        source: marche_calc_nv_jetpack
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Dépend de la carte porteuse.
+      prix:
+        valeur: 2999
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP, 1KU+)
+        source: marche_calc_nv_faq
+        date: *id001
+        url: https://developer.nvidia.com/embedded/faq
+        note: Hausse de juillet 2026 (cnx_prix).
+      prix_ue:
+        valeur: 2887.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_t4000
+        date: *id001
+        url: https://www.siliconhighwaydirect.com/product-p/900-13834-0000-000.htm
+        note: Prix unitaire HT affiché.
+      disponibilite_ch_ue:
+        valeur: 'Silicon Highway Direct (UK) : prix affiché, stock non indiqué'
+        source: marche_calc_shd_t4000
+      note: 'Puissance : NVIDIA (nv_thor) 40–70 W ; CNX (cnx_t2000_t3000) 40–75 W : 75 W retenu (prudent).'
+    jetson_t3000:
+      famille: jetson_module
+      nom: Jetson T3000 (et IGX Thor T3000)
+      fabricant: NVIDIA
+      statut:
+        valeur: annoncé le 2026-07-16, disponibilité prévue T1 2027 ; pas de kit dédié (émulation sur kit AGX Thor)
+        source: marche_calc_cnx_t2000_t3000
+      cotes_module:
+        valeur: environ 50 x 87
+        unite: mm
+        source: marche_calc_cnx_t2000_t3000
+        note: « about half the size of the T4000/T5000 », préliminaire
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: 'Non publiée ; CNX avance « 20 W–65 W? » pour le T3000, simple conjecture : non retenue.'
+      cpu:
+        valeur: 8-core Arm Neoverse-V3AE
+        source: marche_calc_cnx_t2000_t3000
+      gpu_ou_accelerateur:
+        valeur: 1536-core NVIDIA Blackwell
+        source: marche_calc_cnx_t2000_t3000
+      tops:
+        valeur: 865
+        precision: FP4 sparse (TFLOPS)
+        dense_ou_sparse: sparse
+        source: marche_calc_cnx_t2000_t3000
+        note: Valeur NVIDIA relayée par CNX ; même mise en garde FP4 que T4000/T5000.
+      memoire:
+        valeur: 32 GB 256-bit LPDDR5X, 273 GB/s
+        source: marche_calc_cnx_t2000_t3000
+      interfaces:
+        ethernet:
+          valeur: « 25GbE connectivity »
+          source: marche_calc_cnx_t2000_t3000
+        usb:
+          valeur: null
+          source: null
+        pcie:
+          valeur: null
+          source: null
+        mipi_csi:
+          valeur: null
+          source: null
+      can_integre:
+        valeur: null
+        canaux: null
+        source: null
+        note: non publié
+      logiciel:
+        valeur: T3000 pris en charge dans JetPack 7.2.1 ; T2000 en émulation dans une version future
+        source: marche_calc_cnx_t2000_t3000
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non publié
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: pas en vente le 2026-10-07
+      note: Spécifications préliminaires (CNX d'après l'annonce et des boîtiers AAEON).
+    jetson_t2000:
+      famille: jetson_module
+      nom: Jetson T2000
+      fabricant: NVIDIA
+      statut:
+        valeur: annoncé le 2026-07-16, disponibilité prévue T1 2027 ; pas de kit dédié (émulation sur kit AGX Thor)
+        source: marche_calc_cnx_t2000_t3000
+      cotes_module:
+        valeur: environ 50 x 87
+        unite: mm
+        source: marche_calc_cnx_t2000_t3000
+        note: « about half the size of the T4000/T5000 », préliminaire
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: 'Non publiée ; CNX avance « 20 W–65 W? » pour le T3000, simple conjecture : non retenue.'
+      cpu:
+        valeur: 6-core Arm Neoverse-V3AE
+        source: marche_calc_cnx_t2000_t3000
+      gpu_ou_accelerateur:
+        valeur: 1024-core NVIDIA Blackwell
+        source: marche_calc_cnx_t2000_t3000
+      tops:
+        valeur: 400
+        precision: FP4 sparse (TFLOPS)
+        dense_ou_sparse: sparse
+        source: marche_calc_cnx_t2000_t3000
+        note: Valeur NVIDIA relayée par CNX ; même mise en garde FP4 que T4000/T5000.
+      memoire:
+        valeur: 16 GB LPDDR5X, 137 GB/s (le texte de CNX dit LPDDR5)
+        source: marche_calc_cnx_t2000_t3000
+      interfaces:
+        ethernet:
+          valeur: 2x 10GbE
+          source: marche_calc_cnx_t2000_t3000
+        usb:
+          valeur: null
+          source: null
+        pcie:
+          valeur: null
+          source: null
+        mipi_csi:
+          valeur: null
+          source: null
+      can_integre:
+        valeur: null
+        canaux: null
+        source: null
+        note: non publié
+      logiciel:
+        valeur: T3000 pris en charge dans JetPack 7.2.1 ; T2000 en émulation dans une version future
+        source: marche_calc_cnx_t2000_t3000
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non publié
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: pas en vente le 2026-10-07
+      note: Spécifications préliminaires.
+    jetson_orin_nano_super_devkit:
+      famille: jetson_kit
+      nom: Jetson Orin Nano Super Developer Kit
+      fabricant: NVIDIA
+      module: Jetson Orin Nano 8GB (avec dissipateur) sur carte porteuse de référence
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+      cotes_porteuse:
+        valeur: 103 x 90.5 x 34.77
+        unite: mm
+        source: marche_calc_openzeka_nano_kit_ds
+        note: 'Hauteur avec pieds, porteuse, module et dissipateur. La page NVIDIA (nv_orin) donne 100 x 79 x 21
+          mm : la plus grande retenue (prudent).'
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+        note: 'Waveshare indique « Weight: 0.89 kg » (probablement le colis) : non retenu comme masse du kit.'
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 25
+          unite: W
+          source: marche_calc_nv_nano_super_kit
+        modes:
+          valeur: 7W - 15W - 25W (MAXN SUPER = 25 W)
+          unite: W
+          source: marche_calc_nv_blog_super
+      cpu:
+        valeur: 6-core Arm Cortex-A78AE v8.2, 1.7 GHz
+        source: marche_calc_nv_nano_super_kit
+      gpu_ou_accelerateur:
+        valeur: 1024 CUDA cores, 32 Tensor Cores, Ampere, 1020 MHz ; pas de DLA
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 67
+        precision: INT8 sparse
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: 'La page du kit (nv_nano_super_kit) écrit « 67 INT8 TOPS » sans dire sparse. Dense : 33 TOPS INT8
+          (nv_blog_super). 17 TFLOPS FP16 sparse.'
+      memoire:
+        valeur: 8GB 128-bit LPDDR5, 102 GB/s
+        source: marche_calc_nv_nano_super_kit
+      interfaces:
+        usb:
+          valeur: 4x USB 3.2 Gen2 Type-A, 1x USB Type-C (UFP)
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: M.2 Key M x4 Gen3, M.2 Key M x2 Gen3, M.2 Key E
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: 2x connecteurs caméra MIPI CSI-2 22 broches
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: null
+        canaux: null
+        source: marche_calc_nv_orin
+        note: 'Le module a 1 CAN, mais le connecteur 40 broches du kit est listé « UART, SPI, I2S, I2C, GPIO » sans
+          CAN : à vérifier sur le kit.'
+      logiciel:
+        valeur: JetPack 6.1+ requis pour le mode MAXN (Super) ; JetPack 7 annoncé pour Orin
+        source: marche_calc_nv_blog_super
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: Jack DC, tension non lue (alimentation fournie).
+      prix:
+        valeur: 399
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP)
+        source: marche_calc_nv_faq
+        date: *id001
+        note: 249 $ avant juillet 2026.
+      prix_ue:
+      - valeur: 355.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_kit_nano_super
+        date: *id001
+        note: référence UE 945-13766-0005-000 ; stock non indiqué
+      - valeur: 586.8
+        devise: EUR
+        tva_incluse: 0.2
+        vendeur: Generation Robots
+        source: marche_calc_genrobots_nano_super
+        date: *id001
+        note: 489,00 € HT ; taux déduit des deux prix affichés ; délai 6 à 8 semaines
+      - valeur: 387.49
+        devise: EUR
+        tva_incluse: false
+        vendeur: Kiwi Electronics
+        source: marche_calc_kiwi_nano_super
+        date: *id001
+        note: rupture de stock
+      disponibilite_ch_ue:
+        valeur: 'Aucun stock confirmé : SHD sans indication, Generation Robots 6–8 semaines, Kiwi en rupture ; ancien
+          kit non-Super chez BerryBase non disponible'
+        source: marche_calc_genrobots_nano_super
+    jetson_agx_orin_devkit:
+      famille: jetson_kit
+      nom: Jetson AGX Orin Developer Kit (64GB)
+      fabricant: NVIDIA
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_orin
+      cotes_porteuse:
+        valeur: 110 x 110 x 71.65
+        unite: mm
+        source: marche_calc_nv_orin
+        note: hauteur avec pieds, porteuse, module et dissipateur
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 60
+          unite: W
+          source: marche_calc_nv_orin
+        modes:
+          valeur: 15W - 60W
+          unite: W
+          source: marche_calc_nv_orin
+      cpu:
+        valeur: 12-core Arm Cortex-A78AE v8.2, 2.2 GHz
+        source: marche_calc_nv_orin
+      gpu_ou_accelerateur:
+        valeur: 2048-core Ampere, 64 Tensor Cores, 1.3 GHz ; 2x NVDLA v2 ; 1x PVA v2
+        source: marche_calc_nv_orin
+      tops:
+        valeur: 275
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+        note: '« AI Performance » NVIDIA = somme GPU (Tensor Cores) + DLA, en INT8 SPARSE (parcimonie structurée
+          2:4). Le dense vaut la moitié ; les TOPS DLA ne servent qu''aux réseaux compatibles DLA. GPU seul : 85
+          TOPS INT8 dense.'
+      memoire:
+        valeur: 64GB 256-bit LPDDR5, 204.8 GB/s ; 64GB eMMC 5.1
+        source: marche_calc_nv_orin
+      interfaces:
+        usb:
+          valeur: 2x USB-C 3.2 Gen2, 2x USB-A 3.2 Gen2, 2x USB-A 3.2 Gen1, micro-B USB 2.0
+          source: marche_calc_nv_orin
+        pcie:
+          valeur: slot x16 (x8 Gen4), M.2 Key M x4 Gen4, M.2 Key E x1 Gen4
+          source: marche_calc_nv_orin
+        ethernet:
+          valeur: RJ45 jusqu'à 10 GbE
+          source: marche_calc_nv_orin
+        mipi_csi:
+          valeur: connecteur MIPI CSI-2 16 voies
+          source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: null
+        source: marche_calc_nv_orin
+        note: « 40-pin header (UART, SPI, I2S, I2C, CAN, PWM, DMIC, GPIO) » ; nombre de canaux exposés non précisé
+      logiciel:
+        valeur: JetPack 7
+        source: marche_calc_nv_jetpack
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: jack DC, tension non lue
+      prix:
+        valeur: 3499
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP)
+        source: marche_calc_nv_faq
+        date: *id001
+        note: 1999 $ avant juillet 2026 (cnx_prix).
+      prix_ue:
+        valeur: 3109.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_agx_kit
+        date: *id001
+        note: HT
+      disponibilite_ch_ue:
+        valeur: 'SHD : prix affiché, stock non indiqué'
+        source: marche_calc_shd_agx_kit
+    jetson_agx_thor_devkit:
+      famille: jetson_kit
+      nom: Jetson AGX Thor Developer Kit
+      fabricant: NVIDIA
+      module: Jetson T5000
+      cotes_module:
+        valeur: 100 x 87
+        unite: mm
+        source: marche_calc_nv_thor
+      cotes_porteuse:
+        valeur: 243.19 x 112.40 x 56.88
+        unite: mm
+        source: marche_calc_nv_thor
+        note: TTP et ventilateur ou dissipateur optionnel
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: 130
+          unite: W
+          source: marche_calc_nv_thor
+        modes:
+          valeur: 40 W–130 W
+          unite: W
+          source: marche_calc_nv_thor
+      cpu:
+        valeur: 14-core Arm Neoverse-V3AE, 2.6 GHz
+        source: marche_calc_nv_thor
+      gpu_ou_accelerateur:
+        valeur: 2560-core Blackwell, MIG 10 TPC, 1.57 GHz ; PVA v3
+        source: marche_calc_nv_thor
+      tops:
+        valeur: 2070
+        precision: FP4 sparse (TFLOPS)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_thor
+        note: Non comparable à de l'INT8 dense ; aucune valeur INT8 publiée sur la page lue.
+      memoire:
+        valeur: 128 GB 256-bit LPDDR5X, 273 GB/s ; NVMe 1 TB M.2
+        source: marche_calc_nv_thor
+      interfaces:
+        usb:
+          valeur: 2x USB-A 3.2 Gen2, 2x USB-C 3.1
+          source: marche_calc_nv_thor
+        pcie:
+          valeur: M.2 Key M x4 Gen5, M.2 Key E x1 Gen5
+          source: marche_calc_nv_thor
+        ethernet:
+          valeur: 1x 5GbE RJ45, 1x QSFP28 (4x 25GbE)
+          source: marche_calc_nv_thor
+        mipi_csi:
+          valeur: 'aucune entrée MIPI listée sur le kit : caméras HSB via QSFP ou USB'
+          source: marche_calc_nv_thor
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_nv_thor
+        note: « 2x 13-pin CAN header »
+      logiciel:
+        valeur: JetPack 7 (SBSA, CUDA 13.0)
+        source: marche_calc_nv_jetpack
+      tension_alimentation:
+        valeur: null
+        unite: V
+        source: null
+        note: « Microfit power jack », tension non lue
+      prix:
+        valeur: 5499
+        devise: USD
+        tva_incluse: null
+        vendeur: NVIDIA (MSRP)
+        source: marche_calc_nv_faq
+        date: *id001
+        note: 3499 $ avant juillet 2026.
+      prix_ue:
+        valeur: 4886.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_thor_kit
+        date: *id001
+        note: HT, référence 945-14070-0085-000
+      disponibilite_ch_ue:
+        valeur: 'SHD : prix affiché, stock non indiqué'
+        source: marche_calc_shd_thor_kit
+    seeed_recomputer_j401:
+      famille: porteuse
+      nom: reComputer J401 (carte seule)
+      fabricant: Seeed Studio
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 100 x 80
+        unite: mm
+        source: marche_calc_seeed_j401
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 4x USB 3.2 Type-A 10 Gbps, 1x USB 2.0 Type-C (device)
+          source: marche_calc_seeed_j401
+        pcie:
+          valeur: M.2 Key M 2280, M.2 Key E
+          source: marche_calc_seeed_j401
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_seeed_j401
+        mipi_csi:
+          valeur: 2x CSI 2 voies 15 broches
+          source: marche_calc_seeed_j401
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_seeed_j401
+        note: 1x CAN
+      tension_alimentation:
+        valeur: 9-19
+        unite: V
+        source: marche_calc_seeed_j401
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non relevé
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: Même format que la porteuse du kit Xavier NX ; -10 à 60 °C.
+    seeed_recomputer_super:
+      famille: porteuse
+      nom: reComputer Super (J40xx/J30xx, boîtier complet)
+      fabricant: Seeed Studio
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 130 x 120 x 66
+        unite: mm
+        source: marche_calc_seeed_super_manual
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: 1110
+        unite: g
+        source: marche_calc_seeed_super_manual
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 4x USB 3.2 Type-A 5 Gbps, 1x USB 2.0 Type-C
+          source: marche_calc_seeed_super_manual
+        pcie:
+          valeur: M.2 Key M (SSD 128 GB inclus), M.2 Key E, mini-PCIe
+          source: marche_calc_seeed_super_manual
+        ethernet:
+          valeur: 2x GbE
+          source: marche_calc_seeed_super_manual
+        mipi_csi:
+          valeur: 4x CSI 2 voies 15 broches
+          source: marche_calc_seeed_super_manual
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_seeed_super_manual
+        note: 1x CAN (header 4 broches)
+      tension_alimentation:
+        valeur: 12-19
+        unite: V
+        source: marche_calc_seeed_super_manual
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non relevé
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: 'Système complet (boîtier, ventilateur) : masse 1110 g, peu réaliste pour un robot de 0,6 m. Modes 25
+        W et 40 W (-20 à 60 °C en 40 W).'
+    seeed_recomputer_mini:
+      famille: porteuse
+      nom: reComputer Mini (porteuse Mini J401, boîtier)
+      fabricant: Seeed Studio
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 63 x 95 x 42
+        unite: mm
+        source: marche_calc_seeed_mini_wiki
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: 345
+        unite: g
+        source: marche_calc_seeed_mini_wiki
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 4x USB 3.2 Type-A 5 Gbps (jusqu'à 7 USB)
+          source: marche_calc_seeed_mini_wiki
+        pcie:
+          valeur: M.2 Key E, M.2 Key M ; PCIe en dessous
+          source: marche_calc_seeed_mini_wiki
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_seeed_mini_wiki
+        mipi_csi:
+          valeur: null
+          source: null
+          note: non relevé
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_seeed_mini_wiki
+        note: 1x CAN JST 4 broches (3,3 V) + 1x CAN XT30 2+2
+      tension_alimentation:
+        valeur: 12-54
+        unite: V
+        source: marche_calc_seeed_mini_wiki
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non relevé
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: Conçu pour drones et robots (entrée 54 V DC). 462 g et 63 x 95 x 66,7 mm avec l'extension. Masse avec
+        module Orin NX 16GB, ventilateur et boîtier (configuration J4012 citée).
+    connecttech_hadron:
+      famille: porteuse
+      nom: Hadron Carrier (NGX012)
+      fabricant: Connect Tech
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 82.6 x 58.8
+        unite: mm
+        source: marche_calc_shd_hadron
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: 49
+        unite: g
+        source: marche_calc_shd_hadron
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 2x USB 3.1
+          source: marche_calc_shd_hadron
+        pcie:
+          valeur: 1x M.2 2242 NVMe (Key M)
+          source: marche_calc_shd_hadron
+        ethernet:
+          valeur: 1x GbE
+          source: marche_calc_shd_hadron
+        mipi_csi:
+          valeur: 1x MIPI CSI-2 4 voies
+          source: marche_calc_shd_hadron
+      can_integre:
+        valeur: null
+        canaux: null
+        source: marche_calc_shd_hadron
+        note: CAN non mentionné sur la page lue
+      tension_alimentation:
+        valeur: 9-60
+        unite: V
+        source: marche_calc_shd_hadron
+      prix:
+        valeur: 318.06
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_hadron
+        date: *id001
+        note: HT
+      disponibilite_ch_ue:
+        valeur: 'SHD : « Out of Stock »'
+        source: marche_calc_shd_hadron
+      note: -25 à +85 °C ; nominal 12–48 V.
+    connecttech_boson:
+      famille: porteuse
+      nom: Boson for FRAMOS Carrier (NGX020)
+      fabricant: Connect Tech
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 90 x 75
+        unite: mm
+        source: marche_calc_shd_boson
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: 80
+        unite: g
+        source: marche_calc_shd_boson
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: double USB
+          source: marche_calc_shd_boson
+        pcie:
+          valeur: NVMe
+          source: marche_calc_shd_boson
+        ethernet:
+          valeur: 2x GbE
+          source: marche_calc_shd_boson
+        mipi_csi:
+          valeur: jusqu'à 4x 2 voies et 2x 4 voies (connecteurs FRAMOS PixelMate)
+          source: marche_calc_shd_boson
+      can_integre:
+        valeur: null
+        canaux: null
+        source: marche_calc_shd_boson
+        note: Non trouvé dans le texte de la page lue (un résultat de recherche, non téléchargé, indiquait « 1x
+          CAN 2.0b »).
+      tension_alimentation:
+        valeur: 9-36
+        unite: V
+        source: marche_calc_shd_boson
+      prix:
+        valeur: 541.75
+        devise: EUR
+        tva_incluse: false
+        vendeur: Silicon Highway Direct
+        source: marche_calc_shd_boson
+        date: *id001
+        note: HT
+      disponibilite_ch_ue:
+        valeur: 'SHD : « In Stock »'
+        source: marche_calc_shd_boson
+      note: Masse 80 g = PCB/électronique ; -40 à +85 °C.
+    auvidea_jnx120s:
+      famille: porteuse
+      nom: JNX120S
+      fabricant: Auvidea
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 24.7 x 75
+        unite: mm
+        source: marche_calc_auvidea_jnx120
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: 14
+        unite: g
+        source: marche_calc_auvidea_jnx120
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 2x USB 2.0
+          source: marche_calc_auvidea_jnx120
+        pcie:
+          valeur: M.2 Key M NVMe, M.2 2230 Key E (USB 2.0 et PCIe x1)
+          source: marche_calc_auvidea_jnx120
+        ethernet:
+          valeur: 100 Mbit
+          source: marche_calc_auvidea_jnx120
+        mipi_csi:
+          valeur: 2x CSI-2 (4 voies)
+          source: marche_calc_auvidea_jnx120
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_auvidea_jnx120
+        note: CAN (terminaison interne optionnelle) ; 1 connecteur CAN
+      tension_alimentation:
+        valeur: 12-24
+        unite: V
+        source: marche_calc_auvidea_jnx120
+      prix:
+        valeur: 179.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Auvidea
+        source: marche_calc_auvidea_jnx120
+        date: *id001
+        note: fourchette 179–219 € HT selon variante (+19 % TVA) ; prix par variante non attribué
+      disponibilite_ch_ue:
+        valeur: 'Auvidea : « currently not available » (échantillons)'
+        source: marche_calc_auvidea_jnx120
+      note: Masse ~14 g PCB seul, sans module ni cartes M.2 ; hauteur 20 mm avec dissipateur ; mode Super pris en
+        charge.
+    auvidea_jnx120m:
+      famille: porteuse
+      nom: JNX120M
+      fabricant: Auvidea
+      modules_acceptes: Jetson Orin Nano / Orin NX
+      cotes_module:
+        valeur: 69.6 x 45
+        unite: mm
+        source: marche_calc_nv_orin
+        note: module SO-DIMM 260 broches
+      cotes_porteuse:
+        valeur: 50 x 75
+        unite: mm
+        source: marche_calc_auvidea_jnx120
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: Dépend du module (voir jetson_orin_*).
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: Dépend du module.
+      interfaces:
+        usb:
+          valeur: 2x USB 2.0
+          source: marche_calc_auvidea_jnx120
+        pcie:
+          valeur: M.2 Key M, M.2 Key E
+          source: marche_calc_auvidea_jnx120
+        ethernet:
+          valeur: GbE + hub 3 ports 100 Mbit
+          source: marche_calc_auvidea_jnx120
+        mipi_csi:
+          valeur: 2x CSI-2 (4 voies)
+          source: marche_calc_auvidea_jnx120
+      can_integre:
+        valeur: true
+        canaux: 1
+        source: marche_calc_auvidea_jnx120
+        note: 1 connecteur CAN
+      tension_alimentation:
+        valeur: 12-24
+        unite: V
+        source: marche_calc_auvidea_jnx120
+      prix:
+        valeur: 219.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: Auvidea
+        source: marche_calc_auvidea_jnx120
+        date: *id001
+        note: borne haute de la fourchette 179–219 € HT ; attribution non vérifiée
+      disponibilite_ch_ue:
+        valeur: 'Auvidea : « currently not available » (échantillons)'
+        source: marche_calc_auvidea_jnx120
+      note: Masse « tbd » dans le tableau du fabricant.
+    rpi5_4gb:
+      famille: rpi
+      nom: Raspberry Pi 5 4GB
+      fabricant: Raspberry Pi Ltd
+      cotes_module:
+        valeur: null
+        unite: mm
+        source: null
+        note: carte unique, pas de module
+      cotes_porteuse:
+        valeur: 85 x 56
+        unite: mm
+        source: marche_calc_rpi5_meca
+        note: entraxes de fixation 58 x 49 ; cotes lues dans le texte extrait du plan
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+        note: non publiée dans le brief
+      puissance_W:
+        repos:
+          valeur: 3.1
+          unite: W
+          source: marche_calc_cnx_rpi5_power
+          note: Lecture PMIC sbc-bench (2,6 à 3,6 W relevés), mesure tierce 2023 ; 3,1 W valeur la plus fréquente.
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+          note: Alimentation 5 V / 5 A (25 W) = capacité de la source, pas une consommation.
+      cpu:
+        valeur: Broadcom BCM2712, 4x Arm Cortex-A76 2.4 GHz, 512 KB L2/cœur, 2 MB L3
+        source: marche_calc_rpi5_brief
+      gpu_ou_accelerateur:
+        valeur: VideoCore VII (OpenGL ES 3.1, Vulkan 1.2 selon le brief ; 1.3 selon la page produit)
+        source: marche_calc_rpi5_brief
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: 'Pas d''accélérateur IA : voir famille rpi_ia.'
+      memoire:
+        valeur: 4GB LPDDR4X-4267
+        source: marche_calc_rpi5_brief
+      interfaces:
+        usb:
+          valeur: 2x USB 3.0, 2x USB 2.0
+          source: marche_calc_rpi5_brief
+        pcie:
+          valeur: PCIe 2.0 x1 (HAT M.2 ou adaptateur requis)
+          source: marche_calc_rpi5_brief
+        ethernet:
+          valeur: GbE, PoE+ avec HAT
+          source: marche_calc_rpi5_brief
+        mipi_csi:
+          valeur: 2x émetteurs-récepteurs MIPI 4 voies (caméra ou écran)
+          source: marche_calc_rpi5_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_rpi5_brief
+        note: 'aucun CAN dans la liste des interfaces : HAT ou adaptateur USB/SPI requis'
+      logiciel:
+        valeur: Raspberry Pi OS ; pas de CUDA ni TensorRT
+        source: marche_calc_rpi5_brief
+      tension_alimentation:
+        valeur: 5 (5 A, USB-C PD)
+        unite: V
+        source: marche_calc_rpi5_brief
+      prix:
+        valeur: 110
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste)
+        source: marche_calc_rpi5_brief
+        date: *id001
+        note: brief publié octobre 2026
+      prix_ue:
+        valeur: 118.5
+        devise: EUR
+        tva_incluse: true
+        vendeur: BerryBase
+        source: marche_calc_berrybase_rpi5_4
+        date: *id001
+        note: « Prices incl. VAT » (taux non affiché)
+      disponibilite_ch_ue:
+        valeur: 'BerryBase (DE) : disponible, 100+ pièces, 1–3 jours'
+        source: marche_calc_berrybase_rpi5_4
+      note: 0 à 70 °C ; production jusqu'à au moins janvier 2036.
+    rpi5_8gb:
+      famille: rpi
+      nom: Raspberry Pi 5 8GB
+      fabricant: Raspberry Pi Ltd
+      cotes_module:
+        valeur: null
+        unite: mm
+        source: null
+        note: carte unique, pas de module
+      cotes_porteuse:
+        valeur: 85 x 56
+        unite: mm
+        source: marche_calc_rpi5_meca
+        note: entraxes de fixation 58 x 49 ; cotes lues dans le texte extrait du plan
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+        note: non publiée dans le brief
+      puissance_W:
+        repos:
+          valeur: 3.1
+          unite: W
+          source: marche_calc_cnx_rpi5_power
+          note: Lecture PMIC sbc-bench (2,6 à 3,6 W relevés), mesure tierce 2023 ; 3,1 W valeur la plus fréquente.
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+          note: Alimentation 5 V / 5 A (25 W) = capacité de la source, pas une consommation.
+      cpu:
+        valeur: Broadcom BCM2712, 4x Arm Cortex-A76 2.4 GHz, 512 KB L2/cœur, 2 MB L3
+        source: marche_calc_rpi5_brief
+      gpu_ou_accelerateur:
+        valeur: VideoCore VII (OpenGL ES 3.1, Vulkan 1.2 selon le brief ; 1.3 selon la page produit)
+        source: marche_calc_rpi5_brief
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: 'Pas d''accélérateur IA : voir famille rpi_ia.'
+      memoire:
+        valeur: 8GB LPDDR4X-4267
+        source: marche_calc_rpi5_brief
+      interfaces:
+        usb:
+          valeur: 2x USB 3.0, 2x USB 2.0
+          source: marche_calc_rpi5_brief
+        pcie:
+          valeur: PCIe 2.0 x1 (HAT M.2 ou adaptateur requis)
+          source: marche_calc_rpi5_brief
+        ethernet:
+          valeur: GbE, PoE+ avec HAT
+          source: marche_calc_rpi5_brief
+        mipi_csi:
+          valeur: 2x émetteurs-récepteurs MIPI 4 voies (caméra ou écran)
+          source: marche_calc_rpi5_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_rpi5_brief
+        note: 'aucun CAN dans la liste des interfaces : HAT ou adaptateur USB/SPI requis'
+      logiciel:
+        valeur: Raspberry Pi OS ; pas de CUDA ni TensorRT
+        source: marche_calc_rpi5_brief
+      tension_alimentation:
+        valeur: 5 (5 A, USB-C PD)
+        unite: V
+        source: marche_calc_rpi5_brief
+      prix:
+        valeur: 175
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste)
+        source: marche_calc_rpi5_brief
+        date: *id001
+        note: brief publié octobre 2026
+      prix_ue:
+        valeur: 184.9
+        devise: EUR
+        tva_incluse: true
+        vendeur: BerryBase
+        source: marche_calc_berrybase_rpi5_8
+        date: *id001
+        note: « Prices incl. VAT » (taux non affiché)
+      disponibilite_ch_ue:
+        valeur: 'BerryBase (DE) : disponible, 100+ pièces, 1–3 jours'
+        source: marche_calc_berrybase_rpi5_8
+      note: 0 à 70 °C ; production jusqu'à au moins janvier 2036.
+    rpi5_16gb:
+      famille: rpi
+      nom: Raspberry Pi 5 16GB
+      fabricant: Raspberry Pi Ltd
+      cotes_module:
+        valeur: null
+        unite: mm
+        source: null
+        note: carte unique, pas de module
+      cotes_porteuse:
+        valeur: 85 x 56
+        unite: mm
+        source: marche_calc_rpi5_meca
+        note: entraxes de fixation 58 x 49 ; cotes lues dans le texte extrait du plan
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+        note: non publiée dans le brief
+      puissance_W:
+        repos:
+          valeur: 3.1
+          unite: W
+          source: marche_calc_cnx_rpi5_power
+          note: Lecture PMIC sbc-bench (2,6 à 3,6 W relevés), mesure tierce 2023 ; 3,1 W valeur la plus fréquente.
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+          note: Alimentation 5 V / 5 A (25 W) = capacité de la source, pas une consommation.
+      cpu:
+        valeur: Broadcom BCM2712, 4x Arm Cortex-A76 2.4 GHz, 512 KB L2/cœur, 2 MB L3
+        source: marche_calc_rpi5_brief
+      gpu_ou_accelerateur:
+        valeur: VideoCore VII (OpenGL ES 3.1, Vulkan 1.2 selon le brief ; 1.3 selon la page produit)
+        source: marche_calc_rpi5_brief
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: 'Pas d''accélérateur IA : voir famille rpi_ia.'
+      memoire:
+        valeur: 16GB LPDDR4X-4267
+        source: marche_calc_rpi5_brief
+      interfaces:
+        usb:
+          valeur: 2x USB 3.0, 2x USB 2.0
+          source: marche_calc_rpi5_brief
+        pcie:
+          valeur: PCIe 2.0 x1 (HAT M.2 ou adaptateur requis)
+          source: marche_calc_rpi5_brief
+        ethernet:
+          valeur: GbE, PoE+ avec HAT
+          source: marche_calc_rpi5_brief
+        mipi_csi:
+          valeur: 2x émetteurs-récepteurs MIPI 4 voies (caméra ou écran)
+          source: marche_calc_rpi5_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_rpi5_brief
+        note: 'aucun CAN dans la liste des interfaces : HAT ou adaptateur USB/SPI requis'
+      logiciel:
+        valeur: Raspberry Pi OS ; pas de CUDA ni TensorRT
+        source: marche_calc_rpi5_brief
+      tension_alimentation:
+        valeur: 5 (5 A, USB-C PD)
+        unite: V
+        source: marche_calc_rpi5_brief
+      prix:
+        valeur: 305
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste)
+        source: marche_calc_rpi5_brief
+        date: *id001
+        note: brief publié octobre 2026
+      prix_ue:
+        valeur: 319.2
+        devise: EUR
+        tva_incluse: true
+        vendeur: BerryBase
+        source: marche_calc_berrybase_rpi5_16
+        date: *id001
+        note: « Prices incl. VAT » (taux non affiché)
+      disponibilite_ch_ue:
+        valeur: 'BerryBase (DE) : disponible, 18 pièces, 1–3 jours'
+        source: marche_calc_berrybase_rpi5_16
+      note: 0 à 70 °C ; production jusqu'à au moins janvier 2036.
+    rpi_cm5:
+      famille: rpi
+      nom: Raspberry Pi Compute Module 5
+      fabricant: Raspberry Pi Ltd
+      cotes_module:
+        valeur: 55 x 40 x 4.7
+        unite: mm
+        source: marche_calc_cm5_brief
+        note: 4 trous M2.5
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: porteuse à concevoir ou acheter (non relevée)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée ; alimentation unique +5 V jusqu'à 5 A
+      cpu:
+        valeur: BCM2712, 4x Cortex-A76 2.4 GHz
+        source: marche_calc_cm5_brief
+      gpu_ou_accelerateur:
+        valeur: VideoCore VII (OpenGL ES 3.1, Vulkan 1.3)
+        source: marche_calc_cm5_brief
+      tops:
+        valeur: null
+        precision: null
+        dense_ou_sparse: inconnu
+        source: null
+        note: pas d'accélérateur IA
+      memoire:
+        valeur: 2, 4, 8 ou 16 GB LPDDR4-4267 avec ECC ; eMMC 0/16/32/64 GB
+        source: marche_calc_cm5_brief
+      interfaces:
+        usb:
+          valeur: 2x USB 3.0, 1x USB 2.0
+          source: marche_calc_cm5_brief
+        pcie:
+          valeur: 1x PCIe Gen2 x1
+          source: marche_calc_cm5_brief
+        ethernet:
+          valeur: PHY GbE (IEEE 1588)
+          source: marche_calc_cm5_brief
+        mipi_csi:
+          valeur: 2x MIPI 4 voies (DSI ou CSI-2)
+          source: marche_calc_cm5_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_cm5_brief
+        note: aucun CAN listé (UART, I2C, SPI, SDIO, DPI, I2S, PWM)
+      logiciel:
+        valeur: Raspberry Pi OS
+        source: marche_calc_cm5_brief
+      tension_alimentation:
+        valeur: '5'
+        unite: V
+        source: marche_calc_cm5_brief
+      prix:
+        valeur: 190
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste)
+        source: marche_calc_cm5_brief
+        date: *id001
+        note: 'variante CM5008016 (8 GB RAM, 16 GB eMMC, sans radio) ; 16 GB RAM / 16 GB eMMC : 360 $ ; Lite 8 GB
+          : 165 $'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: non relevée
+      note: -20 à +85 °C ; production jusqu'à au moins janvier 2036.
+    rpi_ai_hat_plus_13:
+      famille: rpi_ia
+      nom: Raspberry Pi AI HAT+ 13 TOPS
+      fabricant: Raspberry Pi Ltd (accélérateur Hailo)
+      cotes_module:
+        valeur: 65 x 56.5
+        unite: mm
+        source: marche_calc_aihat_brief
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: se monte sur un Raspberry Pi 5 (voir rpi5_*)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée dans le brief
+      gpu_ou_accelerateur:
+        valeur: Hailo-8L
+        source: marche_calc_aihat_brief
+      tops:
+        valeur: 13
+        precision: non précisée (« 13 TOPS inferencing performance »)
+        dense_ou_sparse: inconnu
+        source: marche_calc_aihat_brief
+        note: Précision et dense/sparse non publiées.
+      interfaces:
+        pcie:
+          valeur: PCIe du Raspberry Pi 5
+          source: marche_calc_aihat_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_aihat_brief
+        note: aucun
+      logiciel:
+        valeur: Raspberry Pi OS, intégré à rpicam-apps (pile caméra)
+        source: marche_calc_aihat_brief
+      prix:
+        valeur: 70
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste 2024)
+        source: marche_calc_aihat_brief
+        date: *id001
+        note: 'PiShop.us : 76,95 $ (pishop_us_aihat2)'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: Livré avec header d'empilage 16 mm ; 0 à 50 °C ; production jusqu'à au moins janvier 2030.
+    rpi_ai_hat_plus_26:
+      famille: rpi_ia
+      nom: Raspberry Pi AI HAT+ 26 TOPS
+      fabricant: Raspberry Pi Ltd (accélérateur Hailo)
+      cotes_module:
+        valeur: 65 x 56.5
+        unite: mm
+        source: marche_calc_aihat_brief
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: se monte sur un Raspberry Pi 5 (voir rpi5_*)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée dans le brief
+      gpu_ou_accelerateur:
+        valeur: Hailo-8
+        source: marche_calc_aihat_brief
+      tops:
+        valeur: 26
+        precision: non précisée (« 26 TOPS inferencing performance »)
+        dense_ou_sparse: inconnu
+        source: marche_calc_aihat_brief
+        note: Précision et dense/sparse non publiées.
+      interfaces:
+        pcie:
+          valeur: PCIe du Raspberry Pi 5
+          source: marche_calc_aihat_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_aihat_brief
+        note: aucun
+      logiciel:
+        valeur: Raspberry Pi OS, intégré à rpicam-apps (pile caméra)
+        source: marche_calc_aihat_brief
+      prix:
+        valeur: 110
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste 2024)
+        source: marche_calc_aihat_brief
+        date: *id001
+        note: 'PiShop.us : 119,95 $ (pishop_us_aihat2)'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: 0 à 50 °C ; production jusqu'à au moins janvier 2030.
+    rpi_ai_hat_plus_2:
+      famille: rpi_ia
+      nom: Raspberry Pi AI HAT+ 2
+      fabricant: Raspberry Pi Ltd (accélérateur Hailo)
+      cotes_module:
+        valeur: 65 x 56.5
+        unite: mm
+        source: marche_calc_aihat2_brief
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: se monte sur un Raspberry Pi 5 (voir rpi5_*)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée dans le brief
+      gpu_ou_accelerateur:
+        valeur: Hailo-10H, 8 GB de RAM embarquée
+        source: marche_calc_aihat2_brief
+      tops:
+        valeur: 40
+        precision: INT4
+        dense_ou_sparse: inconnu
+        source: marche_calc_aihat2_brief
+        note: '40 TOPS en INT4, PAS en INT8 : le fabricant dit lui-même que les performances en vision sont « comparables
+          » (ou « equivalent or superior ») à l''AI HAT+ 26 TOPS.'
+      interfaces:
+        pcie:
+          valeur: PCIe du Raspberry Pi 5
+          source: marche_calc_aihat2_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_aihat2_brief
+        note: aucun
+      logiciel:
+        valeur: Raspberry Pi OS, intégré à rpicam-apps (pile caméra)
+        source: marche_calc_aihat2_brief
+      prix:
+        valeur: 200
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste)
+        source: marche_calc_aihat2_brief
+        date: *id001
+      disponibilite_ch_ue:
+        valeur: 'Botland (PL) : disponible, expédition 24 h (boutique réservée aux clients B2B inscrits)'
+        source: marche_calc_botland_aihat2
+      prix_ue:
+        valeur: 210.5
+        devise: EUR
+        tva_incluse: 0.23
+        vendeur: Botland
+        source: marche_calc_botland_aihat2
+        date: *id001
+        note: 176,89 € HT ; taux déduit des deux prix affichés
+      note: Dissipateur optionnel 42,5 x 64 x 14 mm conseillé contre l'étranglement thermique ; 0 à 50 °C ; production
+        jusqu'à au moins janvier 2036 ; brief publié juillet 2026.
+    rpi_ai_kit:
+      famille: rpi_ia
+      nom: Raspberry Pi AI Kit (M.2 HAT+ et module Hailo-8L)
+      fabricant: Raspberry Pi Ltd (accélérateur Hailo)
+      cotes_module:
+        valeur: null
+        unite: mm
+        source: null
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: se monte sur un Raspberry Pi 5 (voir rpi5_*)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée dans le brief
+      gpu_ou_accelerateur:
+        valeur: Hailo-8L
+        source: marche_calc_aikit_page
+      tops:
+        valeur: 13
+        precision: non précisée
+        dense_ou_sparse: inconnu
+        source: marche_calc_aikit_page
+        note: Lu via WebFetch seulement.
+      interfaces:
+        pcie:
+          valeur: PCIe du Raspberry Pi 5
+          source: marche_calc_aikit_page
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_aikit_page
+        note: aucun
+      logiciel:
+        valeur: Raspberry Pi OS, intégré à rpicam-apps (pile caméra)
+        source: marche_calc_aikit_page
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        date: *id001
+        note: non relevé
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      statut:
+        valeur: 'FIN DE PRODUCTION : « no longer in production. New customers should instead purchase the Raspberry
+          Pi AI HAT+ »'
+        source: marche_calc_aikit_page
+    rpi_ai_camera:
+      famille: rpi_ia
+      nom: Raspberry Pi AI Camera (pour information)
+      fabricant: Raspberry Pi Ltd (capteur Sony)
+      cotes_module:
+        valeur: 25 x 24 x 11.9
+        unite: mm
+        source: marche_calc_aicam_brief
+      cotes_porteuse:
+        valeur: null
+        unite: mm
+        source: null
+        note: se monte sur un Raspberry Pi 5 (voir rpi5_*)
+      masse_module:
+        valeur: null
+        unite: g
+        source: null
+      masse_ensemble:
+        valeur: null
+        unite: g
+        source: null
+      puissance_W:
+        repos:
+          valeur: null
+          unite: W
+          source: null
+        typique:
+          valeur: null
+          unite: W
+          source: null
+        max:
+          valeur: null
+          unite: W
+          source: null
+        note: non publiée dans le brief
+      gpu_ou_accelerateur:
+        valeur: Sony IMX500 (capteur 12 MP avec inférence intégrée)
+        source: marche_calc_aicam_brief
+      tops:
+        valeur: null
+        precision: entrées int8 ou uint8
+        dense_ou_sparse: inconnu
+        source: marche_calc_aicam_brief
+        note: Aucun TOPS publié ; mémoire 8 388 480 octets pour firmware, poids et travail ; tenseur d'entrée max
+          640 x 640.
+      interfaces:
+        mipi_csi:
+          valeur: nappe FPC 15 x 1 mm ou 22 x 0,5 mm
+          source: marche_calc_aicam_brief
+      can_integre:
+        valeur: false
+        canaux: 0
+        source: marche_calc_aicam_brief
+        note: aucun
+      logiciel:
+        valeur: Raspberry Pi OS, intégré à rpicam-apps (pile caméra)
+        source: marche_calc_aicam_brief
+      prix:
+        valeur: 70
+        devise: USD
+        tva_incluse: null
+        vendeur: Raspberry Pi Ltd (prix de liste 2024)
+        source: marche_calc_aicam_brief
+        date: *id001
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+      note: Compatible avec tous les Raspberry Pi (nappe 200 mm) ; 4056 x 3040 à 10 i/s, 2028 x 1520 à 30 i/s ;
+        production jusqu'à au moins janvier 2028.

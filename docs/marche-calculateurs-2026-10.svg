@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 440" width="100%" role="img" aria-label="TOPS INT8 dense par watt (vertical) et par franc HT (horizontal)">
+<style>:root{--s:#fcfcfb;--t1:#0b0b0b;--t2:#52514e;--g:#e4e3df}@media (prefers-color-scheme: dark){:root{--s:#1a1a19;--t1:#fff;--t2:#c3c2b7;--g:#33332f}}text{font:11px system-ui,sans-serif;fill:var(--t2)} .t{fill:var(--t1);font-weight:600;font-size:12px}.grid{stroke:var(--g)}</style>
+<rect width="780" height="440" fill="var(--s)"/>
+<text x="64" y="20" class="t">TOPS INT8 dense par watt (vertical) et par franc HT (horizontal)</text>
+<line class="grid" x1="64.0" y1="40" x2="64.0" y2="394"/><text x="64.0" y="408" text-anchor="middle">0.0257</text><line class="grid" x1="64" y1="394.0" x2="590" y2="394.0"/><text x="58" y="398.0" text-anchor="end">0.643</text>
+<line class="grid" x1="169.2" y1="40" x2="169.2" y2="394"/><text x="169.2" y="408" text-anchor="middle">0.0411</text><line class="grid" x1="64" y1="323.2" x2="590" y2="323.2"/><text x="58" y="327.2" text-anchor="end">0.805</text>
+<line class="grid" x1="274.4" y1="40" x2="274.4" y2="394"/><text x="274.4" y="408" text-anchor="middle">0.0565</text><line class="grid" x1="64" y1="252.4" x2="590" y2="252.4"/><text x="58" y="256.4" text-anchor="end">0.967</text>
+<line class="grid" x1="379.6" y1="40" x2="379.6" y2="394"/><text x="379.6" y="408" text-anchor="middle">0.0718</text><line class="grid" x1="64" y1="181.6" x2="590" y2="181.6"/><text x="58" y="185.6" text-anchor="end">1.13</text>
+<line class="grid" x1="484.8" y1="40" x2="484.8" y2="394"/><text x="484.8" y="408" text-anchor="middle">0.0872</text><line class="grid" x1="64" y1="110.8" x2="590" y2="110.8"/><text x="58" y="114.8" text-anchor="end">1.29</text>
+<line class="grid" x1="590.0" y1="40" x2="590.0" y2="394"/><text x="590.0" y="408" text-anchor="middle">0.103</text><line class="grid" x1="64" y1="40.0" x2="590" y2="40.0"/><text x="58" y="44.0" text-anchor="end">1.45</text>
+<text x="327.0" y="432" text-anchor="middle">TOPS dense par CHF HT</text><text x="14" y="217.0" transform="rotate(-90 14 217.0)" text-anchor="middle">TOPS dense par W</text>
+<circle cx="287.4" cy="377.9" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson Orin Nano 4GB (Super) : 0.0584 ; 0.68</title></circle>
+<circle cx="566.1" cy="98.3" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson Orin Nano 8GB (Super) : 0.0991 ; 1.32</title></circle>
+<circle cx="368.1" cy="260.0" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson Orin NX 8GB (Super) : 0.0701 ; 0.95</title></circle>
+<circle cx="199.9" cy="260.0" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson Orin NX 16GB (Super) : 0.0456 ; 0.95</title></circle>
+<circle cx="134.1" cy="281.8" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson AGX Orin 32GB : 0.036 ; 0.9</title></circle>
+<circle cx="120.4" cy="56.1" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson AGX Orin 64GB : 0.034 ; 1.42</title></circle>
+<circle cx="87.9" cy="220.6" r="4.5" fill="#2a78d6" stroke="var(--s)" stroke-width="1.5"><title>Jetson AGX Orin Industrial (64GB, ECC) : 0.0292 ; 1.04</title></circle>
+<circle cx="608" cy="50" r="4.5" fill="#2a78d6"/><text x="618" y="54">jetson module</text>
+</svg>

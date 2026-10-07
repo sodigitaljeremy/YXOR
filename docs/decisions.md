@@ -155,6 +155,15 @@ avec qui l'a décidé.
     - Fiches : [0009](../decisions/archive/0009-build123d.md),
       [0018](../decisions/archive/0018-application-web.md).
 
+19. **YXOR Lab et YXOR fonctionnent entièrement sur batterie.** Le
+    calculateur n'est PAS décidé : Jeremy préfère NVIDIA Jetson et demande
+    une comparaison chiffrée avec le Raspberry Pi 5 et ses cartes d'IA.
+    - Décidée par Jeremy le 2026-10-07. Ses mots : « Les deux robots, YXOR
+      Lab et YXOR, fonctionnent entièrement sur batterie. Je préfère NVIDIA
+      Jetson, mais je veux une comparaison chiffrée avec le Raspberry Pi 5
+      et ses cartes d'IA. » (prompt du 2026-10-07).
+    - Fiche : [0070](../decisions/0070-robots-sur-batterie.md).
+
 ## B — Conventions confirmées
 
 Ce ne sont pas des décisions actives : ce sont des façons de faire,

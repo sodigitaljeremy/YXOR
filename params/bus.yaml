@@ -1,0 +1,3075 @@
+# Marché des cartes de bus, trame CAN, protocole RobStride, tensions Feetech — lu par scripts/marche_composants.py
+#
+# DONNÉES SEULEMENT (2026-10-07) : aucune intégration à l'explorateur, aucun achat (fiche 0066).
+# Contexte DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : « Les deux robots, YXOR Lab et YXOR, fonctionnent
+# entièrement sur batterie. Je préfère NVIDIA Jetson, mais je veux une comparaison chiffrée avec le
+# Raspberry Pi 5 et ses cartes d'IA. »
+#
+# Même méthode que le marché des actionneurs : une valeur non lue est null ; deux sources qui divergent,
+# la plus prudente (fiche 0064), l'autre en note. Relevé par quatre agents de Claude Code le 2026-10-07 ;
+# chaque source est TÉLÉCHARGÉE (hors du dépôt) et inscrite au registre params/fournisseurs.yaml sous
+# la clé citée ici (marche_<domaine>_<id>), redistribuable: false. Les valeurs dérivées (énergie non
+# publiée, volume, densités, CHF HT, TOPS/W, canaux CAN) sont CALCULÉES par scripts/marche_composants.py,
+# jamais déclarées ici.
+
+trame_can:
+  sof_bits:
+    valeur: 1
+    source: marche_bus_bosch_can20_1991
+    page: 45
+    note: « a single 'dominant' bit » (Partie B, p. 43 imprimée)
+  identifiant_standard_bits:
+    valeur: 11
+    source: marche_bus_bosch_can20_1991
+    page: 45-46
+    note: ID-28…ID-18
+  identifiant_etendu_bits:
+    valeur: 29 = 11 (Base ID) + 18 (Extended ID)
+    source: marche_bus_bosch_can20_1991
+    page: 46-47
+    note: null
+  rtr_bits:
+    valeur: 1
+    source: marche_bus_bosch_can20_1991
+    page: 45
+    note: dominant pour une trame de données
+  srr_bits_etendue:
+    valeur: 1
+    source: marche_bus_bosch_can20_1991
+    page: 47
+    note: récessif, à la place du RTR de la trame standard
+  ide_bits:
+    valeur: 1
+    source: marche_bus_bosch_can20_1991
+    page: 47
+    note: dans le champ d'arbitrage en trame étendue ; dans le champ de contrôle en trame standard
+  champ_controle_bits:
+    valeur: 6
+    source: marche_bus_bosch_can20_1991
+    page: 47
+    note: 'standard : IDE + r0 + DLC (4) ; étendue : r1 + r0 + DLC (4)'
+  dlc_bits:
+    valeur: 4
+    source: marche_bus_bosch_can20_1991
+    page: 47-48
+    note: null
+  donnees_bits_8_octets:
+    valeur: 64
+    source: marche_bus_bosch_can20_1991
+    page: 49
+    note: 0 à 8 octets de 8 bits, MSB en premier
+  crc_sequence_bits:
+    valeur: 15
+    source: marche_bus_bosch_can20_1991
+    page: 49
+    note: 'registre CRC_RG(14:0) de 15 bits, polynôme X15+X14+X10+X8+X7+X4+X3+1 ; TI SLOA101B p. 3 : « 16-bit (15
+      bits plus delimiter) »'
+  crc_delimiteur_bits:
+    valeur: 1
+    source: marche_bus_bosch_can20_1991
+    page: 50
+    note: null
+  ack_bits:
+    valeur: 2
+    source: marche_bus_bosch_can20_1991
+    page: 50
+    note: ACK SLOT + ACK DELIMITER
+  eof_bits:
+    valeur: 7
+    source: marche_bus_bosch_can20_1991
+    page: 51
+    note: sept bits récessifs
+  intertrame_intermission_bits:
+    valeur: 3
+    source: marche_bus_bosch_can20_1991
+    page: 55
+    note: 'l''INTERFRAME SPACE comprend INTERMISSION (3 bits récessifs) puis BUS IDLE (durée quelconque) et, pour
+      une station « error passive » qui vient d''émettre, SUSPEND TRANSMISSION (8 bits). DIVERGENCE : TI SLOA101B
+      p. 3 écrit « This 7-bit interframe space (IFS) » ; pour un calcul de charge, la valeur la plus prudente est
+      donc 7 (TI), la spécification dit 3'
+  intertrame_ti_bits:
+    valeur: 7
+    source: marche_bus_ti_sloa101b
+    page: 3
+    note: valeur divergente de la spécification Bosch (3 bits d'INTERMISSION) ; à retenir si l'on applique « la
+      plus prudente »
+  total_standard_8_octets_sans_bourrage_bits:
+    valeur: 108
+    source: marche_bus_bosch_can20_1991
+    page: 45-51
+    note: 'CALCULÉ par somme des champs lus : 1+11+1 (RTR) +6 (IDE, r0, DLC) +64+15+1+2+7 ; + intertrame 3 → 111
+      (ou 115 avec l''IFS de TI)'
+  total_etendue_8_octets_sans_bourrage_bits:
+    valeur: 128
+    source: marche_bus_bosch_can20_1991
+    page: 45-51
+    note: 'CALCULÉ : 1+11+1 (SRR) +1 (IDE) +18+1 (RTR) +6 (r1, r0, DLC) +64+15+1+2+7 ; + intertrame 3 → 131 (ou
+      135 avec l''IFS de TI)'
+  regle_bourrage:
+    valeur: après 5 bits consécutifs de même valeur, l'émetteur insère un bit complémentaire
+    source: marche_bus_bosch_can20_1991
+    page: 60
+    note: « STUFF ERROR » détectée au 6e bit égal consécutif (p. 60) ; même règle dans TI SLOA101B p. 3
+  portee_bourrage:
+    valeur: du START OF FRAME à la fin de la CRC SEQUENCE (SOF, arbitrage, contrôle, données, séquence CRC)
+    source: marche_bus_bosch_can20_1991
+    page: 60
+    note: 'non bourrés : délimiteur CRC, champ ACK, END OF FRAME (forme fixe), trames d''erreur et de surcharge.
+      Le nombre maximal de bits de bourrage n''est pas publié dans la spécification lue : à calculer, pas à déclarer'
+protocole_robstride:
+  interface:
+    valeur: CAN 2.0
+    source: marche_bus_rs00_manuel_260713
+    page: 38
+    note: même phrase RS02 p. 41, RS05 p. 45 (« The motor communication is the CAN 2.0 communication interface »)
+  debit_can_defaut:
+    valeur: 1 Mbit/s
+    source: marche_bus_rs00_manuel_260713
+    page: 11
+    note: tableau driver « CAN bus bit rate 1Mbps » ; RS02 p. 12, RS05 p. 14 ; répété au protocole (RS00 p. 38)
+      et au protocole MIT (RS00 p. 70)
+  debits_possibles:
+    valeur: 1 M, 500 k, 250 k, 125 kbit/s
+    source: marche_bus_rs00_manuel_260713
+    page: 43-44
+    note: 'type de communication 23 (0x17), octet F_CMD : 01 = 1M, 02 = 500K, 03 = 250K, 04 = 125K ; effet après
+      remise sous tension. RS02 p. 46, RS05 p. 51. Paramètre 0x2009 motor_baud (RS00 p. 21)'
+  format_trame_protocole_prive:
+    valeur: trame étendue, identifiant 29 bits
+    source: marche_bus_rs00_manuel_260713
+    page: 38
+    note: 'identifiant : bits 28-24 type de communication, bits 23-8 zone de données 2, bits 7-0 adresse de destination
+      ; RS02 p. 41, RS05 p. 45'
+  format_trame_protocole_mit:
+    valeur: trame standard, identifiant 11 bits
+    source: marche_bus_rs00_manuel_260713
+    page: 70
+    note: protocole MIT, débit par défaut 1 Mbit/s, « baud rate can be modified by switching to the private protocol
+      » ; RS02 p. 72, RS05 p. 79. Un 3e protocole, CANopen (DS402), existe (chapitre 5, RS00 p. 61 et suivantes)
+      ; bascule par type 25, effective après redémarrage (p. 44, 49)
+  octets_donnees_commande:
+    valeur: 8
+    source: marche_bus_rs00_manuel_260713
+    page: 38-39
+    note: '« 29-bit ID 8Byte data field » pour chaque type ; commande de type 1 (contrôle « opération ») : couple
+      dans l''identifiant (bits 23-8), angle, vitesse, Kp, Kd sur les 8 octets'
+  octets_donnees_reponse:
+    valeur: 8
+    source: marche_bus_rs00_manuel_260713
+    page: 39-40
+    note: 'trame de retour type 2 : 8 octets ; défauts et mode codés dans l''identifiant 29 bits'
+  une_reponse_par_commande:
+    valeur: true
+    source: marche_bus_rs00_manuel_260713
+    page: 39
+    note: 'après la commande de type 1 : « Response frame: Response motor feedback frame (see communication type
+      2) » ; même mention pour les autres types de commande. Il s''agit d''une lecture du texte, pas d''une mesure
+      du bus'
+  remontee_active:
+    valeur: désactivée par défaut ; type 24 ; intervalle par défaut 10 ms
+    source: marche_bus_rs00_manuel_260713
+    page: 44
+    note: 'p. 48 : « Report type: Type 2 (default interval: 10ms) », réglable par EPScan_time (p. 47 : « 1 indicates
+      10ms. Plus 1 increments by 5ms ») ; l''outil PC indique « a minimum of 10ms » (p. 16). RS02 p. 17 et 47, RS05
+      p. 18 et 51'
+  can_fd_firmware:
+    valeur: null
+    source: marche_bus_rs00_manuel_260713
+    page: null
+    note: 'aucune mention de CAN-FD (ni « CAN FD », « CANFD », « flexible data ») dans les trois manuels 260713
+      ni dans l''arborescence du dépôt ; tous disent « CAN 2.0 ». Absence de mention, pas preuve d''absence : prise
+      en charge non établie'
+  debit_donnees_fd:
+    valeur: null
+    source: null
+    page: null
+    note: sans objet tant que le CAN-FD n'est pas documenté
+  frequence_commande_max:
+    valeur: null
+    source: null
+    page: null
+    note: 'non documentée dans les trois manuels ; seules valeurs temporelles publiées : remontée active 10 ms par
+      défaut (p. 44), minimum 10 ms dans l''outil PC (p. 16)'
+  temporisation_perte_can:
+    valeur: CAN_TIMEOUT, 20000 = 1 s ; 0 = désactivé ; au-delà, passage en mode reset
+    source: marche_bus_rs00_manuel_260713
+    page: 28
+    note: RS02 p. 31, RS05 p. 34 ; aussi p. 47 (« timeout threshold, 20000 is 1s »)
+  adaptateur_canhub_debit:
+    valeur: 1M configuré dans la procédure
+    source: marche_bus_rs_canhub_v1_0
+    page: 12
+    note: manuel chinois de l'adaptateur USB-CANHUB RobStride (5 voies CAN, p. 11-12)
+tensions_feetech:
+  sts3250:
+    min_V: 6
+    max_V: 12
+    source: marche_bus_c_aifitlab_sts3250
+    page: 3
+    note: « 额定工作电压 Rated Input Voltage 6V-12V » ; typique 12 V. Concorde avec la note « plage 6–12 V » déjà au dépôt.
+  st3215_c018:
+    min_V: 4
+    max_V: 14
+    source: marche_bus_c_akizuki_st3215_c018
+    page: 3
+    note: « 5-7 工作电压范围 Rated Input Voltage 4V-14V » ; nominale 12 V (5-1).
+  st3215_c001:
+    min_V: 4
+    max_V: 7.4
+    source: marche_bus_c_aifitlab_sts3215
+    page: 3
+    note: '« 5-7 工作电压 Input Voltage 4V-7.4V » ; typique 6 V / 7.4 V. Document intitulé « STS3215 » 7.4V 19KG.CM,
+      sans suffixe : rattachement à C001 par le libellé (7,4 V, 19 kg·cm), non par le numéro.'
+  st3032_c001:
+    min_V: 4
+    max_V: 7.4
+    source: marche_bus_c_aifitlab_sts3032
+    page: 3
+    note: '« 5-7 工作电压 Input Voltage 4V-7.4V » (extraction en mode mise en page) ; typique 4,8 / 6 V. Document intitulé
+      « STS3032 » (simple axe), sans suffixe : rattachement à C001 non garanti.'
+  st3032_c036:
+    min_V: 4
+    max_V: 7.4
+    source: marche_bus_c_aifitlab_sts3032_c036
+    page: 3
+    note: « 额定工作电压 Rated Input Voltage 4V-7.4V » ; typique 4,8 / 6 V.
+  st3036_c001:
+    min_V: null
+    max_V: null
+    source: marche_bus_c_aifitlab_st3036_c002
+    page: 3
+    note: 'fiche constructeur non téléchargée : DNS feetechrc.com. Seule fiche trouvée : ST-3036-C002 (autre variante),
+      « Input Voltage Range 4.8V-7.4V » — non reportée sur C001.'
+  scs0009_c013:
+    min_V: 4
+    max_V: 7.4
+    source: marche_bus_c_aifitlab_scs0009_c013
+    page: 3
+    note: « 工作电压 Input Voltage 4V-7.4V » ; typique 4,8 / 6 V.
+  scs15_c022:
+    min_V: 4
+    max_V: 8.4
+    source: marche_bus_c_aifitlab_scs15_c022
+    page: 3
+    note: « 工作电压 Input Voltage 4V-8.4V » ; typique 6 / 7,4 V.
+  scs2332_c001:
+    min_V: 4
+    max_V: 8.4
+    source: marche_bus_c_aifitlab_scs2332
+    page: 3
+    note: « 5-7 工作电压 Input Voltage 4V-8.4V » (mode mise en page) ; typique 4,8 / 6 V. Document intitulé « SCS2332
+      », sans suffixe -C001.
+  hl2909_c001:
+    min_V: null
+    max_V: null
+    source: null
+    page: null
+    note: 'fiche constructeur non téléchargée : DNS feetechrc.com ; aucune copie de fiche ni page revendeur trouvée.'
+  hl2915_c001:
+    min_V: 9
+    max_V: 14
+    source: marche_bus_c_aifitlab_hl2915_c001
+    page: 3
+    note: « 5-1 工作电压范围 Working voltage range 9V-14V » ; typique 12 V.
+  hd1910_c001:
+    min_V: 5
+    max_V: 8.4
+    source: marche_bus_c_openelab_hd1910
+    page: null
+    note: 'fiche constructeur non téléchargée : DNS feetechrc.com. Plage lue sur page revendeur (« Listed operating
+      voltage 5-8.4 V »), identique sur c_rcdrone_hd1910. Un résumé de moteur de recherche donnait 4–8,4 V : non
+      lu dans une source, non retenu.'
+  scs0002_c001:
+    min_V: 4.8
+    max_V: 6
+    source: marche_bus_c_aifitlab_scs0002_c001
+    page: 3
+    note: « 5-1 工作电压范围 Input Voltage Range 4.8V-6V ».
+  scs0037_c001:
+    min_V: 4.8
+    max_V: 6
+    source: marche_bus_c_aifitlab_scs0037_c001
+    page: 3
+    note: « 5-1 工作电压范围 Input Voltage Range 4.8V-6V ».
+  scs0043_c001:
+    min_V: 3.7
+    max_V: 6
+    source: marche_bus_c_aifitlab_scs0043_c001
+    page: 3
+    note: « 5-1 工作电压范围 Input Voltage Range 3.7V-6V ».
+  scs0005_c001:
+    min_V: 3.7
+    max_V: 6
+    source: marche_bus_c_aifitlab_scs0005_c001
+    page: 3
+    note: « 5-1 工作电压范围 Input Voltage Range 3.7V-6V ».
+marche:
+  sources:
+    marche_bus_rs00_manuel_260713:
+      titre: RS00 User Manual 260713
+      url: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS00/RS00User%20Manual260713.pdf
+      editeur: RobStride (Lingzu)
+      date: 2026-10-07
+      empreinte: sha256:47d0ae5c909df2d989b0485c870d36900b9e17c72e608efeb3e13b6e98953832
+      octets: 1946711
+      conditions: non lues
+      note: téléchargé via raw.githubusercontent.com au commit 3f0cae4 ; pages citées = numéro de page du PDF (le
+        numéro imprimé vaut PDF − 1)
+    marche_bus_rs02_manuel_260713:
+      titre: RS02 User Manual 260713
+      url: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/RS02User%20Manual260713.pdf
+      editeur: RobStride (Lingzu)
+      date: 2026-10-07
+      empreinte: sha256:87baa04792996978d1d4edc4176cd583e695e8bc09a65f97fc982b2e0a7f71b7
+      octets: 2119490
+      conditions: non lues
+      note: commit 3f0cae4 ; pages = numéro de page du PDF
+    marche_bus_rs05_manuel_260713:
+      titre: RS05 User Manual 260713
+      url: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS05/RS05User%20Manual260713.pdf
+      editeur: RobStride (Lingzu)
+      date: 2026-10-07
+      empreinte: sha256:1b2c61a6daa8331b9a348455005d10d6e425165c22e6f64c39cbca33f6360e82
+      octets: 1964100
+      conditions: non lues
+      note: commit 3f0cae4 ; pages = numéro de page du PDF
+    marche_bus_rs_canhub_v1_0:
+      titre: USB_CANHUB使用说明V1.0 (manuel de l'adaptateur USB-CANHUB RobStride)
+      url: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/canhub/USB_CANHUB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.0.pdf
+      editeur: RobStride (Lingzu)
+      date: 2026-10-07
+      empreinte: sha256:ed3bcddbc65d777144ded45916ddf480a291aaba1a46335b4cefb1ba331c09d1
+      octets: 1027475
+      conditions: non lues
+      note: 'en chinois, 12 pages ; seule information exploitée : configuration du débit à 1M (p. 12). Le dossier
+        « Product Literature/canhub » anglais ne contient que le STEP'
+    marche_bus_rs_arbre_depot:
+      titre: Arborescence du dépôt RobStride/Product_Information au commit 3f0cae4 (API GitHub)
+      url: https://api.github.com/repos/RobStride/Product_Information/git/trees/3f0cae4986e175337c7b03d891b899247b1f2933?recursive=1
+      editeur: GitHub
+      date: 2026-10-07
+      empreinte: sha256:89799abf51f91704a62f9704c113ead7753a143adbcac6f8538bd7bfaa6d824b
+      octets: 29068
+      conditions: non lues
+      note: sert à établir la liste des documents ; aucun manuel de protocole CAN-FD distinct dans le dépôt
+    marche_bus_bosch_can20_1991:
+      titre: BOSCH CAN Specification Version 2.0 (Robert Bosch GmbH, sept. 1991), Parties A et B
+      url: http://esd.cs.ucr.edu/webres/can20.pdf
+      editeur: Robert Bosch GmbH (copie hébergée par l'UC Riverside ; mise en page Motorola 1995)
+      date: 2026-10-07
+      empreinte: sha256:99358a5d42cfeb6f576e532e38953abcbfddc0a8e587c0ad5ae9814e29b28927
+      octets: 192556
+      conditions: 'p. 2 du PDF : « The document as a whole may be copied and distributed without restrictions. However,
+        the usage of it in parts or as a whole in other documents needs the consent of Robert Bosch GmbH »'
+      note: 'copie tierce (pas le site Bosch : l''URL bosch-semiconductors.com essayée renvoie du HTML ; la copie
+        NXP BCANPSV2.pdf renvoie « Page not available »). 72 pages ; pages citées = page du PDF, le numéro imprimé
+        « Part B - page N » vaut PDF − 2'
+    marche_bus_ti_sloa101b:
+      titre: Introduction to the Controller Area Network (CAN), SLOA101B (août 2002, révisé mai 2016)
+      url: https://www.ti.com/lit/an/sloa101b/sloa101b.pdf
+      editeur: Texas Instruments
+      date: 2026-10-07
+      empreinte: sha256:32abab14388402ec313f77648f0b4dd3e986cc1ff18988f2e7549db3a665a694
+      octets: 345278
+      conditions: non lues
+      note: note d'application, source secondaire ; sert de contre-lecture
+    marche_bus_peak_pcan_usb_manuel:
+      titre: PCAN-USB User Manual (anglais)
+      url: https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB_UserMan_eng.pdf
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:814e7bf18e76de444f569f607edb41e3005cb59878f85cc86f9795be1bea2858
+      octets: 4596634
+      conditions: non lues
+      note: 40 pages ; pages = page du PDF
+    marche_bus_peak_pcan_usb_fd_manuel:
+      titre: PCAN-USB FD User Manual (anglais)
+      url: https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB-FD_UserMan_eng.pdf
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:a5bba6c7bfa6b2125b40b88ed5a8031c11c82a88fb5d295be6bb3a2e9ed4a0af
+      octets: 4808910
+      conditions: non lues
+      note: 39 pages
+    marche_bus_peak_pcan_usb_pro_fd_manuel:
+      titre: PCAN-USB Pro FD User Manual (anglais)
+      url: https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB-Pro-FD_UserMan_eng.pdf
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:f7dc6978e9e8fb082a43bb159adf413b042505574e479edd1b75a8b74a7dd404
+      octets: 6911324
+      conditions: non lues
+      note: 54 pages
+    marche_bus_peak_pcan_m2_manuel:
+      titre: PCAN-M.2 User Manual (anglais)
+      url: https://www.peak-system.com/produktcd/Pdf/English/PCAN-M.2_UserMan_eng.pdf
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:1b550612580cd56e1836503b42aaffac5d8e94ceb243f54c041e06b60e45082e
+      octets: 5273214
+      conditions: non lues
+      note: 33 pages
+    marche_bus_peak_pcan_minipcie_fd_manuel:
+      titre: PCAN-miniPCIe FD User Manual (anglais)
+      url: https://www.peak-system.com/produktcd/Pdf/English/PCAN-miniPCIe-FD_UserMan_eng.pdf
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:13b23e23d08cb60a32da1c6cca0b7a0d793449e085bf4a7f375ed196e160dfb8
+      octets: 5284617
+      conditions: non lues
+      note: 33 pages
+    marche_bus_peak_linux:
+      titre: PEAK-System – Linux (tableau « Part of the Linux mainline kernel »)
+      url: https://linux.peak-system.com/
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:fba79bf29b5b0c53494fb68c4e0a0bd1c7e8cf9757d45fcbc7eed39117290db2
+      octets: 32535
+      conditions: non lues
+      note: versions minimales du noyau par interface
+    marche_bus_peak_page_pcan_usb_fd:
+      titre: Page produit PCAN-USB FD
+      url: https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1
+      editeur: PEAK-System Technik GmbH
+      date: 2026-10-07
+      empreinte: sha256:4ef7cb99ed96c09d65d0c61e0fa1837a7dac3b61cc7b6cecaeabe7335d4a3848
+      octets: 389271
+      conditions: non lues
+      note: 'prix non présents dans le HTML statique (« All prices are stated net of VAT », « Offers only for industry
+        and trade ») ; IPEH-004023 (USB-C) affiché « Out of stock! » le 2026-10-07. Pages sœurs téléchargées aussi,
+        sans prix lisible : PCAN-USB (sha256:0e9c8254…, 383396 o), PCAN-USB Pro FD (sha256:67f0d848…, 389307 o),
+        PCAN-M.2 (sha256:45964d45…, 386962 o), PCAN-miniPCIe FD (sha256:7ab140b8…, 385802 o)'
+    marche_bus_twincomm_pcan_usb_fd:
+      titre: TwinComm – PCAN-USB FD
+      url: https://twincomm.nl/en/product/pcan-usb-fd/
+      editeur: TwinComm (Pays-Bas), revendeur
+      date: 2026-10-07
+      empreinte: sha256:8e62133fcb7f995d0f840349cb5de178deb3ad8f8ef137e1d45acb7e7d7be11a
+      octets: 241132
+      conditions: non lues
+      note: « All prices exclude VAT » ; prix par variante lus dans le JSON data-product_variations de la page
+    marche_bus_twincomm_pcan_usb:
+      titre: TwinComm – PCAN-USB (redirigé vers peak-pcan-usb-iso)
+      url: https://twincomm.nl/en/product/peak-pcan-usb-iso/
+      editeur: TwinComm (Pays-Bas), revendeur
+      date: 2026-10-07
+      empreinte: sha256:50dc2cee741669ded0a3eb76d931e45623dd4f229b1f1426a6da773288e97f7c
+      octets: 219155
+      conditions: non lues
+      note: « All prices exclude VAT »
+    marche_bus_twincomm_pcan_usb_pro_fd:
+      titre: TwinComm – PCAN-USB Pro FD
+      url: https://twincomm.nl/en/product/pcan-usb-pro-fd/
+      editeur: TwinComm (Pays-Bas), revendeur
+      date: 2026-10-07
+      empreinte: sha256:8befb6465af0a6c66cca306e674642eac30bdf104cfa9bd1286949af960d35b1
+      octets: 219850
+      conditions: non lues
+      note: « All prices exclude VAT »
+    marche_bus_twincomm_pcan_m2:
+      titre: TwinComm – PCAN-M.2
+      url: https://twincomm.nl/en/product/pcan-m-2/
+      editeur: TwinComm (Pays-Bas), revendeur
+      date: 2026-10-07
+      empreinte: sha256:7ff8ca0ae3cb4313054da92460c3847a9fd286dfa755983763db948c28549f7e
+      octets: 239998
+      conditions: non lues
+      note: « excl. VAT » ; variantes 1/2/4 canaux avec stock « Stock DE »
+    marche_bus_twincomm_pcan_minipcie_fd:
+      titre: TwinComm – PCAN-miniPCIe FD
+      url: https://twincomm.nl/en/product/pcan-minipcie-fd/
+      editeur: TwinComm (Pays-Bas), revendeur
+      date: 2026-10-07
+      empreinte: sha256:8e00a4b67244d220a5a05713ae52c5a3c1fa3d4ad736e88e80fcd22b03ed9ab6
+      octets: 242789
+      conditions: non lues
+      note: « excl. VAT » ; variantes 1/2/4 canaux avec stock « Stock DE »
+    marche_bus_emsa_pcan_usb_fd:
+      titre: EmSA Online Shop – PEAK PCAN-USB FD
+      url: https://esacademystore.eu/products/peak-pcan-usb-fd-usb-to-can-fd-interface
+      editeur: Embedded Systems Academy (Allemagne), revendeur
+      date: 2026-10-07
+      empreinte: sha256:0c3cfddc7bdb7f6c375d16e1345925b3019f7de2e8ed474e332b73d78ec99532
+      octets: 363751
+      conditions: non lues
+      note: 275,00 € affiché ; mention TVA incluse/exclue non trouvée dans la page
+    marche_bus_a_kvaser_leaf_v2:
+      titre: Kvaser Leaf Light v2 (page produit)
+      url: https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
+      editeur: Kvaser AB
+      date: '2026-10-07'
+      empreinte: sha256:59a3a48cec39f0758e08ddb3410afa1098b473206c2f9a26d896e5db28dbff2e
+      octets: 388075
+      fichier: a_kvaser_leaf_v2.html
+      conditions: non lues
+      note: fiche « Tech Specs » de la page ; prix affiché en USD
+    marche_bus_a_kvaser_u100:
+      titre: Kvaser U100 (page produit)
+      url: https://www.kvaser.com/product/kvaser-u100/
+      editeur: Kvaser AB
+      date: '2026-10-07'
+      empreinte: sha256:4751297ece25b24fecf238a758aed5b0fdbbba14bbf9bba382d39989a8262601
+      octets: 380679
+      fichier: a_kvaser_u100.html
+      conditions: non lues
+      note: fiche « Tech Specs » de la page ; prix affiché en USD
+    marche_bus_a_linux_can_usb_kconfig:
+      titre: Linux drivers/net/can/usb/Kconfig
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/Kconfig
+      editeur: Linux kernel (torvalds/linux, commit 602042bf, 7.3-rc6)
+      date: '2026-10-07'
+      empreinte: sha256:d7de80022ccd85d9052431b6bdc0d773f2fd628b5c4d9d84a22d4078f6872d02
+      octets: 5780
+      fichier: a_linux_can_usb_kconfig.txt
+      conditions: GPL-2.0 (lecture de faits)
+      note: commit du 2026-10-07 (master)
+    marche_bus_a_linux_can_kconfig:
+      titre: Linux drivers/net/can/Kconfig
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/Kconfig
+      editeur: Linux kernel (commit 602042bf)
+      date: '2026-10-07'
+      empreinte: sha256:19de75d947fba9678dbb5b2b0a3a4ddeda7f64f56f7f9ab2dfee72d26b9f97b2
+      octets: 9101
+      fichier: a_linux_can_kconfig.txt
+      conditions: GPL-2.0 (lecture de faits)
+      note: entrée CAN_SLCAN
+    marche_bus_a_linux_gs_usb_c:
+      titre: Linux drivers/net/can/usb/gs_usb.c
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/gs_usb.c
+      editeur: Linux kernel (commit 602042bf)
+      date: '2026-10-07'
+      empreinte: sha256:e174e1dd5c3afb00b41d1f98a028a70264a97356c6ef6225dd3c7c15ea53ea45
+      octets: 44365
+      fichier: a_linux_gs_usb_c.txt
+      conditions: GPL-2.0 (lecture de faits)
+      note: identifiants USB candleLight 1209:2323 et GS 1d50:606f ; trames CAN FD gérées (canfd_frame, BRS)
+    marche_bus_a_linux_slcan_core_c:
+      titre: Linux drivers/net/can/slcan/slcan-core.c
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/slcan/slcan-core.c
+      editeur: Linux kernel (commit 602042bf)
+      date: '2026-10-07'
+      empreinte: sha256:b08d2a49bdfc7484ee6ebfa61b9ae1e406bcdd85b39a557f62e3d6f0d31c3f6c
+      octets: 24707
+      fichier: a_linux_slcan_core_c.txt
+      conditions: GPL-2.0 (lecture de faits)
+      note: aucune occurrence de « canfd », « can_fd » ou « CAN_FD » dans le fichier (recherche textuelle)
+    marche_bus_a_linux_usb_8dev_c:
+      titre: Linux drivers/net/can/usb/usb_8dev.c
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/usb_8dev.c
+      editeur: Linux kernel (commit 602042bf)
+      date: '2026-10-07'
+      empreinte: sha256:223677c7a880c1e6112843ccbb16eb0598473d47d1984340d04f45dedd75a428
+      octets: 24287
+      fichier: a_linux_usb_8dev_c.txt
+      conditions: GPL-2.0 (lecture de faits)
+      note: VID:PID 0483:1234
+    marche_bus_a_linux_makefile:
+      titre: Linux Makefile (version)
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/Makefile
+      editeur: Linux kernel
+      date: '2026-10-07'
+      empreinte: sha256:e1478a3514d5f24fe9494fdb87af862bb1215d9e18de86e096fa862e3225c57e
+      octets: 81066
+      fichier: a_linux_makefile.txt
+      conditions: GPL-2.0
+      note: 'VERSION 7, PATCHLEVEL 3, EXTRAVERSION -rc6 : identifie la version lue'
+    marche_bus_a_candlelight_gh:
+      titre: candle-usb/candleLight_fw (README GitHub)
+      url: https://github.com/candle-usb/candleLight_fw
+      editeur: candle-usb (communauté)
+      date: '2026-10-07'
+      empreinte: sha256:2f183f942d5160ee95505d6e0734f5732c23b342de3662ce7046570546fcc9fc
+      octets: 336083
+      fichier: a_candlelight_gh.html
+      conditions: MIT (firmware, d'après la fiche LXA)
+      note: 'liste des matériels compatibles : candleLight, candleLight FD, cantact, canable (STM32F042C6), CANable-MKS,
+        xCANFD…'
+    marche_bus_a_lxa_candlelight:
+      titre: candleLight (page produit)
+      url: https://www.linux-automation.com/en/products/candlelight.html
+      editeur: Linux Automation GmbH
+      date: '2026-10-07'
+      empreinte: sha256:e369e9758333c9a752de3092f8ff79c077a5a9a265b15e032cb5a25cf15fe06e
+      octets: 22027
+      fichier: a_lxa_candlelight.html
+      conditions: non lues
+      note: version CAN 2.0 ; le lien boutique redirige vers le candleLight FD (prix non lu)
+    marche_bus_a_lxa_candlelight_ds:
+      titre: Datasheet candleLight
+      url: https://www.linux-automation.com/media/pages/products/candlelight/Datasheet_candlelight.pdf
+      editeur: Linux Automation GmbH
+      date: '2026-10-07'
+      empreinte: sha256:842f209e1db005c6349556ad7e648a16322eb38c33bcb9d510e3fec089c54db1
+      octets: 350527
+      fichier: a_lxa_candlelight_ds.pdf
+      conditions: non lues
+      note: ''
+    marche_bus_a_lxa_candlelight_fd:
+      titre: candleLight FD (page produit)
+      url: https://linux-automation.com/en/products/candlelight-fd.html
+      editeur: Linux Automation GmbH
+      date: '2026-10-07'
+      empreinte: sha256:8c1abfd8d33c04c4ca57faf553e67eb807146f470adeb940858b4dbb1d6d0228
+      octets: 20118
+      fichier: a_lxa_candlelight_fd.html
+      conditions: non lues
+      note: gs_usb dès Linux 3.6, CAN FD dès Linux 5.18
+    marche_bus_a_lxa_candlelight_fd_ds:
+      titre: Datasheet candleLight FD, candlelightfd-M02-R02, 2024-11-08
+      url: https://linux-automation.com/media/pages/products/candlelightfd/datasheet_candlelightfd-R02.pdf
+      editeur: Linux Automation GmbH
+      date: '2026-10-07'
+      empreinte: sha256:bdf74532f6be28464acdbe014566c07148c7b287bcb81c7a9769c8f9cd9987c8
+      octets: 748849
+      fichier: a_lxa_candlelight_fd_ds.pdf
+      conditions: non lues
+      note: ''
+    marche_bus_a_lxa_shop_fd:
+      titre: Boutique LXA, candlelight FD
+      url: https://shop.linux-automation.com/candlelight-fd-de
+      editeur: Linux Automation GmbH
+      date: '2026-10-07'
+      empreinte: sha256:6a1337b5a262a30b930b2edb62ada6514462e7846b4084741ec826ab2589989f
+      octets: 22377
+      fichier: a_lxa_shop_fd.html
+      conditions: non lues
+      note: '« The candleLightFD is a prototype! » ; « CE Compliant: No »'
+    marche_bus_a_canable2_fw_readme:
+      titre: normaldotcom/canable2-fw README
+      url: https://raw.githubusercontent.com/normaldotcom/canable2-fw/b158aa7ab106bc018715cd4d5f02f544f9de1830/README.md
+      editeur: Openlight Labs (normaldotcom)
+      date: '2026-10-07'
+      empreinte: sha256:efec2b5b49057d5f360803b176065822529815dd68d3fed59f324d30b3e66317
+      octets: 2787
+      fichier: a_canable2_fw_readme.md
+      conditions: non lues
+      note: firmware slcan avec commandes CAN FD non standard
+    marche_bus_a_canable2_shop_js:
+      titre: Openlight Labs, CANable 2.0 (JSON Shopify)
+      url: https://openlightlabs.com/products/canable-2-0.js
+      editeur: Openlight Labs
+      date: '2026-10-07'
+      empreinte: sha256:b2bfe8b9ad2ec67fb72dad0949d1abee43f64d8c2d20a25030373da32da0fa41
+      octets: 8090
+      fichier: a_canable2_shop.js
+      conditions: non lues
+      note: price 3500 (centimes), available false
+    marche_bus_a_canable2_shop:
+      titre: Openlight Labs, CANable 2.0 (page produit)
+      url: https://openlightlabs.com/products/canable-2-0
+      editeur: Openlight Labs
+      date: '2026-10-07'
+      empreinte: sha256:de366c0e86b3ec772aa64c0676e854faa97b44fb2bf4c98b4a2814f4ddbb29cf
+      octets: 153638
+      fichier: a_canable2_shop.html
+      conditions: non lues
+      note: devise USD (Shopify.currency) ; « Sold out » ; canable.io injoignable ce jour (HTTPS en échec)
+    marche_bus_a_innomaker_usb2can_manual:
+      titre: InnoMaker USB2CAN UserManual v2.0
+      url: https://raw.githubusercontent.com/INNO-MAKER/usb2can/99d6bc8a5f7258fda245648a88de8f541024bcf7/Document%EF%BC%88read%20me%20first%EF%BC%89/USB2CAN%20UserManual%20v2.0.pdf
+      editeur: InnoMaker
+      date: '2026-10-07'
+      empreinte: sha256:0e5634c3d26394a05b15e241dc4ca571da7feb2180bb52773f9ec39158c31cd1
+      octets: 3012201
+      fichier: a_innomaker_usb2can_manual.pdf
+      conditions: non lues
+      note: 'inno-maker.com injoignable ce jour (DNS) ; le dépôt GitHub du fabricant redistribue aussi des normes
+        ISO 11898 : NON téléchargées'
+    marche_bus_a_seeed_usbcan:
+      titre: Seeed USB to CAN Analyzer (page produit)
+      url: https://www.seeedstudio.com/USB-CAN-Analyzer-p-2888.html
+      editeur: Seeed Studio
+      date: '2026-10-07'
+      empreinte: sha256:1238fa80b8fc50b2d4be426c093d1b47146a4976e493672dd357a899637c2fcb
+      octets: 929670
+      fichier: a_seeed_usbcan.html
+      conditions: non lues
+      note: 'page très JavaScript : seuls prix et stock lisibles'
+    marche_bus_a_seeed_usbcan_ds:
+      titre: USB-CAN Analyzer SKU 114991193 Description
+      url: https://media.digikey.com/pdf/Data%20Sheets/Seeed%20Technology/114991193_Web.pdf
+      editeur: Seeed Studio (hébergé par DigiKey)
+      date: '2026-10-07'
+      empreinte: sha256:2c19a4a0c876f1450f1b38cf703f4941840a236d66e1619563225af0856d5074
+      octets: 1017435
+      fichier: a_seeed_usbcan_ds.pdf
+      conditions: non lues
+      note: 2 pages, sans date
+    marche_bus_a_pythoncan_seeed:
+      titre: python-can 4.6.1, Seeed Studio USB-CAN Analyzer
+      url: https://python-can.readthedocs.io/en/stable/interfaces/seeedstudio.html
+      editeur: python-can
+      date: '2026-10-07'
+      empreinte: sha256:3dd7a1dd642175f1747cf64eee4d3b4ad51d485735ff9ed66ffcc979c2949374
+      octets: 25192
+      fichier: a_pythoncan_seeed.html
+      conditions: LGPL-3.0 (doc)
+      note: port série /dev/ttyUSB0 à 2 000 000 bauds ; débits CAN de 5 k à 1 M
+    marche_bus_a_8dev_korlan:
+      titre: Korlan USB2CAN (page produit)
+      url: https://www.8devices.com/products/usb2can_korlan
+      editeur: UAB 8devices
+      date: '2026-10-07'
+      empreinte: sha256:965349e4b625a6b3d32dfd3d40ef432469c328940c572ff0e0b369d1cbbf77fa
+      octets: 139516
+      fichier: a_8dev_korlan.html
+      conditions: non lues
+      note: URL demandée ; la page servie est /products/korlan
+    marche_bus_a_8dev_korlan_shop:
+      titre: Boutique 8devices, Korlan
+      url: https://shop.8devices.com/usb2can/korlan/
+      editeur: UAB 8devices
+      date: '2026-10-07'
+      empreinte: sha256:b346c9c06a3df5e8e67af51db9d0a85e3aa2ec632d031a2bb0de7707111d0478
+      octets: 212232
+      fichier: a_8dev_korlan_shop.html
+      conditions: non lues
+      note: variantes DB9 et OBD2 à $69.00 ; un « €48,98 » isolé apparaît aussi, non rattaché à une variante
+    marche_bus_a_8dev_korlan_wiki:
+      titre: Wiki 8devices, Korlan
+      url: https://wiki.8devices.com/korlan
+      editeur: UAB 8devices
+      date: '2026-10-07'
+      empreinte: sha256:268d1c61f8f07d0fd37d3ecdeaa3455d1e0c21324b992d007470545402de4a27
+      octets: 22368
+      fichier: a_8dev_korlan_wiki.html
+      conditions: non lues
+      note: téléchargements Windows ; rien de chiffré retenu
+    marche_bus_a_8dev_usb2can_readme:
+      titre: 8devices/usb2can README
+      url: https://raw.githubusercontent.com/8devices/usb2can/9c66dc0addc9be04b7f35bb52839f11e7d6be368/README.md
+      editeur: UAB 8devices
+      date: '2026-10-07'
+      empreinte: sha256:b02aa7373289b2efa484a443b90c6a775c398feccaa33c266936ba38065fb324
+      octets: 1232
+      fichier: a_8dev_usb2can_readme.md
+      conditions: GPL-2.0
+      note: « supported by mainline linux since version 3.9 » ; lié depuis la page Korlan comme « Korlan USB2CAN
+        Linux driver »
+    marche_bus_a_nvidia_jetson_can:
+      titre: Jetson Linux Developer Guide r36.4, Controller Area Network (CAN)
+      url: https://docs.nvidia.com/jetson/archives/r36.4/DeveloperGuide/HR/ControllerAreaNetworkCan.html
+      editeur: NVIDIA
+      date: '2026-10-07'
+      empreinte: sha256:8aeedff9a049f3a5be29a646edbfef8901b88d62c79299aee408004c5c3b09d8
+      octets: 31259
+      fichier: a_nvidia_jetson_can.html
+      conditions: non lues
+      note: contrôleur TTCAN (mttcan) ; transceiver externe requis
+    marche_bus_b_ws_canfd_page:
+      titre: 2-CH CAN FD HAT (page produit)
+      url: https://www.waveshare.com/2-ch-can-fd-hat.htm
+      editeur: Waveshare
+      date: &id001 2026-10-07
+      empreinte: sha256:399bec7c94cc505a9d6074c4969c379d4d98fb92f76fb6df0728531d74ba8317
+      octets: 208308
+      fichier: b_ws_canfd_page.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_canfd_wiki:
+      titre: 2-CH CAN FD HAT - Waveshare Wiki
+      url: https://www.waveshare.com/wiki/2-CH_CAN_FD_HAT
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:3c19e5cf8bbf9bea05bffce5a9ddecc8a90a5d7b6dc2e2080c371841a8b8fe6a
+      octets: 72689
+      fichier: b_ws_canfd_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_pican_fd:
+      titre: PICAN FD - CAN Bus FD Duo Board with Real Time Clock for Raspberry Pi
+      url: https://copperhilltech.com/pican-fd-can-bus-fd-duo-board-with-real-time-clock-for-raspberry-pi/
+      editeur: Copperhill Technologies (revendeur US de SK Pang)
+      date: *id001
+      empreinte: sha256:4083ee9afcb00f52644baf930d43e79fd17268b9201021a70db4141f65b198ba
+      octets: 78154
+      fichier: b_pican_fd.html
+      conditions: non lues
+      note: 'page SK Pang essayée : 404'
+    marche_bus_b_seeed_canfd_hat:
+      titre: 2-Channel CAN-BUS(FD) Shield for Raspberry Pi (SKU 103030296)
+      url: https://www.seeedstudio.com/2-Channel-CAN-BUS-FD-Shield-for-Raspberry-Pi-p-4072.html
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:e4a4412114f631e7bfa41da65fb3cc049abe37c2eff5be65ff82820330bf6525
+      octets: 925554
+      fichier: b_seeed_canfd_hat.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_seeed_canfd_wiki:
+      titre: 2 Channel CAN BUS FD Shield for Raspberry Pi (wiki)
+      url: https://wiki.seeedstudio.com/2-Channel-CAN-BUS-FD-Shield-for-Raspberry-Pi/
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:61292951996e1e800a9f346f6d2daed1ed1232aaad7fcc96cd9b3ed0efa62ca4
+      octets: 438215
+      fichier: b_seeed_canfd_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_kernel_mcp251xfd_kconfig:
+      titre: drivers/net/can/spi/mcp251xfd/Kconfig
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/spi/mcp251xfd/Kconfig
+      editeur: Linux (torvalds/linux, commit 602042bf29f6, 2026-10-07)
+      date: *id001
+      empreinte: sha256:d8c55da8296c3a8127dbcecc363274eae26d48d858c63953b7ddfa24febd2585
+      octets: 559
+      fichier: b_kernel_mcp251xfd_kconfig.txt
+      conditions: GPL-2.0-only (fichier lu, rien copié)
+      note: ''
+    marche_bus_b_kernel_mcp251xfd_core:
+      titre: drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+      editeur: Linux (torvalds/linux, commit 602042bf29f6)
+      date: *id001
+      empreinte: sha256:ebb111d6d551fab950e51b28ab501ef28aa39be0f6f27d4596fd4a9356a84aeb
+      octets: 64330
+      fichier: b_kernel_mcp251xfd_core_c.txt
+      conditions: GPL-2.0-only (fichier lu, rien copié)
+      note: ''
+    marche_bus_b_kernel_usbserial_kconfig:
+      titre: drivers/usb/serial/Kconfig
+      url: https://raw.githubusercontent.com/torvalds/linux/master/drivers/usb/serial/Kconfig
+      editeur: Linux (master le 2026-10-07, = 602042bf29f6)
+      date: *id001
+      empreinte: sha256:b92edb8a940e703577ae0feccad622593879789588a2f87ac828e3154ca5341d
+      octets: 21422
+      fichier: b_kernel_usbserial_kconfig.txt
+      conditions: GPL-2.0-only
+      note: ''
+    marche_bus_b_kernel_ch341:
+      titre: drivers/usb/serial/ch341.c
+      url: https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/usb/serial/ch341.c
+      editeur: Linux (commit 602042bf29f6)
+      date: *id001
+      empreinte: sha256:42dfb2e94a8e8a82cedc464a71e41f721caa36917d31d81dd792cb5ea4c03f2f
+      octets: 23133
+      fichier: b_kernel_ch341_c.txt
+      conditions: GPL-2.0-only
+      note: ''
+    marche_bus_b_rcdrone_urt1:
+      titre: Feetech Multi Function Serial Port Signal Converter USB/URT-1 (revendeur)
+      url: https://rcdrone.top/products/multi-function-serial-port-signal-converter-usb-urt-1-sms-rs485-servo-scs-ttl-compatible-feetech-scservo-and-sm-servo
+      editeur: rcdrone.top (revendeur)
+      date: *id001
+      empreinte: sha256:fa898d3927cd6525b8c884679117631ba1c97a900f2686e624b61f1b7b847fce
+      octets: 373729
+      fichier: b_rcdrone_urt1.html
+      conditions: non lues
+      note: 'feetechrc.com injoignable (DNS) le 2026-10-07 : page revendeur seulement ; elle reproduit un « FE-URT-1
+        USE MANUAL » et contient deux jeux de cotes contradictoires'
+    marche_bus_b_rcdrone_urt1_js:
+      titre: idem, JSON Shopify (.js)
+      url: https://rcdrone.top/products/multi-function-serial-port-signal-converter-usb-urt-1-sms-rs485-servo-scs-ttl-compatible-feetech-scservo-and-sm-servo.js
+      editeur: rcdrone.top
+      date: *id001
+      empreinte: sha256:47bcf27964ea327a43899383680c7374830cba12122539c1c9164eb378200ddd
+      octets: 27864
+      fichier: b_rcdrone_urt1.js
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotis_u2d2:
+      titre: U2D2 e-Manual
+      url: https://emanual.robotis.com/docs/en/parts/interface/u2d2/
+      editeur: ROBOTIS
+      date: *id001
+      empreinte: sha256:87995f91a20566f04d24b04164679931598b8c96b599bd66005613b08e9daf89
+      octets: 217213
+      fichier: b_robotis_u2d2.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotis_u2d2phb:
+      titre: U2D2 Power Hub Board e-Manual
+      url: https://emanual.robotis.com/docs/en/parts/interface/u2d2_power_hub/
+      editeur: ROBOTIS
+      date: *id001
+      empreinte: sha256:987ebfb04b216e92324cb1b355c500a9ca2d47e4c96598cd5b2f737b207914ae
+      octets: 204241
+      fichier: b_robotis_u2d2phb.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotis_openrb150:
+      titre: OpenRB-150 e-Manual
+      url: https://emanual.robotis.com/docs/en/parts/controller/openrb-150/
+      editeur: ROBOTIS
+      date: *id001
+      empreinte: sha256:3d63ad9b64a92aebf9727d51f0eaac14d2638d6adde2eb264486cd7082c6f2fb
+      octets: 231927
+      fichier: b_robotis_openrb150.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotisus_u2d2:
+      titre: U2D2, JSON Shopify robotis.us
+      url: https://www.robotis.us/products/u2d2.js
+      editeur: ROBOTIS America
+      date: *id001
+      empreinte: sha256:9e7aa5dd4c8ff3c8e1593a24ae034bb1fe797c62c8768c27f73016952a043c42
+      octets: 13525
+      fichier: b_robotisus_u2d2.js
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotisus_u2d2_page:
+      titre: U2D2, page boutique robotis.us
+      url: https://www.robotis.us/products/u2d2
+      editeur: ROBOTIS America
+      date: *id001
+      empreinte: sha256:5d1d71efa69ad405d35ff48cdff68c9c370031c2240cee7809226258bbb4fafb
+      octets: 534384
+      fichier: b_robotisus_u2d2_page.html
+      conditions: non lues
+      note: 'devise de la boutique lue : USD (meta currency) ; aucune mention de taxe incluse'
+    marche_bus_b_robotisus_u2d2phb:
+      titre: U2D2 Power Hub Board Set, JSON Shopify
+      url: https://www.robotis.us/products/u2d2-power-hub-board-set.js
+      editeur: ROBOTIS America
+      date: *id001
+      empreinte: sha256:e2034c740293a082e291f39d00241e2ac43f971f1143f8ddf00f6727e4cfb29b
+      octets: 12059
+      fichier: b_robotisus_u2d2phb.js
+      conditions: non lues
+      note: ''
+    marche_bus_b_robotisus_openrb150:
+      titre: OpenRB-150, JSON Shopify
+      url: https://www.robotis.us/products/openrb-150.js
+      editeur: ROBOTIS America
+      date: *id001
+      empreinte: sha256:98587424fe04c7cb7e9ef85aa6eaa6f99c2cee93856c1501c3682d2b0aa185ce
+      octets: 6688
+      fichier: b_robotisus_openrb150.js
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_busservo_a_page:
+      titre: Bus Servo Adapter (A) (page produit, SKU 25514)
+      url: https://www.waveshare.com/bus-servo-adapter-a.htm
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:9c6dcf518f8438184e51de7261eae98ad0ea281906b69cbacb37e6d939a255b8
+      octets: 214800
+      fichier: b_ws_busservo_a_page.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_busservo_a_wiki:
+      titre: Bus Servo Adapter (A) - Waveshare Wiki
+      url: https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:27e99dce28dd69eca02c83840d830c974ebba1cf730d4214f70ad3aa0343f2d0
+      octets: 39586
+      fichier: b_ws_busservo_a_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_sbsdriver_wiki:
+      titre: Serial Bus Servo Driver Board - Waveshare Wiki
+      url: https://www.waveshare.com/wiki/Serial_Bus_Servo_Driver_Board
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:3c745e9940a5a3c9357be30cd442522b1a84dc4c67f6af1520f01cda9b9f0926
+      octets: 13541
+      fichier: b_ws_sbsdriver_wiki.html
+      conditions: non lues
+      note: 'page vide (« resources are under urgent production ») ; page produit bus-servo-driver-board.htm : 404'
+    marche_bus_b_seeed_xiao_busservo_wiki:
+      titre: Bus Servo Driver Board for XIAO (wiki)
+      url: https://wiki.seeedstudio.com/bus_servo_driver_board/
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:850c52df454f79977b35c45d47e3c9e373e34c3e96c6f1d47c8ba2d2a9904567
+      octets: 150834
+      fichier: b_seeed_xiao_busservo_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_seeed_xiao_busservo_page:
+      titre: Bus Servo Driver Board for Seeed Studio XIAO (SKU 105990190)
+      url: https://www.seeedstudio.com/Bus-Servo-Driver-Board-for-XIAO-p-6413.html
+      editeur: Seeed Studio
+      date: *id001
+      empreinte: sha256:54c1515b815f5acc19300e894dcfbee03bfeb54c6e191c64433c44611771e534
+      octets: 941909
+      fichier: b_seeed_xiao_busservo_page.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_usb_rs485_page:
+      titre: USB TO RS485 (page produit, SKU 17286)
+      url: https://www.waveshare.com/usb-to-rs485.htm
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:ae0c09abb13747d49b76821dbf3b4b7b856ca6cd038d8ca638ab272cb603bfe7
+      octets: 210359
+      fichier: b_ws_usb_rs485_page.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_usb_rs485_wiki:
+      titre: USB TO RS485 - Waveshare Wiki
+      url: https://www.waveshare.com/wiki/USB_TO_RS485
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:046b8fe35175cd126eaddd9c241a6211daffc8daf12315326c58393b7b259399
+      octets: 40806
+      fichier: b_ws_usb_rs485_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ws_usb_ttl_wiki:
+      titre: USB TO TTL - Waveshare Wiki
+      url: https://www.waveshare.com/wiki/USB_TO_TTL
+      editeur: Waveshare
+      date: *id001
+      empreinte: sha256:0265d241a5175e6c6fb21a22b130d170da615922755df0ba9a3caedb75683f8b
+      octets: 55931
+      fichier: b_ws_usb_ttl_wiki.html
+      conditions: non lues
+      note: ''
+    marche_bus_b_ftdi_usb_rs485:
+      titre: DS_USB_RS485_CABLES (fiche FTDI des câbles USB-RS485)
+      url: https://ftdichip.com/wp-content/uploads/2020/07/DS_USB_RS485_CABLES.pdf
+      editeur: FTDI
+      date: *id001
+      empreinte: null
+      octets: null
+      fichier: null
+      conditions: non lues
+      note: 'non téléchargée : page de défi Cloudflare (« Just a moment... ») ; miroirs Mouser/Adafruit refusés,
+        Farnell renvoyait un autre document'
+    marche_bus_c_akizuki_st3215_c018:
+      titre: Feetech PRODUCT SPECIFICATION ST-3215-C018, édition A/0
+      url: https://akizukidenshi.com/goodsaffix/STS3215-C018.pdf
+      editeur: Feetech (copie hébergée par Akizuki Denshi, revendeur)
+      date: '2026-10-07'
+      empreinte: sha256:3f1dc84e470ac89cbd7b7244183fcc62b7f7a5345aa41a62120280a9b7b26f5e
+      octets: 569854
+      conditions: non lues
+      note: Copie revendeur de la fiche constructeur ; modèle imprimé ST-3215-C018. feetechrc.com injoignable (DNS).
+    marche_bus_c_aifitlab_sts3250:
+      titre: Feetech PRODUCT SPECIFICATION STS3250, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3250-C001Specification.pdf?v=1744785378
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:c471fe4e3b872423100ec28726800e65bfc5eb7aa14a82e35db28d3c8e89ab28
+      octets: 542825
+      conditions: non lues
+      note: 'Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. Modèle imprimé : « STS3250 ».'
+    marche_bus_c_aifitlab_sts3215:
+      titre: Feetech PRODUCT SPECIFICATION STS3215 (7.4V 19KG.CM), édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3215-PRODUCT_SPECIFICATION.pdf?v=1743958514
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:eeac0fb6b73bf2215974d8f73fb7db0f09d59a59f5affff99aa89fee64948286
+      octets: 620876
+      conditions: non lues
+      note: 'Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. Modèle imprimé : « STS3215 », sans suffixe -C001.'
+    marche_bus_c_aifitlab_sts3032:
+      titre: Feetech PRODUCT SPECIFICATION STS3032 (6V 4.5KG.CM, simple axe), édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3032_PRODUCT_SPECIFICATION.pdf?v=1745006404
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:fc777696d2c915786b3dbb327d3fa18264772975377739739ad48e6f0a22f639
+      octets: 562275
+      conditions: non lues
+      note: 'Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. Modèle imprimé : « STS3032 », sans suffixe.'
+    marche_bus_c_aifitlab_sts3032_c036:
+      titre: Feetech PRODUCT SPECIFICATION STS3032-C036, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3032_C036_PRODUCT_SPECIFICATION.pdf?v=1745008249
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:c698370fa25c5c10c4d44abf28476cc963b0b3947fa2b8b5e5f689d7d6fc8726
+      octets: 566379
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_st3036_c002:
+      titre: Feetech PRODUCT SPECIFICATION ST-3036-C002, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH_ST3036_Servo_Motor_PRODUCT_SPECIFICATION.pdf?v=1774849736
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:a047a3cfdfaa424fef0b96744ac8794955841b11557a503146ea293c0fedac89
+      octets: 639725
+      conditions: non lues
+      note: 'Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. ATTENTION : modèle imprimé ST-3036-C002, pas C001.'
+    marche_bus_c_aifitlab_scs0009_c013:
+      titre: Feetech PRODUCT SPECIFICATION SCS0009-C013, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SC-0090-C013Serial_Communication_Specification.pdf?v=1744049016
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:4672a95b814f39dd845c2edee9ba6d9e2b01831787e8319148acf0f889540260
+      octets: 458171
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. Nom de fichier « Serial_Communication_Specification » mais contenu = fiche produit.
+    marche_bus_c_aifitlab_scs15_c022:
+      titre: Feetech PRODUCT SPECIFICATION SCS15-C022, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SCS15-PRODUCT_SPECIFICATION.pdf?v=1759390738
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:93ba3360727471f26d7fbfb245be3294a09b2cab0869512ccef2d351b2ea3b10
+      octets: 513550
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_scs2332:
+      titre: Feetech PRODUCT SPECIFICATION SCS2332, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SCS2332-PRODUCT_SPECIFICATION.pdf?v=1759402275
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:2ced34dbcc9e85c05c781dd079c184b55c880460189ec0afa3332934bc39d8bf
+      octets: 528586
+      conditions: non lues
+      note: 'Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable. Modèle imprimé : « SCS2332 », sans suffixe -C001.'
+    marche_bus_c_aifitlab_hl2915_c001:
+      titre: Feetech PRODUCT SPECIFICATION HL-2915-C001, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-HL2915.pdf?v=1783132110
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:92f0af30f17c606ee226a932e6778bca9f7243a0ec07b1c226005af4553aa20b
+      octets: 593138
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_scs0002_c001:
+      titre: Feetech PRODUCT SPECIFICATION SCS0002-C001, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0002.pdf?v=1783133983
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:11a1bd412a140281686587e84e1fb9cb3d8cd17f6518722acc3670e64858fbea
+      octets: 831056
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_scs0005_c001:
+      titre: Feetech PRODUCT SPECIFICATION SCS0005-C001, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0005.pdf?v=1783133983
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:4c4b4d84cfa34f3285a92ff30e0a9244a7a2d0d695b7952577729e7fab6fa4f8
+      octets: 692812
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_scs0037_c001:
+      titre: Feetech PRODUCT SPECIFICATION SCS0037-C001, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0037.pdf?v=1783133983
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:eb8cae5967c52740afd33b7f196d70d4bff2481a43ad279f2d5375098c22e822
+      octets: 649658
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_aifitlab_scs0043_c001:
+      titre: Feetech PRODUCT SPECIFICATION SCS0043-C001, édition A/0
+      url: https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0043.pdf?v=1783133983
+      editeur: Feetech (copie aifitlab)
+      date: '2026-10-07'
+      empreinte: sha256:42517dabea2b30aeeb2ecc7d2f51a860e287a1cda73644199468df9adf4ed793
+      octets: 642255
+      conditions: non lues
+      note: Copie de la fiche constructeur Feetech (en-tête « SHENZHEN FEETECH RC MODEL CO.,LTD. PRODUCT SPECIFICATION
+        ») hébergée par un revendeur (aifitlab.com, CDN Shopify), pas par Feetech ; la fiche sur feetechrc.com n’a
+        pas pu être téléchargée (DNS feetechrc.com en échec le 2026-10-07). Identité avec le PDF de feetechrc.com
+        non vérifiable.
+    marche_bus_c_openelab_hd1910:
+      titre: Feetech HD-1910-C001 Coreless TTL Servo (page produit)
+      url: https://openelab.io/products/feetech-hd1910-microduck-coreless-servo
+      editeur: OpenELAB (revendeur)
+      date: '2026-10-07'
+      empreinte: sha256:7cbf385314f5485617f5d2483202dfe5008ed76c924e3ecb9f85c9d3770cf34e
+      octets: 1313349
+      conditions: non lues
+      note: Page revendeur, pas une fiche constructeur.
+    marche_bus_c_rcdrone_hd1910:
+      titre: Feetech HD-1910-C001 TTL Servo (page produit)
+      url: https://rcdrone.top/products/feetech-hd-1910-c001-10kg-cm-coreless-metal-gear-servo-for-microduck-diy-robot
+      editeur: RCDrone (revendeur)
+      date: '2026-10-07'
+      empreinte: sha256:aee526c700a72ab5ccbf45947d3f134d9a531e840089a8b64e8a8a22696fe87a
+      octets: 330759
+      conditions: non lues
+      note: Page revendeur, pas une fiche constructeur.
+    marche_bus_c_feetechrc_fiches:
+      titre: Fiches constructeur feetechrc.com (URL de params/actionneurs.yaml)
+      url: https://www.feetechrc.com/
+      editeur: Feetech
+      date: '2026-10-07'
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargées : résolution DNS de www.feetechrc.com, feetechrc.com, www.feetechrc.cn, www.feetech.cn
+        en échec (3 essais, curl et WebFetch) ; archive.org injoignable.'
+  produits:
+    peak_pcan_usb:
+      famille: can_usb
+      nom: PCAN-USB (IPEH-002021) / PCAN-USB opto-decoupled (IPEH-002022)
+      fabricant: PEAK-System
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 6
+        note: null
+      can_fd:
+        valeur: false
+        unite: null
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 32
+        note: « CAN ISO 11898-1:2015, 2.0 » ; contrôleur NXP SJA1000
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 6
+        note: 5 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 32
+        note: 'sans objet : pas de CAN-FD'
+      interface_hote:
+        valeur: USB Full-Speed (compatible USB 1.1, 2.0, 3.0)
+        unite: null
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 6
+        note: null
+      isolation_galvanique:
+        valeur: aucune (PCAN-USB) ; jusqu'à 500 V (PCAN-USB opto, IPEH-002022)
+        unite: V
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 32
+        note: null
+      pilote_linux:
+        valeur: peak_usb (SocketCAN) ; ou paquet chardev PEAK
+        unite: null
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 39
+        note: null
+      pilote_mainline:
+        valeur: oui, noyau ≥ 3.4
+        unite: null
+        source: marche_bus_peak_linux
+        page: null
+        note: null
+      cotes_mm:
+        valeur: '75 x 43 x 22 (opto : 87 x 43 x 22), sans câble'
+        unite: mm
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 32
+        note: câble ≈ 0,75 m
+      masse_g:
+        valeur: '78 (opto : 83), avec câble'
+        unite: g
+        source: marche_bus_peak_pcan_usb_manuel
+        page: 32
+        note: null
+      prix:
+        valeur: 245.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: TwinComm (NL)
+        source: marche_bus_twincomm_pcan_usb
+        url: https://twincomm.nl/en/product/peak-pcan-usb-iso/
+        date: 2026-10-07
+        note: version isolée (galvanic) ; le menu du site affiche « PCAN-USB from € 199,00 » (version non isolée
+          présumée, non vérifiée sur sa page)
+      disponibilite_ch_ue:
+        valeur: 'UE : vendu par TwinComm (NL) ; CH : null'
+        unite: null
+        source: marche_bus_twincomm_pcan_usb
+        page: null
+        note: stock non lu pour cette page
+    peak_pcan_usb_fd:
+      famille: can_usb
+      nom: PCAN-USB FD (IPEH-004022 USB-A / IPEH-004023 USB-C)
+      fabricant: PEAK-System
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 6
+        note: null
+      can_fd:
+        valeur: true
+        unite: null
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 6
+        note: ISO et non-ISO
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 6
+        note: 25 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: 12
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 6
+        note: 25 kbit/s à 12 Mbit/s, 64 octets max
+      interface_hote:
+        valeur: USB 2.0 High-Speed (USB-A ou USB-C)
+        unite: null
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 6
+        note: null
+      isolation_galvanique:
+        valeur: 500
+        unite: V
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 32
+        note: null
+      pilote_linux:
+        valeur: peak_usb (SocketCAN) ; ou paquet chardev PEAK
+        unite: null
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 38
+        note: « Since the end of 2022 there is PCAN-USB FD with a different hardware version, which is only supported
+          with kernel 6.x and higher or with the peak-linux-driver-8.15 »
+      pilote_mainline:
+        valeur: oui, noyau ≥ 4.0 (≥ 6.0 pour les révisions récentes)
+        unite: null
+        source: marche_bus_peak_linux
+        page: null
+        note: null
+      cotes_mm:
+        valeur: 75 x 43 x 22, sans câble
+        unite: mm
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 32
+        note: null
+      masse_g:
+        valeur: 68 max., avec câble
+        unite: g
+        source: marche_bus_peak_pcan_usb_fd_manuel
+        page: 32
+        note: null
+      prix:
+        valeur: 278.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: TwinComm (NL)
+        source: marche_bus_twincomm_pcan_usb_fd
+        url: https://twincomm.nl/en/product/pcan-usb-fd/
+        date: 2026-10-07
+        note: USB-A et USB-C au même prix ; EmSA (DE) affiche 275,00 €, TVA non précisée (source emsa_pcan_usb_fd)
+      disponibilite_ch_ue:
+        valeur: 'UE : en stock chez TwinComm (is_in_stock) ; chez PEAK, USB-C « Out of stock » le 2026-10-07 ; CH
+          : null'
+        unite: null
+        source: marche_bus_twincomm_pcan_usb_fd
+        page: null
+        note: statut PEAK lu sur peak_page_pcan_usb_fd
+    peak_pcan_usb_pro_fd:
+      famille: can_usb
+      nom: PCAN-USB Pro FD
+      fabricant: PEAK-System
+      canaux:
+        valeur: 2 CAN FD + 2 LIN
+        unite: canaux
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 5
+        note: null
+      can_fd:
+        valeur: true
+        unite: null
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 6
+        note: ISO et non-ISO commutables ; contrôleur CAN FD en FPGA
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 6
+        note: 25 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: 12
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 6
+        note: null
+      interface_hote:
+        valeur: USB 2.0 High-Speed
+        unite: null
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 6
+        note: null
+      isolation_galvanique:
+        valeur: 500 V par canal CAN contre USB et LIN
+        unite: V
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 45
+        note: null
+      pilote_linux:
+        valeur: peak_usb (SocketCAN) ; ou paquet chardev PEAK
+        unite: null
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 53
+        note: null
+      pilote_mainline:
+        valeur: oui, noyau ≥ 4.0
+        unite: null
+        source: marche_bus_peak_linux
+        page: null
+        note: null
+      cotes_mm:
+        valeur: 71,5 x 24 x 114 (l x h x p), sans câble
+        unite: mm
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 46
+        note: câble ≈ 1,5 m
+      masse_g:
+        valeur: 220
+        unite: g
+        source: marche_bus_peak_pcan_usb_pro_fd_manuel
+        page: 46
+        note: avec câble
+      prix:
+        valeur: 566.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: TwinComm (NL)
+        source: marche_bus_twincomm_pcan_usb_pro_fd
+        url: https://twincomm.nl/en/product/pcan-usb-pro-fd/
+        date: 2026-10-07
+        note: null
+      disponibilite_ch_ue:
+        valeur: 'UE : vendu par TwinComm (NL) ; CH : null'
+        unite: null
+        source: marche_bus_twincomm_pcan_usb_pro_fd
+        page: null
+        note: stock non lu
+    peak_pcan_m2:
+      famille: can_m2_pcie
+      nom: PCAN-M.2 (IPEH-004083 / 004084 / 004085)
+      fabricant: PEAK-System
+      canaux:
+        valeur: 1, 2 ou 4
+        unite: canaux
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 5
+        note: null
+      can_fd:
+        valeur: true
+        unite: null
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 5
+        note: null
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 5
+        note: 20 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: 12
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 5
+        note: 20 kbit/s à 12 Mbit/s
+      interface_hote:
+        valeur: M.2 2280/2260-B-M, une ligne PCIe, DMA bus master
+        unite: null
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 5
+        note: 'à vérifier : le slot M.2 Key M des Jetson Orin Nano / Raspberry Pi 5 (HAT M.2) n''a pas été examiné
+          ici'
+      isolation_galvanique:
+        valeur: 300 V, séparée pour chaque canal
+        unite: V
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 26
+        note: null
+      pilote_linux:
+        valeur: peak_pci (SocketCAN, pilote peak_pciefd selon le noyau) ; ou paquet chardev PEAK
+        unite: null
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 32
+        note: le manuel indique « la réponse commence par peak_pci »
+      pilote_mainline:
+        valeur: oui, noyau ≥ 4.14
+        unite: null
+        source: marche_bus_peak_linux
+        page: null
+        note: null
+      cotes_mm:
+        valeur: 30 x 51 x 4 (1 et 2 canaux) ; 30 x 51 x 12 (4 canaux)
+        unite: mm
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 27
+        note: plus câble 20 cm avec D-Sub par canal
+      masse_g:
+        valeur: 6 (1 et 2 canaux) ; 10 (4 canaux) ; câble 7 g chacun
+        unite: g
+        source: marche_bus_peak_pcan_m2_manuel
+        page: 27
+        note: null
+      prix:
+        valeur: 273,00 (1 canal) ; 345,00 (2) ; 392,00 (4)
+        devise: EUR
+        tva_incluse: false
+        vendeur: TwinComm (NL)
+        source: marche_bus_twincomm_pcan_m2
+        url: https://twincomm.nl/en/product/pcan-m-2/
+        date: 2026-10-07
+        note: null
+      disponibilite_ch_ue:
+        valeur: 'UE : « Stock DE » chez TwinComm pour les trois variantes ; CH : null'
+        unite: null
+        source: marche_bus_twincomm_pcan_m2
+        page: null
+        note: null
+    peak_pcan_minipcie_fd:
+      famille: can_m2_pcie
+      nom: PCAN-miniPCIe FD (IPEH-004045 / 004046 / 004047)
+      fabricant: PEAK-System
+      canaux:
+        valeur: 1, 2 ou 4
+        unite: canaux
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 5
+        note: '4 canaux : hauteur hors format Mini PCIe'
+      can_fd:
+        valeur: true
+        unite: null
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 5
+        note: null
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 5
+        note: 25 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: 12
+        unite: Mbit/s
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 5
+        note: null
+      interface_hote:
+        valeur: PCI Express Mini (ligne PCIe), DMA bus master
+        unite: null
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 5
+        note: null
+      isolation_galvanique:
+        valeur: 300 V, séparée pour chaque canal
+        unite: V
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 25
+        note: null
+      pilote_linux:
+        valeur: peak_pci (SocketCAN) ; ou paquet chardev PEAK
+        unite: null
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 32
+        note: null
+      pilote_mainline:
+        valeur: oui, noyau ≥ 4.14
+        unite: null
+        source: marche_bus_peak_linux
+        page: null
+        note: null
+      cotes_mm:
+        valeur: 30 x 51 x 4,6 (1 et 2 canaux) ; 30 x 51 x 12 (4 canaux)
+        unite: mm
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 26
+        note: null
+      masse_g:
+        valeur: 8 (1 et 2 canaux) ; 11 (4 canaux)
+        unite: g
+        source: marche_bus_peak_pcan_minipcie_fd_manuel
+        page: 26
+        note: null
+      prix:
+        valeur: 273,00 (1 canal) ; 340,00 (2) ; 386,00 (4)
+        devise: EUR
+        tva_incluse: false
+        vendeur: TwinComm (NL)
+        source: marche_bus_twincomm_pcan_minipcie_fd
+        url: https://twincomm.nl/en/product/pcan-minipcie-fd/
+        date: 2026-10-07
+        note: null
+      disponibilite_ch_ue:
+        valeur: 'UE : « Stock DE » chez TwinComm ; CH : null'
+        unite: null
+        source: marche_bus_twincomm_pcan_minipcie_fd
+        page: null
+        note: null
+    kvaser_leaf_light_v2:
+      famille: can_usb
+      nom: Kvaser Leaf Light v2
+      fabricant: Kvaser AB
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_kvaser_leaf_v2
+        note: « Channels 1 »
+      can_fd:
+        valeur: false
+        source: marche_bus_a_kvaser_leaf_v2
+        note: « CAN FD Bitrate N/A »
+      debit_nominal_max:
+        valeur: 1000
+        unite: kbit/s
+        source: marche_bus_a_kvaser_leaf_v2
+        note: « Bit Rate (kbps) 40 - 1000 »
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: marche_bus_a_kvaser_leaf_v2
+        note: sans objet (pas de CAN FD)
+      interface_hote:
+        valeur: USB 2.0
+        source: marche_bus_a_kvaser_leaf_v2
+      isolation_galvanique:
+        valeur: true
+        source: marche_bus_a_kvaser_leaf_v2
+        note: « Galvanic Isolation Yes » ; tension non chiffrée
+      pilote_linux:
+        valeur: kvaser_usb (SocketCAN)
+        source: marche_bus_a_linux_can_usb_kconfig
+        note: Kconfig CAN_KVASER_USB liste « Kvaser Leaf Light v2 » ; Kvaser fournit aussi un pilote propriétaire
+          (CANlib)
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_linux_can_usb_kconfig
+        note: version du noyau d'introduction non lue
+      cotes_mm:
+        valeur:
+        - 165
+        - 35
+        - 17
+        unite: mm (L x l x h)
+        source: marche_bus_a_kvaser_leaf_v2
+        note: Length 165, Width 35, Height 17 (câble compris, la page ne précise pas)
+      masse_g:
+        valeur: 112
+        unite: g
+        source: marche_bus_a_kvaser_leaf_v2
+      prix:
+        valeur: 463.0
+        devise: USD
+        tva_incluse: null
+        vendeur: Kvaser (site constructeur)
+        url: https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
+        date: '2026-10-07'
+        source: marche_bus_a_kvaser_leaf_v2
+        note: TVA non indiquée ; « Available while stocks last » ; la même page propose le Leaf v3 à $370.00
+      disponibilite_ch_ue:
+        valeur: null
+        source: marche_bus_a_kvaser_leaf_v2
+        note: « Available while stocks last » (fin de série) ; stock CH/UE non lu
+    kvaser_u100:
+      famille: can_usb
+      nom: Kvaser U100
+      fabricant: Kvaser AB
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_kvaser_u100
+      can_fd:
+        valeur: true
+        source: marche_bus_a_kvaser_u100
+      debit_nominal_max:
+        valeur: 1000
+        unite: kbit/s
+        source: marche_bus_a_kvaser_u100
+        note: « Bit Rate (kbps) 10 - 1000 »
+      debit_donnees_fd_max:
+        valeur: 8
+        unite: Mbit/s
+        source: marche_bus_a_kvaser_u100
+        note: « CAN FD Bitrate Up to 8 Mbit/s »
+      interface_hote:
+        valeur: USB
+        source: marche_bus_a_kvaser_u100
+        note: génération USB non lue
+      isolation_galvanique:
+        valeur: true
+        source: marche_bus_a_kvaser_u100
+        note: « Reinforced Galvanic Isolation, 5000VAC rms applied for 60 seconds » ; IP67
+      pilote_linux:
+        valeur: kvaser_usb (SocketCAN)
+        source: marche_bus_a_linux_can_usb_kconfig
+        note: Kconfig liste « Kvaser U100 », « U100P », « U100S »
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_linux_can_usb_kconfig
+      cotes_mm:
+        valeur:
+        - 128
+        - 38
+        - 26
+        unite: mm (L x l x h)
+        source: marche_bus_a_kvaser_u100
+      masse_g:
+        valeur: 167
+        unite: g
+        source: marche_bus_a_kvaser_u100
+      prix:
+        valeur: 536.0
+        devise: USD
+        tva_incluse: null
+        vendeur: Kvaser (site constructeur)
+        url: https://www.kvaser.com/product/kvaser-u100/
+        date: '2026-10-07'
+        source: marche_bus_a_kvaser_u100
+        note: TVA non indiquée
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: non lue
+    canable_2_0:
+      famille: can_usb
+      nom: CANable 2.0
+      fabricant: Openlight Labs
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_canable2_shop_js
+        note: déduit de la description (un bornier CANH/CANL), non écrit tel quel
+      can_fd:
+        valeur: true
+        source: marche_bus_a_canable2_shop_js
+        note: « Initial slcan support for CANFD (beta) »
+      debit_nominal_max:
+        valeur: 1000
+        unite: kbit/s
+        source: marche_bus_a_canable2_fw_readme
+        note: commande S8 = 1M
+      debit_donnees_fd_max:
+        valeur: 5
+        unite: Mbit/s
+        source: marche_bus_a_canable2_fw_readme
+        note: Y2 = 2M (défaut), Y5 = 5M
+      interface_hote:
+        valeur: USB-C, port série virtuel (slcan)
+        source: marche_bus_a_canable2_shop_js
+      isolation_galvanique:
+        valeur: null
+        source: null
+        note: non mentionnée
+      pilote_linux:
+        valeur: slcan (slcand) ; firmware candleLight/gs_usb possible
+        source: marche_bus_a_canable2_shop_js
+        note: '« works natively with slcand » ; gs_usb : seulement si on reflashe un firmware candleLight, la liste
+          candleLight cite « canable » (STM32F042C6, CANable 1.x), pas le 2.0'
+      pilote_mainline:
+        valeur: 'slcan : oui, mais CAN 2.0 seulement'
+        source: marche_bus_a_linux_slcan_core_c
+        note: 'le slcan du noyau ne contient aucun code CAN FD : les commandes FD non standard du firmware 2.0 ne
+          passent pas par SocketCAN'
+      cotes_mm:
+        valeur: null
+        source: null
+        note: non lues (canable.io injoignable)
+      masse_g:
+        valeur: null
+        source: null
+        note: non lue
+      prix:
+        valeur: 35.0
+        devise: USD
+        tva_incluse: null
+        vendeur: Openlight Labs
+        url: https://openlightlabs.com/products/canable-2-0
+        date: '2026-10-07'
+        source: marche_bus_a_canable2_shop_js
+        note: 3500 centimes, devise USD ; « Sold out » (available false) ; TVA non indiquée
+      disponibilite_ch_ue:
+        valeur: épuisé chez le fabricant
+        source: marche_bus_a_canable2_shop_js
+        note: expédition CH/UE non lue
+    candlelight_fd_lxa:
+      famille: can_usb
+      nom: candleLight FD
+      fabricant: Linux Automation GmbH
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_lxa_candlelight_fd_ds
+      can_fd:
+        valeur: true
+        source: marche_bus_a_lxa_candlelight_fd_ds
+        page: 1
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_a_lxa_candlelight_fd_ds
+        page: 1
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: null
+        note: non publié ; l'exemple de la page produit utilise dbitrate 2 Mbit/s, ce n'est pas un maximum
+      interface_hote:
+        valeur: USB 2.0, USB-C
+        source: marche_bus_a_lxa_candlelight_fd_ds
+        page: 2
+      isolation_galvanique:
+        valeur: null
+        source: null
+        note: non mentionnée ; transceiver NXP TJA1051/3 (p. 2)
+      pilote_linux:
+        valeur: gs_usb (SocketCAN)
+        source: marche_bus_a_lxa_candlelight_fd_ds
+        page: 1
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_lxa_candlelight_fd
+        note: gs_usb dès Linux 3.6 ; CAN FD dès Linux 5.18
+      cotes_mm:
+        valeur:
+        - 38
+        - 20
+        unite: mm (sans connecteur)
+        source: marche_bus_a_lxa_candlelight_fd_ds
+        page: 2
+      masse_g:
+        valeur: null
+        source: null
+        note: non lue
+      prix:
+        valeur: 54.74
+        devise: EUR
+        tva_incluse: 19 % (DE)
+        vendeur: Linux Automation GmbH (boutique)
+        url: https://shop.linux-automation.com/candlelight-fd-de
+        date: '2026-10-07'
+        source: marche_bus_a_lxa_shop_fd
+        note: '46,00 € HT ; version assemblée (le kit est « Discontinued ») ; « prototype », « CE Compliant: No
+          »'
+      disponibilite_ch_ue:
+        valeur: Available (DE)
+        source: marche_bus_a_lxa_shop_fd
+        note: fabriqué en Allemagne ; expédition CH non lue
+    candlelight_lxa:
+      famille: can_usb
+      nom: candleLight (CAN 2.0)
+      fabricant: Linux Automation GmbH (matériel ouvert, firmware candle-usb)
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_lxa_candlelight_ds
+      can_fd:
+        valeur: false
+        source: marche_bus_a_lxa_candlelight
+        note: la page renvoie au candleLight FD pour le CAN FD
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_a_lxa_candlelight_ds
+        page: 1
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: null
+        note: sans objet
+      interface_hote:
+        valeur: Micro USB 2.0
+        source: marche_bus_a_lxa_candlelight
+      isolation_galvanique:
+        valeur: null
+        source: null
+        note: non mentionnée
+      pilote_linux:
+        valeur: gs_usb (SocketCAN)
+        source: marche_bus_a_lxa_candlelight
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_lxa_candlelight
+        note: dès Linux 3.6 ; identifiant 1209:2323 dans gs_usb.c (a_linux_gs_usb_c)
+      cotes_mm:
+        valeur: null
+        source: null
+        note: non lues
+      masse_g:
+        valeur: null
+        source: null
+        note: non lue
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: Linux Automation GmbH
+        url: https://shop.linux-automation.com/candlelight-D02-R01-V01-C00-en
+        date: '2026-10-07'
+        source: null
+        note: 'le lien boutique sert la page du candleLight FD : prix du modèle CAN 2.0 non lu (fichier non conservé,
+          identique en contenu à a_lxa_shop_fd)'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: 'probablement remplacé par le FD : non établi'
+    innomaker_usb2can:
+      famille: can_usb
+      nom: InnoMaker USB2CAN (module, -C, -X2)
+      fabricant: InnoMaker
+      canaux:
+        valeur: 1 (USB2CAN, -C) ; 2 (USB2CAN-X2)
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6-9
+      can_fd:
+        valeur: false
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6
+        note: « 2.0A … and 2.0B », aucune mention du FD
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6
+        note: 20 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: null
+        note: sans objet
+      interface_hote:
+        valeur: USB 2.0 Full-Speed
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6
+      isolation_galvanique:
+        valeur: 'USB2CAN et -C : 1,5 kV DC/min, 3 kV DC/1 s (ISO1050) ; -X2 : jusqu''à 5000 V DC/1 s'
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6, 8, 9
+      pilote_linux:
+        valeur: gs_usb (SocketCAN)
+        source: marche_bus_a_innomaker_usb2can_manual
+        note: « Enable gs_usb.c and install gs_usb.ko » (manuel, partie Linux) ; identifiant USB de l'InnoMaker
+          non vérifié dans gs_usb.c
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_innomaker_usb2can_manual
+        note: 'par gs_usb, si l''identifiant USB est reconnu : non vérifié'
+      cotes_mm:
+        valeur: null
+        source: null
+        note: non lues
+      masse_g:
+        valeur: 15,5 (module) ; 50 (-C) ; 157 (-X2)
+        unite: g
+        source: marche_bus_a_innomaker_usb2can_manual
+        page: 6, 8, 9
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        url: https://www.inno-maker.com/product/usb2can-cable/
+        date: '2026-10-07'
+        source: null
+        note: 'inno-maker.com injoignable (DNS) : prix non lu'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: non lue
+    seeed_usb_can_analyzer:
+      famille: can_usb
+      nom: Seeed USB-CAN Analyzer (SKU 114991193)
+      fabricant: Seeed Studio
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_pythoncan_seeed
+        note: un seul « channel » série par appareil ; nombre de canaux non écrit tel quel dans la fiche
+      can_fd:
+        valeur: false
+        source: marche_bus_a_seeed_usbcan_ds
+        page: 2
+        note: CAN 2.0A/2.0B seulement
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_a_seeed_usbcan_ds
+        page: 2
+        note: « CAN baud rate (5K~1M) »
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: null
+        note: sans objet
+      interface_hote:
+        valeur: USB, port COM virtuel (protocole série propriétaire)
+        source: marche_bus_a_seeed_usbcan_ds
+        page: 2
+        note: port série à 2 000 000 bauds d'après python-can
+      isolation_galvanique:
+        valeur: null
+        source: null
+        note: non mentionnée (seulement « TVS Surge Protection »)
+      pilote_linux:
+        valeur: 'pas de SocketCAN natif : port série (ttyUSB), interface « seeedstudio » de python-can'
+        source: marche_bus_a_pythoncan_seeed
+        note: pilote série USB (CH340 d'après un résumé de recherche) non vérifié dans une source téléchargée
+      pilote_mainline:
+        valeur: false
+        source: marche_bus_a_pythoncan_seeed
+        note: aucun pilote CAN du noyau pour ce protocole n'est cité ; non vérifié de façon exhaustive
+      cotes_mm:
+        valeur: null
+        source: null
+        note: non lues
+      masse_g:
+        valeur: null
+        source: null
+        note: non lue
+      prix:
+        valeur: 26.99
+        devise: USD
+        tva_incluse: null
+        vendeur: Seeed Studio
+        url: https://www.seeedstudio.com/USB-CAN-Analyzer-p-2888.html
+        date: '2026-10-07'
+        source: marche_bus_a_seeed_usbcan
+        note: TVA non indiquée ; la page précise pour l'UE des envois DAP (droits et taxes à la charge de l'acheteur)
+      disponibilite_ch_ue:
+        valeur: In stock (entrepôts US et Chine)
+        source: marche_bus_a_seeed_usbcan
+        note: pas d'entrepôt UE affiché
+    8devices_korlan_usb2can:
+      famille: can_usb
+      nom: Korlan USB2CAN
+      fabricant: UAB 8devices (Lituanie)
+      canaux:
+        valeur: 1
+        unite: canal
+        source: marche_bus_a_8dev_korlan
+        note: 'déduit : un connecteur DB9 ou OBD2'
+      can_fd:
+        valeur: false
+        source: marche_bus_a_8dev_korlan
+        note: « 2.0A (11-bit ID) and 2.0B (29-bit ID) »
+      debit_nominal_max:
+        valeur: 2000
+        unite: kbit/s
+        source: marche_bus_a_8dev_korlan
+        note: « 20-2000 Kbit/s user definable speed »
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: null
+        note: sans objet
+      interface_hote:
+        valeur: USB 2.0 Full speed (12 Mbit/s)
+        source: marche_bus_a_8dev_korlan
+      isolation_galvanique:
+        valeur: 2,5 kV
+        source: marche_bus_a_8dev_korlan
+      pilote_linux:
+        valeur: usb_8dev (SocketCAN)
+        source: marche_bus_a_8dev_usb2can_readme
+        note: 'le dépôt 8devices/usb2can est lié depuis la page Korlan ; usb_8dev.c : VID:PID 0483:1234'
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_8dev_usb2can_readme
+        note: « supported by mainline linux since version 3.9 » ; Kconfig CAN_8DEV_USB
+      cotes_mm:
+        valeur: null
+        source: null
+        note: non lues
+      masse_g:
+        valeur: null
+        source: null
+        note: non lue
+      prix:
+        valeur: 69.0
+        devise: USD
+        tva_incluse: null
+        vendeur: UAB 8devices (boutique)
+        url: https://shop.8devices.com/usb2can/korlan/
+        date: '2026-10-07'
+        source: marche_bus_a_8dev_korlan_shop
+        note: 'DB9 ou OBD2, même prix ; un « €48,98 » apparaît aussi sur la page sans être rattaché à une variante
+          : écarté ; prix « confirmé au paiement »'
+      disponibilite_ch_ue:
+        valeur: vendeur dans l'UE (Lituanie)
+        source: marche_bus_a_8dev_korlan_shop
+        note: stock non affiché
+    geschwister_schneider_gs_usb:
+      famille: can_usb
+      nom: Interfaces Geschwister Schneider UG (origine du protocole gs_usb)
+      fabricant: Geschwister Schneider UG
+      canaux:
+        valeur: null
+        source: null
+      can_fd:
+        valeur: null
+        source: null
+      debit_nominal_max:
+        valeur: null
+        source: null
+      debit_donnees_fd_max:
+        valeur: null
+        source: null
+      interface_hote:
+        valeur: USB
+        source: marche_bus_a_linux_can_usb_kconfig
+      isolation_galvanique:
+        valeur: null
+        source: null
+      pilote_linux:
+        valeur: gs_usb (SocketCAN)
+        source: marche_bus_a_linux_can_usb_kconfig
+        note: « Geschwister Schneider UG and candleLight compatible interfaces » ; VID:PID 1d50:606f dans gs_usb.c
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_a_linux_can_usb_kconfig
+      cotes_mm:
+        valeur: null
+        source: null
+      masse_g:
+        valeur: null
+        source: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        url: null
+        date: '2026-10-07'
+        source: null
+        note: 'geschwister-schneider.de injoignable : aucun produit identifié'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: aucun produit trouvé ; la famille vit aujourd'hui par le protocole (candleLight et clones)
+    jetson_orin_nano_devkit_can:
+      famille: can_usb
+      nom: Contrôleur CAN intégré du Jetson Orin NX/Nano (carte porteuse du kit, connecteur J17)
+      fabricant: NVIDIA
+      note_famille: 'pas un adaptateur USB : CAN natif du SoC, rangé ici faute de famille dédiée'
+      canaux:
+        valeur: 1
+        unite: contrôleur
+        source: marche_bus_a_nvidia_jetson_can
+        note: 'Orin NX et Nano : 1 ; AGX Orin : 2'
+      can_fd:
+        valeur: true
+        source: marche_bus_a_nvidia_jetson_can
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_a_nvidia_jetson_can
+        note: 10 kbit/s à 1 Mbit/s
+      debit_donnees_fd_max:
+        valeur: 15
+        unite: Mbit/s
+        source: marche_bus_a_nvidia_jetson_can
+        note: 15 Mbit/s au maximum ; 5 Mbit/s garantis quel que soit le transceiver, au-delà réglage TDCR
+      interface_hote:
+        valeur: 'intégré au SoC (bloc Always-On), J17 : CAN_RX broche 1, CAN_TX broche 2'
+        source: marche_bus_a_nvidia_jetson_can
+      isolation_galvanique:
+        valeur: false
+        source: marche_bus_a_nvidia_jetson_can
+        note: 'niveaux logiques : un transceiver externe 3,3 V est requis (NVIDIA cite un module Waveshare SN65HVD230)
+          ; l''isolation dépend de ce transceiver'
+      pilote_linux:
+        valeur: mttcan (SocketCAN)
+        source: marche_bus_a_nvidia_jetson_can
+      pilote_mainline:
+        valeur: null
+        source: null
+        note: présence de mttcan dans le noyau principal non vérifiée ; fourni par Jetson Linux
+      cotes_mm:
+        valeur: null
+        source: null
+        note: sans objet
+      masse_g:
+        valeur: null
+        source: null
+        note: sans objet
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        url: null
+        date: '2026-10-07'
+        source: null
+        note: inclus dans le module ; prix du kit non relevé
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    ws_2ch_can_fd_hat:
+      famille: can_spi
+      nom: 2-CH CAN FD HAT
+      fabricant: Waveshare
+      canaux:
+        valeur: 2
+        source: marche_bus_b_ws_canfd_page
+        page: Specifications / Features
+        note: jusqu’à 4 voies par empilement (page) ; « up to 5-channel » par 3 cartes (wiki)
+      controleur:
+        valeur: MCP2518FD
+        source: marche_bus_b_ws_canfd_page
+        page: Specifications
+      can_fd:
+        valeur: true
+        source: marche_bus_b_ws_canfd_wiki
+        page: Introduction
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_b_ws_canfd_wiki
+        page: Introduction (« arbitration bit rate is as high as 1Mbps »)
+      debit_donnees_fd_max:
+        valeur: null
+        unite: Mbit/s
+        source: marche_bus_b_ws_canfd_wiki
+        page: null
+        note: 'aucun maximum chiffré : « breaks through the 1Mbps limit » ; l’exemple python du wiki utilise dbitrate
+          8000000, ce n’est pas une spécification'
+      interface_hote:
+        valeur: SPI (GPIO 40 broches Raspberry Pi), SPI jusqu’à 20 MHz
+        source: marche_bus_b_ws_canfd_wiki
+        page: Introduction
+      isolation_galvanique:
+        valeur: oui, jusqu’à 5 kV
+        source: marche_bus_b_ws_canfd_page
+        page: Features
+        note: isolateur numérique SI8642ED et module B0505LS-1W cités
+      pilote_linux:
+        valeur: mcp251xfd (dtoverlay=mcp251xfd)
+        source: marche_bus_b_ws_canfd_wiki
+        page: Driver Installation (New Version, Rev2.1)
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_b_kernel_mcp251xfd_core
+        page: l. 2181 (compatible microchip,mcp2518fd)
+        note: version du noyau d’introduction non lue
+      cotes_mm:
+        valeur: 65,0 × 56,5
+        source: marche_bus_b_ws_canfd_page
+        page: Specifications
+      masse_g:
+        valeur: 40
+        unite: g
+        source: marche_bus_b_ws_canfd_page
+        page: 'Weight: 0.04 kg'
+        note: masse d’expédition probable, non précisée
+      alimentation:
+        valeur: 8–28 V DC (bornier) ou 5 V Raspberry Pi
+        source: marche_bus_b_ws_canfd_page
+        page: Specifications
+      prix:
+        valeur: 46.99
+        devise: USD
+        tva_incluse: null
+        vendeur: Waveshare (boutique officielle)
+        source: marche_bus_b_ws_canfd_page
+        note: 'prix affiché 46,99 USD ; le tableau de quantités indique 45,99 USD pour 1 : on garde le plus haut.
+          Taxes non mentionnées.'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+        note: non lue (boutique chinoise, expédition internationale)
+    pican_fd_duo:
+      famille: can_spi
+      nom: PiCAN FD Duo (avec RTC)
+      fabricant: SK Pang Electronics (vendu par Copperhill)
+      canaux:
+        valeur: 2
+        source: marche_bus_b_pican_fd
+        page: description
+      controleur:
+        valeur: MCP2517FD + transceiver MCP2562FD
+        source: marche_bus_b_pican_fd
+        page: Features
+      can_fd:
+        valeur: true
+        source: marche_bus_b_pican_fd
+        page: Features
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_b_pican_fd
+        page: Features (Arbitration Bit Rate up to 1Mbps)
+      debit_donnees_fd_max:
+        valeur: 8
+        unite: Mbit/s
+        source: marche_bus_b_pican_fd
+        page: Features (Data Bit Rate up to 8Mbps)
+      interface_hote:
+        valeur: SPI (HAT Raspberry Pi), interruptions GPIO25 et GPIO05
+        source: marche_bus_b_pican_fd
+        page: Features
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionnée sur cette version ; une variante « PiCAN FD Duo Isolated » existe (179,95 USD, même
+          page, produits liés)
+      pilote_linux:
+        valeur: SocketCAN (can0) ; module non nommé
+        source: marche_bus_b_pican_fd
+        page: Features
+        note: MCP2517FD pris en charge par mcp251xfd mainline (b_kernel_mcp251xfd_core l. 2178)
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_b_kernel_mcp251xfd_core
+        page: l. 2178 (compatible microchip,mcp2517fd)
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+        note: non lues (format HAT annoncé, sans cotes)
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      prix:
+        valeur: 114.95
+        devise: USD
+        tva_incluse: null
+        vendeur: Copperhill Technologies (US)
+        source: marche_bus_b_pican_fd
+        note: boutique US, taxes non mentionnées
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+        note: non lue ; « Usually ships within 5 business days » (US)
+    seeed_2ch_canfd_shield:
+      famille: can_spi
+      nom: 2-Channel CAN-BUS(FD) Shield for Raspberry Pi (SKU 103030296)
+      fabricant: Seeed Studio
+      canaux:
+        valeur: 2
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Introduction
+      controleur:
+        valeur: MCP2518FD (version actuelle) ; MCP2517FD (version arrêtée)
+        source: marche_bus_b_seeed_canfd_hat
+        page: Selection Guide
+        note: 'le tableau Specification du wiki indique MCP2517FD + MCP2557FD : la puce de la SKU 103030296 n’est
+          pas établie'
+      can_fd:
+        valeur: true
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Introduction
+      debit_nominal_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Features (« 1Mbps@40m »)
+        note: donné comme débit à longueur de câble, pas comme maximum nominal
+      debit_donnees_fd_max:
+        valeur: 8
+        unite: Mbit/s
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Features (« 8Mbps@10m 20AWG »)
+      interface_hote:
+        valeur: SPI (HAT Raspberry Pi)
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Introduction
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionnée
+      pilote_linux:
+        valeur: overlay seeed-can-fd-hat-v2 (dépôt seeed-linux-dtoverlays)
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Install CAN-HAT
+        note: overlay hors noyau ; le contrôleur MCP251xFD est pris en charge par mcp251xfd mainline
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_b_kernel_mcp251xfd_core
+        page: l. 2178-2181
+      jetson:
+        valeur: 'MCP2517FD : seulement can0 sur Jetson Nano ; MCP2518FD : deux canaux'
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Versions Declare
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      alimentation:
+        valeur: 12–24 V DC ou 5 V GPIO
+        source: marche_bus_b_seeed_canfd_wiki
+        page: Specification
+      prix:
+        valeur: 29.9
+        devise: USD
+        tva_incluse: false
+        vendeur: Seeed Studio
+        source: marche_bus_b_seeed_canfd_hat
+        note: '« Out of stock » ; expédition DAP : droits et taxes à la charge de l’acheteur (lu sur la page) ;
+          10+ : 27,40 USD'
+      disponibilite_ch_ue:
+        valeur: rupture de stock chez Seeed le 2026-10-07
+        source: marche_bus_b_seeed_canfd_hat
+        page: bloc prix
+    feetech_fe_urt_1:
+      famille: serie_feetech
+      nom: FE-URT-1 (URT-1), convertisseur USB/UART vers SMS (RS-485) et SCS (TTL)
+      fabricant: Feetech
+      canaux:
+        valeur: '1 bus, deux connecteurs : SCS TTL 3 broches (5264-3AW) et SMS RS-485 4 broches (5264-4AW)'
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §3
+      interface_hote:
+        valeur: USB 2.0 pleine vitesse
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §2
+        note: 'connecteur dit « MINI USB » (manuel) et « Micro USB » (fiche attributs) : contradiction'
+      debit_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §2 (50 bit/s – 1 Mbit/s)
+      demi_duplex:
+        valeur: true
+        source: marche_bus_b_rcdrone_urt1
+        page: attributs (« Half Duplex Asynchronous Serial Communication »)
+      niveau:
+        valeur: TTL et RS-485 ; UART 5 V ou 3,3 V commutable
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §2
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionnée
+      puce_usb:
+        valeur: CH340C
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §6 (pilote CH341SER)
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+        note: aucune source lue ne nomme le pilote Linux du CH340C ; le module noyau ch341 (b_kernel_usbserial_kconfig)
+          vise le « Winchiphead CH341 », sans mention du CH340
+      cotes_mm:
+        valeur: 55,8 × 36,6 × 11,5
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §3
+        note: 'la fiche attributs dit 52 × 38,4 × 16 mm : enveloppe prudente 55,8 × 38,4 × 16'
+      masse_g:
+        valeur: 12.5
+        unite: g
+        source: marche_bus_b_rcdrone_urt1
+        page: USE MANUAL §3
+      alimentation:
+        valeur: 4,8–25 V
+        source: marche_bus_b_rcdrone_urt1
+        page: attributs
+      prix:
+        valeur: 19.44
+        devise: USD
+        tva_incluse: true
+        vendeur: rcdrone.top
+        source: marche_bus_b_rcdrone_urt1
+        note: '« Taxes included » lu ; variante « Sold out » (.js : available True, contradiction)'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+        note: feetechrc.com injoignable ; disponibilité UE non lue
+    robotis_u2d2:
+      famille: serie_dynamixel
+      nom: U2D2
+      fabricant: ROBOTIS
+      canaux:
+        valeur: 1 bus ; ports TTL 3 broches, RS-485 4 broches, UART 4 broches
+        source: marche_bus_b_robotis_u2d2
+        page: Specifications
+      interface_hote:
+        valeur: USB
+        source: marche_bus_b_robotis_u2d2
+        page: How to Use
+      debit_max:
+        valeur: 6
+        unite: Mbit/s
+        source: marche_bus_b_robotis_u2d2
+        page: Specifications (Baudrate Maximum 6Mbps)
+      demi_duplex:
+        valeur: true
+        source: marche_bus_b_robotis_u2d2
+        page: Data Flow Control
+        note: 'déduit du texte : les données reçues ne sont pas renvoyées aux autres périphériques, collisions si
+          deux répondent ; le mot « half duplex » n’apparaît pas'
+      niveau:
+        valeur: TTL et RS-485
+        source: marche_bus_b_robotis_u2d2
+        page: Specifications
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionnée ; la page met en garde contre les différences de potentiel de masse
+      puce_usb:
+        valeur: FTDI (référence non citée)
+        source: marche_bus_b_robotis_u2d2
+        page: How to Use (« FTDI devices such as the U2D2 »)
+      pilote_linux:
+        valeur: null
+        source: marche_bus_b_robotis_u2d2
+        page: latency_timer
+        note: 'module non nommé par la source : la page règle /sys/bus/usb-serial/devices/ttyUSB0/latency_timer
+          à 1 ms (indice d''un pilote usb-serial FTDI, ftdi_sio probable, NON lu)'
+      cotes_mm:
+        valeur: 48 × 18 × 14,9
+        source: marche_bus_b_robotis_u2d2
+        page: Specifications
+      masse_g:
+        valeur: 9
+        unite: g
+        source: marche_bus_b_robotis_u2d2
+        page: Specifications
+      alimentation_servos:
+        valeur: 'aucune : U2D2 n’alimente pas les DYNAMIXEL'
+        source: marche_bus_b_robotis_u2d2
+        page: How to Use
+      prix:
+        valeur: 36.92
+        devise: USD
+        tva_incluse: null
+        vendeur: ROBOTIS America (robotis.us)
+        source: marche_bus_b_robotisus_u2d2
+        note: devise lue sur b_robotisus_u2d2_page ; taxe de vente non indiquée
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+        note: 'non lue (boutique US ; available: true au .js)'
+    robotis_u2d2_phb:
+      famille: serie_dynamixel
+      nom: U2D2 Power Hub Board
+      fabricant: ROBOTIS
+      canaux:
+        valeur: connecteurs TTL (JST EHR-03) et RS-485 (JST EHR-04)
+        source: marche_bus_b_robotis_u2d2phb
+        page: Connector Information
+      interface_hote:
+        valeur: 'aucune : carte d’alimentation associée à U2D2'
+        source: marche_bus_b_robotis_u2d2phb
+        page: Introduction
+      debit_max:
+        valeur: null
+        source: null
+        page: null
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: null
+        source: null
+        page: null
+        note: sans objet
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+        note: sans objet
+      tension_entree:
+        valeur: 3,5–24,0 V
+        source: marche_bus_b_robotis_u2d2phb
+        page: Specifications
+      courant_max:
+        valeur: 10.0
+        unite: A
+        source: marche_bus_b_robotis_u2d2phb
+        page: Specifications
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      prix:
+        valeur: 21.85
+        devise: USD
+        tva_incluse: null
+        vendeur: ROBOTIS America (robotis.us)
+        source: marche_bus_b_robotisus_u2d2phb
+        note: « U2D2 Power Hub Board Set » ; devise supposée identique à b_robotisus_u2d2_page (même boutique)
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    robotis_openrb_150:
+      famille: serie_dynamixel
+      nom: OpenRB-150
+      fabricant: ROBOTIS
+      canaux:
+        valeur: 4 ports DYNAMIXEL TTL
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications
+      interface_hote:
+        valeur: USB-C (SAMD21 Cortex-M0+ ; micrologiciel usb_to_dynamixel par défaut)
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications / note usb_to_dynamixel
+      debit_max:
+        valeur: 1
+        unite: Mbit/s
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications (TTL Max 1 Mbps) ; note usb_to_dynamixel
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionné
+      niveau:
+        valeur: TTL ; RS-485 via « DYNAMIXEL Communication Bridge »
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications, note 1
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: 'aucune puce dédiée : USB natif du SAMD21'
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications
+        note: déduit de « MICROCONTROLLER SAMD21 » et USB 5 V ; pas dit explicitement
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+        note: non nommé (probablement CDC-ACM, non lu)
+      cotes_mm:
+        valeur: 25 × 66
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      alimentation:
+        valeur: USB 5 V ou VIN 3,7–12,6 V ; 3 000 mA vers les ports DYNAMIXEL
+        source: marche_bus_b_robotis_openrb150
+        page: Specifications
+      prix:
+        valeur: 28.64
+        devise: USD
+        tva_incluse: null
+        vendeur: ROBOTIS America (robotis.us)
+        source: marche_bus_b_robotisus_openrb150
+        note: devise supposée identique à b_robotisus_u2d2_page
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    ws_bus_servo_adapter_a:
+      famille: serie_feetech
+      nom: Bus Servo Adapter (A) (SKU 25514)
+      fabricant: Waveshare
+      canaux:
+        valeur: 1 bus (servos ST/SC)
+        source: marche_bus_b_ws_busservo_a_page
+        page: Features
+      interface_hote:
+        valeur: UART, ou USB (mode B par cavalier)
+        source: marche_bus_b_ws_busservo_a_page
+        page: Features / Specifications
+      debit_max:
+        valeur: null
+        source: null
+        page: null
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionné
+      niveau:
+        valeur: TTL (servos ST/SC)
+        source: marche_bus_b_ws_busservo_a_page
+        page: Features
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: null
+        source: null
+        page: null
+        note: non citée
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+      cotes_mm:
+        valeur: 42,00 × 33,00
+        source: marche_bus_b_ws_busservo_a_page
+        page: Specifications
+      masse_g:
+        valeur: 16
+        unite: g
+        source: marche_bus_b_ws_busservo_a_page
+        page: 'Weight: 0.016 kg'
+      alimentation:
+        valeur: 9–12,6 V DC (série ST)
+        source: marche_bus_b_ws_busservo_a_page
+        page: Specifications
+        note: 'wiki : 9~12.6V « should match servo voltage »'
+      prix:
+        valeur: 4.99
+        devise: USD
+        tva_incluse: null
+        vendeur: Waveshare (boutique officielle)
+        source: marche_bus_b_ws_busservo_a_page
+        note: taxes non mentionnées
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    ws_serial_bus_servo_driver_board:
+      famille: serie_feetech
+      nom: Serial Bus Servo Driver Board
+      fabricant: Waveshare
+      canaux:
+        valeur: null
+        source: null
+        page: null
+        note: wiki vide, page produit 404
+      interface_hote:
+        valeur: null
+        source: null
+        page: null
+      debit_max:
+        valeur: null
+        source: null
+        page: null
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+      niveau:
+        valeur: null
+        source: null
+        page: null
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: null
+        source: null
+        page: null
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: marche_bus_b_ws_sbsdriver_wiki
+        note: aucune source exploitable
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    seeed_bus_servo_driver_xiao:
+      famille: serie_feetech
+      nom: Bus Servo Driver Board for Seeed Studio XIAO (SKU 105990190)
+      fabricant: Seeed Studio
+      canaux:
+        valeur: 1 bus (servos ST/SC, dont Feetech SCS)
+        source: marche_bus_b_seeed_xiao_busservo_wiki
+        page: Introduction
+      interface_hote:
+        valeur: UART direct, ou USB via un adaptateur USB-UART externe
+        source: marche_bus_b_seeed_xiao_busservo_wiki
+        page: Getting Started
+      debit_max:
+        valeur: null
+        source: null
+        page: null
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+      niveau:
+        valeur: TTL
+        source: marche_bus_b_seeed_xiao_busservo_wiki
+        page: Introduction
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: null
+        source: null
+        page: null
+        note: aucune sur la carte d’après le wiki (adaptateur externe)
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      alimentation:
+        valeur: 5–12 V (doit correspondre aux servos), jack 5,5 × 2,1 mm
+        source: marche_bus_b_seeed_xiao_busservo_wiki
+        page: Getting Started / Hardware Overview
+      prix:
+        valeur: 5.99
+        devise: USD
+        tva_incluse: false
+        vendeur: Seeed Studio
+        source: marche_bus_b_seeed_xiao_busservo_page
+        note: '« In stock » ; DAP : taxes à la charge de l’acheteur (lu)'
+      disponibilite_ch_ue:
+        valeur: en stock chez Seeed (expédition DAP vers l’UE)
+        source: marche_bus_b_seeed_xiao_busservo_page
+        page: bloc prix
+    ftdi_usb_rs485_we:
+      famille: serie_generique
+      nom: USB-RS485-WE (câble)
+      fabricant: FTDI
+      canaux:
+        valeur: null
+        source: null
+        page: null
+        note: fiche non téléchargée (Cloudflare)
+      interface_hote:
+        valeur: null
+        source: null
+        page: null
+      debit_max:
+        valeur: null
+        source: null
+        page: null
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+      niveau:
+        valeur: null
+        source: null
+        page: null
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: null
+        source: null
+        page: null
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+        note: ftdi_sio existe (b_kernel_usbserial_kconfig, l. 170) mais la puce du câble n’a pas été lue
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: marche_bus_b_ftdi_usb_rs485
+        note: non lu
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    ws_usb_to_rs485:
+      famille: serie_generique
+      nom: USB TO RS485 (SKU 17286)
+      fabricant: Waveshare
+      canaux:
+        valeur: 1
+        source: marche_bus_b_ws_usb_rs485_page
+        page: Specifications
+      interface_hote:
+        valeur: USB-A
+        source: marche_bus_b_ws_usb_rs485_page
+        page: Specifications
+      debit_max:
+        valeur: 0.9216
+        unite: Mbit/s
+        source: marche_bus_b_ws_usb_rs485_page
+        page: Specifications (300 bit/s – 921 600 bit/s)
+      demi_duplex:
+        valeur: null
+        source: null
+        page: null
+        note: non mentionné
+      niveau:
+        valeur: RS-485
+        source: marche_bus_b_ws_usb_rs485_page
+        page: Specifications
+      isolation_galvanique:
+        valeur: false
+        source: marche_bus_b_ws_usb_rs485_wiki
+        page: FAQ
+        note: 'la FAQ conseille un optocoupleur externe pour isoler ; protections : fusible 200 mA, ESD, TVS'
+      puce_usb:
+        valeur: FT232RNL + SP485EEN
+        source: marche_bus_b_ws_usb_rs485_page
+        page: titre / Onboard Original Chips
+        note: le wiki dit FT232RL
+      pilote_linux:
+        valeur: null
+        source: null
+        page: null
+        note: Linux annoncé compatible ; module non nommé (ftdi_sio probable, non lu)
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: 67
+        unite: g
+        source: marche_bus_b_ws_usb_rs485_page
+        page: 'Weight: 0.067 kg'
+        note: avec câble USB ~1,2 m et tournevis (contenu du colis)
+      prix:
+        valeur: 10.99
+        devise: USD
+        tva_incluse: null
+        vendeur: Waveshare (boutique officielle)
+        source: marche_bus_b_ws_usb_rs485_page
+        note: 'affiché 10,99 USD ; tableau : 10,59 USD pour 1 ; on garde le plus haut'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    ws_usb_to_ttl:
+      famille: serie_generique
+      nom: USB TO TTL
+      fabricant: Waveshare
+      canaux:
+        valeur: 1
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Specification
+      interface_hote:
+        valeur: USB
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Specification
+      debit_max:
+        valeur: 3
+        unite: Mbit/s
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Specification (300 bit/s – 3 Mbit/s)
+      demi_duplex:
+        valeur: false
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Interface Description
+        note: 'UART TX/RX séparés : pas de demi-duplex natif, un montage externe serait nécessaire pour un bus servo
+          une ligne (déduction)'
+      niveau:
+        valeur: TTL 5 V / 3,3 V
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Specification
+      isolation_galvanique:
+        valeur: null
+        source: null
+        page: null
+      puce_usb:
+        valeur: FT232 (référence exacte non lue)
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: How to Use / Linux
+      pilote_linux:
+        valeur: pilote FT232 inclus dans les distributions (/dev/ttyUSB*)
+        source: marche_bus_b_ws_usb_ttl_wiki
+        page: Linux
+        note: module non nommé ; ftdi_sio au Kconfig (b_kernel_usbserial_kconfig l. 170)
+      cotes_mm:
+        valeur: null
+        source: null
+        page: null
+      masse_g:
+        valeur: null
+        source: null
+        page: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: page produit non téléchargée
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        page: null
+    _pilote_mcp251xfd:
+      famille: can_spi
+      nom: Pilote noyau mcp251xfd (référence, pas un produit)
+      fabricant: Linux
+      pilote_linux:
+        valeur: CAN_MCP251XFD, « Microchip MCP251xFD SPI CAN controllers »
+        source: marche_bus_b_kernel_mcp251xfd_kconfig
+        page: Kconfig
+      puces_prises_en_charge:
+        valeur: mcp2517fd, mcp2518fd, mcp251863
+        source: marche_bus_b_kernel_mcp251xfd_core
+        page: l. 2178-2206 (of_device_id / spi_device_id)
+      pilote_mainline:
+        valeur: true
+        source: marche_bus_b_kernel_mcp251xfd_core
+        page: arbre torvalds/linux 602042bf29f6
+        note: version d’introduction non lue
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: sans objet

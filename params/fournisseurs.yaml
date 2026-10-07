@@ -3360,3 +3360,1772 @@ fichiers:
     conditions: >
       Comme robot_dataset_csv.
     redistribuable: false
+
+  # ── Marchés des batteries, calculateurs et cartes de bus (2026-10-07), sources lues, jamais versées ──
+  marche_bat_ds_molicel_p28a:
+    source: E-One Moli Energy (Molicel), https://files.batteryjunction.com/frontend/files/molicel/DataSheets/MOLICEL-P28A-Datasheet.pdf
+    reference: Product Data Sheet INR-18650-P28A
+    date: &id001 2026-10-07
+    empreinte: sha256:bbf2583db562ecee783a0e56d1e9a13ae0b45f58779c0fe5cffb384b92c0e9b7
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_molicel_p30b:
+    source: E-One Moli Energy (Molicel), https://files.batteryjunction.com/frontend/files/molicel/DataSheets/MOLICEL-P30B-Datasheet.pdf
+    reference: Product Data Sheet INR-18650-P30B, version 1.0
+    date: *id001
+    empreinte: sha256:9d5dd80c32f2dc7306396e9f3bf2a752fe8ce55a9a78c003a2abd461c9535c7a
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_molicel_p42a:
+    source: E-One Moli Energy (Molicel), https://files.batteryjunction.com/frontend/files/molicel/DataSheets/MOLICEL-P42A-Datasheet.pdf
+    reference: Product Data Sheet INR-21700-P42A
+    date: *id001
+    empreinte: sha256:72ff2543732b8f236d554d0157fb9cb9d300940d5e39757706ce4a633dccd7f7
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_molicel_p45b:
+    source: E-One Moli Energy (Molicel), https://files.batteryjunction.com/frontend/files/molicel/DataSheets/MOLICEL-P45B-Datasheet.pdf
+    reference: Product Data Sheet INR-21700-P45B, version 1.2
+    date: *id001
+    empreinte: sha256:8b08963c0a198fd391ed7e62388be12cbd14c38d7b587982f9800b15c6821b4a
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_molicel_p50b:
+    source: E-One Moli Energy (Molicel), https://files.batteryjunction.com/frontend/files/molicel/DataSheets/MOLICEL-P50B-Updated-DataSheet.pdf
+    reference: Product Data Sheet INR-21700-P50B, version 1.1
+    date: *id001
+    empreinte: sha256:867a4873b71a7c5b758be83f8371daf5ca5cb624675ac85b405dc227504df20c
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_samsung_30q:
+    source: Samsung SDI, https://files.batteryjunction.com/frontend/files/samsung/datasheet/SAMSUNG-30Q-18650-3000-FLAT-Datasheet.pdf
+    reference: Specification of product INR18650-30Q, version 0.0
+    date: *id001
+    empreinte: sha256:94c569420a6fa7d702ee202594f054f2add2c9e05f2bf814e64621988a40b4e3
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_samsung_35e:
+    source: Samsung SDI, https://files.batteryjunction.com/frontend/files/samsung/datasheet/SAMSUNG-35E-18650-3000-FLAT-Datasheet.pdf
+    reference: Specification of product INR18650-35E, version 1.1
+    date: *id001
+    empreinte: sha256:ae67aed4d3b9922f8ba2c3ba490370f9be08db6512bcb85543231088b267aadf
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_samsung_40t:
+    source: Samsung SDI, https://files.batteryjunction.com/frontend/files/samsung/datasheet/SAMSUNG-40T-Datasheet.pdf
+    reference: Specification of product INR21700-40T, version 0.0
+    date: *id001
+    empreinte: sha256:1a0a6bb28390e58d47dbe608c66f6f25c1f82f25dc9a481c16c43d81036cc0a1
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_samsung_50e:
+    source: Samsung SDI, https://files.batteryjunction.com/frontend/files/samsung/datasheet/SAMSUNG-50E-21700-Datasheet.pdf
+    reference: Specification of product INR21700-50E, version 0.2
+    date: *id001
+    empreinte: sha256:7be1ecb83fc1d8f5b0376b945a625e9e0b25c55b7581cfca1fc03aae8ffa6949
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_samsung_50s:
+    source: Samsung SDI, https://files.batteryjunction.com/frontend/files/samsung/datasheet/SAMSUNG-INR21700-50S-DataSheet.pdf
+    reference: Specification of product INR21700-50S, version 0.2
+    date: *id001
+    empreinte: sha256:62890dd22d8b084f6510538778e4daf9b29cb57c973a1f7a10837c21a20afc1e
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_lg_hg2:
+    source: LG Chem, https://files.batteryjunction.com/frontend/files/lg/datasheet/LG-HG2-18650-INR-Datasheet.pdf
+    reference: Product Specification INR18650HG2, BCY-PS-HG2-Rev0, 2014-10-13
+    date: *id001
+    empreinte: sha256:b135f906d383a964ac7d4585d66acc762145aa739c20d7bfc60269d32d7857e9
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_lg_mj1:
+    source: LG Chem, https://files.batteryjunction.com/frontend/files/lg/datasheet/LG-MJ1-Datasheet.pdf
+    reference: Product Specification INR18650 MJ1, LRB-PS-CY3450_MJ1 rev 1, 2014-08-22
+    date: *id001
+    empreinte: sha256:c18d138d3fc9d7fc6cfa9d266516d03caa661a18cd63ab33449bd62e9cc7000b
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_lg_m50lt:
+    source: LG Energy Solution, https://evwest.com/support/21700_M50LT_datasheet.pdf
+    reference: Product Specification INR21700M50LT, 2020-LSD-MBD-b00090 rev 0, 2020-09-17
+    date: *id001
+    empreinte: sha256:ca27e992a370709ca9a1c1d70052daed678712fe97c04e88521950e75419b9e5
+    conditions: non lues ; fiche servie par un revendeur tiers (EV West, US)
+    redistribuable: false
+  marche_bat_ds_lg_m58t:
+    source: LG Energy Solution, https://18650baterie.pl/wp-content/uploads/2025/05/Datasheet-LG-M58T.pdf
+    reference: Product Specification INR21700 M58T, 2021-LSD-MBD-b00020 rev 1.4, 2022-01-18
+    date: *id001
+    empreinte: sha256:e3460a7695d8cc39abfafd720d1cde6b11b713ffcaf7bae1aca3b43257b2140e
+    conditions: non lues ; fiche servie par un revendeur tiers (18650baterie.pl, PL)
+    redistribuable: false
+  marche_bat_ds_murata_vtc5a:
+    source: Murata (ex-Sony Energy Devices), https://files.batteryjunction.com/frontend/files/murata/datasheet/MURATA-VTC5A-18650-2600-FLAT-Datasheet.pdf
+    reference: Lithium-ion battery specifications US18650VTC5A (14 p.)
+    date: *id001
+    empreinte: sha256:1b444a14117479458273d0ce17e3fb7b180fae4569b62a920b85e0ec497fdfa2
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_murata_vtc6:
+    source: Murata (ex-Sony Energy Devices), https://files.batteryjunction.com/frontend/files/murata/datasheet/MURATA-VTC6-18650-3000-FLAT-Datasheet.pdf
+    reference: Lithium-ion battery specifications US18650VTC6 (14 p.)
+    date: *id001
+    empreinte: sha256:4db74f3e5ec867553277601e53a6698146f7b8e1766039ba06e96f9932eedc1d
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_murata_vtc6a:
+    source: Murata, https://files.batteryjunction.com/frontend/files/murata/datasheet/MURATA-VTC6A-21700-4100-FLAT-Datasheet.pdf
+    reference: Lithium-ion battery specifications US21700VTC6A (9 p., scan)
+    date: *id001
+    empreinte: sha256:b66dc61e13243669f04b50a9d11b59ab7b3c7e4b4d76f2e8af8b3be46b43b023
+    conditions: non lues ; fiche constructeur servie par un revendeur tiers (Battery Junction, US), non par le site
+      du fabricant
+    redistribuable: false
+  marche_bat_ds_eve_40pl:
+    source: EVE Energy, https://www.batimex.pl/zdjecia/pdf/inr21700-40pl.pdf
+    reference: Specification INR21700/40PL, PBRI-INR21700/40PL-D06-01 version A
+    date: *id001
+    empreinte: sha256:fc4838f2a754bf84b4a79b599fabdb17467be51c595a1e115b71fe71961bfd86
+    conditions: non lues ; document marqué « Confidential and Proprietary » par EVE, servi par un revendeur tiers
+      (Batimex, PL)
+    redistribuable: false
+  marche_bat_ds_a123_anr26650:
+    source: A123 Systems, https://www.bto.pl/pdf/04579/MD100113-01-ANR26650M1B.pdf
+    reference: Nanophosphate High Power Lithium Ion Cell ANR26650M1-B, MD100113-01 (2011)
+    date: *id001
+    empreinte: sha256:d7b33db7c18be867e8a53a4f58299a828be89caa29e72d1ddf5d0b0370ffbc5c
+    conditions: non lues ; fiche servie par un revendeur tiers (BTO, PL)
+    redistribuable: false
+  marche_bat_ds_k2_26650p:
+    source: K2 Energy Solutions, https://www.master-instruments.com.au/file/62570/1/K2%20Energy-K226650P.pdf
+    reference: K226650P01 Power Cell Data, MDS-700080-002 rev A
+    date: *id001
+    empreinte: sha256:78d6deb43707117150c7df80d3371303a3e2dd14596f2ea84760e3a542503f24
+    conditions: non lues ; fiche servie par un distributeur (Master Instruments, AU)
+    redistribuable: false
+  marche_bat_ds_solicell_32700:
+    source: SoliCELL (négociant ; fabricant réel non nommé), https://docs.tuyap.online/FDOCS/39736.pdf
+    reference: Specifications for Product 32700 LiFePO4 6000mAh (SoliCELL), janvier 2021
+    date: *id001
+    empreinte: sha256:bd3ea9d5b4f02eb3683018be38e09110ac9a3e34cf5f17388e46ae98db66be97
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ds_powersonic_ifr18650ec:
+    source: Power-Sonic Corporation, https://cdn.power-sonic.com/documents/PSL-FP-IFR18650EC_Data_Sheet.pdf
+    reference: PSL-FP-IFR18650EC Data Sheet, Rev1 06/20
+    date: *id001
+    empreinte: sha256:b792e1d47a3634f306512b21d09af7a38db87b61b2dd409cc86025876293d924
+    conditions: non lues ; site du fabricant
+    redistribuable: false
+  marche_bat_ds_pkcell_lipo:
+    source: Shenzhen PKCELL Battery Co., https://cdn-shop.adafruit.com/product-files/1578/Datasheet.pdf
+    reference: Li-Polymer Battery Technology Specification, 500 mAh 3.7 V with PCM
+    date: *id001
+    empreinte: sha256:bc2bc5609d228a589c3b3a965087c12b936136210c5c575edb366c7790e4dcaf
+    conditions: non lues ; servie par Adafruit
+    redistribuable: false
+  marche_bat_nkon_liste_21700:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/rechargeable/li-ion/21700-20700-size.html?product_list_limit=100
+    reference: NKON, catégorie 21700 (100 articles par page)
+    date: *id001
+    empreinte: sha256:3187e874507a06be7b1cab180b6cece7aebc6d76bfa6da2a484225505da4aacd
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_liste_18650:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/rechargeable/li-ion/18650-size.html?product_list_limit=100
+    reference: NKON, catégorie 18650
+    date: *id001
+    empreinte: sha256:ea2f670d850b9a8d1d215e0cf2cbdfeaf5b56e67c53cd1a5d7b6908e5a761c6a
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_liste_lifepo4:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/rechargeable/lifepo4.html?product_list_limit=100
+    reference: NKON, catégorie LiFePO4
+    date: *id001
+    empreinte: sha256:c35ebf056823ee8392381b0419791addf4a452b18dd784d144b84ad447d3a288
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_p42a:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/molicel-inr21700-p42a-4200mah-45a-malaysia.html
+    reference: NKON, fiche produit molicel-inr21700-p42a-4200mah-45a-malaysia
+    date: *id001
+    empreinte: sha256:01d159d4bcdb3f26956e24934fa3c59ee48008880a3ff6565055f0f9331b0015
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_p45b:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/molicel-inr21700-p45b-4500mah-45a-partially-wrapped.html
+    reference: NKON, fiche produit molicel-inr21700-p45b-4500mah-45a-partially-wrapped
+    date: *id001
+    empreinte: sha256:bfe8c0f3e12721992632b8268cf50b5a254e64a65c15b95f4c2c7297dbfa38be
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_40pl:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/eve-inr21700-40pl-4000mah-70a-reclaimed.html
+    reference: NKON, fiche produit eve-inr21700-40pl-4000mah-70a-reclaimed
+    date: *id001
+    empreinte: sha256:121276dd47fba2262891b9a3b857ade6fbfbcfa294439977c6fce97bcf9728eb
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_p28a:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/molicel-inr18650-p28a-2800mah-35a-productiejaar-2021.html
+    reference: NKON, fiche produit molicel-inr18650-p28a-2800mah-35a-productiejaar-2021
+    date: *id001
+    empreinte: sha256:cef95c2bb8a4644c1edd8e8536783635e6845f223b5eed619bbf61a52d3eaf55
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_p30b:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/molicel-inr18650-p30b-3000mah-30a-met-button-top.html
+    reference: NKON, fiche produit molicel-inr18650-p30b-3000mah-30a-met-button-top
+    date: *id001
+    empreinte: sha256:682df99d9cfadc578f073df20199987e0ab9f371e08ce88192733e4e1b02562f
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_a123:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/lithium-werks-former-a123-systems-anr26650m1b-2600mah-50a-lifepo4-3-2v-productiejaar-2021.html
+    reference: NKON, fiche produit lithium-werks-former-a123-systems-anr26650m1b-2600mah-50a-lifepo4-3-2v-productiejaar-2021
+    date: *id001
+    empreinte: sha256:5c523cb2157a8137ae4f0d94f2738e5275bbc75fa47562115b6f94a7e7d1a295
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_m50lt:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/inr21700-m50l-m50lt-4930mah-14-4a-clear-wrap.html
+    reference: NKON, fiche produit inr21700-m50l-m50lt-4930mah-14-4a-clear-wrap
+    date: *id001
+    empreinte: sha256:713b5b8626b60383b6c29b9dc479669e8806d7ef09ca74a074bef75a81aa0251
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_powersonic:
+    source: NKON (Nuenen, NL), https://www.nkon.nl/en/powersonic-psl-fp-ifr18650ec-18650-1500-mah-4-5a-lifepo4-3-2v.html
+    reference: NKON, fiche produit Powersonic PSL-FP-IFR18650EC
+    date: *id001
+    empreinte: sha256:dc37b98c3d345c08922d977e0ad1663bbb70803c5069254fb2232231ae0fde80
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_cgv:
+    source: NKON, https://www.nkon.nl/en/terms-conditions
+    reference: NKON, Terms & conditions
+    date: *id001
+    empreinte: sha256:0ff51bc155170d8edb0ff507aa3aa3514f998763fbb3fe6ffdeec8d4ce8f26d7
+    conditions: non lues
+    redistribuable: false
+  marche_bat_nkon_envoi:
+    source: NKON, https://www.nkon.nl/en/ordering-and-shipping
+    reference: NKON, Ordering and Shipping
+    date: *id001
+    empreinte: sha256:8bed636471f5be2a78509aaba31f7ed802ecdf290abe139aca644dbe021acc77
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_50s:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/lithium-ionen-battery/size-21700/samsung/samsung-inr21700-50s-5000mah-max-45a-3-6-3-7v-lithium-ion-battery_100671_3335
+    reference: akkuteile.de, fiche produit samsung-inr21700-50s-5000mah-max-45a-3-6-3-7v-lithium-ion-battery_100671_3335
+    date: *id001
+    empreinte: sha256:efc13328072760c56bd93988abf7714c2e71420895e582e5e166bd647d48a4ab
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_40t:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/samsung-inr21700-40t-4000mah-35a-li-ion-battery-3-6v-3-7v_100811_2354
+    reference: akkuteile.de, fiche produit samsung-inr21700-40t-4000mah-35a-li-ion-battery-3-6v-3-7v_100811_2354
+    date: *id001
+    empreinte: sha256:554a2895e1c7011fba38f022ed91612f32f58e719e99824431b5014ca21fbbba
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_50e:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/samsung-inr21700-50e-5000mah-3-6-3-7v-lithium-ion-battery_100602_1204
+    reference: akkuteile.de, fiche produit samsung-inr21700-50e-5000mah-3-6-3-7v-lithium-ion-battery_100602_1204
+    date: *id001
+    empreinte: sha256:c1c16cf28e1777053e0ebfb62a8c96cae7c6e0aee4b60fb4a3a52347e788bae6
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_35e:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/samsung-inr18650-35e-3-6v-3-7v-3500mah-plus-pole-flat_100631_3391
+    reference: akkuteile.de, fiche produit samsung-inr18650-35e-3-6v-3-7v-3500mah-plus-pole-flat_100631_3391
+    date: *id001
+    empreinte: sha256:5c42406443bf8db451595540acaff67bd0262be7a0e6629465db2151acff2ff9
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_30q:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/samsung-inr18650-30q-3-6v-3-7v-3000mah-15a_100805_1325
+    reference: akkuteile.de, fiche produit samsung-inr18650-30q-3-6v-3-7v-3000mah-15a_100805_1325
+    date: *id001
+    empreinte: sha256:6645692a69c32b528f7abb32e23c74064b6b8f6c6295f5784ce88266090528ba
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_p50b:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/lithium-ionen-battery/size-21700/molicel/molicel-inr21700-p50b-5000mah-60a-3-6-3-7v-li-ion-battery_100638_3507
+    reference: akkuteile.de, fiche produit molicel-inr21700-p50b-5000mah-60a-3-6-3-7v-li-ion-battery_100638_3507
+    date: *id001
+    empreinte: sha256:9597b40c826e060c37013ab5590840bd10ac32b82e1e42cf43c3863c43e4ca99
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_p45b:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/lithium-ionen-battery/size-21700/molicel/molicel-inr21700-p45b-4500mah-li-ion-battery-3-6v-3-7v_100852_3119
+    reference: akkuteile.de, fiche produit molicel-inr21700-p45b-4500mah-li-ion-battery-3-6v-3-7v_100852_3119
+    date: *id001
+    empreinte: sha256:1002faaaa8f049688d259735caa8172a98730446c02a5ee5e39c51d8a272dfcb
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_p42a:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/lithium-ionen-battery/size-21700/molicel/molicel-inr21700-p42a-4200mah-30a-to-max-45a-li-ion-battery-3-6v-3-7v_12105_3367
+    reference: akkuteile.de, fiche produit molicel-inr21700-p42a-4200mah-30a-to-max-45a-li-ion-battery-3-6v-3-7v_12105_3367
+    date: *id001
+    empreinte: sha256:2bb6206caa5f23e5bcb50337ab145eb2580f1b2db873fa72364a726026f933bd
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_m58t:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/lithium-ionen-battery/size-21700/lg-chem/inr21700m58t-with-5650mah-20wh-3-6v-3-7v-li-ion-battery_100605_3576
+    reference: akkuteile.de, fiche produit inr21700m58t-with-5650mah-20wh-3-6v-3-7v-li-ion-battery_100605_3576
+    date: *id001
+    empreinte: sha256:eac835072c54d32ef349ba92aef622f5999c1f471a5665f93fb181a388e31625
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ak_envoi:
+    source: akkuteile.de (DE), https://www.akkuteile.de/en/versandkosten
+    reference: akkuteile.de, Shipping conditions
+    date: *id001
+    empreinte: sha256:0f50dbcff47164a1f989f0306f71b9c2d1ea8598465954aed80ed66adad8a965
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ch_smokeshop_p45b:
+    source: smoke-shop.ch (CH, magasin de cigarette électronique), https://smoke-shop.ch/20700-21700-top-batterien/14758-e-zigarette-molicel-inr21700-p45b-4500mah-45a-li-ionen-akku-36v-37v-1490-chf.html
+    reference: smoke-shop.ch, Molicel INR21700-P45B
+    date: *id001
+    empreinte: sha256:7d87c860f7110b5b11086eee23771d0d0f189afac51e0a4c6e9a9b1a1b58ecf3
+    conditions: non lues
+    redistribuable: false
+  marche_bat_post_handbuch:
+    source: La Poste suisse, https://www.post.ch/-/media/portal-opp/pl/dokumente/handbuch-gefahrgut.pdf?sc_lang=de&hash=8CECDB53973A356EF5A4E9E0CC4BCD97
+    reference: Handbuch Gefahrgut – Richtlinien für den Versand mit der Post, Version August 2026
+    date: *id001
+    empreinte: sha256:e4b77d4a5e54bf088eef46ed0581aa043192d1245934c1fc1dee9943be14b2ac
+    conditions: non lues
+    redistribuable: false
+  marche_bat_post_national:
+    source: La Poste suisse, https://www.post.ch/en/sending-parcels/dangerous-goods/domestic-dangerous-goods
+    reference: Dangerous goods in Switzerland (domestic)
+    date: *id001
+    empreinte: sha256:f33e6fee94cae9ab638d144d063a4ad7d6614c626400cb39711afc8eef6285f7
+    conditions: non lues
+    redistribuable: false
+  marche_bat_post_international:
+    source: La Poste suisse, https://www.post.ch/en/sending-parcels/dangerous-goods/international-dangerous-goods
+    reference: 'International dangerous goods: what can be included and what cannot?'
+    date: *id001
+    empreinte: sha256:043ab0b2742524f2a0290f5053387e54be5441137c20639ff5c2f4df4d9539ae
+    conditions: non lues
+    redistribuable: false
+  marche_bat_dhl_liion:
+    source: DHL Express, https://mydhl.express.dhl/content/dam/downloads/global/en/lithium-batteries/lithium_ion_batteries_regulations.pdf.coredownload.pdf
+    reference: Lithium ion and lithium polymer cells or batteries – 2022 IATA DGR, V 5.7 (effective 2022-01-01)
+    date: *id001
+    empreinte: sha256:316781184c0d41cd02f0b953073425ca6190bfa724480d043a085702d94930e2
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_ga_5000_6s_60c:
+    source: GensTattu (boutique US de Grepow), https://genstattu.com/gens-ace-5000mah-6s-60c-22-2v-g-tech-lipo-battery-pack-with-ec5-plug/
+    reference: Gens ace 5000mAh 6S 60C 22.2V G-tech EC5
+    date: 2026-10-07
+    empreinte: sha256:2fe6bf312eb6d1e248740c7ae3ab07d1b36cd952ced3e6c5fa4a4eb4817ff968
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_cat_8s:
+    source: GensTattu, https://genstattu.com/8s-29-6v/
+    reference: LiPo 8S 29.6V (catégorie)
+    date: 2026-10-07
+    empreinte: sha256:1b468b00a315b87e51763a40faf19c09fa739ce924e83920cd52379212d7e183
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_cat_14s:
+    source: GensTattu, https://genstattu.com/14s-51-8v/
+    reference: LiPo 14S 51.8V (catégorie)
+    date: 2026-10-07
+    empreinte: sha256:44b2eea946984bbe1b19a2f8b4348a5527ef36c596c1c3423cdcb3e0c37689f7
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_cat_12s:
+    source: GensTattu, https://genstattu.com/12s-44-4v-lipo-battery.html
+    reference: LiPo 12S 44.4V (catégorie)
+    date: 2026-10-07
+    empreinte: sha256:912c9eda623cd392f1d2f12783ccd16d2add90fc1dcb394a2b54513f6aeaff76
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_8s_6000_150c:
+    source: GensTattu, https://genstattu.com/tattu-6000mah-8s-150c-29-6v-lipo-battery-xt90-s-plug-cinelifter/
+    reference: Tattu 6000mAh 8S 150C XT90-S
+    date: 2026-10-07
+    empreinte: sha256:0095d97c02109c8cd9822754176f5a5346be3071a7b118ea38d5a0a86c78dd5c
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_8s_5600_95c:
+    source: GensTattu, https://genstattu.com/tattu-r-line-5600mah-29-6v-8s1p-95c-165-76wh-lipo-battery-with-xt90-s/
+    reference: Tattu R-Line 5600mAh 8S 95C XT90-S
+    date: 2026-10-07
+    empreinte: sha256:3e3a6abe7d58bff3cea5c9fa9d5b830423bee698d879d504c7b3ba71cde4df27
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_8s_8000_95c:
+    source: GensTattu, https://genstattu.com/tattu-r-line-8000mah-29-6v-8s1p-95c-236-8wh-lipo-battery-with-xt60/
+    reference: Tattu R-Line 8000mAh 8S 95C XT60
+    date: 2026-10-07
+    empreinte: sha256:bed7925146296e9fce2b629f4014473bd43a026035132e2af38aaa0799c05d91
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_ga_12s_3500_80c:
+    source: GensTattu, https://genstattu.com/gens-ace-sport-g-tech-3500mah-12s-80c-44-4v-lipo-battery-pack-with-xt90-plug/
+    reference: Gens ace Sport 3500mAh 12S 80C XT90
+    date: 2026-10-07
+    empreinte: sha256:413ccfc160e5f7fc146b3ae20fb84d7dc398df2c2f80f056370b620866418e60
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_12s_10000_30c:
+    source: GensTattu, https://genstattu.com/ta-30c-10000-12s1p-as150u.html
+    reference: Tattu 10000mAh 12S 30C AS150U
+    date: 2026-10-07
+    empreinte: sha256:31e7764f1b7bcaab3c98c81946ac27443fb07f041d2620e6f617e83baf11af39
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_plus_12s_10000_15c:
+    source: GensTattu, https://genstattu.com/tattu-plus-1-0-compact-version-10000mah-44-4v-15c-12s1p-lipo-smart-battery-pack-with-as150uplug/
+    reference: Tattu Plus 1.0 Compact 10000mAh 12S 15C (smart)
+    date: 2026-10-07
+    empreinte: sha256:d9be6a88224b0f21d8c6751f7fc846fb9cf3f4d697b120281aeb0010831acb46
+    conditions: non lues
+    redistribuable: false
+  marche_bat_genstattu_tattu_pro_14s_22000:
+    source: GensTattu, https://genstattu.com/tattu-pro-22000mah-51-8v-25c-14s-1p-lipo-smart-battery-pack-with-as150u-f-plug/
+    reference: Tattu Pro 22000mAh 14S 25C AS150U-F (smart)
+    date: 2026-10-07
+    empreinte: sha256:35b5f34eebdd7824f460ce2f4ada299aa5526601f2d0d8a7c5c36c387a33822b
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_6s_json:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/collections/6s-lipo-battery/products.json?limit=250
+    reference: Collection 6S (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:d69d8b76e3a81eb62bdd2c01671e1de736752b65a6492896e8a81ac945022338
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_8s_json:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/collections/8s-lipo-battery/products.json?limit=250
+    reference: Collection 8S (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:a9ee5a7d500decb98c89d4b2469c6c94a702d8ac66b723f4058a69f42d390c33
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_10s_json:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/collections/10s-lipo-battery/products.json?limit=250
+    reference: Collection 10S (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:86d8b086af0fc30d06856e218fcfdb6b803f91b45f50b1b753d8deac627fc054
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_12s_json:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/collections/12s-lipo-battery/products.json?limit=250
+    reference: Collection 12S (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:bc6d193ab2fede7f21b65c37e7b2a296b0a331706a1a24240bc4d2e419a07bd4
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_14s_json:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/collections/14s-lipo-battery/products.json?limit=250
+    reference: Collection 14S (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:e5a606df5891c5ae64f78fc41e1589069bfab651161e7d54c0e9d4e8375b9029
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_p_gens_ace_g_tech_5000mah_44_4v_60c_12s1p_:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/products/gens-ace-g-tech-5000mah-44-4v-60c-12s1p-xt90-lipo-battery-pack
+    reference: Gens ace 5000mAh 12S 60C XT90 Heli
+    date: 2026-10-07
+    empreinte: sha256:ac07ec648b14eec9a27384685666c3eda1561f7d05955695ccab64c7b5dceb0a
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_p_gea3512s80x9gt:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/products/gea3512s80x9gt
+    reference: Gens ace 3500mAh 12S 80C XT90 Sport
+    date: 2026-10-07
+    empreinte: sha256:b03fd5b0a4919f5d0bce10abbdd3fc21052eaba0b78b57d18fbbd7b5db8f7f3d
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_p_tattu_r_line_5600mah_29_6v_8s1p_95c_165_:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/products/tattu-r-line-5600mah-29-6v-8s1p-95c-165-76wh-lipo-battery-with-xt90-s
+    reference: Tattu R-Line 5600mAh 8S 95C XT90-S
+    date: 2026-10-07
+    empreinte: sha256:6b2893099f1ab58fa77b846ece16fb94fcf0e563f27e01cbafd7bef455cdf503
+    conditions: non lues
+    redistribuable: false
+  marche_bat_gensace_de_p_tattu_10000mah_44_4v_30c_12s1p_lipo_batt:
+    source: Genspow GmbH (gensace.de, DE), https://gensace.de/products/tattu-10000mah-44-4v-30c-12s1p-lipo-battery-pack-with-as150u-plug-2340
+    reference: Tattu 10000mAh 12S 30C AS150U
+    date: 2026-10-07
+    empreinte: sha256:56e95e53c627680bb9002cd1ec682d84bf862fff1054afddc478a65a5c27bc9a
+    conditions: non lues
+    redistribuable: false
+  marche_bat_sls_xtron_10s_5000:
+    source: SLS StefansLipoShop GmbH (DE), https://www.stefansliposhop.de/en/batteries/sls-xtron/sls-xtron-stickpack/sls-xtron-5000mah-10s1p-37v-30c-60c-split::1077.html
+    reference: SLS XTRON 5000mAh 10S1P 37V 30C/60C SPLIT
+    date: 2026-10-07
+    empreinte: sha256:394708902ab36ad4f14a10fd5cccec8c6c11995064ef169dab657efaac57ff9e
+    conditions: non lues
+    redistribuable: false
+  marche_bat_sls_stickpack_cat:
+    source: SLS StefansLipoShop GmbH (DE), https://www.stefansliposhop.de/en/batteries/sls-xtron/sls-xtron-stickpack:::173_120_124.html
+    reference: SLS XTRON STICKPACK (catégorie)
+    date: 2026-10-07
+    empreinte: sha256:602acdeac3d46932c0fb67eecb5eb13b91096b1d317d839437d13bdf9f63e586
+    conditions: non lues
+    redistribuable: false
+  marche_bat_overlander_6s_5000_35c:
+    source: Overlander Batteries (UK), https://overlander.co.uk/product/5000mah-22-2v-6s-35c-supersport-pro-lipo-battery/
+    reference: Overlander 5000mAh 6S 35C Supersport Pro
+    date: 2026-10-07
+    empreinte: sha256:293bac20687177e3517c8958fa6d16e952b15e085769edbe3005147a3708d116
+    conditions: non lues
+    redistribuable: false
+  marche_bat_sls_xtron_12s_5000_30c:
+    source: SLS StefansLipoShop GmbH (DE), https://www.stefansliposhop.de/en/batteries/sls-xtron/sls-xtron-stickpack/sls-xtron-5000mah-12s1p-44-4v-30c-60c-split::1389.html
+    reference: SLS XTRON 5000mAh 12S1P 44,4V 30C/60C SPLIT
+    date: 2026-10-07
+    empreinte: sha256:cb4b4868be400c74df87d38294052dfb48a529fae1a73f3a8b25bacf437f7744
+    conditions: non lues
+    redistribuable: false
+  marche_bat_sls_xtron_14s_5000_30c:
+    source: SLS StefansLipoShop GmbH (DE), https://www.stefansliposhop.de/en/batteries/sls-xtron/sls-xtron-stickpack/sls-xtron-5000mah-14s1p-51-8v-30c-60c-split::2365.html
+    reference: SLS XTRON 5000mAh 14S1P 51,8V 30C/60C SPLIT
+    date: 2026-10-07
+    empreinte: sha256:2d7d2b2cacfac247494433593f379806ffb2cc696503a1c310cb63f6ec1a8298
+    conditions: non lues
+    redistribuable: false
+  marche_bat_makita_de_bl1850b:
+    source: Makita Werkzeug GmbH (DE), https://www.makita.de/product/bl1850b.html
+    reference: Akku BL1850B (197280-8)
+    date: 2026-10-07
+    empreinte: sha256:527da1abf1ac2f93232ada85636827f73e122968b0714223cedeb5e67c3aff03
+    conditions: non lues
+    redistribuable: false
+  marche_bat_makita_de_bl1860b:
+    source: Makita Werkzeug GmbH (DE), https://www.makita.de/product/bl1860b.html
+    reference: Akku BL1860B (197422-4)
+    date: 2026-10-07
+    empreinte: sha256:05b9dc5d922977f15b9a7adf22bd339ba3a21c600fb2c98d0289192415dec92f
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bosch_at_procore_8ah:
+    source: Robert Bosch Power Tools (site AT), https://www.bosch-professional.com/at/de/products/procore18v-8-0ah-1600A016GK
+    reference: ProCORE18V 8.0Ah (1600A016GK)
+    date: 2026-10-07
+    empreinte: sha256:a18311ca935d1daf689d56cec5797bec6028683f23c3e441303fd4c787d52fb5
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bosch_at_procore_4ah:
+    source: Robert Bosch Power Tools (site AT), https://www.bosch-professional.com/at/de/products/procore18v-4-0ah-1600A016GB
+    reference: ProCORE18V 4.0Ah (1600A016GB)
+    date: 2026-10-07
+    empreinte: sha256:287d58e447334353f306766decdb88b155f4c96d7f3c779c7a15a15832982246
+    conditions: non lues
+    redistribuable: false
+  marche_bat_dewalt_de_dcb184:
+    source: DeWalt (DE), https://www.dewalt.de/product/dcb184-xj/18v-xr-50ah-li-ion-akku
+    reference: DCB184-XJ Ersatz-Akku 18 V / 5,0 Ah XR
+    date: 2026-10-07
+    empreinte: sha256:08962c2f8d9ef34e382930ab88ea7e15a56006b4e4f1bea7769d1e5699894bc8
+    conditions: non lues
+    redistribuable: false
+  marche_bat_dewalt_de_dcb546:
+    source: DeWalt (DE), https://www.dewalt.de/product/dcb546-xj/54-volt-108-wh-xr-flexvolt-ersatz-akku
+    reference: DCB546-XJ 54 Volt / 108 Wh XR FLEXVOLT
+    date: 2026-10-07
+    empreinte: sha256:f284ab4fe3b518bd8884625f4cac3c26e9f55dd69e0ce99495d396247927c74f
+    conditions: non lues
+    redistribuable: false
+  marche_bat_its_m18_fb8:
+    source: ITS (UK), https://its.co.uk/pd/milwaukee-m18-fb8-8-0ah-18v-forge-li-ion-battery-_milm18fb8.htm
+    reference: Milwaukee M18 FB8 8.0Ah FORGE
+    date: 2026-10-07
+    empreinte: sha256:7b605213ca5a18bf85219bed05a53e5aa08099cc0c679b925dc3c312dcbf89d1
+    conditions: non lues
+    redistribuable: false
+  marche_bat_its_m18_hb8:
+    source: ITS (UK), https://its.co.uk/pd/M18-HB8-Milwaukee-M18-HB8-80Ah-18V-High-Output-Li-Ion-Battery-_MILM18HB8.htm
+    reference: Milwaukee M18 HB8 8.0Ah High Output
+    date: 2026-10-07
+    empreinte: sha256:6973f718475ff8bdc04d39cfbbae9582e8d7d5f3586172e1007c45d5969f9852
+    conditions: non lues
+    redistribuable: false
+  marche_bat_its_m18_hb55:
+    source: ITS (UK), https://its.co.uk/pd/M18-HB55-Milwaukee-M18-HB55-55Ah-18V-High-Output-Li-Ion-Battery-_MILM18HB55.htm
+    reference: Milwaukee M18 HB5.5 5.5Ah High Output
+    date: 2026-10-07
+    empreinte: sha256:f76ac11ac40e238f7def40576665e37d2c5ecac0913b5e635acdcb3fdbcf5ed6
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toolbrothers_dcb184:
+    source: Toolbrothers (DE), https://www.toolbrothers.de/products/dewalt-dcb-184-akku-18-v-5-ah-5000-mah-xr-li-ion
+    reference: Dewalt DCB 184 Akku 18 V 5 Ah
+    date: 2026-10-07
+    empreinte: sha256:a1be423995d3876aa078e7a4c34f8536732222e607ccb795b213d2750f579175
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_bl1850b:
+    source: Toppreise.ch (comparateur CH), https://www.toppreise.ch/produktsuche?q=BL1850B
+    reference: Recherche BL1850B
+    date: 2026-10-07
+    empreinte: sha256:09e33f34bc04a488b6150fa9b1ac06c07669581bd963528c82ea3e119112d1a9
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_bl1860b:
+    source: Toppreise.ch, https://www.toppreise.ch/produktsuche?q=BL1860B
+    reference: Recherche BL1860B
+    date: 2026-10-07
+    empreinte: sha256:250e128076baaf68139bf60f0e19be6e75b4c9199ce0b2ea99803c1abe2eb5c8
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_dcb184:
+    source: Toppreise.ch, https://www.toppreise.ch/produktsuche?q=DCB184
+    reference: Recherche DCB184
+    date: 2026-10-07
+    empreinte: sha256:7b68a9b6276953a97c68c2f5e80e36df09af4509ff6fe6e6defc0ccef07cb488
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_dcb546:
+    source: Toppreise.ch, https://www.toppreise.ch/produktsuche?q=DCB546
+    reference: Recherche DCB546
+    date: 2026-10-07
+    empreinte: sha256:a140c80b4c328f63ef63bdf769767a80553a2db9929515cc702900028ad2dfd2
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_1600a016gb:
+    source: Toppreise.ch, https://www.toppreise.ch/produktsuche?q=1600A016GB
+    reference: Recherche 1600A016GB
+    date: 2026-10-07
+    empreinte: sha256:cd7aa0d66bd0911af3fcd6a8531d7f4991ba5064ba004088066d64ff4a789080
+    conditions: non lues
+    redistribuable: false
+  marche_bat_toppreise_1600a016gk:
+    source: Toppreise.ch, https://www.toppreise.ch/produktsuche?q=1600A016GK
+    reference: Recherche 1600A016GK
+    date: 2026-10-07
+    empreinte: sha256:98956e1fa526e2aeac84570dd973bf4bb6664bca2c6249526bd5754c8ecfa229
+    conditions: non lues
+    redistribuable: false
+  marche_bat_victron_ds_lithium_smart_pdf:
+    source: Victron Energy B.V. (copie hébergée par defender.com), https://defender.com/assets/pdf/victron-energy/datasheet-12-8-25-6-volt-lithium-iron-phosphate-batteries-smart-en.pdf
+    reference: Datasheet 12,8 & 25,6 Volt Lithium-Iron-Phosphate Batteries Smart
+    date: 2026-10-07
+    empreinte: sha256:5f3de2982a2c208806a46051d3e83eda6cb790cd97d8a655091fc8cb1f02413f
+    conditions: non lues
+    redistribuable: false
+  marche_bat_victron_ds_lithium_ng_pdf:
+    source: Victron Energy B.V., https://www.victronenergy.com/upload/documents/Datasheet-Lithium-NG-batteries-12,8V-25,6V-51,2V-EN-.pdf
+    reference: Datasheet Lithium NG batteries 12,8V 25,6V 51,2V
+    date: 2026-10-07
+    empreinte: sha256:31bb8322bd0d560ac564704ecd523b2f32823ec098a5a387cff14ad9b59b56e6
+    conditions: non lues
+    redistribuable: false
+  marche_bat_liontron_shop_1220lx:
+    source: Liontron GmbH & Co. KG (DE), https://shop.liontron.com/produkt/liontron-lifepo4-128v-20ah-lx-mit-bms/
+    reference: LIONTRON LiFePO4 12,8V 20Ah LX mit BMS
+    date: 2026-10-07
+    empreinte: sha256:a888b6568e7591f7ec10e1b9865ac040d84d9be3e149a9d6f2781af0b527dbde
+    conditions: non lues
+    redistribuable: false
+  marche_bat_maurelma_liontron_1220lx:
+    source: Maurelma (CH), https://www.maurelma.ch/de/produkt/liontron-lithium-batterie-lifepo4-lx-128v-20ah
+    reference: Liontron LiFePO4 LX 12,8V 20Ah
+    date: 2026-10-07
+    empreinte: sha256:a69350be435c40ad55ecd380ddd6b99916c92150fb79c1db6de263ef6ea8643c
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bioenno_24v_coll:
+    source: Bioenno Power (US), https://www.bioennopower.com/collections/24v-series-lifepo4-lithium-iron-phosphate-batteries/products.json?limit=250
+    reference: 24/36/48V Series LFP (JSON Shopify)
+    date: 2026-10-07
+    empreinte: sha256:db54d5cdf04ce60e9c5bb68b5d74a044e042ff8a1bece85b2dd45a1f09195a9d
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bioenno_24v_10ah:
+    source: Bioenno Power (US), https://www.bioennopower.com/products/24v-10ah-lfp-battery-black-a-pvc-pack
+    reference: 24V 10Ah LFP BLF-2410A
+    date: 2026-10-07
+    empreinte: sha256:76692c1125cafe92dbc6977eb3025bce4655006b6edadda94650224ce13cce15
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bioenno_36v_10ah:
+    source: Bioenno Power (US), https://www.bioennopower.com/products/36v-10ah-lfp-battery-black-a-pvc-pack
+    reference: 36V 10Ah LFP BLF-3610A
+    date: 2026-10-07
+    empreinte: sha256:463e528162c1d23a9870c39a6c32aa157b61bcfbf3cd5483afb6519b508545dd
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bioenno_48v_10ah:
+    source: Bioenno Power (US), https://www.bioennopower.com/products/48v-10ah-lfp-battery-black-a-pvc-pack
+    reference: 48V 10Ah LFP BLF-4810A
+    date: 2026-10-07
+    empreinte: sha256:5d807a3964285b97d8c5280f429f5161d005e54316d5f394fc3d681ee6a414d8
+    conditions: non lues
+    redistribuable: false
+  marche_bat_bioenno_24v_20ah:
+    source: Bioenno Power (US), https://www.bioennopower.com/products/copy-of-24v-20ah-lfp-battery-pvc-blf-2420as
+    reference: 24V 20Ah LFP BLF-2420AS
+    date: 2026-10-07
+    empreinte: sha256:914b94e8afa64c05ccc5ea9c87048823a0c7a1a4490efeebf78841ff841054d8
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ective_lc50l_24v:
+    source: ECTIVE (DE), https://www.ective.de/batterien/lithium-lifepo4-batterien/lc-50l-bt-24v-lfp
+    reference: ECTIVE LC 50L BT 24V LiFePO4
+    date: 2026-10-07
+    empreinte: sha256:5e65ba875d91916038f36e12186971c22dbe812828d741a4dcb93d4e068628b0
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ebikesca_b3610_btl:
+    source: Grin Technologies (ebikes.ca, CA), https://ebikes.ca/b3610-li-btl.html
+    reference: 36V 10Ah Bottle Battery
+    date: 2026-10-07
+    empreinte: sha256:7dc8a3fecdf0a6069287b72493c7f1aad1b95e2f3c0f7fe1cafe727bbcc1dc72
+    conditions: non lues
+    redistribuable: false
+  marche_bat_ebikesca_b4810_btl:
+    source: Grin Technologies (ebikes.ca, CA), https://ebikes.ca/b4810-li-btl.html
+    reference: 48V 10Ah Bottle Battery
+    date: 2026-10-07
+    empreinte: sha256:465e8dba6b5002ccfe5f79bff0613679bf02b95461461bdcb0893b820bc78318
+    conditions: non lues
+    redistribuable: false
+  marche_bat_greenbikekit_36v10ah_compact:
+    source: GreenBikeKit (GBK, CN/US), https://greenbikekit.com/36v-10ah-customized-ebike-battery-packs.html
+    reference: 36V ebike battery 12.8AH-25AH compact
+    date: 2026-10-07
+    empreinte: sha256:4ed556d35f1e016385c32f02c1ef60ee6dafe5d44546d3c9208a53403960e659
+    conditions: non lues
+    redistribuable: false
+  marche_bat_greenbikekit_36v_hailong:
+    source: GreenBikeKit (GBK, CN/US), https://www.greenbikekit.com/36v-down-tube-lithium-battery-hl-1.html
+    reference: ebike 36V 14AH ~17.5AH Hailong 01 downtube
+    date: 2026-10-07
+    empreinte: sha256:64fadba36025e87188ceb939b183baaeebcd506f9aa095d0f36208c1fcce5750
+    conditions: non lues
+    redistribuable: false
+  marche_bat_chinahobbyline_cnhl:
+    source: ChinaHobbyLine, https://chinahobbyline.com/products/cnhl-black-series-5000mah-22-2v-6s-65c-lipo-battery-with-xt90-plug
+    reference: CNHL Black Series 5000mAh 6S 65C XT90
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bat_hobbyking_turnigy:
+    source: HobbyKing, https://hobbyking.com/en_us/turnigy-5000mah-6s-40c-lipo-pack-xt90.html
+    reference: Turnigy 5000mAh 6S 40C XT90
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bat_ryobi_uk_rb1850x:
+    source: Ryobi (UK), https://uk.ryobitools.eu/batteries-and-chargers/18v-one-batteries-and-battery-chargers/18v-one-batteries/rb1850x/rb1850x/
+    reference: 18V ONE+ Lithium+ 5.0Ah RB1850X
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bat_milwaukee_eu:
+    source: Milwaukee Tool EU, https://www.milwaukeetool.eu/en-eu/m18-forge-80-ah-battery/m18-fb8/
+    reference: M18 FB8 / M18 HB8
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bat_ecoworthy_uk:
+    source: Eco-Worthy UK, https://uk.eco-worthy.com/products/12v-20ah-portable-lifepo4-deep-cycle-rechargeable-battery
+    reference: Eco-Worthy 12V 20Ah
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bat_liontron_ds_pdf:
+    source: Liontron, https://liontron.com/download/german/LI1220LX.pdf
+    reference: Datenblatt LI1220LX
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_calc_nv_modules:
+    source: NVIDIA, https://developer.nvidia.com/embedded/jetson-modules
+    reference: Jetson Modules, Support, Ecosystem, and Lineup
+    date: &id002 2026-10-07
+    empreinte: sha256:d5e31fa0611f0f7cbab9e222c9b3f01ef50786dfc1c0a8a50684954e6cb49bd1
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_orin:
+    source: NVIDIA, https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+    reference: NVIDIA Jetson Orin (tableaux de spécifications)
+    date: *id002
+    empreinte: sha256:67811971d65f01881f361b5dac7337d5662155b1d90b553cf522688e95840055
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_thor:
+    source: NVIDIA, https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/
+    reference: NVIDIA Jetson Thor
+    date: *id002
+    empreinte: sha256:078f3e464733f3e04b6f3cb0bba1ff1adc57452e37f4c71f5d21a8ebb102aac4
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_nano_super_kit:
+    source: NVIDIA, https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/nano-super-developer-kit/
+    reference: Jetson Orin Nano Super Developer Kit
+    date: *id002
+    empreinte: sha256:fa20c4200706785a33e67da605164e3a1a0e42fb4016670a8cad00b02b8239ad
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_faq:
+    source: NVIDIA, https://developer.nvidia.com/embedded/faq
+    reference: Jetson FAQ (prix MSRP, origine, régions, durée de vie)
+    date: *id002
+    empreinte: sha256:fb0108976da1cbf4a2965f1ab7c163ec7181bc9f5731dec29e7150c5e98dbbfd
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_jetpack:
+    source: NVIDIA, https://developer.nvidia.com/embedded/jetpack
+    reference: JetPack SDK
+    date: *id002
+    empreinte: sha256:e950ec4d52810f4eb19d80c4bccb5d552706affdbf79b46ff39854d9b3ad9cc0
+    conditions: non lues
+    redistribuable: false
+  marche_calc_nv_blog_super:
+    source: NVIDIA, https://developer.nvidia.com/blog/nvidia-jetson-orin-nano-developer-kit-gets-a-super-boost/
+    reference: NVIDIA Jetson Orin Nano Developer Kit Gets a “Super” Boost
+    date: *id002
+    empreinte: sha256:7b9f67000ffdd0565b4c6e7787c2845b3f5cd0f7f61be86159e64e76ee23276b
+    conditions: non lues
+    redistribuable: false
+  marche_calc_cnx_prix:
+    source: CNX Software, https://www.cnx-software.com/2026/07/22/nvidia-increases-the-price-of-jetson-modules-and-devkits-by-up-to-101/
+    reference: NVIDIA increases the price of Jetson modules and devkits by up to 101%
+    date: *id002
+    empreinte: sha256:654d7d805a9edd03dd8d64356606f01bca83afcb817239db3be06467a2511b5c
+    conditions: non lues
+    redistribuable: false
+  marche_calc_cnx_t2000_t3000:
+    source: CNX Software, https://www.cnx-software.com/2026/07/16/nvidia-jetson-t2000-and-t3000-modules-for-edge-ai-and-robotics-applications/
+    reference: NVIDIA launches smaller, mainstream Jetson T2000 and T3000 modules
+    date: *id002
+    empreinte: sha256:070478052f709f2a211bf2a9299724026b574dc1ee48785e540f23f369dd7d3b
+    conditions: non lues
+    redistribuable: false
+  marche_calc_cnx_lpddr4_eol:
+    source: CNX Software, https://www.cnx-software.com/2026/04/30/nvidia-phases-out-several-jetson-modules-due-to-high-lpddr4-ram-prices-and-tight-supplies/
+    reference: NVIDIA phases out several Jetson modules due to high LPDDR4 RAM prices
+    date: *id002
+    empreinte: sha256:f6cf2b83566e7216c7119bfc4b75d92d88aaf1e378e4b3d6fb9d57e41fd7cbf5
+    conditions: non lues
+    redistribuable: false
+  marche_calc_openzeka_nano_kit_ds:
+    source: NVIDIA (hébergé par OpenZeka), https://openzeka.com/en/wp-content/uploads/2024/12/jetson-super-orin-nano-developer-kit-datasheet.pdf
+    reference: NVIDIA Jetson Orin Nano Super Developer Kit (fiche technique, copie revendeur)
+    date: *id002
+    empreinte: sha256:275521a387396ce5274ae89b7b859134ca3aec991e89d11b5b2d5636e2fca57f
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_kit_nano_super:
+    source: Silicon Highway Direct (distributeur UK/UE), https://www.siliconhighwaydirect.com/product-p/945-13766-0005-000.htm
+    reference: NVIDIA Jetson Orin Nano Super Developer Kit 945-13766-0005-000
+    date: *id002
+    empreinte: sha256:c93dcfa591928d126601158b167d65de7ad76e3aca7561eede57d94a39834488
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_agx_kit:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/945-13730-0055-000.htm
+    reference: NVIDIA Jetson AGX Orin development kit (64GB) 945-13730-0055-000
+    date: *id002
+    empreinte: sha256:afc2b4f6c7d80e281e55b88e2ea1b06a06815b5f838b908b6a04409b4f0ab361
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_thor_kit:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/945-14070-0085-000.htm
+    reference: NVIDIA Jetson AGX Thor Developer Kit 945-14070-0085-000
+    date: *id002
+    empreinte: sha256:922177e74463feb511435d619997150768e4b475b606346a594df2d72a17c371
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_nx16:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13767-0000-001.htm
+    reference: NVIDIA Jetson Orin NX 16GB 900-13767-0000-001
+    date: *id002
+    empreinte: sha256:7ef311bbff23bdb6a609bcd45c636865ed58beef4138c1466c2e34574999aa25
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_nx8:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13767-0010-001.htm
+    reference: NVIDIA Jetson Orin NX 8GB 900-13767-0010-001
+    date: *id002
+    empreinte: sha256:65cba0bf5c414c342609ae3b431b3030ec2f2bb1014a6229e3dc84e0f3be8d2d
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_nano8:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13767-0030-000.htm
+    reference: NVIDIA Jetson Orin Nano 8GB 900-13767-0030-000
+    date: *id002
+    empreinte: sha256:7f73acce6e311c7559758d9a2fbde75b37bc648b659e4193ed86c3e6e140834c
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_nano4:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13767-0040-000.htm
+    reference: NVIDIA Jetson Orin Nano 4GB 900-13767-0040-000
+    date: *id002
+    empreinte: sha256:03076cd539565a7ff0cd557fcb809a9f46f9f05040025588cf498e237aec8254
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_agx32:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13701-0040-000.htm
+    reference: NVIDIA Jetson AGX Orin 32GB 900-13701-0040-000
+    date: *id002
+    empreinte: sha256:9e71266a93ba5df87534f7fd64fd677025ff089ee5293d7331ddfdc8055a4bbe
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_agx64:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13701-0050-000.htm
+    reference: NVIDIA Jetson AGX Orin 64GB 900-13701-0050-000
+    date: *id002
+    empreinte: sha256:dd280dac0af862ce495f135b14236f0c159d8088f055b0b468952eb68d196303
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_agxind:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13701-0080-000.htm
+    reference: NVIDIA Jetson AGX Orin Industrial 900-13701-0080-000
+    date: *id002
+    empreinte: sha256:d4e556438036372f523a81ad26edd3964758e95ad849c155279e38ba84731569
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_t5000:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13834-0080-001.htm
+    reference: NVIDIA Jetson T5000 900-13834-0080-001
+    date: *id002
+    empreinte: sha256:a56fd5b9bb4dfff3424cba9a2cd3cc7df5320a3ab16484cab41e87f75d2a874b
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_t4000:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/900-13834-0000-000.htm
+    reference: NVIDIA Jetson T4000 900-13834-0000-000
+    date: *id002
+    empreinte: sha256:8aca18bc40066c879af144d13edeeedf23e9fbffce9764172ed68f3e0ebd2ad7
+    conditions: non lues
+    redistribuable: false
+  marche_calc_kiwi_nano_super:
+    source: Kiwi Electronics (Pays-Bas), https://www.kiwi-electronics.com/en/nvidia-jetson-orin-nano-super-developer-kit-11461
+    reference: NVIDIA Jetson Orin Nano Super Developer Kit (KW-3185)
+    date: *id002
+    empreinte: sha256:752234ce701a637572a6b273580fa944aa8d85b19f7c9d091e65a62ada964986
+    conditions: non lues
+    redistribuable: false
+  marche_calc_genrobots_nano_super:
+    source: Generation Robots (France), https://www.generationrobots.com/en/404303-nvidia-jetson-orin-nano-super-developer-kit.html
+    reference: NVIDIA Jetson Orin Nano Super Developer Kit
+    date: *id002
+    empreinte: sha256:03e787fda8c5d9ca81d538c89d3acca2978211a0ab1f7b1238dd42204ded9de6
+    conditions: non lues
+    redistribuable: false
+  marche_calc_berrybase_nano_kit:
+    source: BerryBase (Allemagne), https://www.berrybase.de/en/nvidia-jetson-orin-nano-developer-kit-8gb
+    reference: NVIDIA Jetson Orin Nano Developer Kit, 8GB (NVI-JET-ON)
+    date: *id002
+    empreinte: sha256:f32aeeb9ac8497890c8eef0daea70155cfbbc5cfd3c99c9faf48be644e2555c7
+    conditions: non lues
+    redistribuable: false
+  marche_calc_waveshare_nano_kit:
+    source: Waveshare, https://www.waveshare.com/jetson-orin-nano-super-developer-kit.htm
+    reference: Jetson Orin Nano Super Developer Kit (Waveshare SKU 30211)
+    date: *id002
+    empreinte: sha256:74534546705f5690eab0d31d5dbff926a0a063eb8758161a565dad4da1946e50
+    conditions: non lues
+    redistribuable: false
+  marche_calc_seeed_j401:
+    source: Seeed Studio, https://files.seeedstudio.com/wiki/reComputer-J4012/Carrier-Board-J401/J401-datasheet.pdf
+    reference: reComputer J401 carrier board datasheet
+    date: *id002
+    empreinte: sha256:ebac79b0bb31eff277768586095b02c3f2c45d30c84fcf085d34255b4f608356
+    conditions: non lues
+    redistribuable: false
+  marche_calc_seeed_super_manual:
+    source: Seeed Studio, https://files.seeedstudio.com/products/NVIDIA-Jetson/reComputer_super_user_manual.pdf
+    reference: reComputer Super User Manual
+    date: *id002
+    empreinte: sha256:8dda6e84e67b4df852eb8926e3488295d28fbbbab9212b8e8139d205a496e6ec
+    conditions: non lues
+    redistribuable: false
+  marche_calc_seeed_mini_wiki:
+    source: Seeed Studio, https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/
+    reference: Getting Started with reComputer Mini
+    date: *id002
+    empreinte: sha256:e4fd57e7be7a62e55b0d3894df3ba524611ccf77c77ad409419a9d46ebe213d8
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_hadron:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/ngx012.htm
+    reference: Connect Tech Hadron Carrier for Jetson Orin NX/Nano (NGX012)
+    date: *id002
+    empreinte: sha256:19598b23c4a06d80278e1430005dbc89f9bcdc9493998bd02c47fc640df2318a
+    conditions: non lues
+    redistribuable: false
+  marche_calc_shd_boson:
+    source: Silicon Highway Direct, https://www.siliconhighwaydirect.com/product-p/ngx020.htm
+    reference: Connect Tech Boson for FRAMOS Carrier (NGX020)
+    date: *id002
+    empreinte: sha256:a2cfe88dd8bd64c7b9e0297ed42ea495906298cac5403829146a7adb58ac054f
+    conditions: non lues
+    redistribuable: false
+  marche_calc_auvidea_jnx120:
+    source: Auvidea GmbH (Allemagne), https://auvidea.eu/product/jnx120-carrier-board-for-nvidia-jetson-orin-nano-nx/
+    reference: JNX120 carrier board for NVIDIA Jetson Orin Nano/NX
+    date: *id002
+    empreinte: sha256:1dc516590bcef6a605c250e6e4ef9b99c2ee80d9affb1dff27660667bf03e753
+    conditions: non lues
+    redistribuable: false
+  marche_calc_rpi5_brief:
+    source: Raspberry Pi Ltd, https://pip.raspberrypi.com/documents/RP-008348-DS-raspberry-pi-5-product-brief.pdf
+    reference: Raspberry Pi 5 Product Brief (publié octobre 2026)
+    date: *id002
+    empreinte: sha256:944fc1d70da50f0b8d5947dd4263078f698c79586f29c07f35fcd4b87077dd3f
+    conditions: non lues
+    redistribuable: false
+  marche_calc_rpi5_meca:
+    source: Raspberry Pi Ltd, https://pip.raspberrypi.com/documents/RP-008347-DS-1-raspberry-pi-5-mechanical-drawing.pdf
+    reference: Raspberry Pi 5 mechanical drawing
+    date: *id002
+    empreinte: sha256:5dd680d6c1f5e7aa9c7b020695e315d04aac862df82ff01d4e9041cd0668d7f2
+    conditions: non lues
+    redistribuable: false
+  marche_calc_rpi5_page:
+    source: Raspberry Pi Ltd, https://www.raspberrypi.com/products/raspberry-pi-5/
+    reference: Buy a Raspberry Pi 5
+    date: *id002
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_calc_cm5_brief:
+    source: Raspberry Pi Ltd, https://datasheets.raspberrypi.com/cm5/cm5-product-brief.pdf
+    reference: Raspberry Pi Compute Module 5 Product Brief (publié septembre 2026)
+    date: *id002
+    empreinte: sha256:489051021cc3ffe643a7c9e57e373e15bcc21553fd39834984dc13d6915246c0
+    conditions: non lues
+    redistribuable: false
+  marche_calc_aihat_brief:
+    source: Raspberry Pi Ltd, https://datasheets.raspberrypi.com/ai-hat-plus/raspberry-pi-ai-hat-plus-product-brief.pdf
+    reference: Raspberry Pi AI HAT+ Product Brief (publié octobre 2024)
+    date: *id002
+    empreinte: sha256:433d7494ec6d1c8396f991fc74bea7080a7cade398a67420a0adf9efbb6008af
+    conditions: non lues
+    redistribuable: false
+  marche_calc_aihat2_brief:
+    source: Raspberry Pi Ltd, https://pip.raspberrypi.com/documents/RP-009655-MM-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+    reference: Raspberry Pi AI HAT+ 2 Product Brief (publié juillet 2026)
+    date: *id002
+    empreinte: sha256:eb01bea592ef6e39e526c617ffdb41786d479dd455924fc74ea4eb832ca60f37
+    conditions: non lues
+    redistribuable: false
+  marche_calc_aikit_page:
+    source: Raspberry Pi Ltd, https://www.raspberrypi.com/products/ai-kit/
+    reference: Raspberry Pi AI Kit
+    date: *id002
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_calc_aicam_brief:
+    source: Raspberry Pi Ltd, https://datasheets.raspberrypi.com/camera/ai-camera-product-brief.pdf
+    reference: Raspberry Pi AI Camera Product Brief (publié septembre 2024)
+    date: *id002
+    empreinte: sha256:aa1d70c5d6ed7f30c55ec7d959948d6aededb83b44eb3092af2dec4b769e4e9a
+    conditions: non lues
+    redistribuable: false
+  marche_calc_berrybase_rpi5_4:
+    source: BerryBase (Allemagne), https://www.berrybase.de/en/raspberry-pi-5-4gb-ram
+    reference: Raspberry Pi 5, 4GB RAM (RPI5-4GB)
+    date: *id002
+    empreinte: sha256:96d19db67ebd82b89ebb770984ad75ffcb75e7127a3abed5e8bcaf12787da9d1
+    conditions: non lues
+    redistribuable: false
+  marche_calc_berrybase_rpi5_8:
+    source: BerryBase (Allemagne), https://www.berrybase.de/en/raspberry-pi-5-8gb-ram
+    reference: Raspberry Pi 5, 8GB RAM (RPI5-8GB)
+    date: *id002
+    empreinte: sha256:a26be3174a18b2d75c169f61eac22e936f9b69e5637440ae2c2af6ec69abf509
+    conditions: non lues
+    redistribuable: false
+  marche_calc_berrybase_rpi5_16:
+    source: BerryBase (Allemagne), https://www.berrybase.de/en/raspberry-pi-5-16gb-ram
+    reference: Raspberry Pi 5, 16GB RAM (RPI5-16GB)
+    date: *id002
+    empreinte: sha256:89827d204e30d705142a6b5588c3aef850f484904f4ee1956c8ec2a37ff679ad
+    conditions: non lues
+    redistribuable: false
+  marche_calc_botland_aihat2:
+    source: Botland (Pologne), https://botland.store/raspberry-pi-5-gpio-extensions-and-hat/27755-raspberry-pi-ai-hat-2-40-tops-ai-accelerator-hat-with-hailo-10h-for-raspberry-pi-5-5056561805955.html
+    reference: Raspberry Pi AI HAT+ 2 (Hailo-10H)
+    date: *id002
+    empreinte: sha256:9b3b651599625c4d2b421251fd0e7056ef3197b7cea7de23ecb61652ed3b4248
+    conditions: non lues
+    redistribuable: false
+  marche_calc_pishop_us_aihat2:
+    source: PiShop.us (États-Unis), https://www.pishop.us/product/raspberry-pi-ai-hat-2/
+    reference: Raspberry Pi AI HAT+ 2 - PiShop.us
+    date: *id002
+    empreinte: sha256:13c2296eb846d19112a608a2e3ecd6febdaa11dbaa9c7c938ae6c686fb476ddb
+    conditions: non lues
+    redistribuable: false
+  marche_calc_seeed_aihat2:
+    source: Seeed Studio, https://www.seeedstudio.com/Raspberry-Pi-Al-HAT-2-p-6648.html
+    reference: Raspberry Pi AI HAT+ 2 (Seeed)
+    date: *id002
+    empreinte: sha256:7a9bb41812e500ca73bc653c83b09872abf9fabf2c65cce45859c6e9519b7879
+    conditions: non lues
+    redistribuable: false
+  marche_calc_cnx_rpi5_power:
+    source: CNX Software, https://www.cnx-software.com/2023/11/05/raspberry-pi-5-review-raspberry-pi-os-bookworm-benchmarks-power-consumption/
+    reference: Raspberry Pi 5 review - Part 2 (consommation)
+    date: *id002
+    empreinte: sha256:03d01e9d7b7710caf2a3b2a49a6bd31e457da9f0a348303e10e752c13ee1552d
+    conditions: non lues
+    redistribuable: false
+  marche_bus_rs00_manuel_260713:
+    source: RobStride (Lingzu), https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS00/RS00User%20Manual260713.pdf
+    reference: RS00 User Manual 260713
+    date: 2026-10-07
+    empreinte: sha256:47d0ae5c909df2d989b0485c870d36900b9e17c72e608efeb3e13b6e98953832
+    conditions: non lues
+    redistribuable: false
+  marche_bus_rs02_manuel_260713:
+    source: RobStride (Lingzu), https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS02/RS02User%20Manual260713.pdf
+    reference: RS02 User Manual 260713
+    date: 2026-10-07
+    empreinte: sha256:87baa04792996978d1d4edc4176cd583e695e8bc09a65f97fc982b2e0a7f71b7
+    conditions: non lues
+    redistribuable: false
+  marche_bus_rs05_manuel_260713:
+    source: RobStride (Lingzu), https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS05/RS05User%20Manual260713.pdf
+    reference: RS05 User Manual 260713
+    date: 2026-10-07
+    empreinte: sha256:1b2c61a6daa8331b9a348455005d10d6e425165c22e6f64c39cbca33f6360e82
+    conditions: non lues
+    redistribuable: false
+  marche_bus_rs_canhub_v1_0:
+    source: RobStride (Lingzu), https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/canhub/USB_CANHUB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.0.pdf
+    reference: USB_CANHUB使用说明V1.0 (manuel de l'adaptateur USB-CANHUB RobStride)
+    date: 2026-10-07
+    empreinte: sha256:ed3bcddbc65d777144ded45916ddf480a291aaba1a46335b4cefb1ba331c09d1
+    conditions: non lues
+    redistribuable: false
+  marche_bus_rs_arbre_depot:
+    source: GitHub, https://api.github.com/repos/RobStride/Product_Information/git/trees/3f0cae4986e175337c7b03d891b899247b1f2933?recursive=1
+    reference: Arborescence du dépôt RobStride/Product_Information au commit 3f0cae4 (API GitHub)
+    date: 2026-10-07
+    empreinte: sha256:89799abf51f91704a62f9704c113ead7753a143adbcac6f8538bd7bfaa6d824b
+    conditions: non lues
+    redistribuable: false
+  marche_bus_bosch_can20_1991:
+    source: Robert Bosch GmbH (copie hébergée par l'UC Riverside ; mise en page Motorola 1995), http://esd.cs.ucr.edu/webres/can20.pdf
+    reference: BOSCH CAN Specification Version 2.0 (Robert Bosch GmbH, sept. 1991), Parties A et B
+    date: 2026-10-07
+    empreinte: sha256:99358a5d42cfeb6f576e532e38953abcbfddc0a8e587c0ad5ae9814e29b28927
+    conditions: 'p. 2 du PDF : « The document as a whole may be copied and distributed without restrictions. However,
+      the usage of it in parts or as a whole in other documents needs the consent of Robert Bosch GmbH »'
+    redistribuable: false
+  marche_bus_ti_sloa101b:
+    source: Texas Instruments, https://www.ti.com/lit/an/sloa101b/sloa101b.pdf
+    reference: Introduction to the Controller Area Network (CAN), SLOA101B (août 2002, révisé mai 2016)
+    date: 2026-10-07
+    empreinte: sha256:32abab14388402ec313f77648f0b4dd3e986cc1ff18988f2e7549db3a665a694
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_pcan_usb_manuel:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB_UserMan_eng.pdf
+    reference: PCAN-USB User Manual (anglais)
+    date: 2026-10-07
+    empreinte: sha256:814e7bf18e76de444f569f607edb41e3005cb59878f85cc86f9795be1bea2858
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_pcan_usb_fd_manuel:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB-FD_UserMan_eng.pdf
+    reference: PCAN-USB FD User Manual (anglais)
+    date: 2026-10-07
+    empreinte: sha256:a5bba6c7bfa6b2125b40b88ed5a8031c11c82a88fb5d295be6bb3a2e9ed4a0af
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_pcan_usb_pro_fd_manuel:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/produktcd/Pdf/English/PCAN-USB-Pro-FD_UserMan_eng.pdf
+    reference: PCAN-USB Pro FD User Manual (anglais)
+    date: 2026-10-07
+    empreinte: sha256:f7dc6978e9e8fb082a43bb159adf413b042505574e479edd1b75a8b74a7dd404
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_pcan_m2_manuel:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/produktcd/Pdf/English/PCAN-M.2_UserMan_eng.pdf
+    reference: PCAN-M.2 User Manual (anglais)
+    date: 2026-10-07
+    empreinte: sha256:1b550612580cd56e1836503b42aaffac5d8e94ceb243f54c041e06b60e45082e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_pcan_minipcie_fd_manuel:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/produktcd/Pdf/English/PCAN-miniPCIe-FD_UserMan_eng.pdf
+    reference: PCAN-miniPCIe FD User Manual (anglais)
+    date: 2026-10-07
+    empreinte: sha256:13b23e23d08cb60a32da1c6cca0b7a0d793449e085bf4a7f375ed196e160dfb8
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_linux:
+    source: PEAK-System Technik GmbH, https://linux.peak-system.com/
+    reference: PEAK-System – Linux (tableau « Part of the Linux mainline kernel »)
+    date: 2026-10-07
+    empreinte: sha256:fba79bf29b5b0c53494fb68c4e0a0bd1c7e8cf9757d45fcbc7eed39117290db2
+    conditions: non lues
+    redistribuable: false
+  marche_bus_peak_page_pcan_usb_fd:
+    source: PEAK-System Technik GmbH, https://www.peak-system.com/PCAN-USB-FD.365.0.html?&L=1
+    reference: Page produit PCAN-USB FD
+    date: 2026-10-07
+    empreinte: sha256:4ef7cb99ed96c09d65d0c61e0fa1837a7dac3b61cc7b6cecaeabe7335d4a3848
+    conditions: non lues
+    redistribuable: false
+  marche_bus_twincomm_pcan_usb_fd:
+    source: TwinComm (Pays-Bas), revendeur, https://twincomm.nl/en/product/pcan-usb-fd/
+    reference: TwinComm – PCAN-USB FD
+    date: 2026-10-07
+    empreinte: sha256:8e62133fcb7f995d0f840349cb5de178deb3ad8f8ef137e1d45acb7e7d7be11a
+    conditions: non lues
+    redistribuable: false
+  marche_bus_twincomm_pcan_usb:
+    source: TwinComm (Pays-Bas), revendeur, https://twincomm.nl/en/product/peak-pcan-usb-iso/
+    reference: TwinComm – PCAN-USB (redirigé vers peak-pcan-usb-iso)
+    date: 2026-10-07
+    empreinte: sha256:50dc2cee741669ded0a3eb76d931e45623dd4f229b1f1426a6da773288e97f7c
+    conditions: non lues
+    redistribuable: false
+  marche_bus_twincomm_pcan_usb_pro_fd:
+    source: TwinComm (Pays-Bas), revendeur, https://twincomm.nl/en/product/pcan-usb-pro-fd/
+    reference: TwinComm – PCAN-USB Pro FD
+    date: 2026-10-07
+    empreinte: sha256:8befb6465af0a6c66cca306e674642eac30bdf104cfa9bd1286949af960d35b1
+    conditions: non lues
+    redistribuable: false
+  marche_bus_twincomm_pcan_m2:
+    source: TwinComm (Pays-Bas), revendeur, https://twincomm.nl/en/product/pcan-m-2/
+    reference: TwinComm – PCAN-M.2
+    date: 2026-10-07
+    empreinte: sha256:7ff8ca0ae3cb4313054da92460c3847a9fd286dfa755983763db948c28549f7e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_twincomm_pcan_minipcie_fd:
+    source: TwinComm (Pays-Bas), revendeur, https://twincomm.nl/en/product/pcan-minipcie-fd/
+    reference: TwinComm – PCAN-miniPCIe FD
+    date: 2026-10-07
+    empreinte: sha256:8e00a4b67244d220a5a05713ae52c5a3c1fa3d4ad736e88e80fcd22b03ed9ab6
+    conditions: non lues
+    redistribuable: false
+  marche_bus_emsa_pcan_usb_fd:
+    source: Embedded Systems Academy (Allemagne), revendeur, https://esacademystore.eu/products/peak-pcan-usb-fd-usb-to-can-fd-interface
+    reference: EmSA Online Shop – PEAK PCAN-USB FD
+    date: 2026-10-07
+    empreinte: sha256:0c3cfddc7bdb7f6c375d16e1345925b3019f7de2e8ed474e332b73d78ec99532
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_kvaser_leaf_v2:
+    source: Kvaser AB, https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
+    reference: Kvaser Leaf Light v2 (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:59a3a48cec39f0758e08ddb3410afa1098b473206c2f9a26d896e5db28dbff2e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_kvaser_u100:
+    source: Kvaser AB, https://www.kvaser.com/product/kvaser-u100/
+    reference: Kvaser U100 (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:4751297ece25b24fecf238a758aed5b0fdbbba14bbf9bba382d39989a8262601
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_linux_can_usb_kconfig:
+    source: Linux kernel (torvalds/linux, commit 602042bf, 7.3-rc6), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/Kconfig
+    reference: Linux drivers/net/can/usb/Kconfig
+    date: '2026-10-07'
+    empreinte: sha256:d7de80022ccd85d9052431b6bdc0d773f2fd628b5c4d9d84a22d4078f6872d02
+    conditions: GPL-2.0 (lecture de faits)
+    redistribuable: false
+  marche_bus_a_linux_can_kconfig:
+    source: Linux kernel (commit 602042bf), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/Kconfig
+    reference: Linux drivers/net/can/Kconfig
+    date: '2026-10-07'
+    empreinte: sha256:19de75d947fba9678dbb5b2b0a3a4ddeda7f64f56f7f9ab2dfee72d26b9f97b2
+    conditions: GPL-2.0 (lecture de faits)
+    redistribuable: false
+  marche_bus_a_linux_gs_usb_c:
+    source: Linux kernel (commit 602042bf), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/gs_usb.c
+    reference: Linux drivers/net/can/usb/gs_usb.c
+    date: '2026-10-07'
+    empreinte: sha256:e174e1dd5c3afb00b41d1f98a028a70264a97356c6ef6225dd3c7c15ea53ea45
+    conditions: GPL-2.0 (lecture de faits)
+    redistribuable: false
+  marche_bus_a_linux_slcan_core_c:
+    source: Linux kernel (commit 602042bf), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/slcan/slcan-core.c
+    reference: Linux drivers/net/can/slcan/slcan-core.c
+    date: '2026-10-07'
+    empreinte: sha256:b08d2a49bdfc7484ee6ebfa61b9ae1e406bcdd85b39a557f62e3d6f0d31c3f6c
+    conditions: GPL-2.0 (lecture de faits)
+    redistribuable: false
+  marche_bus_a_linux_usb_8dev_c:
+    source: Linux kernel (commit 602042bf), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/usb/usb_8dev.c
+    reference: Linux drivers/net/can/usb/usb_8dev.c
+    date: '2026-10-07'
+    empreinte: sha256:223677c7a880c1e6112843ccbb16eb0598473d47d1984340d04f45dedd75a428
+    conditions: GPL-2.0 (lecture de faits)
+    redistribuable: false
+  marche_bus_a_linux_makefile:
+    source: Linux kernel, https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/Makefile
+    reference: Linux Makefile (version)
+    date: '2026-10-07'
+    empreinte: sha256:e1478a3514d5f24fe9494fdb87af862bb1215d9e18de86e096fa862e3225c57e
+    conditions: GPL-2.0
+    redistribuable: false
+  marche_bus_a_candlelight_gh:
+    source: candle-usb (communauté), https://github.com/candle-usb/candleLight_fw
+    reference: candle-usb/candleLight_fw (README GitHub)
+    date: '2026-10-07'
+    empreinte: sha256:2f183f942d5160ee95505d6e0734f5732c23b342de3662ce7046570546fcc9fc
+    conditions: MIT (firmware, d'après la fiche LXA)
+    redistribuable: false
+  marche_bus_a_lxa_candlelight:
+    source: Linux Automation GmbH, https://www.linux-automation.com/en/products/candlelight.html
+    reference: candleLight (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:e369e9758333c9a752de3092f8ff79c077a5a9a265b15e032cb5a25cf15fe06e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_lxa_candlelight_ds:
+    source: Linux Automation GmbH, https://www.linux-automation.com/media/pages/products/candlelight/Datasheet_candlelight.pdf
+    reference: Datasheet candleLight
+    date: '2026-10-07'
+    empreinte: sha256:842f209e1db005c6349556ad7e648a16322eb38c33bcb9d510e3fec089c54db1
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_lxa_candlelight_fd:
+    source: Linux Automation GmbH, https://linux-automation.com/en/products/candlelight-fd.html
+    reference: candleLight FD (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:8c1abfd8d33c04c4ca57faf553e67eb807146f470adeb940858b4dbb1d6d0228
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_lxa_candlelight_fd_ds:
+    source: Linux Automation GmbH, https://linux-automation.com/media/pages/products/candlelightfd/datasheet_candlelightfd-R02.pdf
+    reference: Datasheet candleLight FD, candlelightfd-M02-R02, 2024-11-08
+    date: '2026-10-07'
+    empreinte: sha256:bdf74532f6be28464acdbe014566c07148c7b287bcb81c7a9769c8f9cd9987c8
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_lxa_shop_fd:
+    source: Linux Automation GmbH, https://shop.linux-automation.com/candlelight-fd-de
+    reference: Boutique LXA, candlelight FD
+    date: '2026-10-07'
+    empreinte: sha256:6a1337b5a262a30b930b2edb62ada6514462e7846b4084741ec826ab2589989f
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_canable2_fw_readme:
+    source: Openlight Labs (normaldotcom), https://raw.githubusercontent.com/normaldotcom/canable2-fw/b158aa7ab106bc018715cd4d5f02f544f9de1830/README.md
+    reference: normaldotcom/canable2-fw README
+    date: '2026-10-07'
+    empreinte: sha256:efec2b5b49057d5f360803b176065822529815dd68d3fed59f324d30b3e66317
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_canable2_shop_js:
+    source: Openlight Labs, https://openlightlabs.com/products/canable-2-0.js
+    reference: Openlight Labs, CANable 2.0 (JSON Shopify)
+    date: '2026-10-07'
+    empreinte: sha256:b2bfe8b9ad2ec67fb72dad0949d1abee43f64d8c2d20a25030373da32da0fa41
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_canable2_shop:
+    source: Openlight Labs, https://openlightlabs.com/products/canable-2-0
+    reference: Openlight Labs, CANable 2.0 (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:de366c0e86b3ec772aa64c0676e854faa97b44fb2bf4c98b4a2814f4ddbb29cf
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_innomaker_usb2can_manual:
+    source: InnoMaker, https://raw.githubusercontent.com/INNO-MAKER/usb2can/99d6bc8a5f7258fda245648a88de8f541024bcf7/Document%EF%BC%88read%20me%20first%EF%BC%89/USB2CAN%20UserManual%20v2.0.pdf
+    reference: InnoMaker USB2CAN UserManual v2.0
+    date: '2026-10-07'
+    empreinte: sha256:0e5634c3d26394a05b15e241dc4ca571da7feb2180bb52773f9ec39158c31cd1
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_seeed_usbcan:
+    source: Seeed Studio, https://www.seeedstudio.com/USB-CAN-Analyzer-p-2888.html
+    reference: Seeed USB to CAN Analyzer (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:1238fa80b8fc50b2d4be426c093d1b47146a4976e493672dd357a899637c2fcb
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_seeed_usbcan_ds:
+    source: Seeed Studio (hébergé par DigiKey), https://media.digikey.com/pdf/Data%20Sheets/Seeed%20Technology/114991193_Web.pdf
+    reference: USB-CAN Analyzer SKU 114991193 Description
+    date: '2026-10-07'
+    empreinte: sha256:2c19a4a0c876f1450f1b38cf703f4941840a236d66e1619563225af0856d5074
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_pythoncan_seeed:
+    source: python-can, https://python-can.readthedocs.io/en/stable/interfaces/seeedstudio.html
+    reference: python-can 4.6.1, Seeed Studio USB-CAN Analyzer
+    date: '2026-10-07'
+    empreinte: sha256:3dd7a1dd642175f1747cf64eee4d3b4ad51d485735ff9ed66ffcc979c2949374
+    conditions: LGPL-3.0 (doc)
+    redistribuable: false
+  marche_bus_a_8dev_korlan:
+    source: UAB 8devices, https://www.8devices.com/products/usb2can_korlan
+    reference: Korlan USB2CAN (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:965349e4b625a6b3d32dfd3d40ef432469c328940c572ff0e0b369d1cbbf77fa
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_8dev_korlan_shop:
+    source: UAB 8devices, https://shop.8devices.com/usb2can/korlan/
+    reference: Boutique 8devices, Korlan
+    date: '2026-10-07'
+    empreinte: sha256:b346c9c06a3df5e8e67af51db9d0a85e3aa2ec632d031a2bb0de7707111d0478
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_8dev_korlan_wiki:
+    source: UAB 8devices, https://wiki.8devices.com/korlan
+    reference: Wiki 8devices, Korlan
+    date: '2026-10-07'
+    empreinte: sha256:268d1c61f8f07d0fd37d3ecdeaa3455d1e0c21324b992d007470545402de4a27
+    conditions: non lues
+    redistribuable: false
+  marche_bus_a_8dev_usb2can_readme:
+    source: UAB 8devices, https://raw.githubusercontent.com/8devices/usb2can/9c66dc0addc9be04b7f35bb52839f11e7d6be368/README.md
+    reference: 8devices/usb2can README
+    date: '2026-10-07'
+    empreinte: sha256:b02aa7373289b2efa484a443b90c6a775c398feccaa33c266936ba38065fb324
+    conditions: GPL-2.0
+    redistribuable: false
+  marche_bus_a_nvidia_jetson_can:
+    source: NVIDIA, https://docs.nvidia.com/jetson/archives/r36.4/DeveloperGuide/HR/ControllerAreaNetworkCan.html
+    reference: Jetson Linux Developer Guide r36.4, Controller Area Network (CAN)
+    date: '2026-10-07'
+    empreinte: sha256:8aeedff9a049f3a5be29a646edbfef8901b88d62c79299aee408004c5c3b09d8
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_canfd_page:
+    source: Waveshare, https://www.waveshare.com/2-ch-can-fd-hat.htm
+    reference: 2-CH CAN FD HAT (page produit)
+    date: &id003 2026-10-07
+    empreinte: sha256:399bec7c94cc505a9d6074c4969c379d4d98fb92f76fb6df0728531d74ba8317
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_canfd_wiki:
+    source: Waveshare, https://www.waveshare.com/wiki/2-CH_CAN_FD_HAT
+    reference: 2-CH CAN FD HAT - Waveshare Wiki
+    date: *id003
+    empreinte: sha256:3c19e5cf8bbf9bea05bffce5a9ddecc8a90a5d7b6dc2e2080c371841a8b8fe6a
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_pican_fd:
+    source: Copperhill Technologies (revendeur US de SK Pang), https://copperhilltech.com/pican-fd-can-bus-fd-duo-board-with-real-time-clock-for-raspberry-pi/
+    reference: PICAN FD - CAN Bus FD Duo Board with Real Time Clock for Raspberry Pi
+    date: *id003
+    empreinte: sha256:4083ee9afcb00f52644baf930d43e79fd17268b9201021a70db4141f65b198ba
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_seeed_canfd_hat:
+    source: Seeed Studio, https://www.seeedstudio.com/2-Channel-CAN-BUS-FD-Shield-for-Raspberry-Pi-p-4072.html
+    reference: 2-Channel CAN-BUS(FD) Shield for Raspberry Pi (SKU 103030296)
+    date: *id003
+    empreinte: sha256:e4a4412114f631e7bfa41da65fb3cc049abe37c2eff5be65ff82820330bf6525
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_seeed_canfd_wiki:
+    source: Seeed Studio, https://wiki.seeedstudio.com/2-Channel-CAN-BUS-FD-Shield-for-Raspberry-Pi/
+    reference: 2 Channel CAN BUS FD Shield for Raspberry Pi (wiki)
+    date: *id003
+    empreinte: sha256:61292951996e1e800a9f346f6d2daed1ed1232aaad7fcc96cd9b3ed0efa62ca4
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_kernel_mcp251xfd_kconfig:
+    source: Linux (torvalds/linux, commit 602042bf29f6, 2026-10-07), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/spi/mcp251xfd/Kconfig
+    reference: drivers/net/can/spi/mcp251xfd/Kconfig
+    date: *id003
+    empreinte: sha256:d8c55da8296c3a8127dbcecc363274eae26d48d858c63953b7ddfa24febd2585
+    conditions: GPL-2.0-only (fichier lu, rien copié)
+    redistribuable: false
+  marche_bus_b_kernel_mcp251xfd_core:
+    source: Linux (torvalds/linux, commit 602042bf29f6), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+    reference: drivers/net/can/spi/mcp251xfd/mcp251xfd-core.c
+    date: *id003
+    empreinte: sha256:ebb111d6d551fab950e51b28ab501ef28aa39be0f6f27d4596fd4a9356a84aeb
+    conditions: GPL-2.0-only (fichier lu, rien copié)
+    redistribuable: false
+  marche_bus_b_kernel_usbserial_kconfig:
+    source: Linux (master le 2026-10-07, = 602042bf29f6), https://raw.githubusercontent.com/torvalds/linux/master/drivers/usb/serial/Kconfig
+    reference: drivers/usb/serial/Kconfig
+    date: *id003
+    empreinte: sha256:b92edb8a940e703577ae0feccad622593879789588a2f87ac828e3154ca5341d
+    conditions: GPL-2.0-only
+    redistribuable: false
+  marche_bus_b_kernel_ch341:
+    source: Linux (commit 602042bf29f6), https://raw.githubusercontent.com/torvalds/linux/602042bf29f6efde39cfb5fdd9289bf4854bc0c5/drivers/usb/serial/ch341.c
+    reference: drivers/usb/serial/ch341.c
+    date: *id003
+    empreinte: sha256:42dfb2e94a8e8a82cedc464a71e41f721caa36917d31d81dd792cb5ea4c03f2f
+    conditions: GPL-2.0-only
+    redistribuable: false
+  marche_bus_b_rcdrone_urt1:
+    source: rcdrone.top (revendeur), https://rcdrone.top/products/multi-function-serial-port-signal-converter-usb-urt-1-sms-rs485-servo-scs-ttl-compatible-feetech-scservo-and-sm-servo
+    reference: Feetech Multi Function Serial Port Signal Converter USB/URT-1 (revendeur)
+    date: *id003
+    empreinte: sha256:fa898d3927cd6525b8c884679117631ba1c97a900f2686e624b61f1b7b847fce
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_rcdrone_urt1_js:
+    source: rcdrone.top, https://rcdrone.top/products/multi-function-serial-port-signal-converter-usb-urt-1-sms-rs485-servo-scs-ttl-compatible-feetech-scservo-and-sm-servo.js
+    reference: idem, JSON Shopify (.js)
+    date: *id003
+    empreinte: sha256:47bcf27964ea327a43899383680c7374830cba12122539c1c9164eb378200ddd
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotis_u2d2:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/parts/interface/u2d2/
+    reference: U2D2 e-Manual
+    date: *id003
+    empreinte: sha256:87995f91a20566f04d24b04164679931598b8c96b599bd66005613b08e9daf89
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotis_u2d2phb:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/parts/interface/u2d2_power_hub/
+    reference: U2D2 Power Hub Board e-Manual
+    date: *id003
+    empreinte: sha256:987ebfb04b216e92324cb1b355c500a9ca2d47e4c96598cd5b2f737b207914ae
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotis_openrb150:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/parts/controller/openrb-150/
+    reference: OpenRB-150 e-Manual
+    date: *id003
+    empreinte: sha256:3d63ad9b64a92aebf9727d51f0eaac14d2638d6adde2eb264486cd7082c6f2fb
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotisus_u2d2:
+    source: ROBOTIS America, https://www.robotis.us/products/u2d2.js
+    reference: U2D2, JSON Shopify robotis.us
+    date: *id003
+    empreinte: sha256:9e7aa5dd4c8ff3c8e1593a24ae034bb1fe797c62c8768c27f73016952a043c42
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotisus_u2d2_page:
+    source: ROBOTIS America, https://www.robotis.us/products/u2d2
+    reference: U2D2, page boutique robotis.us
+    date: *id003
+    empreinte: sha256:5d1d71efa69ad405d35ff48cdff68c9c370031c2240cee7809226258bbb4fafb
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotisus_u2d2phb:
+    source: ROBOTIS America, https://www.robotis.us/products/u2d2-power-hub-board-set.js
+    reference: U2D2 Power Hub Board Set, JSON Shopify
+    date: *id003
+    empreinte: sha256:e2034c740293a082e291f39d00241e2ac43f971f1143f8ddf00f6727e4cfb29b
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_robotisus_openrb150:
+    source: ROBOTIS America, https://www.robotis.us/products/openrb-150.js
+    reference: OpenRB-150, JSON Shopify
+    date: *id003
+    empreinte: sha256:98587424fe04c7cb7e9ef85aa6eaa6f99c2cee93856c1501c3682d2b0aa185ce
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_busservo_a_page:
+    source: Waveshare, https://www.waveshare.com/bus-servo-adapter-a.htm
+    reference: Bus Servo Adapter (A) (page produit, SKU 25514)
+    date: *id003
+    empreinte: sha256:9c6dcf518f8438184e51de7261eae98ad0ea281906b69cbacb37e6d939a255b8
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_busservo_a_wiki:
+    source: Waveshare, https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)
+    reference: Bus Servo Adapter (A) - Waveshare Wiki
+    date: *id003
+    empreinte: sha256:27e99dce28dd69eca02c83840d830c974ebba1cf730d4214f70ad3aa0343f2d0
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_sbsdriver_wiki:
+    source: Waveshare, https://www.waveshare.com/wiki/Serial_Bus_Servo_Driver_Board
+    reference: Serial Bus Servo Driver Board - Waveshare Wiki
+    date: *id003
+    empreinte: sha256:3c745e9940a5a3c9357be30cd442522b1a84dc4c67f6af1520f01cda9b9f0926
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_seeed_xiao_busservo_wiki:
+    source: Seeed Studio, https://wiki.seeedstudio.com/bus_servo_driver_board/
+    reference: Bus Servo Driver Board for XIAO (wiki)
+    date: *id003
+    empreinte: sha256:850c52df454f79977b35c45d47e3c9e373e34c3e96c6f1d47c8ba2d2a9904567
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_seeed_xiao_busservo_page:
+    source: Seeed Studio, https://www.seeedstudio.com/Bus-Servo-Driver-Board-for-XIAO-p-6413.html
+    reference: Bus Servo Driver Board for Seeed Studio XIAO (SKU 105990190)
+    date: *id003
+    empreinte: sha256:54c1515b815f5acc19300e894dcfbee03bfeb54c6e191c64433c44611771e534
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_usb_rs485_page:
+    source: Waveshare, https://www.waveshare.com/usb-to-rs485.htm
+    reference: USB TO RS485 (page produit, SKU 17286)
+    date: *id003
+    empreinte: sha256:ae0c09abb13747d49b76821dbf3b4b7b856ca6cd038d8ca638ab272cb603bfe7
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_usb_rs485_wiki:
+    source: Waveshare, https://www.waveshare.com/wiki/USB_TO_RS485
+    reference: USB TO RS485 - Waveshare Wiki
+    date: *id003
+    empreinte: sha256:046b8fe35175cd126eaddd9c241a6211daffc8daf12315326c58393b7b259399
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ws_usb_ttl_wiki:
+    source: Waveshare, https://www.waveshare.com/wiki/USB_TO_TTL
+    reference: USB TO TTL - Waveshare Wiki
+    date: *id003
+    empreinte: sha256:0265d241a5175e6c6fb21a22b130d170da615922755df0ba9a3caedb75683f8b
+    conditions: non lues
+    redistribuable: false
+  marche_bus_b_ftdi_usb_rs485:
+    source: FTDI, https://ftdichip.com/wp-content/uploads/2020/07/DS_USB_RS485_CABLES.pdf
+    reference: DS_USB_RS485_CABLES (fiche FTDI des câbles USB-RS485)
+    date: *id003
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_bus_c_akizuki_st3215_c018:
+    source: Feetech (copie hébergée par Akizuki Denshi, revendeur), https://akizukidenshi.com/goodsaffix/STS3215-C018.pdf
+    reference: Feetech PRODUCT SPECIFICATION ST-3215-C018, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:3f1dc84e470ac89cbd7b7244183fcc62b7f7a5345aa41a62120280a9b7b26f5e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_sts3250:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3250-C001Specification.pdf?v=1744785378
+    reference: Feetech PRODUCT SPECIFICATION STS3250, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:c471fe4e3b872423100ec28726800e65bfc5eb7aa14a82e35db28d3c8e89ab28
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_sts3215:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3215-PRODUCT_SPECIFICATION.pdf?v=1743958514
+    reference: Feetech PRODUCT SPECIFICATION STS3215 (7.4V 19KG.CM), édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:eeac0fb6b73bf2215974d8f73fb7db0f09d59a59f5affff99aa89fee64948286
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_sts3032:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3032_PRODUCT_SPECIFICATION.pdf?v=1745006404
+    reference: Feetech PRODUCT SPECIFICATION STS3032 (6V 4.5KG.CM, simple axe), édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:fc777696d2c915786b3dbb327d3fa18264772975377739739ad48e6f0a22f639
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_sts3032_c036:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/STS3032_C036_PRODUCT_SPECIFICATION.pdf?v=1745008249
+    reference: Feetech PRODUCT SPECIFICATION STS3032-C036, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:c698370fa25c5c10c4d44abf28476cc963b0b3947fa2b8b5e5f689d7d6fc8726
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_st3036_c002:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH_ST3036_Servo_Motor_PRODUCT_SPECIFICATION.pdf?v=1774849736
+    reference: Feetech PRODUCT SPECIFICATION ST-3036-C002, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:a047a3cfdfaa424fef0b96744ac8794955841b11557a503146ea293c0fedac89
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs0009_c013:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SC-0090-C013Serial_Communication_Specification.pdf?v=1744049016
+    reference: Feetech PRODUCT SPECIFICATION SCS0009-C013, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:4672a95b814f39dd845c2edee9ba6d9e2b01831787e8319148acf0f889540260
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs15_c022:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SCS15-PRODUCT_SPECIFICATION.pdf?v=1759390738
+    reference: Feetech PRODUCT SPECIFICATION SCS15-C022, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:93ba3360727471f26d7fbfb245be3294a09b2cab0869512ccef2d351b2ea3b10
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs2332:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/SCS2332-PRODUCT_SPECIFICATION.pdf?v=1759402275
+    reference: Feetech PRODUCT SPECIFICATION SCS2332, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:2ced34dbcc9e85c05c781dd079c184b55c880460189ec0afa3332934bc39d8bf
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_hl2915_c001:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-HL2915.pdf?v=1783132110
+    reference: Feetech PRODUCT SPECIFICATION HL-2915-C001, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:92f0af30f17c606ee226a932e6778bca9f7243a0ec07b1c226005af4553aa20b
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs0002_c001:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0002.pdf?v=1783133983
+    reference: Feetech PRODUCT SPECIFICATION SCS0002-C001, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:11a1bd412a140281686587e84e1fb9cb3d8cd17f6518722acc3670e64858fbea
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs0005_c001:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0005.pdf?v=1783133983
+    reference: Feetech PRODUCT SPECIFICATION SCS0005-C001, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:4c4b4d84cfa34f3285a92ff30e0a9244a7a2d0d695b7952577729e7fab6fa4f8
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs0037_c001:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0037.pdf?v=1783133983
+    reference: Feetech PRODUCT SPECIFICATION SCS0037-C001, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:eb8cae5967c52740afd33b7f196d70d4bff2481a43ad279f2d5375098c22e822
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_aifitlab_scs0043_c001:
+    source: Feetech (copie aifitlab), https://cdn.shopify.com/s/files/1/0673/6848/5000/files/FEETECH-SC0043.pdf?v=1783133983
+    reference: Feetech PRODUCT SPECIFICATION SCS0043-C001, édition A/0
+    date: '2026-10-07'
+    empreinte: sha256:42517dabea2b30aeeb2ecc7d2f51a860e287a1cda73644199468df9adf4ed793
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_openelab_hd1910:
+    source: OpenELAB (revendeur), https://openelab.io/products/feetech-hd1910-microduck-coreless-servo
+    reference: Feetech HD-1910-C001 Coreless TTL Servo (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:7cbf385314f5485617f5d2483202dfe5008ed76c924e3ecb9f85c9d3770cf34e
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_rcdrone_hd1910:
+    source: RCDrone (revendeur), https://rcdrone.top/products/feetech-hd-1910-c001-10kg-cm-coreless-metal-gear-servo-for-microduck-diy-robot
+    reference: Feetech HD-1910-C001 TTL Servo (page produit)
+    date: '2026-10-07'
+    empreinte: sha256:aee526c700a72ab5ccbf45947d3f134d9a531e840089a8b64e8a8a22696fe87a
+    conditions: non lues
+    redistribuable: false
+  marche_bus_c_feetechrc_fiches:
+    source: Feetech, https://www.feetechrc.com/
+    reference: Fiches constructeur feetechrc.com (URL de params/actionneurs.yaml)
+    date: '2026-10-07'
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false

@@ -22,6 +22,10 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | rotation et inclinaison du buste | axes du buste | lacet seul / lacet + roulis + tangage | waist_yaw, waist_roll, *waist_pitch* | statique |
 | orientation de la tête | axes du cou | 2 / 3 axes | neck_yaw, neck_pitch, *neck_roll* | statique |
 | expressions du visage | moyen d'expression | écran / 4 micro-servos / 10 micro-servos | *visage* | statique |
+| autonomie sur batterie ‡ **PROPOSÉE** | durée d'un enchaînement de cycles « marche + pauses », batterie pleine jusqu'au seuil d'arrêt | 10 / 20 / 30 / 60 min | — | energie |
+| IA embarquée ‡ **PROPOSÉE** | ce que le calculateur fait tourner à bord | commande seule / + vision / + vision et voix / + modèle de langage local | — | composants |
+
+‡ **PROPOSÉE** par Claude le 2026-10-07, À CONFIRMER par Jeremy : hors de la confirmation du 2026-10-05. Cycle d'autonomie proposé : 1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien).
 
 ## Profils cibles
 
@@ -43,12 +47,15 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | buste | lacet seul | lacet + roulis + tangage |
 | tete | 2 | à balayer |
 | visage | écran | à balayer |
+| autonomie | — | — |
+| ia embarquee | — | — |
 
 ## Méthodes
 
 - **simulation** : simulation MuJoCo de la tâche (trajectoire ou politique), relevé des couples, vitesses et puissances par articulation.
 - **statique** : équilibre statique dans la posture la plus défavorable : couple = force × bras de levier, par articulation.
 - **energie** : bilan d'énergie : potentielle m·g·h, cinétique ½·m·v² ou ½·I·ω², puissance = énergie / durée.
+- **composants** : inventaire : puissance, masse et volume des composants (calculateur, accélérateur, capteurs), relevés au marché (docs/marche-calculateurs-2026-10.md).
 
 ## Noms d'axes à créer (PROPOSÉS, hors de `joints.yaml`)
 
@@ -68,4 +75,4 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | energie chute | J | m · g · h_cg : masse totale × 9,81 × hauteur du centre de gravité debout |
 | energie cinetique membre | J | ½ · I · ω_max² par membre (I autour de l'articulation proximale, ω_max = vitesse à vide de son actionneur) |
 
-Balayage complet : 14 tâches, produit des niveaux = 559 872 combinaisons de capacités (avant le choix des axes et des actionneurs).
+Balayage complet : 16 tâches, produit des niveaux = 8 957 952 combinaisons de capacités (avant le choix des axes et des actionneurs).
