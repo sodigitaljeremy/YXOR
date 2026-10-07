@@ -120,21 +120,21 @@ Chaque panneau montre une famille en couleur et le reste du marché en gris. Les
 | ENCOS EC-A13715-P1-12.67 | Encos | 320 | 110 | — | 2.7e+03 | 119 | Ø170 × 73 | oui | 2250.0 USD | — |
 | ENCOS EC-A10020-P2-24 | Encos | 330 | 100 | — | 2.21e+03 | 149 | Ø124 × 85 | oui | 2250.0 USD | — |
 | ENCOS EC-A13720-P1-11.4 | Encos | 380 | 120 | — | 3.16e+03 | 120 | Ø170 × 84.5 | oui | 2370.0 USD | — |
-| Feetech STS3215 12 V (ST-3215-C018) | Feetech | — | — | 2.94 | 55 | — | 45.2 × 24.7 × 35 | — | 26.45  | oui |
-| Feetech STS3215 7,4 V (ST-3215-C001) | Feetech | — | — | 1.62 | 55 | — | 45.2 × 24.7 × 35 | — | 24.35  | oui |
-| Feetech STS3032 (ST-3032-C001) | Feetech | — | — | 0.441 | 20.6 | — | 32 × 12 × 27.5 | — | 37.24  | oui |
-| Feetech STS3032 double axe (ST-3032-C036) | Feetech | — | — | 0.441 | 20.6 | — | 32 × 12 × 27.5 | — | 39.25  | oui |
-| Feetech STS3036 boîtier plastique (ST-3036-C001) | Feetech | — | — | 0.441 | 17.7 | — | 32 × 12 × 27.5 | — | — | — |
-| Feetech SCS0009 (SC-0090-C013) | Feetech | — | — | 0.226 | 13.2 | — | 23.2 × 12 × 25.5 | — | 12.95  | oui |
-| Feetech SCS15 (SCS15-C022) | Feetech | — | — | 1.39 | 58.2 | — | 40.2 × 20.2 × 40 | — | — | — |
-| Feetech SCS2332 (SC-2332-C001) | Feetech | — | — | 0.441 | 26 | — | 32 × 12 × 27.5 | — | — | — |
-| Feetech HL-2909-C001 (série HLS, 12 V, force contrôlée) | Feetech | — | — | 0.873 | 22.5 | — | 34 × 20 × 23 | — | — | — |
-| Feetech HL-2915-C001 (série HLS, 12 V, force contrôlée) | Feetech | — | — | 1.39 | 27.8 | — | 34 × 20 × 23 | — | — | — |
-| Feetech HD-1910-C001 (4,8 V, « Open Source Duck Robot ») | Feetech | — | — | 0.883 | 21 | — | 34 × 20 × 23 | — | — | — |
-| Feetech SC-0002-C001 (2 g) | Feetech | — | — | 0.0686 | 4.8 | — | 16.7 × 8.3 × 17.2 (PDF) ; page 16.05 × 8.2 × 17 → retenu le PDF (plus grand) | — | — | — |
-| Feetech SC-0037-C001 (3,7 g) | Feetech | — | — | 0.177 | 6.1 | — | 20.19 × 8.5 × 17.4 | — | — | — |
-| Feetech SC-0043-C001 (4,3 g) | Feetech | — | — | 0.216 | 6.6 | — | 20.3 × 8.5 × 19.39 | — | — | — |
-| Feetech SC-0005-C001 (5 g) | Feetech | — | — | 0.177 | 8.8 | — | 21.6 × 11.7 × 20.5 | — | — | — |
+| Feetech STS3215 12 V (ST-3215-C018) | Feetech | — | 0.981 | 2.94 | 55 | — | 45.2 × 24.7 × 35 | — | 26.45  | oui |
+| Feetech STS3215 7,4 V (ST-3215-C001) | Feetech | — | 0.392 | 1.62 | 55 | — | 45.2 × 24.7 × 35 | — | 24.35  | oui |
+| Feetech STS3032 (ST-3032-C001) | Feetech | — | 0.113 | 0.441 | 20.6 | — | 32 × 12 × 27.5 | — | 37.24  | oui |
+| Feetech STS3032 double axe (ST-3032-C036) | Feetech | — | 0.113 | 0.441 | 20.6 | — | 32 × 12 × 27.5 | — | 39.25  | oui |
+| Feetech STS3036 boîtier plastique (ST-3036-C001) | Feetech | — | 0.113 | 0.441 | 17.7 | — | 32 × 12 × 27.5 | — | — | — |
+| Feetech SCS0009 (SC-0090-C013) | Feetech | — | 0.0637 | 0.226 | 13.2 | — | 23.2 × 12 × 25.5 | — | 12.95  | oui |
+| Feetech SCS15 (SCS15-C022) | Feetech | — | 0.441 | 1.39 | 58.2 | — | 40.2 × 20.2 × 40 | — | — | — |
+| Feetech SCS2332 (SC-2332-C001) | Feetech | — | 0.113 | 0.441 | 26 | — | 32 × 12 × 27.5 | — | — | — |
+| Feetech HL-2909-C001 (série HLS, 12 V, force contrôlée) | Feetech | — | 0.284 | 0.873 | 22.5 | — | 34 × 20 × 23 | — | — | — |
+| Feetech HL-2915-C001 (série HLS, 12 V, force contrôlée) | Feetech | — | 0.441 | 1.39 | 27.8 | — | 34 × 20 × 23 | — | — | — |
+| Feetech HD-1910-C001 (4,8 V, « Open Source Duck Robot ») | Feetech | — | 0.216 | 0.883 | 21 | — | 34 × 20 × 23 | — | — | — |
+| Feetech SC-0002-C001 (2 g) | Feetech | — | 0.0157 | 0.0686 | 4.8 | — | 16.7 × 8.3 × 17.2 (PDF) ; page 16.05 × 8.2 × 17 → retenu le PDF (plus grand) | — | — | — |
+| Feetech SC-0037-C001 (3,7 g) | Feetech | — | 0.049 | 0.177 | 6.1 | — | 20.19 × 8.5 × 17.4 | — | — | — |
+| Feetech SC-0043-C001 (4,3 g) | Feetech | — | 0.049 | 0.216 | 6.6 | — | 20.3 × 8.5 × 19.39 | — | — | — |
+| Feetech SC-0005-C001 (5 g) | Feetech | — | 0.049 | 0.177 | 8.8 | — | 21.6 × 11.7 × 20.5 | — | — | — |
 | Feetech STS3250 | Feetech | 4.9 | 1.57 | 4.9 | 74.5 | 65.8 | 45,22 × 24,72 × 35 | — | — | — |
 | HTDW-4438-30-NE-JC (HTDW-4530-02-CNE) | HighTorque | — | 2 | 10 | 237 | — | 44 × 44 × 44,9 | oui | 199.0 USD | — |
 | HTDW-5022-02-DNE | HighTorque | — | 3.5 | 13 | 322 | — | 50 × 50 × 47,4 | oui | 189.0 USD | — |
@@ -254,7 +254,7 @@ Nombre d'actionneurs sans la donnée, sur 211 :
 | Donnée | Manquante pour | Lesquels |
 | --- | ---: | --- |
 | couple en pointe | 87 | gim3505_8_gds34_24v, gim3505_8_gdz34_24v, gim3505_9_driver_inconnu_24v, gim3505_36_driver_inconnu_24v, gim3510_8_gdz34_24v, gim3510_64_gdz34_24v, gim4305_10_gdz34_24v, gim4305_10_gds34_24v, gim4310_10_gds34_24v, gim4310_36_gdz34_24v, gim4310_36_gds34_24v, gim4310_40_gdz4_40_24v, … |
-| couple continu | 37 | xm430_w210, xm430_w350, unitree_go_m8010_6, unitree_a1_motor, unitree_b1_motor, unitree_im6014, unitree_ys_342026_s288, unitree_ys_342026_j288, xl330_m077, xl330_m288, xc330_m181, xc330_m288, … |
+| couple continu | 22 | xm430_w210, xm430_w350, unitree_go_m8010_6, unitree_a1_motor, unitree_b1_motor, unitree_im6014, unitree_ys_342026_s288, unitree_ys_342026_j288, xl330_m077, xl330_m288, xc330_m181, xc330_m288, … |
 | couple au blocage | 89 | ak70_10, dm_j4310, ak45_10_v3, dm_j8006, dm_j4340, dm_j8009, ak80_9_v3, ak10_9_v3, ak70_9_v3, dm_j4310_48v, cybergear, ak40_10_v3, … |
 | masse | 4 | dm_j8520p, dm_h3510, gim10015_10_driver_inconnu_48v, unitree_ys_342026_j288 |
 | cotes (Ø × L) | 23 | edulite05, xm430_w210, dm_j8006, dm_j4340, dm_j8009, ak80_9_v3, ak10_9_v3, ak70_9_v3, x4_36, dm_j4310_48v, htdw_5036_02_dne, htdw_6036_02_dne, … |

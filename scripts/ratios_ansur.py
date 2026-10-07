@@ -104,6 +104,8 @@ RATIOS: dict[str, tuple[list[tuple[str, int]] | None, str]] = {
     "avant_bras":       ([("radialestylionlength", +1)],
                          "radiale à stylion : l'avant-bras"),
     "main_longueur":    ([("handlength", +1)], "mesure directe"),
+    "profondeur_poitrine": ([("chestdepth", +1)],
+                         "mesure directe : profondeur de la poitrine (ajoutée le 2026-10-07, place dans le tronc)"),
     "tete_hauteur":     (None,
                          "ANSUR mesure le tragion et la cervicale, pas le "
                          "menton ni le vertex sur la même verticale"),

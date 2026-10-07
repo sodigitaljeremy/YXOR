@@ -51,6 +51,205 @@ meta:
   - 'ONNX Runtime : non vérifié. Tensions d''entrée des kits NVIDIA : non lues.'
 marche:
   sources:
+    marche_ver_adafruit_ai_hat_2:
+      titre: Adafruit (US) — Raspberry Pi AI HAT+ 2 (6451)
+      url: https://www.adafruit.com/product/6451
+      editeur: Adafruit
+      date: '2026-10-07'
+      fichier: adafruit_6451.html
+      empreinte: 54804833b0c9fb6dd1dcf1d7c0d73979a26b04d06fd63a13d381baf0b4649491
+      octets: 80870
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: null
+    marche_ver_auvidea_jnx120:
+      titre: Auvidea — JNX120 carrier board for NVIDIA Jetson Orin Nano/NX
+      url: https://auvidea.eu/product/jnx120-carrier-board-for-nvidia-jetson-orin-nano-nx/
+      editeur: Auvidea
+      date: '2026-10-07'
+      fichier: auvidea_jnx120.html
+      empreinte: 3c59401b2188a6e0af41dbaff95a7742a8198f034e723f799d1806e0497793a5
+      octets: 311956
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: 'Page : « currently in design, first prototype quantities by January 2026 » ; tableau comparatif : JNX120S
+        « samples now ».'
+    marche_ver_core_ai_hat_plus_2:
+      titre: Core Electronics (AU) — Raspberry Pi AI HAT+ 2 (CE10475)
+      url: https://core-electronics.com.au/raspberry-pi-ai-hat-plus-2.html.plain.md
+      editeur: Core Electronics
+      date: '2026-10-07'
+      fichier: core_ai_hat_plus_2.md
+      empreinte: 9a0a41592221e154229b4a894b03c783c1236319067563be477fcfb34b0cacfb
+      octets: 4732
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: null
+    marche_ver_nvidia_page_jetson_orin:
+      titre: NVIDIA — Jetson Orin (page produit), encart « Jetson Orin Nano 2 Redefines Entry-Level Edge AI »
+      url: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+      editeur: NVIDIA
+      date: '2026-10-07'
+      fichier: nv_jetson_orin.html
+      empreinte: a11857ed21e44d32247e27cf58ba522281281b637d5cec4bc9065f32032b3b34
+      octets: 638077
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: Lien « Read the Press Release » vers nvidianews.nvidia.com.
+    marche_ver_pimoroni_eu_ai_hat_2:
+      titre: Pimoroni (UK, boutique EU) — Raspberry Pi AI HAT+ 2
+      url: https://shop.pimoroni.com/en-eu/products/raspberry-pi-ai-hat-2
+      editeur: Pimoroni
+      date: '2026-10-07'
+      fichier: pimoroni_eu_ai_hat_2.html
+      empreinte: f4c4dec3a7e46cfa9b783706555bf75135df0df276e27781644543d7afc056b6
+      octets: 372630
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: Prix lu dans les données structurées de la page (JSON), pas dans le texte affiché.
+    marche_ver_pishop_ch:
+      titre: pi-shop.ch (CH) — recherche AI HAT+ 2
+      url: https://www.pi-shop.ch/catalogsearch/result/?q=AI+HAT%2B+2
+      editeur: pi-shop.ch
+      date: '2026-10-07'
+      fichier: null
+      empreinte: null
+      octets: null
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: 'non lue : défi Cloudflare ; aucun revendeur suisse lu'
+    marche_ver_raspberrypi_dk_ai_hat_2:
+      titre: RaspberryPi.dk (DK, revendeur agréé) — AI HAT+ 2
+      url: https://raspberrypi.dk/en/?p=348664
+      editeur: RaspberryPi.dk
+      date: '2026-10-07'
+      fichier: raspberrypi_dk_ai_hat_2.html
+      empreinte: a2133da9a13960264dfc5642f47bd08d1b8008a9fdc201fb87a6a261f3ee3b22
+      octets: 257892
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: null
+    marche_ver_rpi_brief_ai_hat_plus:
+      titre: Raspberry Pi AI HAT+ Product Brief (Published October 2024)
+      url: https://datasheets.raspberrypi.com/ai-hat-plus/raspberry-pi-ai-hat-plus-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: '2026-10-07'
+      fichier: ai_hat_plus_product_brief.pdf
+      empreinte: 433d7494ec6d1c8396f991fc74bea7080a7cade398a67420a0adf9efbb6008af
+      octets: 757248
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: 'Version de 2024 : prix possiblement révisés depuis (cf. AI HAT+ 2 : 130 $ → 200 $).'
+    marche_ver_rpi_brief_ai_hat_plus_2_2026_01:
+      titre: Raspberry Pi AI HAT+ 2 Product Brief (Published January 2026)
+      url: https://core-electronics.com.au/attachments/uploads/CE10475-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+      editeur: Raspberry Pi Ltd (copie hébergée par Core Electronics)
+      date: '2026-10-07'
+      fichier: core_ai_hat_plus_2_brief.pdf
+      empreinte: 86a8698e1edd35b8403ff09f4933b67dbb22b5eba9496f21fc7e44a797d075ac
+      octets: 4378577
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: Document du fabricant, hébergé par un revendeur ; version antérieure.
+    marche_ver_rpi_brief_ai_hat_plus_2_2026_07:
+      titre: Raspberry Pi AI HAT+ 2 Product Brief (Published July 2026), RP-009655-MM-6
+      url: https://pip-assets.raspberrypi.com/categories/1319-raspberry-pi-ai-hat-2/documents/RP-009655-MM-6-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: '2026-10-07'
+      fichier: pip_ai_hat_plus_2_brief_MM6.pdf
+      empreinte: eb01bea592ef6e39e526c617ffdb41786d479dd455924fc74ea4eb832ca60f37
+      octets: 4336862
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: L'URL MM-3 sert un fichier identique (même sha256).
+    marche_ver_rpi_brief_rpi5:
+      titre: Raspberry Pi 5 Product Brief (Published October 2026)
+      url: https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-product-brief.pdf
+      editeur: Raspberry Pi Ltd
+      date: '2026-10-07'
+      fichier: rpi5_product_brief.pdf
+      empreinte: 944fc1d70da50f0b8d5947dd4263078f698c79586f29c07f35fcd4b87077dd3f
+      octets: 52948347
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: null
+    marche_ver_rpi_doc_ai_hat_plus:
+      titre: Documentation Raspberry Pi — ai-hat-plus/about.adoc (commit 42deaef)
+      url: https://github.com/raspberrypi/documentation/blob/42deaefbc8b4edfe342b0d759ec16cda3be5e7d8/documentation/asciidoc/accessories/ai-hat-plus/about.adoc
+      editeur: Raspberry Pi Ltd
+      date: '2026-10-07'
+      fichier: rpi_doc_ai-hat-plus_about.adoc
+      empreinte: 504fac4e6b3da3500fa60617bb0d39d2a2cf0bc4b176d407540f346056a22889
+      octets: 12763
+      conditions: dépôt public
+      primaire: true
+      note: Aucune consommation ni masse publiée.
+    marche_ver_rpi_doc_power_supplies:
+      titre: Documentation Raspberry Pi — power-supplies.adoc (commit 42deaef du dépôt raspberrypi/documentation)
+      url: https://github.com/raspberrypi/documentation/blob/42deaefbc8b4edfe342b0d759ec16cda3be5e7d8/documentation/asciidoc/computers/raspberry-pi/power-supplies.adoc
+      editeur: Raspberry Pi Ltd
+      date: '2026-10-07'
+      fichier: rpi_doc_power-supplies.adoc
+      empreinte: 49f6478c1c0164237ebcf1d28aac4709e843d2b5c06442539bacae05e49eafb1
+      octets: 9271
+      conditions: dépôt public, CC BY-SA 4.0 (documentation Raspberry Pi) — non revérifié
+      primaire: true
+      note: Source de la page raspberrypi.com/documentation (site derrière Cloudflare, illisible en direct).
+    marche_ver_seeed_p6356_mini_j3011:
+      titre: Seeed — reComputer Mini J3011 (Orin Nano 8GB)
+      url: https://www.seeedstudio.com/reComputer-Mini-J3011-p-6356.html
+      editeur: Seeed Studio
+      date: '2026-10-07'
+      fichier: seeed_p6356_recomputer_mini_j3011.html
+      empreinte: de1484efe60f124189dfffa944703ee87098e7e4754cae204a819fc416be0967
+      octets: 960736
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: null
+    marche_ver_seeed_recomputer_mini_datasheet:
+      titre: reComputer Mini J30/40 datasheet V1.0
+      url: https://files.seeedstudio.com/products/NVIDIA-Jetson/reComputer_mini_datasheet_V1.0.pdf
+      editeur: Seeed Studio
+      date: '2026-10-07'
+      fichier: seeed_recomputer_mini_datasheet.pdf
+      empreinte: 8c2cdacee8f3431e08483303d8c5ef07049190c3113280f8b6272636244417e1
+      octets: 1108037
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: null
+    marche_ver_seeed_wiki_recomputer_mini:
+      titre: Seeed Wiki — Getting Started with reComputer Mini
+      url: https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/
+      editeur: Seeed Studio
+      date: '2026-10-07'
+      fichier: seeed_wiki_recomputer_mini.html
+      empreinte: 3193e595ea8273f43ced55bfab501f7d1e2e75516a05e68d90b54a6452a25b79
+      octets: 83445
+      conditions: page publique, consultée sans compte
+      primaire: true
+      note: null
+    marche_ver_sth_orin_nano_2:
+      titre: ServeTheHome — NVIDIA Announces Jetson Orin Nano 2 (Ryan Smith, 2026-08-30)
+      url: https://www.servethehome.com/nvidia-announces-jetson-orin-nano-2-entry-level-edge-board-gets-new-ampere-silicon/
+      editeur: ServeTheHome
+      date: '2026-10-07'
+      fichier: sth_orin_nano_2.html
+      empreinte: b989dfbc12b0069523798187fbb147d68217367f9838195c2f84d5f9ec79fbd7
+      octets: 163474
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: null
+    marche_ver_storagereview_orin_nano_2:
+      titre: 'StorageReview — Jetson Orin Nano 2: 78 TOPS… (2026-08-27)'
+      url: https://www.storagereview.com/news/nvidia-jetson-orin-nano-2-78-tops-and-2x-the-inference-of-its-predecessor-arriving-first-half-of-2027
+      editeur: StorageReview
+      date: '2026-10-07'
+      fichier: storagereview_orin_nano_2.html
+      empreinte: 424fbb1173215e0baa6e90efe50c042c5235cf34ce5a3f779b581432428fcee3
+      octets: 152014
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: null
     marche_calc_nv_modules:
       titre: Jetson Modules, Support, Ecosystem, and Lineup
       url: https://developer.nvidia.com/embedded/jetson-modules
@@ -517,6 +716,57 @@ marche:
       note: 'Secondaire, 2023. Seules lues : valeurs PMIC des journaux sbc-bench (2,6–3,6 W au repos). Le paragraphe
         de synthèse n''a pas été retrouvé dans le texte extrait.'
   produits:
+    # ── ajouté le 2026-10-07 (soir), vérification F ──
+    seeed_recomputer_mini_j3011:
+      famille: jetson_kit
+      nom: Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus)
+      fabricant: Seeed Studio
+      memoire:
+        valeur: 8GB (module Orin Nano 8 GB)
+        source: marche_ver_seeed_p6356_mini_j3011
+      masse_ensemble:
+        valeur: 345
+        unite: g
+        source: marche_ver_seeed_wiki_recomputer_mini
+        note: J3011 sans extension (système complet) ; 462 g avec extension
+      puissance_W:
+        max:
+          valeur: 25
+          unite: W
+          source: marche_calc_nv_orin
+          note: module Orin Nano 8 GB seul (mode le plus haut) ; consommation de la porteuse NON publiée, non comptée
+      tops:
+        valeur: 67
+        precision: INT8 sparse (GPU + DLA)
+        dense_ou_sparse: sparse
+        source: marche_calc_nv_orin
+      tops_gpu_int8_dense:
+        valeur: 33
+        unite: TOPS
+        source: marche_calc_nv_orin
+      can_integre:
+        valeur: true
+        canaux: 2
+        source: marche_calc_seeed_mini_wiki
+        note: porteuse reComputer Mini
+      tension_alimentation:
+        valeur: 12-54
+        unite: V
+        source: marche_ver_seeed_recomputer_mini_datasheet
+      cotes_porteuse:
+        valeur: 63 x 95 x 42
+        unite: mm
+        source: marche_calc_seeed_mini_wiki
+      prix:
+        valeur: 599.0
+        devise: USD
+        tva_incluse: 0.0
+        vendeur: Seeed Studio
+        source: marche_ver_seeed_p6356_mini_j3011
+        note: 'reComputer Mini J3011 (Orin Nano 8 Go inclus) ; 589 $ par 10. Résumé de recherche : 812,90 € chez un
+          revendeur — non lu, non retenu'
+      disponibilite_ch_ue:
+        valeur: null
     jetson_orin_nano_4gb:
       famille: jetson_module
       nom: Jetson Orin Nano 4GB (Super)
@@ -3290,3 +3540,151 @@ marche:
         source: null
       note: Compatible avec tous les Raspberry Pi (nappe 200 mm) ; 4056 x 3040 à 10 i/s, 2028 x 1520 à 30 i/s ;
         production jusqu'à au moins janvier 2028.
+verifications_2026_10_07_soir:
+  orin_nano_2:
+    confirme:
+    - 'Le produit existe et est annoncé par NVIDIA : encart sur la page produit nvidia.com Jetson Orin, avec lien
+      vers le communiqué (nvidia_page_jetson_orin, PRIMAIRE).'
+    - 'Date d''annonce 25 août 2026 : Unite.AI (« NVIDIA on August 25, 2026 announced ») ; billet Seeed daté 2026/08/25
+      dans son URL ; StorageReview et AI Insider le 27 août ; STH le 30 août (« this week »). Date du communiqué
+      lui-même non lue.'
+    - '8 Go de mémoire, CPU 8 cœurs Arm (Cortex-A78), 78 TOPS : StorageReview, Unite.AI, AI Insider, Antmicro (secondaires
+      concordantes).'
+    - 'Disponibilité module et kit de développement au 1er semestre 2027 : StorageReview, Unite.AI, AI Insider,
+      Antmicro.'
+    - '2× l''inférence de l''Orin Nano Super et 40 % de consommation en moins à performance égale : page NVIDIA
+      (« nearly twice », « consuming 40% less power ») et presse.'
+    contredit:
+    - '« 15 W annoncés » : la page NVIDIA parle d''une enveloppe de 40 W (« same form factor and 40W power envelope
+      ») ; 15 W est le MODE dans lequel la comparaison −40 % est faite (StorageReview, AI Insider, Unite.AI) ; STH
+      donne une plage TDP 15–40 W. 15 W n''est pas la consommation du module.'
+    introuvable:
+    - Le texte du communiqué NVIDIA (nvidianews.nvidia.com injoignable depuis cet environnement, archive aussi).
+    - 'Le type exact des 78 TOPS dans une source NVIDIA : STH les classe « INT8 Sparse » dans son tableau ; Unite.AI
+      les compare aux 67 « sparse INT8 TOPS » du Super. Non confirmé par NVIDIA.'
+    - Un article de CNX Software (aucun dans sa recherche).
+    - 'Un prix (Unite.AI : « NVIDIA''s release sets no pricing »).'
+    tops:
+      valeur: 78
+      source: marche_ver_storagereview_orin_nano_2
+      note: Type non précisé par la source primaire lue ; INT8 dense/épars selon STH (sth_orin_nano_2).
+    memoire_Go:
+      valeur: 8
+      source: marche_ver_storagereview_orin_nano_2
+      note: 'LPDDR5X selon Antmicro et STH (STH : LPDDR5X-7500, 120 Go/s).'
+    puissance_W:
+      valeur:
+      - 15
+      - 40
+      source: marche_ver_sth_orin_nano_2
+      note: 'Plage TDP du tableau STH ; la page NVIDIA donne 40 W d''enveloppe (nvidia_page_jetson_orin). Valeur
+        prudente pour un bilan : 40 W.'
+    puissance_enveloppe_max_W:
+      valeur: 40
+      source: marche_ver_nvidia_page_jetson_orin
+      note: « … same form factor and 40W power envelope, consuming 40% less power. »
+    disponibilite:
+      valeur: 1er semestre 2027
+      source: marche_ver_storagereview_orin_nano_2
+      note: null
+    prix: {devise: EUR, note: 'fourchette 179–219 € HT publiée (S et M confondus) : la plus PRUDENTE (0064)', source: marche_ver_auvidea_jnx120, tva_incluse: 0.0, valeur: 219.0, vendeur: Auvidea}
+    prix_liste:
+      valeur: 200
+      devise: USD
+      source: marche_ver_rpi_brief_ai_hat_plus_2_2026_07
+      note: '« List price $200 » dans le Product Brief « Published July 2026 » (PRIMAIRE). Le brief « Published
+        January 2026 » (rpi_brief_ai_hat_plus_2_2026_01) donnait « List price: $130 ».'
+    prix_liste_historique:
+    - valeur: 130
+      devise: USD
+      date_document: 2026-01
+      source: marche_ver_rpi_brief_ai_hat_plus_2_2026_01
+    - valeur: 200
+      devise: USD
+      date_document: 2026-07
+      source: marche_ver_rpi_brief_ai_hat_plus_2_2026_07
+    revendeurs:
+    - valeur: 220.58
+      devise: EUR
+      tva_incluse: true
+      vendeur: RaspberryPi.dk (DK)
+      source: marche_ver_raspberrypi_dk_ai_hat_2
+      note: 176,46 € HT
+    - valeur: 231.54
+      devise: EUR
+      tva_incluse: true
+      vendeur: Pimoroni (UK), boutique EU
+      source: marche_ver_pimoroni_eu_ai_hat_2
+      note: '192,95 € dans un autre champ : 231,54/192,95 = 1,20 → HT probable (TVA 20 %), non affiché en clair'
+    - valeur: 289.0
+      devise: AUD
+      tva_incluse: true
+      vendeur: Core Electronics (AU)
+      source: marche_ver_core_ai_hat_plus_2
+      note: 262,73 AUD HT
+    - valeur: 225.0
+      devise: USD
+      tva_incluse: false
+      vendeur: Adafruit (US)
+      source: marche_ver_adafruit_ai_hat_2
+      note: hors taxe de vente
+    revendeurs_suisses:
+      valeur: null
+      source: marche_ver_pishop_ch
+      note: aucun lu (pi-shop.ch derrière Cloudflare ; Galaxus « Access Denied »)
+    conclusion: 'Les deux chiffres sont exacts, à des dates différentes : 130 $ au lancement (brief de janvier 2026),
+      200 $ depuis le brief de juillet 2026. Le prix de liste ACTUEL est 200 $ (Claude et Grok citent un prix périmé
+      ; ChatGPT est à jour). Les revendeurs UE lus affichent 220–232 € TTC.'
+  consommations:
+    rpi5:
+      alimentation:
+        valeur: 5 V / 5 A par USB-C, avec Power Delivery
+        source: marche_ver_rpi_brief_rpi5
+        note: 'Doc : alimentation 27 W recommandée ; 5,1 V pour tous les modèles ; courant d''alimentation recommandé
+          5,0 A (rpi_doc_power_supplies).'
+      courant_actif_typique_A:
+        valeur: 0.8
+        source: marche_ver_rpi_doc_power_supplies
+        note: « Typical bare-board active current consumption » 800 mA (carte nue, sans périphérique). ≈ 4 W à 5
+          V, CALCULÉ, non publié en watts.
+      repos_W:
+        valeur: null
+        source: marche_ver_rpi_doc_power_supplies
+        note: 'Le tableau Boot/Idle/Stress de la documentation s''arrête au Raspberry Pi 4B (idle 0,6 A) : rien
+          pour le Pi 5.'
+      charge_W:
+        valeur: null
+        source: marche_ver_rpi_doc_power_supplies
+        note: non publié pour le Pi 5
+      courant_usb_aval_A:
+        valeur: 1.6
+        source: marche_ver_rpi_doc_power_supplies
+        note: 1,6 A vers les périphériques USB avec une alimentation 5 A (600 mA sinon).
+    rpi_ai_hat_plus_26:
+      repos_W:
+        valeur: null
+        source: marche_ver_rpi_doc_ai_hat_plus
+        note: non publié (brief 2024, documentation)
+      charge_W:
+        valeur: null
+        source: marche_ver_rpi_brief_ai_hat_plus
+        note: non publié
+      alimentation:
+        valeur: par le Raspberry Pi 5 (PCIe + GPIO, HAT+)
+        source: marche_ver_rpi_brief_ai_hat_plus
+        note: null
+    rpi_ai_hat_plus_2:
+      repos_W:
+        valeur: null
+        source: marche_ver_rpi_doc_ai_hat_plus
+        note: non publié
+      charge_W:
+        valeur: null
+        source: marche_ver_rpi_brief_ai_hat_plus_2_2026_07
+        note: non publié
+      alimentation:
+        valeur: par le Raspberry Pi 5 (PCIe, HAT+)
+        source: marche_ver_rpi_brief_ai_hat_plus_2_2026_07
+        note: null
+  complements_non_verses: 'masses des modules Jetson, du Raspberry Pi 5 et des AI HAT+ : NON publiées (fiches NVIDIA
+    derrière un compte ; poids d''expédition des distributeurs écartés)'

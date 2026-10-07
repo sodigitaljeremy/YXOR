@@ -109,11 +109,13 @@ def doc(cap: dict) -> str:
     for tid, t in cap["taches"].items():
         arts = ", ".join(n if n in joints else f"*{n}*" for n in t["sollicite"])
         L.append(f"| {t['capacite']}{' †' if t.get('ajoute_dans_ce_lot') else ''}"
-                 f"{' ‡ **PROPOSÉE**' if t.get('proposee') else ''} | {t['grandeur']} | "
+                 f"{' ‡ **PROPOSÉE**' if t.get('proposee') else ''}{' ‡' if t.get('confirmee') else ''} | {t['grandeur']} | "
                  f"{niv(t)} | {arts or '—'} | {t['methode']} |")
     if any(t.get("proposee") for t in cap["taches"].values()):
-        L += ["", "‡ **PROPOSÉE** par Claude le 2026-10-07, À CONFIRMER par Jeremy : hors de la confirmation du "
-              "2026-10-05. Cycle d'autonomie proposé : "
+        L += ["", "‡ **PROPOSÉE** par Claude, À CONFIRMER par Jeremy."]
+    if any(t.get("confirmee") for t in cap["taches"].values()):
+        L += ["", "‡ Ajoutées le 2026-10-07 et **CONFIRMÉES par Jeremy** le même soir, ses mots : « Je confirme les "
+              "tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. » Cycle : "
               + cap["taches"]["autonomie"]["cycle"]["definition"] + "."]
     pr = cap.get("profils") or {}
     if pr:

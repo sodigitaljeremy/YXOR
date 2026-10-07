@@ -163,6 +163,18 @@ avec qui l'a décidé.
       Jetson, mais je veux une comparaison chiffrée avec le Raspberry Pi 5
       et ses cartes d'IA. » (prompt du 2026-10-07).
     - Fiche : [0070](../decisions/0070-robots-sur-batterie.md).
+20. **Autonomie et IA embarquée de chaque robot.** YXOR Lab : 30 min,
+    commande + vision ; YXOR (final) : 60 min, modèle de langage local ;
+    cycle de 40 s de marche suivies de 20 s debout. 12S ou 13S : pas
+    encore tranché.
+    - Décidée par Jeremy le 2026-10-07. Ses mots : « Je confirme les tâches
+      autonomie et IA embarquée, et le cycle de 40 s de marche suivies de
+      20 s debout. Pour YXOR Lab : autonomie 30 minutes, IA embarquée
+      commande + vision. Pour YXOR final : autonomie 60 minutes, IA
+      embarquée avec modèle de langage local. Je trancherai entre 12S et
+      13S sur les chiffres. » (prompt du 2026-10-07, soir).
+    - Fiche : [0071](../decisions/0071-autonomie-et-ia-par-robot.md), qui
+      complète la [0070](../decisions/0070-robots-sur-batterie.md).
 
 ## B — Conventions confirmées
 

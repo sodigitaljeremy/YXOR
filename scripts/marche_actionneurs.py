@@ -67,7 +67,8 @@ def blocage(c):
 
 
 def charger():
-    cat = yaml.safe_load(CAT.read_text(encoding="utf-8"))
+    import marche_composants as MC                       # lecture en cache (2026-10-07) : même contenu, une fois
+    cat = MC.lire(CAT.name)
     m = cat.get("marche") or {}
     fam = m.get("familles_logicielles") or {}
     comp = m.get("complements") or {}

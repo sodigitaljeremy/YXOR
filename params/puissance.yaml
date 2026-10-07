@@ -1,0 +1,2869 @@
+# Système électrique de YXOR — chaîne de puissance, sécurité, rails, hypothèses
+# lu par scripts/systeme_electrique.py (et l'explorateur)
+#
+# Créé le 2026-10-07 (phase 4a quinquies). TOUT CE FICHIER EST PROPOSÉ par
+# Claude : AUCUNE DÉCISION. Le contexte, lui, est décidé :
+#   · fiche 0070 (Jeremy, 2026-10-07) : les deux robots fonctionnent
+#     entièrement sur batterie ;
+#   · fiche 0071 (Jeremy, 2026-10-07, soir) : autonomie 30 min (Lab) et
+#     60 min (final) sur le cycle 40 s de marche + 20 s debout ; IA « commande
+#     + vision » (Lab) et « modèle de langage local » (final) ; « Je
+#     trancherai entre 12S et 13S sur les chiffres. »
+#
+# Les produits (bloc `marche`) suivent la méthode des marchés : une valeur
+# non lue est null ; chaque source est téléchargée hors du dépôt et inscrite
+# à params/fournisseurs.yaml (marche_pui_<id>, non redistribuable).
+
+statut: "PROPOSÉ par Claude le 2026-10-07 : architecture et hypothèses à confirmer par Jeremy"
+
+# ── Chaîne de puissance, dans l'ordre du courant ──────────────────────────
+# Chaque maillon est choisi dans `marche` (le moins cher dont les valeurs LUES
+# tiennent le courant et la tension) ; sa masse, son volume et son prix sont
+# comptés par l'explorateur.
+chaine:
+  - {maillon: cellules,    role: "pack Li-ion 12S ou 13S en 21700 (variantes)"}
+  - {maillon: fusible,     role: "coupe un court-circuit du pack ; calibre ≥ courant de pointe, tension DC ≥ pleine charge", categorie: fusible}
+  - {maillon: sectionneur, role: "coupure manuelle, accessible, pour la maintenance et le transport", categorie: sectionneur}
+  - {maillon: bms,         role: "surveille chaque cellule ; coupe en surtension, sous-tension, surintensité, température", categorie: bms}
+  - {maillon: contacteur,  role: "ouvert par l'arrêt d'urgence MATÉRIEL, indépendant du calculateur", categorie: contacteur}
+  - {maillon: precharge,   role: "charge les condensateurs des variateurs avant la fermeture du contacteur (pas d'étincelle ni de pic)", categorie: precharge}
+  - {maillon: bus_moteurs, role: "les actionneurs du corps (RobStride), directement à la tension du pack"}
+
+# Régénération : au freinage, les moteurs renvoient de l'énergie dans le bus ;
+# si le BMS refuse la charge (pack plein), la tension monte vers la protection
+# de 60 V des RobStride. Un absorbeur (résistance de freinage ou module de
+# décharge RobStride, à documenter) borne cette tension.
+absorbeur_regeneration: {role: "borne la tension du bus au freinage", categorie: regeneration}
+
+# Arrêt d'urgence MATÉRIEL : il ouvre le contacteur sans passer par le
+# calculateur ni par le bus CAN (une panne logicielle ne l'empêche pas).
+arret_urgence: {role: "bouton à contacts NF en série avec la bobine du contacteur", categorie: arret_urgence}
+
+# Rails secondaires, par convertisseurs DC/DC depuis le pack (jamais le
+# calculateur sur le bus moteurs directement : prompt du 2026-10-07).
+rails:
+  "12":  {usage: "calculateur (carte porteuse 12 V), capteurs", categorie: dcdc}
+  "7.4": {usage: "servos Feetech de 7,4 V nominal", categorie: dcdc}
+  "6":   {usage: "servos Feetech de 6 V", categorie: dcdc}
+  "5":   {usage: "Raspberry Pi 5 (5 V 5 A), depuis le rail 12 V", categorie: dcdc}
+
+# ── Hypothèses du calcul d'énergie et de place (toutes PROPOSÉES) ─────────
+hypotheses:
+  rendement_actionneurs:
+    bas: 0.4
+    haut: 0.7
+    statut: "PROPOSÉ : puissance électrique = puissance mécanique ÷ rendement ; bande large faute de rendement publié (un actionneur à faible réduction rend peu à fort couple et faible vitesse). Une solution doit tenir au rendement BAS."
+  fraction_utilisable:
+    valeur: 0.9
+    statut: "PROPOSÉ : part de l'énergie nominale des cellules utilisable avant le seuil d'arrêt (BMS, vieillissement)"
+  facteur_pack_masse:
+    valeur: 1.3
+    statut: "PROPOSÉ : masse du pack = masse des cellules × 1,3 (barrettes, fils, boîtier, isolants ; BMS compté à part). Ordre de grandeur « +20 à 35 % » d'un rapport secondaire (rapport_batteries_claude), non vérifié."
+  facteur_pack_volume:
+    valeur: 1.2
+    statut: "PROPOSÉ : volume du pack = volume des cylindres ÷ (π/4, rangement carré, CALCULÉ) × 1,2 (boîtier)"
+  remplissage_tronc:
+    valeur: 0.5
+    statut: "PROPOSÉ : part du volume du tronc (largeur d'épaules × profondeur de poitrine × hauteur du tronc, ANSUR) disponible pour l'électronique ; le reste : structure, moteurs de taille et d'épaules, câbles"
+  imu_cablage_kg:
+    valeur: 0.3
+    statut: "PROPOSÉ (exigences_S.yaml, charge_utile.detail_kg.imu_can_distribution_cablage, 2026-10-01) : la seule part de l'ancienne charge utile de 1,2 kg qui n'est pas un composant chiffré ici"
+  debout:
+    statut: "Pendant les 20 s debout, la puissance MÉCANIQUE est nulle ; les pertes de maintien (I²R aux couples de posture) ne sont PAS comptées : couples debout non calculés. L'énergie est donc sous-estimée de ces pertes (dit dans le rapport)."
+  niveaux_ia:
+    statut: "PROPOSÉ : traduction d'un niveau d'IA en matériel ; à confirmer par Jeremy"
+    "commande seule": {accelerateur: false, memoire_GB: 4}
+    "+ vision": {accelerateur: true, memoire_GB: 4}
+    "+ vision et voix": {accelerateur: true, memoire_GB: 8}
+    "+ modèle de langage local": {accelerateur: true, memoire_GB: 16, modele_de_langage: true}
+    modele_de_langage: "accélérateur présenté par son fabricant pour les modèles de langage : GPU des Jetson (CUDA), Hailo-10H de l'AI HAT+ 2 ; pas les Hailo-8 / 8L (vision)"
+
+# ── Marché des composants de puissance (relevé du 2026-10-07, soir ; agent de Claude Code) ──
+# Une valeur non lue est null ; la plus prudente de deux sources ; chaque source téléchargée hors du dépôt
+# et inscrite à params/fournisseurs.yaml (marche_pui_<id>, non redistribuable).
+marche:
+  sources:
+    marche_pui_rs_depot_arbre:
+      titre: RobStride/Product_Information, arborescence du commit 3f0cae4
+      url: https://api.github.com/repos/RobStride/Product_Information/git/trees/main?recursive=1
+      editeur: RobStride Dynamics (GitHub)
+      date: 2026-10-07
+      empreinte: sha256:f6231051bc5f36f2fa8122e19e01ae627d05d9b463409558c39f23f1878e392c
+      octets: 23885
+      conditions: non lues (dépôt sans licence lue)
+      note: 'La branche main pointe encore sur 3f0cae4986e175337c7b03d891b899247b1f2933 le 2026-10-07. Dossiers
+        utiles : ''Product Literature/dischargeModule'' (manuel EN V1.0 + STEP), ''产品资料/dischargeModule'' (manuel
+        ZH V1.1 + STEP), ''Product Literature/powerBoard''.'
+    marche_pui_rs_decharge_en_v10:
+      titre: Discharge Module User Manual V1.0
+      url: https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/dischargeModule/Discharge%20Module%20User%20Manual%20V1.0.pdf
+      editeur: Beijing Robstride Technology Co., Ltd.
+      date: 2026-10-07
+      empreinte: sha256:31163afcbb9a87c0bc78314b977e597cbd06b7cf0b27f8bd7968d656e557754f
+      octets: 279350
+      conditions: non lues
+      note: '6 pages ; caractéristiques électriques p. 3. Seuils 48 V : 64/59 V (contredits par la V1.1 chinoise).'
+    marche_pui_rs_decharge_zh_v11:
+      titre: 泄放模块使用说明 V1.1 (manuel du module de décharge, chinois)
+      url: https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/dischargeModule/%E6%B3%84%E6%94%BE%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.1.pdf
+      editeur: 北京市灵足时代科技有限公司 (RobStride)
+      date: 2026-10-07
+      empreinte: sha256:b020ead859a33fb7e2606496ddb3f7fb4fdf244796b1d36fa910db1aff1a37f6
+      octets: 470400
+      conditions: non lues
+      note: 'Version plus récente (V1.1) que l''anglaise (V1.0). Seuils 48 V : 53,5/50,5 V. Ajoute : « autres seuils
+        sur demande au service client ».'
+    marche_pui_rs_carte_alim_v13:
+      titre: Power Supply Board User Manual V1.3 (2025-12-26)
+      url: https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/powerBoard/Power%20supply%20board%20instructionsV1.3_20251226.pdf
+      editeur: RobStride Dynamics
+      date: 2026-10-07
+      empreinte: sha256:40e9c3073eaeb3d66e01044691ee790fcf47aef0b13f5dd165358d26638622e5
+      octets: 830143
+      conditions: non lues
+      note: Caractéristiques électriques p. 5-6, protections et décharge p. 6-7, protocole CAN p. 7 et suivantes.
+    marche_pui_rcdrone_rs_bleeder:
+      titre: RobStride Bleeder Module (rcdrone.top)
+      url: https://rcdrone.top/products/robstride-bleeder-module
+      editeur: rcdrone.top
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée : HTTP 429 « local_rate_limited » à chaque essai (curl et WebFetch). Un moteur de recherche
+        en donne 47,55 USD, valeur NON lue par moi, donc non retenue.'
+    marche_pui_nkon_jk:
+      titre: JK Smart Active Balance BMS B2A20S20P-HC - (8S - 20S) - 200A
+      url: https://nkon.nl/en/jk-bms-b2a20s20p.html
+      editeur: NKON (Pays-Bas)
+      date: 2026-10-07
+      empreinte: sha256:472b95e7f85e85413633464116e6bf2214cd29858c046f427122754a4e93cc70
+      octets: 274089
+      conditions: non lues
+      note: Prix 145,95 EUR TTC / 120,62 EUR HT (rapport 1,21).
+    marche_pui_sigmanortec_daly:
+      titre: Smart BMS 13S module, Daly, 60A, Bluetooth, 48V
+      url: https://sigmanortec.ro/en/smart-bms-13s-module-daly-60a-bluetooth-48v
+      editeur: Sigmanortec (Roumanie)
+      date: 2026-10-07
+      empreinte: sha256:28021cbec3f041c729a7729e6166a9c2ff6c4db99d77d014f39dc3eaf52d01cd
+      octets: 312811
+      conditions: non lues
+      note: Prix 430,83 RON TTC / 356,06 RON HT (rapport 1,21). « Last items in stock ». Le vendeur recommande de
+        ne pas dépasser 50 % des valeurs maximales en continu.
+    marche_pui_orion_jr2_specs:
+      titre: Orion Jr 2 specifications
+      url: https://www.orionbms.com/downloads/documents/orionjr2_specifications.pdf
+      editeur: Ewert Energy Systems
+      date: 2026-10-07
+      empreinte: sha256:1af90bc12d5adf4eb64ed1da326def676f079461d2f526a5c2ebd747bda6569f
+      octets: 363494
+      conditions: non lues
+      note: 2 pages.
+    marche_pui_orion2_specs:
+      titre: Orion BMS 2 specifications
+      url: https://www.orionbms.com/downloads/documents/orionbms2_specifications.pdf
+      editeur: Ewert Energy Systems
+      date: 2026-10-07
+      empreinte: sha256:f2987c015bb0a58a04f12d8df90f703aff0e11a3da0893b816f42bd2ef3e4f95
+      octets: 714398
+      conditions: non lues
+      note: 'Téléchargée, non exploitée : l''Orion 2 commence à 24 cellules selon une recherche (non vérifié), hors
+        périmètre 12-13S.'
+    marche_pui_evshop_orionjr2:
+      titre: Orion Jr. 2 BMS CAN enabled Kit 16 cells
+      url: https://evshop.eu/en/bms/311-orion-jr-2-bms-can-enabled-kit-16-cells.html
+      editeur: EVShop.eu
+      date: 2026-10-07
+      empreinte: sha256:48a3bf235a900255e6e2febe01f2da9c76fdb86b569e23bb077e520ac6491eb2
+      octets: 134497
+      conditions: non lues
+      note: 620,00 EUR « Tax excluded » ; « Sorry, This item is out of stock » ; option « Hall effect current sensor
+        ».
+    marche_pui_ebay_ant:
+      titre: ANT Smart BMS 7S-16S 40A-420A (eBay.de)
+      url: https://www.ebay.de/itm/156811726845
+      editeur: eBay
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée : page de blocage (1831 octets). Aucun produit ANT retenu.'
+    marche_pui_adc_regenclamp_ds:
+      titre: Data Sheet STP-DRVA-RC_DS, STP-DRVA-RC-050 Regeneration Clamp, 1st Edition 10/2012
+      url: https://cdn.automationdirect.com/static/manuals/surestepmanual/surestepclamp_datasheet.pdf
+      editeur: AutomationDirect
+      date: 2026-10-07
+      empreinte: sha256:8c26d320f0843e1d8757c510ce47fdd0103e2520d0c7b8f11f744e42e908e969
+      octets: 183256
+      conditions: non lues
+      note: 2 feuilles.
+    marche_pui_adc_regenclamp_page:
+      titre: STP-DRVA-RC-050 - Regen Clamp (page produit)
+      url: https://www.automationdirect.com/adc/shopping/catalog/motion_control/stepper_systems/stepper_accessories/stp-drva-rc-050
+      editeur: AutomationDirect
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée (curl refusé) ; lue via WebFetch : « Discontinued (retired 05/2021) », remplacé par
+        STP-DRVA-RC-050A ; aucun prix.'
+    marche_pui_amc_srst50:
+      titre: SRST50 shunt regulator
+      url: https://www.a-m-c.com/product/srst50/
+      editeur: ADVANCED Motion Controls
+      date: 2026-10-07
+      empreinte: sha256:eb6346c740cd2dea2dfdb9d52c05db52a269715fa181c853986a6d9854aaec66
+      octets: 239056
+      conditions: non lues
+      note: 'Fiche technique PDF derrière inscription : non lue.'
+    marche_pui_amc_srst70:
+      titre: SRST70 shunt regulator
+      url: https://www.a-m-c.com/product/srst70/
+      editeur: ADVANCED Motion Controls
+      date: 2026-10-07
+      empreinte: sha256:e6ea8e2cdeaa69ec880d273b349865afd1b0e31c24f25426029a3c55af3bbdc0
+      octets: 239692
+      conditions: non lues
+      note: ''
+    marche_pui_odrive_eu_brake:
+      titre: Set of 8 Brake Resistors — ODrive Europe
+      url: https://eu.odriverobotics.com/shop/set-of-8-brake-resistors
+      editeur: ODrive Robotics (boutique Europe)
+      date: 2026-10-07
+      empreinte: sha256:6b5725f8ebada6a2b1d25e06efba1a19c2e6519f135d99d14762bd9f5b5c2af0
+      octets: 94973
+      conditions: non lues
+      note: 19,00 EUR le lot de 8 ; TVA non précisée sur la page.
+    marche_pui_realman_bleeder:
+      titre: Power Bleeding Module (HPD) — user manual
+      url: https://develop.realman-robotics.com/en/joints/usermanualforpowerdischargemodule/
+      editeur: Realman Intelligent Technology (Beijing)
+      date: 2026-10-07
+      empreinte: sha256:26c6191293e8aa27431a71895264fc9cae2106e87474f5042422e98840bcb757
+      octets: 45228
+      conditions: non lues
+      note: Aucun prix sur la page.
+    marche_pui_fs_100mega_midi60:
+      titre: Victron MIDI pojistka 60A (58V) CIP134060020 | 100MEGA Distribution
+      url: https://b2b.100mega.com/en/324376-victron-midi-pojistka-60a-58v
+      editeur: 100MEGA Distribution s.r.o. (CZ)
+      date: 2026-10-07
+      empreinte: sha256:ccc9c38b0ed3cedf6f857f15872b8bf529d495f240ce5e7cade0132d0b989795
+      octets: 160221
+      conditions: non lues
+      note: Prix visible seulement après connexion (B2B).
+    marche_pui_fs_100mega_mega80_125:
+      titre: Victron DC MEGA pojistka 125A (80V) CIP138125020 | 100MEGA Distribution
+      url: https://b2b.100mega.com/en/309127-victron-dc-mega-pojistka-125a-80v
+      editeur: 100MEGA Distribution s.r.o. (CZ)
+      date: 2026-10-07
+      empreinte: sha256:635f6fdfe5ff20a2b8dc6531fb9c71e02baf62a35a5d4803f41bd93fa2c266a2
+      octets: 240079
+      conditions: non lues
+      note: Prix visible seulement après connexion (B2B).
+    marche_pui_fs_offgridtec_mega58:
+      titre: Victron 58V/48V 125A-300A Megafuse fuses | Offgridtec
+      url: https://www.offgridtec.com/en/victron-58v-48v-125a-300a-megafuse-fuses.html
+      editeur: Offgridtec AG (DE)
+      date: 2026-10-07
+      empreinte: sha256:69f69ea60c649990561a45d81287f214fe7f367cdfe673ccc026494601af3b33
+      octets: 867092
+      conditions: non lues
+      note: 'La page affichée est la variante 250A (CIP137250010, réf. boutique 8-67-010140). L''URL « victron-300a-80v-mega-fuse-fuse-set-of-5
+        » redirige vers cette même page 58 V : aucune offre 80 V lue chez Offgridtec.'
+    marche_pui_fs_offgridtec_megaholder:
+      titre: Offgridtec MEGA-Fuse fuse holder | Offgridtec
+      url: https://www.offgridtec.com/en/offgridtec-mega-fuse-fuse-holder.html
+      editeur: Offgridtec AG (DE)
+      date: 2026-10-07
+      empreinte: sha256:ca04a326af812ea342757549a8917aeb72209a1d24cf212acc59cadf204ae66a
+      octets: 1091096
+      conditions: non lues
+      note: null
+    marche_pui_fs_bussmann_amg_ds:
+      titre: Bussmann AMG Series bolt-in automotive fuses (fiche technique, Cooper Bussmann Transportation Products,
+        p. 35)
+      url: https://media.digikey.com/pdf/Data%20Sheets/Cooper%20Bussmann%20PDFs/AMG%20Series.pdf
+      editeur: Cooper Bussmann (aujourd'hui Eaton), hébergé par Digi-Key
+      date: 2026-10-07
+      empreinte: sha256:091a2f304290af29da7d629bac4b62ebf1f039e06b6f9011fc440de742d6bd52
+      octets: 80307
+      conditions: non lues
+      note: 'Fiche ancienne (marque Cooper), non datée. Des résultats de recherche (Waytek, non ouvrables par curl
+        : page JavaScript vide) annoncent 70 VDC et 2 500 A de pouvoir de coupure : non lus dans une source ouverte,
+        donc non retenus.'
+    marche_pui_fs_littelfuse_bf1_58v:
+      titre: BF1 58V Series - MIDI style 58V Slo-Blo Automotive Bolt-Down Fuse (Littelfuse)
+      url: https://www.littelfuse.com/products/fuses/automotive-passenger-car/high-current-fuses/bf1-58v
+      editeur: Littelfuse
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée : littelfuse.com répond 403 (curl et WebFetch) ; fiches miroirs Arrow, Mouser, ChipDip,
+        Farnell, element14 bloquées ou hors délai. Les valeurs vues en résumé de recherche (58 VDC, 1 000 A à 58
+        VDC, 30–200 A, M5/M6) ne sont donc PAS retenues.'
+    marche_pui_fs_qualityheating_6006:
+      titre: Blue Sea Systems m-Series 48V On/Off Battery Switch | Quality Heating
+      url: https://qualityheating.co.uk/products/blue-sea-systems-m-series-48v-on-off-battery-switch
+      editeur: Quality Heating (UK)
+      date: 2026-10-07
+      empreinte: sha256:2b84f93ae97f4d0c76dc086b205ac558e1bcc683d9d185858e6a809484bea802
+      octets: 870433
+      conditions: non lues
+      note: Fichier fichiers/qualityheating_6006.html (téléchargé par l'agent parent). Prix chargé en JavaScript,
+        absent du HTML ; l'API JSON Shopify répond « local_rate_limited ».
+    marche_pui_fs_offgridtec_vbs275:
+      titre: Victron battery switch 275A 48V | Offgridtec
+      url: https://www.offgridtec.com/en/victron-battery-switch-275a-48v.html
+      editeur: Offgridtec AG (DE)
+      date: 2026-10-07
+      empreinte: sha256:786bc34760712f75f6cfd98cf0b35f4b5cf06f4598a215b4a3064d943a664bea
+      octets: 720020
+      conditions: non lues
+      note: 'Contradiction interne à la page : « Maximum DC operating voltage: 60V » (données techniques) et « Max.
+        System voltage: 70 V/DC » (tableau). Retenu : 60 V.'
+    marche_pui_fs_amass_xt90s:
+      titre: 大电流防打火连接器—XT90S (AMASS, fiche produit officielle)
+      url: https://www.china-amass.com/biao/300.html
+      editeur: Changzhou Amass Electronics (fabricant)
+      date: 2026-10-07
+      empreinte: sha256:6c6c71c973488b18fdbf3b25f7566c7bcbaabf829d85d84a531f9f5883da99b3
+      octets: 41401
+      conditions: non lues
+      note: En chinois. 耐电压 = tension de tenue diélectrique, pas une tension d'emploi en coupure.
+    marche_pui_fs_amass_as150:
+      titre: 大电流防打火连接器—AS150 (AMASS, fiche produit officielle)
+      url: https://www.china-amass.com/biao/178.html
+      editeur: Changzhou Amass Electronics (fabricant)
+      date: 2026-10-07
+      empreinte: sha256:0a8e5dea9512f15701fefd5e928c2e630524a1c69c0fa4e4115a83ba7b0319d9
+      octets: 42183
+      conditions: non lues
+      note: En chinois.
+    marche_pui_fs_amass_as150u:
+      titre: 大电流混合型防打火连接器—AS150U (AMASS, fiche produit officielle)
+      url: https://www.china-amass.com/biao/179.html
+      editeur: Changzhou Amass Electronics (fabricant)
+      date: 2026-10-07
+      empreinte: sha256:0d8d0a0c020f042e5e5dddbb1b0b2809b4f387793c8eaff506d7576fe9c9bfe1
+      octets: 43102
+      conditions: non lues
+      note: Variante AS150U (2 broches de puissance + 4 de signal). Non retenue comme produit ; lue pour comparaison.
+    marche_pui_fs_rotorama_xt90s:
+      titre: Amass XT90S antispark connector (1 pair) | Rotorama
+      url: https://www.rotorama.com/prislusenstvi/xt90s-antispark-konektor-par
+      editeur: Rotorama s.r.o. (CZ)
+      date: 2026-10-07
+      empreinte: sha256:7086bcf95c7dd69d02903e4472dbc7680b5b5c3b69572b80aec0f2afb8d15783
+      octets: 43006
+      conditions: non lues
+      note: TVA non mentionnée près du prix.
+    marche_pui_fs_originhobbies_as150:
+      titre: Amass AS150 7mm Gold Plated Anti Spark Connector set 150A – MT1451 | OriginHobbies
+      url: https://originhobbies.com/de/shop/charging/battery-accessories/amass-as150-anti-spark-gold-connector-system-7mm-150a-2-sets/
+      editeur: Octal Oy / OriginHobbies (FI)
+      date: 2026-10-07
+      empreinte: sha256:f0c5705bb7f4c44c30f1089821981906034278b0d309fc774a2c9a177f9b1108
+      octets: 327882
+      conditions: non lues
+      note: 'Prix servi en USD (tarification selon le pays du visiteur), « valueAddedTaxIncluded: true » dans les
+        données structurées.'
+    marche_pui_fs_flyingtech_as150:
+      titre: Amass AS150 7mm Gold Bullet Anti Spark Connector | Flying Tech
+      url: https://www.flyingtech.co.uk/product/amass-as150-7mm-gold-bullet-anti-spark-connector/
+      editeur: Flying Tech (UK)
+      date: 2026-10-07
+      empreinte: sha256:0f679f7ef57041c9bdfeeebba0c808dc17dc7726d10de909a1cd88fe950dbbd3
+      octets: 515394
+      conditions: non lues
+      note: Hors UE (Royaume-Uni).
+    marche_pui_cp_albright_sw80_ds:
+      titre: Albright SW80 Single Pole Single Throw Normally Open, fiche SW80v6-01-20
+      url: https://intellaparts.com/mm5/graphics/pdf/SW80.pdf
+      editeur: Albright International (fiche hébergée par Intella Parts)
+      date: 2026-10-07
+      empreinte: sha256:313091d7463cf861328b9d7f51948f52970d5f44f8cf59f35c3503a852064e5c
+      octets: 929981
+      conditions: non lues
+      note: Le PDF contient deux versions de la fiche (2010 avec 250/350 A, et 2020 avec 100/125 A, en-tête « 100A/125A
+        »). La version 2020 est retenue. Le dessin coté n'est pas extractible en texte.
+    marche_pui_cp_gigavac_gv200_ds:
+      titre: Sensata GIGAVAC GV200 series open contactors datasheet
+      url: https://www.sensata.com/sites/default/files/a/sensata-gigavac-gv200-series-open-contactors-datasheet.pdf
+      editeur: Sensata Technologies
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'Non téléchargée : curl reçoit une page HTML de blocage, WebFetch reçoit un 403. Aucune valeur n''en
+        est tirée.'
+    marche_pui_cp_evshop_relays:
+      titre: EVShop.eu — catégorie Relays (liste et prix)
+      url: https://evshop.eu/en/20-relays
+      editeur: EVShop.eu (Pitesti, Roumanie)
+      date: 2026-10-07
+      empreinte: sha256:371795572725b5961ad7179bc206a53a7b21f806125651e6c35bc2075b4d9fe6
+      octets: 136016
+      conditions: non lues
+      note: Liste aussi un TE KILOVAC LEV100 12 V d'occasion (70 €) et un Tyco EV200 (190 €), non détaillés ici.
+    marche_pui_cp_evshop_p115:
+      titre: Gigavac P115 Mini-Tactor Contactor
+      url: https://evshop.eu/en/relays/175-8414-gigavac-p115-mini-tactor-contactor.html
+      editeur: EVShop.eu
+      date: 2026-10-07
+      empreinte: sha256:5378b5502a93bb3928a38fd12aa0d9cafb78806d7de556a2dabc6dbc6310a790
+      octets: 121310
+      conditions: non lues
+      note: Prix « Tax excluded » ; 18 en stock affichés.
+    marche_pui_cp_evshop_gv200pa:
+      titre: Gigavac GV200PA Contactor - 12V Coil without economizer
+      url: https://evshop.eu/en/relays/208-gigavac-gv200pa-contactor-12v-coil-without-economizer.html
+      editeur: EVShop.eu
+      date: 2026-10-07
+      empreinte: sha256:e7271e57804972d7e91f67ee0606c083d21900cf48a21614068c4495f97146a9
+      octets: 124110
+      conditions: non lues
+      note: 'La page se contredit : titre et « Features » disent sans économiseur, la ligne « Specifications » dit
+        « Economizer: Yes ». Rupture de stock affichée.'
+    marche_pui_cp_evshop_gv200fc:
+      titre: Gigavac GV200FC Contactor - 48 V interne spoelonderdrukking
+      url: https://evshop.eu/nl/relais/497-gigavac-gv200fc-contactor-48-v-interne-spoelonderdrukking.html
+      editeur: EVShop.eu
+      date: 2026-10-07
+      empreinte: sha256:b6dc0f0a170d5b578f1636d269723a173d2c7fbb53f81c0da12a017b21116af2
+      octets: 123413
+      conditions: non lues
+      note: Variante à bobine 48 V de la même famille GV200, 175 € ; gardée pour mémoire, non retenue (bobine non
+        12 V).
+    marche_pui_cp_victron_smart_bp:
+      titre: Victron Energy — Smart BatteryProtect (page produit)
+      url: https://www.victronenergy.com/battery_protect/smart-battery-protect
+      editeur: Victron Energy B.V.
+      date: 2026-10-07
+      empreinte: sha256:e0345c6ce8668cf72e7227dd7b9804b05916bee61abbdfaa3edaaf3e752e0063
+      octets: 498074
+      conditions: non lues
+      note: Sert seulement à trouver la fiche technique 48V-100A.
+    marche_pui_cp_victron_sbp48_ds:
+      titre: Datasheet Smart BatteryProtect 48V-100A (EN)
+      url: https://www.victronenergy.com/upload/documents/Datasheet-Smart-BatteryProtect-48V-100A-EN.pdf
+      editeur: Victron Energy B.V.
+      date: 2026-10-07
+      empreinte: sha256:b608246df4554f554bc7557d5c63fdf5ea2be74b5248eb3b2d17e603c18f7b0c
+      octets: 266133
+      conditions: non lues
+      note: Fiche d'une page.
+    marche_pui_cp_solarelectric_sbp48:
+      titre: Victron Energy Smart BatteryProtect 48V-100A — Northern Arizona Wind & Sun
+      url: https://www.solar-electric.com/victron-energy-smart-batteryprotect-48v-100a.html
+      editeur: solar-electric.com (États-Unis)
+      date: 2026-10-07
+      empreinte: sha256:c7d8885ef1bc9595410f9c34358ab7dbd8b26cb3260f93c08100cc5cc16398c4
+      octets: 1224037
+      conditions: non lues
+      note: 'Prix lu dans les métadonnées de la page (data-price-amount 137.7, priceCurrency USD) ; rupture de stock
+        affichée. Aucun prix UE lisible : 100mega.com (CZ) exige une connexion, wattuneed.com n''a pas répondu à
+        curl.'
+    marche_pui_cp_rec_accessories:
+      titre: REC BMS — Accessories (Pre-charge unit V3.1)
+      url: https://www.rec-bms.com/rec-accessories/
+      editeur: REC d.o.o. (Postojna, Slovénie)
+      date: 2026-10-07
+      empreinte: sha256:28555efe1eb5a2a45f0ae3a3b801d4dab9dd116348de00c095f519f8afa14d39
+      octets: 86882
+      conditions: non lues
+      note: Annonce « suitable for 12, 24, 48 and up to 120 V systems », « 6 A top side coil drive ». Pas de prix.
+    marche_pui_cp_rec_precharge_v31_manual:
+      titre: User Manual Pre-charge unit V3.1 (Timeset)
+      url: https://www.rec-bms.com/wp-content/uploads/2023/09/UserManualPrecharge_3_1_Timeset.pdf
+      editeur: REC d.o.o.
+      date: 2026-10-07
+      empreinte: sha256:26e3b7588139b2fde02ce81d128f2ecb01e32db05aa9ce3166d69a9fbcaa5ef6
+      octets: 1736685
+      conditions: non lues
+      note: Tableau des caractéristiques électriques et section Dimensions.
+    marche_pui_cp_flipsky_products:
+      titre: Flipsky — catalogue produits (products.json de la boutique)
+      url: https://flipsky.net/products.json?limit=250
+      editeur: Flipsky
+      date: 2026-10-07
+      empreinte: sha256:1c2976eb4c566edc29aee8f24dab2d274428ad67b9c3988ac2f5c96edeb8915e
+      octets: 1773219
+      conditions: non lues
+      note: Les pages produit HTML renvoient 429 (limitation de débit). Le JSON donne le prix sans devise explicite
+        et un champ « grams ».
+    marche_pui_cp_flipsky_as300v4_manual:
+      titre: Anti-spark Switch V4.0 User Manual
+      url: https://cdn.shopify.com/s/files/1/0011/4039/1996/files/Anti-spark_Switch_V4.0_User_Manual_98d83a39-fc34-40f6-8283-0ac4f56058c5.pdf?v=1764408572
+      editeur: Flipsky
+      date: 2026-10-07
+      empreinte: sha256:3631d8c5ba9b26b5258e7a7ef57017f732ea02d8172ebb51f45f8d4fc059aec2
+      octets: 4486578
+      conditions: non lues
+      note: 4 pages, anglais et chinois.
+    marche_pui_cp_rotorama_xt90s:
+      titre: Amass XT90S antispark connector (1 pair)
+      url: https://www.rotorama.com/prislusenstvi/xt90s-antispark-konektor-par
+      editeur: Rotorama (République tchèque)
+      date: 2026-10-07
+      empreinte: sha256:c48252f8a64a54ee45f6ba0f1e95f2652399f23ee88d51a885fd5681184abac0
+      octets: 43006
+      conditions: non lues
+      note: Affichage EN / EUR, « In Stock ». La page ne dit pas si la TVA est incluse.
+    marche_pui_cp_rotorama_as150:
+      titre: Amass AS150 connector (1 pair)
+      url: https://www.rotorama.com/product/amass-as150-banana-plug
+      editeur: Rotorama (République tchèque)
+      date: 2026-10-07
+      empreinte: sha256:89ea92efa07c169b6bc9b66fadab8f0793711229205162425b7618ac3be5f472
+      octets: 46814
+      conditions: non lues
+      note: Donne 70 A continu / 150 A pointe / 500 V max.
+    marche_pui_cp_flyingtech_as150:
+      titre: Amass AS150 7mm Gold Bullet Anti Spark Connector
+      url: https://www.flyingtech.co.uk/product/amass-as150-7mm-gold-bullet-anti-spark-connector/
+      editeur: Flying Tech (Royaume-Uni)
+      date: 2026-10-07
+      empreinte: sha256:0f679f7ef57041c9bdfeeebba0c808dc17dc7726d10de909a1cd88fe950dbbd3
+      octets: 515394
+      conditions: non lues
+      note: Donne 150 A constant / 200 A pointe, masse 24 g la paire ; prix « £1.90 through £7.85 Inc. VAT » selon
+        variante.
+    marche_pui_au_eao_84_ds:
+      titre: EAO 84-5540.0040, Emergency stop switch Series 84, fiche produit (distribution Farnell)
+      url: https://www.farnell.com/datasheets/4520153.pdf
+      editeur: EAO AG (fiche servie par Farnell)
+      date: 2026-10-07
+      empreinte: sha256:ac69d231eb72f01c39f20b8011e1e36b5941ec84a3ed7000c44da26d329a85c6
+      octets: 575452
+      conditions: non lues
+      note: PDF 7 pages. Aucun prix trouvé (Farnell et RS bloquent curl).
+    marche_pui_au_buerklin_xa1e_bv302r:
+      titre: XA1E-BV302R | IDEC | Emergency Stop | Bürklin Elektronik
+      url: https://buerklin.com/en/p/idec/emergency-stop/xa1e-bv302r/12G2350
+      editeur: Bürklin GmbH & Co. KG (Oberhaching, DE)
+      date: 2026-10-07
+      empreinte: sha256:e2978caf1b076e7cf31391672472ec6bb24f1756077d3d5838381ed60bdaf48d
+      octets: 300550
+      conditions: non lues
+      note: Prix « incl. VAT plus shipping », taux non affiché. La page indique aussi « Product not available for
+        private customers » (vente aux professionnels). Fiche technique IDEC non téléchargée (lien JavaScript).
+    marche_pui_au_teleradio_catalog_2026:
+      titre: Tele Radio USA, catalogue 2026 (FULLTRUSA-Catalog-2026)
+      url: https://www.tele-radio.com/app/uploads/FULLTRUSA-Catalog-2026.pdf
+      editeur: Tele Radio
+      date: 2026-10-07
+      empreinte: sha256:65fa7270624642b01d95c6a0e716606dca370c4cc11b2aacc8aeab4eed64bb89
+      octets: 8016096
+      conditions: non lues
+      note: 'Catalogue américain, unités impériales, pas de prix. Pages 4-5 : gamme Panther.'
+    marche_pui_au_teleradio_ch_panther_sets:
+      titre: Tele Radio Schweiz, prospectus PANTHER Winden-Sets
+      url: https://www.tele-radio.com/app/uploads/TRCHE-Prospekt-PANTHER-Winden-Sets.pdf
+      editeur: Tele Radio Schweiz GmbH (Rotkreuz, CH)
+      date: 2026-10-07
+      empreinte: sha256:e90c254bf4bef555106d976edfd0cf9799d04d88f91e54742c8a5cb6603ca18a
+      octets: 1507054
+      conditions: non lues
+      note: Atteste la distribution en Suisse et la certification PLd/Cat. 3 du PN-T19-2 ; aucun prix.
+    marche_pui_au_hbc_fse319:
+      titre: HBC-radiomatic, FSE 319 radio receiver (page produit)
+      url: https://www.hbc-radiomatic.com/en/products/receivers/fse-319.html
+      editeur: HBC-radiomatic GmbH (Crailsheim, DE)
+      date: 2026-10-07
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: non téléchargée (curl sans réponse, aussi via hbc-usa.com) ; lue via WebFetch le 2026-10-07.
+    marche_pui_au_hbc_eco_info:
+      titre: HBC Product Information eco (PI_eco 12/23)
+      url: https://cdn.dzwigi.net.pl/b/v2/FST524_eco3/Document/HBC-Product-Information-eco-6a44eaef03437.pdf
+      editeur: HBC-radiomatic GmbH (fichier servi par un revendeur polonais)
+      date: 2026-10-07
+      empreinte: sha256:7cbbb53f14275ed11c9a33452729c7d39caf4f48441fbeee9abf54fb5f0c05aa
+      octets: 4538901
+      conditions: reproduction interdite sans autorisation écrite (mention du document) ; seules des valeurs sont
+        extraites
+      note: Émetteur eco, combinable avec FSE 507/510/512/516/524 (pas le FSE 319).
+    marche_pui_au_sigmanortec_433_relay:
+      titre: Relay module with remote control, 1 channel, 433MHz, 12VDC
+      url: https://sigmanortec.ro/en/relay-module-with-remote-control-1-channel-433mhz-12vdc
+      editeur: Sigmanortec (RO)
+      date: 2026-10-07
+      empreinte: sha256:dfa849a6f6e2cd60e6c5481b2e2a7a3a0e0c3a8928d79acd75de9dc0491fb79b
+      octets: 338301
+      conditions: non lues
+      note: 'Deux prix affichés : 49.05 RON et 40.54 RON (rapport 1,21 = TVA roumaine 21 %).'
+    marche_pui_au_mybotshop_husky_estop:
+      titre: Clearpath Robotics Husky A300 Wireless E-Stop | MYBOTSHOP
+      url: https://www.mybotshop.de/Clearpath-Robotics-Husky-A300-Wireless-E-Stop_3
+      editeur: MYBOTSHOP (DE)
+      date: 2026-10-07
+      empreinte: sha256:bd91cd9e475f25e1570bb4304becc8e4bca65ac28c9ff00ac01cc39cb4f2fb5b
+      octets: 242750
+      conditions: non lues
+      note: 'Écarté comme produit : accessoire lié au Husky A300 (électronique et antenne du robot requises). Point
+        de prix seulement : 4 495,95 € ; l''arrêt se déclenche aussi sur perte de liaison ou batterie faible.'
+    marche_pui_dc_meanwell_sd200:
+      titre: SD-200 series, 200W Single Output DC-DC Converter (SD-200-SPEC, 2024-11-22)
+      url: https://www.meanwell.com/Upload/PDF/SD-200/SD-200-SPEC.PDF
+      editeur: Mean Well
+      date: 2026-10-07
+      empreinte: sha256:0cfdd4572ec92e0d4166f7aedcf91258f6797824b5486182fe68c3ecd09bea69
+      octets: 170105
+      conditions: non lues
+      note: Fiche technique constructeur, 1 page lue (texte extrait par pypdf).
+    marche_pui_dc_meanwell_rsd200:
+      titre: RSD-200 series, 200W Railway Single Output DC-DC Converter (RSD-200-SPEC, 2025-07-18)
+      url: https://www.meanwell.com/Upload/PDF/RSD-200/RSD-200-SPEC.PDF
+      editeur: Mean Well
+      date: 2026-10-07
+      empreinte: sha256:83212bba71630099942764adf80f76bc0eaec2ec109110cf7957e8456b967a2e
+      octets: 327473
+      conditions: non lues
+      note: Texte extrait par pypdf ; l'ordre des colonnes du tableau est ambigu à l'extraction (voir notes produit).
+    marche_pui_dc_alimentatorishop_sd200c12:
+      titre: SD-200C-12 - Meanwell - Convertitore dc-dc 200W 12V - Ingresso 48VDC
+      url: https://www.alimentatorishop.com/convertitori-dcdc/sd-200c-12
+      editeur: alimentatorishop.com (Italie)
+      date: 2026-10-07
+      empreinte: sha256:efbb3cc10012687e9272c67e53038fe67d8f06428450949372b39a1ed82e2b1e
+      octets: 236235
+      conditions: non lues
+      note: 'Prix lu : 100,45 € tasse escluse, 122,55 € IVA inclusa ; « Non disponibile - contattaci ».'
+    marche_pui_dc_pololu_d42v110f12:
+      titre: 12V, 9A Step-Down Voltage Regulator D42V110F12
+      url: https://www.pololu.com/product-info-merged/5677
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:fb13fce3e4465fbfe77a030d44866f712a9efa09cc9a94d9285b1eebbad3ae7e
+      octets: 66986
+      conditions: non lues
+      note: Prix lu dans les données structurées de la page (price 59.95 USD, InStock).
+    marche_pui_dc_pololu_d42v110f6:
+      titre: 6V, 11A Step-Down Voltage Regulator D42V110F6
+      url: https://www.pololu.com/product-info-merged/5673
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:5312c4c50322c342c849451fddde2a6416c076efef15134e10e7123e6fd228ff
+      octets: 66952
+      conditions: non lues
+      note: Prix lu dans les données structurées (59.95 USD, InStock).
+    marche_pui_dc_pololu_d42v110f7:
+      titre: 7.5V, 10A Step-Down Voltage Regulator D42V110F7
+      url: https://www.pololu.com/product-info-merged/5674
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:ff82e38a2277e15a2c35415e8af21a0e1189596dea99cf30f1ae77fb3599d740
+      octets: 69816
+      conditions: non lues
+      note: Prix lu dans les données structurées (59.95 USD).
+    marche_pui_dc_pololu_d42v55f5:
+      titre: 5V, 6A Step-Down Voltage Regulator D42V55F5
+      url: https://www.pololu.com/product-info-merged/5571
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:4886f0e1c7622d8e9cf20509ac7ac18e505656873f796abc034bd4da5cad91ad
+      octets: 56106
+      conditions: non lues
+      note: Prix lu dans les données structurées (39.95 USD, InStock).
+    marche_pui_dc_botland_d42v55f5:
+      titre: D42V55F5 - step-down converter - 5V 6A - Pololu 5571
+      url: https://botland.store/converters-step-down/28515-d42v55f5-step-down-converter-5v-6a-pololu-5571-5904422378011.html
+      editeur: Botland (Pologne)
+      date: 2026-10-07
+      empreinte: sha256:3ef5ae0039391166aa5b1e0c3c2b5e4d35082b76f3b8fb933bd10ba397bd6ce5
+      octets: 746982
+      conditions: non lues
+      note: 'Prix lu : 35.5 EUR (méta-données de la page) ; régime de TVA non affiché dans le texte extrait.'
+    marche_pui_dc_pololu_d24v150f6:
+      titre: Pololu 6V, 15A Step-Down Voltage Regulator D24V150F6 (page produit 2883)
+      url: https://www.pololu.com/product/2883
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:f6e5ddf85610cbdeb4a1062f28b6253c9cf150721f95053ca7dbd9daf8b3b158
+      octets: 76105
+      conditions: non lues
+      note: 'ÉCARTÉ : entrée jusqu''à 40 V seulement ; Pololu recommande le D42V110Fx (60 V).'
+    marche_pui_dc_pololu_d36v50f5:
+      titre: Pololu D36V50Fx (page produit 4091)
+      url: https://www.pololu.com/product/4091
+      editeur: Pololu
+      date: 2026-10-07
+      empreinte: sha256:0d7e873d3cc2af2b5d32d07c53656f5585c1c2c1fac84facd345c65caa0ee2d2
+      octets: 76799
+      conditions: non lues
+      note: 'ÉCARTÉ : entrée jusqu''à 50 V (< 54,6 V, 13S pleine charge) ; Pololu renvoie au D42V55Fx (60 V).'
+  produits:
+    jk_b2a20s20p_hc:
+      categorie: bms
+      nom: JK Smart Active Balance BMS B2A20S20P-HC
+      fabricant: JIKONG (JK BMS)
+      nombre_s:
+        valeur: 8-20
+        unite: S
+        source: marche_pui_nkon_jk
+        note: couvre 12S et 13S ; Li-ion, LiFePO4, LTO
+      courant_continu:
+        valeur: 200
+        unite: A
+        source: marche_pui_nkon_jk
+        note: très au-dessus du besoin 30-100 A
+      courant_pointe:
+        valeur: 350
+        unite: A
+        source: marche_pui_nkon_jk
+        note: durée non indiquée
+      equilibrage:
+        valeur: actif 2 A
+        unite: null
+        source: marche_pui_nkon_jk
+      protections:
+        valeur: surcharge, surdécharge, surintensité, court-circuit, surchauffe, défaut de câblage
+        unite: null
+        source: marche_pui_nkon_jk
+        note: aucune coupure par choc mentionnée
+      communication:
+        valeur: Bluetooth, CAN (version HC) ; RS485 seulement pour la version R
+        unite: null
+        source: marche_pui_nkon_jk
+      masse_g:
+        valeur: 470
+        unite: g
+        source: marche_pui_nkon_jk
+        note: champ « Weight - g » de la fiche boutique ; peut inclure câbles et interrupteur livrés
+      dimensions_mm:
+        valeur: null
+        source: null
+        note: non indiquées sur la page lue
+      prix:
+        valeur: 145.95
+        devise: EUR
+        tva_incluse: 0.21
+        vendeur: NKON (NL)
+        source: marche_pui_nkon_jk
+        note: 120,62 EUR HT ; livré avec jeu de câbles et interrupteur
+      disponibilite_ch_ue:
+        valeur: UE (NL), en vente le 2026-10-07
+        source: marche_pui_nkon_jk
+    daly_smart_13s_60a:
+      categorie: bms
+      nom: Daly Smart BMS 13S 60A Bluetooth (48 V Li-ion)
+      fabricant: Daly
+      nombre_s:
+        valeur: 13
+        unite: S
+        source: marche_pui_sigmanortec_daly
+        note: 54,6 V ; existe aussi en 12S chez Daly (non lu ici)
+      courant_continu:
+        valeur: 60
+        unite: A
+        source: marche_pui_sigmanortec_daly
+        note: le vendeur conseille ≤ 50 % du maximum en continu
+      courant_pointe:
+        valeur: 120
+        unite: A
+        source: marche_pui_sigmanortec_daly
+        note: seuil de protection de surintensité en décharge, délai 1,0 ± 0,8 s
+      court_circuit:
+        valeur: 10-500
+        unite: µs
+        source: marche_pui_sigmanortec_daly
+        note: délai de protection
+      resistance_interne:
+        valeur: < 20
+        unite: mΩ
+        source: marche_pui_sigmanortec_daly
+      equilibrage:
+        valeur: passif 100 ± 15 mA, début 4,0 V
+        unite: null
+        source: marche_pui_sigmanortec_daly
+      protections:
+        valeur: court-circuit, surdécharge (2,7 V), surcharge (4,25 V), surintensité ; plage de température -35
+          à 75 °C
+        unite: null
+        source: marche_pui_sigmanortec_daly
+        note: aucune coupure par choc mentionnée
+      communication:
+        valeur: UART + module Bluetooth fourni
+        unite: null
+        source: marche_pui_sigmanortec_daly
+        note: la version CAN est un autre modèle, non lu
+      masse_g:
+        valeur: 184
+        unite: g
+        source: marche_pui_sigmanortec_daly
+      dimensions_mm:
+        valeur: 123 x 65 x 14
+        source: marche_pui_sigmanortec_daly
+        note: donné « 65 x 123 x 14mm »
+      prix:
+        valeur: 430.83
+        devise: RON
+        tva_incluse: 0.21
+        vendeur: Sigmanortec (RO)
+        source: marche_pui_sigmanortec_daly
+        note: 356,06 RON HT ; livraison UE annoncée
+      disponibilite_ch_ue:
+        valeur: UE (RO), « Last items in stock »
+        source: marche_pui_sigmanortec_daly
+    orion_jr2:
+      categorie: bms
+      nom: Orion Jr 2 BMS (version CAN, kit 16 cellules)
+      fabricant: Ewert Energy Systems
+      nombre_s:
+        valeur: 1-16
+        unite: S
+        source: marche_pui_orion_jr2_specs
+        note: packs jusqu'à 48 V nominal (60 V max)
+      courant_continu:
+        valeur: null
+        unite: A
+        source: marche_pui_orion_jr2_specs
+        note: 'BMS « industriel » centralisé SANS interrupteur de puissance : il commande des contacteurs/relais
+          externes (sorties numériques 60 V/175 mA) et mesure le courant par capteur à effet Hall 200 à 1000 A'
+      protections:
+        valeur: surtension, sous-tension, surintensité, température ; limites de courant de charge/décharge calculées
+        unite: null
+        source: marche_pui_orion_jr2_specs
+        note: aucune coupure par choc mentionnée
+      communication:
+        valeur: CAN 2.0B (optionnel, 125-1000 kbit/s), RS-232, 3 sorties analogiques 0-5 V
+        unite: null
+        source: marche_pui_orion_jr2_specs
+      masse_g:
+        valeur: 210
+        unite: g
+        source: marche_pui_orion_jr2_specs
+        page: 2
+        note: BMS seul, 7,6 oz (0,21 kg)
+      dimensions_mm:
+        valeur: 181,4 x 101,9 x 38,1
+        source: marche_pui_orion_jr2_specs
+        page: 2
+        note: converti de 7,14 x 4,01 x 1,50 in
+      prix:
+        valeur: 620.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: EVShop.eu
+        source: marche_pui_evshop_orionjr2
+        note: kit ; « out of stock »
+      disponibilite_ch_ue:
+        valeur: UE, rupture le 2026-10-07
+        source: marche_pui_evshop_orionjr2
+    robstride_module_decharge:
+      categorie: regeneration
+      nom: RobStride Discharge Module (泄放模块, « bleeder module »)
+      fabricant: RobStride (Beijing Robstride Technology)
+      principe:
+        valeur: 'hacheur de freinage : au-dessus d''un seuil de tension de bus, commute une résistance externe (bornes
+          R+/R-) en parallèle sur le bus (B+/B-) ; hystérésis ; LED en décharge, buzzer en surchauffe'
+        unite: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 2
+      tension_service:
+        valeur: 15-60
+        unite: V
+        source: marche_pui_rs_decharge_en_v10
+        page: 3
+        note: pointe 80 V < 100 ms ; isolement 500 V vers les trous de fixation
+      seuil_declenchement_48v:
+        valeur: 53.5
+        unite: V
+        source: marche_pui_rs_decharge_zh_v11
+        page: 3
+        note: '± 0,5 V, arrêt à 50,5 ± 0,5 V. La V1.0 anglaise dit 64 ± 0,5 V / arrêt 59 ± 0,5 V. Valeur prudente
+          retenue = la V1.1, plus récente et plus basse. ATTENTION : en 13S (54,6 V pleine charge), un seuil de
+          53,5 V ferait décharger la batterie pleine dans la résistance ; en 12S (50,4 V) il reste au-dessus. À
+          l''inverse, 64 V (V1.0) dépasse la protection de surtension de 60 V des moteurs. Le manuel V1.1 dit que
+          d''autres seuils sont possibles sur demande.'
+      seuil_declenchement_24v:
+        valeur: 27
+        unite: V
+        source: marche_pui_rs_decharge_zh_v11
+        page: 3
+        note: arrêt 25,5 V ; la V1.0 dit 34/31 V
+      selection_plateforme:
+        valeur: 'interrupteur DIP : 0 = 24 V, 1 = 48 V ; ne pas basculer sous tension'
+        unite: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 2
+      courant_continu:
+        valeur: 30
+        unite: A
+        source: marche_pui_rs_decharge_en_v10
+        page: 3
+      courant_pointe:
+        valeur: 200
+        unite: A
+        source: marche_pui_rs_decharge_en_v10
+        page: 3
+        note: pendant 100 ms
+      resistance_recommandee:
+        valeur: 3 Ω/500 W à 10 Ω/200 W
+        unite: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 3
+        note: non fournie dans les bornes ; recommandation « membres supérieurs et inférieurs de robots humanoïdes
+          »
+      usage:
+        valeur: entre batterie et moteurs si la batterie a une résistance interne élevée (plomb, Li-ion vieillie)
+          ou si le câblage est long ; obligatoire avec une alimentation à découpage unidirectionnelle
+        unite: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 4
+      fixation:
+        valeur: 4 vis M2
+        unite: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 2
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        note: non indiquée
+      dimensions_mm:
+        valeur: null
+        source: marche_pui_rs_decharge_en_v10
+        page: 2
+        note: hauteur max 12,1 mm ; contour sur une figure (non lue en texte) et dans dischargemodule.step du dépôt
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: rcdrone.top
+        source: marche_pui_rcdrone_rs_bleeder
+        note: page non téléchargeable (HTTP 429) ; valeur de 47,55 USD vue seulement dans un résumé de recherche,
+          non retenue
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: aucun distributeur UE trouvé
+    robstride_carte_alimentation:
+      categorie: precharge
+      nom: RobStride Power Supply Board V1.3 (carte de distribution)
+      fabricant: RobStride
+      tension_entree:
+        valeur: 20-65
+        unite: V
+        source: marche_pui_rs_carte_alim_v13
+        page: 5
+        note: surtension 65 V (défaut non récupérable), sous-tension 20 V
+      branches_moteur:
+        valeur: 4 branches, 20 A nominal / 40 A pointe chacune
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 5
+        note: 'nombre de branches déduit du mode 2 : « button A controls the power supply to the four motor branches
+          » (p. 6)'
+      surintensite_totale:
+        valeur: 80 A/30 ms (logiciel), 100 A/1 ms (matériel)
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 5
+      court_circuit:
+        valeur: 150 A/1,2 µs + fusible à usage unique (I²t 5270 A²s)
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 5
+      sorties_auxiliaires:
+        valeur: 24 V 4 A (coupée sous 30 V d'entrée), 12 V 2 A, 5 V 2 A
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 5
+      precharge:
+        valeur: résistance externe 3-10 Ω/50 W et plus, qui sert aussi de résistance de décharge
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 6
+      decharge_integree:
+        valeur: 'active à 64 V, inactive à 60 V par défaut ; réglable par CAN : V_max + 6 V / V_max + 2 V'
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 7
+        note: 'avec V_max = 54,6 V (13S) : 60,6 V / 56,6 V'
+      arret_urgence:
+        valeur: entrée NO par défaut, coupe les branches moteur en ≈ 5 µs ; défaut non récupérable
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 6
+        note: ne s'applique qu'aux branches ; aucune certification indiquée
+      sequencage:
+        valeur: mise sous tension séquencée (moteurs 1 s après les rails) ou par télécommande/commande
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 6
+      communication:
+        valeur: CAN 2.0 1 Mbit/s ID 29 bits ; USB (COM 921600)
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 7
+      temperature:
+        valeur: 100
+        unite: °C
+        source: marche_pui_rs_carte_alim_v13
+        page: 6
+        note: seuil de surchauffe
+      fixation:
+        valeur: 4 vis M3, hauteur max 16,5 mm
+        unite: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 4
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+      dimensions_mm:
+        valeur: null
+        source: marche_pui_rs_carte_alim_v13
+        page: 4
+        note: contour sur figure ; STEP POWER_PCB_V1.3_1105.step dans le dépôt
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: '177,50 USD vu seulement dans un résumé de recherche (rcdrone.top), page non ouverte : non retenu'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    adc_stp_drva_rc_050:
+      categorie: regeneration
+      nom: SureStep STP-DRVA-RC-050 Regeneration Clamp
+      fabricant: AutomationDirect
+      principe:
+        valeur: diode d'entrée (bloque le retour vers l'alimentation) + MOSFET + résistance 50 W interne ; s'enclenche
+          quand Vout dépasse Vin d'environ 1,2 V, se coupe à environ 1 V sous Vin ; pas de réglage
+        unite: null
+        source: marche_pui_adc_regenclamp_ds
+        page: 1
+        note: avec une batterie, la diode empêche toute recharge par freinage
+      tension_service:
+        valeur: 24-80
+        unite: V
+        source: marche_pui_adc_regenclamp_ds
+        page: 1
+      puissance_continue:
+        valeur: 50
+        unite: W
+        source: marche_pui_adc_regenclamp_ds
+        page: 1
+        note: extensible par résistance externe (STP-DRVA-BR-100, 10 Ω 100 W)
+      puissance_pointe:
+        valeur: 800
+        unite: W
+        source: marche_pui_adc_regenclamp_ds
+        page: 1
+      courant_entree:
+        valeur: 20
+        unite: A
+        source: marche_pui_adc_regenclamp_ds
+        page: 1
+        note: continu, pointes > 100 A ; MOSFET 20 A
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+      dimensions_mm:
+        valeur: null
+        source: marche_pui_adc_regenclamp_ds
+        page: 2
+        note: plan coté en pouces/mm, cotes lues 101,6 / 95,3 / 76,2 / 63,5 / 38,1 mm, mais l'encombrement hors-tout
+          n'est pas identifiable sans la figure
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: AutomationDirect
+        source: marche_pui_adc_regenclamp_page
+        note: produit ARRÊTÉ (05/2021), remplacé par STP-DRVA-RC-050A (non lu)
+      disponibilite_ch_ue:
+        valeur: arrêté
+        source: marche_pui_adc_regenclamp_page
+    amc_srst50_srst70:
+      categorie: regeneration
+      nom: SRST50 / SRST70 shunt regulators
+      fabricant: ADVANCED Motion Controls
+      seuil_declenchement:
+        valeur: 50 (SRST50) ou 70 (SRST70)
+        unite: V
+        source: marche_pui_amc_srst50
+        note: 'AUCUN ne convient : 50 V < 54,6 V (13S pleine charge, et même trop proche de 50,4 V en 12S) ; 70
+          V > 60 V de protection RobStride'
+      puissance_continue:
+        valeur: 95
+        unite: W
+        source: marche_pui_amc_srst50
+      masse_g:
+        valeur: 385
+        unite: g
+        source: marche_pui_amc_srst50
+      dimensions_mm:
+        valeur: 203,2 x 108,0 x 66,70
+        source: marche_pui_amc_srst50
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun prix lu
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: statut « Active » chez le fabricant
+    realman_hpd_bleeder:
+      categorie: regeneration
+      nom: HPD Power Bleeding Module
+      fabricant: Realman Robotics
+      seuil_declenchement_48v:
+        valeur: 52
+        unite: V
+        source: marche_pui_realman_bleeder
+        note: 'décharge active de 52 V à 70 V ; au-delà de 70 V, « overvoltage », décharge coupée ; sous 35 V, sous-tension.
+          Même conflit que RobStride V1.1 : 52 V < 54,6 V (13S)'
+      seuil_declenchement_24v:
+        valeur: 25.5
+        unite: V
+        source: marche_pui_realman_bleeder
+      resistance_recommandee:
+        valeur: 5 Ω 75 W (articulations ≤ 287 W) ou 5 Ω 300 W, + condensateur 820 µF 80 V et 3 varistances
+        unite: null
+        source: marche_pui_realman_bleeder
+      masse_g:
+        valeur: 66
+        unite: g
+        source: marche_pui_realman_bleeder
+        note: chiffre donné avec la résistance intégrée
+      dimensions_mm:
+        valeur: 63,2 x 54 x 18
+        source: marche_pui_realman_bleeder
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: accessoire des articulations Realman, aucun prix public lu
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    odrive_resistances_freinage:
+      categorie: regeneration
+      nom: Set of 8 Brake Resistors (ACC-0006)
+      fabricant: ODrive Robotics
+      resistance:
+        valeur: 2
+        unite: Ω
+        source: marche_pui_odrive_eu_brake
+      puissance_continue:
+        valeur: 50
+        unite: W
+        source: marche_pui_odrive_eu_brake
+      principe:
+        valeur: résistance seule ; le hacheur est dans le contrôleur ODrive, pas dans ce produit
+        unite: null
+        source: marche_pui_odrive_eu_brake
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+      dimensions_mm:
+        valeur: null
+        source: null
+      prix:
+        valeur: 19.0
+        devise: EUR
+        tva_incluse: null
+        vendeur: ODrive Europe
+        source: marche_pui_odrive_eu_brake
+        note: lot de 8
+      disponibilite_ch_ue:
+        valeur: boutique européenne
+        source: marche_pui_odrive_eu_brake
+    victron_midi_58v:
+      categorie: fusible
+      nom: MIDI-fuse 60A/58V (gamme MIDI 58 V pour produits 48 V)
+      fabricant: Victron Energy
+      reference:
+        valeur: CIP134060020
+        unite: null
+        source: marche_pui_fs_100mega_midi60
+        page: null
+        note: Référence lue sur la page ; d'autres calibres existent (30–100 A d'après des résultats de recherche,
+          non ouverts).
+      courant_nominal:
+        valeur: 60
+        unite: A
+        source: marche_pui_fs_100mega_midi60
+        page: null
+        note: null
+      tension_dc_nominale:
+        valeur: 58
+        unite: V
+        source: marche_pui_fs_100mega_midi60
+        page: null
+        note: '⚠ 58 V : au-dessus de 54,6 V (13S pleine charge) mais SOUS 60 V (protection RobStride) et sous 64
+          V (seuil de démarrage du module de décharge RobStride V1.0, mode 48 V). Marge de 3,4 V seulement en 13S.'
+      pouvoir_de_coupure:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: Non publié sur la page lue.
+      masse_g:
+        valeur: 2
+        unite: g
+        source: marche_pui_fs_100mega_midi60
+        page: null
+        note: '« Weight: 0.002 kg » : valeur douteuse pour un fusible à pattes cuivre, probablement une saisie distributeur
+          ; à vérifier sur pièce.'
+      dimensions_mm:
+        valeur: 42,3 x 12 x null
+        unite: mm
+        source: marche_pui_fs_100mega_midi60
+        page: null
+        note: Deux cotes seulement publiées.
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: 100MEGA Distribution
+        source: marche_pui_fs_100mega_midi60
+        note: Prix réservé aux comptes connectés.
+      disponibilite_ch_ue:
+        valeur: en stock (CZ, B2B)
+        source: marche_pui_fs_100mega_midi60
+        note: null
+    victron_mega_58v:
+      categorie: fusible
+      nom: MEGA-fuse 58V/48V (125, 200, 225, 300 A)
+      fabricant: Victron Energy
+      reference:
+        valeur: CIP137125010 (125 A) ; CIP137200010 ; CIP137250010 ; CIP137300010
+        unite: null
+        source: marche_pui_fs_offgridtec_mega58
+        page: null
+        note: null
+      courant_nominal:
+        valeur: 125 / 200 / 225 / 300
+        unite: A
+        source: marche_pui_fs_offgridtec_mega58
+        page: null
+        note: 'Plus petit calibre 125 A : au-dessus de la plage visée pour un robot de 10 kg.'
+      tension_dc_nominale:
+        valeur: 58
+        unite: V
+        source: marche_pui_fs_offgridtec_mega58
+        page: null
+        note: ⚠ SOUS 60 V et sous 64 V (voir victron_midi_58v).
+      pouvoir_de_coupure:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: Non publié sur la page lue.
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 31.36
+        devise: EUR
+        tva_incluse: 0.19
+        vendeur: Offgridtec
+        source: marche_pui_fs_offgridtec_mega58
+        note: Variante 250 A affichée (26,35 € à TVA 0 % selon §12 al. 3 UStG, réservé aux installations en Allemagne).
+          Prix des autres calibres non lus.
+      disponibilite_ch_ue:
+        valeur: expédié sous 2 à 5 jours (DE)
+        source: marche_pui_fs_offgridtec_mega58
+        note: null
+    victron_mega_80v:
+      categorie: fusible
+      nom: DC MEGA-fuse 125A/80V
+      fabricant: Victron Energy
+      reference:
+        valeur: CIP138125020
+        unite: null
+        source: marche_pui_fs_100mega_mega80_125
+        page: null
+        note: 'Un 100A/80V (CIP138100020, lot de 5) apparaît en recherche : page non ouverte.'
+      courant_nominal:
+        valeur: 125
+        unite: A
+        source: marche_pui_fs_100mega_mega80_125
+        page: null
+        note: null
+      tension_dc_nominale:
+        valeur: 80
+        unite: V
+        source: marche_pui_fs_100mega_mega80_125
+        page: null
+        note: Seul fusible lu au-dessus de 64 V (seuil de décharge RobStride V1.0).
+      pouvoir_de_coupure:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: Non publié sur la page lue.
+      masse_g:
+        valeur: 20
+        unite: g
+        source: marche_pui_fs_100mega_mega80_125
+        page: null
+        note: '« Weight: 0.02 kg ».'
+      dimensions_mm:
+        valeur: 68,8 x 19 x null
+        unite: mm
+        source: marche_pui_fs_100mega_mega80_125
+        page: null
+        note: Deux cotes seulement publiées.
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: 100MEGA Distribution
+        source: marche_pui_fs_100mega_mega80_125
+        note: Prix réservé aux comptes connectés.
+      disponibilite_ch_ue:
+        valeur: en stock (CZ, B2B)
+        source: marche_pui_fs_100mega_mega80_125
+        note: null
+    offgridtec_mega_porte_fusible:
+      categorie: fusible
+      nom: MEGA-Fuse fuse holder (porte-fusible MEGA avec capot)
+      fabricant: Offgridtec
+      reference:
+        valeur: ANM-B (MPN fabricant cité) ; 010050
+        unite: null
+        source: marche_pui_fs_offgridtec_megaholder
+        page: null
+        note: null
+      courant_nominal:
+        valeur: 300
+        unite: A
+        source: marche_pui_fs_offgridtec_megaholder
+        page: null
+        note: 300 A à 58 V DC ; 500 A à 32 V DC.
+      tension_dc_nominale:
+        valeur: 58
+        unite: V
+        source: marche_pui_fs_offgridtec_megaholder
+        page: null
+        note: '⚠ 58 V max : n''accepte donc pas l''usage d''un MEGA 80 V au-delà de 58 V. SOUS 60 V.'
+      norme:
+        valeur: IEC 60947-3 + IEC 60947-1 (conformité déclarée)
+        unite: null
+        source: marche_pui_fs_offgridtec_megaholder
+        page: null
+        note: null
+      masse_g:
+        valeur: 100
+        unite: g
+        source: marche_pui_fs_offgridtec_megaholder
+        page: null
+        note: '« Weight: 0,1 » sans unité ; kg supposé d''après le format de la boutique.'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 5.8
+        devise: EUR
+        tva_incluse: 0.19
+        vendeur: Offgridtec
+        source: marche_pui_fs_offgridtec_megaholder
+        note: 4,87 € à TVA 0 % (§12 al. 3 UStG).
+      disponibilite_ch_ue:
+        valeur: expédié sous 1 à 3 jours (DE)
+        source: marche_pui_fs_offgridtec_megaholder
+        note: null
+    bussmann_amg:
+      categorie: fusible
+      nom: AMG Series bolt-in automotive fuse (100–300 A)
+      fabricant: Eaton Bussmann (ex-Cooper Bussmann)
+      courant_nominal:
+        valeur: 100 / 125 / 150 / 175 / 200 / 225 / 250 / 300
+        unite: A
+        source: marche_pui_fs_bussmann_amg_ds
+        page: 1
+        note: null
+      tension_dc_nominale:
+        valeur: 32
+        unite: V
+        source: marche_pui_fs_bussmann_amg_ds
+        page: 1
+        note: '⚠ 32 VDC sur la fiche lue (« Consult factory for higher voltage fuses ») : INSUFFISANT pour 12S/13S.
+          Une version 70 VDC est annoncée par des distributeurs (non ouverte) ; la valeur prudente lue est retenue.'
+      pouvoir_de_coupure:
+        valeur: 1000
+        unite: A
+        source: marche_pui_fs_bussmann_amg_ds
+        page: 1
+        note: 1 000 A à 32 VDC.
+      fixation:
+        valeur: goujons M8 ou 5/16-18, entraxe 50,8 mm
+        unite: null
+        source: marche_pui_fs_bussmann_amg_ds
+        page: 1
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: marche_pui_fs_bussmann_amg_ds
+        page: 1
+        note: Le dessin donne 68,40 de long et 50,80 d'entraxe (lus) ; les autres cotes du dessin ne sont pas attribuables
+          avec certitude après extraction du texte.
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: Aucune offre ouverte.
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    littelfuse_bf1_58v:
+      categorie: fusible
+      nom: BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse
+      fabricant: Littelfuse
+      courant_nominal:
+        valeur: null
+        unite: A
+        source: marche_pui_fs_littelfuse_bf1_58v
+        page: null
+        note: 'Source non téléchargée (403). Résumé de recherche : 30–200 A, non retenu.'
+      tension_dc_nominale:
+        valeur: null
+        unite: V
+        source: marche_pui_fs_littelfuse_bf1_58v
+        page: null
+        note: 'Résumé de recherche : 58 VDC, non retenu. Si confirmé : même réserve que les Victron 58 V (sous 60
+          V).'
+      pouvoir_de_coupure:
+        valeur: null
+        unite: A
+        source: marche_pui_fs_littelfuse_bf1_58v
+        page: null
+        note: 'Résumé de recherche : 1 000 A à 58 VDC, non retenu.'
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: 'Farnell IE / element14 : hors délai.'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    bluesea_6006_m_series:
+      categorie: sectionneur
+      nom: m-Series Mini On-Off Battery Switch 6006 (6006M)
+      fabricant: Blue Sea Systems
+      tension_dc_max:
+        valeur: 48
+        unite: V
+        source: marche_pui_fs_qualityheating_6006
+        page: null
+        note: '⚠ 48 V DC max : INSUFFISANT pour 12S (50,4 V) comme pour 13S (54,6 V).'
+      courant_continu:
+        valeur: 300
+        unite: A
+        source: marche_pui_fs_qualityheating_6006
+        page: null
+        note: null
+      courant_intermittent:
+        valeur: 900
+        unite: A
+        source: marche_pui_fs_qualityheating_6006
+        page: null
+        note: 'Page : « 900A intermittent » ; un résumé de recherche donnait 500 A (5 min), non ouvert.'
+      courant_demarrage_10s:
+        valeur: 1500
+        unite: A
+        source: marche_pui_fs_qualityheating_6006
+        page: null
+        note: null
+      coupure_en_charge:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: Non précisé.
+      masse_g:
+        valeur: 290
+        unite: g
+        source: marche_pui_fs_qualityheating_6006
+        page: null
+        note: '0,29 kg ; un résumé de recherche donnait 0,28 kg : la plus lourde est retenue.'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: null
+        devise: GBP
+        tva_incluse: null
+        vendeur: Quality Heating (UK)
+        source: marche_pui_fs_qualityheating_6006
+        note: Prix non présent dans le HTML téléchargé.
+      disponibilite_ch_ue:
+        valeur: UK seulement lu
+        source: marche_pui_fs_qualityheating_6006
+        note: null
+    victron_battery_switch_275a:
+      categorie: sectionneur
+      nom: Battery switch ON/OFF 275A
+      fabricant: Victron Energy
+      reference:
+        valeur: VBS127010010
+        unite: null
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      tension_dc_max:
+        valeur: 60
+        unite: V
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: '⚠ 60 V (« Maximum DC operating voltage »), la même page dit aussi 70 V/DC : 60 V retenu. Égal à la
+          protection RobStride, SOUS le seuil de 64 V du module de décharge V1.0.'
+      courant_continu:
+        valeur: 275
+        unite: A
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      courant_1_min:
+        valeur: 455
+        unite: A
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      courant_demarrage:
+        valeur: 1250
+        unite: A
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      coupure_en_charge:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: Non précisé.
+      protection:
+        valeur: ISO 8846 / SAE J1171 (protection contre l'inflammation)
+        unite: null
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      bornes:
+        valeur: M10, 8 N·m
+        unite: null
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      masse_g:
+        valeur: 200
+        unite: g
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 69,5 x 76,3 x 69,5
+        unite: mm
+        source: marche_pui_fs_offgridtec_vbs275
+        page: null
+        note: null
+      prix:
+        valeur: 37.43
+        devise: EUR
+        tva_incluse: 0.19
+        vendeur: Offgridtec
+        source: marche_pui_fs_offgridtec_vbs275
+        note: Prix remisé (barré 41,65 €).
+      disponibilite_ch_ue:
+        valeur: précommande, retour en stock annoncé le 2026-10-15 (DE)
+        source: marche_pui_fs_offgridtec_vbs275
+        note: null
+    amass_xt90s:
+      categorie: sectionneur
+      nom: XT90S anti-spark connector (XT90S-F + XT90H-M)
+      fabricant: AMASS
+      courant_nominal:
+        valeur: 45
+        unite: A
+        source: marche_pui_fs_amass_xt90s
+        page: null
+        note: 'Fabricant : 45 A max (10 AWG, échauffement < 85 °C). Rotorama dit aussi 45 A continu, 90 A bref.
+          D''autres revendeurs (non ouverts) disent 50 A : 45 A retenu.'
+      courant_bref:
+        valeur: 90
+        unite: A
+        source: marche_pui_fs_rotorama_xt90s
+        page: null
+        note: Durée non précisée.
+      tension_tenue:
+        valeur: 500
+        unite: V DC
+        source: marche_pui_fs_amass_xt90s
+        page: null
+        note: 'Tenue diélectrique (耐电压), PAS un pouvoir de coupure : un connecteur n''est pas fait pour s''ouvrir
+          en charge.'
+      anti_etincelle:
+        valeur: résistance intégrée (précharge à la connexion)
+        unite: null
+        source: marche_pui_fs_rotorama_xt90s
+        page: null
+        note: Valeur de la résistance non publiée pour le XT90S.
+      duree_de_vie:
+        valeur: 100
+        unite: cycles
+        source: marche_pui_fs_amass_xt90s
+        page: null
+        note: null
+      resistance_contact:
+        valeur: ≤ 1,0
+        unite: mΩ (écrit « MΩ » sur la page, coquille probable)
+        source: marche_pui_fs_amass_xt90s
+        page: null
+        note: null
+      protection:
+        valeur: IP40, UL94 V-0
+        unite: null
+        source: marche_pui_fs_amass_xt90s
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 20 x 15 x 8
+        unite: mm
+        source: marche_pui_fs_rotorama_xt90s
+        page: null
+        note: Cotes revendeur.
+      prix:
+        valeur: 3.69
+        devise: EUR
+        tva_incluse: null
+        vendeur: Rotorama (CZ)
+        source: marche_pui_fs_rotorama_xt90s
+        note: La paire. TVA non indiquée.
+      disponibilite_ch_ue:
+        valeur: en stock (CZ)
+        source: marche_pui_fs_rotorama_xt90s
+        note: null
+      note_doublon: aussi décrit sous amass_xt90s_precharge (catégorie precharge), par une lecture indépendante
+        ; valeurs à comparer
+    amass_as150:
+      categorie: sectionneur
+      nom: AS150 anti-spark connector 7 mm (AS150-F/M)
+      fabricant: AMASS
+      courant_nominal:
+        valeur: 65
+        unite: A
+        source: marche_pui_fs_amass_as150
+        page: null
+        note: '⚠ Fabricant : 65 A max (8 AWG, échauffement < 85 °C). Les revendeurs annoncent 150 A continu / 200
+          A bref (OriginHobbies, Flying Tech) : 65 A retenu, le nom « 150 » ne décrit pas le courant permanent.'
+      courant_bref:
+        valeur: 200
+        unite: A
+        source: marche_pui_fs_originhobbies_as150
+        page: null
+        note: Revendeur, durée non précisée.
+      tension_tenue:
+        valeur: 600
+        unite: V DC
+        source: marche_pui_fs_amass_as150
+        page: null
+        note: Tenue diélectrique, PAS un pouvoir de coupure.
+      anti_etincelle:
+        valeur: résistance intégrée de 5,6 Ω
+        unite: null
+        source: marche_pui_fs_originhobbies_as150
+        page: null
+        note: 'Valeur revendeur. À 54,6 V : pointe de 9,75 A à la connexion (calcul : 54,6 / 5,6).'
+      duree_de_vie:
+        valeur: 100
+        unite: cycles
+        source: marche_pui_fs_amass_as150
+        page: null
+        note: null
+      resistance_contact:
+        valeur: ≤ 0,8
+        unite: mΩ (écrit « MΩ », coquille probable)
+        source: marche_pui_fs_amass_as150
+        page: null
+        note: null
+      protection:
+        valeur: IP40, UL94 V-2
+        unite: null
+        source: marche_pui_fs_amass_as150
+        page: null
+        note: null
+      masse_g:
+        valeur: 35
+        unite: g
+        source: marche_pui_fs_originhobbies_as150
+        page: null
+        note: 'Jeu de 4 pièces (1 fiche anti-étincelle, 1 fiche, 2 douilles). Flying Tech : 24 g la paire. 35 g
+          retenu.'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 8.27
+        devise: USD
+        tva_incluse: true
+        vendeur: OriginHobbies (FI)
+        source: marche_pui_fs_originhobbies_as150
+        note: 'Prix servi en USD selon la localisation. Flying Tech (UK) : 1,90 à 7,85 GBP TTC selon la variante.'
+      disponibilite_ch_ue:
+        valeur: en stock (FI)
+        source: marche_pui_fs_originhobbies_as150
+        note: null
+      note_doublon: aussi décrit sous amass_as150_precharge (catégorie precharge), par une lecture indépendante
+        ; valeurs à comparer
+    albright_sw80:
+      categorie: contacteur
+      nom: SW80 (contacteur unipolaire NO, double coupure)
+      fabricant: Albright International
+      courant_thermique_continu:
+        valeur: 100
+        unite: A
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: 'Ith en usage « interrupted » (ouverture en charge fréquente) ; 125 A en « uninterrupted ». La version
+          2010 de la fiche, dans le même PDF, annonçait 250/350 A : on garde la version 2020, la plus prudente.'
+      courant_intermittent:
+        valeur: 185
+        unite: A
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: à 30 % de facteur de marche, interrupted ; 230 A uninterrupted
+      tension_contacts_max:
+        valeur: 60
+        unite: V DC
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: '« Maximum Recommended Contact Voltages (Ue): SW80 48V D.C. 60V D.C. » (deux valeurs sans explication).
+          Version SW80B : 96 V DC. Pouvoir de coupure : 600 A à 48 V (UL583, constante 5 ms) ; 190 A à 60 V DC sur
+          charge résistive (UL508).'
+      bobine:
+        valeur: 6 à 240 V DC (12 V possible)
+        unite: null
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: Puissance bobine 7–13 W (service continu) à 20–30 W (très intermittent). Appel ≤ 66 % Us (continu).
+      chute_tension:
+        valeur: 40
+        unite: mV par pôle à 100 A, contacts neufs
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué ; à vérifier vu le freinage qui renvoie du courant dans le bus
+      masse_g:
+        valeur: 350
+        unite: g
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: « Guideline Contactor Weight » ; +20 g avec auxiliaire, +50 g avec soufflage magnétique
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: marche_pui_cp_albright_sw80_ds
+        page: 1
+        note: dessin coté présent mais non lisible en texte ; bornes M8
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun prix d'un SW80 d'origine lu dans une source téléchargée (eBay et revendeurs bloquent curl)
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: fabricant au Royaume-Uni ; aucun stock UE lu
+    gigavac_p115:
+      categorie: contacteur
+      nom: P115 Mini-Tactor (P115xDA), bobine 12 V au choix (P115BDA)
+      fabricant: GIGAVAC (Sensata)
+      courant_max:
+        valeur: 50
+        unite: A
+        source: marche_pui_cp_evshop_p115
+        page: null
+        note: '« Max Current Rating: 50 Amps » ; continu ou pointe non précisé'
+      tension_max:
+        valeur: 1200
+        unite: V AC/DC
+        source: marche_pui_cp_evshop_p115
+        page: null
+        note: « Make/Break switching to 1,200Vdc »
+      bobine:
+        valeur: 12, 24 ou 48 V
+        unite: null
+        source: marche_pui_cp_evshop_p115
+        page: null
+        note: sans économiseur ; puissance de bobine non lue
+      bidirectionnel:
+        valeur: true
+        unite: null
+        source: marche_pui_cp_evshop_p115
+        page: null
+        note: « Capable of bi-directional switching » ; scellé hermétiquement ; présenté comme « Perfect choice
+          for pre-charge »
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        note: fiche Sensata non téléchargeable
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        note: null
+      prix:
+        valeur: 59.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: EVShop.eu
+        source: marche_pui_cp_evshop_p115
+        note: prix promo (76,00 € barré), « Tax excluded »
+      disponibilite_ch_ue:
+        valeur: UE, en stock (18 affichés)
+        source: marche_pui_cp_evshop_p115
+        note: vendeur en Roumanie
+    gigavac_gv200pa:
+      categorie: contacteur
+      nom: GV200PA, bobine 12 V
+      fabricant: GIGAVAC (Sensata)
+      courant_continu:
+        valeur: 400
+        unite: A
+        source: marche_pui_cp_evshop_gv200pa
+        page: null
+        note: 4000 A/10 s, 3000 A/60 s ; coupure de court-circuit 3500 A « depending on voltage »
+      tension_max:
+        valeur: 800
+        unite: V DC
+        source: marche_pui_cp_evshop_gv200pa
+        page: null
+        note: le texte de la même page dit aussi « rated voltages between 12Vdc and 1200Vdc » pour la série GV
+      bobine:
+        valeur: 12 V
+        unite: null
+        source: marche_pui_cp_evshop_gv200pa
+        page: null
+        note: 'économiseur : la page se contredit (sans dans le titre, « Yes » dans les spécifications)'
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        note: fiche Sensata non téléchargeable ; surdimensionné (400 A) pour le besoin
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        note: null
+      prix:
+        valeur: 149.0
+        devise: EUR
+        tva_incluse: false
+        vendeur: EVShop.eu
+        source: marche_pui_cp_evshop_gv200pa
+        note: « Tax excluded »
+      disponibilite_ch_ue:
+        valeur: UE, en rupture de stock
+        source: marche_pui_cp_evshop_gv200pa
+        note: null
+    victron_smart_batteryprotect_48v_100a:
+      categorie: contacteur
+      nom: Smart BatteryProtect 48V-100A (SBP 48|100), interrupteur statique à MOSFET
+      fabricant: Victron Energy
+      courant_continu:
+        valeur: 100
+        unite: A
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: pleine charge de -40 à +40 °C ; 60 % du nominal à 50 °C
+      courant_pointe:
+        valeur: 250
+        unite: A
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: null
+      plage_tension:
+        valeur: 24 – 70
+        unite: V
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: coupe la charge au-dessus de 64 V (protection de surtension)
+      commande:
+        valeur: entrée marche/arrêt à distance, Bluetooth, ou VE.Bus BMS
+        unite: null
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: 'conçu comme coupure de décharge profonde : délai de coupure 90 s sur seuil bas (immédiat si déclenché
+          par le VE.Bus BMS)'
+      courant_inverse:
+        valeur: false
+        unite: null
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: '« not designed for reverse currents from charging sources » : point bloquant possible avec le courant
+          de freinage des RobStride renvoyé vers la batterie'
+      consommation_propre:
+        valeur: 1.9
+        unite: mA
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: BLE actif, en marche
+      masse_g:
+        valeur: 800
+        unite: g
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: null
+      dimensions_mm:
+        valeur: 123 x 120 x 62
+        unite: mm
+        source: marche_pui_cp_victron_sbp48_ds
+        page: 1
+        note: 'fiche : h x l x p = 62 x 123 x 120 ; bornes M8 ; électronique IP67'
+      prix:
+        valeur: 137.7
+        devise: USD
+        tva_incluse: false
+        vendeur: solar-electric.com (États-Unis)
+        source: marche_pui_cp_solarelectric_sbp48
+        note: prix hors taxes de vente US, rupture de stock ; aucun prix UE lisible
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: Victron est néerlandais et largement distribué en UE, mais aucun stock UE n'a été lu
+    rec_precharge_v31:
+      categorie: precharge
+      nom: Pre-charge unit V3.1 (Timeset)
+      fabricant: REC d.o.o.
+      tension_batterie:
+        valeur: 10 – 120
+        unite: V
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: alimentation du module 10–80 V
+      resistance_precharge:
+        valeur: 15 Ω ou 30 Ω, + CTN 10 Ω
+        unite: Ω
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: intégrées ; fusible de précharge 4,0 A temporisé
+      delai:
+        valeur: 1 / 2 / 4 / 8
+        unite: s
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: par interrupteurs DIP
+      sortie_bobine:
+        valeur: VCC - 0,7 V max, 6,0 A
+        unite: null
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: 'la bobine du contacteur est alimentée à la tension d''alimentation du module : avec un pack 48 V,
+          il faut une bobine 48 V (pas 12 V). Fusible bobine 6,3 A.'
+      commande:
+        valeur: entrée BMS (active si ≤ VSS + 0,2 V)
+        unite: null
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: null
+      masse_g:
+        valeur: 129
+        unite: g
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 127 x 70.6 x 35.5
+        unite: mm
+        source: marche_pui_cp_rec_precharge_v31_manual
+        page: null
+        note: IP20
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun prix trouvé dans une source lue
+      disponibilite_ch_ue:
+        valeur: null
+        source: marche_pui_cp_rec_accessories
+        note: fabricant en Slovénie (UE) ; disponibilité en boutique non lue
+    flipsky_antispark_300a_v4:
+      categorie: precharge
+      nom: Anti-spark Switch Smart V4.0 (300 A)
+      fabricant: Flipsky
+      tension:
+        valeur: 6 – 26S Li-Po
+        unite: null
+        source: marche_pui_cp_flipsky_as300v4_manual
+        page: 2
+        note: couvre 12S et 13S
+      courant_continu:
+        valeur: 300
+        unite: A
+        source: marche_pui_cp_flipsky_as300v4_manual
+        page: 2
+        note: « duration time depends on external heat dissipation conditions »
+      principe:
+        valeur: commutation MOSFET côté positif, démarrage progressif, protection de court-circuit
+        unite: null
+        source: marche_pui_cp_flipsky_as300v4_manual
+        page: 2
+        note: 'le manuel interdit de charger la batterie par la sortie (« will damage the product ») : le courant
+          de freinage renvoyé vers la batterie est à vérifier auprès du fabricant. Non certifié.'
+      masse_g:
+        valeur: 356
+        unite: g
+        source: marche_pui_cp_flipsky_as300v4_manual
+        page: 2
+        note: 'même valeur dans le JSON (grams: 356)'
+      dimensions_mm:
+        valeur: 97 x 57 x 27
+        unite: mm
+        source: marche_pui_cp_flipsky_as300v4_manual
+        page: 2
+        note: null
+      prix:
+        valeur: 63.0
+        devise: null
+        tva_incluse: null
+        vendeur: flipsky.net
+        source: marche_pui_cp_flipsky_products
+        note: 'devise non indiquée dans le JSON lu ; boutique chinoise. Autres modèles du même catalogue : 120A
+          V1.0 (12S max, 60 A continu, sans protection de court-circuit, coupure automatique après 20 min sans variation
+          de tension) à 32.00.'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: vente directe depuis la Chine ; stock UE non lu
+    amass_xt90s_precharge:
+      categorie: precharge
+      nom: XT90-S (connecteur anti-étincelle à résistance intégrée), paire
+      fabricant: Amass
+      courant_continu:
+        valeur: 45
+        unite: A
+        source: marche_pui_cp_rotorama_xt90s
+        page: null
+        note: 90 A en courte durée
+      tension_max:
+        valeur: null
+        unite: V
+        source: null
+        note: non indiquée par la source
+      resistance_precharge:
+        valeur: null
+        unite: Ω
+        source: null
+        note: valeur non indiquée
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        note: null
+      dimensions_mm:
+        valeur: 20 x 15 x 8
+        unite: mm
+        source: marche_pui_cp_rotorama_xt90s
+        page: null
+        note: contacts de 5 mm
+      prix:
+        valeur: 3.69
+        devise: EUR
+        tva_incluse: null
+        vendeur: Rotorama
+        source: marche_pui_cp_rotorama_xt90s
+        note: la page ne dit pas si la TVA est comprise
+      disponibilite_ch_ue:
+        valeur: UE, en stock
+        source: marche_pui_cp_rotorama_xt90s
+        note: République tchèque
+      note_doublon: aussi décrit sous amass_xt90s (catégorie sectionneur)
+    amass_as150_precharge:
+      categorie: precharge
+      nom: AS150 (connecteur balle 7 mm anti-étincelle), paire
+      fabricant: Amass
+      courant_continu:
+        valeur: 70
+        unite: A
+        source: marche_pui_cp_rotorama_as150
+        page: null
+        note: valeur la plus prudente ; Flying Tech annonce 150 A constant / 200 A pointe (cp_flyingtech_as150)
+      courant_pointe:
+        valeur: 150
+        unite: A
+        source: marche_pui_cp_rotorama_as150
+        page: null
+        note: 'Flying Tech : 200 A'
+      tension_max:
+        valeur: 500
+        unite: V
+        source: marche_pui_cp_rotorama_as150
+        page: null
+        note: null
+      resistance_precharge:
+        valeur: null
+        unite: Ω
+        source: null
+        note: résistance intégrée, valeur non indiquée
+      masse_g:
+        valeur: 24
+        unite: g (la paire)
+        source: marche_pui_cp_flyingtech_as150
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        note: câble jusqu'à 8 AWG
+      prix:
+        valeur: 7.79
+        devise: EUR
+        tva_incluse: null
+        vendeur: Rotorama
+        source: marche_pui_cp_rotorama_as150
+        note: 'TVA non précisée ; Flying Tech (UK) : £1.90 à £7.85 TTC selon variante'
+      disponibilite_ch_ue:
+        valeur: UE, en stock
+        source: marche_pui_cp_rotorama_as150
+        note: République tchèque
+      note_doublon: aussi décrit sous amass_as150 (catégorie sectionneur)
+    eao_84_5540_0040:
+      categorie: arret_urgence
+      nom: Emergency stop switch Series 84, Ø 32 mm, 2 NC, câble plat 300 mm (84-5540.0040)
+      fabricant: EAO (CH)
+      type:
+        valeur: bouton coup de poing, déverrouillage par rotation
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 1-3
+        note: Twist to unlock, maintained
+      contacts:
+        valeur: 2 NC à ouverture forcée (EN 60947-5-5)
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 2-7
+        note: variantes 1 NC, 2 NC, 1 NC + 1 NO
+      pouvoir_contacts_dc:
+        valeur: 'NC : 12 V/2,5 A ; 24 V/2,5 A ; 48 V/1,25 A ; 60 V/1,0 A (DC-13)'
+        unite: V/A
+        source: marche_pui_au_eao_84_ds
+        page: 5
+        note: contacts argent dorés
+      normes:
+        valeur: EN 60947-5-1, EN 60947-5-5, DIN EN ISO 13850, EN IEC 60204 ; approbations UL, CE, CCC
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 3-5
+        note: null
+      certification_securite:
+        valeur: composant conforme EN 60947-5-5 ; aucun PL, SIL ni B10d indiqué
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: null
+        note: le PL se calcule au niveau de la chaîne (bouton + relais/contacteur), pas du bouton seul
+      diametre_tete_mm:
+        valeur: 32
+        unite: mm
+        source: marche_pui_au_eao_84_ds
+        page: 2
+        note: null
+      decoupe_montage_mm:
+        valeur: 22.5
+        unite: mm
+        source: marche_pui_au_eao_84_ds
+        page: 2
+        note: page 4 indique 22.3 mm pour le même composant
+      ip:
+        valeur: IP65, IP66, IP67 (face avant) ; IP20 arrière
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 3-6
+        note: null
+      choc:
+        valeur: 150 m/s², 11 ms, 3 axes
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 6
+        note: vibration 50 m/s² 10-500 Hz
+      duree_vie_mecanique:
+        valeur: 250000
+        unite: cycles
+        source: marche_pui_au_eao_84_ds
+        page: 6
+        note: 'électrique : 50 000 cycles'
+      masse_g:
+        valeur: 36
+        unite: g
+        source: marche_pui_au_eao_84_ds
+        page: 3
+        note: Total weight 0.036 kg
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: marche_pui_au_eao_84_ds
+        page: null
+        note: profondeur non lue (dessin non extrait)
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun prix lu (Farnell, RS bloquent curl)
+      disponibilite_ch_ue:
+        valeur: fabricant suisse ; distribué par Farnell
+        unite: null
+        source: marche_pui_au_eao_84_ds
+        page: 1
+        note: stock non vérifié
+    idec_xa1e_bv302r:
+      categorie: arret_urgence
+      nom: XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2 NC, rotation/traction
+      fabricant: IDEC (JP)
+      type:
+        valeur: bouton coup de poing, montage Ø 16 mm, déverrouillage rotation/traction
+        unite: null
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        page: null
+        note: le plus compact trouvé (montage 16 mm)
+      contacts:
+        valeur: 2 NC (2 Form B)
+        unite: null
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        page: null
+        note: '« Safe break action » : les NC s''ouvrent si le bloc contact est détaché ; mécanisme d''ouverture
+          directe'
+      pouvoir_contacts_dc:
+        valeur: null
+        unite: V/A
+        source: null
+        page: null
+        note: tension assignée 250 V affichée, aucune valeur DC lue
+      normes:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: IEC 60947-5-5 vu seulement dans un résumé de recherche, pas dans une source ouverte
+      certification_securite:
+        valeur: aucun PL/SIL lu
+        unite: null
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        page: null
+        note: null
+      ip:
+        valeur: IP65
+        unite: null
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: catalogue IDEC non téléchargé (chipdip, mouser, TTI sans réponse)
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: montage Ø 16 mm (Bürklin) ; profondeur non lue
+      prix:
+        valeur: 53.8
+        devise: EUR
+        tva_incluse: true
+        vendeur: Bürklin Elektronik (DE)
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        note: 'à l''unité, TVA incluse sans taux affiché, port en sus (CH : 16,40 € HT) ; vente aux professionnels
+          seulement ; 4 pièces en stock. Variante 4 NC XA1E-BV304R : 25.38 €.'
+      disponibilite_ch_ue:
+        valeur: UE (DE), livraison CH annoncée
+        unite: null
+        source: marche_pui_au_buerklin_xa1e_bv302r
+        page: null
+        note: null
+    teleradio_panther_pn_t19_2_r15_13:
+      categorie: arret_urgence
+      nom: Panther PN-T19-2 (émetteur) + PN-R15-13 (récepteur 12-24 V, 4 relais)
+      fabricant: Tele Radio (SE ; filiale Tele Radio Schweiz GmbH)
+      type:
+        valeur: télécommande radio industrielle avec fonction STOP certifiée
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4-5
+        note: null
+      certification_securite:
+        valeur: CAT3 PLd (EN 13849-1:2015 selon le prospectus suisse)
+        unite: null
+        source: marche_pui_au_teleradio_ch_panther_sets
+        page: 2
+        note: 'PLd exige l''émetteur PN-T19-2 ET un récepteur certifié (R15 ou R23). Catalogue : CE, FCC, IC, CAT3
+          PLd.'
+      frequence:
+        valeur: 2,4 GHz, 16 canaux
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4
+        note: null
+      portee_m:
+        valeur: 488
+        unite: m
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4
+        note: « estimated operating range of up to 1600ft, line of sight » (converti) ; portée de gamme, pas spécifique
+          au PN-T19-2
+      alimentation_recepteur:
+        valeur: 12-24 V AC/DC (R15-13, R15-14)
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 5
+        note: 'R15-1/R15-2 : 48-230 VAC'
+      sorties_recepteur:
+        valeur: 4 relais de fonction + 2 relais de sécurité indépendants
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 5
+        note: null
+      batterie_emetteur:
+        valeur: 3 x AAA ou Li-ion amovible rechargeable
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4
+        note: null
+      ip:
+        valeur: émetteur IP65 ; récepteur IP66
+        unite: null
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4-5
+        note: null
+      masse_g:
+        valeur: émetteur 331 ; récepteur 499
+        unite: g
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4-5
+        note: 0.73 lb et 1.10 lb convertis
+      dimensions_mm:
+        valeur: émetteur 84 x 193 x 43 ; récepteur 119 x 117 x 51
+        unite: mm
+        source: marche_pui_au_teleradio_catalog_2026
+        page: 4-5
+        note: ~3.3 x 7.6 x 1.7 in et ~4.7 x 4.6 x 2 in convertis, valeurs approchées (« ~ »)
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: prix sur devis, aucun prix public trouvé
+      disponibilite_ch_ue:
+        valeur: filiale suisse (Rotkreuz)
+        unite: null
+        source: marche_pui_au_teleradio_ch_panther_sets
+        page: 1
+        note: null
+    hbc_eco_fse319:
+      categorie: arret_urgence
+      nom: 'HBC radiomatic : récepteur FSE 319 ; émetteur eco (à titre de comparaison)'
+      fabricant: HBC-radiomatic GmbH (DE)
+      type:
+        valeur: radiocommande industrielle (grue, hydraulique) avec E-STOP
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: matériel de chantier, surdimensionné pour un robot de 10-35 kg
+      certification_securite:
+        valeur: E-STOP PL d catégorie 3 selon EN ISO 13849-1:2015 (émetteur eco et récepteur FSE 319)
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: 'FSE 319 : même mention lue via WebFetch (au_hbc_fse319)'
+      compatibilite:
+        valeur: eco combinable avec FSE 507/510/512/516/524 et FSE 726/727/736/737 — FSE 319 non listé
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: l'émetteur compatible du FSE 319 n'a pas été identifié
+      frequence:
+        valeur: 405-475, 865-870, 902-928 MHz, 2,4 GHz, DECT 1790-1930 MHz
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: null
+      portee_m:
+        valeur: null
+        unite: m
+        source: null
+        page: null
+        note: non lue
+      alimentation_recepteur:
+        valeur: 12 / 24 V DC
+        unite: null
+        source: marche_pui_au_hbc_fse319
+        page: null
+        note: FSE 319 ; 18 fonctions de commande
+      masse_g:
+        valeur: récepteur FSE 319 680 ; émetteur eco 1500
+        unite: g
+        source: marche_pui_au_hbc_fse319
+        page: null
+        note: masse de l'eco lue dans au_hbc_eco_info
+      dimensions_mm:
+        valeur: récepteur FSE 319 150 x 141 x 64
+        unite: mm
+        source: marche_pui_au_hbc_fse319
+        page: null
+        note: 'eco : cotes 264, 169, 111 et 121 mm sur le dessin, ordre L x l x h non établi'
+      ip:
+        valeur: IP65 (eco et FSE 319)
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun prix public
+      disponibilite_ch_ue:
+        valeur: fabricant allemand
+        unite: null
+        source: marche_pui_au_hbc_eco_info
+        page: 1
+        note: null
+    sigmanortec_relais_433mhz_1c:
+      categorie: arret_urgence
+      nom: Module relais avec télécommande, 1 canal, 433 MHz, 12 VDC (hobby)
+      fabricant: null
+      type:
+        valeur: relais radio hobby, télécommande 2 boutons
+        unite: null
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: fabricant non indiqué
+      certification_securite:
+        valeur: aucune ; pas de liaison surveillée
+        unite: null
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: 'codage 1527/2262, modulation ASK, sens unique : rien n''indique un arrêt sur perte de liaison. Ce
+          n''est PAS un arrêt d''urgence ; seul le mode « momentary » (relais tenu tant que le bouton est pressé)
+          se comporte en homme-mort.'
+      alimentation:
+        valeur: 12
+        unite: V DC
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: télécommande 2 x CR2016 non fournies
+      contacts:
+        valeur: 1 relais, 10 A max, 250 VAC ou 30 VDC
+        unite: null
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: '30 VDC : ne coupe pas directement un bus 48-60 V ; commande seulement une bobine'
+      portee_m:
+        valeur: 50
+        unite: m
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: « up to 50 meters, in ideal conditions »
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: non indiquée
+      dimensions_mm:
+        valeur: 39 x 35 x 24
+        unite: mm
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: boîtier
+      prix:
+        valeur: 49.05
+        devise: RON
+        tva_incluse: 0.21
+        vendeur: Sigmanortec (RO)
+        source: marche_pui_au_sigmanortec_433_relay
+        note: 40.54 RON HT ; taux déduit du rapport des deux prix affichés (1,21) ; stock annoncé, expédition sous
+          24 h
+      disponibilite_ch_ue:
+        valeur: UE (RO), expédition UE
+        unite: null
+        source: marche_pui_au_sigmanortec_433_relay
+        page: null
+        note: null
+    meanwell_sd200c12:
+      categorie: dcdc
+      nom: SD-200C-12
+      fabricant: Mean Well
+      entree_v:
+        valeur: 36 ~ 72
+        unite: V DC
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+        note: Version C. Seule du lot à couvrir 64 V (seuil EN du module de décharge RobStride et de la carte d'alimentation).
+      sortie_v:
+        valeur: 12
+        unite: V
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+        note: Réglable 11 ~ 16 V.
+      courant_a:
+        valeur: 16.7
+        unite: A
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+      puissance_w:
+        valeur: 200.4
+        unite: W
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+      rendement:
+        valeur: 0.84
+        unite: ''
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+        note: Lecture de la ligne EFFICIENCY par paires B/C (79/81, 82/84, 85/86, 86/86) ; à confirmer sur le PDF.
+      isole:
+        valeur: true
+        unite: ''
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+        note: Tenue I/P-O/P 1,5 kVAC.
+      masse_g:
+        valeur: 1100
+        unite: g
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+        note: Boîtier capoté, lourd pour un robot.
+      dimensions_mm:
+        valeur: 215 x 115 x 50
+        unite: mm
+        source: marche_pui_dc_meanwell_sd200
+        page: 1
+      prix:
+        valeur: 122.55
+        devise: EUR
+        tva_incluse: 0.22
+        vendeur: alimentatorishop.com
+        source: marche_pui_dc_alimentatorishop_sd200c12
+        note: '100,45 € HT ; indisponible le 2026-10-07. RS NL (161,56 € TTC selon un résumé de recherche) non lu
+          : 403.'
+      disponibilite_ch_ue:
+        valeur: UE (Italie), non disponible à la date
+        source: marche_pui_dc_alimentatorishop_sd200c12
+    meanwell_rsd200c12:
+      categorie: dcdc
+      nom: RSD-200C-12
+      fabricant: Mean Well
+      entree_v:
+        valeur: 33.6 ~ 62.4
+        unite: V DC
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+        note: 'Plage continue de la version C ; 28,8 ~ 67,2 V figure à côté avec « 1 SEC. » (plage transitoire,
+          lecture à confirmer). Max continu 62,4 V : couvre 54,6 V et le seuil V1.1 (53,5 V), pas le seuil 64 V.'
+      sortie_v:
+        valeur: 12
+        unite: V
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+      courant_a:
+        valeur: 16.7
+        unite: A
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+      puissance_w:
+        valeur: 200.4
+        unite: W
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+      rendement:
+        valeur: 0.89
+        unite: ''
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+        note: 'Ligne lue 89 % 89 % 91 % 91 % 91 % 91 % ; colonne non attribuable avec certitude : valeur la plus
+          basse retenue.'
+      isole:
+        valeur: true
+        unite: ''
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+        note: I/P-O/P 4 kVDC ; série ferroviaire (IEC 61373 vibrations).
+      masse_g:
+        valeur: 940
+        unite: g
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+      dimensions_mm:
+        valeur: 191 x 86 x 40
+        unite: mm
+        source: marche_pui_dc_meanwell_rsd200
+        page: 1
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: 'Aucun prix lu (alimentatorishop : page ambiguë, écartée).'
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    pololu_d42v110f12:
+      categorie: dcdc
+      nom: D42V110F12 (12V, 9A Step-Down Voltage Regulator)
+      fabricant: Pololu
+      entree_v:
+        valeur: 12 ~ 60
+        unite: V DC
+        source: marche_pui_dc_pololu_d42v110f12
+        note: 'Max 60 V : couvre 54,6 V, pas 64 V. Non isolé.'
+      sortie_v:
+        valeur: 12
+        unite: V
+        source: marche_pui_dc_pololu_d42v110f12
+        note: Précision 3 %.
+      courant_a:
+        valeur: 6 ~ 12
+        unite: A
+        source: marche_pui_dc_pololu_d42v110f12
+        note: Courant continu typique selon tension d'entrée (9 A nominal à 42 V dans le titre) ; limité thermiquement.
+      puissance_w:
+        valeur: null
+        unite: W
+        source: null
+        note: Non déclarée ; ≈ 12 V × courant, non calculée ici.
+      rendement:
+        valeur: null
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f12
+        note: Courbe graphique non lue.
+      isole:
+        valeur: false
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f12
+        note: Régulateur abaisseur synchrone (buck).
+      masse_g:
+        valeur: 15
+        unite: g
+        source: marche_pui_dc_pololu_d42v110f12
+      dimensions_mm:
+        valeur: 43.2 x 31.8 x 9
+        unite: mm
+        source: marche_pui_dc_pololu_d42v110f12
+      prix:
+        valeur: 59.95
+        devise: USD
+        tva_incluse: false
+        vendeur: Pololu (US)
+        source: marche_pui_dc_pololu_d42v110f12
+        note: Prix unitaire, hors taxes et port.
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: Stock Pololu US « InStock » ; distributeur UE non vérifié pour cette version.
+    pololu_d42v110f6:
+      categorie: dcdc
+      nom: D42V110F6 (6V, 11A Step-Down Voltage Regulator)
+      fabricant: Pololu
+      entree_v:
+        valeur: 6 ~ 60
+        unite: V DC
+        source: marche_pui_dc_pololu_d42v110f6
+        note: Max 60 V. Utilisable sur le bus 13S (54,6 V) ou sur un rail 12 V.
+      sortie_v:
+        valeur: 6
+        unite: V
+        source: marche_pui_dc_pololu_d42v110f6
+        note: Rail servos Feetech 6 V ; précision 3 %.
+      courant_a:
+        valeur: 8 ~ 15
+        unite: A
+        source: marche_pui_dc_pololu_d42v110f6
+        note: Continu typique, selon tension d'entrée ; 11 A nominal à 42 V.
+      rendement:
+        valeur: 0.85 ~ 0.95
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f6
+      isole:
+        valeur: false
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f6
+      masse_g:
+        valeur: 15
+        unite: g
+        source: marche_pui_dc_pololu_d42v110f6
+      dimensions_mm:
+        valeur: 43.2 x 31.8 x 9
+        unite: mm
+        source: marche_pui_dc_pololu_d42v110f6
+      prix:
+        valeur: 59.95
+        devise: USD
+        tva_incluse: false
+        vendeur: Pololu (US)
+        source: marche_pui_dc_pololu_d42v110f6
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    pololu_d42v110f7:
+      categorie: dcdc
+      nom: D42V110F7 (7.5V, 10A Step-Down Voltage Regulator)
+      fabricant: Pololu
+      entree_v:
+        valeur: 7.6 ~ 60
+        unite: V DC
+        source: marche_pui_dc_pololu_d42v110f7
+      sortie_v:
+        valeur: 7.57
+        unite: V
+        source: marche_pui_dc_pololu_d42v110f7
+        note: Pour un rail 7,4 V ; précision 3 %.
+      courant_a:
+        valeur: 7 ~ 14
+        unite: A
+        source: marche_pui_dc_pololu_d42v110f7
+        note: Continu typique selon tension d'entrée.
+      rendement:
+        valeur: 0.85 ~ 0.95
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f7
+      isole:
+        valeur: false
+        unite: ''
+        source: marche_pui_dc_pololu_d42v110f7
+      masse_g:
+        valeur: 15
+        unite: g
+        source: marche_pui_dc_pololu_d42v110f7
+      dimensions_mm:
+        valeur: 43.2 x 31.8 x 9
+        unite: mm
+        source: marche_pui_dc_pololu_d42v110f7
+      prix:
+        valeur: 59.95
+        devise: USD
+        tva_incluse: false
+        vendeur: Pololu (US)
+        source: marche_pui_dc_pololu_d42v110f7
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+    pololu_d42v55f5:
+      categorie: dcdc
+      nom: D42V55F5 (5V, 6A Step-Down Voltage Regulator)
+      fabricant: Pololu
+      entree_v:
+        valeur: 5 ~ 60
+        unite: V DC
+        source: marche_pui_dc_pololu_d42v55f5
+        note: Utilisable depuis 12 V ou directement sur le bus 48 V.
+      sortie_v:
+        valeur: 5
+        unite: V
+        source: marche_pui_dc_pololu_d42v55f5
+        note: Raspberry Pi 5 (5 V / 5 A). Une version 5,3 V (D42V55F5.3) existe, page non lue.
+      courant_a:
+        valeur: 5 ~ 8
+        unite: A
+        source: marche_pui_dc_pololu_d42v55f5
+        note: Continu typique selon tension d'entrée ; 6 A nominal à 42 V.
+      rendement:
+        valeur: 0.80 ~ 0.95
+        unite: ''
+        source: marche_pui_dc_pololu_d42v55f5
+      isole:
+        valeur: false
+        unite: ''
+        source: marche_pui_dc_pololu_d42v55f5
+      masse_g:
+        valeur: 6.5
+        unite: g
+        source: marche_pui_dc_pololu_d42v55f5
+      dimensions_mm:
+        valeur: 25.4 x 25.4 x 9
+        unite: mm
+        source: marche_pui_dc_pololu_d42v55f5
+      prix:
+        valeur: 35.5
+        devise: EUR
+        tva_incluse: null
+        vendeur: Botland (Pologne)
+        source: marche_pui_dc_botland_d42v55f5
+        note: 'TVA non lue. Pololu US : 39.95 USD hors taxes (dc_pololu_d42v55f5).'
+      disponibilite_ch_ue:
+        valeur: UE (Pologne, Botland) ; stock non lu
+        source: marche_pui_dc_botland_d42v55f5
+

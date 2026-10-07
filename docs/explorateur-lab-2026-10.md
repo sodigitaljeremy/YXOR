@@ -10,7 +10,7 @@ Une solution n'est **faisable** que si elle tient aux trois exposants b = 1,814,
 
 ## Profil cible
 
-Profil **lab** de `params/capacites.yaml` : DÉCIDÉ par Jeremy le 2026-10-07 (ses mots y sont cités). Capacités voulues : marche_sol_plat 0.6, sol_irregulier 2, pente 5, releve depuis le dos et depuis le ventre, saut_vertical 10, gestes_pointage 2.0, saisie 0.2, poussee 20, buste lacet seul, tete 2, visage écran. Axes exigés au-delà du calcul (PROPOSÉ) : sol_irregulier → ankle_roll, mains_a_doigts → doigts.
+Profil **lab** de `params/capacites.yaml` : DÉCIDÉ par Jeremy le 2026-10-07 (ses mots y sont cités). Capacités voulues : marche_sol_plat 0.6, sol_irregulier 2, pente 5, releve depuis le dos et depuis le ventre, saut_vertical 10, gestes_pointage 2.0, saisie 0.2, poussee 20, buste lacet seul, tete 2, visage écran, autonomie 30, ia_embarquee + vision. Axes exigés au-delà du calcul (PROPOSÉ) : sol_irregulier → ankle_roll, mains_a_doigts → doigts.
 
 | Ensemble | Ne couvre pas | Voulues non calculées (INCONNUES) |
 | ---: | --- | --- |
@@ -21,9 +21,9 @@ Profil **lab** de `params/capacites.yaml` : DÉCIDÉ par Jeremy le 2026-10-07 (s
 
 ## Entrées et hypothèses
 
-- Besoins : tables a·M + b des phases 3a (`exigences_physiques`) et 3b (`simulations_marche`, référence prudente : par axe, le robot le plus exigeant parmi ceux dont la marche couvre le Froude). Par axe, le **maximum** des tâches du profil, à la vraie masse de la solution ; `verifier_maximum` l'a recontrôlé sur 535 solutions.
+- Besoins : tables a·M + b des phases 3a (`exigences_physiques`) et 3b (`simulations_marche`, référence prudente : par axe, le robot le plus exigeant parmi ceux dont la marche couvre le Froude). Par axe, le **maximum** des tâches du profil, à la vraie masse de la solution ; `verifier_maximum` l'a recontrôlé sur 379 solutions.
 - Marge : 1,5 sur les couples (fiche 0051). La vitesse à vide doit couvrir la vitesse de pointe, sans marge.
-- Structure : segment par segment (`scripts/structure_plaques.py`, reconstruction des études du 2026-10-03 et 04 : caissons, liaisons à 90°, boîtes, étalonnés sur la CAO), à 0,60 m, puis × (H / 0,60)^b. Par ensemble (kg, centrale / haute) : 25 : 1,82 / 3,86 ; 26 : 1,86 / 3,92 ; 27 : 1,90 / 4,00 ; 29 : 1,97 / 4,12. Charge utile 1,2 kg (PROPOSÉE, `exigences_S.yaml`).
+- Structure : segment par segment (`scripts/structure_plaques.py`, reconstruction des études du 2026-10-03 et 04 : caissons, liaisons à 90°, boîtes, étalonnés sur la CAO), à 0,60 m, puis × (H / 0,60)^b. Par ensemble (kg, centrale / haute) : 25 : 1,82 / 3,86 ; 26 : 1,86 / 3,92 ; 27 : 1,90 / 4,00 ; 29 : 1,97 / 4,12. Charge utile 0,3 kg (PROPOSÉE, `exigences_S.yaml`).
 - Régimes : charge, saisie, poussée, buste et tête au couple **continu** ; saut, relevé et gestes au couple de **pointe** ; la marche aux deux.
 - Place : taille minimale géométrique (`scripts/taille_minimale.py`, reconstruction de l'étude du 2026-10-04), lecture AVEC ÉCARTS : les chaînes verticales qui débordent (jambe, tronc, cou et tête) s'allongent, la hauteur RÉELLE vaut H + dépassements ; la lecture ANSUR stricte est rapportée. **Couples à la hauteur réelle** (phase 4a ter) : lus au pas supérieur de la grille (5 cm, prudent) au-dessus de la hauteur réelle, structure à la hauteur réelle, masse minimale au pas inférieur ; itération (choix → place → hauteur) jusqu'à stabilité. Le robot allongé est traité comme un robot proportionné à sa hauteur réelle : centre de gravité et bras de levier y grandissent tous, ce qui majore les couples (prudent). Cheville à 2 axes : la meilleure des options (a), (b), (d).
 - Un axe absent de l'ensemble est rigide. Coût = actionneurs seuls (CHF HT, taux BCE de `budget.yaml`). Énergie de chute = M·g·(hauteur de hanche ANSUR × hauteur réelle).
@@ -40,24 +40,24 @@ Familles du corps : robstride, damiao, steadywin, cubemars, myactuator, hightorq
 
 ## Bilan
 
-73728 solutions évaluées en 69 s : 4740 faisables, 22496 infaisables, 46492 INCONNUES. Par famille du corps :
+73728 solutions évaluées en 3379 s : 0 faisables, 36984 infaisables, 36744 INCONNUES. Par famille du corps :
 
 | Famille | Faisables | Infaisables | INCONNUES |
 | --- | ---: | ---: | ---: |
-| robstride | 1760 | 2272 | 5184 |
-| damiao | 0 | 0 | 9216 |
-| steadywin | 0 | 4704 | 4512 |
-| cubemars | 1828 | 2208 | 5180 |
-| myactuator | 1152 | 4096 | 3968 |
+| robstride | 0 | 5114 | 4102 |
+| damiao | 0 | 8 | 9208 |
+| steadywin | 0 | 8032 | 1184 |
+| cubemars | 0 | 1322 | 7894 |
+| myactuator | 0 | 5692 | 3524 |
 | hightorque | 0 | 9216 | 0 |
-| encos | 0 | 0 | 9216 |
-| unitree | 0 | 0 | 9216 |
+| encos | 0 | 48 | 9168 |
+| unitree | 0 | 7552 | 1664 |
 
 ## Front de Pareto
 
 ![Front de Pareto](explorateur-lab-2026-10.svg)
 
-6 solutions non dominées (coût, masse, énergie de chute, capacités tenues, capacités voulues couvertes). **Toutes sont à H = 0,50 m, la borne BASSE de la plage du prompt** : plus petit est moins cher et plus léger tant que tout tient ; la plage n'a pas été étendue en dessous.
+0 solutions non dominées (coût, masse, énergie de chute, capacités tenues, capacités voulues couvertes).
 
 ## Les 5 meilleures solutions
 
@@ -65,31 +65,6 @@ Classement PROPOSÉ : le moins de capacités voulues NON couvertes, puis le plus
 
 | # | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) [bande] | H³ (kg) | Coût (CHF) | Chute (J) | Capacités tenues | Ne couvre pas |
 | ---: | ---: | --- | --- | --- | --- | ---: | ---: | --- | --- |
-| 1 | 27 | 0,50 → 0,541 | robstride + feetech | 9,8 [9,8 ; 11,6] | 9,7 (tient) | 2 633 | 27 | 6 : marche_sol_plat, releve, saut_vertical, gestes_pointage, poussee, buste | — |
-| 2 | 27 | 0,50 → 0,541 | robstride + feetech | 9,3 [9,2 ; 11,0] | 9,1 (tient) | 2 431 | 25 | 5 : marche_sol_plat, releve, saut_vertical, gestes_pointage, buste | — |
-| 3 | 27 | 0,50 → 0,530 | robstride + feetech | 8,3 [8,3 ; 10,1] | 8,2 (tient) | 2 284 | 22 | 4 : marche_sol_plat, releve, gestes_pointage, buste | — |
-| 4 | 25 | 0,50 → 0,541 | robstride + feetech | 9,4 [9,4 ; 11,1] | 9,2 (tient) | 2 429 | 26 | 6 : marche_sol_plat, releve, saut_vertical, gestes_pointage, poussee, buste | sol_irregulier |
-| 5 | 25 | 0,50 → 0,530 | robstride + feetech | 8,8 [8,7 ; 10,4] | 8,6 (tient) | 2 227 | 23 | 5 : marche_sol_plat, releve, gestes_pointage, poussee, buste | sol_irregulier |
-
-**1.** statut faisable ; actionneurs : rs00 : hip_yaw, hip_roll ; rs02 : hip_pitch ; rs06 : knee, ankle_pitch ; rs05 : ankle_roll, shoulder_pitch, shoulder_roll, elbow_roll, wrist_pitch, wrist_roll, waist_yaw ; scs0009_c013 : gripper, neck_yaw, neck_pitch.
-Place : cheville (d), dépassements tronc +41 mm ; proportions ANSUR strictes : ne tient pas (il faudrait 0,633 m, limité par : tronc).
-Capacités voulues INCONNUES (non calculées) : sol_irregulier, pente, visage.
-
-**2.** statut faisable ; actionneurs : rs00 : hip_yaw, hip_roll, ankle_pitch ; rs02 : hip_pitch ; rs06 : knee ; rs05 : ankle_roll, shoulder_pitch, shoulder_roll, elbow_roll, wrist_pitch, wrist_roll, waist_yaw ; scs0009_c013 : gripper, neck_yaw, neck_pitch.
-Place : cheville (a), dépassements tronc +41 mm ; proportions ANSUR strictes : ne tient pas (il faudrait 0,633 m, limité par : tronc).
-Capacités voulues INCONNUES (non calculées) : sol_irregulier, pente, visage.
-
-**3.** statut faisable ; actionneurs : rs00 : hip_yaw, hip_roll, hip_pitch ; rs02 : knee ; rs05 : ankle_pitch, ankle_roll, shoulder_pitch, shoulder_roll, elbow_roll, wrist_pitch, wrist_roll, waist_yaw ; scs0009_c013 : gripper, neck_yaw, neck_pitch.
-Place : cheville (a), dépassements tronc +30 mm ; proportions ANSUR strictes : ne tient pas (il faudrait 0,598 m, limité par : tronc).
-Capacités voulues INCONNUES (non calculées) : sol_irregulier, pente, visage.
-
-**4.** statut faisable ; actionneurs : rs00 : hip_yaw, hip_roll ; rs02 : hip_pitch ; rs06 : knee, ankle_pitch ; rs05 : shoulder_pitch, shoulder_roll, elbow_roll, wrist_pitch, wrist_roll, waist_yaw ; scs0009_c013 : gripper, neck_yaw, neck_pitch.
-Place : cheville (c), dépassements tronc +41 mm ; proportions ANSUR strictes : ne tient pas (il faudrait 0,633 m, limité par : tronc).
-Capacités voulues INCONNUES (non calculées) : pente, visage.
-
-**5.** statut faisable ; actionneurs : rs00 : hip_yaw, hip_roll, hip_pitch ; rs02 : knee ; rs06 : ankle_pitch ; rs05 : shoulder_pitch, shoulder_roll, elbow_roll, wrist_pitch, wrist_roll, waist_yaw ; scs0009_c013 : gripper, neck_yaw, neck_pitch.
-Place : cheville (c), dépassements tronc +30 mm ; proportions ANSUR strictes : ne tient pas (il faudrait 0,598 m, limité par : tronc).
-Capacités voulues INCONNUES (non calculées) : pente, visage.
 
 ## Coût de chaque capacité
 
@@ -99,20 +74,20 @@ Pour chaque tâche calculée du profil, et chaque niveau jusqu'au niveau visé :
 
 | Tâche | Niveau | Coût (CHF) | + CHF | Masse (kg) | + kg | Hauteur réelle de la moins chère | H min réelle | Note |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| marche seule (référence) | 0.6 | 1 961 | — | 7,8 | — | 0,530 | 0,530 | |
-| marche_sol_plat | 0.3 | 1 961 | — | 7,8 | — | 0,530 | 0,530 |  |
-| marche_sol_plat | 0.6 | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| releve | depuis le dos | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| releve | depuis le ventre | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| saut_vertical | 5 | 2 080 | +120 | 7,9 | +0,1 | 0,530 | 0,530 |  |
-| saut_vertical | 10 | 2 227 | +147 | 8,8 | +0,9 | 0,541 | 0,541 |  |
-| gestes_pointage | 0.5 | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| gestes_pointage | 1.0 | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| gestes_pointage | 2.0 | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| saisie | 0.2 | — | — | — | — | — | — | aucune faisable ; 494 INCONNUES (surtout : couple continu de scs0002_c001) |
-| poussee | 20 | 2 227 | +267 | 8,8 | +1,0 | 0,530 | 0,530 |  |
-| buste | lacet seul | 1 961 | +0 | 7,8 | +0,0 | 0,530 | 0,530 |  |
-| tete | 2 | — | — | — | — | — | — | aucune faisable ; 498 INCONNUES (surtout : couple continu de scs0002_c001) |
+| marche seule (référence) | 0.6 | ≥ 4 047 | — | 10,7 | — | 0,599 | — | |
+| marche_sol_plat | 0.3 | ≥ 4 047 | — | 10,7 | — | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| marche_sol_plat | 0.6 | ≥ 4 047 | +0 | 10,7 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| releve | depuis le dos | ≥ 3 992 | −55 | 11,0 | +0,3 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| releve | depuis le ventre | ≥ 3 992 | +0 | 11,0 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saut_vertical | 5 | ≥ 4 308 | +261 | 13,3 | +2,6 | 0,682 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saut_vertical | 10 | — | — | — | — | — | — | aucune faisable ; 216 INCONNUES (surtout : prix de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible)) |
+| gestes_pointage | 0.5 | ≥ 4 047 | +0 | 10,7 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| gestes_pointage | 1.0 | ≥ 4 047 | +0 | 10,7 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| gestes_pointage | 2.0 | ≥ 4 047 | +0 | 10,7 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saisie | 0.2 | ≥ 4 060 | +13 | 11,4 | +0,7 | 0,602 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| poussee | 20 | ≥ 4 194 | +147 | 11,5 | +0,9 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| buste | lacet seul | ≥ 4 047 | +0 | 10,7 | +0,0 | 0,599 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| tete | 2 | ≥ 4 087 | +40 | 11,1 | +0,4 | 0,602 | — | ≥ : chaîne de puissance incomplètement chiffrée |
 
 ## Données INCONNUES les plus bloquantes
 
@@ -120,18 +95,18 @@ Rangées par le nombre de solutions INCONNUES où elles manquent ; « seule » =
 
 | Donnée manquante | Solutions | Seule |
 | --- | ---: | ---: |
-| couple continu de scs0002_c001 | 19168 | 0 |
-| prix de scs0002_c001 | 19168 | 0 |
-| couple continu de xl330_m077 | 19148 | 6900 |
-| vitesse à vide de ec_a4310_p2_36 | 9216 | 248 |
-| vitesse à vide de unitree_go_m8010_6 | 9216 | 0 |
-| couple continu de unitree_go_m8010_6 | 9184 | 0 |
-| vitesse à vide de dm_j4340_v10 | 8996 | 0 |
-| prix de dm_j4340_v10 | 8996 | 0 |
-| vitesse à vide de ec_a2806_p2_36 | 7768 | 0 |
-| couple continu de unitree_im6014 | 5856 | 0 |
-| vitesse à vide de unitree_im6014 | 5856 | 0 |
-| couple continu de unitree_ys_342026_s288 | 5184 | 0 |
+| cotes de MEGA-Fuse fuse holder (porte-fusible MEGA avec capot) (porte_fusible) | 36744 | 0 |
+| masse de P115 Mini-Tactor (P115xDA), bobine 12 V au choix (P115BDA) (contacteur) | 36744 | 0 |
+| cotes de P115 Mini-Tactor (P115xDA), bobine 12 V au choix (P115BDA) (contacteur) | 36744 | 0 |
+| courant de P115 Mini-Tactor (P115xDA), bobine 12 V au choix (P115BDA) (contacteur) | 36744 | 0 |
+| regeneration : aucun produit au marché qui convienne | 36744 | 0 |
+| masse de XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2 NC, rotation/traction (arret_urgence) | 36744 | 0 |
+| cotes de XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2 NC, rotation/traction (arret_urgence) | 36744 | 0 |
+| cotes de JK Smart Active Balance BMS B2A20S20P-HC (bms) | 33176 | 0 |
+| tension de JK Smart Active Balance BMS B2A20S20P-HC (bms) | 33176 | 0 |
+| masse de MEGA-fuse 58V/48V (125, 200, 225, 300 A) (fusible) | 24108 | 0 |
+| cotes de MEGA-fuse 58V/48V (125, 200, 225, 300 A) (fusible) | 24108 | 0 |
+| masse de XT90-S (connecteur anti-étincelle à résistance intégrée), paire (precharge) | 21474 | 0 |
 
 Hors calcul pour toute solution (capacités jamais « tenues » ici) :
 
@@ -142,3 +117,182 @@ Hors calcul pour toute solution (capacités jamais « tenues » ici) :
 - **visage** : masse, prix et place d'un écran ou de micro-servos : non relevés
 - **structure** : seule la jambe basse est dessinée ; les autres segments sont estimés par des formules étalonnées sur elle ; l'évidement est une borne haute ; l'alu 2 mm n'est pas confirmé chez l'opérateur.
 - **place** : volume de l'électronique et de la batterie dans le tronc compté NUL ; cardan des bielles (b) supposé ; servos en boîtier pris dans leur plus grande cote.
+
+## Système électrique : variantes 12S / 13S, 250 / 500 Hz (phase 4a quinquies)
+
+Contexte DÉCIDÉ : fiches 0070 (batterie) et 0071 (Lab : autonomie 30 min sur le cycle 40 s de marche + 20 s debout, IA « commande + vision » ; « Je trancherai entre 12S et 13S sur les chiffres »). Tout le reste est PROPOSÉ (`params/puissance.yaml`) :
+
+- puissance électrique = puissance mécanique MOYENNE de la marche simulée (phase 3b, |τ·ω|, le robot le plus exigeant qui couvre le Froude) ÷ rendement BAS 0,4 (bande 0,4–0,7), sur 40 s de 60 ; debout, puissance mécanique nulle et pertes de maintien NON comptées (sous-estimation, dite) ; plus le calculateur ;
+- énergie = puissance moyenne × autonomie ÷ 0,9 (part utilisable) ; courant de pointe = Σ des pointes par axe (marche simulée et tâches directes du profil) ÷ rendement bas ÷ tension de COUPURE ;
+- batterie : la composition S × P de cellules 21700 la plus LÉGÈRE du marché versé qui fournit l'énergie et dont le courant CONTINU publié tient la pointe ; masse × 1,3, volume des cylindres ÷ π/4 × 1,2 ;
+- tension : chaque RobStride doit accepter le pack de la coupure à la pleine charge (plage publiée) ; sa vitesse à vide est ramenée à la tension de COUPURE, proportionnellement (hypothèse écrite ; fiche à 48 V) : ×0.625 en 12S ; ×0.677 en 13S ;
+- calculateur : le moins cher qui convient au niveau d'IA (critères PROPOSÉS : commande seule : accélérateur non, ≥ 4 GB ; + vision : accélérateur oui, ≥ 4 GB ; + vision et voix : accélérateur oui, ≥ 8 GB ; + modèle de langage local : accélérateur oui, ≥ 16 GB, modèles de langage), carte porteuse comprise, alimenté par le rail 12 V (Raspberry Pi : 12 → 5 V) ;
+- bus : canaux CAN au calcul écrit (`docs/marche-bus-2026-10.md`), au-delà de ceux du calculateur par l'adaptateur le moins cher à pilote Linux principal ; un adaptateur série Feetech ;
+- chaîne de puissance et rails : `params/puissance.yaml` (cellules → fusible → sectionneur → BMS → contacteur → précharge → bus moteurs ; absorbeur de régénération ; arrêt d'urgence matériel ; rails 12, 7,4, 6 et 5 V) ;
+- place : batterie, calculateur, cartes et convertisseurs dans 50 % du tronc (largeur d'épaules × profondeur de poitrine × hauteur du tronc, ANSUR, à la hauteur réelle) ; ce qui dépasse ALLONGE le tronc (même lecture « avec écarts » que la place des moteurs).
+
+**Référence, méthode de 14 h 05 recalculée (sans système électrique, charge utile forfaitaire de 1,2 kg)** : 27 axes, 0,50 → 0,557 m, 10,7 kg, 2 709 CHF (actionneurs seuls).
+
+### 12S, 250 Hz
+
+73728 solutions : 0 faisables, 38942 infaisables, 34786 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,70 → 0,727 | encos + feetech | 13,6 | ≥ 13 881 | 12 695 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,70 → 0,725 | encos + dynamixel | 13,4 | ≥ 13 888 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,65 → 0,729 | encos + dynamixel | 13,5 | ≥ 13 888 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,60 → 0,740 | encos + dynamixel | 13,5 | ≥ 13 888 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,75 → 0,750 | encos + dynamixel | 13,6 | ≥ 13 888 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+
+Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,55 → 0,595 | robstride + feetech | 12,2 | ≥ 4 009 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,50 → 0,595 | robstride + feetech | 12,2 | ≥ 4 009 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,60 → 0,626 | robstride + feetech | 12,2 | ≥ 4 009 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,55, robstride + feetech, même profil) :
+
+| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| autonomie | 10 | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 20 | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 30 | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 60 | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | commande seule | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + vision | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + vision et voix | 12,2 | ≥ 4 009 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + modèle de langage local | 11,5 | ≥ 3 734 | 12S1P 173 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,570 | INCONNU |
+
+### 12S, 500 Hz
+
+73728 solutions : 0 faisables, 39156 infaisables, 34572 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,70 → 0,725 | encos + dynamixel | 13,7 | ≥ 14 584 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,65 → 0,729 | encos + dynamixel | 13,7 | ≥ 14 584 | 12 752 | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,70 → 0,727 | encos + feetech | 13,8 | ≥ 1 883 | — | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,65 → 0,730 | encos + feetech | 13,9 | ≥ 1 883 | — | INR21700/40PL 12S3P, 518 Wh, 3,14 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,80 → 0,845 | cubemars + dynamixel | 20,5 | ≥ 11 284 | 8 947 | INR21700/40PL 12S4P, 691 Wh, 4,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+
+Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,55 → 0,595 | robstride + feetech | 12,4 | ≥ 4 706 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,50 → 0,595 | robstride + feetech | 12,4 | ≥ 4 706 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,60 → 0,626 | robstride + feetech | 12,5 | ≥ 4 706 | 2 857 | INR21700/40PL 12S1P, 173 Wh, 1,05 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,55, robstride + feetech, même profil) :
+
+| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| autonomie | 10 | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 20 | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 30 | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| autonomie | 60 | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | commande seule | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + vision | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + vision et voix | 12,4 | ≥ 4 706 | 12S1P 173 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,595 | INCONNU |
+| ia_embarquee | + modèle de langage local | 11,6 | ≥ 3 773 | 12S1P 173 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,570 | INCONNU |
+
+### 13S, 250 Hz
+
+73728 solutions : 0 faisables, 36820 infaisables, 36908 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,80 → 0,859 | cubemars + dynamixel | 21,1 | ≥ 10 681 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,85 → 0,859 | cubemars + dynamixel | 21,1 | ≥ 10 681 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,75 → 0,863 | cubemars + dynamixel | 21,1 | ≥ 10 681 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,70 → 0,870 | cubemars + dynamixel | 21,2 | ≥ 10 681 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,65 → 0,883 | cubemars + dynamixel | 21,3 | ≥ 10 681 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+
+Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,55 → 0,602 | robstride + feetech | 12,3 | ≥ 4 012 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,50 → 0,602 | robstride + feetech | 12,3 | ≥ 4 012 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+| 27 | 0,60 → 0,626 | robstride + feetech | 12,3 | ≥ 4 012 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU |
+
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,55, robstride + feetech, même profil) :
+
+| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| autonomie | 10 | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 20 | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 30 | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 60 | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | commande seule | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + vision | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + vision et voix | 12,3 | ≥ 4 012 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + modèle de langage local | 11,6 | ≥ 3 737 | 13S1P 187 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,570 | INCONNU |
+
+### 13S, 500 Hz
+
+73728 solutions : 0 faisables, 36984 infaisables, 36744 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,80 → 0,859 | cubemars + dynamixel | 21,3 | ≥ 11 378 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,85 → 0,859 | cubemars + dynamixel | 21,3 | ≥ 11 378 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,75 → 0,863 | cubemars + dynamixel | 21,3 | ≥ 11 378 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,70 → 0,870 | cubemars + dynamixel | 21,4 | ≥ 11 378 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,65 → 0,883 | cubemars + dynamixel | 21,5 | ≥ 11 378 | 9 030 | INR21700/40PL 13S4P, 749 Wh, 4,53 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+
+Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,55 → 0,602 | robstride + feetech | 12,5 | ≥ 4 709 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,50 → 0,602 | robstride + feetech | 12,5 | ≥ 4 709 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+| 27 | 0,60 → 0,626 | robstride + feetech | 12,6 | ≥ 4 709 | 2 857 | INR21700/40PL 13S1P, 187 Wh, 1,13 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU |
+
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,55, robstride + feetech, même profil) :
+
+| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| autonomie | 10 | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 20 | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 30 | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| autonomie | 60 | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | commande seule | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + vision | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + vision et voix | 12,5 | ≥ 4 709 | 13S1P 187 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,602 | INCONNU |
+| ia_embarquee | + modèle de langage local | 11,7 | ≥ 3 776 | 13S1P 187 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,570 | INCONNU |
+
+### Vitesse des RobStride à la tension de coupure
+
+- 12S : le plus rapide des RobStride compatibles, rs05, tourne à 31,4 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 49,4 rad/s à H = 0,50 m (borne haute : rampe linéaire). Le saut est donc HORS de portée des RobStride dans cette variante.
+- 13S : le plus rapide des RobStride compatibles, rs05, tourne à 34,0 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 49,4 rad/s à H = 0,50 m (borne haute : rampe linéaire). Le saut est donc HORS de portée des RobStride dans cette variante.
+
+Deux hypothèses rendent ce verrou prudent : la vitesse à vide prise à la tension de COUPURE (et non nominale), et la vitesse du saut en rampe linéaire. Elles sont écrites ; c'est à Jeremy de dire si l'une doit être assouplie.
+
+### Canaux CAN (27 axes ; 23 sur CAN, le cou et les pinces étant en Feetech)
+
+| Fréquence | Protocole | 27 axes | 23 axes |
+| ---: | --- | ---: | ---: |
+| 250 Hz | MIT (trame standard) | 3 | 3 |
+| 250 Hz | privé (trame étendue) | 4 | 3 |
+| 500 Hz | MIT (trame standard) | 6 | 5 |
+| 500 Hz | privé (trame étendue) | 7 | 6 |

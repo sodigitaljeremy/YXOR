@@ -5129,3 +5129,988 @@ fichiers:
     empreinte: null
     conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
     redistribuable: false
+
+  # ── Chaîne de puissance (2026-10-07, soir), sources lues, jamais versées ──
+  marche_pui_rs_depot_arbre:
+    source: RobStride Dynamics (GitHub), https://api.github.com/repos/RobStride/Product_Information/git/trees/main?recursive=1
+    reference: RobStride/Product_Information, arborescence du commit 3f0cae4
+    date: 2026-10-07
+    empreinte: sha256:f6231051bc5f36f2fa8122e19e01ae627d05d9b463409558c39f23f1878e392c
+    conditions: non lues (dépôt sans licence lue)
+    redistribuable: false
+  marche_pui_rs_decharge_en_v10:
+    source: Beijing Robstride Technology Co., Ltd., https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/dischargeModule/Discharge%20Module%20User%20Manual%20V1.0.pdf
+    reference: Discharge Module User Manual V1.0
+    date: 2026-10-07
+    empreinte: sha256:31163afcbb9a87c0bc78314b977e597cbd06b7cf0b27f8bd7968d656e557754f
+    conditions: non lues
+    redistribuable: false
+  marche_pui_rs_decharge_zh_v11:
+    source: 北京市灵足时代科技有限公司 (RobStride), https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/dischargeModule/%E6%B3%84%E6%94%BE%E6%A8%A1%E5%9D%97%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.1.pdf
+    reference: 泄放模块使用说明 V1.1 (manuel du module de décharge, chinois)
+    date: 2026-10-07
+    empreinte: sha256:b020ead859a33fb7e2606496ddb3f7fb4fdf244796b1d36fa910db1aff1a37f6
+    conditions: non lues
+    redistribuable: false
+  marche_pui_rs_carte_alim_v13:
+    source: RobStride Dynamics, https://raw.githubusercontent.com/RobStride/Product_Information/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/powerBoard/Power%20supply%20board%20instructionsV1.3_20251226.pdf
+    reference: Power Supply Board User Manual V1.3 (2025-12-26)
+    date: 2026-10-07
+    empreinte: sha256:40e9c3073eaeb3d66e01044691ee790fcf47aef0b13f5dd165358d26638622e5
+    conditions: non lues
+    redistribuable: false
+  marche_pui_rcdrone_rs_bleeder:
+    source: rcdrone.top, https://rcdrone.top/products/robstride-bleeder-module
+    reference: RobStride Bleeder Module (rcdrone.top)
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_nkon_jk:
+    source: NKON (Pays-Bas), https://nkon.nl/en/jk-bms-b2a20s20p.html
+    reference: JK Smart Active Balance BMS B2A20S20P-HC - (8S - 20S) - 200A
+    date: 2026-10-07
+    empreinte: sha256:472b95e7f85e85413633464116e6bf2214cd29858c046f427122754a4e93cc70
+    conditions: non lues
+    redistribuable: false
+  marche_pui_sigmanortec_daly:
+    source: Sigmanortec (Roumanie), https://sigmanortec.ro/en/smart-bms-13s-module-daly-60a-bluetooth-48v
+    reference: Smart BMS 13S module, Daly, 60A, Bluetooth, 48V
+    date: 2026-10-07
+    empreinte: sha256:28021cbec3f041c729a7729e6166a9c2ff6c4db99d77d014f39dc3eaf52d01cd
+    conditions: non lues
+    redistribuable: false
+  marche_pui_orion_jr2_specs:
+    source: Ewert Energy Systems, https://www.orionbms.com/downloads/documents/orionjr2_specifications.pdf
+    reference: Orion Jr 2 specifications
+    date: 2026-10-07
+    empreinte: sha256:1af90bc12d5adf4eb64ed1da326def676f079461d2f526a5c2ebd747bda6569f
+    conditions: non lues
+    redistribuable: false
+  marche_pui_orion2_specs:
+    source: Ewert Energy Systems, https://www.orionbms.com/downloads/documents/orionbms2_specifications.pdf
+    reference: Orion BMS 2 specifications
+    date: 2026-10-07
+    empreinte: sha256:f2987c015bb0a58a04f12d8df90f703aff0e11a3da0893b816f42bd2ef3e4f95
+    conditions: non lues
+    redistribuable: false
+  marche_pui_evshop_orionjr2:
+    source: EVShop.eu, https://evshop.eu/en/bms/311-orion-jr-2-bms-can-enabled-kit-16-cells.html
+    reference: Orion Jr. 2 BMS CAN enabled Kit 16 cells
+    date: 2026-10-07
+    empreinte: sha256:48a3bf235a900255e6e2febe01f2da9c76fdb86b569e23bb077e520ac6491eb2
+    conditions: non lues
+    redistribuable: false
+  marche_pui_ebay_ant:
+    source: eBay, https://www.ebay.de/itm/156811726845
+    reference: ANT Smart BMS 7S-16S 40A-420A (eBay.de)
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_adc_regenclamp_ds:
+    source: AutomationDirect, https://cdn.automationdirect.com/static/manuals/surestepmanual/surestepclamp_datasheet.pdf
+    reference: Data Sheet STP-DRVA-RC_DS, STP-DRVA-RC-050 Regeneration Clamp, 1st Edition 10/2012
+    date: 2026-10-07
+    empreinte: sha256:8c26d320f0843e1d8757c510ce47fdd0103e2520d0c7b8f11f744e42e908e969
+    conditions: non lues
+    redistribuable: false
+  marche_pui_adc_regenclamp_page:
+    source: AutomationDirect, https://www.automationdirect.com/adc/shopping/catalog/motion_control/stepper_systems/stepper_accessories/stp-drva-rc-050
+    reference: STP-DRVA-RC-050 - Regen Clamp (page produit)
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_amc_srst50:
+    source: ADVANCED Motion Controls, https://www.a-m-c.com/product/srst50/
+    reference: SRST50 shunt regulator
+    date: 2026-10-07
+    empreinte: sha256:eb6346c740cd2dea2dfdb9d52c05db52a269715fa181c853986a6d9854aaec66
+    conditions: non lues
+    redistribuable: false
+  marche_pui_amc_srst70:
+    source: ADVANCED Motion Controls, https://www.a-m-c.com/product/srst70/
+    reference: SRST70 shunt regulator
+    date: 2026-10-07
+    empreinte: sha256:e6ea8e2cdeaa69ec880d273b349865afd1b0e31c24f25426029a3c55af3bbdc0
+    conditions: non lues
+    redistribuable: false
+  marche_pui_odrive_eu_brake:
+    source: ODrive Robotics (boutique Europe), https://eu.odriverobotics.com/shop/set-of-8-brake-resistors
+    reference: Set of 8 Brake Resistors — ODrive Europe
+    date: 2026-10-07
+    empreinte: sha256:6b5725f8ebada6a2b1d25e06efba1a19c2e6519f135d99d14762bd9f5b5c2af0
+    conditions: non lues
+    redistribuable: false
+  marche_pui_realman_bleeder:
+    source: Realman Intelligent Technology (Beijing), https://develop.realman-robotics.com/en/joints/usermanualforpowerdischargemodule/
+    reference: Power Bleeding Module (HPD) — user manual
+    date: 2026-10-07
+    empreinte: sha256:26c6191293e8aa27431a71895264fc9cae2106e87474f5042422e98840bcb757
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_100mega_midi60:
+    source: 100MEGA Distribution s.r.o. (CZ), https://b2b.100mega.com/en/324376-victron-midi-pojistka-60a-58v
+    reference: Victron MIDI pojistka 60A (58V) CIP134060020 | 100MEGA Distribution
+    date: 2026-10-07
+    empreinte: sha256:ccc9c38b0ed3cedf6f857f15872b8bf529d495f240ce5e7cade0132d0b989795
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_100mega_mega80_125:
+    source: 100MEGA Distribution s.r.o. (CZ), https://b2b.100mega.com/en/309127-victron-dc-mega-pojistka-125a-80v
+    reference: Victron DC MEGA pojistka 125A (80V) CIP138125020 | 100MEGA Distribution
+    date: 2026-10-07
+    empreinte: sha256:635f6fdfe5ff20a2b8dc6531fb9c71e02baf62a35a5d4803f41bd93fa2c266a2
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_offgridtec_mega58:
+    source: Offgridtec AG (DE), https://www.offgridtec.com/en/victron-58v-48v-125a-300a-megafuse-fuses.html
+    reference: Victron 58V/48V 125A-300A Megafuse fuses | Offgridtec
+    date: 2026-10-07
+    empreinte: sha256:69f69ea60c649990561a45d81287f214fe7f367cdfe673ccc026494601af3b33
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_offgridtec_megaholder:
+    source: Offgridtec AG (DE), https://www.offgridtec.com/en/offgridtec-mega-fuse-fuse-holder.html
+    reference: Offgridtec MEGA-Fuse fuse holder | Offgridtec
+    date: 2026-10-07
+    empreinte: sha256:ca04a326af812ea342757549a8917aeb72209a1d24cf212acc59cadf204ae66a
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_bussmann_amg_ds:
+    source: Cooper Bussmann (aujourd'hui Eaton), hébergé par Digi-Key, https://media.digikey.com/pdf/Data%20Sheets/Cooper%20Bussmann%20PDFs/AMG%20Series.pdf
+    reference: Bussmann AMG Series bolt-in automotive fuses (fiche technique, Cooper Bussmann Transportation Products,
+      p. 35)
+    date: 2026-10-07
+    empreinte: sha256:091a2f304290af29da7d629bac4b62ebf1f039e06b6f9011fc440de742d6bd52
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_littelfuse_bf1_58v:
+    source: Littelfuse, https://www.littelfuse.com/products/fuses/automotive-passenger-car/high-current-fuses/bf1-58v
+    reference: BF1 58V Series - MIDI style 58V Slo-Blo Automotive Bolt-Down Fuse (Littelfuse)
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_fs_qualityheating_6006:
+    source: Quality Heating (UK), https://qualityheating.co.uk/products/blue-sea-systems-m-series-48v-on-off-battery-switch
+    reference: Blue Sea Systems m-Series 48V On/Off Battery Switch | Quality Heating
+    date: 2026-10-07
+    empreinte: sha256:2b84f93ae97f4d0c76dc086b205ac558e1bcc683d9d185858e6a809484bea802
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_offgridtec_vbs275:
+    source: Offgridtec AG (DE), https://www.offgridtec.com/en/victron-battery-switch-275a-48v.html
+    reference: Victron battery switch 275A 48V | Offgridtec
+    date: 2026-10-07
+    empreinte: sha256:786bc34760712f75f6cfd98cf0b35f4b5cf06f4598a215b4a3064d943a664bea
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_amass_xt90s:
+    source: Changzhou Amass Electronics (fabricant), https://www.china-amass.com/biao/300.html
+    reference: 大电流防打火连接器—XT90S (AMASS, fiche produit officielle)
+    date: 2026-10-07
+    empreinte: sha256:6c6c71c973488b18fdbf3b25f7566c7bcbaabf829d85d84a531f9f5883da99b3
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_amass_as150:
+    source: Changzhou Amass Electronics (fabricant), https://www.china-amass.com/biao/178.html
+    reference: 大电流防打火连接器—AS150 (AMASS, fiche produit officielle)
+    date: 2026-10-07
+    empreinte: sha256:0a8e5dea9512f15701fefd5e928c2e630524a1c69c0fa4e4115a83ba7b0319d9
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_amass_as150u:
+    source: Changzhou Amass Electronics (fabricant), https://www.china-amass.com/biao/179.html
+    reference: 大电流混合型防打火连接器—AS150U (AMASS, fiche produit officielle)
+    date: 2026-10-07
+    empreinte: sha256:0d8d0a0c020f042e5e5dddbb1b0b2809b4f387793c8eaff506d7576fe9c9bfe1
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_rotorama_xt90s:
+    source: Rotorama s.r.o. (CZ), https://www.rotorama.com/prislusenstvi/xt90s-antispark-konektor-par
+    reference: Amass XT90S antispark connector (1 pair) | Rotorama
+    date: 2026-10-07
+    empreinte: sha256:7086bcf95c7dd69d02903e4472dbc7680b5b5c3b69572b80aec0f2afb8d15783
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_originhobbies_as150:
+    source: Octal Oy / OriginHobbies (FI), https://originhobbies.com/de/shop/charging/battery-accessories/amass-as150-anti-spark-gold-connector-system-7mm-150a-2-sets/
+    reference: Amass AS150 7mm Gold Plated Anti Spark Connector set 150A – MT1451 | OriginHobbies
+    date: 2026-10-07
+    empreinte: sha256:f0c5705bb7f4c44c30f1089821981906034278b0d309fc774a2c9a177f9b1108
+    conditions: non lues
+    redistribuable: false
+  marche_pui_fs_flyingtech_as150:
+    source: Flying Tech (UK), https://www.flyingtech.co.uk/product/amass-as150-7mm-gold-bullet-anti-spark-connector/
+    reference: Amass AS150 7mm Gold Bullet Anti Spark Connector | Flying Tech
+    date: 2026-10-07
+    empreinte: sha256:0f679f7ef57041c9bdfeeebba0c808dc17dc7726d10de909a1cd88fe950dbbd3
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_albright_sw80_ds:
+    source: Albright International (fiche hébergée par Intella Parts), https://intellaparts.com/mm5/graphics/pdf/SW80.pdf
+    reference: Albright SW80 Single Pole Single Throw Normally Open, fiche SW80v6-01-20
+    date: 2026-10-07
+    empreinte: sha256:313091d7463cf861328b9d7f51948f52970d5f44f8cf59f35c3503a852064e5c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_gigavac_gv200_ds:
+    source: Sensata Technologies, https://www.sensata.com/sites/default/files/a/sensata-gigavac-gv200-series-open-contactors-datasheet.pdf
+    reference: Sensata GIGAVAC GV200 series open contactors datasheet
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_cp_evshop_relays:
+    source: EVShop.eu (Pitesti, Roumanie), https://evshop.eu/en/20-relays
+    reference: EVShop.eu — catégorie Relays (liste et prix)
+    date: 2026-10-07
+    empreinte: sha256:371795572725b5961ad7179bc206a53a7b21f806125651e6c35bc2075b4d9fe6
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_evshop_p115:
+    source: EVShop.eu, https://evshop.eu/en/relays/175-8414-gigavac-p115-mini-tactor-contactor.html
+    reference: Gigavac P115 Mini-Tactor Contactor
+    date: 2026-10-07
+    empreinte: sha256:5378b5502a93bb3928a38fd12aa0d9cafb78806d7de556a2dabc6dbc6310a790
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_evshop_gv200pa:
+    source: EVShop.eu, https://evshop.eu/en/relays/208-gigavac-gv200pa-contactor-12v-coil-without-economizer.html
+    reference: Gigavac GV200PA Contactor - 12V Coil without economizer
+    date: 2026-10-07
+    empreinte: sha256:e7271e57804972d7e91f67ee0606c083d21900cf48a21614068c4495f97146a9
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_evshop_gv200fc:
+    source: EVShop.eu, https://evshop.eu/nl/relais/497-gigavac-gv200fc-contactor-48-v-interne-spoelonderdrukking.html
+    reference: Gigavac GV200FC Contactor - 48 V interne spoelonderdrukking
+    date: 2026-10-07
+    empreinte: sha256:b6dc0f0a170d5b578f1636d269723a173d2c7fbb53f81c0da12a017b21116af2
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_victron_smart_bp:
+    source: Victron Energy B.V., https://www.victronenergy.com/battery_protect/smart-battery-protect
+    reference: Victron Energy — Smart BatteryProtect (page produit)
+    date: 2026-10-07
+    empreinte: sha256:e0345c6ce8668cf72e7227dd7b9804b05916bee61abbdfaa3edaaf3e752e0063
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_victron_sbp48_ds:
+    source: Victron Energy B.V., https://www.victronenergy.com/upload/documents/Datasheet-Smart-BatteryProtect-48V-100A-EN.pdf
+    reference: Datasheet Smart BatteryProtect 48V-100A (EN)
+    date: 2026-10-07
+    empreinte: sha256:b608246df4554f554bc7557d5c63fdf5ea2be74b5248eb3b2d17e603c18f7b0c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_solarelectric_sbp48:
+    source: solar-electric.com (États-Unis), https://www.solar-electric.com/victron-energy-smart-batteryprotect-48v-100a.html
+    reference: Victron Energy Smart BatteryProtect 48V-100A — Northern Arizona Wind & Sun
+    date: 2026-10-07
+    empreinte: sha256:c7d8885ef1bc9595410f9c34358ab7dbd8b26cb3260f93c08100cc5cc16398c4
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_rec_accessories:
+    source: REC d.o.o. (Postojna, Slovénie), https://www.rec-bms.com/rec-accessories/
+    reference: REC BMS — Accessories (Pre-charge unit V3.1)
+    date: 2026-10-07
+    empreinte: sha256:28555efe1eb5a2a45f0ae3a3b801d4dab9dd116348de00c095f519f8afa14d39
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_rec_precharge_v31_manual:
+    source: REC d.o.o., https://www.rec-bms.com/wp-content/uploads/2023/09/UserManualPrecharge_3_1_Timeset.pdf
+    reference: User Manual Pre-charge unit V3.1 (Timeset)
+    date: 2026-10-07
+    empreinte: sha256:26e3b7588139b2fde02ce81d128f2ecb01e32db05aa9ce3166d69a9fbcaa5ef6
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_flipsky_products:
+    source: Flipsky, https://flipsky.net/products.json?limit=250
+    reference: Flipsky — catalogue produits (products.json de la boutique)
+    date: 2026-10-07
+    empreinte: sha256:1c2976eb4c566edc29aee8f24dab2d274428ad67b9c3988ac2f5c96edeb8915e
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_flipsky_as300v4_manual:
+    source: Flipsky, https://cdn.shopify.com/s/files/1/0011/4039/1996/files/Anti-spark_Switch_V4.0_User_Manual_98d83a39-fc34-40f6-8283-0ac4f56058c5.pdf?v=1764408572
+    reference: Anti-spark Switch V4.0 User Manual
+    date: 2026-10-07
+    empreinte: sha256:3631d8c5ba9b26b5258e7a7ef57017f732ea02d8172ebb51f45f8d4fc059aec2
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_rotorama_xt90s:
+    source: Rotorama (République tchèque), https://www.rotorama.com/prislusenstvi/xt90s-antispark-konektor-par
+    reference: Amass XT90S antispark connector (1 pair)
+    date: 2026-10-07
+    empreinte: sha256:c48252f8a64a54ee45f6ba0f1e95f2652399f23ee88d51a885fd5681184abac0
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_rotorama_as150:
+    source: Rotorama (République tchèque), https://www.rotorama.com/product/amass-as150-banana-plug
+    reference: Amass AS150 connector (1 pair)
+    date: 2026-10-07
+    empreinte: sha256:89ea92efa07c169b6bc9b66fadab8f0793711229205162425b7618ac3be5f472
+    conditions: non lues
+    redistribuable: false
+  marche_pui_cp_flyingtech_as150:
+    source: Flying Tech (Royaume-Uni), https://www.flyingtech.co.uk/product/amass-as150-7mm-gold-bullet-anti-spark-connector/
+    reference: Amass AS150 7mm Gold Bullet Anti Spark Connector
+    date: 2026-10-07
+    empreinte: sha256:0f679f7ef57041c9bdfeeebba0c808dc17dc7726d10de909a1cd88fe950dbbd3
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_eao_84_ds:
+    source: EAO AG (fiche servie par Farnell), https://www.farnell.com/datasheets/4520153.pdf
+    reference: EAO 84-5540.0040, Emergency stop switch Series 84, fiche produit (distribution Farnell)
+    date: 2026-10-07
+    empreinte: sha256:ac69d231eb72f01c39f20b8011e1e36b5941ec84a3ed7000c44da26d329a85c6
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_buerklin_xa1e_bv302r:
+    source: Bürklin GmbH & Co. KG (Oberhaching, DE), https://buerklin.com/en/p/idec/emergency-stop/xa1e-bv302r/12G2350
+    reference: XA1E-BV302R | IDEC | Emergency Stop | Bürklin Elektronik
+    date: 2026-10-07
+    empreinte: sha256:e2978caf1b076e7cf31391672472ec6bb24f1756077d3d5838381ed60bdaf48d
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_teleradio_catalog_2026:
+    source: Tele Radio, https://www.tele-radio.com/app/uploads/FULLTRUSA-Catalog-2026.pdf
+    reference: Tele Radio USA, catalogue 2026 (FULLTRUSA-Catalog-2026)
+    date: 2026-10-07
+    empreinte: sha256:65fa7270624642b01d95c6a0e716606dca370c4cc11b2aacc8aeab4eed64bb89
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_teleradio_ch_panther_sets:
+    source: Tele Radio Schweiz GmbH (Rotkreuz, CH), https://www.tele-radio.com/app/uploads/TRCHE-Prospekt-PANTHER-Winden-Sets.pdf
+    reference: Tele Radio Schweiz, prospectus PANTHER Winden-Sets
+    date: 2026-10-07
+    empreinte: sha256:e90c254bf4bef555106d976edfd0cf9799d04d88f91e54742c8a5cb6603ca18a
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_hbc_fse319:
+    source: HBC-radiomatic GmbH (Crailsheim, DE), https://www.hbc-radiomatic.com/en/products/receivers/fse-319.html
+    reference: HBC-radiomatic, FSE 319 radio receiver (page produit)
+    date: 2026-10-07
+    empreinte: null
+    conditions: non lues ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_pui_au_hbc_eco_info:
+    source: HBC-radiomatic GmbH (fichier servi par un revendeur polonais), https://cdn.dzwigi.net.pl/b/v2/FST524_eco3/Document/HBC-Product-Information-eco-6a44eaef03437.pdf
+    reference: HBC Product Information eco (PI_eco 12/23)
+    date: 2026-10-07
+    empreinte: sha256:7cbbb53f14275ed11c9a33452729c7d39caf4f48441fbeee9abf54fb5f0c05aa
+    conditions: reproduction interdite sans autorisation écrite (mention du document) ; seules des valeurs sont extraites
+    redistribuable: false
+  marche_pui_au_sigmanortec_433_relay:
+    source: Sigmanortec (RO), https://sigmanortec.ro/en/relay-module-with-remote-control-1-channel-433mhz-12vdc
+    reference: Relay module with remote control, 1 channel, 433MHz, 12VDC
+    date: 2026-10-07
+    empreinte: sha256:dfa849a6f6e2cd60e6c5481b2e2a7a3a0e0c3a8928d79acd75de9dc0491fb79b
+    conditions: non lues
+    redistribuable: false
+  marche_pui_au_mybotshop_husky_estop:
+    source: MYBOTSHOP (DE), https://www.mybotshop.de/Clearpath-Robotics-Husky-A300-Wireless-E-Stop_3
+    reference: Clearpath Robotics Husky A300 Wireless E-Stop | MYBOTSHOP
+    date: 2026-10-07
+    empreinte: sha256:bd91cd9e475f25e1570bb4304becc8e4bca65ac28c9ff00ac01cc39cb4f2fb5b
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_meanwell_sd200:
+    source: Mean Well, https://www.meanwell.com/Upload/PDF/SD-200/SD-200-SPEC.PDF
+    reference: SD-200 series, 200W Single Output DC-DC Converter (SD-200-SPEC, 2024-11-22)
+    date: 2026-10-07
+    empreinte: sha256:0cfdd4572ec92e0d4166f7aedcf91258f6797824b5486182fe68c3ecd09bea69
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_meanwell_rsd200:
+    source: Mean Well, https://www.meanwell.com/Upload/PDF/RSD-200/RSD-200-SPEC.PDF
+    reference: RSD-200 series, 200W Railway Single Output DC-DC Converter (RSD-200-SPEC, 2025-07-18)
+    date: 2026-10-07
+    empreinte: sha256:83212bba71630099942764adf80f76bc0eaec2ec109110cf7957e8456b967a2e
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_alimentatorishop_sd200c12:
+    source: alimentatorishop.com (Italie), https://www.alimentatorishop.com/convertitori-dcdc/sd-200c-12
+    reference: SD-200C-12 - Meanwell - Convertitore dc-dc 200W 12V - Ingresso 48VDC
+    date: 2026-10-07
+    empreinte: sha256:efbb3cc10012687e9272c67e53038fe67d8f06428450949372b39a1ed82e2b1e
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d42v110f12:
+    source: Pololu, https://www.pololu.com/product-info-merged/5677
+    reference: 12V, 9A Step-Down Voltage Regulator D42V110F12
+    date: 2026-10-07
+    empreinte: sha256:fb13fce3e4465fbfe77a030d44866f712a9efa09cc9a94d9285b1eebbad3ae7e
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d42v110f6:
+    source: Pololu, https://www.pololu.com/product-info-merged/5673
+    reference: 6V, 11A Step-Down Voltage Regulator D42V110F6
+    date: 2026-10-07
+    empreinte: sha256:5312c4c50322c342c849451fddde2a6416c076efef15134e10e7123e6fd228ff
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d42v110f7:
+    source: Pololu, https://www.pololu.com/product-info-merged/5674
+    reference: 7.5V, 10A Step-Down Voltage Regulator D42V110F7
+    date: 2026-10-07
+    empreinte: sha256:ff82e38a2277e15a2c35415e8af21a0e1189596dea99cf30f1ae77fb3599d740
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d42v55f5:
+    source: Pololu, https://www.pololu.com/product-info-merged/5571
+    reference: 5V, 6A Step-Down Voltage Regulator D42V55F5
+    date: 2026-10-07
+    empreinte: sha256:4886f0e1c7622d8e9cf20509ac7ac18e505656873f796abc034bd4da5cad91ad
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_botland_d42v55f5:
+    source: Botland (Pologne), https://botland.store/converters-step-down/28515-d42v55f5-step-down-converter-5v-6a-pololu-5571-5904422378011.html
+    reference: D42V55F5 - step-down converter - 5V 6A - Pololu 5571
+    date: 2026-10-07
+    empreinte: sha256:3ef5ae0039391166aa5b1e0c3c2b5e4d35082b76f3b8fb933bd10ba397bd6ce5
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d24v150f6:
+    source: Pololu, https://www.pololu.com/product/2883
+    reference: Pololu 6V, 15A Step-Down Voltage Regulator D24V150F6 (page produit 2883)
+    date: 2026-10-07
+    empreinte: sha256:f6e5ddf85610cbdeb4a1062f28b6253c9cf150721f95053ca7dbd9daf8b3b158
+    conditions: non lues
+    redistribuable: false
+  marche_pui_dc_pololu_d36v50f5:
+    source: Pololu, https://www.pololu.com/product/4091
+    reference: Pololu D36V50Fx (page produit 4091)
+    date: 2026-10-07
+    empreinte: sha256:0d7e873d3cc2af2b5d32d07c53656f5585c1c2c1fac84facd345c65caa0ee2d2
+    conditions: non lues
+    redistribuable: false
+
+  # ── Vérifications F (2026-10-07, soir) : Feetech, CANHUB, Orin Nano 2, AI HAT+ 2, calculateurs ──
+  marche_ver_feetech_pdf_st3215_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772523943436695270694.pdf
+    reference: Fiche technique Feetech ST-3215-C001 (2020-04-10, édition A/0)
+    date: '2026-10-07'
+    empreinte: 707da810d6443597bb7877fc191251915bf01a3d3594ee77b1e0f8ef8b45d017
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_st3215_c018:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772519923113075854851.pdf
+    reference: Fiche technique Feetech ST-3215-C018 (2023-7-20, édition A/0)
+    date: '2026-10-07'
+    empreinte: d0a735a8ddc23585dd7fef40bf7ed87359b6234436103e00bb6e992b5ffe9f39
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_st3250_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772424007467984928587.pdf
+    reference: Fiche technique Feetech ST-3250-C001 (2024-01-16)
+    date: '2026-10-07'
+    empreinte: 92926b0571809316d17f0d9cb3d8da8924a7f234f950c7eabc7330be0665c2d7
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_st3032_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772539739757769932408.pdf
+    reference: Fiche technique Feetech ST-3032-C001 (2020-06-08, édition A/0)
+    date: '2026-10-07'
+    empreinte: e136ae8377a4903a7ebb2b3445a9845c4b4f1c0e4e36ca9a0a4ca5009bc9ea93
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_st3032_c036:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772535103966341968672.pdf
+    reference: Fiche technique Feetech ST-3032-C036 (2024-01-12, édition A/0)
+    date: '2026-10-07'
+    empreinte: 0aafa390fef454ba7cee3cd4f63111428a873495745844012be25e1d1c96a674
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_st3036_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391772527252817758682392.pdf
+    reference: Fiche technique Feetech ST-3036-C001 (2025-07-26, édition A/0)
+    date: '2026-10-07'
+    empreinte: e3c112070ad3fe826bd7406a21b08414d4f13cd2a7f99e355de8e6469156f002
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc0090_c013:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771868598044632953633.pdf
+    reference: Fiche technique Feetech SC-0090-C013 (2022-04-11, édition A/0)
+    date: '2026-10-07'
+    empreinte: b313230efc2a01675f33566437aa0f58ce7ccfc43dba706ca7a0dda320b7952c
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc1500_c022:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771845929831597900239.pdf
+    reference: Fiche technique Feetech SC-1500-C022 (2022-10-25, édition A/0)
+    date: '2026-10-07'
+    empreinte: 4021fd7a4fddd41456f4c0d2b9c3928abc79efe4c2701cc0a61aae9c52fee56d
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc2332_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771864516788879652765.pdf
+    reference: Fiche technique Feetech SC-2332-C001 (2020-06-08, édition A/0)
+    date: '2026-10-07'
+    empreinte: 48fed1f6f73235964697411757eb7862be8a2fa9390b6e722bc85ee71edb051b
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_hl2915_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260623/6391782995369048295663730.pdf
+    reference: Fiche technique Feetech HL-2915-C001 (2026-1-18, édition A/0)
+    date: '2026-10-07'
+    empreinte: 92f0af30f17c606ee226a932e6778bca9f7243a0ec07b1c226005af4553aa20b
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc0002_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771886009025053412379.pdf
+    reference: Fiche technique Feetech SC-0002-C001 (2025-9-7, édition A/0)
+    date: '2026-10-07'
+    empreinte: 11a1bd412a140281686587e84e1fb9cb3d8cd17f6518722acc3670e64858fbea
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc0037_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771882565263995959110.pdf
+    reference: Fiche technique Feetech SC-0037-C001 (2025-9-7, édition A/0)
+    date: '2026-10-07'
+    empreinte: eb8cae5967c52740afd33b7f196d70d4bff2481a43ad279f2d5375098c22e822
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc0043_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771879618382454421537.pdf
+    reference: Fiche technique Feetech SC-0043-C001 (2025-9-7, édition A/0)
+    date: '2026-10-07'
+    empreinte: 42517dabea2b30aeeb2ecc7d2f51a860e287a1cda73644199468df9adf4ed793
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_pdf_sc0005_c001:
+    source: Feetech (Shenzhen Feite Model Co.), https://www.feetechrc.com/Data/feetechrc/upload/file/20260622/6391771876679316899843221.pdf
+    reference: Fiche technique Feetech SC-0005-C001 (2025-9-7, édition A/0)
+    date: '2026-10-07'
+    empreinte: 4c4b4d84cfa34f3285a92ff30e0a9244a7a2d0d695b7952577729e7fab6fa4f8
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_page_sts3215_c001:
+    source: Feetech, https://www.feetechrc.com/74v-19-kgcm-plastic-case-metal-tooth-magnetic-code-double-axis-ttl-series-steering-gear.html
+    reference: Page produit Feetech ST-3215-C001
+    date: '2026-10-07'
+    empreinte: f99ac6248d046761e4f7351557fa24f219ad3b08096bbb073a31477b48bd741c
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_page_sts3215_c018:
+    source: Feetech, https://www.feetechrc.com/525603.html
+    reference: Page produit Feetech ST-3215-C018
+    date: '2026-10-07'
+    empreinte: 35bc70fdbf0451c5395e5d12433c9e1d3a9ad60fcbf6b1435b0d103d56412c28
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_page_hl2909_c001:
+    source: Feetech, https://www.feetechrc.com/870282.html
+    reference: Page produit Feetech HL-2909-C001
+    date: '2026-10-07'
+    empreinte: e584e691b1ab587124da67c069587fdb073d4d060fdd51b21eaa07ee9e580891
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_feetech_page_hd1910_c001:
+    source: Feetech, https://www.feetechrc.com/510257.html
+    reference: Page produit Feetech HD-1910-C001
+    date: '2026-10-07'
+    empreinte: ae9a719d95cf5a1b3b57b3f09a22a2604b6b1a730fd07969723eceefb67835ee
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_evelta_sts3215_c001:
+    source: Evelta, https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/
+    reference: Evelta (IN) — ST3215 7.4V 19Kg
+    date: '2026-10-07'
+    empreinte: 93d98515db0a2a2ccf299c74ff511952d42e5acdfdb800dcc0bd8d8ca6ed7444
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_evelta_sts3215_c018:
+    source: Evelta, https://evelta.com/sts3215-c018-12v-30kg-cm-dual-shaft-ttl-serial-servo-metal-gears-magnetic-encoder/
+    reference: Evelta (IN) — STS3215-C018 12V 30kg·cm
+    date: '2026-10-07'
+    empreinte: 582ebf66fd1339790f4932122a319e5d6c7e9c17db31fee5fa9e8c193ef19bc1
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_core_sts3215:
+    source: Core Electronics, https://core-electronics.com.au/catalog/product/view/sku/CE09383
+    reference: Core Electronics (AU) — STS3215 Smart Servo (CE09383)
+    date: '2026-10-07'
+    empreinte: 80e9f7e95bc5fee1b925fe5063b53334d84feb4656baa75f26a83a95bc4bdd78
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_aifitlab_sts3215:
+    source: AIFitLab, https://aifitlab.com/products/feetech-sts3215-servo-motor
+    reference: AIFitLab — Feetech STS3215
+    date: '2026-10-07'
+    empreinte: 54d6cf4e5176b3263b5bedb2bc012bbb52ce8997d15417359c3977fe5bd9e637
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_eckstein_sts3215_c018:
+    source: Eckstein, https://eckstein-shop.de/Motors?mf=1602
+    reference: Eckstein (DE) — Feetech STS3215 / ST-3215-C018 (liste filtrée)
+    date: '2026-10-07'
+    empreinte: effa7d6e7a54087fd4a6322aa88f77601afa29a015a30329497b6e938bf041cd
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_waveshare_st3215:
+    source: Waveshare, https://www.waveshare.com/st3215-servo.htm
+    reference: Waveshare — ST3215 Servo (page produit)
+    date: '2026-10-07'
+    empreinte: 31175396efb9d770819509383eb55a8d60d0ec932f828cb0fa0491603608a711
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_waveshare_wiki_st3215:
+    source: Waveshare, https://www.waveshare.com/wiki/ST3215_Servo
+    reference: Waveshare Wiki — ST3215 Servo
+    date: '2026-10-07'
+    empreinte: 1ce1888e7933dd6f103326755d34f5c620c921580976deeaa1c4fd86e31109b6
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_robotshop_sts3215:
+    source: RobotShop, https://www.robotshop.com/products/feetech-12v-30kgcm-magnetic-encoding-servo-sts3215
+    reference: RobotShop — STS3215 7,4 V et 12 V
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_robotis_xl330_m077:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/dxl/x/xl330-m077/
+    reference: ROBOTIS e-Manual — XL330-M077
+    date: '2026-10-07'
+    empreinte: 967898feb737c6cce1009f492f427fafe81ce9cffbdc8fa7187e45e152237392
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_robotis_xl330_m288:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/dxl/x/xl330-m288/
+    reference: ROBOTIS e-Manual — XL330-M288
+    date: '2026-10-07'
+    empreinte: a336b9e3333295355870c48ccd99736596d175e61cf9b52f5b4602b0f67806b7
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_robotis_xc330_m288:
+    source: ROBOTIS, https://emanual.robotis.com/docs/en/dxl/x/xc330-m288/
+    reference: ROBOTIS e-Manual — XC330-M288
+    date: '2026-10-07'
+    empreinte: c70b353ef9ee9091b290b14c307210dad3075e281818975e999278e145fc644d
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_robstride_canhub_manuel:
+    source: RobStride, https://github.com/RobStride/Product_Information/blob/e501b78afc04671b6fe10135fe9a08b9e676269a/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/canhub/USB_CANHUB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.0.pdf
+    reference: USB_CANHUB 使用说明手册 V1.0 (RobStride / 北京灵足时代科技)
+    date: '2026-10-07'
+    empreinte: ed3bcddbc65d777144ded45916ddf480a291aaba1a46335b4cefb1ba331c09d1
+    conditions: dépôt GitHub public ; licence du dépôt non vérifiée
+    redistribuable: false
+  marche_ver_robstride_canhub_step:
+    source: RobStride, https://github.com/RobStride/Product_Information/blob/e501b78afc04671b6fe10135fe9a08b9e676269a/Product%20Literature/canhub/3D_CANHUB_V03_2025-10-13.step
+    reference: Modèle 3D CANHUB V03 (2025-10-13)
+    date: '2026-10-07'
+    empreinte: ed7253865243b1fd027e69046b3ef1390076df557157cceb0e56fd6d90d4bc5a
+    conditions: dépôt GitHub public ; licence non vérifiée ; fichier binaire, à ne pas entrer dans le dépôt YXOR
+    redistribuable: false
+  marche_ver_aifitlab_canhub:
+    source: AIFitLab, https://aifitlab.com/products/robstride-usb-can-hub-module
+    reference: AIFitLab — ROBSTRIDE USB-CAN HUB Module
+    date: '2026-10-07'
+    empreinte: 9dba884a33bb24f9550e1d27c5c0d6df4698df0891598bf8714947c47a8c8cc4
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_openelab_robstride_can_usb:
+    source: OpenELAB, https://openelab.io/fr/products/robstride-can-to-usb-debugging-module
+    reference: OpenELAB (FR) — Module de débogage ROBSTRIDE CAN vers USB
+    date: '2026-10-07'
+    empreinte: 14d22f9e081d7d72c6eaae334fe83994b70f3ad777ee4043ad750f536fc9d074
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_evelta_fe_urt_1:
+    source: Evelta, https://evelta.com/fe-urt-1-rs485-servo-bus-programmer-usb-to-ttl-serial-signal-converter/
+    reference: Evelta (IN) — FE-URT-1
+    date: '2026-10-07'
+    empreinte: 6901e6af49473294df8558c17b34b030714d2412e20f93b25c075950c315f73e
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_pakronics_fe_urt_1:
+    source: Pakronics, https://www.pakronics.com.au/products/feetech-fe-urt-1-usb-to-ttl-485-bus-programmer-ss100036057
+    reference: Pakronics (AU) — Feetech FE-URT-1
+    date: '2026-10-07'
+    empreinte: 776a59e168cfc998523fd216345249c3b7a7f958e1bd88ed9adc46a1ac5a776b
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_robotshop_fe_urt_1:
+    source: RobotShop, https://uk.robotshop.com/products/fe-urt-1-usb-to-ttl-485-bus-programmer
+    reference: RobotShop UK — FE-URT-1
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_waveshare_bus_servo_adapter_a:
+    source: Waveshare, https://www.waveshare.com/bus-servo-adapter-a.htm
+    reference: Waveshare — Bus Servo Adapter (A), SKU 25514
+    date: '2026-10-07'
+    empreinte: cc69cffbe623b38552ff6a25d98759995f6b357a93ea4ad27f79e5f21f083aa8
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_waveshare_wiki_bus_servo_adapter_a:
+    source: Waveshare, https://www.waveshare.com/wiki/Bus_Servo_Adapter_(A)
+    reference: Waveshare Wiki — Bus Servo Adapter (A)
+    date: '2026-10-07'
+    empreinte: 9bda72e53feb24776e27b1d41b41e35950061c4d0c1d32a6502c2e57ac9c1d92
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_waveshare_servo_driver_esp32:
+    source: Waveshare, https://www.waveshare.com/Servo-Driver-with-ESP32.htm
+    reference: Waveshare — ESP32 Servo Driver Expansion Board, SKU 21593
+    date: '2026-10-07'
+    empreinte: 91ba13ca0dc40a4e9a0998af16e0039ecca6d93e226d041a9ffc9394102d6d03
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_nvidia_page_jetson_orin:
+    source: NVIDIA, https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+    reference: NVIDIA — Jetson Orin (page produit), encart « Jetson Orin Nano 2 Redefines Entry-Level Edge AI »
+    date: '2026-10-07'
+    empreinte: a11857ed21e44d32247e27cf58ba522281281b637d5cec4bc9065f32032b3b34
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_nvidia_communique_orin_nano_2:
+    source: NVIDIA, https://nvidianews.nvidia.com/news/nvidia-announces-jetson-orin-nano-2-robotics-computer-to-redefine-entry-level-edge-ai
+    reference: NVIDIA Newsroom — NVIDIA Announces Jetson Orin Nano 2 Robotics Computer…
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_sth_orin_nano_2:
+    source: ServeTheHome, https://www.servethehome.com/nvidia-announces-jetson-orin-nano-2-entry-level-edge-board-gets-new-ampere-silicon/
+    reference: ServeTheHome — NVIDIA Announces Jetson Orin Nano 2 (Ryan Smith, 2026-08-30)
+    date: '2026-10-07'
+    empreinte: b989dfbc12b0069523798187fbb147d68217367f9838195c2f84d5f9ec79fbd7
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_storagereview_orin_nano_2:
+    source: StorageReview, https://www.storagereview.com/news/nvidia-jetson-orin-nano-2-78-tops-and-2x-the-inference-of-its-predecessor-arriving-first-half-of-2027
+    reference: 'StorageReview — Jetson Orin Nano 2: 78 TOPS… (2026-08-27)'
+    date: '2026-10-07'
+    empreinte: 424fbb1173215e0baa6e90efe50c042c5235cf34ce5a3f779b581432428fcee3
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_uniteai_orin_nano_2:
+    source: Unite.AI, https://www.unite.ai/nvidia-unveils-jetson-orin-nano-2-to-redefine-entry-level-edge-ai/
+    reference: Unite.AI — NVIDIA Unveils Jetson Orin Nano 2 (2026-08-25)
+    date: '2026-10-07'
+    empreinte: 6e83fe8438c5de7005d0e1e368ef48b95f8e424424565dfe1b2cc7e168bb64b4
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_aiinsider_orin_nano_2:
+    source: The AI Insider, https://theaiinsider.tech/2026/08/27/nvidia-releases-jetson-orin-nano-2-robotics-computer-for-entry-level-edge-ai/
+    reference: The AI Insider — Nvidia Releases Jetson Orin Nano 2 (2026-08-27)
+    date: '2026-10-07'
+    empreinte: 48e85f24ed9e9bce923a567e801f567359c9535c8de1689045fe732dfd7734ea
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_antmicro_orin_nano_2:
+    source: Antmicro, https://antmicro.com/blog/2026/08/entry-level-edge-ai-with-nvidia-jetson-nano-2-som
+    reference: Antmicro (partenaire Jetson) — Jetson Orin Nano 2 SoM
+    date: '2026-10-07'
+    empreinte: c08efbbbad72411e455ad531da309139eaef3aca382f062934b03d9d42e54ce4
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_cnx_recherche_orin_nano_2:
+    source: CNX Software, https://www.cnx-software.com/?s=jetson+orin+nano+2
+    reference: CNX Software — recherche « jetson orin nano 2 »
+    date: '2026-10-07'
+    empreinte: c4d963e015a2f5543f08221bf1a823b83e38cfd33552ea7f955e4c593f58b76f
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_rpi_brief_ai_hat_plus_2_2026_07:
+    source: Raspberry Pi Ltd, https://pip-assets.raspberrypi.com/categories/1319-raspberry-pi-ai-hat-2/documents/RP-009655-MM-6-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+    reference: Raspberry Pi AI HAT+ 2 Product Brief (Published July 2026), RP-009655-MM-6
+    date: '2026-10-07'
+    empreinte: eb01bea592ef6e39e526c617ffdb41786d479dd455924fc74ea4eb832ca60f37
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_rpi_brief_ai_hat_plus_2_2026_01:
+    source: Raspberry Pi Ltd (copie hébergée par Core Electronics), https://core-electronics.com.au/attachments/uploads/CE10475-raspberry-pi-ai-hat-plus-2-product-brief.pdf
+    reference: Raspberry Pi AI HAT+ 2 Product Brief (Published January 2026)
+    date: '2026-10-07'
+    empreinte: 86a8698e1edd35b8403ff09f4933b67dbb22b5eba9496f21fc7e44a797d075ac
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_rpi_brief_ai_hat_plus:
+    source: Raspberry Pi Ltd, https://datasheets.raspberrypi.com/ai-hat-plus/raspberry-pi-ai-hat-plus-product-brief.pdf
+    reference: Raspberry Pi AI HAT+ Product Brief (Published October 2024)
+    date: '2026-10-07'
+    empreinte: 433d7494ec6d1c8396f991fc74bea7080a7cade398a67420a0adf9efbb6008af
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_rpi_brief_rpi5:
+    source: Raspberry Pi Ltd, https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-product-brief.pdf
+    reference: Raspberry Pi 5 Product Brief (Published October 2026)
+    date: '2026-10-07'
+    empreinte: 944fc1d70da50f0b8d5947dd4263078f698c79586f29c07f35fcd4b87077dd3f
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_rpi_doc_power_supplies:
+    source: Raspberry Pi Ltd, https://github.com/raspberrypi/documentation/blob/42deaefbc8b4edfe342b0d759ec16cda3be5e7d8/documentation/asciidoc/computers/raspberry-pi/power-supplies.adoc
+    reference: Documentation Raspberry Pi — power-supplies.adoc (commit 42deaef du dépôt raspberrypi/documentation)
+    date: '2026-10-07'
+    empreinte: 49f6478c1c0164237ebcf1d28aac4709e843d2b5c06442539bacae05e49eafb1
+    conditions: dépôt public, CC BY-SA 4.0 (documentation Raspberry Pi) — non revérifié
+    redistribuable: false
+  marche_ver_rpi_doc_ai_hat_plus:
+    source: Raspberry Pi Ltd, https://github.com/raspberrypi/documentation/blob/42deaefbc8b4edfe342b0d759ec16cda3be5e7d8/documentation/asciidoc/accessories/ai-hat-plus/about.adoc
+    reference: Documentation Raspberry Pi — ai-hat-plus/about.adoc (commit 42deaef)
+    date: '2026-10-07'
+    empreinte: 504fac4e6b3da3500fa60617bb0d39d2a2cf0bc4b176d407540f346056a22889
+    conditions: dépôt public
+    redistribuable: false
+  marche_ver_rpi_site_produits:
+    source: Raspberry Pi Ltd, https://www.raspberrypi.com/products/ai-hat-plus-2/
+    reference: raspberrypi.com/products/ai-hat-plus-2/, /raspberry-pi-5/, /news/…
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_core_ai_hat_plus_2:
+    source: Core Electronics, https://core-electronics.com.au/raspberry-pi-ai-hat-plus-2.html.plain.md
+    reference: Core Electronics (AU) — Raspberry Pi AI HAT+ 2 (CE10475)
+    date: '2026-10-07'
+    empreinte: 9a0a41592221e154229b4a894b03c783c1236319067563be477fcfb34b0cacfb
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_raspberrypi_dk_ai_hat_2:
+    source: RaspberryPi.dk, https://raspberrypi.dk/en/?p=348664
+    reference: RaspberryPi.dk (DK, revendeur agréé) — AI HAT+ 2
+    date: '2026-10-07'
+    empreinte: a2133da9a13960264dfc5642f47bd08d1b8008a9fdc201fb87a6a261f3ee3b22
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_pimoroni_eu_ai_hat_2:
+    source: Pimoroni, https://shop.pimoroni.com/en-eu/products/raspberry-pi-ai-hat-2
+    reference: Pimoroni (UK, boutique EU) — Raspberry Pi AI HAT+ 2
+    date: '2026-10-07'
+    empreinte: f4c4dec3a7e46cfa9b783706555bf75135df0df276e27781644543d7afc056b6
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_adafruit_ai_hat_2:
+    source: Adafruit, https://www.adafruit.com/product/6451
+    reference: Adafruit (US) — Raspberry Pi AI HAT+ 2 (6451)
+    date: '2026-10-07'
+    empreinte: 54804833b0c9fb6dd1dcf1d7c0d73979a26b04d06fd63a13d381baf0b4649491
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_galaxus_ai_hat_2:
+    source: Galaxus, https://www.galaxus.de/en/s1/product/raspberry-pi-ai-hat-2-40-tops-hailo-10h-accelerator-has-electronics-modules-66299552
+    reference: Galaxus (DE) — Raspberry Pi AI HAT+ 2
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_pishop_ch:
+    source: pi-shop.ch, https://www.pi-shop.ch/catalogsearch/result/?q=AI+HAT%2B+2
+    reference: pi-shop.ch (CH) — recherche AI HAT+ 2
+    date: '2026-10-07'
+    empreinte: null
+    conditions: page publique, consultée sans compte ; NON téléchargée (lue par WebFetch), empreinte absente
+    redistribuable: false
+  marche_ver_nvdocs_agx_orin_howto:
+    source: NVIDIA, https://docs.nvidia.com/jetson/agx-orin-devkit/user-guide/latest/howto.html
+    reference: Jetson AGX Orin Developer Kit User Guide — How-to Guides
+    date: '2026-10-07'
+    empreinte: 45f9cadc87181bdfeae2595b2e24d196c1916487271c944b2f0ff7ba73f04a2d
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_nvdocs_agx_orin_hw_layout:
+    source: NVIDIA, https://docs.nvidia.com/jetson/agx-orin-devkit/user-guide/latest/hardware_layout.html
+    reference: Jetson AGX Orin Developer Kit User Guide — Hardware Layout
+    date: '2026-10-07'
+    empreinte: 4d3c8bd382f9d4dbf86d639201599b72057615ea6f20e0c737926033986366a4
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_nvdocs_orin_nano_hw_layout:
+    source: NVIDIA, https://docs.nvidia.com/jetson/orin-nano-devkit/user-guide/latest/hardware_layout.html
+    reference: Jetson Orin Nano Developer Kit User Guide — Hardware Layout
+    date: '2026-10-07'
+    empreinte: 9ed02ce46718ec94e7d6ab63032ce6a1eaaa96b1e990f157585d888462c6d420
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_nvdev_get_started_orin_nano:
+    source: NVIDIA, https://developer.nvidia.com/embedded/learn/get-started-jetson-orin-nano-devkit
+    reference: Get Started With Jetson Orin Nano Developer Kit (JetPack 7.2.1)
+    date: '2026-10-07'
+    empreinte: a51a1fa0f0c99c0d9809d5effdd9af9cba03803a052f2c28665c8ad92d9a3f60
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_openzeka_orin_nx_brochure:
+    source: NVIDIA (copie revendeur), https://openzeka.com/wp-content/uploads/2025/08/jetson-orin-nx-datasheet-1.pdf
+    reference: NVIDIA Jetson Orin NX Series (brochure, copie OpenZeka)
+    date: '2026-10-07'
+    empreinte: 2cf4126f1b2289f578ffd3baf3c2dc3ce570195b7a0e3f65c7eddca696eecb02
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_j401_datasheet:
+    source: Seeed Studio, https://files.seeedstudio.com/wiki/reComputer-J4012/Carrier-Board-J401/J401-datasheet.pdf
+    reference: reComputer J401 carrier board datasheet
+    date: '2026-10-07'
+    empreinte: ebac79b0bb31eff277768586095b02c3f2c45d30c84fcf085d34255b4f608356
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_relshop_j401:
+    source: Seeed Studio, https://relshop.seeedstudio.com/reComputer-J401-Carrier-Board-for-Jetson-Orin-NX-Orin-Nano-p-5636.html
+    reference: Seeed — reComputer J401 Carrier Board (SKU 102110769)
+    date: '2026-10-07'
+    empreinte: 1dca6b37bfb4793735697fac4c2614f51a09b261f16a7207e15ddce2fdd8aee0
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_super_j401_datasheet:
+    source: Seeed Studio, https://files.seeedstudio.com/Bazaar/product_pdf/100090211.pdf
+    reference: reComputer Super J401 Carrier Board datasheet (SKU 100090211, mis à jour 2026-09-20)
+    date: '2026-10-07'
+    empreinte: 03c0369b3dd3da788774f544c6b76c32f805ccf6fc355bbfaae7444d19df31f6
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_p6642_super_j401:
+    source: Seeed Studio, https://www.seeedstudio.com/reComputer-Super-J401-Carrier-Board-p-6642.html
+    reference: Seeed — reComputer Super J401 Carrier Board
+    date: '2026-10-07'
+    empreinte: 2c3abac330d79f69b4dbfe07b577efb15f154812593ffff46471039c2f989508
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_p6443_super_j4012:
+    source: Seeed Studio, https://www.seeedstudio.com/reComputer-Super-J4012-p-6443.html
+    reference: Seeed — reComputer Super J4012 (Orin NX 16GB)
+    date: '2026-10-07'
+    empreinte: b171dabd011121b9e20dab9a21ab7cccacd52114b0efa0e61b17df273bc8910c
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_recomputer_super_manual:
+    source: Seeed Studio, https://files.seeedstudio.com/products/NVIDIA-Jetson/reComputer_super_user_manual.pdf
+    reference: reComputer Super User Manual
+    date: '2026-10-07'
+    empreinte: 8dda6e84e67b4df852eb8926e3488295d28fbbbab9212b8e8139d205a496e6ec
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_p6356_mini_j3011:
+    source: Seeed Studio, https://www.seeedstudio.com/reComputer-Mini-J3011-p-6356.html
+    reference: Seeed — reComputer Mini J3011 (Orin Nano 8GB)
+    date: '2026-10-07'
+    empreinte: de1484efe60f124189dfffa944703ee87098e7e4754cae204a819fc416be0967
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_wiki_recomputer_mini:
+    source: Seeed Studio, https://wiki.seeedstudio.com/recomputer_jetson_mini_getting_started/
+    reference: Seeed Wiki — Getting Started with reComputer Mini
+    date: '2026-10-07'
+    empreinte: 3193e595ea8273f43ced55bfab501f7d1e2e75516a05e68d90b54a6452a25b79
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_seeed_recomputer_mini_datasheet:
+    source: Seeed Studio, https://files.seeedstudio.com/products/NVIDIA-Jetson/reComputer_mini_datasheet_V1.0.pdf
+    reference: reComputer Mini J30/40 datasheet V1.0
+    date: '2026-10-07'
+    empreinte: 8c2cdacee8f3431e08483303d8c5ef07049190c3113280f8b6272636244417e1
+    conditions: page publique, consultée sans compte
+    redistribuable: false
+  marche_ver_auvidea_jnx120:
+    source: Auvidea, https://auvidea.eu/product/jnx120-carrier-board-for-nvidia-jetson-orin-nano-nx/
+    reference: Auvidea — JNX120 carrier board for NVIDIA Jetson Orin Nano/NX
+    date: '2026-10-07'
+    empreinte: 3c59401b2188a6e0af41dbaff95a7742a8198f034e723f799d1806e0497793a5
+    conditions: page publique, consultée sans compte
+    redistribuable: false

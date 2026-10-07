@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `c42a17909026`, le 2026-10-07 ; 243 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `b434d250efa2`, le 2026-10-07 ; 254 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,13 +54,14 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (70)
+## decisions/ (71)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0067-s-jambes-mixtes-rs02-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0068-s-cheville-sans-roulis.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0069-deux-robots-lab-et-final.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0070-robots-sur-batterie.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md
@@ -127,7 +128,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (30)
+## docs/ (35)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -148,6 +149,11 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/loi-masse-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.svg
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-batteries-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-batteries-2026-10.svg
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-bus-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-calculateurs-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-calculateurs-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.svg
@@ -175,12 +181,15 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-07.md
 
-## params/ (18)
+## params/ (21)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/banc.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/batteries.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/budget.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/bus.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/calculateurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/capacites.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/ckpts.manifest.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/configuration_S.yaml
@@ -208,7 +217,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (32)
+## scripts/ (33)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -229,6 +238,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstr
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/loi_masse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_actionneurs.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_composants.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/pages.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/pertes_cuivre.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/plan_decoupe.py
@@ -254,7 +264,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (23)
+## tests/ (24)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -272,6 +282,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_bas
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_loi_masse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_actionneurs.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_composants.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py

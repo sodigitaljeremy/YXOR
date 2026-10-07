@@ -2,7 +2,7 @@
 
 **Engendré** par `.venv/bin/python scripts/marche_composants.py --ecrire`. Ne pas éditer à la main. **Données seulement** : aucune intégration à l'explorateur, aucun achat (fiche 0066). Contexte DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : « Les deux robots, YXOR Lab et YXOR, fonctionnent entièrement sur batterie. Je préfère NVIDIA Jetson, mais je veux une comparaison chiffrée avec le Raspberry Pi 5 et ses cartes d'IA. » Sources lues le 2026-10-07, téléchargées hors du dépôt, inscrites à `params/fournisseurs.yaml` (non redistribuables) ; une valeur non lue est un trou (—), jamais estimée.
 
-29 produits, 90 sources.
+30 produits, 93 sources.
 
 ## Protocole CAN des RobStride
 
@@ -42,6 +42,7 @@ Calcul écrit : une commande et une réponse par axe et par cycle (protocole Rob
 | PiCAN FD Duo (avec RTC) | can_spi | 2 | True | SPI (HAT Raspberry Pi), interruptions GP | SocketCAN (can0) ; module non nommé | — | 96 |
 | 2-Channel CAN-BUS(FD) Shield for Raspberry Pi (SKU 103030296) | can_spi | 2 | True | SPI (HAT Raspberry Pi) | overlay seeed-can-fd-hat-v2 (dépôt seeed-linux-dto | — | 25 |
 | Pilote noyau mcp251xfd (référence, pas un produit) | can_spi | — | — | — | CAN_MCP251XFD, « Microchip MCP251xFD SPI CAN contr | — | — |
+| RobStride USB_CANHUB (USB-CAN-HUB) | can_usb | 5 | — | USB 2.0 (Type-C), ou connecteur MX1.25-4 | interfaces SocketCAN natives canX (can0, can1…), o | — | 63 |
 | PCAN-USB (IPEH-002021) / PCAN-USB opto-decoupled (IPEH-002022) | can_usb | 1 | False | USB Full-Speed (compatible USB 1.1, 2.0, | peak_usb (SocketCAN) ; ou paquet chardev PEAK | 78 | 232 |
 | PCAN-USB FD (IPEH-004022 USB-A / IPEH-004023 USB-C) | can_usb | 1 | True | USB 2.0 High-Speed (USB-A ou USB-C) | peak_usb (SocketCAN) ; ou paquet chardev PEAK | 68 | 263 |
 | PCAN-USB Pro FD | can_usb | 2 CAN FD + 2 LIN | True | USB 2.0 High-Speed | peak_usb (SocketCAN) ; ou paquet chardev PEAK | 220 | 536 |

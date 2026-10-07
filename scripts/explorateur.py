@@ -156,7 +156,8 @@ def axes_requis(tache, niveau):
 
 
 def lire(nom):
-    return yaml.safe_load((REPO / "params" / nom).read_text(encoding="utf-8"))
+    import marche_composants as MC
+    return MC.lire(nom)
 
 
 # ─────────────────────────────── besoins ────────────────────────────────
@@ -257,6 +258,10 @@ def catalogue():
     fam, rows = MA.charger()
     cv = TM.conventions()
     cand = lire("actionneurs.yaml")["candidats"]
+    import marche_composants as MC
+    plages = {}
+    for f in set(r["famille"] for r in rows if r["famille"]):
+        plages.update({x["id"]: (x["min"], x["max"]) if x["min"] is not None else None for x in MC.plages(f)})
     par, ecartes = {}, []
     for r in rows:
         couple = r["pointe"] or r["blocage"]
@@ -267,7 +272,9 @@ def catalogue():
         par.setdefault(r["famille"], []).append(dict(
             id=r["id"], pointe=float(couple), par_blocage=not r["pointe"], continu=num(r["continu"]),
             vitesse=v * 2 * math.pi / 60 if v else None, masse=m / 1000 if m else None,
-            prix=EP.prix_chf(r["prix"], taux, D), D=diametre(r["dims"]),
+            prix=EP.prix_chf(r["prix"], taux, D), D=diametre(r["dims"]), famille=r["famille"],
+            v_ref=num(r["tension"]), plage=plages.get(r["id"]),
+            plage_servo=plages.get(r["id"]) or plages.get(r["id"].replace("sts3", "st3", 1)),
             geo=TM.moteur_catalogue(cand[r["id"]], cv) if r["id"] in cand else TM.moteur_dims(r["dims"], cv)))
     for l in par.values():
         l.sort(key=lambda a: (a["masse"] is None, a["masse"] or 0.0, a["pointe"]))
@@ -276,6 +283,8 @@ def catalogue():
 
 def passe(a, need, marge) -> bool:
     """Les critères CONNUS sont tenus (un critère inconnu ne fait ni passer ni échouer : il est rendu)."""
+    if a.get("compat") is False:                       # plage de tension dépassée par la variante 12S / 13S
+        return False
     if a["pointe"] < marge * need["pk"]:
         return False
     if need["c"] > 0 and a["continu"] is not None and a["continu"] < marge * need["c"]:
@@ -307,7 +316,10 @@ def inconnues_de(a, need) -> list[str]:
     if need["c"] > 0 and a["continu"] is None:
         out.append(f"couple continu de {a['id']}")
     if need["w"] > 0 and a["vitesse"] is None:
-        out.append(f"vitesse à vide de {a['id']}")
+        out.append(f"tension de référence de la vitesse de {a['id']}" if a.get("v_ref_inconnue") else
+                   f"vitesse à vide de {a['id']}")
+    if "compat" in a and a["compat"] is None:
+        out.append(f"plage de tension de {a['id']}")
     if a["masse"] is None:
         out.append(f"masse de {a['id']}")
     if a["prix"] is None:
@@ -328,7 +340,32 @@ def structures() -> dict:
     return dict(par_ensemble=out, H_S=m["H_S"], modele=m, charge=lire("exigences_S.yaml")["charge_utile"]["valeur_kg"])
 
 
-def contexte(struct=None, cible=None, profil="lab") -> dict:
+def electrique(ctx, S, f_can, etendue) -> dict:
+    """Variante de tension S (12 ou 13) appliquée aux actionneurs du CORPS (sur le bus moteurs), et données du système
+    électrique (phase 4a quinquies). Les petits axes sont sur des rails régulés : non concernés."""
+    import systeme_electrique as SE
+    pui = SE.lire("puissance.yaml")
+    hyp = pui["hypotheses"]
+    var = SE.variante(S)
+    for fam in EP.CORPS:
+        ctx["act"][fam] = [dict(a, compat=SE.compatibilite(a["plage"], var),
+                                vitesse=(a["vitesse"] * SE.facteur_vitesse(a["v_ref"], var))
+                                if a["vitesse"] and SE.facteur_vitesse(a["v_ref"], var) else None,
+                                v_ref_inconnue=SE.facteur_vitesse(a["v_ref"], var) is None)
+                           for a in ctx["act"].get(fam, [])]
+    import simulations_marche as SM
+    marches, _, _ = SM.charger()
+    opts = SE.options_calculateur()
+    niveau = ctx["cible"].get("ia_embarquee")
+    ctx["struct"]["charge"] = hyp["imu_cablage_kg"]["valeur"]
+    return dict(S=S, var=var, hyp=hyp, pui=pui, f_can=f_can, etendue=etendue, cible=ctx["cible"],
+                comps=SE.composants(pui) if (pui.get("marche") or {}).get("produits") else None,
+                Pm=SE.table_puissance(marches, ctx["cap"], EP.HS), P3a=SE.table_pointe_3a(EP.tout()[2]),
+                cells=SE.cellules_21700(), calc=SE.choisir_calculateur(opts, niveau, hyp) if niveau else None,
+                adapt=SE.adaptateurs_can(), serie=SE.adaptateur_serie(), niveau_ia=niveau)
+
+
+def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=True) -> dict:
     import simulations_marche as SM
     cap, an, lignes = EP.tout()
     marches, releve, manque = SM.charger()
@@ -337,7 +374,7 @@ def contexte(struct=None, cible=None, profil="lab") -> dict:
     par, ecartes, fams = catalogue()
     sq = lire("squelette.yaml")
     import taille_minimale as TM
-    return dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()}, cv=TM.conventions(),
+    ctx = dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()}, cv=TM.conventions(),
                 cible=cible or cible_defaut(cap, profil), profil=profil,
                 T=table_besoins(lignes, marches, releve, cap), manque=manque,
                 C={H: EP.contraintes(H, cap, an) for H in EP.HS}, ex=ex, decision=lm.get("retenue"),
@@ -345,6 +382,9 @@ def contexte(struct=None, cible=None, profil="lab") -> dict:
                 marge=lire("actionneurs.yaml")["dimensionnement"]["marge"],
                 jeu=sq["ecarts_ansur"]["cheville"]["jeu_mm"]["valeur"],
                 fr_max=max((e["Fr"] for e in marches.values()), default=0.0), memo={})
+    if S:
+        ctx["elec"] = electrique(ctx, S, f_can, etendue)
+    return ctx
 
 
 def masse_structure(ctx, ens, H, b, cas="central"):
@@ -401,8 +441,11 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
         return dict(statut="infaisable", violees=violees, inconnues=[])
     idx = {a: 0 for a in axes}
     Ht, Hr, pl, manque_place, iterations = H, H, None, [], 0
-    for iterations in range(1, 12):                          # hauteur réelle ↔ couples ↔ choix ↔ place
-        mfix = lambda b, c="central", Hm=Hr: masse_structure(ctx, ens, Hm, ctx["ex"][b], c) + ctx["struct"]["charge"]
+    m_el, el = 0.0, None                                     # système électrique (phase 4a quinquies)
+    axes_corps = {a: n for a, n in axes.items() if a not in PETITS_AXES}
+    for iterations in range(1, 16):                          # hauteur réelle ↔ couples ↔ choix ↔ place ↔ électrique
+        mfix = (lambda b, c="central", Hm=Hr, me=m_el:
+                masse_structure(ctx, ens, Hm, ctx["ex"][b], c) + ctx["struct"]["charge"] + me)
         M = {}
         for _ in range(40):                                  # point fixe : masse ↔ choix, à Ht
             change = False
@@ -427,14 +470,23 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
         choix = {a: acts[a][idx[a]] for a in axes}
         pl, manque_place = place(ctx, axes, choix, H)        # taille minimale géométrique, aux proportions de H
         Hr = pl["H_reel"] if pl else H
+        m_el_n = m_el
+        if "elec" in ctx:
+            import systeme_electrique as SE
+            el = SE.dimensionner(ctx["elec"], ctx["R"], ctx["cible"], axes_corps,
+                                 [choix[a] for a in axes if a in PETITS_AXES], max(M.values()), Ht, Hr, profil,
+                                 sum(axes_corps.values()), ctx["elec"])
+            if el["place"]:
+                Hr += el["place"]["allonge_m"]               # le tronc s'allonge si l'électronique n'y tient pas
+            m_el_n = el["masse"] if el["masse"] is not None else el["masse_connue"]
         Ht_n = grille_haut(Hr)
         if Ht_n is None:
             return dict(statut="infaisable", inconnues=[],
                         violees=[f"hauteur réelle {f1(Hr, 3)} m au-delà de la grille des besoins ({EP.HS[-1]} m)"])
-        if abs(Ht_n - Ht) < 1e-9:
+        if abs(Ht_n - Ht) < 1e-9 and abs(m_el_n - m_el) < 1e-3:
             break
-        Ht = Ht_n
-    inconnues = list(manque_place)
+        Ht, m_el = Ht_n, m_el_n
+    inconnues = list(manque_place) + (el["inconnues"] if el else [])
     for t, niv in paires(profil):
         if (round(Ht, 2), t, niv) not in ctx["T"]:
             inconnues.append(f"{t} {niv} : aucun besoin calculé à {f1(Ht, 2)} m"
@@ -452,7 +504,8 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
         inconnues += inconnues_de(c, need)
     inconnues = list(dict.fromkeys(inconnues))
     prix = [c["prix"] for c in choix.values()]
-    cout = sum(n * choix[a]["prix"] for a, n in axes.items()) if None not in prix else None
+    cout_act = sum(n * choix[a]["prix"] for a, n in axes.items()) if None not in prix else None
+    cout = cout_act if el is None else (cout_act + el["prix"] if cout_act is not None and el["prix"] is not None else None)
     # borne pessimiste H³ : le même choix tient-il ?
     mc = M[("central", "central")]
     M_iso = mfix("iso") + mc - mfix("central")
@@ -462,7 +515,7 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
                     for a, c in choix.items())
     statut = "infaisable" if violees else ("INCONNU" if inconnues else "faisable")
     nc = non_couvertes(axes, ctx["cible"])
-    return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=mc,
+    return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=mc, elec=el, cout_actionneurs=cout_act,
                 M_bande=(min(M.values()), max(M.values())), M_iso=M_iso, tient_iso=tient_iso, cout=cout,
                 E=mc * G * ctx["R"]["hauteur_hanche"] * Hr, ncap=len(profil),
                 H_reel=Hr if pl else None, H_couples=Ht, iterations=iterations, place=pl, non_couvertes=nc,
@@ -523,6 +576,7 @@ def pareto(sols):
 def meilleure(ctx, profil):
     """La solution faisable la moins chère pour un profil, sur tout l'espace ; et la plus petite H faisable."""
     best, hmin, n_inc, raisons, n_eval, viol = None, None, 0, Counter(), 0, Counter()
+    best_inc = None              # sans faisable : la meilleure dont les seules inconnues sont celles, COMMUNES, du système électrique
     for ens in ENSEMBLES:
         for H in H_LAB:
             for fc in EP.CORPS:
@@ -541,7 +595,20 @@ def meilleure(ctx, profil):
                     elif r["statut"] == "INCONNU":
                         n_inc += 1
                         raisons.update(r["inconnues"])
+                        if not set(r["inconnues"]) - set((r.get("elec") or {}).get("inconnues") or []):
+                            r = dict(r, ens=ens, H=H, fc=fc, fp=fp, profil=profil, cout=cout_borne(r), borne=True)
+                            if best_inc is None or (r["cout"], r["M"]) < (best_inc["cout"], best_inc["M"]):
+                                best_inc = r
+    if best is None and best_inc is not None:
+        best = best_inc
     return dict(best=best, hmin=hmin, n_inc=n_inc, raisons=raisons, n_eval=n_eval, viol=viol)
+
+
+def cout_borne(x):
+    """Coût total si connu ; sinon sa part CONNUE (actionneurs + éléments chiffrés du système électrique) : une borne basse."""
+    if x.get("cout") is not None:
+        return x["cout"]
+    return (x.get("cout_actionneurs") or 0.0) + ((x.get("elec") or {}).get("prix_connu") or 0.0)
 
 
 def cout_capacites(ctx):
@@ -643,7 +710,7 @@ def svg(front, ctx_sols) -> str:
     return "\n".join(o)
 
 
-def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
+def rapport(ctx, sols, front, ref, caps, nverif, duree, runs=None, top0=None) -> str:
     s_ = ctx["struct"]
     ex = ctx["ex"]
     stat = Counter(s["statut"] for s in sols)
@@ -740,7 +807,103 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
           "supposé ; servos en boîtier pris dans leur plus grande cote."]
     if ctx["manque"]:
         L += [f"- **séries** : {m}" for m in ctx["manque"]]
+    if runs:
+        L += section_electrique(ctx, runs, top0)
     return "\n".join(L) + "\n"
+
+
+def section_electrique(ctx, runs, top0) -> list[str]:
+    """Phase 4a quinquies : variantes 12S / 13S × 250 / 500 Hz, niveaux d'autonomie et d'IA, canaux CAN."""
+    import systeme_electrique as SE
+    hyp = ctx["elec"]["hyp"]
+    L = ["", "## Système électrique : variantes 12S / 13S, 250 / 500 Hz (phase 4a quinquies)", "",
+         "Contexte DÉCIDÉ : fiches 0070 (batterie) et 0071 (Lab : autonomie 30 min sur le cycle 40 s de marche + 20 s "
+         "debout, IA « commande + vision » ; « Je trancherai entre 12S et 13S sur les chiffres »). Tout le reste est "
+         "PROPOSÉ (`params/puissance.yaml`) :", "",
+         f"- puissance électrique = puissance mécanique MOYENNE de la marche simulée (phase 3b, |τ·ω|, le robot le plus "
+         f"exigeant qui couvre le Froude) ÷ rendement BAS {f1(hyp['rendement_actionneurs']['bas'])} (bande "
+         f"{f1(hyp['rendement_actionneurs']['bas'])}–{f1(hyp['rendement_actionneurs']['haut'])}), sur 40 s de 60 ; debout, "
+         "puissance mécanique nulle et pertes de maintien NON comptées (sous-estimation, dite) ; plus le calculateur ;",
+         f"- énergie = puissance moyenne × autonomie ÷ {f1(hyp['fraction_utilisable']['valeur'])} (part utilisable) ; "
+         "courant de pointe = Σ des pointes par axe (marche simulée et tâches directes du profil) ÷ rendement bas ÷ "
+         "tension de COUPURE ;",
+         f"- batterie : la composition S × P de cellules 21700 la plus LÉGÈRE du marché versé qui fournit l'énergie et "
+         f"dont le courant CONTINU publié tient la pointe ; masse × {f1(hyp['facteur_pack_masse']['valeur'])}, volume des "
+         f"cylindres ÷ π/4 × {f1(hyp['facteur_pack_volume']['valeur'])} ;",
+         "- tension : chaque RobStride doit accepter le pack de la coupure à la pleine charge (plage publiée) ; sa vitesse "
+         "à vide est ramenée à la tension de COUPURE, proportionnellement (hypothèse écrite ; fiche à 48 V) : ×"
+         + " ; ×".join(f"{SE.variante(S)['Vfin'] / 48:.3f} en {S}S" for S in (12, 13)) + " ;",
+         "- calculateur : le moins cher qui convient au niveau d'IA (critères PROPOSÉS : "
+         + " ; ".join(f"{k} : accélérateur {'oui' if v['accelerateur'] else 'non'}, ≥ {v['memoire_GB']} GB"
+                      + (", modèles de langage" if v.get("modele_de_langage") else "")
+                      for k, v in hyp["niveaux_ia"].items() if isinstance(v, dict))
+         + "), carte porteuse comprise, alimenté par le rail 12 V (Raspberry Pi : 12 → 5 V) ;",
+         "- bus : canaux CAN au calcul écrit (`docs/marche-bus-2026-10.md`), au-delà de ceux du calculateur par "
+         "l'adaptateur le moins cher à pilote Linux principal ; un adaptateur série Feetech ;",
+         "- chaîne de puissance et rails : `params/puissance.yaml` (cellules → fusible → sectionneur → BMS → contacteur → "
+         "précharge → bus moteurs ; absorbeur de régénération ; arrêt d'urgence matériel ; rails 12, 7,4, 6 et 5 V) ;",
+         f"- place : batterie, calculateur, cartes et convertisseurs dans {f1(hyp['remplissage_tronc']['valeur'] * 100, 0)} % "
+         "du tronc (largeur d'épaules × profondeur de poitrine × hauteur du tronc, ANSUR, à la hauteur réelle) ; ce qui "
+         "dépasse ALLONGE le tronc (même lecture « avec écarts » que la place des moteurs).", ""]
+    if top0:
+        x = top0[0]
+        L += [f"**Référence, méthode de 14 h 05 recalculée (sans système électrique, charge utile forfaitaire de 1,2 kg)** : "
+              f"{x['ens']} axes, {f1(x['H'], 2)} → {f1(x['H_reel'], 3)} m, {f1(x['M'])} kg, {f1(x['cout'], 0)} CHF "
+              "(actionneurs seuls).", ""]
+    for (S, f), R in runs.items():
+        st = R["stat"]
+        bas = all(abs(x["H"] - H_LAB[0]) < 1e-9 for x in R["top"]) if R["top"] else None
+        L += [f"### {S}S, {f} Hz", "",
+              f"{len(R['sols'])} solutions : {st['faisable']} faisables, {st['infaisable']} infaisables, {st['INCONNU']} "
+              f"INCONNUES ; front de {len(R['front'])}. "
+              + ("Le front RESTE à la borne basse H = 0,50 m (proportions) ; la hauteur RÉELLE est en colonne."
+                 if bas else "Le front QUITTE la borne basse H = 0,50 m." if bas is False else ""), "",
+              ENTETE_ELEC[0], ENTETE_ELEC[1]] + [ligne_elec(x) for x in R["top"]]
+        L += ["", "Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :", "",
+              ENTETE_ELEC[0], ENTETE_ELEC[1]] + [ligne_elec(x) for x in R["rs"]]
+        L += [""] + [f"- RobStride n° {i} : {', '.join(x['profil'])} ; manque du profil : "
+                     + (", ".join(t for t in ctx["cible"] if t not in x["profil"] and t not in ("autonomie", "ia_embarquee")) or "—")
+                     for i, x in enumerate(R["rs"], 1)]
+        if R["niveaux"]:
+            b0 = R["base_niveaux"]
+            L += ["", f"Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride ({b0['ens']} axes, "
+                  f"H {f1(b0['H'], 2)}, {b0['fc']} + {b0['fp']}, même profil) :", "",
+                  "| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |",
+                  "| --- | --- | ---: | ---: | --- | --- | ---: | --- |"]
+            for n in R["niveaux"]:
+                r = n["r"] or {}
+                el = r.get("elec") or {}
+                b = el.get("batterie")
+                L.append(f"| {n['tache']} | {n['niveau']} | {f1(r.get('M'))} | "
+                         f"{(f1(r['cout'], 0) if r.get('cout') is not None else '≥ ' + f1(cout_borne(r), 0)) if r.get('statut') else '—'} | "
+                         + (f"{b['S']}S{b['P']}P {f1(b['E'], 0)} Wh" if b else "—")
+                         + f" | {(el.get('calc') or {}).get('nom', '—')} | {f1(r.get('H_reel'), 3)} | {r.get('statut', '—')} |")
+        L.append("")
+    # verrou de vitesse : RobStride à la coupure contre le saut du profil (calculé)
+    niv = ctx["cible"].get("saut_vertical")
+    if niv is not None:
+        L += ["### Vitesse des RobStride à la tension de coupure", ""]
+        for (S, f), R in runs.items():
+            if f != VARIANTES[0][1]:
+                continue
+            rs = [(a["id"], a["vitesse"]) for a in R["ctx"]["act"].get("robstride", []) if a["vitesse"] and a.get("compat")]
+            vmax = max(rs, key=lambda x: x[1]) if rs else None
+            besoin = max((w for (h, t, n), e in R["ctx"]["T"].items() if t == "saut_vertical" and n == niv and abs(h - H_LAB[0]) < 1e-9
+                          for ax in e.values() for w in ax["w"]), default=None)
+            L.append(f"- {S}S : le plus rapide des RobStride compatibles, {vmax[0]}, tourne à {f1(vmax[1])} rad/s à la "
+                     f"coupure ; le saut de {niv} cm demande jusqu'à {f1(besoin)} rad/s à H = {f1(H_LAB[0], 2)} m (borne "
+                     "haute : rampe linéaire). " + ("Le saut est donc HORS de portée des RobStride dans cette variante."
+                                                   if vmax and besoin and vmax[1] < besoin else "Il passe.") if vmax and besoin
+                     else f"- {S}S : non calculable")
+        L += ["", "Deux hypothèses rendent ce verrou prudent : la vitesse à vide prise à la tension de COUPURE (et non "
+              "nominale), et la vitesse du saut en rampe linéaire. Elles sont écrites ; c'est à Jeremy de dire si l'une "
+              "doit être assouplie.", ""]
+    L += ["### Canaux CAN (27 axes ; 23 sur CAN, le cou et les pinces étant en Feetech)", "",
+          "| Fréquence | Protocole | 27 axes | 23 axes |", "| ---: | --- | ---: | ---: |"]
+    for f in (250, 500):
+        for et, nom in ((False, "MIT (trame standard)"), (True, "privé (trame étendue)")):
+            L.append(f"| {f} Hz | {nom} | {SE.canaux_can(27, f, et)['canaux']} | {SE.canaux_can(23, f, et)['canaux']} |")
+    return L
 
 
 def table_top(top, detail=False):
@@ -770,7 +933,7 @@ def table_caps(ref, caps):
          "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |"]
     b0 = ref["best"]
     L.append(f"| marche seule (référence) | {b0['profil']['marche_sol_plat'] if b0 else '—'} | "
-             f"{f1(b0 and b0['cout'], 0)} | — | {f1(b0 and b0['M'])} | — | {f1(b0 and b0['H_reel'], 3)} | "
+             f"{('≥ ' if b0 and b0.get('borne') else '') + f1(b0 and b0['cout'], 0)} | — | {f1(b0 and b0['M'])} | — | {f1(b0 and b0['H_reel'], 3)} | "
              f"{f1(ref['hmin'], 3)} | |")
     for c in caps:
         r = c["res"]
@@ -788,9 +951,60 @@ def table_caps(ref, caps):
                 note = f"infaisable partout ({r['n_eval']} essais ; surtout : {r['viol'].most_common(1)[0][0]})"
         elif c["prec"] and not p:
             note = "niveau inférieur sans solution faisable"
-        L.append(f"| {c['tache']} | {c['niveau']} | {f1(b and b['cout'], 0)} | {d('cout', 0)} | {f1(b and b['M'])} | "
+        if b and b.get("borne"):
+            note = (note + " ; " if note else "") + "≥ : chaîne de puissance incomplètement chiffrée"
+        L.append(f"| {c['tache']} | {c['niveau']} | {('≥ ' if b and b.get('borne') else '') + f1(b and b['cout'], 0)} | {d('cout', 0)} | {f1(b and b['M'])} | "
                  f"{d('M', 1)} | {f1(b and b['H_reel'], 3)} | {f1(r['hmin'], 3)} | {note} |")
     return L
+
+
+VARIANTES = [(12, 250), (12, 500), (13, 250), (13, 500)]   # 12S / 13S × 250 / 500 Hz (prompt du 2026-10-07, soir)
+REFERENCE = (13, 500)                                     # PROPOSÉ : la variante détaillée (coût de chaque tâche)
+
+
+def classement_large(sols, n=5):
+    """Les meilleures FAISABLES (front) ; complétées, s'il en manque, par les meilleures INCONNUES (marquées)."""
+    top = classement(pareto(sols))[:n]
+    if len(top) < n:
+        inc = [x for x in sols if x["statut"] == "INCONNU"]
+        borne = lambda x: x["cout"] if x["cout"] is not None else (x.get("cout_actionneurs") or 0) + ((x.get("elec") or {}).get("prix_connu") or 0)
+        # les données manquantes du SYSTÈME ÉLECTRIQUE sont communes à toutes les solutions (même chaîne) : on départage
+        # par celles qui sont PROPRES à la solution (actionneurs, place), puis par le coût connu
+        propres = lambda x: len(set(x["inconnues"]) - set((x.get("elec") or {}).get("inconnues") or []))
+        inc.sort(key=lambda x: (len(x.get("non_couvertes", [])), -x["ncap"], propres(x), x.get("cout_actionneurs") is None,
+                                borne(x), x["M"]))
+        top += inc[:n - len(top)]
+    return top
+
+
+def niveaux_elec(ctx, s) -> list[dict]:
+    """La même solution (ensemble, H, familles, profil), réévaluée à chaque niveau d'autonomie et d'IA."""
+    import systeme_electrique as SE
+    cap, out = ctx["cap"], []
+    for t in ("autonomie", "ia_embarquee"):
+        for n in cap["taches"][t]["niveaux"]:
+            c2 = dict(ctx, cible=dict(ctx["cible"], **{t: n}), memo={})
+            el = dict(ctx["elec"], cible=c2["cible"])
+            if t == "ia_embarquee":
+                el["calc"] = SE.choisir_calculateur(SE.options_calculateur(), n, el["hyp"])
+            c2["elec"] = el
+            out.append(dict(tache=t, niveau=n, r=evaluer(c2, s["ens"], s["H"], s["fc"], s["fp"], s["profil"])))
+    return out
+
+
+def ligne_elec(s) -> str:
+    el = s.get("elec") or {}
+    b, c = el.get("batterie"), el.get("calc")
+    cout = f1(s["cout"], 0) if s["cout"] is not None else "≥ " + f1((s.get("cout_actionneurs") or 0) + (el.get("prix_connu") or 0), 0)
+    return (f"| {s['ens']} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {s['fc']} + {s['fp']} | {f1(s['M'])} | {cout} | "
+            f"{f1(s.get('cout_actionneurs'), 0)} | "
+            + (f"{b['nom']} {b['S']}S{b['P']}P, {f1(b['E'], 0)} Wh, {f1(b['masse'], 2)} kg" if b else "—")
+            + f" | {(c or {}).get('nom', '—')} | {el.get('n_can', '—')} | {s['statut']} |")
+
+
+ENTETE_ELEC = ("| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | "
+               "Batterie | Calculateur | Canaux CAN | Statut |",
+               "| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |")
 
 
 def main(argv=None) -> int:
@@ -798,6 +1012,7 @@ def main(argv=None) -> int:
     ap.add_argument("--ecrire", action="store_true")
     ap.add_argument("--profil", default="lab", choices=["lab", "final"], help="profil de params/capacites.yaml")
     ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (remplace le profil)")
+    ap.add_argument("--sans-electrique", action="store_true", help="méthode de 14 h 05 : sans système électrique")
     a = ap.parse_args(argv)
     t0 = time.time()
     cible = None
@@ -811,33 +1026,53 @@ def main(argv=None) -> int:
             cible[t] = next((v for v in niv if str(v) == n), None) if n else defaut[t]
             if cible[t] is None:
                 ap.error(f"niveau « {n} » inconnu pour {t} : {niv}")
-    ctx = contexte(cible=cible, profil=a.profil)
-    if not ctx["T"]:
+    # référence sans système électrique (méthode de 14 h 05, recalculée)
+    ctx0 = contexte(cible=cible, profil=a.profil)
+    if not ctx0["T"]:
         print("  explorateur SAUTÉ : aucune table de besoins")
         return 0
-    sols = explorer(ctx)
-    duree = time.time() - t0
-    front = pareto(sols)
+    sols0 = explorer(ctx0)
+    top0 = classement_large(sols0)
+    print(f"  sans système électrique (méthode de 14 h 05) : {len(sols0)} solutions ; meilleure : "
+          + (f"{top0[0]['ens']} axes, {top0[0]['H']:.2f} → {top0[0]['H_reel']:.3f} m, {top0[0]['M']:.1f} kg, "
+             f"{top0[0]['cout']:.0f} CHF" if top0 else "aucune"))
+    if a.sans_electrique:
+        return 0
+    runs = {}
+    for S, f in VARIANTES:
+        t1 = time.time()
+        ctx = contexte(cible=cible, profil=a.profil, S=S, f_can=f)
+        sols = explorer(ctx)
+        top = classement_large(sols)
+        stat = Counter(x["statut"] for x in sols)
+        rs = classement_large([x for x in sols if x["fc"] == "robstride"], 3)   # famille de la fiche 0069
+        base = rs[0] if rs else (top[0] if top else None)
+        runs[(S, f)] = dict(ctx=ctx, sols=sols, top=top, rs=rs, stat=stat, front=pareto(sols),
+                            niveaux=niveaux_elec(ctx, base) if base else [], base_niveaux=base, duree=time.time() - t1)
+        print(f"\n  {S}S, {f} Hz : {len(sols)} solutions ({stat['faisable']} faisables, {stat['infaisable']} "
+              f"infaisables, {stat['INCONNU']} INCONNUES) en {time.time() - t1:.0f} s ; front {len(runs[(S, f)]['front'])}")
+        print("  " + ENTETE_ELEC[0] + "\n  " + ENTETE_ELEC[1])
+        for x in top:
+            print("  " + ligne_elec(x))
+        print("  meilleures RobStride (fiche 0069) :")
+        for x in rs:
+            print("  " + ligne_elec(x) + f" capacités : {', '.join(x['profil'])}")
+    R = runs[REFERENCE]
+    ctx, sols, front = R["ctx"], R["sols"], R["front"]
     nverif, fautes = 0, []
-    for s in front + [x for x in sols if x["statut"] != "infaisable"][:: 97]:
-        if "besoins" in s:
-            fautes += verifier_maximum(s["besoins"], ctx["T"], s["H_couples"], s["profil"], s["M"])
+    for x in front + [y for y in sols if y["statut"] != "infaisable"][:: 97]:
+        if "besoins" in x:
+            fautes += verifier_maximum(x["besoins"], ctx["T"], x["H_couples"], x["profil"], x["M"])
             nverif += 1
     ref, caps = cout_capacites(ctx)
-    stat = Counter(s["statut"] for s in sols)
-    print(f"  explorateur : {len(sols)} solutions ({stat['faisable']} faisables, {stat['infaisable']} infaisables, "
-          f"{stat['INCONNU']} INCONNUES) en {duree:.0f} s ; front {len(front)} ; maximum vérifié sur {nverif} : "
-          f"{len(fautes)} écart(s) ; H de {H_LAB[0]:.2f} à {H_LAB[-1]:.2f} m ; cible : {len(ctx['cible'])} capacités")
-    for f in fautes[:5]:
-        print(f"     ✗ {f}")
-    print("\n".join(table_top(classement(front)[:5])))
-    print()
+    print(f"\n  maximum vérifié sur {nverif} solutions : {len(fautes)} écart(s)")
     print("\n".join(table_caps(ref, caps)))
     print("\n  | Donnée manquante | Solutions | Seule |")
     for k, v, s1 in blocantes(sols, 10):
         print(f"  | {k} | {v} | {s1} |")
     if a.ecrire:
-        DOC.write_text(rapport(ctx, sols, front, ref, caps, nverif, duree), encoding="utf-8")
+        DOC.write_text(rapport(ctx, sols, front, ref, caps, nverif, time.time() - t0, runs=runs, top0=top0),
+                       encoding="utf-8")
         SVG.write_text(svg(front, sols), encoding="utf-8")
         print(f"  -> {DOC.relative_to(REPO)}, {SVG.relative_to(REPO)}")
     return 1 if fautes else 0

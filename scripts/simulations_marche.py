@@ -85,11 +85,13 @@ def profil(chemin: Path, M: float, H: float, borne=None, sat_tb=None) -> dict:
             sat = sat_tb.get(nom)
         else:
             sat = None
-        o = out.setdefault(ty, dict(rms=[], pk=[], w=[], p=[], sat=[], serie=[]))
+        o = out.setdefault(ty, dict(rms=[], pk=[], w=[], p=[], pm=[], sat=[], serie=[]))
         o["rms"].append(math.sqrt(sum(x * x for x in tau) / len(tau)) / (M * G * H))
         o["pk"].append(max(abs(x) for x in tau) / (M * G * H))
         o["w"].append(max(abs(x) for x in vit) * math.sqrt(H / G))
         o["p"].append(max(pw) / (M * G * math.sqrt(G * H)))
+        # puissance MÉCANIQUE MOYENNE (|τ·ω| moyen), ajoutée le 2026-10-07 pour l'énergie du cycle (phase 4a quinquies)
+        o["pm"].append(sum(pw) / len(pw) / (M * G * math.sqrt(G * H)))
         if sat is not None:
             o["sat"].append(sat)
         if nom.lower().startswith("left"):
@@ -97,6 +99,7 @@ def profil(chemin: Path, M: float, H: float, borne=None, sat_tb=None) -> dict:
     res = {}
     for ty, o in out.items():
         res[ty] = dict(rms=max(o["rms"]), pointe=max(o["pk"]), omega=max(o["w"]), puissance=max(o["p"]),
+                       puissance_moy=max(o["pm"]),
                        saturation=max(o["sat"]) if o["sat"] else None, serie=o["serie"])
     return res
 
@@ -123,7 +126,8 @@ def saturation_tb(chemin: Path) -> dict:
 def charger():
     """Les marches retenues (vitesse la plus haute tenue) et le relevé ; ce qui manque est dit."""
     import analyser_marche as AM
-    cat = yaml.safe_load((REPO / "params" / "actionneurs.yaml").read_text(encoding="utf-8"))
+    import marche_composants as MC                       # lecture en cache (2026-10-07)
+    cat = MC.lire("actionneurs.yaml")
     H_TB = cat["reference_toddlerbot"]["hauteur_m"]["valeur"]
     marches, manque = {}, []
     for robot, motif in (("ToddlerBot", "toddlerbot_marche_vx*.json"), ("Booster T1", "t1_marche_vx*.json"),

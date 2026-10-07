@@ -22,10 +22,10 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | rotation et inclinaison du buste | axes du buste | lacet seul / lacet + roulis + tangage | waist_yaw, waist_roll, *waist_pitch* | statique |
 | orientation de la tête | axes du cou | 2 / 3 axes | neck_yaw, neck_pitch, *neck_roll* | statique |
 | expressions du visage | moyen d'expression | écran / 4 micro-servos / 10 micro-servos | *visage* | statique |
-| autonomie sur batterie ‡ **PROPOSÉE** | durée d'un enchaînement de cycles « marche + pauses », batterie pleine jusqu'au seuil d'arrêt | 10 / 20 / 30 / 60 min | — | energie |
-| IA embarquée ‡ **PROPOSÉE** | ce que le calculateur fait tourner à bord | commande seule / + vision / + vision et voix / + modèle de langage local | — | composants |
+| autonomie sur batterie ‡ | durée d'un enchaînement de cycles « marche + pauses », batterie pleine jusqu'au seuil d'arrêt | 10 / 20 / 30 / 60 min | — | energie |
+| IA embarquée ‡ | ce que le calculateur fait tourner à bord | commande seule / + vision / + vision et voix / + modèle de langage local | — | composants |
 
-‡ **PROPOSÉE** par Claude le 2026-10-07, À CONFIRMER par Jeremy : hors de la confirmation du 2026-10-05. Cycle d'autonomie proposé : 1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien).
+‡ Ajoutées le 2026-10-07 et **CONFIRMÉES par Jeremy** le même soir, ses mots : « Je confirme les tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. » Cycle : 1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien).
 
 ## Profils cibles
 
@@ -47,8 +47,8 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 | buste | lacet seul | lacet + roulis + tangage |
 | tete | 2 | à balayer |
 | visage | écran | à balayer |
-| autonomie | — | — |
-| ia embarquee | — | — |
+| autonomie | 30 | 60 |
+| ia embarquee | + vision | + modèle de langage local |
 
 ## Méthodes
 

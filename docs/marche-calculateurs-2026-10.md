@@ -2,7 +2,7 @@
 
 **Engendré** par `.venv/bin/python scripts/marche_composants.py --ecrire`. Ne pas éditer à la main. **Données seulement** : aucune intégration à l'explorateur, aucun achat (fiche 0066). Contexte DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : « Les deux robots, YXOR Lab et YXOR, fonctionnent entièrement sur batterie. Je préfère NVIDIA Jetson, mais je veux une comparaison chiffrée avec le Raspberry Pi 5 et ses cartes d'IA. » Sources lues le 2026-10-07, téléchargées hors du dépôt, inscrites à `params/fournisseurs.yaml` (non redistribuables) ; une valeur non lue est un trou (—), jamais estimée.
 
-30 produits, 48 sources.
+31 produits, 66 sources.
 
 ## Mises en garde sur les TOPS
 
@@ -21,6 +21,7 @@ Seuls les TOPS **INT8 dense** se comparent : colonne « dense ». Le chiffre aff
 | --- | --- | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | Jetson AGX Thor Developer Kit | jetson_kit | — | 2 070 (FP4 sparse (TFLOPS)) | 130 | — | 4 590 | — | oui (2) |
 | Jetson AGX Orin Developer Kit (64GB) | jetson_kit | — | 275 (INT8 sparse (GPU + DLA)) | 60 | — | 2 921 | — | oui |
+| Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | jetson_kit | 33 | 67 (INT8 sparse (GPU + DLA)) | 25 | 1,32 | 500 | 0,066 | oui (2) |
 | Jetson Orin Nano Super Developer Kit | jetson_kit | — | 67 (INT8 sparse) | 25 | — | 333 | — | — |
 | Jetson T5000 (Jetson AGX Thor) | jetson_module | — | 2 070 (FP4 sparse (TFLOPS)) | 130 | — | 4 173 | — | oui (4) |
 | Jetson T4000 | jetson_module | — | 1 200 (FP4 sparse (TFLOPS)) | 75 | — | 2 503 | — | — |
@@ -57,12 +58,13 @@ Critères PROPOSÉS : puissance maximale ≤ 25 W (ou non publiée, DIT) ; produ
 | # | Produit | TOPS dense | TOPS affichés | W max | CHF HT | CAN intégré |
 | ---: | --- | ---: | --- | ---: | ---: | --- |
 | 1 | Jetson Orin Nano 8GB (Super) | 33 | 67 (INT8 sparse (GPU + DLA)) | 25 | 333 | oui |
-| 2 | Jetson Orin Nano 4GB (Super) | 17 | 34 (INT8 sparse (GPU + DLA)) | 25 | 291 | oui |
-| 3 | Jetson Orin Nano Super Developer Kit | — | 67 (INT8 sparse) | 25 | 333 | — |
-| 4 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 2 | — | 40 (INT4) | non publiée | 313 | non |
-| 5 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 26 TOPS | — | 26 (non précisée (« 26 TOPS inferencing performance »)) | non publiée | 238 | non |
-| 6 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 13 TOPS | — | 13 (non précisée (« 13 TOPS inferencing performance »)) | non publiée | 205 | non |
-| 7 | Raspberry Pi 5 8GB + Raspberry Pi AI Camera (pour information) | — | — (entrées int8 ou uint8) | non publiée | 205 | non |
+| 2 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 33 | 67 (INT8 sparse (GPU + DLA)) | 25 | 500 | oui |
+| 3 | Jetson Orin Nano 4GB (Super) | 17 | 34 (INT8 sparse (GPU + DLA)) | 25 | 291 | oui |
+| 4 | Jetson Orin Nano Super Developer Kit | — | 67 (INT8 sparse) | 25 | 333 | — |
+| 5 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 2 | — | 40 (INT4) | non publiée | 313 | non |
+| 6 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 26 TOPS | — | 26 (non précisée (« 26 TOPS inferencing performance »)) | non publiée | 238 | non |
+| 7 | Raspberry Pi 5 8GB + Raspberry Pi AI HAT+ 13 TOPS | — | 13 (non précisée (« 13 TOPS inferencing performance »)) | non publiée | 205 | non |
+| 8 | Raspberry Pi 5 8GB + Raspberry Pi AI Camera (pour information) | — | — (entrées int8 ou uint8) | non publiée | 205 | non |
 
 ## Les plus pertinents pour un robot de 35 kg
 
@@ -76,8 +78,8 @@ Critères PROPOSÉS : puissance maximale ≤ 75 W (ou non publiée, DIT) ; produ
 | 4 | Jetson Orin NX 16GB (Super) | 38 | 157 (INT8 sparse (GPU + DLA)) | 40 | 834 | oui |
 | 5 | Jetson Orin NX 8GB (Super) | 38 | 117 (INT8 sparse (GPU + DLA)) | 40 | 542 | oui |
 | 6 | Jetson Orin Nano 8GB (Super) | 33 | 67 (INT8 sparse (GPU + DLA)) | 25 | 333 | oui |
-| 7 | Jetson Orin Nano 4GB (Super) | 17 | 34 (INT8 sparse (GPU + DLA)) | 25 | 291 | oui |
-| 8 | Jetson T4000 | — | 1 200 (FP4 sparse (TFLOPS)) | 75 | 2 503 | — |
+| 7 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 33 | 67 (INT8 sparse (GPU + DLA)) | 25 | 500 | oui |
+| 8 | Jetson Orin Nano 4GB (Super) | 17 | 34 (INT8 sparse (GPU + DLA)) | 25 | 291 | oui |
 
 ## Marché en 2026
 

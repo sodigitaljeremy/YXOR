@@ -169,6 +169,13 @@ ratios:
     ecart_type: 0.0044
     effectif: 6068
     note: "mesure directe"
+  profondeur_poitrine:
+    valeur: 0.1470
+    source: "ANSUR II 2012, +chestdepth / stature"
+    verifie: true
+    ecart_type: 0.0157
+    effectif: 6068
+    note: "mesure directe : profondeur de la poitrine (ajoutée le 2026-10-07, place des composants dans le tronc)"
   tete_hauteur:
     valeur: 0.130    # CONSERVÉE de Drillis & Contini
     source: "D&C fig. 4.1 — non dérivable d'ANSUR II"

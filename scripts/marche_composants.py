@@ -32,8 +32,20 @@ DOCS = {k: REPO / "docs" / f"marche-{k}-2026-10.md" for k in ("batteries", "calc
 SVGS = {k: REPO / "docs" / f"marche-{k}-2026-10.svg" for k in ("batteries", "calculateurs")}
 
 
+_CACHE = {}
+
+
 def lire(nom):
-    return yaml.safe_load((REPO / "params" / nom).read_text(encoding="utf-8"))
+    """Un fichier de params/, lu UNE fois par version (date de modification) avec le lecteur YAML compilé s'il existe ;
+    chaque appel reçoit sa propre copie (un appelant qui modifie ne touche pas le cache). Ajouté le 2026-10-07 :
+    le catalogue des actionneurs (20 000 lignes) était relu à chaque famille."""
+    import copy
+    f = REPO / "params" / nom
+    cle = (nom, f.stat().st_mtime_ns)
+    if cle not in _CACHE:
+        chargeur = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+        _CACHE[cle] = yaml.load(f.read_text(encoding="utf-8"), Loader=chargeur)
+    return copy.deepcopy(_CACHE[cle])
 
 
 def v(p: dict, champ: str):

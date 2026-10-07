@@ -305,6 +305,40 @@ tensions_feetech:
     note: « 5-1 工作电压范围 Input Voltage Range 3.7V-6V ».
 marche:
   sources:
+    marche_ver_aifitlab_canhub:
+      titre: AIFitLab — ROBSTRIDE USB-CAN HUB Module
+      url: https://aifitlab.com/products/robstride-usb-can-hub-module
+      editeur: AIFitLab
+      date: '2026-10-07'
+      fichier: aifitlab_canhub.html
+      empreinte: 9dba884a33bb24f9550e1d27c5c0d6df4698df0891598bf8714947c47a8c8cc4
+      octets: 498240
+      conditions: page publique, consultée sans compte
+      primaire: false
+      note: Prix 75,00 USD ; « backordered » selon le résumé de recherche (statut non revérifié dans la copie).
+    marche_ver_robstride_canhub_manuel:
+      titre: USB_CANHUB 使用说明手册 V1.0 (RobStride / 北京灵足时代科技)
+      url: https://github.com/RobStride/Product_Information/blob/e501b78afc04671b6fe10135fe9a08b9e676269a/%E4%BA%A7%E5%93%81%E8%B5%84%E6%96%99/canhub/USB_CANHUB%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8EV1.0.pdf
+      editeur: RobStride
+      date: '2026-10-07'
+      fichier: robstride_USB_CANHUB_V1.0.pdf
+      empreinte: ed3bcddbc65d777144ded45916ddf480a291aaba1a46335b4cefb1ba331c09d1
+      octets: 1027475
+      conditions: dépôt GitHub public ; licence du dépôt non vérifiée
+      primaire: true
+      note: 12 pages, en chinois ; dernier commit du fichier e501b78 (2026-03-02). Cotes en image (fig. 2), non lisibles
+        par extraction de texte.
+    marche_ver_robstride_canhub_step:
+      titre: Modèle 3D CANHUB V03 (2025-10-13)
+      url: https://github.com/RobStride/Product_Information/blob/e501b78afc04671b6fe10135fe9a08b9e676269a/Product%20Literature/canhub/3D_CANHUB_V03_2025-10-13.step
+      editeur: RobStride
+      date: '2026-10-07'
+      fichier: robstride_3D_CANHUB_V03_2025-10-13.step
+      empreinte: ed7253865243b1fd027e69046b3ef1390076df557157cceb0e56fd6d90d4bc5a
+      octets: 27877459
+      conditions: dépôt GitHub public ; licence non vérifiée ; fichier binaire, à ne pas entrer dans le dépôt YXOR
+      primaire: true
+      note: Boîte englobante CALCULÉE avec build123d (unité supposée mm, celle du STEP).
     marche_bus_rs00_manuel_260713:
       titre: RS00 User Manual 260713
       url: https://github.com/RobStride/Product_Information/blob/3f0cae4986e175337c7b03d891b899247b1f2933/Product%20Literature/RS00/RS00User%20Manual260713.pdf
@@ -1222,6 +1256,63 @@ marche:
       note: 'non téléchargées : résolution DNS de www.feetechrc.com, feetechrc.com, www.feetechrc.cn, www.feetech.cn
         en échec (3 essais, curl et WebFetch) ; archive.org injoignable.'
   produits:
+    # ── ajouté le 2026-10-07 (soir), vérification F ──
+    robstride_usb_canhub:
+      famille: can_usb
+      nom: RobStride USB_CANHUB (USB-CAN-HUB)
+      fabricant: RobStride
+      canaux:
+        valeur: 5
+        page: 11
+        source: marche_ver_robstride_canhub_manuel
+        note: '§4.5 « 配置 5 个 can 路 » ; 5 voyants Rx verts + 5 Tx rouges (§3.3) ; aifitlab_canhub : « total 5 channels
+          ».'
+      can_fd:
+        valeur: null
+        note: non mentionné (manuel V1.0)
+      debit_nominal_max:
+        valeur: 1 Mbit/s (exemple du manuel)
+        page: 9
+        source: marche_ver_robstride_canhub_manuel
+        note: §4.1 `ip link set can0 type can bitrate 1000000` et §4.6 « 将波特率配置成1M ». Aucun débit maximal ni CAN FD
+          mentionné.
+      interface_hote:
+        valeur: USB 2.0 (Type-C), ou connecteur MX1.25-4P couché (D+/D-)
+        page: 9
+        source: marche_ver_robstride_canhub_manuel
+        note: null
+      pilote_linux:
+        valeur: interfaces SocketCAN natives canX (can0, can1…), outils can-utils
+        page: 9
+        source: marche_ver_robstride_canhub_manuel
+        note: « 使用原生 CAN_HUB设备 / 在 linux 生成 canX » + modprobe can, can_raw, can_dev. Le module noyau précis (gs_usb
+          ou autre) N'EST PAS nommé. Exemples « 基于 canable » (C++ robstride_ros_sample, SDK Python). Logiciel Windows
+          .exe aussi fourni.
+      pilote_mainline:
+        valeur: null
+        note: module noyau non nommé par le manuel (gs_usb non confirmé)
+      isolation_galvanique:
+        valeur: null
+      cotes_mm:
+        valeur: 64,97 × 56,07 × 11,6
+        page: null
+        source: marche_ver_robstride_canhub_step
+        note: Boîte englobante CALCULÉE du modèle STEP V03 (connecteurs compris s'ils sont modélisés). Le plan coté
+          du manuel (fig. 2) est une image non lue.
+      masse_g:
+        valeur: null
+        source: null
+        note: non publiée (manuel, page revendeur)
+      prix:
+        valeur: 75.0
+        devise: USD
+        tva_incluse: null
+        vendeur: AIFitLab
+        source: marche_ver_aifitlab_canhub
+        note: Seul prix lu. Aucun prix RobStride (fabricant). Ne pas confondre avec le « module de débogage CAN vers
+          USB » RobStride à 19,55 € chez OpenELAB (openelab_robstride_can_usb), qui est un autre produit.
+      disponibilite_ch_ue:
+        valeur: null
     peak_pcan_usb:
       famille: can_usb
       nom: PCAN-USB (IPEH-002021) / PCAN-USB opto-decoupled (IPEH-002022)

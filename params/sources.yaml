@@ -388,3 +388,50 @@ sources:
     lu: "lu en entier le 2026-10-06 (contrôle de droits) ; affirmations NON revérifiées."
     pourquoi: >
       Cycle en V mécatronique, actionneur figé tôt puis caractérisé (Berkeley, MIT, ODRI, ToddlerBot) ; cite Oke et al. (m ∝ L², τ ∝ m·L).
+  # Rapports « batteries, calculateurs, bus » (prompt commun, 2026-10-07), déposés par Jeremy. SECONDAIRES.
+  # Lus et inscrits AVANT d'être commités (écart du 2026-10-06 corrigé).
+  rapport_batteries_claude:
+    auteurs: "Claude (claude.ai, recherche web) (rapport d'assistant)"
+    titre: "YXOR : batteries, calculateurs et bus, rapport de Claude"
+    editeur: "rapport d'assistant, docs/sources/batteries-claude-2026-10-07.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/batteries-claude-2026-10-07.md"
+    pages: "160 lignes"
+    empreinte: "sha256:6075f31d730b5807a4d59ab5e2358b3c22ec933bd7a436d5cda4a7d4731b36e3"
+    octets: 14324
+    droits: >
+      Rapport d'assistant ; cite des normes et documents sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-07 (contrôle de droits). Affirmations NON revérifiées sauf celles que recoupent les marchés versés le 2026-10-07."
+    pourquoi: >
+      Batteries, calculateurs, bus. Donne l'AI HAT+ 2 à 130 $ et le STS3215 à 6,5 kg·cm continu à 6 V (revendeurs) : à vérifier (lot 4a quinquies).
+  rapport_batteries_grok:
+    auteurs: "Grok (rapport d'assistant)"
+    titre: "YXOR : batteries, calculateurs et bus, rapport de Grok"
+    editeur: "rapport d'assistant, docs/sources/batteries-grok-2026-10-07.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/batteries-grok-2026-10-07.md"
+    pages: "134 lignes"
+    empreinte: "sha256:cd84986498846e2d6a188920e4a1fb754e8ebbdb5f797cdd0c45f4d0ebb8615d"
+    octets: 15460
+    droits: >
+      Rapport d'assistant ; cite des normes et documents sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-07 (contrôle de droits) ; affirmations NON revérifiées."
+    pourquoi: >
+      Seule source d'un « Orin Nano 2 » (annonce NVIDIA du 25 août 2026, 8 Go, 15 W, 78 TOPS de type non précisé) : à vérifier sur une source primaire. AI HAT+ 2 à 130 $ (source secondaire).
+  rapport_batteries_chatgpt:
+    auteurs: "ChatGPT (rapport d'assistant)"
+    titre: "YXOR : batteries, calculateurs et bus, rapport de ChatGPT"
+    editeur: "rapport d'assistant, docs/sources/batteries-chatgpt-2026-10-07.md"
+    annee: 2026
+    identifiant_perenne: "docs/sources/batteries-chatgpt-2026-10-07.md"
+    pages: "877 lignes"
+    empreinte: "sha256:6f82cc5eabb07d05b3b25ae0d1a3f50bf158796d7e23cc830f141b2420db3449"
+    octets: 46557
+    droits: >
+      Rapport d'assistant ; cite des normes et documents sous droits par leur référence, sans extrait recopié (vérifié à la lecture).
+    lecture: lu
+    lu: "lu en entier le 2026-10-07 (contrôle de droits) ; 3 marqueurs de référence sans lien, irrécupérables."
+    pourquoi: >
+      Préconise 13S, rails DC/DC 12 / 7,4–8 / 6 V, contacteur + précharge + dissipateur de régénération ; cite le module de décharge RobStride. Donne l'AI HAT+ 2 à 200 $ (contredit Claude et Grok).

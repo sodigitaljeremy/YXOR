@@ -181,8 +181,9 @@ taches:
     methode: statique
     note: "« 4 à 10 micro-servos » du prompt balayé à ses deux bornes"
 
-  # ── énergie et calcul : PROPOSÉES par Claude le 2026-10-07 (prompt du jour), À CONFIRMER par Jeremy ──
-  # Ajoutées après la confirmation du 2026-10-05 : elles n'en font PAS partie.
+  # ── énergie et calcul : proposées par Claude le 2026-10-07 (après-midi), CONFIRMÉES par Jeremy ──
+  # le 2026-10-07 au soir, ses mots (prompt de la phase 4a quinquies) :
+  #   « Je confirme les tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. Pour YXOR Lab : autonomie 30 minutes, IA embarquée commande + vision. Pour YXOR final : autonomie 60 minutes, IA embarquée avec modèle de langage local. Je trancherai entre 12S et 13S sur les chiffres. »
   # Le contexte est DÉCIDÉ (fiche 0070, Jeremy, 2026-10-07) : les deux robots
   # fonctionnent entièrement sur batterie.
   autonomie:
@@ -190,12 +191,12 @@ taches:
     grandeur: "durée d'un enchaînement de cycles « marche + pauses », batterie pleine jusqu'au seuil d'arrêt"
     unite: "min"
     niveaux: [10, 20, 30, 60]
-    proposee: true
+    confirmee: "Jeremy, 2026-10-07 (soir), prompt de la phase 4a quinquies"
     sollicite: []
     methode: energie
     cycle:
       definition: "1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien)"
-      statut: "PROPOSÉ par Claude (2026-10-07), à confirmer par Jeremy : part de marche, durée, niveau de marche"
+      statut: "proposé par Claude, CONFIRMÉ par Jeremy le 2026-10-07 (« le cycle de 40 s de marche suivies de 20 s debout ») ; marche au niveau du profil"
       energie: "E_cycle = 40 s × P_marche + 20 s × P_debout + 60 s × P_calcul ; P_marche et P_debout depuis les puissances mécaniques des simulations (phase 3b) divisées par le rendement des actionneurs (non publié uniformément : INCONNU) ; P_calcul : marché des calculateurs"
     note: "autonomie = énergie utile de la batterie (au seuil d'arrêt, pas à 0 %) / puissance moyenne du cycle"
 
@@ -204,7 +205,7 @@ taches:
     grandeur: "ce que le calculateur fait tourner à bord"
     unite: "—"
     niveaux: ["commande seule", "+ vision", "+ vision et voix", "+ modèle de langage local"]
-    proposee: true
+    confirmee: "Jeremy, 2026-10-07 (soir), prompt de la phase 4a quinquies"
     sollicite: []
     methode: composants
     note: "chaque niveau ajoute de la puissance, de la masse et des TOPS ; les TOPS publiés ne sont pas toujours comparables (INT8 dense, sparse, FP4) : docs/marche-calculateurs-2026-10.md"
@@ -239,6 +240,8 @@ profils:
       buste: "lacet seul"
       tete: 2
       visage: "écran"
+      autonomie: 30                       # Jeremy, 2026-10-07 (soir) : « Je confirme les tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. Pour YXOR Lab : autonomie 30 minutes, IA embarquée commande + vision. Pour YXOR final : autonomie 60 minutes, IA embarquée avec modèle de langage local. Je trancherai entre 12S et 13S sur les chiffres. »
+      ia_embarquee: "+ vision"            # « IA embarquée commande + vision » (même phrase)
     reserve_au_final: {buste: "lacet + roulis + tangage", charge_lourde: null, course: null, mains_a_doigts: null}
   final:
     decide: "fiche 0069 (capacités cochées par Jeremy le 2026-10-04) ; niveaux à balayer en phase 4b"
@@ -257,6 +260,8 @@ profils:
       buste: "lacet + roulis + tangage"
       tete: null
       visage: null
+      autonomie: 60                       # Jeremy, 2026-10-07 (soir) : « Pour YXOR final : autonomie 60 minutes »
+      ia_embarquee: "+ modèle de langage local"   # « IA embarquée avec modèle de langage local »
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Sorties prévues de l'explorateur, POUR CHAQUE SOLUTION (phase 3)
