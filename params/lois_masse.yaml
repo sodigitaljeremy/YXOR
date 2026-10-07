@@ -12,6 +12,22 @@
 # exports/sources/ (ignoré). Le test tests/test_loi_masse.py vérifie que ces
 # valeurs sont celles que l'ajustement redonne, quand le CSV est là.
 
+# ─────────────────────────────────────────────────────────────────────────
+# DÉCIDÉ PAR JEREMY le 2026-10-07, ses mots (réponse à la question de Claude,
+# phase 4a) : « J'adopte la loi allométrique mesurée, avec son intervalle comme
+# bande d'incertitude ; H³ reste en mémoire comme borne pessimiste. »
+# Appliqué d'abord à l'explorateur (scripts/explorateur.py) : une solution
+# n'est faisable que si elle tient au b bas, central ET haut ; H³ y est
+# rapporté comme borne pessimiste. Les calculs antérieurs (dimensionnement,
+# grille de S, exigences) gardent leur exposant 3 jusqu'à leur reprise : à
+# appliquer, rien n'y change en silence.
+# ─────────────────────────────────────────────────────────────────────────
+retenue:
+  loi: allometrique
+  bande: [bas, central, haut]
+  borne_pessimiste: isometrique
+  decide: "Jeremy, 2026-10-07, réponse à la question de Claude (phase 4a) : « J'adopte la loi allométrique mesurée, avec son intervalle comme bande d'incertitude ; H³ reste en mémoire comme borne pessimiste. »"
+
 variantes:
   isometrique:
     exposant: 3.0
