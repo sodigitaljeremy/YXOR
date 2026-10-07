@@ -17,31 +17,43 @@ profil de capacités). Pour chacune :
      marge de la fiche 0051 ; la masse dépend du choix et le choix de la
      masse : point fixe ;
   3. ROBUSTESSE (loi de masse DÉCIDÉE par Jeremy le 2026-10-07, params/
-     lois_masse.yaml) : le choix doit tenir au b bas, central ET haut ; H³ est
-     rapporté comme borne pessimiste, sans filtrer ;
+     lois_masse.yaml) : le choix doit tenir au b bas, central ET haut, et avec
+     la structure centrale (évidée 50 % + 2 mm) ET haute (pleine 3 mm) : six
+     cas ; H³ est rapporté comme borne pessimiste, sans filtrer ;
   4. statut : faisable / infaisable (contraintes violées, listées) / INCONNU
      (données manquantes, listées comme mesures à faire). Une donnée absente
      n'est JAMAIS estimée : elle rend la solution INCONNUE.
 
 Front de Pareto (tri maison, sans dépendance : réponse de Jeremy du
-2026-10-07, « Non, Pareto maison ») sur coût, masse, énergie de chute et nombre
-de capacités tenues, parmi les solutions faisables.
+2026-10-07, « Non, Pareto maison ») sur coût, masse, énergie de chute, nombre
+de capacités tenues et nombre de capacités VOULUES couvertes, parmi les
+solutions faisables.
+
+PROFIL CIBLE (phase 4a bis) : les capacités voulues (par défaut, toutes celles
+de la fiche 0069). Un ensemble sans les axes d'une capacité voulue est marqué
+« ne couvre pas » (la capacité est listée) au lieu d'être comparé à égalité ;
+une capacité voulue mais non calculée reste INCONNUE, listée.
+
+Révisé le 2026-10-07 après-midi (phase 4a bis) : place et structure par les
+études reconstruites (scripts/taille_minimale.py, scripts/structure_plaques.py) ;
+profil cible ; H de 0,50 à 0,90 m.
 
 HYPOTHÈSES, toutes PROPOSÉES par Claude et écrites ici (aucune cachée) :
-  · ENSEMBLES : 26 = squelette v3 (params/squelette.yaml) ; 27 = fiche 0069
-    (proposition de Claude) ; 25 et 29 RECONSTRUITS, l'étude de session du
-    2026-10-04 n'ayant jamais été versée (voir ENSEMBLES) ;
-  · PLACE : l'étude H_min du 2026-10-04 n'a pas été versée non plus. Règle
-    SIMPLIFIÉE à la place : deux actionneurs aux deux bouts d'un segment ne se
-    chevauchent pas, (Ø_a + Ø_b)/2 + jeu ≤ longueur ANSUR × H (PLACE) ;
-  · STRUCTURE : masse Winter de la structure du modèle de S × facteur des
-    plaques (masse CAO des plaques alu de la jambe basse / part Winter du
-    tibia et du pied : UN seul segment mesuré), puis × (H / H_S)^b ;
+  · ENSEMBLES : 26 = squelette v3 ; 27 et 29 = ceux calculés le 2026-10-04
+    (taille_minimale.ENSEMBLES_0410) ; 25 n'a JAMAIS été calculé (le prompt du
+    2026-10-04 le citait seulement) : reconstruit, le 26 sans roulis de taille ;
+  · PLACE : taille minimale géométrique (scripts/taille_minimale.py), lecture
+    AVEC ÉCARTS : la hauteur réelle vaut H + dépassements des chaînes
+    verticales ; la lecture ANSUR stricte est rapportée (tient / ne tient pas).
+    Couples et masses restent calculés à H (le tronc allongé n'y change rien :
+    hypothèse) ;
+  · STRUCTURE : segment par segment (scripts/structure_plaques.py), à H_S,
+    selon l'ensemble, puis × (H / H_S)^b ;
   · RÉGIME : les tâches tenues (charge, saisie, poussée, buste, tête) se
     comparent au couple CONTINU ; les gestes brefs (saut, relevé, gestes) au
     couple de POINTE ; la marche aux deux (REGIME) ;
   · un axe absent de l'ensemble est RIGIDE : la structure reprend son couple ;
-  · énergie de chute = M·g·h, h = hauteur de hanche ANSUR × H ;
+  · énergie de chute = M·g·h, h = hauteur de hanche ANSUR × hauteur RÉELLE ;
   · coût = Σ prix des actionneurs seulement (structure non chiffrée) ;
   · la marche est toujours dans le profil (niveau le plus bas au moins) : un
     bipède qui ne marche pas n'est pas une solution.
@@ -66,7 +78,8 @@ import exigences_physiques as EP  # noqa: E402
 DOC = REPO / "docs" / "explorateur-lab-2026-10.md"
 SVG = REPO / "docs" / "explorateur-lab-2026-10.svg"
 G = 9.80665                                    # non-cote: pesanteur normale (m/s²)
-H_LAB = [h for h in EP.HS if 0.50 - 1e-9 <= h <= 0.80 + 1e-9]   # non-cote: plage du prompt (m)
+H_LAB = [h for h in EP.HS if 0.50 - 1e-9 <= h <= 0.90 + 1e-9]   # non-cote: plage du prompt (m), 4a bis
+STRUCT_CAS = {"central": "évidée 50 % + 2 mm", "haute": "pleine 3 mm"}     # prompt de la phase 4a bis
 BANDE = ("bas", "central", "haut")
 
 # ─────────────────────────────── ensembles ──────────────────────────────
@@ -82,13 +95,13 @@ def _ens(jambe, taille):
 
 ENSEMBLES = {
     25: dict(axes=_ens(JAMBE5, ["waist_yaw"]),
-             source="RECONSTRUIT (étude du 2026-10-04 non versée) : v3 sans le roulis de taille"),
+             source="JAMAIS calculé le 2026-10-04 (seulement cité par le prompt d'alors) : le 26 sans roulis de taille"),
     26: dict(axes=_ens(JAMBE5, ["waist_yaw", "waist_roll"]),
              source="squelette v3 (params/squelette.yaml, fiche 0068 : 5 axes par jambe)"),
     27: dict(axes=_ens(JAMBE5 + ["ankle_roll"], ["waist_yaw"]),
-             source="fiche 0069 (proposition de Claude) : jambes 6 × 2, taille 1, bras 5 × 2, pinces, cou 2"),
+             source="fiche 0069 (proposition de Claude) et étude du 2026-10-04 : jambes 6 × 2, taille 1, bras 5 × 2, pinces, cou 2"),
     29: dict(axes=_ens(JAMBE5 + ["ankle_roll"], ["waist_yaw", "waist_roll", "waist_pitch"]),
-             source="RECONSTRUIT (étude du 2026-10-04 non versée) : le 27 avec la taille à 3 axes"),
+             source="étude du 2026-10-04 (« 29, bras 5 ») : le 27 avec la taille à 3 axes"),
 }
 PETITS_AXES = {"neck_yaw", "neck_pitch", "neck_roll", "gripper"}
 NOMS = {"pince": "gripper"}     # capacites.yaml dit « pince », squelette.yaml « gripper » : le même axe (noms_a_creer)
@@ -105,11 +118,26 @@ SANS_CALCUL = {
     "mains_a_doigts": "aucun ensemble du Lab n'a de doigts",
     "visage": "masse, prix et place d'un écran ou de micro-servos : non relevés",
 }
-# lignes de place : (segment ANSUR, axe à un bout, axe à l'autre bout)
-PLACE = [("largeur_bassin", "hip_yaw", "hip_yaw"), ("cuisse", "hip_pitch", "knee"), ("tibia", "knee", "ankle_pitch"),
-         ("bras", "shoulder_roll", "elbow_roll"), ("avant_bras", "elbow_roll", "wrist_pitch")]
+TOUTES = ["marche_sol_plat", "sol_irregulier", "pente", "releve", "course", "saut_vertical", "gestes_pointage",
+          "saisie", "charge_lourde", "poussee", "mains_a_doigts", "buste", "tete", "visage"]
+# Axes qu'une capacité VOULUE exige au-delà de son calcul. PROPOSÉ par Claude (2026-10-07) : le roulis de
+# cheville pour le sol irrégulier (exemple du prompt) ; des doigts pour la main. La pente et la course n'en
+# exigent pas (des robots à 5 axes par jambe courent : fiche 0068, H1).
+AXES_CIBLE = {"sol_irregulier": ["ankle_roll"], "mains_a_doigts": ["doigts"]}
 
-A_PLACE = {x for _, a, b in PLACE for x in (a, b)}
+
+def cible_defaut(cap) -> dict:
+    """Toutes les capacités de la fiche 0069 au niveau le plus bas, sauf le buste : « rotation ET inclinaison »
+    (fiche 0069) demande le niveau à 3 axes. PROPOSÉ par Claude, à confirmer."""
+    c = {t: cap["taches"][t]["niveaux"][0] for t in TOUTES}
+    c["buste"] = cap["taches"]["buste"]["niveaux"][-1]
+    return c
+
+
+def non_couvertes(axes, cible) -> list[str]:
+    """Capacités voulues dont l'ensemble n'a pas les axes."""
+    return [t for t, niv in cible.items()
+            if any(a not in axes for a in axes_requis(t, niv) + AXES_CIBLE.get(t, []))]
 
 
 def axes_requis(tache, niveau):
@@ -221,7 +249,10 @@ def catalogue():
     import dimensionnement as D
     import marche_actionneurs as MA
     taux = lire("budget.yaml")["taux_de_change"]
+    import taille_minimale as TM
     fam, rows = MA.charger()
+    cv = TM.conventions()
+    cand = lire("actionneurs.yaml")["candidats"]
     par, ecartes = {}, []
     for r in rows:
         couple = r["pointe"] or r["blocage"]
@@ -232,7 +263,8 @@ def catalogue():
         par.setdefault(r["famille"], []).append(dict(
             id=r["id"], pointe=float(couple), par_blocage=not r["pointe"], continu=num(r["continu"]),
             vitesse=v * 2 * math.pi / 60 if v else None, masse=m / 1000 if m else None,
-            prix=EP.prix_chf(r["prix"], taux, D), D=diametre(r["dims"])))
+            prix=EP.prix_chf(r["prix"], taux, D), D=diametre(r["dims"]),
+            geo=TM.moteur_catalogue(cand[r["id"]], cv) if r["id"] in cand else TM.moteur_dims(r["dims"], cv)))
     for l in par.values():
         l.sort(key=lambda a: (a["masse"] is None, a["masse"] or 0.0, a["pointe"]))
     return par, ecartes, fam
@@ -257,7 +289,7 @@ def choisir(acts, need, marge, depuis=0, cotes=False):
         a = acts[i]
         if not passe(a, need, marge):
             continue
-        if not inconnues_de(a, need) and not (cotes and a["D"] is None):
+        if not inconnues_de(a, need) and not (cotes and a.get("geo") is None):
             return i
         if repli is None:
             repli = i
@@ -280,26 +312,19 @@ def inconnues_de(a, need) -> list[str]:
 
 
 # ─────────────────────────────── contexte ───────────────────────────────
-def facteur_plaques() -> dict:
-    """Masse CAO des plaques alu de la jambe basse / part Winter du tibia et du pied (≈ 22 s de CAO)."""
-    sys.path.insert(0, str(REPO / "parts"))
-    import jambe_basse as J
-    import squelette as SQ
-    rid = "operateur_cn_alu_3"
-    g = J.donnees(rid)
-    Gm = J.geometrie(g)
-    P = J.plaques_structure(g, Gm)
-    for pl in P:
-        pl.finir(g["e"], g["d_min"])
-    dens = J.lire("hardware.yaml")["matieres"][g["reg"]["matiere"]]["densite"]
-    m = sum(pl.solide.volume * len(pl.poses) for pl in P) * dens / 1e6          # kg
-    sq = SQ.construire()
-    part = sq["segs"]["left_tibia"]["masse"] + sq["segs"]["left_pied"]["masse"]
-    return dict(k=m / part, plaques_kg=m, part_kg=part, m_struct_S=sq["m_struct"], H_S=sq["H"], charge=sq["charge"],
-                reglage=rid)
+def structures() -> dict:
+    """Structure à H_S (kg) par ensemble et par cas (central, haute) : scripts/structure_plaques.py."""
+    import structure_plaques as SP
+    m = SP.modele()
+    out = {}
+    for k, e in ENSEMBLES.items():
+        n_haut = sum(n for a, n in e["axes"].items() if a not in JAMBE5 + ["ankle_roll"])
+        for cas, var in STRUCT_CAS.items():
+            out[(k, cas)] = SP.structure(m, var, SP.V3, n_rs05_de_plus=n_haut - 16, roulis_cheville="ankle_roll" in e["axes"])
+    return dict(par_ensemble=out, H_S=m["H_S"], modele=m, charge=lire("exigences_S.yaml")["charge_utile"]["valeur_kg"])
 
 
-def contexte(struct=None) -> dict:
+def contexte(struct=None, cible=None) -> dict:
     import simulations_marche as SM
     cap, an, lignes = EP.tout()
     marches, releve, manque = SM.charger()
@@ -307,24 +332,48 @@ def contexte(struct=None) -> dict:
     ex = dict(lm["variantes"]["allometrique"]["exposant"], iso=lm["variantes"]["isometrique"]["exposant"])
     par, ecartes, fams = catalogue()
     sq = lire("squelette.yaml")
-    return dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()},
+    import taille_minimale as TM
+    return dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()}, cv=TM.conventions(),
+                cible=cible or cible_defaut(cap),
                 T=table_besoins(lignes, marches, releve, cap), manque=manque,
                 C={H: EP.contraintes(H, cap, an) for H in H_LAB}, ex=ex, decision=lm.get("retenue"),
-                act=par, ecartes=ecartes, fams=fams, struct=struct or facteur_plaques(),
+                act=par, ecartes=ecartes, fams=fams, struct=struct or structures(),
                 marge=lire("actionneurs.yaml")["dimensionnement"]["marge"],
                 jeu=sq["ecarts_ansur"]["cheville"]["jeu_mm"]["valeur"],
                 fr_max=max((e["Fr"] for e in marches.values()), default=0.0), memo={})
 
 
-def masse_structure(ctx, H, b):
+def masse_structure(ctx, ens, H, b, cas="central"):
     s = ctx["struct"]
-    return s["m_struct_S"] * s["k"] * (H / s["H_S"]) ** b
+    return s["par_ensemble"][(ens, cas)] * (H / s["H_S"]) ** b
+
+
+CAS = [(b, c) for b in BANDE for c in STRUCT_CAS]           # six cas de masse : b × structure
+TRONC_ROLE = {"tronc": ("waist_yaw", "waist_roll", "waist_pitch", "shoulder_pitch", "shoulder_roll"),
+              "bras": tuple(BRAS5), "cou": ("neck_yaw", "neck_pitch", "neck_roll")}
+
+
+def place(ctx, axes, choix, H):
+    """Taille minimale géométrique (taille_minimale) pour les actionneurs choisis ; None et les cotes manquantes."""
+    import taille_minimale as TM
+    manque = sorted({c["id"] for c in choix.values() if c.get("geo") is None})
+    if manque:
+        return None, [f"cotes de {i}" for i in manque]
+    A = {r: choix[r]["geo"] for r in ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_roll") if r in choix}
+    if any(r not in A for r in ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch")):
+        return None, ["place : jambe incomplète dans l'ensemble"]
+    for role, noms in TRONC_ROLE.items():
+        geos = [choix[a]["geo"] for a in noms if a in choix]
+        A[role] = max(geos, key=lambda g: (g["R"], g["L"])) if geos else A["hip_roll"]
+    ens = dict(cheville=6 if "ankle_roll" in axes else 5, taille=sum(1 for a in axes if a.startswith("waist")),
+               bras=5, pince="gripper" in axes)
+    return TM.evaluer(ens, A, H, ctx["R"], ctx["cv"]), []
 
 
 # ─────────────────────────────── évaluation ─────────────────────────────
 def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
     """Une solution. None si le profil demande un axe que l'ensemble n'a pas (capacité sans objet)."""
-    axes = ENSEMBLES[ens]["axes"] if isinstance(ens, int) else ens
+    axes = ENSEMBLES[ens]["axes"]
     for t, niv in profil.items():
         if any(a not in axes for a in axes_requis(t, niv)):
             return None
@@ -340,61 +389,61 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
             violees.append(f"{a} : famille {fam_de[a]} vide au catalogue")
     if violees:
         return dict(statut="infaisable", violees=violees, inconnues=inconnues)
-    mfix = lambda b: masse_structure(ctx, H, ctx["ex"][b]) + ctx["struct"]["charge"]
+    mfix = lambda b, c="central": masse_structure(ctx, ens, H, ctx["ex"][b], c) + ctx["struct"]["charge"]
     idx = {a: 0 for a in axes}
     M = {}
     for _ in range(40):                                      # point fixe : masse ↔ choix
         change = False
-        for b in BANDE:
-            M[b] = mfix(b) + sum(n * (acts[a][idx[a]]["masse"] or 0.0) for a, n in axes.items())
-            bes = besoins(ctx["T"], H, profil, M[b])
+        for b, c in CAS:
+            M[(b, c)] = mfix(b, c) + sum(n * (acts[a][idx[a]]["masse"] or 0.0) for a, n in axes.items())
+            bes = besoins(ctx["T"], H, profil, M[(b, c)])
             for a in axes:
                 need = bes.get(a, dict(pk=0.0, c=0.0, w=0.0))
-                cle = (fam_de[a], idx[a], round(need["pk"], 3), round(need["c"], 3), round(need["w"], 2), a in A_PLACE)
+                cle = (fam_de[a], idx[a], round(need["pk"], 3), round(need["c"], 3), round(need["w"], 2))
                 if cle not in ctx["memo"]:
-                    ctx["memo"][cle] = choisir(acts[a], need, ctx["marge"], idx[a], a in A_PLACE)
+                    ctx["memo"][cle] = choisir(acts[a], need, ctx["marge"], idx[a], True)
                 i = ctx["memo"][cle]
                 if i is None:
                     violees.append(f"{a} : aucun {fam_de[a]} ne tient (pointe {need['pk']:.2f}, continu "
-                                   f"{need['c']:.2f} N·m, ω {need['w']:.1f} rad/s, b {b}, marge {ctx['marge']})")
+                                   f"{need['c']:.2f} N·m, ω {need['w']:.1f} rad/s, b {b}, structure {c}, "
+                                   f"marge {ctx['marge']})")
                     return dict(statut="infaisable", violees=violees, inconnues=inconnues)
                 if i > idx[a]:
                     idx[a], change = i, True
         if not change:
             break
     choix = {a: acts[a][idx[a]] for a in axes}
-    bes = {b: besoins(ctx["T"], H, profil, M[b]) for b in BANDE}
-    for b in BANDE:                                           # masses minimales (équilibre, frottement)
+    bes = {k: besoins(ctx["T"], H, profil, M[k]) for k in CAS}
+    for k in CAS:                                             # masses minimales (équilibre, frottement)
         for t, niv in profil.items():
             mmin = ctx["C"].get(H, {}).get((t, niv))
-            if mmin and M[b] < mmin:
-                violees.append(f"{t} {niv} : M = {M[b]:.1f} kg < {mmin:.1f} kg (équilibre ou frottement, b {b})")
-    for seg, x, y in PLACE:                                   # place (règle simplifiée)
-        if x in choix and y in choix:
-            da, db = choix[x]["D"], choix[y]["D"]
-            if da is None or db is None:
-                inconnues += [f"cotes de {c['id']}" for c in (choix[x], choix[y]) if c["D"] is None]
-            elif (da + db) / 2 + ctx["jeu"] > ctx["R"][seg] * H * 1000:
-                violees.append(f"place : {x}/{y} (Ø{da:g}, Ø{db:g}) ne tiennent pas sur {seg} "
-                               f"({ctx['R'][seg] * H * 1000:.0f} mm)")
+            if mmin and M[k] < mmin:
+                violees.append(f"{t} {niv} : M = {M[k]:.1f} kg < {mmin:.1f} kg (équilibre ou frottement, "
+                               f"b {k[0]}, structure {k[1]})")
+    pl, manque = place(ctx, axes, choix, H)                   # taille minimale géométrique
+    inconnues += manque
     for a, c in choix.items():
-        need = {k: max(bes[b].get(a, {}).get(k, 0.0) for b in BANDE) for k in ("pk", "c", "w")}
+        need = {k: max(bes[x].get(a, {}).get(k, 0.0) for x in CAS) for k in ("pk", "c", "w")}
         inconnues += inconnues_de(c, need)
     inconnues = list(dict.fromkeys(inconnues))
     prix = [c["prix"] for c in choix.values()]
     cout = sum(n * choix[a]["prix"] for a, n in axes.items()) if None not in prix else None
     # borne pessimiste H³ : le même choix tient-il ?
-    M_iso = mfix("iso") + M["central"] - mfix("central")
+    mc = M[("central", "central")]
+    M_iso = mfix("iso") + mc - mfix("central")
     b_iso = besoins(ctx["T"], H, profil, M_iso)
     tient_iso = all(c["pointe"] >= ctx["marge"] * b_iso.get(a, {}).get("pk", 0)
                     and (c["continu"] is None or c["continu"] >= ctx["marge"] * b_iso.get(a, {}).get("c", 0))
                     for a, c in choix.items())
     statut = "infaisable" if violees else ("INCONNU" if inconnues else "faisable")
-    return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=M["central"],
-                M_bande=(M["bas"], M["haut"]) if H >= ctx["struct"]["H_S"] else (M["haut"], M["bas"]),
-                M_iso=M_iso, tient_iso=tient_iso, cout=cout,
-                E=M["central"] * G * ctx["R"]["hauteur_hanche"] * H, ncap=len(profil),
-                n_axes=sum(axes.values()), besoins=bes["central"])
+    H_reel = pl["H_reel"] if pl else None
+    nc = non_couvertes(axes, ctx["cible"])
+    return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=mc,
+                M_bande=(min(M.values()), max(M.values())), M_iso=M_iso, tient_iso=tient_iso, cout=cout,
+                E=mc * G * ctx["R"]["hauteur_hanche"] * (H_reel or H), ncap=len(profil),
+                H_reel=H_reel, place=pl, non_couvertes=nc, n_couvertes=len(ctx["cible"]) - len(nc),
+                cap_inconnues=[t for t in ctx["cible"] if t in SANS_CALCUL and t not in nc],
+                n_axes=sum(axes.values()), besoins=bes[("central", "central")])
 
 
 def niveau_bas(cap, t):
@@ -402,17 +451,18 @@ def niveau_bas(cap, t):
 
 
 def explorer(ctx, ensembles=None, hs=None, corps=None, petits=None):
-    """Toutes les solutions : chaque sous-ensemble des tâches optionnelles, au niveau le plus bas.
+    """Toutes les solutions : chaque sous-ensemble des tâches optionnelles VOULUES, au niveau de la cible.
 
     Un niveau plus haut ne change pas le nombre de capacités tenues et coûte au
     moins autant : il ne peut pas être sur le front. Il est chiffré à part
     (`cout_capacites`)."""
-    cap = ctx["cap"]
-    base = {"marche_sol_plat": niveau_bas(cap, "marche_sol_plat")}
+    cap, cible = ctx["cap"], ctx["cible"]
+    base = {"marche_sol_plat": cible.get("marche_sol_plat", niveau_bas(cap, "marche_sol_plat"))}
+    opt = [t for t in OPTIONNELLES if t in cible]
     out = []
-    for k in range(len(OPTIONNELLES) + 1):
-        for sub in itertools.combinations(OPTIONNELLES, k):
-            profil = dict(base, **{t: niveau_bas(cap, t) for t in sub})
+    for k in range(len(opt) + 1):
+        for sub in itertools.combinations(opt, k):
+            profil = dict(base, **{t: cible[t] for t in sub})
             for ens in (ensembles or ENSEMBLES):
                 for H in (hs or H_LAB):
                     for fc in (corps or EP.CORPS):
@@ -424,15 +474,16 @@ def explorer(ctx, ensembles=None, hs=None, corps=None, petits=None):
 
 
 def pareto(sols):
-    """Non dominées sur (coût ↓, masse ↓, énergie de chute ↓, capacités ↑), parmi les faisables."""
+    """Non dominées sur (coût ↓, masse ↓, énergie de chute ↓, capacités tenues ↑, voulues couvertes ↑), faisables."""
     f = [s for s in sols if s["statut"] == "faisable"]
-    f.sort(key=lambda s: (s["cout"], s["M"], s["E"], -s["ncap"]))
+    obj = lambda s: (s["cout"], s["M"], s["E"], -s["ncap"], -s.get("n_couvertes", 0))
+    f.sort(key=obj)
     front = []
     for s in f:
-        v = (s["cout"], s["M"], s["E"], -s["ncap"])
+        v = obj(s)
         domine = False
         for p in front:
-            w = (p["cout"], p["M"], p["E"], -p["ncap"])
+            w = obj(p)
             if all(x <= y for x, y in zip(w, v)) and w != v:
                 domine = True
                 break
@@ -460,7 +511,8 @@ def meilleure(ctx, profil):
                         r = dict(r, ens=ens, H=H, fc=fc, fp=fp, profil=profil)
                         if best is None or (r["cout"], r["M"]) < (best["cout"], best["M"]):
                             best = r
-                        hmin = H if hmin is None else min(hmin, H)
+                        hr = r["H_reel"] or H
+                        hmin = hr if hmin is None else min(hmin, hr)
                     elif r["statut"] == "INCONNU":
                         n_inc += 1
                         raisons.update(r["inconnues"])
@@ -496,7 +548,7 @@ def resume_choix(s):
 
 
 def classement(front):
-    return sorted(front, key=lambda s: (-s["ncap"], s["cout"], s["M"]))
+    return sorted(front, key=lambda s: (len(s.get("non_couvertes", [])), -s["ncap"], s["cout"], s["M"]))
 
 
 def blocantes(sols, n=10):
@@ -568,30 +620,44 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
     stat = Counter(s["statut"] for s in sols)
     L = ["# Explorateur : YXOR Lab", "",
          "**Engendré** par `.venv/bin/python scripts/explorateur.py --ecrire`. Ne pas éditer à la main. "
-         "**Étude, aucune décision d'architecture** (phase 4a, fiche 0069).", "",
+         "**Étude, aucune décision d'architecture** (phases 4a et 4a bis, fiche 0069).", "",
          "## Loi de masse", "",
          f"DÉCIDÉE par Jeremy le 2026-10-07 (`params/lois_masse.yaml`, `retenue`) : {ctx['decision']['decide']}", "",
          f"Une solution n'est **faisable** que si elle tient aux trois exposants b = {f1(ex['bas'], 3)}, "
-         f"{f1(ex['central'], 3)} et {f1(ex['haut'], 3)}. La masse est donnée au b central. H³ (b = {ex['iso']:g}) "
-         "est rapporté comme borne pessimiste, sans filtrer.", "",
+         f"{f1(ex['central'], 3)} et {f1(ex['haut'], 3)}, chacun avec la structure centrale "
+         f"(« {STRUCT_CAS['central']} ») ET haute (« {STRUCT_CAS['haute']} ») : six cas. La masse est donnée au b "
+         f"central, structure centrale ; la bande couvre les six cas. H³ (b = {ex['iso']:g}) est rapporté comme "
+         "borne pessimiste, sans filtrer.", "",
+         "## Profil cible", "",
+         "Capacités VOULUES (par défaut : toutes celles de la fiche 0069 ; niveau le plus bas, sauf le buste à 3 axes, "
+         "« rotation et inclinaison » : PROPOSÉ) : "
+         + ", ".join(f"{t} {n}" for t, n in ctx["cible"].items()) + ". Axes exigés au-delà du calcul (PROPOSÉ) : "
+         + ", ".join(f"{t} → {', '.join(a)}" for t, a in AXES_CIBLE.items()) + ".", "",
+         "| Ensemble | Ne couvre pas | Voulues non calculées (INCONNUES) |", "| ---: | --- | --- |"]
+    for k, e in ENSEMBLES.items():
+        nc = non_couvertes(e["axes"], ctx["cible"])
+        L.append(f"| {k} | {', '.join(nc) or '—'} | {', '.join(t for t in ctx['cible'] if t in SANS_CALCUL and t not in nc)} |")
+    L += ["",
          "## Entrées et hypothèses", "",
          "- Besoins : tables a·M + b des phases 3a (`exigences_physiques`) et 3b (`simulations_marche`, "
          "référence prudente : par axe, le robot le plus exigeant parmi ceux dont la marche couvre le Froude). "
          "Par axe, le **maximum** des tâches du profil, à la vraie masse de la solution ; "
          f"`verifier_maximum` l'a recontrôlé sur {nverif} solutions.",
          f"- Marge : {f1(ctx['marge'])} sur les couples (fiche 0051). La vitesse à vide doit couvrir la vitesse de pointe, sans marge.",
-         f"- Structure : {f1(s_['m_struct_S'], 3)} kg (part Winter du modèle de S, {f1(s_['H_S'], 2)} m) × facteur des plaques "
-         f"**{f1(s_['k'], 2)}** (plaques alu de la jambe basse, CAO, {s_['plaques_kg'] * 1000:.0f} g, contre "
-         f"{s_['part_kg'] * 1000:.0f} g de part Winter du tibia et du pied), puis × (H / {f1(s_['H_S'], 2)})^b. "
-         "**Un seul segment mesuré** : le facteur est étendu à toute la structure (hypothèse). "
-         f"Charge utile {f1(s_['charge'])} kg (PROPOSÉE, `exigences_S.yaml`).",
+         "- Structure : segment par segment (`scripts/structure_plaques.py`, reconstruction des études du "
+         "2026-10-03 et 04 : caissons, liaisons à 90°, boîtes, étalonnés sur la CAO), à "
+         f"{f1(s_['H_S'], 2)} m, puis × (H / {f1(s_['H_S'], 2)})^b. Par ensemble (kg, centrale / haute) : "
+         + " ; ".join(f"{k} : {f1(s_['par_ensemble'][(k, 'central')], 2)} / {f1(s_['par_ensemble'][(k, 'haute')], 2)}"
+                      for k in ENSEMBLES)
+         + f". Charge utile {f1(s_['charge'])} kg (PROPOSÉE, `exigences_S.yaml`).",
          "- Régimes : charge, saisie, poussée, buste et tête au couple **continu** ; saut, relevé et gestes au "
          "couple de **pointe** ; la marche aux deux.",
-         f"- Place (règle SIMPLIFIÉE, l'étude H_min du 2026-10-04 n'a pas été versée) : (Ø_a + Ø_b)/2 + "
-         f"{ctx['jeu']:g} mm ≤ longueur ANSUR × H, sur "
-         + ", ".join(f"{seg} ({x}/{y})" for seg, x, y in PLACE) + ".",
+         "- Place : taille minimale géométrique (`scripts/taille_minimale.py`, reconstruction de l'étude du "
+         "2026-10-04), lecture AVEC ÉCARTS : les chaînes verticales qui débordent (jambe, tronc, cou et tête) "
+         "s'allongent, la hauteur RÉELLE vaut H + dépassements ; la lecture ANSUR stricte est rapportée. Les couples "
+         "et la masse restent calculés à H (hypothèse). Cheville à 2 axes : la meilleure des options (a), (b), (d).",
          "- Un axe absent de l'ensemble est rigide. Coût = actionneurs seuls (CHF HT, taux BCE de `budget.yaml`). "
-         "Énergie de chute = M·g·(hauteur de hanche ANSUR × H).",
+         "Énergie de chute = M·g·(hauteur de hanche ANSUR × hauteur réelle).",
          f"- Actionneurs sans aucun couple publié, écartés : {len(ctx['ecartes'])}.", "",
          "| Ensemble | Axes | Source |", "| ---: | ---: | --- |"]
     for k, e in ENSEMBLES.items():
@@ -607,17 +673,29 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
         c = Counter(s["statut"] for s in sols if s["fc"] == fc)
         L.append(f"| {fc} | {c['faisable']} | {c['infaisable']} | {c['INCONNU']} |")
     L += ["", "## Front de Pareto", "", f"![Front de Pareto]({SVG.name})", "",
-          f"{len(front)} solutions non dominées (coût, masse, énergie de chute, nombre de capacités tenues)."
+          f"{len(front)} solutions non dominées (coût, masse, énergie de chute, capacités tenues, capacités voulues "
+          "couvertes)."
           + (f" **Toutes sont à H = {f1(H_LAB[0], 2)} m, la borne BASSE de la plage du prompt** : plus petit est moins "
              "cher et plus léger tant que tout tient ; la plage n'a pas été étendue en dessous."
              if front and all(abs(s["H"] - H_LAB[0]) < 1e-9 for s in front) else ""), "",
           "## Les 5 meilleures solutions", "",
-          "Classement PROPOSÉ : le plus de capacités, puis le moins cher, puis le plus léger, parmi le front.", ""]
-    L += table_top(classement(front)[:5], detail=True)
+          "Classement PROPOSÉ : le moins de capacités voulues NON couvertes, puis le plus de capacités tenues, puis le "
+          "moins cher, puis le plus léger, parmi le front. H = échelle des proportions ; « réelle » = avec les écarts.", ""]
+    top = classement(front)[:5]
+    L += table_top(top, detail=True)
+    longs = [(x, x["place"]["depassements"].get("tronc", 0.0) / (ctx["R"]["tronc_hauteur"] * x["H"] * 1000))
+             for x in top if x.get("place")]
+    pire = max(longs, key=lambda t: t[1], default=(None, 0.0))
+    if pire[1] > 0.5:
+        L += ["", f"**Réserve** : le tronc de ces solutions dépasse ANSUR jusqu'à {pire[1]:.0%} de sa longueur "
+              f"(ensemble {pire[0]['ens']}, H {f1(pire[0]['H'], 2)} m). La lecture « avec écarts » l'autorise, mais les "
+              "couples sont calculés aux proportions de H : pour un tronc aussi long, le centre de gravité est plus haut "
+              "et les couples sont SOUS-estimés. C'est la taille à plusieurs axes empilés qui allonge le tronc "
+              "(constat déjà fait le 2026-10-04)."]
     L += ["", "## Coût de chaque capacité", "",
           "Pour chaque tâche et chaque niveau : la solution faisable la moins chère sur tout l'espace (ensembles, H, "
           "familles), avec la marche au niveau le plus bas ; l'écart est pris au niveau inférieur (au premier "
-          "niveau : à la marche seule). « H min » = la plus petite taille où une solution est faisable.", "",
+          "niveau : à la marche seule). « H min » = la plus petite hauteur RÉELLE où une solution est faisable.", "",
           "**Lecture** : « le plus petit actionneur » est le plus LÉGER, pas le moins cher. Un niveau plus exigeant "
           "peut donc coûter MOINS (un actionneur plus lourd mais meilleur marché devient le plus petit qui passe) : "
           "un écart négatif n'est pas une erreur de calcul, c'est le prix de la légèreté.", ""]
@@ -629,36 +707,44 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree) -> str:
         L.append(f"| {k} | {v} | {s1} |")
     L += ["", "Hors calcul pour toute solution (capacités jamais « tenues » ici) :", ""]
     L += [f"- **{t}** : {r}" for t, r in SANS_CALCUL.items()]
-    L += [f"- **structure** : facteur des plaques mesuré sur un seul segment ; les autres segments (cuisse, bassin, "
-          "tronc, bras) restent à dessiner pour être pesés."]
+    L += ["- **structure** : seule la jambe basse est dessinée ; les autres segments sont estimés par des formules "
+          "étalonnées sur elle ; l'évidement est une borne haute ; l'alu 2 mm n'est pas confirmé chez l'opérateur.",
+          "- **place** : volume de l'électronique et de la batterie dans le tronc compté NUL ; cardan des bielles (b) "
+          "supposé ; servos en boîtier pris dans leur plus grande cote."]
     if ctx["manque"]:
         L += [f"- **séries** : {m}" for m in ctx["manque"]]
     return "\n".join(L) + "\n"
 
 
 def table_top(top, detail=False):
-    L = ["| # | Ensemble | H (m) | Corps + petits | Masse (kg) [bande] | H³ (kg) | Coût (CHF) | Chute (J) | Capacités |",
-         "| ---: | ---: | ---: | --- | --- | --- | ---: | ---: | --- |"]
+    L = ["| # | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) [bande] | H³ (kg) | Coût (CHF) | Chute (J) "
+         "| Capacités tenues | Ne couvre pas |",
+         "| ---: | ---: | --- | --- | --- | --- | ---: | ---: | --- | --- |"]
     for i, s in enumerate(top, 1):
         caps = ", ".join(t for t in s["profil"])
-        L.append(f"| {i} | {s['ens']} | {f1(s['H'], 2)} | {s['fc']} + {s['fp']} | {f1(s['M'])} [{f1(s['M_bande'][0])} ; "
-                 f"{f1(s['M_bande'][1])}] | {f1(s['M_iso'])} ({'tient' if s['tient_iso'] else 'ne tient pas'}) | "
-                 f"{f1(s['cout'], 0)} | {f1(s['E'], 0)} | {s['ncap']} : {caps} |")
+        L.append(f"| {i} | {s['ens']} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {s['fc']} + {s['fp']} | {f1(s['M'])} "
+                 f"[{f1(s['M_bande'][0])} ; {f1(s['M_bande'][1])}] | {f1(s['M_iso'])} "
+                 f"({'tient' if s['tient_iso'] else 'ne tient pas'}) | {f1(s['cout'], 0)} | {f1(s['E'], 0)} | "
+                 f"{s['ncap']} : {caps} | {', '.join(s['non_couvertes']) or '—'} |")
     if detail:
         for i, s in enumerate(top, 1):
+            pl = s["place"]
             L += ["", f"**{i}.** statut {s['statut']} ; actionneurs : {resume_choix(s)}.",
-                  "Reste INCONNU : " + ("; ".join(SANS_CALCUL) + " (capacités non calculées) ; "
-                                         "facteur de structure sur un seul segment ; place par la règle simplifiée.")]
+                  f"Place : cheville ({pl['option']}), dépassements "
+                  f"{', '.join(f'{k} +{v:.0f} mm' for k, v in pl['depassements'].items()) or 'aucun'} ; proportions "
+                  f"ANSUR strictes : {'tient' if pl['tient_ansur'] else 'ne tient pas'} (il faudrait "
+                  f"{f1(pl['H_min_ansur'], 3)} m, limité par : {pl['limitante_ansur']}).",
+                  "Capacités voulues INCONNUES (non calculées) : " + (", ".join(s["cap_inconnues"]) or "aucune") + "."]
     return L
 
 
 def table_caps(ref, caps):
-    L = ["| Tâche | Niveau | Coût (CHF) | + CHF | Masse (kg) | + kg | H de la moins chère | H min | Note |",
+    L = ["| Tâche | Niveau | Coût (CHF) | + CHF | Masse (kg) | + kg | Hauteur réelle de la moins chère | H min réelle | Note |",
          "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |"]
     b0 = ref["best"]
     L.append(f"| marche seule (référence) | {b0['profil']['marche_sol_plat'] if b0 else '—'} | "
-             f"{f1(b0 and b0['cout'], 0)} | — | {f1(b0 and b0['M'])} | — | {f1(b0 and b0['H'], 2)} | "
-             f"{f1(ref['hmin'], 2)} | |")
+             f"{f1(b0 and b0['cout'], 0)} | — | {f1(b0 and b0['M'])} | — | {f1(b0 and b0['H_reel'], 3)} | "
+             f"{f1(ref['hmin'], 3)} | |")
     for c in caps:
         r = c["res"]
         b = r["best"]
@@ -676,16 +762,28 @@ def table_caps(ref, caps):
         elif c["prec"] and not p:
             note = "niveau inférieur sans solution faisable"
         L.append(f"| {c['tache']} | {c['niveau']} | {f1(b and b['cout'], 0)} | {d('cout', 0)} | {f1(b and b['M'])} | "
-                 f"{d('M', 1)} | {f1(b and b['H'], 2)} | {f1(r['hmin'], 2)} | {note} |")
+                 f"{d('M', 1)} | {f1(b and b['H_reel'], 3)} | {f1(r['hmin'], 3)} | {note} |")
     return L
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ecrire", action="store_true")
+    ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (défaut : toutes celles de la fiche 0069)")
     a = ap.parse_args(argv)
     t0 = time.time()
-    ctx = contexte()
+    cible = None
+    if a.cible:
+        cap = lire("capacites.yaml")
+        defaut = cible_defaut(cap)
+        cible = {}
+        for x in a.cible.split(","):
+            t, _, n = x.strip().partition("=")
+            niv = cap["taches"][t]["niveaux"]
+            cible[t] = next((v for v in niv if str(v) == n), None) if n else defaut[t]
+            if cible[t] is None:
+                ap.error(f"niveau « {n} » inconnu pour {t} : {niv}")
+    ctx = contexte(cible=cible)
     if not ctx["T"]:
         print("  explorateur SAUTÉ : aucune table de besoins")
         return 0
@@ -701,7 +799,7 @@ def main(argv=None) -> int:
     stat = Counter(s["statut"] for s in sols)
     print(f"  explorateur : {len(sols)} solutions ({stat['faisable']} faisables, {stat['infaisable']} infaisables, "
           f"{stat['INCONNU']} INCONNUES) en {duree:.0f} s ; front {len(front)} ; maximum vérifié sur {nverif} : "
-          f"{len(fautes)} écart(s) ; structure × {ctx['struct']['k']:.2f}")
+          f"{len(fautes)} écart(s) ; H de {H_LAB[0]:.2f} à {H_LAB[-1]:.2f} m ; cible : {len(ctx['cible'])} capacités")
     for f in fautes[:5]:
         print(f"     ✗ {f}")
     print("\n".join(table_top(classement(front)[:5])))

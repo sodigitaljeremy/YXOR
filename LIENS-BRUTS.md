@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `5fd83b95bf78`, le 2026-10-06 ; 235 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `c42a17909026`, le 2026-10-07 ; 243 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -127,7 +127,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (28)
+## docs/ (30)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -140,6 +140,8 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/estimation-ther
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/etat-factuel-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/exigences-physiques-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/exigences-physiques-2026-10.svg
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/explorateur-lab-2026-10.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/explorateur-lab-2026-10.svg
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/faisabilite-2d-2026-10-03.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
@@ -158,7 +160,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodo
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-gemini-2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-grok-2026-10-06.md
 
-## journal/ (11)
+## journal/ (12)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-20.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-28.md
@@ -171,6 +173,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-03.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-04.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-07.md
 
 ## params/ (18)
 
@@ -205,7 +208,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (29)
+## scripts/ (32)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -221,6 +224,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/dimensionnem
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/empreinte.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/estimation_thermique.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/exigences_physiques.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/explorateur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstream_limits.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/loi_masse.py
@@ -236,6 +240,8 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/regenerer.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/simulations_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/source.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/squelette.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/structure_plaques.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/taille_minimale.py
 
 ## sim/ (8)
 
@@ -248,7 +254,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (21)
+## tests/ (23)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -259,7 +265,9 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_controles
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_critere_banc.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_dimensionnement_coherence.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_empreinte.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_etudes_reconstruites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_exigences_physiques.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_explorateur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_loi_masse.py
