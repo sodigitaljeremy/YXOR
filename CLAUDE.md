@@ -47,6 +47,13 @@ passage, sans les supposer acquises.
 
    *Règles 7 et 8 : proposées par Claude (arbitrage), validées par Jeremy
    le 2026-09-30 (« oui aux quatre », D6).*
+9. **Toute étude citée dans une décision ou réutilisée par un calcul vit
+   dans le dépôt** (`scripts/` + test), jamais seulement dans le dossier de
+   session. Motif : les études du 2026-10-03 et 04 (structure, taille
+   minimale), perdues avec ce dossier puis reconstruites depuis la
+   transcription le 2026-10-07. *Validée par Jeremy le 2026-10-07, ses
+   mots : « Je valide : toute étude citée dans une décision ou réutilisée
+   par un calcul vit dans le dépôt, avec un test. »*
 
 **Journal** : `journal/AAAA-MM-JJ.md`, **10 lignes au plus par lot**
 (décision de la refonte, 2026-10-01).
