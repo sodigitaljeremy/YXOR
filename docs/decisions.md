@@ -185,6 +185,19 @@ avec qui l'a décidé.
       réversible : pas de fiche (règle 5), journal du 2026-10-08.
     - Fiche : [0072](../decisions/0072-batterie-12s.md), qui complète la
       [0071](../decisions/0071-autonomie-et-ia-par-robot.md).
+22. **La gamme YXOR : Kit, Lab, Home et Pro ; « final » devient Pro.**
+    Projet personnel, non commercial et open source ; budget de chaque
+    modèle calculé selon ses capacités et ses contraintes ; Jeremy premier
+    utilisateur ; le Kit fabriqué en premier ; saut du Lab ramené à 5 cm.
+    - Décidée par Jeremy le 2026-10-08. Ses mots : « La gamme YXOR comprend
+      quatre modèles : YXOR Kit, YXOR Lab, YXOR Home et YXOR Pro ; YXOR Pro
+      remplace ce que nous appelions YXOR final. Le projet est personnel,
+      non commercial et open source. Le budget de chaque modèle est calculé
+      selon ses capacités et ses contraintes. Je suis le premier
+      utilisateur, et YXOR Kit est le premier modèle que je fabrique. Pour
+      YXOR Lab, le saut est ramené à 5 cm. »
+    - Fiche : [0073](../decisions/0073-gamme-yxor.md), qui complète la
+      [0069](../decisions/0069-deux-robots-lab-et-final.md).
 
 ## B — Conventions confirmées
 

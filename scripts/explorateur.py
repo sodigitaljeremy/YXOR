@@ -30,7 +30,7 @@ de capacités tenues et nombre de capacités VOULUES couvertes, parmi les
 solutions faisables.
 
 PROFIL CIBLE : les capacités voulues, `profils` de params/capacites.yaml (`lab`,
-DÉCIDÉ par Jeremy le 2026-10-07, par défaut ; `final` avec --profil final). Un ensemble sans les axes d'une capacité voulue est marqué
+DÉCIDÉ par Jeremy le 2026-10-07, par défaut ; `pro` (ex-« final », fiche 0073) avec --profil pro). Un ensemble sans les axes d'une capacité voulue est marqué
 « ne couvre pas » (la capacité est listée) au lieu d'être comparé à égalité ;
 une capacité voulue mais non calculée reste INCONNUE, listée.
 
@@ -1182,7 +1182,7 @@ def _executer(tache, cible, profil) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ecrire", action="store_true")
-    ap.add_argument("--profil", default="lab", choices=["lab", "final"], help="profil de params/capacites.yaml")
+    ap.add_argument("--profil", default="lab", choices=["lab", "pro"], help="profil de params/capacites.yaml")
     ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (remplace le profil)")
     ap.add_argument("--sans-electrique", action="store_true", help="méthode de 14 h 05 : sans système électrique")
     a = ap.parse_args(argv)

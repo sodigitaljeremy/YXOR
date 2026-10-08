@@ -40,7 +40,7 @@ class Capacites(unittest.TestCase):
         c = copy.deepcopy(self.cap)
         c["profils"]["lab"]["taches"]["saut_vertical"] = 15
         c["profils"]["lab"]["taches"]["charge_lourde"] = 2
-        del c["profils"]["final"]["taches"]["pente"]
+        del c["profils"]["pro"]["taches"]["pente"]
         fautes = CA.controler_profils(c)
         self.assertEqual(len(fautes), 3, fautes)
         self.assertEqual(CA.controler_profils(self.cap), [])

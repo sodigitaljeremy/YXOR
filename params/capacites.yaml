@@ -220,7 +220,7 @@ taches:
 #   2 m/s, saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes,
 #   visage sur écran. Réservé au final : inclinaison du buste, port de charges
 #   lourdes, course, mains à doigts. »
-# `final` : les capacités de la fiche 0069 (cochées par Jeremy le 2026-10-04,
+# `pro` (ex-`final`, renommé le 2026-10-08, fiche 0073) : les capacités de la fiche 0069 (cochées par Jeremy le 2026-10-04,
 # selon le prompt). Niveaux NON fixés (null = à balayer, phase 4b), sauf le
 # buste : « inclinaison du buste », réservée au final par Jeremy, est le niveau
 # à 3 axes. Un niveau peut être une LISTE (le relevé : les deux positions).
@@ -233,7 +233,7 @@ profils:
       sol_irregulier: 2
       pente: 5
       releve: ["depuis le dos", "depuis le ventre"]
-      saut_vertical: 10
+      saut_vertical: 5                    # Jeremy, 2026-10-08 (fiche 0073) : « Pour YXOR Lab, le saut est ramené à 5 cm. » (était 10)
       gestes_pointage: 2.0
       saisie: 0.2
       poussee: 20
@@ -243,8 +243,8 @@ profils:
       autonomie: 30                       # Jeremy, 2026-10-07 (soir) : « Je confirme les tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. Pour YXOR Lab : autonomie 30 minutes, IA embarquée commande + vision. Pour YXOR final : autonomie 60 minutes, IA embarquée avec modèle de langage local. Je trancherai entre 12S et 13S sur les chiffres. »
       ia_embarquee: "+ vision"            # « IA embarquée commande + vision » (même phrase)
     reserve_au_final: {buste: "lacet + roulis + tangage", charge_lourde: null, course: null, mains_a_doigts: null}
-  final:
-    decide: "fiche 0069 (capacités cochées par Jeremy le 2026-10-04) ; niveaux à balayer en phase 4b"
+  pro:
+    decide: "fiche 0069 (capacités cochées par Jeremy le 2026-10-04) ; « YXOR Pro remplace ce que nous appelions YXOR final » (Jeremy, 2026-10-08, fiche 0073) ; niveaux à balayer en phase 4b"
     taches:
       marche_sol_plat: null
       sol_irregulier: null
@@ -262,6 +262,13 @@ profils:
       visage: null
       autonomie: 60                       # Jeremy, 2026-10-07 (soir) : « Pour YXOR final : autonomie 60 minutes »
       ia_embarquee: "+ modèle de langage local"   # « IA embarquée avec modèle de langage local »
+  # Gamme YXOR (fiche 0073, Jeremy, 2026-10-08) : Kit et Home À DÉFINIR avec Jeremy ; profils VIDES.
+  kit:
+    decide: "modèle décidé (fiche 0073, premier fabriqué) ; capacités et niveaux À DÉFINIR avec Jeremy"
+    taches: {}
+  home:
+    decide: "modèle décidé (fiche 0073) ; capacités et niveaux À DÉFINIR avec Jeremy"
+    taches: {}
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Sorties prévues de l'explorateur, POUR CHAQUE SOLUTION (phase 3)

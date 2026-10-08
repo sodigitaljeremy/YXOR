@@ -147,7 +147,7 @@ class Cible(unittest.TestCase):
 
     def test_profil_final(self):
         cap = X.lire("capacites.yaml")
-        nc = X.non_couvertes(X.ENSEMBLES[27]["axes"], X.cible_defaut(cap, "final"))
+        nc = X.non_couvertes(X.ENSEMBLES[27]["axes"], X.cible_defaut(cap, "pro"))
         self.assertEqual(nc, ["mains_a_doigts", "buste"])
 
     def test_niveaux_en_liste(self):

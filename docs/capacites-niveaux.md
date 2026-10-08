@@ -27,28 +27,30 @@ Les capacités sont celles de la fiche 0069. **Capacités et niveaux CONFIRMÉS 
 
 ‡ Ajoutées le 2026-10-07 et **CONFIRMÉES par Jeremy** le même soir, ses mots : « Je confirme les tâches autonomie et IA embarquée, et le cycle de 40 s de marche suivies de 20 s debout. » Cycle : 1 cycle = 60 s : 40 s de marche sur sol plat au niveau du profil, puis 20 s debout immobile (posture tenue, couples de maintien).
 
-## Profils cibles
+## Profils cibles : la gamme YXOR
 
-**YXOR Lab : DÉCIDÉ par Jeremy le 2026-10-07**, ses mots : « Je retiens pour YXOR Lab : marche sur sol plat 0,6 m/s, sol irrégulier 2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes 2 m/s, saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes, visage sur écran. Réservé au final : inclinaison du buste, port de charges lourdes, course, mains à doigts. » YXOR (final) : les capacités de la fiche 0069, niveaux à balayer (phase 4b).
+**Gamme DÉCIDÉE par Jeremy le 2026-10-08** (fiche 0073) : YXOR Kit, YXOR Lab, YXOR Home et YXOR Pro ; « YXOR Pro remplace ce que nous appelions YXOR final ». Kit et Home : capacités À DÉFINIR avec Jeremy.
 
-| Tâche | YXOR Lab | YXOR (final) |
-| --- | --- | --- |
-| marche sol plat | 0.6 | à balayer |
-| sol irregulier | 2 | à balayer |
-| pente | 5 | à balayer |
-| releve | depuis le dos et depuis le ventre | à balayer |
-| course | réservé au final | à balayer |
-| saut vertical | 10 | à balayer |
-| gestes pointage | 2.0 | à balayer |
-| saisie | 0.2 | à balayer |
-| charge lourde | réservé au final | à balayer |
-| poussee | 20 | à balayer |
-| mains a doigts | réservé au final | à balayer |
-| buste | lacet seul | lacet + roulis + tangage |
-| tete | 2 | à balayer |
-| visage | écran | à balayer |
-| autonomie | 30 | 60 |
-| ia embarquee | + vision | + modèle de langage local |
+**YXOR Lab : DÉCIDÉ par Jeremy le 2026-10-07**, ses mots : « Je retiens pour YXOR Lab : marche sur sol plat 0,6 m/s, sol irrégulier 2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes 2 m/s, saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes, visage sur écran. Réservé au final : inclinaison du buste, port de charges lourdes, course, mains à doigts. » Puis, le 2026-10-08 (fiche 0073) : « Pour YXOR Lab, le saut est ramené à 5 cm. » YXOR Pro : les capacités de la fiche 0069, niveaux à balayer (phase 4b).
+
+| Tâche | YXOR Kit | YXOR Lab | YXOR Home | YXOR Pro |
+| --- | --- | --- | --- | --- |
+| marche sol plat | à définir | 0.6 | à définir | à balayer |
+| sol irregulier | à définir | 2 | à définir | à balayer |
+| pente | à définir | 5 | à définir | à balayer |
+| releve | à définir | depuis le dos et depuis le ventre | à définir | à balayer |
+| course | à définir | réservé au Pro | à définir | à balayer |
+| saut vertical | à définir | 5 | à définir | à balayer |
+| gestes pointage | à définir | 2.0 | à définir | à balayer |
+| saisie | à définir | 0.2 | à définir | à balayer |
+| charge lourde | à définir | réservé au Pro | à définir | à balayer |
+| poussee | à définir | 20 | à définir | à balayer |
+| mains a doigts | à définir | réservé au Pro | à définir | à balayer |
+| buste | à définir | lacet seul | à définir | lacet + roulis + tangage |
+| tete | à définir | 2 | à définir | à balayer |
+| visage | à définir | écran | à définir | à balayer |
+| autonomie | à définir | 30 | à définir | 60 |
+| ia embarquee | à définir | + vision | à définir | + modèle de langage local |
 
 ## Méthodes
 

@@ -65,7 +65,7 @@ def controler_profils(cap: dict) -> list[str]:
     """Profils (ajouté le 2026-10-07) : tâches et niveaux existants ; lab ⊂ final ; réservé au final hors du lab."""
     fautes, taches = [], cap.get("taches") or {}
     pr = cap.get("profils") or {}
-    for nom in ("lab", "final"):
+    for nom in ("kit", "lab", "home", "pro"):          # gamme de la fiche 0073 (« final » devenu « pro », 2026-10-08)
         if nom not in pr:
             fautes.append(f"profil « {nom} » absent")
     for nom, p in pr.items():
@@ -76,9 +76,9 @@ def controler_profils(cap: dict) -> list[str]:
             for n in niveaux_de(v):
                 if n not in taches[t]["niveaux"]:
                     fautes.append(f"profil {nom} : niveau « {n} » inconnu pour {t} ({taches[t]['niveaux']})")
-    if "lab" in pr and "final" in pr:
-        lab, fin = pr["lab"].get("taches") or {}, pr["final"].get("taches") or {}
-        fautes += [f"profil lab : {t} absent du final (le Lab est un sous-ensemble)" for t in lab if t not in fin]
+    if "lab" in pr and "pro" in pr:
+        lab, fin = pr["lab"].get("taches") or {}, pr["pro"].get("taches") or {}
+        fautes += [f"profil lab : {t} absent du pro (le Lab est un sous-ensemble)" for t in lab if t not in fin]
         for t, v in (pr["lab"].get("reserve_au_final") or {}).items():
             if t in lab and (v is None or set(niveaux_de(v)) & set(niveaux_de(lab[t]))):   # null : la tâche entière
                 fautes.append(f"profil lab : {t} {v} est réservé au final mais retenu pour le Lab")
@@ -120,18 +120,22 @@ def doc(cap: dict) -> str:
     pr = cap.get("profils") or {}
     if pr:
         f = lambda v: "à balayer" if v is None else " et ".join(str(x) for x in niveaux_de(v))
-        L += ["", "## Profils cibles", "",
+        L += ["", "## Profils cibles : la gamme YXOR", "",
+              "**Gamme DÉCIDÉE par Jeremy le 2026-10-08** (fiche 0073) : YXOR Kit, YXOR Lab, YXOR Home et YXOR Pro ; "
+              "« YXOR Pro remplace ce que nous appelions YXOR final ». Kit et Home : capacités À DÉFINIR avec Jeremy.", "",
               "**YXOR Lab : DÉCIDÉ par Jeremy le 2026-10-07**, ses mots : « Je retiens pour YXOR Lab : marche sur sol "
               "plat 0,6 m/s, sol irrégulier 2 cm, pente 5°, relevé sur le dos et sur le ventre, saut 10 cm, gestes 2 m/s, "
               "saisie 0,2 kg, poussée 20 N, buste en lacet seul, tête à 2 axes, visage sur écran. Réservé au final : "
-              "inclinaison du buste, port de charges lourdes, course, mains à doigts. » YXOR (final) : les capacités de "
-              "la fiche 0069, niveaux à balayer (phase 4b).", "",
-              "| Tâche | YXOR Lab | YXOR (final) |", "| --- | --- | --- |"]
-        lab, fin = pr["lab"]["taches"], pr["final"]["taches"]
+              "inclinaison du buste, port de charges lourdes, course, mains à doigts. » Puis, le 2026-10-08 (fiche "
+              "0073) : « Pour YXOR Lab, le saut est ramené à 5 cm. » YXOR Pro : les capacités de la fiche 0069, "
+              "niveaux à balayer (phase 4b).", "",
+              "| Tâche | YXOR Kit | YXOR Lab | YXOR Home | YXOR Pro |", "| --- | --- | --- | --- | --- |"]
+        P = {k: (pr.get(k) or {}).get("taches") or {} for k in ("kit", "lab", "home", "pro")}
         res = pr["lab"].get("reserve_au_final") or {}
         for t in cap["taches"]:
-            l_ = f(lab[t]) if t in lab else ("réservé au final" if t in res else "—")
-            L.append(f"| {t.replace('_', ' ')} | {l_} | {f(fin[t]) if t in fin else '—'} |")
+            l_ = f(P["lab"][t]) if t in P["lab"] else ("réservé au Pro" if t in res else "—")
+            L.append(f"| {t.replace('_', ' ')} | {f(P['kit'][t]) if t in P['kit'] else 'à définir'} | {l_} | "
+                     f"{f(P['home'][t]) if t in P['home'] else 'à définir'} | {f(P['pro'][t]) if t in P['pro'] else '—'} |")
     L += ["", "## Méthodes", ""] + [f"- **{k}** : {v}." for k, v in cap["methodes"].items()]
     L += ["", "## Noms d'axes à créer (PROPOSÉS, hors de `joints.yaml`)", ""]
     L += [f"- *{k}* ({v['groupe']}) : {v['note']}." for k, v in cap["noms_a_creer"].items()]
