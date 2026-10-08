@@ -222,6 +222,10 @@ package YXOR {
             attribute autonomie : Niveau_autonomie[0..*];
             attribute ia_embarquee : Niveau_ia_embarquee[0..*];
         }
+        part def YXOR_Kit :> ModeleYXOR {
+            doc /* modèle décidé (fiche 0073, premier fabriqué) ; modules successifs, même taille, même squelette et mêmes composants que le Lab, en carton, aux outils du ménage (fiche 0074, Jeremy, 2026-10-08) ; capacités et niveaux des modules PROPOSÉS */
+            // capacités À DÉFINIR avec Jeremy
+        }
         part def YXOR_Lab :> ModeleYXOR {
             doc /* Jeremy, 2026-10-07, réponse à la question de Claude (phase 4a ter) */
             attribute :>> marche_sol_plat = Niveau_marche_sol_plat::n0_6;
@@ -237,6 +241,10 @@ package YXOR {
             attribute :>> visage = Niveau_visage::ecran;
             attribute :>> autonomie = Niveau_autonomie::n30;
             attribute :>> ia_embarquee = Niveau_ia_embarquee::plus_vision;
+        }
+        part def YXOR_Home :> ModeleYXOR {
+            doc /* modèle décidé (fiche 0073) ; capacités et niveaux À DÉFINIR avec Jeremy */
+            // capacités À DÉFINIR avec Jeremy
         }
         part def YXOR_Pro :> ModeleYXOR {
             doc /* fiche 0069 (capacités cochées par Jeremy le 2026-10-04) ; « YXOR Pro remplace ce que nous appelions YXOR final » (Jeremy, 2026-10-08, fiche 0073) ; niveaux à balayer en phase 4b */
@@ -257,20 +265,12 @@ package YXOR {
             attribute :>> autonomie = Niveau_autonomie::n60;
             attribute :>> ia_embarquee = Niveau_ia_embarquee::plus_modele_de_langage_local;
         }
-        part def YXOR_Kit :> ModeleYXOR {
-            doc /* modèle décidé (fiche 0073, premier fabriqué) ; modules successifs, même taille, même squelette et mêmes composants que le Lab, en carton, aux outils du ménage (fiche 0074, Jeremy, 2026-10-08) ; capacités et niveaux des modules PROPOSÉS */
-            // capacités À DÉFINIR avec Jeremy
-        }
-        part def YXOR_Home :> ModeleYXOR {
-            doc /* modèle décidé (fiche 0073) ; capacités et niveaux À DÉFINIR avec Jeremy */
-            // capacités À DÉFINIR avec Jeremy
-        }
         variation part def Gamme {
             doc /* Les quatre modèles de la gamme (fiche 0073). */
-            variant part lab : YXOR_Lab;
-            variant part pro : YXOR_Pro;
             variant part kit : YXOR_Kit;
+            variant part lab : YXOR_Lab;
             variant part home : YXOR_Home;
+            variant part pro : YXOR_Pro;
         }
     }
 

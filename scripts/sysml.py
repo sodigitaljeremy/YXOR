@@ -28,6 +28,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 SORTIE = REPO / "model" / "yxor.sysml"
 GROUPES = ("jambes", "bras", "taille", "nuque")
+GAMME = ("kit", "lab", "home", "pro")                     # les modèles de la gamme (fiche 0073) ; pas les profils candidats
 
 
 def lire(nom):
@@ -123,7 +124,7 @@ def engendrer() -> str:
     for t in cap["taches"]:
         L.append(f"            attribute {t} : Niveau_{t}[0..*];")
     L += ["        }"]
-    for nom, p in cap["profils"].items():
+    for nom, p in ((n, cap["profils"][n]) for n in GAMME):
         L.append(f"        part def YXOR_{nom.capitalize()} :> ModeleYXOR {{")
         L.append(f"            doc /* {p.get('decide', '')} */")
         taches = p.get("taches") or {}
@@ -138,7 +139,7 @@ def engendrer() -> str:
         L.append("        }")
     L += ["        variation part def Gamme {",
           "            doc /* Les quatre modèles de la gamme (fiche 0073). */"]
-    for nom in cap["profils"]:
+    for nom in GAMME:
         L.append(f"            variant part {nom} : YXOR_{nom.capitalize()};")
     L += ["        }", "    }", ""]
     # exigences chiffrées du Lab

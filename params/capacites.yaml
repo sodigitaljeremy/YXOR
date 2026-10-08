@@ -303,6 +303,20 @@ profils:
   home:
     decide: "modèle décidé (fiche 0073) ; capacités et niveaux À DÉFINIR avec Jeremy"
     taches: {}
+  # Profil CANDIDAT, PROPOSÉ (étude du 2026-10-08, docs/lab-leger-2026-10.md) : AUCUNE décision ; il ne remplace
+  # pas le profil lab. Question de Jeremy (2026-10-08) : « Est-ce que l'étude et ce que nous avions déterminé pour
+  # YXOR Lab ne représente-t-il pas mieux YXOR Home finalement ? Est-ce qu'il n'existerait pas une meilleure version
+  # de YXOR Lab plus optimisée et compatible avec YXOR Kit ? »
+  lab_leger:
+    decide: "CANDIDAT PROPOSÉ (étude du 2026-10-08) ; aucune décision"
+    taches:
+      marche_sol_plat: 0.3              # et 0,15 m/s : niveau HORS de la grille, ajouté dans scripts/lab_leger.py
+                                          # seulement (l'ajouter ici change les besoins du Lab : constaté le 2026-10-08)
+      releve: ["depuis le dos", "depuis le ventre"]
+      gestes_pointage: 0.5
+      tete: 2
+      ia_embarquee: "+ vision"
+      autonomie: 20                     # la plus exigeante de 10 et 20 min (prompt du 2026-10-08)
 
 # ═════════════════════════════════════════════════════════════════════════
 #  Sorties prévues de l'explorateur, POUR CHAQUE SOLUTION (phase 3)
