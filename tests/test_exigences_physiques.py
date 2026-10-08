@@ -53,6 +53,19 @@ class Exigences(unittest.TestCase):
                 l["a"] *= 0.1
         self.assertGreater(len(non_monotones(faux)), 0)
 
+    def test_saut_geometrie_coherente(self):
+        # ajouté le 2026-10-08 : la course de poussée est celle que donne la cinématique directe des deux segments
+        import math
+        L1, L2, a = 0.1238, 0.1134, math.radians(40)
+        g = EP.geometrie_saut(L1, L2, a)
+        hanche_accroupie = L2 * math.cos(a) + L1 * math.cos(g["beta"])
+        self.assertAlmostEqual(L2 * math.sin(a) - L1 * math.sin(g["beta"]), 0.0)          # hanche à l'aplomb
+        self.assertAlmostEqual(g["d"], L1 + L2 - hanche_accroupie)
+        w = [l["omega"] for l in self.lignes if l["tache"] == "saut_vertical" and l["niveau"] == 10
+             and l["articulation"] == "knee" and abs(l["H"] - 0.5) < 1e-9][0]
+        self.assertAlmostEqual(w, 37.0, delta=0.1)                                          # 49,4 avant la correction
+        self.assertLess(w, 49.0)
+
     def test_rapport_a_jour(self):
         md = EP.rapport(self.cap, self.an, self.lignes, EP.familles(), EP.refs_md())
         self.assertEqual(md, EP.DOC.read_text(encoding="utf-8"), "relancer : scripts/exigences_physiques.py --ecrire")

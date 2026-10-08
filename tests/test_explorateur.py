@@ -172,3 +172,28 @@ class Ensembles(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Leger(unittest.TestCase):
+    """Ajouté le 2026-10-08 : les solutions légères se classent comme les complètes, et `complet` les rend à l'identique."""
+
+    def test_classement_identique(self):
+        ctx = X.contexte(S=12, f_can=250)
+        args = dict(ensembles=[27, 25], hs=[0.5, 0.6], corps=["robstride", "cubemars"], petits=["feetech"])
+        pleins = X.explorer(ctx, **args)
+        legers = X.explorer(ctx, garder_leger=True, **args)
+        cle = lambda xs: [(x["ens"], x["H"], x["fc"], x["fp"], tuple(x["profil"])) for x in xs]
+        self.assertEqual(cle(X.classement_large(pleins)), cle(X.classement_large(legers)))
+        self.assertEqual(len(X.pareto(pleins)), len(X.pareto(legers)))
+        x = X.classement_large(legers)[0]
+        y = X.classement_large(pleins)[0]
+        z = X.complet(ctx, x)
+        self.assertEqual((z["M"], z["cout"], z["H_reel"], z["inconnues"]), (y["M"], y["cout"], y["H_reel"], y["inconnues"]))
+
+    def test_leger_vu_echouer(self):
+        r = dict(statut="INCONNU", ncap=2, cout=None, cout_actionneurs=10.0, M=1.0, E=1.0, H_reel=0.5, H_couples=0.5,
+                 non_couvertes=[], n_couvertes=1, inconnues=["a"], elec=None)
+        x = X.leger(r, ens=27, H=0.5, fc="f", fp="p", profil={})
+        self.assertNotIn("choix", x)
+        x["inconnues"] = ("b",)                                  # une inconnue faussée change le classement : vu
+        self.assertNotEqual(X.leger(r, ens=27, H=0.5, fc="f", fp="p", profil={})["inconnues"], x["inconnues"])

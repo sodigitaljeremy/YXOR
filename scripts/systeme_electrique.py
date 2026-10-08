@@ -38,10 +38,12 @@ def nombres(x) -> list[float]:
 
 
 # ─────────────────────────────── tension ────────────────────────────────
-def variante(S: int, bat=None) -> dict:
-    """Pack Li-ion de S cellules en série : tensions de coupure (fin de décharge), nominale, pleine charge."""
+def variante(S: int, bat=None, coupure=None) -> dict:
+    """Pack Li-ion de S cellules en série : tensions de coupure (fin de décharge), nominale, pleine charge.
+    `coupure` (V par cellule) : seuil d'arrêt étudié en variante (2026-10-08) ; absent, la coupure de la fiche."""
     c = MC.chimie(bat or lire("batteries.yaml"), "li_ion")
-    return dict(S=S, Vfin=S * c["tension_min_V"], Vnom=S * c["tension_nominale_V"], Vmax=S * c["tension_max_V"])
+    vc = coupure if coupure is not None else c["tension_min_V"]
+    return dict(S=S, Vfin=S * vc, Vnom=S * c["tension_nominale_V"], Vmax=S * c["tension_max_V"], coupure=vc)
 
 
 def compatibilite(plage, var) -> bool | None:
@@ -89,7 +91,7 @@ def table_pointe_3a(lignes_ep) -> dict:
     return out
 
 
-def energie(ctx, axes: dict, M: float, Ht: float, profil: dict, p_calc_W, p_aux_W, hyp) -> dict:
+def energie(ctx, axes: dict, M: float, Ht: float, profil: dict, p_calc_W, p_aux_W, hyp, var=None) -> dict:
     """Puissance moyenne du cycle, énergie pour l'autonomie visée, courant de pointe (au rendement BAS)."""
     cible = ctx["cible"]
     v = cible.get("marche_sol_plat")
@@ -115,14 +117,45 @@ def energie(ctx, axes: dict, M: float, Ht: float, profil: dict, p_calc_W, p_aux_
     cycle = hyp.get("cycle_marche_s", 40.0), hyp.get("cycle_debout_s", 20.0)
     p_moy = (cycle[0] * p_mec / eta) / (cycle[0] + cycle[1]) + fixe          # debout : 0 mécanique (dit)
     minutes = cible.get("autonomie")
-    E = p_moy * minutes / 60.0 / hyp["fraction_utilisable"]["valeur"] if minutes else None
+    fc = 1.0
+    if var is not None:                                 # énergie au-dessus de la coupure (PROPOSÉ, puissance.yaml)
+        tab = hyp.get("energie_au_dessus_de_la_coupure") or {}
+        fc = next((float(v) for k, v in tab.items() if k != "statut" and abs(float(k) - var["coupure"]) < 1e-6), None)
+        if fc is None:
+            return dict(inconnues=[f"énergie au-dessus d'une coupure de {var['coupure']} V"])
+    E = p_moy * minutes / 60.0 / hyp["fraction_utilisable"]["valeur"] / fc if minutes else None
     return dict(p_mec_marche=p_mec, p_elec_moy=p_moy, E_Wh=E, P_pointe=sum(pk.values()) / eta + fixe,
                 autonomie_min=minutes, inconnues=inconnues)
 
 
 # ─────────────────────────────── batterie ───────────────────────────────
-def cellules_21700(bat=None, taux=None) -> list[dict]:
-    return [b for b in MC.batteries(bat, taux) if b["famille"] == "cellule_21700"]
+# Ajouté le 2026-10-08 (prompt du lot 4a sexies) : « Seules les cellules neuves d'un distributeur identifié sont
+# retenues. » Mentions lues dans les notes du marché qui EXCLUENT une offre :
+EXCLUSIONS_CELLULES = (("reclaimed", "cellules de récupération"), ("récupération", "cellules de récupération"),
+                       ("occasion", "occasion"), ("marque masquée", "marque masquée : identité du fabricant non garantie"))
+
+
+def exclusion_cellule(b: dict) -> str | None:
+    """La raison d'écarter l'offre retenue d'une cellule (récupération, occasion, marque masquée), ou None."""
+    p = b["p"]
+    txt = " ".join(str(x) for x in (p.get("prix") or {}, p.get("disponibilite_ch_ue"))).lower()
+    return next((r for m, r in EXCLUSIONS_CELLULES if m in txt), None)
+
+
+def cellules_21700(bat=None, taux=None, ecartees=None) -> list[dict]:
+    """Les cellules 21700 NEUVES d'un distributeur identifié ; les autres sont rangées dans `ecartees` avec leur raison."""
+    out = []
+    for b in MC.batteries(bat, taux):
+        if b["famille"] != "cellule_21700":
+            continue
+        r = exclusion_cellule(b)
+        if r is None and b["prix"] is not None and not (b["p"].get("prix") or {}).get("vendeur"):
+            r = "distributeur non identifié"
+        if r and ecartees is not None:
+            ecartees[b["id"]] = r
+        if not r:
+            out.append(b)
+    return out
 
 
 def batterie(cells, var, E_Wh, P_pointe_W, hyp) -> dict:
@@ -247,15 +280,17 @@ def variantes_adaptateur(pid, p, taux) -> list[dict]:
     """Un adaptateur CAN, ou ses variantes « 1, 2 ou 4 canaux » au prix de chacune."""
     ch, pr = MC.v(p, "canaux"), p.get("prix") or {}
     masse = max(nombres(MC.v(p, "masse_g")), default=None)                       # la plus lourde : prudent
+    vol = MC.volume_l(MC.v(p, "cotes_mm"))
     pm = MC.v(p, "pilote_mainline")
     linux_ok = None if pm is None else (pm is True or str(pm).lower().startswith("oui"))   # None : pilote non nommé
     m = re.findall(r"(\d+[.,]\d+|\d+)\s*\((\d+)", str(pr.get("valeur")))
     if m:
         return [dict(id=f"{pid}_{n}ch", nom=f"{p['nom']} ({n} canaux)", canaux=int(n), linux=linux_ok, masse=masse,
-                     famille=p["famille"],
+                     famille=p["famille"], volume=vol,
                      prix=MC.chf(dict(pr, valeur=float(x.replace(",", "."))), taux)) for x, n in m]
     n = nombres(ch)
     return [dict(id=pid, nom=p["nom"], canaux=int(n[0]) if n else None, linux=linux_ok, masse=masse, famille=p["famille"],
+                 volume=vol,
                  prix=MC.chf(pr, taux))]
 
 
@@ -287,7 +322,8 @@ def choisir_bus(n_can: int, can_calc, adapt, serie, type_calc="jetson") -> dict:
             cout = k * a["prix"] if a["prix"] is not None else None
             cle = (cout is None or a["masse"] is None or a["linux"] is None, cout if cout is not None else 1e12)
             if best is None or cle < best["cle"]:
-                best = dict(a, unites=k, cout=cout, masse_tot=(k * a["masse"]) if a["masse"] is not None else None, cle=cle)
+                best = dict(a, unites=k, cout=cout, masse_tot=(k * a["masse"]) if a["masse"] is not None else None, cle=cle,
+                            volume_tot=(k * a["volume"]) if a.get("volume") is not None else None)
         if best is None:
             inc.append("aucun adaptateur CAN avec pilote Linux principal")
         else:
@@ -296,7 +332,9 @@ def choisir_bus(n_can: int, can_calc, adapt, serie, type_calc="jetson") -> dict:
     s = serie
     if s:
         inc += [f"{x} de {s['nom']}" for x in ("prix", "masse") if s.get(x) is None]
-    return dict(can=best, reste=reste, serie=s, inconnues=inc,
+    if best and best.get("volume_tot") is None:
+        inc.append(f"cotes de {best['nom']}")
+    return dict(can=best, reste=reste, serie=s, inconnues=inc, volume=(best or {}).get("volume_tot", 0.0) if best else 0.0,
                 prix=_somme(best["cout"] if best else 0.0, (s or {}).get("prix", 0.0)),
                 masse=_somme(best["masse_tot"] if best else 0.0, (s or {}).get("masse", 0.0)))
 
@@ -367,8 +405,16 @@ def _texte(p) -> str:
 
 def composants(pui: dict, taux=None) -> list[dict]:
     taux = taux or lire("budget.yaml")["taux_de_change"]
+    bornes = pui.get("bornes_proposees") or {}
     out = []
     for pid, p in ((pui.get("marche") or {}).get("produits") or {}).items():
+        # bornes PROPOSÉES (majorantes) : seulement là où la valeur lue est null ; chaque usage est noté
+        utilisees = []
+        for champ, bo in (bornes.get(pid) or {}).items():
+            cle = "tension_max" if champ == "tension_max_V" else champ
+            if MC.v(p, cle) is None:
+                p = dict(p, **{cle: {"valeur": bo["valeur"], "note": "BORNE PROPOSÉE : " + bo["justification"]}})
+                utilisees.append(f"{champ} de {p.get('nom', pid)}")
         Vs = nombres(MC.v(p, "tension_service"))
         V = _premier(p, CHAMPS_V)
         ns = nombres(MC.v(p, "nombre_s"))
@@ -377,7 +423,7 @@ def composants(pui: dict, taux=None) -> list[dict]:
                         Vout=MC.num(MC.v(p, "sortie_v")), Vin=nombres(MC.v(p, "entree_v")),
                         S=(min(ns), max(ns)) if ns else None, seuil=MC.num(MC.v(p, "seuil_declenchement_48v")),
                         bidir=MC.v(p, "bidirectionnel"), certif=str(MC.v(p, "certification_securite") or ""),
-                        texte=_texte(p), masse=MC.num(MC.v(p, "masse_g")),
+                        texte=_texte(p), masse=MC.num(MC.v(p, "masse_g")), bornes=utilisees,
                         volume=MC.volume_l(p.get("dimensions_mm")), prix=MC.chf(p.get("prix"), taux)))
     return out
 
@@ -452,7 +498,7 @@ def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list,
                       (calc or {}).get("type", "jetson"))
     inc += bus["inconnues"]
     # énergie
-    en = energie(ctx_tables, axes_corps, M, Ht, profil, (calc or {}).get("pmax"), 0.0, hyp)
+    en = energie(ctx_tables, axes_corps, M, Ht, profil, (calc or {}).get("pmax"), 0.0, hyp, var)
     inc += en["inconnues"]
     bat = batterie(el["cells"], var, en["E_Wh"], en["P_pointe"], hyp) if en.get("E_Wh") else dict(best=None, inconnues=[])
     inc += bat["inconnues"]
@@ -490,14 +536,17 @@ def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list,
     masse = _somme(b["masse"] if b else None, (calc or {}).get("masse") and calc["masse"] / 1000,
                    bus["masse"] / 1000 if bus["masse"] is not None else None,
                    *[(x["masse"] / 1000) if x["masse"] is not None else None for x in elems])
-    volume = _somme(b["volume"] if b else None, (calc or {}).get("volume"), *[x["volume"] for x in elems])
     prix = _somme(b["prix"] if b else None, (calc or {}).get("prix"), bus["prix"], *[x["prix"] for x in elems])
     if any(x["best"] is None for _, x in chaine + list(rails.items())):
         prix = None                                      # un maillon manque (absorbeur en 13S…) : le coût n'est qu'une borne
     if (calc or {}).get("volume") is None and calc:
         inc.append(f"cotes de {calc['nom']}")
     connu = lambda xs: sum(x for x in xs if x is not None)
-    volume_connu = connu([b["volume"] if b else None, (calc or {}).get("volume")] + [x["volume"] for x in elems])
+    volumes = ([("batterie", b["volume"] if b else None), ("calculateur", (calc or {}).get("volume")),
+                ("cartes CAN", bus.get("volume"))]
+               + [(f"{x['categorie']} : {x['nom'][:40]}", x["volume"]) for x in elems])
+    volume = _somme(*[v for _, v in volumes])
+    volume_connu = connu([v for _, v in volumes])
     prix_connu = connu([b["prix"] if b else None, (calc or {}).get("prix"), bus["prix"]] + [x["prix"] for x in elems])
     # place : sur le volume complet s'il est connu ; sinon sur sa part CONNUE (borne basse de l'allongement, dite)
     pl = place_tronc(R, Hr, volume if volume is not None else volume_connu, hyp)
@@ -506,5 +555,6 @@ def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list,
                 masse_connue=sum(x for x in [b and b["masse"], (calc or {}).get("masse") and calc["masse"] / 1000,
                                                bus["masse"] and bus["masse"] / 1000] + [x["masse"] / 1000 for x in elems
                                                                                         if x["masse"] is not None] if x),
-                volume=volume, prix=prix, place=pl, volume_connu=volume_connu, prix_connu=prix_connu,
+                volume=volume, prix=prix, place=pl, volume_connu=volume_connu, prix_connu=prix_connu, volumes=volumes,
+                bornes=[b for x in elems for b in x.get("bornes", [])],
                 inconnues=list(dict.fromkeys(inc)))

@@ -175,6 +175,13 @@ avec qui l'a décidé.
       13S sur les chiffres. » (prompt du 2026-10-07, soir).
     - Fiche : [0071](../decisions/0071-autonomie-et-ia-par-robot.md), qui
       complète la [0070](../decisions/0070-robots-sur-batterie.md).
+21. **Batterie 12S pour les deux robots.** La tension de coupure n'est
+    pas décidée (variante 2,5 / 3,0 / 3,2 V par cellule).
+    - Décidée par Jeremy le 2026-10-08. Ses mots : « Je retiens le 12S
+      pour les deux robots, sur les chiffres de l'explorateur du 7
+      octobre. » (prompt du lot 4a sexies).
+    - Fiche : [0072](../decisions/0072-batterie-12s.md), qui complète la
+      [0071](../decisions/0071-autonomie-et-ia-par-robot.md).
 
 ## B — Conventions confirmées
 

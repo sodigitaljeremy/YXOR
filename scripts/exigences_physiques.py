@@ -56,7 +56,9 @@ HS = [round(0.50 + 0.05 * i, 2) for i in range(19)]      # non-cote: grille de H
 # Hypothèses des tâches : valeur, statut. PROPOSÉES par Claude (2026-10-05),
 # sauf mention ; toutes à remplacer par une mesure ou une simulation.
 HYP = {
-    "poussee_saut_frac": (0.25, "course de poussée du saut = 25 % de la hauteur de hanche (accroupi → extension)"),
+    "poussee_saut_frac": (None, "REMPLACÉE le 2026-10-08 : la course de poussée du saut se CALCULE depuis l'accroupi "
+                                "(tibia incliné, hanche à l'aplomb de la cheville), voir geometrie_saut ; elle valait 25 % "
+                                "de la hauteur de hanche, incohérente avec les angles (genou 130° pour 64 mm à 0,50 m)"),
     "inclinaison_tibia_deg": (None, "accroupi du saut et du relevé : params/exigences_S.yaml (releve.inclinaison_tibia_deg)"),
     "levier_cheville_frac": (0.5, "au saut, la réaction du sol passe à mi-longueur du pied devant la cheville"),
     "extension_cheville_deg": (20, "au saut, la cheville s'étend de 20° au-delà de l'angle d'accroupi"),
@@ -86,6 +88,17 @@ def ref_masse(H):
 
 
 # ─────────────────────────────── tâches ─────────────────────────────────
+def geometrie_saut(L1: float, L2: float, alpha: float) -> dict:
+    """Accroupi du saut (ajouté le 2026-10-08) : tibia incliné de alpha sur la verticale, hanche À L'APLOMB de la
+    cheville (centre de gravité au-dessus des pieds) ; la cuisse fait l'angle beta tel que L2·sin α = L1·sin β.
+    Course de poussée d = hauteur de hanche jambe tendue − hauteur accroupie ; excursions : genou α + β, hanche β
+    (tronc droit), cheville α (+ l'extension au-delà, ajoutée par l'appelant)."""
+    beta = math.asin(min(1.0, L2 * math.sin(alpha) / L1))
+    d = (L1 + L2) - (L2 * math.cos(alpha) + L1 * math.cos(beta))
+    return dict(beta=beta, d=d, knee=alpha + beta, hip_pitch=beta)
+
+
+
 def calculer(H: float, cap: dict, an: dict, rel: dict) -> list[dict]:
     """Toutes les lignes (tâche, niveau, articulation) à la taille H : a, b, puissance (aP, bP), ω."""
     R = {k: v["valeur"] for k, v in an["ratios"].items()}
@@ -99,8 +112,11 @@ def calculer(H: float, cap: dict, an: dict, rel: dict) -> list[dict]:
     def ligne(t, niv, art, a, b, aP=0.0, bP=0.0, w=None, note=""):
         out.append(dict(tache=t, niveau=niv, H=H, articulation=art, a=a, b=b, aP=aP, bP=bP, omega=w, note=note))
 
-    # saut vertical : M·g·(1 + h/d) pendant la course d, en accroupi
-    d = HYP["poussee_saut_frac"][0] * L["hauteur_hanche"]
+    # saut vertical : M·g·(1 + h/d) pendant la course d, en accroupi. CORRIGÉ le 2026-10-08 : d et les excursions
+    # angulaires viennent de la MÊME posture (geometrie_saut) ; avant, d = 25 % de la hauteur de hanche avec un genou
+    # de 90° + α : à 0,50 m et 10 cm, le genou demandait 49,4 rad/s au lieu de 37,0.
+    gs = geometrie_saut(L["cuisse"], L["tibia"], alpha)
+    d = gs["d"]
     for h_cm in cap["taches"]["saut_vertical"]["niveaux"]:
         h = h_cm / 100
         v = math.sqrt(2 * G * h)
@@ -109,7 +125,7 @@ def calculer(H: float, cap: dict, an: dict, rel: dict) -> list[dict]:
         lev = {"knee": L["tibia"] * math.sin(alpha),
                "hip_pitch": abs(L["tibia"] * math.sin(alpha) - L["cuisse"]),
                "ankle_pitch": HYP["levier_cheville_frac"][0] * L["pied_longueur"]}
-        dth = {"knee": math.pi / 2 + alpha, "hip_pitch": math.pi / 2,
+        dth = {"knee": gs["knee"], "hip_pitch": gs["hip_pitch"],
                "ankle_pitch": alpha + math.radians(HYP["extension_cheville_deg"][0])}
         for art in ("hip_pitch", "knee", "ankle_pitch"):
             w = 2 * dth[art] / tp                            # vitesse angulaire de pointe (rampe linéaire)

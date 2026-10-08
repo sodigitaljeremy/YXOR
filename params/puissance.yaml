@@ -16,6 +16,13 @@
 
 statut: "PROPOSÉ par Claude le 2026-10-07 : architecture et hypothèses à confirmer par Jeremy"
 
+# DÉCIDÉ PAR JEREMY le 2026-10-08 (fiche 0072), ses mots : « Je retiens le 12S
+# pour les deux robots, sur les chiffres de l'explorateur du 7 octobre. »
+tension_retenue:
+  S: 12
+  decide: "Jeremy, 2026-10-08, prompt du lot 4a sexies (fiche 0072)"
+  coupure_V_par_cellule: "NON décidée : variantes 2,5 / 3,0 / 3,2 (lot 4a sexies)"
+
 # ── Chaîne de puissance, dans l'ordre du courant ──────────────────────────
 # Chaque maillon est choisi dans `marche` (le moins cher dont les valeurs LUES
 # tiennent le courant et la tension) ; sa masse, son volume et son prix sont
@@ -53,6 +60,11 @@ hypotheses:
     bas: 0.4
     haut: 0.7
     statut: "PROPOSÉ : puissance électrique = puissance mécanique ÷ rendement ; bande large faute de rendement publié (un actionneur à faible réduction rend peu à fort couple et faible vitesse). Une solution doit tenir au rendement BAS."
+  energie_au_dessus_de_la_coupure:
+    "2.5": 1.0
+    "3.0": 0.85
+    "3.2": 0.70
+    statut: "PROPOSÉ (2026-10-08) : part de l'énergie NOMINALE (publiée jusqu'à 2,5 V par cellule) encore disponible au-dessus de la tension de coupure. Prudent : aucune courbe de décharge n'a été lue NUMÉRIQUEMENT (graphiques des fiches) ; à remplacer par la courbe de la cellule retenue."
   fraction_utilisable:
     valeur: 0.9
     statut: "PROPOSÉ : part de l'énergie nominale des cellules utilisable avant le seuil d'arrêt (BMS, vieillissement)"
@@ -77,6 +89,34 @@ hypotheses:
     "+ vision et voix": {accelerateur: true, memoire_GB: 8}
     "+ modèle de langage local": {accelerateur: true, memoire_GB: 16, modele_de_langage: true}
     modele_de_langage: "accélérateur présenté par son fabricant pour les modèles de langage : GPU des Jetson (CUDA), Hailo-10H de l'AI HAT+ 2 ; pas les Hailo-8 / 8L (vision)"
+
+# ── BORNES PRUDENTES (majorantes), PROPOSÉES par Claude le 2026-10-08 ──────
+# Prompt du lot 4a sexies : pour les composants sans masse ni cotes publiées,
+# des bornes MAJORANTES, une par une, avec leur justification. Elles ne
+# remplacent JAMAIS une valeur lue : seulement un null. Une solution qui en
+# use est marquée « bornes proposées » dans le rapport, jamais « vérifiée ».
+# Ni courant, ni tension, ni prix ne sont bornés ici (sauf une tension DÉDUITE
+# d'une caractéristique lue, dite comme telle).
+bornes_proposees:
+  victron_mega_58v:
+    masse_g: {valeur: 30, justification: "fusible MEGA du même fabricant en 80 V : 20 g lus (victron_mega_80v) ; +50 %"}
+    dimensions_mm: {valeur: "70 x 20 x 12", justification: "MEGA 80 V lu : 68,8 × 19 mm ; épaisseur non lue, 12 mm majorant (pattes cuivre)"}
+  offgridtec_mega_porte_fusible:
+    dimensions_mm: {valeur: "110 x 50 x 45", justification: "porte-fusible MEGA à capot : il loge un fusible de 68,8 mm entre deux goujons ; enveloppe majorante"}
+  jk_b2a20s20p_hc:
+    dimensions_mm: {valeur: "220 x 110 x 40", justification: "BMS 200 A à équilibrage actif, cotes non publiées sur la page lue ; enveloppe majorante d'un boîtier de BMS de cette classe (Orion Jr 2, 181 × 102 × 38 mm lus, + 20 %)"}
+    tension_max_V: {valeur: 84.0, justification: "DÉDUITE de la plage lue « 8–20 S » : 20 cellules × 4,2 V ; ce n'est pas une borne de masse, c'est la conséquence d'une caractéristique lue"}
+  gigavac_gv200pa:
+    masse_g: {valeur: 500, justification: "contacteur 400 A scellé ; l'Albright SW80 lu pèse 350 g ; +40 %"}
+    dimensions_mm: {valeur: "100 x 75 x 75", justification: "enveloppe majorante d'un contacteur scellé 400 A à bornes M8 (non lue)"}
+  amass_as150_precharge:
+    dimensions_mm: {valeur: "60 x 30 x 20", justification: "connecteur AS150 lu à 24 g ; boîtier de 2 contacts de 7 mm, enveloppe majorante"}
+  idec_xa1e_bv302r:
+    masse_g: {valeur: 50, justification: "bouton d'arrêt d'urgence EAO de même fonction : 36 g lus ; +40 %"}
+    dimensions_mm: {valeur: "40 x 40 x 60", justification: "montage Ø 16 mm lu ; tête champignon et bloc de contacts, enveloppe majorante"}
+  robstride_module_decharge:
+    masse_g: {valeur: 300, justification: "module seul non pesé (module Realman de même fonction : 66 g lus, résistance comprise) ; ici + une résistance EXTERNE de 10 Ω / 200 W recommandée par la notice : 300 g majorant pour l'ensemble"}
+    dimensions_mm: {valeur: "100 x 60 x 40", justification: "hauteur du module 12,1 mm lue ; résistance de 200 W en boîtier aluminium : enveloppe majorante de l'ensemble"}
 
 # ── Marché des composants de puissance (relevé du 2026-10-07, soir ; agent de Claude Code) ──
 # Une valeur non lue est null ; la plus prudente de deux sources ; chaque source téléchargée hors du dépôt

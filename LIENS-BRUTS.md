@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `b434d250efa2`, le 2026-10-07 ; 254 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `17465bd97dd7`, le 2026-10-08 ; 261 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,7 +54,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (71)
+## decisions/ (72)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
@@ -62,6 +62,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0067-s-jam
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0068-s-cheville-sans-roulis.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0069-deux-robots-lab-et-final.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0070-robots-sur-batterie.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0071-autonomie-et-ia-par-robot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md
@@ -128,7 +129,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (35)
+## docs/ (38)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -157,6 +158,9 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-calculat
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/protocole-banc.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/simulations-marche-2026-10.svg
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/batteries-chatgpt-2026-10-07.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/batteries-claude-2026-10-07.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/batteries-grok-2026-10-07.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-chatgpt-lots-a-b-2026-10-02.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-claude-2026-10-01.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/dfm-tole-grok-2026-10-01.md
@@ -181,7 +185,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-07.md
 
-## params/ (21)
+## params/ (22)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
@@ -200,6 +204,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/joints.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/lois_masse.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/mesures.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/origines.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/puissance.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/references_simulables.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/sources.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/squelette.yaml
@@ -217,7 +222,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (33)
+## scripts/ (34)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -251,6 +256,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/simulations_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/source.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/squelette.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/structure_plaques.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/systeme_electrique.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/taille_minimale.py
 
 ## sim/ (8)
@@ -264,7 +270,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (24)
+## tests/ (25)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -290,6 +296,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulations_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_squelette.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_systeme_electrique.py
 
 ## web/ (4)
 

@@ -63,6 +63,7 @@ from __future__ import annotations
 import argparse
 import itertools
 import math
+import os
 import re
 import sys
 import time
@@ -340,13 +341,13 @@ def structures() -> dict:
     return dict(par_ensemble=out, H_S=m["H_S"], modele=m, charge=lire("exigences_S.yaml")["charge_utile"]["valeur_kg"])
 
 
-def electrique(ctx, S, f_can, etendue) -> dict:
+def electrique(ctx, S, f_can, etendue, coupure=None) -> dict:
     """Variante de tension S (12 ou 13) appliquée aux actionneurs du CORPS (sur le bus moteurs), et données du système
     électrique (phase 4a quinquies). Les petits axes sont sur des rails régulés : non concernés."""
     import systeme_electrique as SE
     pui = SE.lire("puissance.yaml")
     hyp = pui["hypotheses"]
-    var = SE.variante(S)
+    var = SE.variante(S, coupure=coupure)
     for fam in EP.CORPS:
         ctx["act"][fam] = [dict(a, compat=SE.compatibilite(a["plage"], var),
                                 vitesse=(a["vitesse"] * SE.facteur_vitesse(a["v_ref"], var))
@@ -365,7 +366,7 @@ def electrique(ctx, S, f_can, etendue) -> dict:
                 adapt=SE.adaptateurs_can(), serie=SE.adaptateur_serie(), niveau_ia=niveau)
 
 
-def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=True) -> dict:
+def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=True, coupure=None) -> dict:
     import simulations_marche as SM
     cap, an, lignes = EP.tout()
     marches, releve, manque = SM.charger()
@@ -383,7 +384,7 @@ def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=T
                 jeu=sq["ecarts_ansur"]["cheville"]["jeu_mm"]["valeur"],
                 fr_max=max((e["Fr"] for e in marches.values()), default=0.0), memo={})
     if S:
-        ctx["elec"] = electrique(ctx, S, f_can, etendue)
+        ctx["elec"] = electrique(ctx, S, f_can, etendue, coupure)
     return ctx
 
 
@@ -528,7 +529,34 @@ def niveau_bas(cap, t):
     return cap["taches"][t]["niveaux"][0]
 
 
-def explorer(ctx, ensembles=None, hs=None, corps=None, petits=None):
+CHAMPS_LEGERS = ("statut", "ncap", "cout", "cout_actionneurs", "M", "E", "H_reel", "H_couples", "non_couvertes",
+                 "n_couvertes")
+
+
+def _interner(xs) -> tuple:
+    return tuple(sys.intern(x) for x in xs or ())
+
+
+def leger(r: dict, **cle) -> dict:
+    """Une solution réduite à ce que servent le classement, les comptes et le graphique (ajouté le 2026-10-08) : les
+    textes des données manquantes sont PARTAGÉS (internés), le détail (actionneurs, système électrique) est jeté et
+    se retrouve en réévaluant la solution (`complet`), le calcul étant déterministe."""
+    el = r.get("elec")
+    d = {c: r.get(c) for c in CHAMPS_LEGERS}
+    d.update(cle, inconnues=_interner(r.get("inconnues")), leger=True,
+             elec={"inconnues": _interner(el["inconnues"]), "prix_connu": el.get("prix_connu")} if el else None)
+    return d
+
+
+def complet(ctx, x: dict) -> dict:
+    """La solution complète (réévaluée) d'un enregistrement léger."""
+    if not x.get("leger"):
+        return x
+    r = evaluer(ctx, x["ens"], x["H"], x["fc"], x["fp"], x["profil"])
+    return dict(r, ens=x["ens"], H=x["H"], fc=x["fc"], fp=x["fp"], profil=x["profil"])
+
+
+def explorer(ctx, ensembles=None, hs=None, corps=None, petits=None, garder_leger=False):
     """Toutes les solutions : chaque sous-ensemble des tâches optionnelles VOULUES, au niveau de la cible.
 
     Un niveau plus haut ne change pas le nombre de capacités tenues et coûte au
@@ -547,7 +575,8 @@ def explorer(ctx, ensembles=None, hs=None, corps=None, petits=None):
                         for fp in (petits or EP.PETITS):
                             r = evaluer(ctx, ens, H, fc, fp, profil)
                             if r:
-                                out.append(dict(r, ens=ens, H=H, fc=fc, fp=fp, profil=profil))
+                                cle = dict(ens=ens, H=H, fc=fc, fp=fp, profil=profil)
+                                out.append(leger(r, **cle) if garder_leger else dict(r, **cle))
     return out
 
 
@@ -573,13 +602,13 @@ def pareto(sols):
     return front
 
 
-def meilleure(ctx, profil):
+def meilleure(ctx, profil, corps=None):
     """La solution faisable la moins chère pour un profil, sur tout l'espace ; et la plus petite H faisable."""
     best, hmin, n_inc, raisons, n_eval, viol = None, None, 0, Counter(), 0, Counter()
     best_inc = None              # sans faisable : la meilleure dont les seules inconnues sont celles, COMMUNES, du système électrique
     for ens in ENSEMBLES:
         for H in H_LAB:
-            for fc in EP.CORPS:
+            for fc in (corps or EP.CORPS):
                 for fp in EP.PETITS:
                     r = evaluer(ctx, ens, H, fc, fp, profil)
                     if not r:
@@ -813,13 +842,14 @@ def rapport(ctx, sols, front, ref, caps, nverif, duree, runs=None, top0=None) ->
 
 
 def section_electrique(ctx, runs, top0) -> list[str]:
-    """Phase 4a quinquies : variantes 12S / 13S × 250 / 500 Hz, niveaux d'autonomie et d'IA, canaux CAN."""
+    """Phases 4a quinquies et sexies : 12S (décidé) × 250 / 500 Hz × coupure, niveaux d'autonomie et d'IA, CAN, place."""
     import systeme_electrique as SE
     hyp = ctx["elec"]["hyp"]
-    L = ["", "## Système électrique : variantes 12S / 13S, 250 / 500 Hz (phase 4a quinquies)", "",
-         "Contexte DÉCIDÉ : fiches 0070 (batterie) et 0071 (Lab : autonomie 30 min sur le cycle 40 s de marche + 20 s "
-         "debout, IA « commande + vision » ; « Je trancherai entre 12S et 13S sur les chiffres »). Tout le reste est "
-         "PROPOSÉ (`params/puissance.yaml`) :", "",
+    L = ["", "## Système électrique : 12S, 250 / 500 Hz, tension de coupure en variante (phases 4a quinquies et sexies)", "",
+         "Contexte DÉCIDÉ : fiches 0070 (batterie), 0071 (Lab : autonomie 30 min sur le cycle 40 s de marche + 20 s "
+         "debout, IA « commande + vision ») et 0072 (Jeremy, 2026-10-08 : « Je retiens le 12S pour les deux robots, sur "
+         "les chiffres de l'explorateur du 7 octobre. »). La tension de COUPURE (seuil d'arrêt) est étudiée en variante : "
+         "2,5, 3,0 et 3,2 V par cellule. Tout le reste est PROPOSÉ (`params/puissance.yaml`) :", "",
          f"- puissance électrique = puissance mécanique MOYENNE de la marche simulée (phase 3b, |τ·ω|, le robot le plus "
          f"exigeant qui couvre le Froude) ÷ rendement BAS {f1(hyp['rendement_actionneurs']['bas'])} (bande "
          f"{f1(hyp['rendement_actionneurs']['bas'])}–{f1(hyp['rendement_actionneurs']['haut'])}), sur 40 s de 60 ; debout, "
@@ -832,7 +862,10 @@ def section_electrique(ctx, runs, top0) -> list[str]:
          f"cylindres ÷ π/4 × {f1(hyp['facteur_pack_volume']['valeur'])} ;",
          "- tension : chaque RobStride doit accepter le pack de la coupure à la pleine charge (plage publiée) ; sa vitesse "
          "à vide est ramenée à la tension de COUPURE, proportionnellement (hypothèse écrite ; fiche à 48 V) : ×"
-         + " ; ×".join(f"{SE.variante(S)['Vfin'] / 48:.3f} en {S}S" for S in (12, 13)) + " ;",
+         + " ; ×".join(f"{SE.variante(12, coupure=c)['Vfin'] / 48:.3f} à {f1(c)} V" for c in (2.5, 3.0, 3.2))
+         + " ; énergie au-dessus de la coupure : " + " ; ".join(
+             f"{f1(float(k))} V : {f1(v * 100, 0)} %" for k, v in hyp["energie_au_dessus_de_la_coupure"].items() if k != "statut")
+         + " de l'énergie nominale (PROPOSÉ, prudent : courbe de décharge non lue numériquement) ;",
          "- calculateur : le moins cher qui convient au niveau d'IA (critères PROPOSÉS : "
          + " ; ".join(f"{k} : accélérateur {'oui' if v['accelerateur'] else 'non'}, ≥ {v['memoire_GB']} GB"
                       + (", modèles de langage" if v.get("modele_de_langage") else "")
@@ -841,7 +874,11 @@ def section_electrique(ctx, runs, top0) -> list[str]:
          "- bus : canaux CAN au calcul écrit (`docs/marche-bus-2026-10.md`), au-delà de ceux du calculateur par "
          "l'adaptateur le moins cher à pilote Linux principal ; un adaptateur série Feetech ;",
          "- chaîne de puissance et rails : `params/puissance.yaml` (cellules → fusible → sectionneur → BMS → contacteur → "
-         "précharge → bus moteurs ; absorbeur de régénération ; arrêt d'urgence matériel ; rails 12, 7,4, 6 et 5 V) ;",
+         "précharge → bus moteurs ; absorbeur de régénération ; arrêt d'urgence matériel ; rails 12, 7,4, 6 et 5 V). "
+         "Masses et cotes non publiées : BORNES PROPOSÉES majorantes (`bornes_proposees`, justifiées une par une) ; une "
+         "solution qui en use est marquée « bornes proposées », jamais « vérifiée » ;",
+         "- batterie : cellules NEUVES d'un distributeur identifié seulement (récupération, occasion, marque masquée "
+         "écartées) ;",
          f"- place : batterie, calculateur, cartes et convertisseurs dans {f1(hyp['remplissage_tronc']['valeur'] * 100, 0)} % "
          "du tronc (largeur d'épaules × profondeur de poitrine × hauteur du tronc, ANSUR, à la hauteur réelle) ; ce qui "
          "dépasse ALLONGE le tronc (même lecture « avec écarts » que la place des moteurs).", ""]
@@ -850,12 +887,31 @@ def section_electrique(ctx, runs, top0) -> list[str]:
         L += [f"**Référence, méthode de 14 h 05 recalculée (sans système électrique, charge utile forfaitaire de 1,2 kg)** : "
               f"{x['ens']} axes, {f1(x['H'], 2)} → {f1(x['H_reel'], 3)} m, {f1(x['M'])} kg, {f1(x['cout'], 0)} CHF "
               "(actionneurs seuls).", ""]
-    for (S, f), R in runs.items():
+    # coupure × tâches rapides, meilleure RobStride (ajouté le 2026-10-08)
+    L += ["### Tension de coupure et tâches rapides (meilleure solution RobStride pour chaque tâche, marche au niveau "
+          "du profil)", "",
+          "| Fréquence | Coupure (V/cellule) | " + " | ".join(n for n, _ in TACHES_COUPURE) + " |",
+          "| ---: | ---: | " + " | ".join("---" for _ in TACHES_COUPURE) + " |"]
+    for (S, f, c), R in runs.items():
+        cell = []
+        for nom, _ in TACHES_COUPURE:
+            r = (R.get("taches_rs") or {}).get(nom) or {}
+            b = r.get("best")
+            if b:
+                cell.append(f"tient : {b['ens']} axes, {f1(b['H_reel'], 3)} m réels, {f1(b['M'])} kg, "
+                            f"{('≥ ' if b.get('borne') else '') + f1(b['cout'], 0)} CHF")
+            else:
+                top = r.get("viol", Counter()).most_common(1)
+                cell.append("NE TIENT PAS" + (f" ({top[0][0][:90]})" if top else "")
+                            if not r.get("n_inc") else f"INCONNU ({r['raisons'].most_common(1)[0][0][:80]})")
+        L.append(f"| {f} Hz | {f1(c)} | " + " | ".join(cell) + " |")
+    L.append("")
+    for (S, f, c), R in runs.items():
         st = R["stat"]
         bas = all(abs(x["H"] - H_LAB[0]) < 1e-9 for x in R["top"]) if R["top"] else None
-        L += [f"### {S}S, {f} Hz", "",
-              f"{len(R['sols'])} solutions : {st['faisable']} faisables, {st['infaisable']} infaisables, {st['INCONNU']} "
-              f"INCONNUES ; front de {len(R['front'])}. "
+        L += [f"### {S}S, {f} Hz, coupure {f1(c)} V", "",
+              f"{R['n']} solutions : {st['faisable']} faisables, {st['infaisable']} infaisables, {st['INCONNU']} "
+              f"INCONNUES ; front de {R['front_n']}. "
               + ("Le front RESTE à la borne basse H = 0,50 m (proportions) ; la hauteur RÉELLE est en colonne."
                  if bas else "Le front QUITTE la borne basse H = 0,50 m." if bas is False else ""), "",
               ENTETE_ELEC[0], ENTETE_ELEC[1]] + [ligne_elec(x) for x in R["top"]]
@@ -864,8 +920,18 @@ def section_electrique(ctx, runs, top0) -> list[str]:
         L += [""] + [f"- RobStride n° {i} : {', '.join(x['profil'])} ; manque du profil : "
                      + (", ".join(t for t in ctx["cible"] if t not in x["profil"] and t not in ("autonomie", "ia_embarquee")) or "—")
                      for i, x in enumerate(R["rs"], 1)]
+        b0 = R.get("base_niveaux")
+        if b0 and (b0.get("elec") or {}).get("volumes"):
+            el0, pl0 = b0["elec"], b0["elec"]["place"]
+            L += ["", f"Volume électronique de la meilleure RobStride ({b0['ens']} axes, H {f1(b0['H'], 2)}) : "
+                  f"{f1(el0['volume_connu'], 2)} L requis pour {f1(pl0['dispo_L'], 2)} L disponibles"
+                  + (" (volume partiel : des cotes manquent)" if pl0.get("partielle") else "")
+                  + f" ; le tronc s'allonge de {f1(pl0['allonge_m'] * 1000, 0)} mm.", "",
+                  "| Élément | Volume (L) | Part |", "| --- | ---: | ---: |"]
+            tot = el0["volume_connu"] or 1.0
+            for nom, v in sorted(el0["volumes"], key=lambda t: -(t[1] or 0)):
+                L.append(f"| {nom} | {f1(v, 3)} | {f1((v or 0) / tot * 100, 0)} % |")
         if R["niveaux"]:
-            b0 = R["base_niveaux"]
             L += ["", f"Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride ({b0['ens']} axes, "
                   f"H {f1(b0['H'], 2)}, {b0['fc']} + {b0['fp']}, même profil) :", "",
                   "| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |",
@@ -883,18 +949,15 @@ def section_electrique(ctx, runs, top0) -> list[str]:
     niv = ctx["cible"].get("saut_vertical")
     if niv is not None:
         L += ["### Vitesse des RobStride à la tension de coupure", ""]
-        for (S, f), R in runs.items():
+        for (S, f, c), R in runs.items():
             if f != VARIANTES[0][1]:
                 continue
-            rs = [(a["id"], a["vitesse"]) for a in R["ctx"]["act"].get("robstride", []) if a["vitesse"] and a.get("compat")]
-            vmax = max(rs, key=lambda x: x[1]) if rs else None
-            besoin = max((w for (h, t, n), e in R["ctx"]["T"].items() if t == "saut_vertical" and n == niv and abs(h - H_LAB[0]) < 1e-9
-                          for ax in e.values() for w in ax["w"]), default=None)
-            L.append(f"- {S}S : le plus rapide des RobStride compatibles, {vmax[0]}, tourne à {f1(vmax[1])} rad/s à la "
+            vmax, besoin = R["vitesse"]["vmax"], R["vitesse"]["besoin"]
+            L.append(f"- {S}S, coupure {f1(c)} V : le plus rapide des RobStride compatibles, {vmax[0]}, tourne à {f1(vmax[1])} rad/s à la "
                      f"coupure ; le saut de {niv} cm demande jusqu'à {f1(besoin)} rad/s à H = {f1(H_LAB[0], 2)} m (borne "
                      "haute : rampe linéaire). " + ("Le saut est donc HORS de portée des RobStride dans cette variante."
                                                    if vmax and besoin and vmax[1] < besoin else "Il passe.") if vmax and besoin
-                     else f"- {S}S : non calculable")
+                     else f"- {S}S, coupure {f1(c)} V : non calculable")
         L += ["", "Deux hypothèses rendent ce verrou prudent : la vitesse à vide prise à la tension de COUPURE (et non "
               "nominale), et la vitesse du saut en rampe linéaire. Elles sont écrites ; c'est à Jeremy de dire si l'une "
               "doit être assouplie.", ""]
@@ -958,8 +1021,11 @@ def table_caps(ref, caps):
     return L
 
 
-VARIANTES = [(12, 250), (12, 500), (13, 250), (13, 500)]   # 12S / 13S × 250 / 500 Hz (prompt du 2026-10-07, soir)
-REFERENCE = (13, 500)                                     # PROPOSÉ : la variante détaillée (coût de chaque tâche)
+# 12S DÉCIDÉ (fiche 0072, Jeremy, 2026-10-08) ; 250 / 500 Hz × coupure 2,5 / 3,0 / 3,2 V par cellule (lot 4a sexies)
+VARIANTES = [(12, f, c) for f in (250, 500) for c in (2.5, 3.0, 3.2)]
+REFERENCE = (12, 500, 2.5)                                # PROPOSÉ : la variante détaillée (coût de chaque tâche)
+TACHES_COUPURE = [("saut 5 cm", {"saut_vertical": 5}), ("saut 10 cm", {"saut_vertical": 10}),
+                  ("gestes 2 m/s", {"gestes_pointage": 2.0})]
 
 
 def classement_large(sols, n=5):
@@ -999,12 +1065,44 @@ def ligne_elec(s) -> str:
     return (f"| {s['ens']} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {s['fc']} + {s['fp']} | {f1(s['M'])} | {cout} | "
             f"{f1(s.get('cout_actionneurs'), 0)} | "
             + (f"{b['nom']} {b['S']}S{b['P']}P, {f1(b['E'], 0)} Wh, {f1(b['masse'], 2)} kg" if b else "—")
-            + f" | {(c or {}).get('nom', '—')} | {el.get('n_can', '—')} | {s['statut']} |")
+            + f" | {(c or {}).get('nom', '—')} | {el.get('n_can', '—')} | {s['statut']}"
+            + (" (bornes proposées)" if el.get("bornes") else "") + " |")
 
 
 ENTETE_ELEC = ("| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | "
                "Batterie | Calculateur | Canaux CAN | Statut |",
                "| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |")
+
+
+def vitesse_robstride(ctx) -> dict:
+    """Le plus rapide des RobStride compatibles (vitesse à la coupure) et le besoin du saut du profil à la borne basse."""
+    niv = ctx["cible"].get("saut_vertical")
+    rs = [(a["id"], a["vitesse"]) for a in ctx["act"].get("robstride", []) if a["vitesse"] and a.get("compat")]
+    besoin = max((w for (h, t, n), e in ctx["T"].items() if t == "saut_vertical" and n == niv and abs(h - H_LAB[0]) < 1e-9
+                  for ax in e.values() for w in ax["w"]), default=None) if niv is not None else None
+    return dict(vmax=max(rs, key=lambda x: x[1]) if rs else None, besoin=besoin)
+
+
+def _executer(tache, cible, profil) -> dict:
+    """Une exécution dans un processus : ne rend que ce qui sert au rapport (solutions complètes du haut du classement,
+    comptes ; les solutions légères de la variante de référence, pour le bilan, le graphique et les inconnues)."""
+    t1 = time.time()
+    genre, S, f, c = tache
+    ctx = (contexte(cible=cible, profil=profil) if genre == "reference"
+           else contexte(cible=cible, profil=profil, S=S, f_can=f, coupure=c))
+    sols = explorer(ctx, garder_leger=True)
+    top = [complet(ctx, x) for x in classement_large(sols)]
+    out = dict(n=len(sols), top=top, stat=Counter(x["statut"] for x in sols), front_n=len(pareto(sols)))
+    if genre == "variante":
+        rs = [complet(ctx, x) for x in classement_large([x for x in sols if x["fc"] == "robstride"], 3)]
+        base = rs[0] if rs else (top[0] if top else None)
+        marche = {"marche_sol_plat": ctx["cible"]["marche_sol_plat"]}
+        out.update(rs=rs, niveaux=niveaux_elec(ctx, base) if base else [], base_niveaux=base, vitesse=vitesse_robstride(ctx),
+                   taches_rs={nom: meilleure(ctx, dict(marche, **t), corps=["robstride"]) for nom, t in TACHES_COUPURE})
+        if (S, f, c) == REFERENCE:
+            out["sols"] = sols
+    out["duree"] = time.time() - t1
+    return out
 
 
 def main(argv=None) -> int:
@@ -1026,41 +1124,43 @@ def main(argv=None) -> int:
             cible[t] = next((v for v in niv if str(v) == n), None) if n else defaut[t]
             if cible[t] is None:
                 ap.error(f"niveau « {n} » inconnu pour {t} : {niv}")
-    # référence sans système électrique (méthode de 14 h 05, recalculée)
-    ctx0 = contexte(cible=cible, profil=a.profil)
-    if not ctx0["T"]:
-        print("  explorateur SAUTÉ : aucune table de besoins")
-        return 0
-    sols0 = explorer(ctx0)
-    top0 = classement_large(sols0)
-    print(f"  sans système électrique (méthode de 14 h 05) : {len(sols0)} solutions ; meilleure : "
-          + (f"{top0[0]['ens']} axes, {top0[0]['H']:.2f} → {top0[0]['H_reel']:.3f} m, {top0[0]['M']:.1f} kg, "
-             f"{top0[0]['cout']:.0f} CHF" if top0 else "aucune"))
+    # référence sans système électrique et variantes : un processus chacune (2026-10-08 : 8 cœurs)
+    import concurrent.futures as CF
+    import multiprocessing as MP
+    taches = [("reference", None, None, None)] + [("variante", S, f, c) for S, f, c in VARIANTES]
+    resultats = {}
+    with CF.ProcessPoolExecutor(max_workers=min(len(taches), os.cpu_count() or 1),
+                                mp_context=MP.get_context("fork")) as pool:
+        futurs = {pool.submit(_executer, t, cible, a.profil): t for t in taches}
+        for fu in CF.as_completed(futurs):
+            t = futurs[fu]
+            resultats[t] = fu.result()
+            print(f"  {t[0]} {t[1] or ''}{'S' if t[1] else ''} {t[2] or ''}{' Hz' if t[2] else ''} {t[3] or ''}{' V' if t[3] else ''} : "
+                  f"terminée en {resultats[t]['duree']:.0f} s", flush=True)
+    top0 = resultats[("reference", None, None, None)]["top"]
+    print(f"  sans système électrique (méthode de 14 h 05) : {resultats[('reference', None, None, None)]['n']} solutions ; "
+          "meilleure : " + (f"{top0[0]['ens']} axes, {top0[0]['H']:.2f} → {top0[0]['H_reel']:.3f} m, {top0[0]['M']:.1f} kg, "
+                            f"{top0[0]['cout']:.0f} CHF" if top0 else "aucune"))
     if a.sans_electrique:
         return 0
     runs = {}
-    for S, f in VARIANTES:
-        t1 = time.time()
-        ctx = contexte(cible=cible, profil=a.profil, S=S, f_can=f)
-        sols = explorer(ctx)
-        top = classement_large(sols)
-        stat = Counter(x["statut"] for x in sols)
-        rs = classement_large([x for x in sols if x["fc"] == "robstride"], 3)   # famille de la fiche 0069
-        base = rs[0] if rs else (top[0] if top else None)
-        runs[(S, f)] = dict(ctx=ctx, sols=sols, top=top, rs=rs, stat=stat, front=pareto(sols),
-                            niveaux=niveaux_elec(ctx, base) if base else [], base_niveaux=base, duree=time.time() - t1)
-        print(f"\n  {S}S, {f} Hz : {len(sols)} solutions ({stat['faisable']} faisables, {stat['infaisable']} "
-              f"infaisables, {stat['INCONNU']} INCONNUES) en {time.time() - t1:.0f} s ; front {len(runs[(S, f)]['front'])}")
+    for S, f, c in VARIANTES:
+        R = runs[(S, f, c)] = resultats[("variante", S, f, c)]
+        st = R["stat"]
+        print(f"\n  {S}S, {f} Hz, coupure {c} V : {R['n']} solutions ({st['faisable']} faisables, {st['infaisable']} "
+              f"infaisables, {st['INCONNU']} INCONNUES) en {R['duree']:.0f} s ; front {R['front_n']}")
         print("  " + ENTETE_ELEC[0] + "\n  " + ENTETE_ELEC[1])
-        for x in top:
+        for x in R["top"]:
             print("  " + ligne_elec(x))
         print("  meilleures RobStride (fiche 0069) :")
-        for x in rs:
+        for x in R["rs"]:
             print("  " + ligne_elec(x) + f" capacités : {', '.join(x['profil'])}")
     R = runs[REFERENCE]
-    ctx, sols, front = R["ctx"], R["sols"], R["front"]
+    sols = R["sols"]
+    ctx = contexte(cible=cible, profil=a.profil, S=REFERENCE[0], f_can=REFERENCE[1], coupure=REFERENCE[2])
+    front = [complet(ctx, x) for x in pareto(sols)]
     nverif, fautes = 0, []
-    for x in front + [y for y in sols if y["statut"] != "infaisable"][:: 97]:
+    for x in front + [complet(ctx, y) for y in [y for y in sols if y["statut"] != "infaisable"][:: 97]]:
         if "besoins" in x:
             fautes += verifier_maximum(x["besoins"], ctx["T"], x["H_couples"], x["profil"], x["M"])
             nverif += 1

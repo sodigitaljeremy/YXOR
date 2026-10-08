@@ -34,7 +34,7 @@ Chaque résultat est rangé sous la forme **τ = a·M + b** (M : masse du robot 
 - Longueurs : ratios ANSUR × H (bras de levier ∝ H). Masses : fractions de Winter × M, centre de masse au milieu de chaque segment. Masse de référence des courbes ∝ H³.
 - Rendement : non appliqué ; les puissances sont mécaniques (à la sortie de l'actionneur).
 - Saut : force M·g·(1 + h/d) pendant une course de poussée d, durée 2d/√(2gh) ; couples dans l'accroupi ; puissance = couple maximal × vitesse maximale (borne haute).
-- `poussee_saut_frac` = 0.25 : course de poussée du saut = 25 % de la hauteur de hanche (accroupi → extension). PROPOSÉ par Claude, à remplacer.
+- `poussee_saut_frac` = (voir texte) : REMPLACÉE le 2026-10-08 : la course de poussée du saut se CALCULE depuis l'accroupi (tibia incliné, hanche à l'aplomb de la cheville), voir geometrie_saut ; elle valait 25 % de la hauteur de hanche, incohérente avec les angles (genou 130° pour 64 mm à 0,50 m). PROPOSÉ par Claude, à remplacer.
 - `inclinaison_tibia_deg` = (voir texte) : accroupi du saut et du relevé : params/exigences_S.yaml (releve.inclinaison_tibia_deg). PROPOSÉ par Claude, à remplacer.
 - `levier_cheville_frac` = 0.5 : au saut, la réaction du sol passe à mi-longueur du pied devant la cheville. PROPOSÉ par Claude, à remplacer.
 - `extension_cheville_deg` = 20 : au saut, la cheville s'étend de 20° au-delà de l'angle d'accroupi. PROPOSÉ par Claude, à remplacer.
@@ -63,12 +63,12 @@ Charge lourde : le robot doit peser au moins m·(d/x − 1) pour que la charge n
 
 | H (m) | M réf. (kg) | Genou, saut 30 cm (N·m) | Épaule, charge 10 kg (N·m) | Hanche, relevé (N·m) |
 | ---: | ---: | ---: | ---: | ---: |
-| 0.50 | 2.5 | 5.0 | 14.9 | 0.6 |
-| 0.60 | 4.2 | 8.9 | 15.0 | 1.3 |
-| 0.80 | 10.1 | 22.5 | 15.5 | 4.0 |
-| 1.00 | 19.7 | 46.8 | 16.2 | 9.8 |
-| 1.20 | 34.0 | 85.7 | 17.2 | 20.4 |
-| 1.40 | 54.0 | 143.9 | 18.7 | 37.7 |
+| 0.50 | 2.5 | 6.1 | 14.9 | 0.6 |
+| 0.60 | 4.2 | 10.9 | 15.0 | 1.3 |
+| 0.80 | 10.1 | 27.2 | 15.5 | 4.0 |
+| 1.00 | 19.7 | 56.0 | 16.2 | 9.8 |
+| 1.20 | 34.0 | 101.7 | 17.2 | 20.4 |
+| 1.40 | 54.0 | 169.1 | 18.7 | 37.7 |
 
 Non chiffré ici : marche, sol irrégulier, pente, course (simulation, phase 3b) ; mains à doigts et visage (un nombre d'actionneurs, pas un couple) ; lacet du buste et de la tête (inertie seulement).
 
