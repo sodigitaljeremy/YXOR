@@ -6114,3 +6114,237 @@ fichiers:
     empreinte: 3c59401b2188a6e0af41dbaff95a7742a8198f034e723f799d1806e0497793a5
     conditions: page publique, consultée sans compte
     redistribuable: false
+
+  # ── Chaîne compacte (2026-10-08), sources lues, jamais versées ──
+  marche_pui_g_jk_bd6a20s12p:
+    source: Jikong Technology (JK BMS), https://www.jkbms.com/product/jk-bd6a20s12p/
+    reference: JK-BD6A20S12P - JK BMS (fiche produit officielle)
+    date: 2026-10-08
+    empreinte: sha256:b5614178f7909d824e5cffecec861ae40cdcdbd838c9764680aa0265748bbd3f
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_jk_bd6a24s10p:
+    source: Jikong Technology (JK BMS), https://www.jkbms.com/product/jk-bd6a24s10p/
+    reference: JK-BD6A24S10P - JK BMS (fiche produit officielle)
+    date: 2026-10-08
+    empreinte: sha256:3bb5ba8113367f8f5685cd0c095db51d15b46962b0d1672a885635861da59a47
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_jk_catalogue:
+    source: Jikong Technology (JK BMS), https://www.jkbms.com/products/active-balancer-bms/
+    reference: JK BMS - Active balancer BMS (liste)
+    date: 2026-10-08
+    empreinte: sha256:b4286403fef6462b3f23bb4b2b48cdf74ea4e06062c574180cbd12897d069108
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_nkon_jk_bd6a20s10p:
+    source: NKON (Pays-Bas), https://www.nkon.nl/en/jk-bms-bd6a20s10p.html
+    reference: JK Smart Active Balance BMS BD6A20S10PR - (8S - 20S) - 100A (NKON)
+    date: 2026-10-08
+    empreinte: sha256:1437a79221ef7f4c306353e8f5c01bd7e97523676d9ed04b5e8f42d5063c40f0
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_nkon_jk_bd6a17s8p:
+    source: NKON (Pays-Bas), https://www.nkon.nl/en/jk-bms-bd6a17s8p.html
+    reference: JK Smart Active Balance BMS BD6A17S8PR - (8S - 17S) - 80A (NKON)
+    date: 2026-10-08
+    empreinte: sha256:0dfc3635f6a1e0f9d462c709a64652b206d91e74f9579100c58e72792da4d03e
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_nkon_jk_bd6a17s6p:
+    source: NKON (Pays-Bas), https://www.nkon.nl/en/jk-bms-bd6a17s6p.html
+    reference: JK Smart Active Balance BMS BD6A17S6PR - (8S - 17S) - 60A (NKON)
+    date: 2026-10-08
+    empreinte: sha256:7746fe6906e4bc00014ebcd64e127aee5e0eec79a25cf63fa058cf2c22a6632c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_nkon_jk_bd4a17s4p:
+    source: NKON (Pays-Bas), https://www.nkon.nl/en/jk-bms-bd4a17s4p.html
+    reference: JK Smart Active Balance BMS BD4A17S4PR - (8S - 17S) - 40A (NKON)
+    date: 2026-10-08
+    empreinte: sha256:168d42d4c156b4c779ca40ad3b3ccfe7c419f0b735f2d57bcb63cfe7d313e305
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_jbd_sp17s005:
+    source: Jiabaida (JBD), https://jbdbms.com/products/sp17s005
+    reference: JBD SP17S005 (10S-17S/20A-120A/LFP&NMC) - boutique officielle JBD
+    date: 2026-10-08
+    empreinte: sha256:76599bdf55484eec443bad09ebd282bf0dbabc29498dc096a07035b3bcad1a89
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_sigmanortec_daly_13s60a:
+    source: Sigmanortec (Roumanie), https://sigmanortec.ro/en/smart-bms-13s-module-daly-60a-bluetooth-48v
+    reference: Smart BMS 13S module, Daly, 60A, Bluetooth, 48V (Sigmanortec)
+    date: 2026-10-08
+    empreinte: sha256:9c1777059864b95236b04e0a75c652252d7f3654f411688bb4e61fbb532f361b
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_daly_officiel_k:
+    source: Dongguan Daly Electronics, https://www.dalybms.com/48v-lifepo4-bms-daly-k-series-smart-bms-3s-to-24s-40a-60a-100a-product/
+    reference: DALY K series smart BMS 3S-24S 40/60/100A (site officiel)
+    date: 2026-10-08
+    empreinte: sha256:a109b3c9cc91423a33d26fefb84c564bc2790428e2c77445d1dbf08a3963033c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_albright_pc100_ds:
+    source: Albright International (Royaume-Uni), https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/07/PC100-Data-Sheet.pdf
+    reference: Albright PC100 Data Sheet
+    date: 2026-10-08
+    empreinte: sha256:2f8882e75189bc4ea3bb80f163c17e3679518acbce2eeabb859fe7b0dbf7ce88
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_albright_sw60_ds:
+    source: Albright International (Royaume-Uni), https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/08/SW60-Data-Sheet.pdf
+    reference: Albright SW60 Data Sheet
+    date: 2026-10-08
+    empreinte: sha256:a3dd14da148b9468eb8c3578298743eb18142ee1e5ddfb30981ef1dae7222e0f
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_albright_sw80_ds:
+    source: Albright International (Royaume-Uni), https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/08/SW80-Data-Sheet.pdf
+    reference: Albright SW80 Data Sheet
+    date: 2026-10-08
+    empreinte: sha256:313091d7463cf861328b9d7f51948f52970d5f44f8cf59f35c3503a852064e5c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_gigavac_p115_ds:
+    source: GIGAVAC (Sensata) ; hébergé par Stealth EV, https://stealthev.com/wp-content/uploads/2019/06/P115-Spec-Sheet.pdf
+    reference: GIGAVAC P115 MiniTACTOR Spec Sheet Rev B 10/11/18 (copie hébergée par Stealth EV)
+    date: 2026-10-08
+    empreinte: sha256:0e62ba79415f648563ce92c34d69971760f2f07c3f4f52f4619bfefc6e554205
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_dccomponents_p115bda:
+    source: DC Components Store, https://dc-components.com/product/gigavac-p115bda/
+    reference: GIGAVAC DC Contactor Relay P115BDA - DC Components Store
+    date: 2026-10-08
+    empreinte: sha256:641cc8b30f1d57a1f12afac6e1c4b6cc0c41dba2d45feacea1afdf7fc08e4b98
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_sensata_p105:
+    source: Sensata Technologies, https://www.sensata.com/products/gigavac-power-contactors-fuses/p-series-minitactor/p105-series
+    reference: Sensata GIGAVAC P105 series
+    date: 2026-10-08
+    empreinte: null
+    conditions: non lues ; NON téléchargée, empreinte absente
+    redistribuable: false
+  marche_pui_g_te_lev100:
+    source: TE Connectivity, https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1-1773701-1_LEV100&DocType=DS&DocLang=English
+    reference: TE Kilovac LEV100 (fiches 4-1618391-x)
+    date: 2026-10-08
+    empreinte: null
+    conditions: non lues ; NON téléchargée, empreinte absente
+    redistribuable: false
+  marche_pui_g_racer_flipsky_se200:
+    source: racer.lt (Lituanie), https://racer.lt/item/flipsky-antispark-switch-smart-enhanced-200a-for-electric-skateboard-ebike-scooter-robots-22552.html
+    reference: Flipsky AntiSpark Switch Smart Enhanced 200A (racer.lt)
+    date: 2026-10-08
+    empreinte: sha256:3b266c0ae22bf11c14a65063ce2b5db1485fdbacce94d98b27974f2eea7b111c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_flipsky_pro_v3:
+    source: ThinkRobotics / Flipsky, https://thinkrobotics.com/products/flipsky-antispark-switch-pro-with-aluminum-pcb-v3-0-280a-for-electric-skateboard-ebike-scooter-robots
+    reference: Flipsky Antispark Switch Pro V3.0 (ThinkRobotics / flipsky.net)
+    date: 2026-10-08
+    empreinte: null
+    conditions: non lues ; NON téléchargée, empreinte absente
+    redistribuable: false
+  marche_pui_g_esurfer_maytech:
+    source: e-surfer.com (forum, Allemagne) ; texte du vendeur Maytech, https://forum.e-surfer.com/t/300a-20-85v-anti-spark-switch/2001
+    reference: 300A 20-85V Anti-spark switch (Maytech MTS2009AS) - forum e-surfer
+    date: 2026-10-08
+    empreinte: sha256:d05cd0179ad61c915143cc64800ff83ffe53c72796af6c05b0809fc70f70d12b
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_as120:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/biao/177.html
+    reference: AMASS AS120 大电流混装防打火连接器 (site officiel)
+    date: 2026-10-08
+    empreinte: sha256:c139c7792d3870266bd36a295d623dcae7583afb50ac2e7751d9fd1d843d72c4
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_as150:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/biao/178.html
+    reference: AMASS AS150 大电流防打火连接器 (site officiel)
+    date: 2026-10-08
+    empreinte: sha256:0a8e5dea9512f15701fefd5e928c2e630524a1c69c0fa4e4115a83ba7b0319d9
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_as150_dessin:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/ueditor/php/upload/image/20240423/1713847651833690.png
+    reference: AMASS AS150 - dessin coté (image de la page officielle)
+    date: 2026-10-08
+    empreinte: sha256:89ed179239216af0799ab8257d1c604ab5f9138f396b23dac026eb11d6db609f
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_as150u:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/biao/179.html
+    reference: AMASS AS150U 大电流混合型防打火连接器 (site officiel)
+    date: 2026-10-08
+    empreinte: sha256:0d8d0a0c020f042e5e5dddbb1b0b2809b4f387793c8eaff506d7576fe9c9bfe1
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_xt90s:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/biao/300.html
+    reference: AMASS XT90S 大电流防打火连接器 (site officiel)
+    date: 2026-10-08
+    empreinte: sha256:6c6c71c973488b18fdbf3b25f7566c7bcbaabf829d85d84a531f9f5883da99b3
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_amass_xt90s_dessin:
+    source: Changzhou Amass Electronics, https://www.china-amass.com/ueditor/php/upload/image/20240420/1713590439399237.png
+    reference: AMASS XT90S - dessin coté (image de la page officielle)
+    date: 2026-10-08
+    empreinte: sha256:6275af381c92a8af35789c10770c83c1438fa3047b3f8032f6db4479d648f367
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_littelfuse_mega70v_ds:
+    source: Littelfuse ; hébergé par Bimble Solar (Royaume-Uni), https://www.bimblesolar.com/docs/125A%20Littelfuse.pdf
+    reference: Littelfuse MEGA High Performance Fuses Rated 70 V-SF51, Fuse Datasheet, rév. 09/07/2023 (copie Bimble
+      Solar)
+    date: 2026-10-08
+    empreinte: sha256:b36f7690755f9fdc33be30d791353af860e5808fc0cd3d3aa38b3351d29e647b
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_victron_fusibles_ds:
+    source: Victron Energy ; hébergé par Offgridtec (Allemagne), https://b2b.offgridtec.com/media/product_attachements/Victron_MIDI-MEGA-ANL-Fuses-and-Fuse-Holders_Datasheet.pdf
+    reference: Victron - MIDI, MEGA and ANL fuses, and fuse holders (datasheet, copie Offgridtec)
+    date: 2026-10-08
+    empreinte: sha256:fed28c611bda8d610cfdd536b409a5f60cefd7d06d9a7d3a6e010fa716a5a74c
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_eh_victron_mega125_58:
+    source: Elektro Hungary (Hongrie), https://elektrohungary.com/en/spd/CIP137125010/Victron-Energy-MEGA-fuse-link-125A-58V
+    reference: Victron Energy MEGA fuse cartridge 125A/58V (Elektro Hungary)
+    date: 2026-10-08
+    empreinte: sha256:c44367ce2cf31fe2aa8c225ab3d88812131bd79ebaf22ecec9f3525f84a9c7ca
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_eh_victron_midi40_58:
+    source: Elektro Hungary (Hongrie), https://elektrohungary.com/en/spd/CIP133040010/Victron-Energy-MIDI-Fuse-40A-58V
+    reference: Victron Energy MIDI Fuse 40A/58V (Elektro Hungary)
+    date: 2026-10-08
+    empreinte: sha256:8f02348c167e3150659693bce04cb5cb6f10b276867eea005a4de5d124e05d47
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_eh_victron_midi_holder:
+    source: Elektro Hungary (Hongrie), https://elektrohungary.com/en/spd/CIP000050001/Victron-Energy-MIDI-fuse-holder
+    reference: Victron Energy MIDI fuse holder CIP000050001 (Elektro Hungary)
+    date: 2026-10-08
+    empreinte: sha256:0578563d582e96b7299813ba92ffc74102e510d7ff1cd73333ebb86b6b1b3bdc
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_eh_victron_mega_holder:
+    source: Elektro Hungary (Hongrie), https://elektrohungary.com/en/spd/CIP000100001/Victron-Energy-MEGA-fuse-holder
+    reference: Victron Energy MEGA fuse holder CIP000100001 (Elektro Hungary)
+    date: 2026-10-08
+    empreinte: sha256:e31ec068210da6ea60223aee2e0470cb7a8e43a58039036174bef078365ff4d6
+    conditions: non lues
+    redistribuable: false
+  marche_pui_g_bluebottle_mrbf:
+    source: Bluebottle Marine (Australie), https://www.bluebottlemarine.com/products/blue-sea-mrbf-terminal-fuse.html
+    reference: Blue Sea MRBF Terminal Fuse (Bluebottle Marine)
+    date: 2026-10-08
+    empreinte: sha256:10383f93c30b1ef5a0ef574581683047369291fc1424124b5d16ab0d7efe18ce
+    conditions: non lues
+    redistribuable: false

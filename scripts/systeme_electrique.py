@@ -356,9 +356,11 @@ def canaux_can(axes_can: int, f_hz: float, etendue: bool, b=None) -> dict:
 
 
 # ─────────────────────────────── place ──────────────────────────────────
-def place_tronc(R: dict, H_reel: float, volume_L: float, hyp) -> dict:
-    """Volume disponible dans le tronc (ANSUR, à la hauteur réelle) ; s'il manque, le tronc s'allonge d'autant."""
-    larg, prof, haut = R["largeur_epaules"] * H_reel, R["profondeur_poitrine"] * H_reel, R["tronc_hauteur"] * H_reel
+def place_tronc(R: dict, H: float, volume_L: float, hyp, tronc_plus: float = 0.0) -> dict:
+    """Volume disponible dans le tronc ; s'il manque, le tronc s'allonge d'autant. CORRIGÉ le 2026-10-08 : largeur et
+    profondeur aux proportions de H (les jambes et le gabarit ne grandissent pas) ; hauteur du tronc = ANSUR × H +
+    `tronc_plus` (rallonge déjà due à la place des moteurs)."""
+    larg, prof, haut = R["largeur_epaules"] * H, R["profondeur_poitrine"] * H, R["tronc_hauteur"] * H + tronc_plus
     f = hyp["remplissage_tronc"]["valeur"]
     dispo = larg * prof * haut * f * 1000                                       # L
     exces = max(0.0, volume_L - dispo)
@@ -398,6 +400,17 @@ def _premier(p, champs):
     return None
 
 
+def _tension(p):
+    """La tension lue : le nombre suivi de « V » s'il y en a un (« 13S (60 V) » → 60), sinon le premier nombre."""
+    for c in CHAMPS_V:
+        x = MC.v(p, c)
+        if x is None:
+            continue
+        m = re.search(r"(\d+(?:[.,]\d+)?)\s*V", str(x))
+        return float(m.group(1).replace(",", ".")) if m else MC.num(x)
+    return None
+
+
 def _texte(p) -> str:
     return " ".join(str((x or {}).get("note") or "") + " " + str((x or {}).get("valeur") or "")
                     for x in p.values() if isinstance(x, dict)).lower()
@@ -406,6 +419,7 @@ def _texte(p) -> str:
 def composants(pui: dict, taux=None) -> list[dict]:
     taux = taux or lire("budget.yaml")["taux_de_change"]
     bornes = pui.get("bornes_proposees") or {}
+    vmax_cellule = MC.chimie(lire("batteries.yaml"), "li_ion")["tension_max_V"]
     out = []
     for pid, p in ((pui.get("marche") or {}).get("produits") or {}).items():
         # bornes PROPOSÉES (majorantes) : seulement là où la valeur lue est null ; chaque usage est noté
@@ -416,13 +430,18 @@ def composants(pui: dict, taux=None) -> list[dict]:
                 p = dict(p, **{cle: {"valeur": bo["valeur"], "note": "BORNE PROPOSÉE : " + bo["justification"]}})
                 utilisees.append(f"{champ} de {p.get('nom', pid)}")
         Vs = nombres(MC.v(p, "tension_service"))
-        V = _premier(p, CHAMPS_V)
+        V = _tension(p)
         ns = nombres(MC.v(p, "nombre_s"))
-        out.append(dict(id=pid, nom=p.get("nom", pid), categorie=p.get("categorie"), I=_premier(p, CHAMPS_I),
+        if V is None and ns and str(p.get("categorie", "")).startswith("bms"):
+            V = max(ns) * vmax_cellule                    # DÉDUITE de la plage de cellules lue (n S × 4,2 V), dite
+            utilisees.append(f"tension de {p.get('nom', pid)} déduite de la plage de cellules lue")
+        I_opts = next((nombres(MC.v(p, c)) for c in CHAMPS_I if MC.v(p, c) is not None), [])
+        out.append(dict(id=pid, nom=p.get("nom", pid), categorie=p.get("categorie"), I=_premier(p, CHAMPS_I), I_options=I_opts,
                         V=V if V is not None else (max(Vs) if Vs else None),
                         Vout=MC.num(MC.v(p, "sortie_v")), Vin=nombres(MC.v(p, "entree_v")),
                         S=(min(ns), max(ns)) if ns else None, seuil=MC.num(MC.v(p, "seuil_declenchement_48v")),
                         bidir=MC.v(p, "bidirectionnel"), certif=str(MC.v(p, "certification_securite") or ""),
+                        port_commun=MC.v(p, "port_commun"),
                         texte=_texte(p), masse=MC.num(MC.v(p, "masse_g")), bornes=utilisees,
                         volume=MC.volume_l(p.get("dimensions_mm")), prix=MC.chf(p.get("prix"), taux)))
     return out
@@ -440,35 +459,54 @@ def admissible(x, categorie, var) -> bool:
         return False                                   # un absorbeur sans seuil publié n'en est pas un (résistances seules) ;
         #                                                sous la pleine charge il viderait le pack ; au-delà de 60 V : trop tard
     porte = "porte-fusible" in x["nom"].lower() or "holder" in x["nom"].lower()
-    if categorie == "fusible" and porte:
+    if categorie in ("fusible", "fusible_compact") and porte:
         return False                                   # le fusible ; son porte-fusible est le maillon suivant
     if categorie == "porte_fusible":
         return porte
+    if categorie in ("anti_etincelle", "precharge") and "interdit" in x["texte"] and "recharg" in x["texte"]:
+        return False                                   # il interdit de recharger par sa sortie : le freinage le fait
+    if categorie == "bms_port_commun" and x["S"] and not (x["S"][0] <= var["S"] <= x["S"][1]):
+        return False
+    if categorie == "contacteur_compact" and (x["bidir"] is False or "courant inverse" in x["texte"]):
+        return False
     return True
 
 
-def composant(comps, categorie, I=None, V=None, Vout=None, Vin=None, var=None) -> dict:
-    """Le moins cher de la catégorie dont les valeurs LUES tiennent I (A), V (V), la sortie Vout et l'entrée Vin ;
-    vérifiable d'abord, sinon le moins cher sur ce qui est connu (et ce qui manque)."""
-    cat_marche = "fusible" if categorie == "porte_fusible" else categorie
-    c = [x for x in comps if x["categorie"] == cat_marche and (var is None or admissible(x, categorie, var))]
+def composant(comps, categorie, I=None, V=None, Vout=None, Vin=None, var=None, ordre=("prix",)) -> dict:
+    """Le produit de la catégorie dont les valeurs LUES tiennent I (A), V (V), la sortie Vout et l'entrée Vin ;
+    vérifiable d'abord, rangé selon `ordre` (2026-10-08 : volume, masse, prix ; avant : prix) ; sinon le premier
+    sur ce qui est connu (et ce qui manque). `categorie` : une catégorie, ou une LISTE (la première qui a un produit
+    qui convient)."""
+    if isinstance(categorie, (list, tuple)):
+        res = None
+        for cat in categorie:
+            res = composant(comps, cat, I, V, Vout, Vin, var, ordre)
+            if res["best"] is not None:
+                return res
+        return res
+    cat_marche = {"porte_fusible": ("fusible", "fusible_compact")}.get(categorie, (categorie,))
+    c = [x for x in comps if x["categorie"] in cat_marche and (var is None or admissible(x, categorie, var))]
     if Vout is not None:
         c = [x for x in c if x["Vout"] is None or abs(x["Vout"] - Vout) < 0.6]
     if Vin is not None:                                # une tension, ou la plage (coupure, pleine charge) du pack
         lo, hi = (Vin, Vin) if not isinstance(Vin, tuple) else Vin
         c = [x for x in c if not x["Vin"] or (min(x["Vin"]) <= lo and hi <= max(x["Vin"]))]
-    c = [x for x in c if (I is None or x["I"] is None or x["I"] >= I) and (V is None or x["V"] is None or x["V"] >= V)]
+    # un produit décliné en plusieurs calibres (« 30, 40, 60, 100 A ») convient si l'un d'eux suffit
+    tient_I = lambda x: x["I"] is None or any(o >= I for o in (x.get("I_options") or [x["I"]]))
+    c = [x for x in c if (I is None or tient_I(x)) and (V is None or x["V"] is None or x["V"] >= V)]
 
     def manque(x):
         m = [lib for k, lib in (("prix", "prix"), ("masse", "masse"), ("volume", "cotes")) if x[k] is None]
         m += (["courant"] if I is not None and x["I"] is None else []) + (["tension"] if V is not None and x["V"] is None else [])
         m += (["tension de sortie"] if Vout is not None and x["Vout"] is None else [])
+        m += (["port commun (régénération)"] if categorie == "bms_port_commun" and "oui" not in str(x.get("port_commun")).lower() else [])
         m += (["seuil de déclenchement"] if categorie == "regeneration" and x["seuil"] is None else [])
         return m
-    sur = sorted((x for x in c if not manque(x)), key=lambda x: x["prix"])
+    cle = lambda x: tuple(x[k] if x[k] is not None else 1e12 for k in ordre)
+    sur = sorted((x for x in c if not manque(x)), key=cle)
     if sur:
         return dict(best=sur[0], inconnues=[])
-    conn = sorted((x for x in c if x["prix"] is not None), key=lambda x: x["prix"]) or c
+    conn = sorted((x for x in c if x["prix"] is not None), key=cle) or sorted(c, key=cle)   # même ordre (2026-10-08)
     if conn:
         return dict(best=conn[0], inconnues=[f"{m} de {conn[0]['nom']} ({categorie})" for m in manque(conn[0])])
     return dict(best=None, inconnues=[f"{categorie} : aucun produit au marché qui convienne"])
@@ -486,7 +524,7 @@ def rail_servo(plage) -> str | None:
 
 # ─────────────────────────────── dimensionnement ────────────────────────
 def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list, M: float, Ht: float, Hr: float,
-                 profil: dict, n_can_axes: int, ctx_tables: dict) -> dict:
+                 profil: dict, n_can_axes: int, ctx_tables: dict, tronc_plus: float = 0.0) -> dict:
     """Le système électrique d'une solution. `el` : contexte électrique ; `petits` : actionneurs des petits axes."""
     hyp, var = el["hyp"], el["var"]
     inc = []
@@ -509,20 +547,28 @@ def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list,
     if not comps:
         inc.append("chaîne de puissance : marché non versé (params/puissance.yaml, bloc marche)")
     else:
-        I = b["I_requis"] if b else None
-        for m in el["pui"]["chaine"]:
+        cm = el["pui"].get("choix_maillons") or {}
+        ordre = tuple(cm.get("ordre") or ("prix",))
+        I = b["I_requis"] * cm.get("marge_courant", 1.0) if b else None      # courant RÉEL × marge (2026-10-08)
+        liste = el["pui"].get("chaine_compacte") if el.get("chaine") == "compacte" else el["pui"]["chaine"]
+        for m in liste:
             if m.get("categorie"):
-                chaine.append((m["maillon"], composant(comps, m["categorie"], I=I, V=var["Vmax"], var=var)))
-                if m["categorie"] == "fusible":
-                    chaine.append(("porte_fusible", composant(comps, "porte_fusible", I=I, V=var["Vmax"], var=var)))
-        chaine.append(("regeneration", composant(comps, "regeneration", V=var["Vmax"], var=var)))
-        chaine.append(("arret_urgence", composant(comps, "arret_urgence", var=var)))
-        rails = {"12": composant(comps, "dcdc", Vout=12.0, Vin=(var["Vfin"], var["Vmax"]))}
+                chaine.append((m["maillon"], composant(comps, m["categorie"], I=I, V=var["Vmax"], var=var, ordre=ordre)))
+                if m["maillon"] == "fusible":
+                    # le porte-fusible du MÊME format que le fusible retenu (MIDI, MEGA, ANL, MRBF) : 2026-10-08
+                    fus = chaine[-1][1]["best"]
+                    fmt = next((f for f in ("MIDI", "MEGA", "ANL", "MRBF") if fus and f in fus["nom"].upper()), None)
+                    porte = [x for x in comps if not fmt or fmt in x["nom"].upper()]
+                    chaine.append(("porte_fusible", composant(porte, "porte_fusible", I=I, V=var["Vmax"], var=var,
+                                                              ordre=ordre)))
+        chaine.append(("regeneration", composant(comps, "regeneration", V=var["Vmax"], var=var, ordre=ordre)))
+        chaine.append(("arret_urgence", composant(comps, "arret_urgence", var=var, ordre=ordre)))
+        rails = {"12": composant(comps, "dcdc", Vout=12.0, Vin=(var["Vfin"], var["Vmax"]), ordre=ordre)}
         if (calc or {}).get("rail") == "5":
-            rails["5"] = composant(comps, "dcdc", Vout=5.0, Vin=12.0)
+            rails["5"] = composant(comps, "dcdc", Vout=5.0, Vin=12.0, ordre=ordre)
         for r in sorted({rail_servo(a.get("plage_servo")) for a in petits} - {None}):
             if r != "12":
-                rails[r] = composant(comps, "dcdc", Vout=float(r), Vin=(var["Vfin"], var["Vmax"]))
+                rails[r] = composant(comps, "dcdc", Vout=float(r), Vin=(var["Vfin"], var["Vmax"]), ordre=ordre)
         if any(rail_servo(a.get("plage_servo")) is None for a in petits):
             inc.append("plage de tension d'un servo des petits axes : rail non choisi")
         for _, x in chaine + list(rails.items()):
@@ -549,7 +595,7 @@ def dimensionner(el: dict, R: dict, cible: dict, axes_corps: dict, petits: list,
     volume_connu = connu([v for _, v in volumes])
     prix_connu = connu([b["prix"] if b else None, (calc or {}).get("prix"), bus["prix"]] + [x["prix"] for x in elems])
     # place : sur le volume complet s'il est connu ; sinon sur sa part CONNUE (borne basse de l'allongement, dite)
-    pl = place_tronc(R, Hr, volume if volume is not None else volume_connu, hyp)
+    pl = place_tronc(R, Hr, volume if volume is not None else volume_connu, hyp, tronc_plus)
     pl["partielle"] = volume is None
     return dict(calc=calc, bus=bus, n_can=n_can, energie=en, batterie=b, chaine=chaine, rails=rails, masse=masse,
                 masse_connue=sum(x for x in [b and b["masse"], (calc or {}).get("masse") and calc["masse"] / 1000,

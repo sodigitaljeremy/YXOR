@@ -21,7 +21,7 @@ Profil **lab** de `params/capacites.yaml` : DÉCIDÉ par Jeremy le 2026-10-07 (s
 
 ## Entrées et hypothèses
 
-- Besoins : tables a·M + b des phases 3a (`exigences_physiques`) et 3b (`simulations_marche`, référence prudente : par axe, le robot le plus exigeant parmi ceux dont la marche couvre le Froude). Par axe, le **maximum** des tâches du profil, à la vraie masse de la solution ; `verifier_maximum` l'a recontrôlé sur 218 solutions.
+- Besoins : tables a·M + b des phases 3a (`exigences_physiques`) et 3b (`simulations_marche`, référence prudente : par axe, le robot le plus exigeant parmi ceux dont la marche couvre le Froude). Par axe, le **maximum** des tâches du profil, à la vraie masse de la solution ; `verifier_maximum` l'a recontrôlé sur 461 solutions.
 - Marge : 1,5 sur les couples (fiche 0051). La vitesse à vide doit couvrir la vitesse de pointe, sans marge.
 - Structure : segment par segment (`scripts/structure_plaques.py`, reconstruction des études du 2026-10-03 et 04 : caissons, liaisons à 90°, boîtes, étalonnés sur la CAO), à 0,60 m, puis × (H / 0,60)^b. Par ensemble (kg, centrale / haute) : 25 : 1,82 / 3,86 ; 26 : 1,86 / 3,92 ; 27 : 1,90 / 4,00 ; 29 : 1,97 / 4,12. Charge utile 0,3 kg (PROPOSÉE, `exigences_S.yaml`).
 - Régimes : charge, saisie, poussée, buste et tête au couple **continu** ; saut, relevé et gestes au couple de **pointe** ; la marche aux deux.
@@ -40,18 +40,18 @@ Familles du corps : robstride, damiao, steadywin, cubemars, myactuator, hightorq
 
 ## Bilan
 
-73728 solutions évaluées en 511 s : 0 faisables, 52602 infaisables, 21126 INCONNUES. Par famille du corps :
+73728 solutions évaluées en 498 s : 0 faisables, 29084 infaisables, 44644 INCONNUES. Par famille du corps :
 
 | Famille | Faisables | Infaisables | INCONNUES |
 | --- | ---: | ---: | ---: |
-| robstride | 0 | 7364 | 1852 |
-| damiao | 0 | 4994 | 4222 |
-| steadywin | 0 | 8976 | 240 |
-| cubemars | 0 | 2500 | 6716 |
-| myactuator | 0 | 8768 | 448 |
+| robstride | 0 | 4696 | 4520 |
+| damiao | 0 | 80 | 9136 |
+| steadywin | 0 | 7632 | 1584 |
+| cubemars | 0 | 260 | 8956 |
+| myactuator | 0 | 4760 | 4456 |
 | hightorque | 0 | 9216 | 0 |
-| encos | 0 | 1568 | 7648 |
-| unitree | 0 | 9216 | 0 |
+| encos | 0 | 8 | 9208 |
+| unitree | 0 | 2432 | 6784 |
 
 ## Front de Pareto
 
@@ -74,20 +74,20 @@ Pour chaque tâche calculée du profil, et chaque niveau jusqu'au niveau visé :
 
 | Tâche | Niveau | Coût (CHF) | + CHF | Masse (kg) | + kg | Hauteur réelle de la moins chère | H min réelle | Note |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| marche seule (référence) | 0.6 | ≥ 4 595 | — | 15,8 | — | 0,873 | — | |
-| marche_sol_plat | 0.3 | ≥ 4 595 | — | 15,8 | — | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| marche_sol_plat | 0.6 | ≥ 4 595 | +0 | 15,8 | +0,0 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| releve | depuis le dos | ≥ 4 715 | +120 | 15,9 | +0,1 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| releve | depuis le ventre | ≥ 4 715 | +0 | 15,9 | +0,0 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| saut_vertical | 5 | ≥ 5 175 | +580 | 23,4 | +7,6 | 0,979 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| saut_vertical | 10 | — | — | — | — | — | — | aucune faisable ; 178 INCONNUES (surtout : prix de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible)) |
-| gestes_pointage | 0.5 | ≥ 4 595 | +0 | 15,8 | +0,0 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| gestes_pointage | 1.0 | ≥ 4 595 | +0 | 15,8 | +0,0 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| gestes_pointage | 2.0 | ≥ 4 540 | −55 | 16,3 | +0,5 | 0,901 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| saisie | 0.2 | ≥ 4 558 | −37 | 16,2 | +0,4 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| poussee | 20 | — | — | — | — | — | — | aucune faisable ; 206 INCONNUES (surtout : prix de RobStride Discharge Module (泄放模块, « bleeder module ») (regeneration)) |
-| buste | lacet seul | ≥ 4 595 | +0 | 15,8 | +0,0 | 0,873 | — | ≥ : chaîne de puissance incomplètement chiffrée |
-| tete | 2 | — | — | — | — | — | — | aucune faisable ; 207 INCONNUES (surtout : prix de RobStride Discharge Module (泄放模块, « bleeder module ») (regeneration)) |
+| marche seule (référence) | 0.6 | ≥ 4 019 | — | 10,2 | — | 0,722 | — | |
+| marche_sol_plat | 0.3 | ≥ 4 019 | — | 10,2 | — | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| marche_sol_plat | 0.6 | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| releve | depuis le dos | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| releve | depuis le ventre | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saut_vertical | 5 | ≥ 4 009 | −10 | 10,3 | +0,2 | 0,683 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saut_vertical | 10 | — | — | — | — | — | — | aucune faisable ; 270 INCONNUES (surtout : masse de Maytech MTS2009AS anti-spark switch 300A 20-85V (anti_etincelle)) |
+| gestes_pointage | 0.5 | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| gestes_pointage | 1.0 | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| gestes_pointage | 2.0 | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| saisie | 0.2 | ≥ 4 003 | −16 | 10,9 | +0,7 | 0,677 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| poussee | 20 | ≥ 4 221 | +202 | 10,7 | +0,6 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| buste | lacet seul | ≥ 4 019 | +0 | 10,2 | +0,0 | 0,722 | — | ≥ : chaîne de puissance incomplètement chiffrée |
+| tete | 2 | ≥ 4 030 | +11 | 10,2 | +0,1 | 0,731 | — | ≥ : chaîne de puissance incomplètement chiffrée |
 
 ## Données INCONNUES les plus bloquantes
 
@@ -95,18 +95,18 @@ Rangées par le nombre de solutions INCONNUES où elles manquent ; « seule » =
 
 | Donnée manquante | Solutions | Seule |
 | --- | ---: | ---: |
-| prix de RobStride Discharge Module (泄放模块, « bleeder module ») (regeneration) | 21126 | 356 |
-| plage de tension d'un servo des petits axes : rail non choisi | 13356 | 0 |
-| prix de RobStride Power Supply Board V1.3 (carte de distribution) (precharge) | 12732 | 0 |
-| masse de RobStride Power Supply Board V1.3 (carte de distribution) (precharge) | 12732 | 0 |
-| cotes de RobStride Power Supply Board V1.3 (carte de distribution) (precharge) | 12732 | 0 |
-| courant de RobStride Power Supply Board V1.3 (carte de distribution) (precharge) | 12732 | 0 |
-| tension de RobStride Power Supply Board V1.3 (carte de distribution) (precharge) | 12732 | 0 |
-| couple continu de xl330_m077 | 10030 | 0 |
-| prix de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible) | 8330 | 0 |
-| masse de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible) | 8330 | 0 |
-| cotes de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible) | 8330 | 0 |
-| courant de BF1 58V Series, MIDI style 58V Slo-Blo bolt-down fuse (fusible) | 8330 | 0 |
+| masse de Maytech MTS2009AS anti-spark switch 300A 20-85V (anti_etincelle) | 44644 | 0 |
+| courant de Maytech MTS2009AS anti-spark switch 300A 20-85V (anti_etincelle) | 44644 | 0 |
+| prix de HPD Power Bleeding Module (regeneration) | 44644 | 0 |
+| tension de HPD Power Bleeding Module (regeneration) | 44644 | 0 |
+| masse de JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) (bms_port_commun) | 28450 | 0 |
+| port commun (régénération) de JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) (bms_port_commun) | 28450 | 0 |
+| courant de Victron porte-fusible MIDI (CIP000050001) (porte_fusible) | 28222 | 0 |
+| tension de Victron porte-fusible MIDI (CIP000050001) (porte_fusible) | 28222 | 0 |
+| prix de GIGAVAC P105 MiniTACTOR (contacteur_compact) | 25248 | 0 |
+| masse de GIGAVAC P105 MiniTACTOR (contacteur_compact) | 25248 | 0 |
+| cotes de GIGAVAC P105 MiniTACTOR (contacteur_compact) | 25248 | 0 |
+| courant de GIGAVAC P105 MiniTACTOR (contacteur_compact) | 25248 | 0 |
 
 Hors calcul pour toute solution (capacités jamais « tenues » ici) :
 
@@ -132,348 +132,246 @@ Contexte DÉCIDÉ : fiches 0070 (batterie), 0071 (Lab : autonomie 30 min sur le 
 - batterie : cellules NEUVES d'un distributeur identifié seulement (récupération, occasion, marque masquée écartées) ;
 - place : batterie, calculateur, cartes et convertisseurs dans 50 % du tronc (largeur d'épaules × profondeur de poitrine × hauteur du tronc, ANSUR, à la hauteur réelle) ; ce qui dépasse ALLONGE le tronc (même lecture « avec écarts » que la place des moteurs).
 
-**Référence, méthode de 14 h 05 recalculée (sans système électrique, charge utile forfaitaire de 1,2 kg)** : 27 axes, 0,50 → 0,557 m, 10,7 kg, 2 709 CHF (actionneurs seuls).
+**Référence, méthode de 14 h 05 recalculée (sans système électrique, charge utile forfaitaire de 1,2 kg)** : 27 axes, 0,50 → 0,550 m, 9,7 kg, 2 682 CHF (actionneurs seuls).
+
+### Chaîne compacte et chaîne industrielle (meilleure solution RobStride)
+
+| Fréquence | Chaîne | Volume électronique (L) | Masse (kg) | Coût TOTAL (CHF HT) | Hauteur réelle (m) | Rallonge du tronc (mm) | Batterie |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| 250 Hz | compacte | 1,46 | 11,5 | ≥ 3 955 | 0,664 | 114 | INR-21700-P42A 12S1P, 176 Wh |
+| 250 Hz | industrielle | 3,17 | 16,2 | ≥ 4 395 | 0,850 | 100 | INR-21700-P42A 12S1P, 176 Wh |
+| 500 Hz | compacte | 1,67 | 13,0 | ≥ 4 861 | 0,700 | 0 | INR-21700-P42A 12S1P, 176 Wh |
+| 500 Hz | industrielle | 3,38 | 16,8 | ≥ 5 091 | 0,865 | 65 | INR-21700-P42A 12S1P, 176 Wh |
 
 ### Tension de coupure et tâches rapides (meilleure solution RobStride pour chaque tâche, marche au niveau du profil)
 
 | Fréquence | Coupure (V/cellule) | saut 5 cm | saut 10 cm | gestes 2 m/s |
 | ---: | ---: | --- | --- | --- |
-| 250 Hz | 2,5 | tient : 25 axes, 0,985 m réels, 23,3 kg, ≥ 4 711 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,902 m réels, 16,2 kg, ≥ 4 076 CHF |
-| 250 Hz | 3,0 | tient : 25 axes, 0,897 m réels, 18,6 kg, ≥ 4 534 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,903 m réels, 16,3 kg, ≥ 4 009 CHF |
-| 250 Hz | 3,2 | tient : 25 axes, 0,897 m réels, 17,5 kg, ≥ 4 327 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,902 m réels, 16,2 kg, ≥ 4 076 CHF |
-| 500 Hz | 2,5 | tient : 25 axes, 0,979 m réels, 23,4 kg, ≥ 5 175 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,901 m réels, 16,3 kg, ≥ 4 540 CHF |
-| 500 Hz | 3,0 | tient : 25 axes, 1,071 m réels, 25,3 kg, ≥ 5 081 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,902 m réels, 16,4 kg, ≥ 4 473 CHF |
-| 500 Hz | 3,2 | tient : 25 axes, 0,949 m réels, 22,0 kg, ≥ 5 099 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,901 m réels, 16,3 kg, ≥ 4 540 CHF |
+| 250 Hz, chaîne compacte | 3,0 | tient : 25 axes, 0,649 m réels, 10,0 kg, ≥ 3 425 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure haut) | tient : 25 axes, 0,688 m réels, 10,0 kg, ≥ 3 555 CHF |
+| 250 Hz, chaîne industrielle | 3,0 | tient : 25 axes, 0,900 m réels, 17,7 kg, ≥ 4 426 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 0,996 m réels, 13,5 kg, ≥ 4 063 CHF |
+| 500 Hz, chaîne compacte | 3,0 | tient : 25 axes, 0,683 m réels, 10,3 kg, ≥ 4 009 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure haut) | tient : 25 axes, 0,722 m réels, 10,2 kg, ≥ 4 019 CHF |
+| 500 Hz, chaîne industrielle | 3,0 | tient : 25 axes, 0,907 m réels, 17,9 kg, ≥ 4 890 CHF | NE TIENT PAS (knee : aucun robstride ne tient (pointe #, continu # N·m, ω # rad/s, b bas, structure cent) | tient : 25 axes, 1,024 m réels, 13,7 kg, ≥ 4 528 CHF |
 
-### 12S, 250 Hz, coupure 2,5 V
+### 12S, 250 Hz, coupure 3,0 V, chaîne compacte
 
-73728 solutions : 0 faisables, 50958 infaisables, 22770 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+73728 solutions : 0 faisables, 28828 infaisables, 44900 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,90 → 0,979 | cubemars + dynamixel | 24,1 | ≥ 11 137 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,85 → 0,987 | cubemars + dynamixel | 24,2 | ≥ 11 137 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 1,003 | cubemars + dynamixel | 24,3 | ≥ 11 137 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 1,020 | cubemars + dynamixel | 24,5 | ≥ 11 137 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,70 → 1,043 | cubemars + dynamixel | 24,8 | ≥ 11 137 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,60 → 0,981 | cubemars + dynamixel | 19,2 | ≥ 10 863 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,65 → 0,933 | cubemars + dynamixel | 19,4 | ≥ 10 863 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,80 → 0,873 | cubemars + dynamixel | 20,3 | ≥ 10 863 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,85 → 0,872 | cubemars + dynamixel | 20,7 | ≥ 10 863 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,50 → 1,115 | cubemars + feetech | 18,6 | ≥ 10 883 | 8 910 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
 
 Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → 0,861 | robstride + dynamixel | 16,8 | ≥ 4 380 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 0,861 | robstride + dynamixel | 16,8 | ≥ 4 380 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,868 | robstride + dynamixel | 16,8 | ≥ 4 380 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-
-- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
-- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
-- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
-
-Volume électronique de la meilleure RobStride (27 axes, H 0,85) : 3,34 L requis pour 3,21 L disponibles ; le tronc s'allonge de 11 mm.
-
-| Élément | Volume (L) | Part |
-| --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 29 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 17 % |
-| batterie | 0,469 | 14 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 11 % |
-| calculateur | 0,251 | 8 % |
-| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 7 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 7 % |
-| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 3 % |
-| cartes CAN | 0,071 | 2 % |
-| precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
-| fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 1 % |
-| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
-
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,85, robstride + dynamixel, même profil) :
-
-| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
-| --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 20 | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 30 | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 60 | 19,7 | ≥ 4 536 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,900 | INCONNU |
-| ia_embarquee | commande seule | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision et voix | 16,8 | ≥ 4 380 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,3 | ≥ 4 225 | 12S1P 210 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,850 | INCONNU |
-
-### 12S, 250 Hz, coupure 3,0 V
-
-73728 solutions : 0 faisables, 40306 infaisables, 33422 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → — | unitree + dynamixel | 36,7 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,90 → — | unitree + dynamixel | 37,8 | ≥ 30 260 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → — | unitree + dynamixel | 38,1 | ≥ 30 260 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → — | unitree + dynamixel | 38,3 | ≥ 30 260 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,70 → — | unitree + dynamixel | 38,7 | ≥ 30 260 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-
-Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → 0,861 | robstride + dynamixel | 17,8 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 0,861 | robstride + dynamixel | 17,8 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,868 | robstride + dynamixel | 17,9 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,55 → 0,664 | robstride + feetech | 11,5 | ≥ 3 955 | 2 857 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,60 → 0,654 | robstride + feetech | 11,8 | ≥ 3 955 | 2 857 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,65 → 0,661 | robstride + feetech | 12,1 | ≥ 3 955 | 2 857 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
 
 - RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 - RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 - RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 
-Volume électronique de la meilleure RobStride (27 axes, H 0,85) : 3,34 L requis pour 3,21 L disponibles ; le tronc s'allonge de 11 mm.
+Volume électronique de la meilleure RobStride (27 axes, H 0,55) : 1,46 L requis pour 1,08 L disponibles ; le tronc s'allonge de 72 mm.
 
 | Élément | Volume (L) | Part |
 | --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 29 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 17 % |
-| batterie | 0,469 | 14 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 11 % |
-| calculateur | 0,251 | 8 % |
-| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 7 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 7 % |
-| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 3 % |
-| cartes CAN | 0,071 | 2 % |
-| precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
-| fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 1 % |
-| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
+| batterie | 0,476 | 33 % |
+| calculateur | 0,251 | 17 % |
+| contacteur_compact : GIGAVAC P115BDA MiniTACTOR (scellé hermé | 0,160 | 11 % |
+| anti_etincelle : Maytech MTS2009AS anti-spark switch 300A | 0,136 | 9 % |
+| fusible_compact : Victron porte-fusible MIDI (CIP000050001 | 0,098 | 7 % |
+| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 7 % |
+| bms_port_commun : JBD SP17S005 smart BMS (variantes NMC 20 | 0,080 | 5 % |
+| cartes CAN | 0,071 | 5 % |
+| regeneration : HPD Power Bleeding Module | 0,061 | 4 % |
+| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 1 % |
+| dcdc : D42V110F6 (6V, 11A Step-Down Voltage Reg | 0,012 | 1 % |
+| fusible_compact : Victron MIDI-fuse 58V (30, 40, 50, 60, 1 | 0,005 | 0 % |
 
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,85, robstride + dynamixel, même profil) :
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,55, robstride + feetech, même profil) :
 
 | Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
 | --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 20 | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 30 | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 60 | 22,2 | ≥ 4 800 | 12S2P 420 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,898 | INCONNU |
-| ia_embarquee | commande seule | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision et voix | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,8 | ≥ 4 239 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,850 | INCONNU |
+| autonomie | 10 | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| autonomie | 20 | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| autonomie | 30 | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| autonomie | 60 | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| ia_embarquee | commande seule | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| ia_embarquee | + vision | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| ia_embarquee | + vision et voix | 11,5 | ≥ 3 955 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,664 | INCONNU |
+| ia_embarquee | + modèle de langage local | 10,8 | ≥ 3 734 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,603 | INCONNU |
 
-### 12S, 250 Hz, coupure 3,2 V
+### 12S, 250 Hz, coupure 3,0 V, chaîne industrielle
 
-73728 solutions : 0 faisables, 39630 infaisables, 34098 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+73728 solutions : 0 faisables, 33908 infaisables, 39820 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,90 → — | unitree + dynamixel | 36,7 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,85 → — | unitree + dynamixel | 36,7 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → — | unitree + dynamixel | 36,8 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → — | unitree + dynamixel | 37,1 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,70 → — | unitree + dynamixel | 37,4 | ≥ 30 164 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,60 → 1,075 | cubemars + dynamixel | 19,8 | ≥ 10 941 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,65 → 1,012 | cubemars + dynamixel | 20,1 | ≥ 10 941 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,70 → 0,970 | cubemars + dynamixel | 20,7 | ≥ 10 941 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,50 → 1,307 | cubemars + feetech | 19,3 | ≥ 10 947 | 8 910 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,55 → 1,168 | cubemars + feetech | 19,5 | ≥ 10 947 | 8 910 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
 
 Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → 0,861 | robstride + dynamixel | 17,8 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 0,861 | robstride + dynamixel | 17,8 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,868 | robstride + dynamixel | 17,9 | ≥ 4 487 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,75 → 0,850 | robstride + dynamixel | 16,2 | ≥ 4 395 | 3 201 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,80 → 0,845 | robstride + dynamixel | 16,5 | ≥ 4 395 | 3 201 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
+| 27 | 0,85 → 0,850 | robstride + dynamixel | 16,9 | ≥ 4 395 | 3 201 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 3 | INCONNU (bornes proposées) |
 
 - RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 - RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 - RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 
-Volume électronique de la meilleure RobStride (27 axes, H 0,85) : 3,34 L requis pour 3,21 L disponibles ; le tronc s'allonge de 11 mm.
+Volume électronique de la meilleure RobStride (27 axes, H 0,75) : 3,17 L requis pour 2,20 L disponibles ; le tronc s'allonge de 100 mm.
 
 | Élément | Volume (L) | Part |
 | --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 29 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 17 % |
-| batterie | 0,469 | 14 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 11 % |
+| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 31 % |
+| contacteur : GV200PA, bobine 12 V | 0,562 | 18 % |
+| batterie | 0,476 | 15 % |
+| sectionneur : Battery switch ON/OFF 275A | 0,369 | 12 % |
 | calculateur | 0,251 | 8 % |
-| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 7 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 7 % |
+| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 8 % |
 | arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 3 % |
 | cartes CAN | 0,071 | 2 % |
+| regeneration : HPD Power Bleeding Module | 0,061 | 2 % |
 | precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
 | fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 1 % |
 | dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
 
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,85, robstride + dynamixel, même profil) :
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,75, robstride + dynamixel, même profil) :
 
 | Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
 | --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 17,8 | ≥ 4 420 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 20 | 17,8 | ≥ 4 420 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 30 | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| autonomie | 60 | 24,9 | ≥ 4 963 | 12S3P 630 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,935 | INCONNU |
-| ia_embarquee | commande seule | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + vision et voix | 17,8 | ≥ 4 487 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,861 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,8 | ≥ 4 239 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,850 | INCONNU |
+| autonomie | 10 | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| autonomie | 20 | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| autonomie | 30 | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| autonomie | 60 | — | ≥ 0 | — | — | — | infaisable |
+| ia_embarquee | commande seule | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| ia_embarquee | + vision | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| ia_embarquee | + vision et voix | 16,2 | ≥ 4 395 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,850 | INCONNU |
+| ia_embarquee | + modèle de langage local | 14,6 | ≥ 4 298 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,817 | INCONNU |
 
-### 12S, 500 Hz, coupure 2,5 V
+### 12S, 500 Hz, coupure 3,0 V, chaîne compacte
 
-73728 solutions : 0 faisables, 52602 infaisables, 21126 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+73728 solutions : 0 faisables, 29084 infaisables, 44644 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,65 → 1,055 | cubemars + dynamixel | 25,6 | ≥ 11 804 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,90 → 0,994 | cubemars + dynamixel | 24,5 | ≥ 11 834 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,85 → 1,004 | cubemars + dynamixel | 24,6 | ≥ 11 834 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 1,022 | cubemars + dynamixel | 24,8 | ≥ 11 834 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 1,041 | cubemars + dynamixel | 25,0 | ≥ 11 834 | 9 030 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,65 → 0,962 | cubemars + dynamixel | 19,7 | ≥ 11 559 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,70 → 0,926 | cubemars + dynamixel | 20,0 | ≥ 11 559 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,75 → 0,904 | cubemars + dynamixel | 20,3 | ≥ 11 559 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,80 → 0,893 | cubemars + dynamixel | 20,6 | ≥ 11 559 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,60 → 0,976 | cubemars + dynamixel | 19,4 | ≥ 11 573 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
 
 Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
 
 | Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
 | ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → 0,878 | robstride + dynamixel | 17,2 | ≥ 5 077 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 0,880 | robstride + dynamixel | 17,2 | ≥ 5 077 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,890 | robstride + dynamixel | 17,3 | ≥ 5 077 | 3 119 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,70 → 0,700 | robstride + feetech | 13,0 | ≥ 4 861 | 3 067 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,55 → 0,705 | robstride + feetech | 12,1 | ≥ 4 881 | 3 088 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,60 → 0,688 | robstride + feetech | 12,3 | ≥ 4 881 | 3 088 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
 
-- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
-- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
-- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, poussee, visage
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
 
-Volume électronique de la meilleure RobStride (27 axes, H 0,85) : 3,55 L requis pour 3,21 L disponibles ; le tronc s'allonge de 28 mm.
+Volume électronique de la meilleure RobStride (27 axes, H 0,70) : 1,67 L requis pour 1,79 L disponibles ; le tronc s'allonge de 0 mm.
 
 | Élément | Volume (L) | Part |
 | --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 27 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 16 % |
-| batterie | 0,469 | 13 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 10 % |
+| batterie | 0,476 | 28 % |
+| cartes CAN | 0,284 | 17 % |
+| calculateur | 0,251 | 15 % |
+| contacteur_compact : GIGAVAC P115BDA MiniTACTOR (scellé hermé | 0,160 | 10 % |
+| anti_etincelle : Maytech MTS2009AS anti-spark switch 300A | 0,136 | 8 % |
+| fusible_compact : Victron porte-fusible MIDI (CIP000050001 | 0,098 | 6 % |
+| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 6 % |
+| bms_port_commun : JBD SP17S005 smart BMS (variantes NMC 20 | 0,080 | 5 % |
+| regeneration : HPD Power Bleeding Module | 0,061 | 4 % |
+| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 1 % |
+| dcdc : D42V110F6 (6V, 11A Step-Down Voltage Reg | 0,012 | 1 % |
+| fusible_compact : Victron MIDI-fuse 58V (30, 40, 50, 60, 1 | 0,005 | 0 % |
+
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,70, robstride + feetech, même profil) :
+
+| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
+| --- | --- | ---: | ---: | --- | --- | ---: | --- |
+| autonomie | 10 | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| autonomie | 20 | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| autonomie | 30 | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| autonomie | 60 | 14,9 | ≥ 5 030 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,743 | INCONNU |
+| ia_embarquee | commande seule | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| ia_embarquee | + vision | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| ia_embarquee | + vision et voix | 13,0 | ≥ 4 861 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,700 | INCONNU |
+| ia_embarquee | + modèle de langage local | 12,5 | ≥ 4 048 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,700 | INCONNU |
+
+### 12S, 500 Hz, coupure 3,0 V, chaîne industrielle
+
+73728 solutions : 0 faisables, 34970 infaisables, 38758 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,60 → 1,109 | cubemars + dynamixel | 20,1 | ≥ 11 637 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,65 → 1,042 | cubemars + dynamixel | 20,3 | ≥ 11 637 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,70 → 0,995 | cubemars + dynamixel | 20,6 | ≥ 11 637 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,75 → 0,964 | cubemars + dynamixel | 21,2 | ≥ 11 637 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,80 → 0,945 | cubemars + dynamixel | 21,6 | ≥ 11 637 | 8 954 | INR-21700-P50B 12S4P, 840 Wh, 4,43 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+
+Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
+
+| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
+| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
+| 27 | 0,80 → 0,865 | robstride + dynamixel | 16,8 | ≥ 5 091 | 3 201 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,85 → 0,864 | robstride + dynamixel | 17,2 | ≥ 5 091 | 3 201 | INR-21700-P42A 12S1P, 176 Wh, 1,09 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+| 27 | 0,90 → 0,900 | robstride + dynamixel | 18,5 | ≥ 5 176 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
+
+- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
+
+Volume électronique de la meilleure RobStride (27 axes, H 0,80) : 3,38 L requis pour 2,67 L disponibles ; le tronc s'allonge de 65 mm.
+
+| Élément | Volume (L) | Part |
+| --- | ---: | ---: |
+| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 29 % |
+| contacteur : GV200PA, bobine 12 V | 0,562 | 17 % |
+| batterie | 0,476 | 14 % |
+| sectionneur : Battery switch ON/OFF 275A | 0,369 | 11 % |
 | cartes CAN | 0,284 | 8 % |
 | calculateur | 0,251 | 7 % |
 | fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 7 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 7 % |
 | arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 3 % |
+| regeneration : HPD Power Bleeding Module | 0,061 | 2 % |
 | precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
 | fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 0 % |
 | dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
 
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,85, robstride + dynamixel, même profil) :
+Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,80, robstride + dynamixel, même profil) :
 
 | Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
 | --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 20 | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 30 | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 60 | 22,1 | ≥ 5 449 | 12S2P 372 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,915 | INCONNU |
-| ia_embarquee | commande seule | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + vision | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + vision et voix | 17,2 | ≥ 5 077 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,4 | ≥ 4 264 | 12S1P 210 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,850 | INCONNU |
-
-### 12S, 500 Hz, coupure 3,0 V
-
-73728 solutions : 0 faisables, 42904 infaisables, 30824 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,90 → — | unitree + dynamixel | 38,2 | ≥ 30 957 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,85 → — | unitree + dynamixel | 38,3 | ≥ 30 957 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,80 → — | unitree + dynamixel | 38,5 | ≥ 30 957 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → — | unitree + dynamixel | 38,8 | ≥ 30 957 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,70 → — | unitree + dynamixel | 39,3 | ≥ 30 957 | 28 087 | INR-21700-P50B 12S6P, 1 260 Wh, 6,65 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-
-Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,85 → 0,878 | robstride + dynamixel | 18,2 | ≥ 5 184 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,80 → 0,880 | robstride + dynamixel | 18,2 | ≥ 5 184 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,890 | robstride + dynamixel | 18,3 | ≥ 5 184 | 3 226 | INR-21700-P50B 12S1P, 210 Wh, 1,11 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-
-- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-
-Volume électronique de la meilleure RobStride (27 axes, H 0,85) : 3,55 L requis pour 3,21 L disponibles ; le tronc s'allonge de 28 mm.
-
-| Élément | Volume (L) | Part |
-| --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 27 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 16 % |
-| batterie | 0,469 | 13 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 10 % |
-| cartes CAN | 0,284 | 8 % |
-| calculateur | 0,251 | 7 % |
-| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 7 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 7 % |
-| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 3 % |
-| precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
-| fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 0 % |
-| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
-
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,85, robstride + dynamixel, même profil) :
-
-| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
-| --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 20 | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 30 | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| autonomie | 60 | 25,3 | ≥ 5 458 | 12S3P 529 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,953 | INCONNU |
-| ia_embarquee | commande seule | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + vision | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + vision et voix | 18,2 | ≥ 5 184 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,878 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,8 | ≥ 4 279 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,850 | INCONNU |
-
-### 12S, 500 Hz, coupure 3,2 V
-
-73728 solutions : 0 faisables, 41700 infaisables, 32028 INCONNUES ; front de 0. Le front QUITTE la borne basse H = 0,50 m.
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,90 → — | unitree + dynamixel | 37,1 | ≥ 30 861 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,85 → — | unitree + dynamixel | 37,1 | ≥ 30 861 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,80 → — | unitree + dynamixel | 37,3 | ≥ 30 861 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → — | unitree + dynamixel | 37,5 | ≥ 30 861 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,70 → — | unitree + dynamixel | 38,0 | ≥ 30 861 | 28 087 | INR-21700-P50B 12S5P, 1 050 Wh, 5,54 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-
-Meilleures solutions **RobStride** (famille des deux robots, fiche 0069), avec leurs capacités tenues :
-
-| Ensemble | H → réelle (m) | Corps + petits | Masse (kg) | Coût TOTAL (CHF HT) | dont actionneurs | Batterie | Calculateur | Canaux CAN | Statut |
-| ---: | --- | --- | ---: | ---: | ---: | --- | --- | ---: | --- |
-| 27 | 0,70 → 0,940 | robstride + dynamixel | 23,7 | ≥ 5 359 | 3 435 | INR-21700-P42A 12S2P, 353 Wh, 2,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,75 → 0,928 | robstride + dynamixel | 23,7 | ≥ 5 359 | 3 435 | INR-21700-P42A 12S2P, 353 Wh, 2,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-| 27 | 0,90 → 0,916 | robstride + dynamixel | 22,6 | ≥ 5 362 | 3 438 | INR-21700-P42A 12S2P, 353 Wh, 2,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 6 | INCONNU (bornes proposées) |
-
-- RobStride n° 1 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-- RobStride n° 2 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-- RobStride n° 3 : marche_sol_plat, releve, gestes_pointage, saisie, poussee, buste, tete ; manque du profil : sol_irregulier, pente, saut_vertical, visage
-
-Volume électronique de la meilleure RobStride (27 axes, H 0,70) : 4,03 L requis pour 2,20 L disponibles ; le tronc s'allonge de 190 mm.
-
-| Élément | Volume (L) | Part |
-| --- | ---: | ---: |
-| bms : JK Smart Active Balance BMS B2A20S20P-HC | 0,968 | 24 % |
-| batterie | 0,952 | 24 % |
-| contacteur : GV200PA, bobine 12 V | 0,562 | 14 % |
-| sectionneur : Battery switch ON/OFF 275A | 0,369 | 9 % |
-| cartes CAN | 0,284 | 7 % |
-| calculateur | 0,251 | 6 % |
-| fusible : MEGA-Fuse fuse holder (porte-fusible MEG | 0,247 | 6 % |
-| regeneration : RobStride Discharge Module (泄放模块, « blee | 0,240 | 6 % |
-| arret_urgence : XA1E-BV302R, arrêt d'urgence Ø 16 mm, 2  | 0,096 | 2 % |
-| precharge : AS150 (connecteur balle 7 mm anti-étince | 0,036 | 1 % |
-| fusible : MEGA-fuse 58V/48V (125, 200, 225, 300 A) | 0,017 | 0 % |
-| dcdc : D42V110F12 (12V, 9A Step-Down Voltage Re | 0,012 | 0 % |
-
-Coût de chaque niveau d'autonomie et d'IA, pour la meilleure solution RobStride (27 axes, H 0,70, robstride + dynamixel, même profil) :
-
-| Tâche | Niveau | Masse (kg) | Coût TOTAL (CHF HT) | Batterie | Calculateur | Hauteur réelle (m) | Statut |
-| --- | --- | ---: | ---: | --- | --- | ---: | --- |
-| autonomie | 10 | 21,3 | ≥ 5 396 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,888 | INCONNU |
-| autonomie | 20 | 21,3 | ≥ 5 396 | 12S1P 210 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,888 | INCONNU |
-| autonomie | 30 | 23,7 | ≥ 5 359 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,940 | INCONNU |
-| autonomie | 60 | 25,7 | ≥ 5 660 | 12S3P 630 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,982 | INCONNU |
-| ia_embarquee | commande seule | 23,7 | ≥ 5 359 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,940 | INCONNU |
-| ia_embarquee | + vision | 23,7 | ≥ 5 359 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,940 | INCONNU |
-| ia_embarquee | + vision et voix | 23,7 | ≥ 5 359 | 12S2P 353 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,940 | INCONNU |
-| ia_embarquee | + modèle de langage local | 16,8 | ≥ 4 279 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,846 | INCONNU |
+| autonomie | 10 | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| autonomie | 20 | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| autonomie | 30 | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| autonomie | 60 | — | ≥ 0 | — | — | — | infaisable |
+| ia_embarquee | commande seule | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| ia_embarquee | + vision | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| ia_embarquee | + vision et voix | 16,8 | ≥ 5 091 | 12S1P 176 Wh | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 0,865 | INCONNU |
+| ia_embarquee | + modèle de langage local | 15,0 | ≥ 4 337 | 12S1P 176 Wh | Raspberry Pi 5 16GB + Raspberry Pi AI HAT+ 2 | 0,816 | INCONNU |
 
 ### Vitesse des RobStride à la tension de coupure
 
-- 12S, coupure 2,5 V : le plus rapide des RobStride compatibles, rs05, tourne à 31,4 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 37,0 rad/s à H = 0,50 m (borne haute : rampe linéaire). Le saut est donc HORS de portée des RobStride dans cette variante.
-- 12S, coupure 3,0 V : le plus rapide des RobStride compatibles, rs05, tourne à 37,7 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 37,0 rad/s à H = 0,50 m (borne haute : rampe linéaire). Il passe.
-- 12S, coupure 3,2 V : le plus rapide des RobStride compatibles, rs05, tourne à 40,2 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 37,0 rad/s à H = 0,50 m (borne haute : rampe linéaire). Il passe.
+- 12S, coupure 3,0 V, chaîne compacte : le plus rapide des RobStride compatibles, rs05, tourne à 37,7 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 37,0 rad/s à H = 0,50 m (borne haute : rampe linéaire). Il passe.
+- 12S, coupure 3,0 V, chaîne industrielle : le plus rapide des RobStride compatibles, rs05, tourne à 37,7 rad/s à la coupure ; le saut de 10 cm demande jusqu'à 37,0 rad/s à H = 0,50 m (borne haute : rampe linéaire). Il passe.
 
 Deux hypothèses rendent ce verrou prudent : la vitesse à vide prise à la tension de COUPURE (et non nominale), et la vitesse du saut en rampe linéaire. Elles sont écrites ; c'est à Jeremy de dire si l'une doit être assouplie.
 

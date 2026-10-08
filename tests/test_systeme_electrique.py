@@ -118,6 +118,19 @@ class Chaine(unittest.TestCase):
         self.assertEqual(SE.composant(f, "fusible", var=SE.variante(13))["best"]["id"], "fus")
         self.assertEqual(SE.composant(f, "porte_fusible", var=SE.variante(13))["best"]["id"], "porte")
 
+    def test_porte_fusible_du_meme_format(self):
+        # ajouté le 2026-10-08 : un fusible MIDI ne va pas dans un porte-fusible MEGA (vu dans le rapport du jour)
+        comps = [self.c(id="midi", nom="fusible MIDI 58V", categorie="fusible", I=60.0, V=58.0, prix=5.0),
+                 self.c(id="pmega", nom="porte-fusible MEGA", categorie="fusible", volume=0.25, prix=1.0),
+                 self.c(id="pmidi", nom="porte-fusible MIDI", categorie="fusible", volume=0.05, prix=9.0)]
+        el = dict(hyp=HYP, var=SE.variante(12, coupure=3.0), calc=None, f_can=250, etendue=True, adapt=[], serie=None,
+                  cells=[], comps=comps, chaine="compacte",
+                  pui=dict(chaine_compacte=[{"maillon": "fusible", "categorie": ["fusible"]}],
+                           choix_maillons={"marge_courant": 1.5, "ordre": ["prix"]}))
+        r = SE.dimensionner(el, Place.R, {}, {}, [], 10.0, 0.6, 0.6, {}, 0, dict(el, Pm={}, P3a={}, cible={}))
+        porte = dict(r["chaine"])["porte_fusible"]["best"]
+        self.assertEqual(porte["id"], "pmidi")                  # le MEGA, moins cher, est refusé
+
     def test_dcdc_couvre_tout_le_pack(self):
         d = [self.c(id="36-72", categorie="dcdc", Vout=12.0, Vin=[36.0, 72.0], prix=1.0),
              self.c(id="12-60", categorie="dcdc", Vout=12.0, Vin=[12.0, 60.0], prix=60.0)]

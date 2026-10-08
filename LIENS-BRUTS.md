@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `17465bd97dd7`, le 2026-10-08 ; 261 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `f261cd460ed9`, le 2026-10-08 ; 263 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,7 +54,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (72)
+## decisions/ (73)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
@@ -63,6 +63,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0068-s-che
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0069-deux-robots-lab-et-final.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0070-robots-sur-batterie.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0071-autonomie-et-ia-par-robot.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0072-batterie-12s.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md
@@ -170,7 +171,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodo
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-gemini-2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-grok-2026-10-06.md
 
-## journal/ (12)
+## journal/ (13)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-20.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-09-28.md
@@ -184,6 +185,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-04.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-07.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-08.md
 
 ## params/ (22)
 

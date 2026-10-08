@@ -23,7 +23,8 @@ T = {(H, "marche_sol_plat", 0.3): {"knee": dict(pk=[(0.5, 0.0)], c=[(0.2, 0.0)],
      (H, "saut_vertical", 5): {"knee": dict(pk=[(0.3, 1.0)], c=[], w=[5.0])}}
 PROFIL = {"marche_sol_plat": 0.3, "saut_vertical": 5}
 CV = TM.conventions()
-RA = {k: x["valeur"] for k, x in TM.lire("anthropometry.yaml")["ratios"].items()}
+AN = TM.lire("anthropometry.yaml")
+RA = {k: x["valeur"] for k, x in AN["ratios"].items()}
 PETIT = TM.moteur_dims("Ø20 × 20", CV)                 # tient partout à 0,60 m
 JAMBE = ["hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch"]
 ENS_TEST = 99
@@ -35,7 +36,7 @@ def act(i, masse, pointe, continu=None, vitesse=50.0, prix=100.0, geo=PETIT, par
 
 
 def ctx(acts, ex=None, mmin=None, struct=1.0, struct_haute=1.0, cible=None):
-    return dict(T=T, act={"f": acts, "p": [act("servo", 0.01, 1.0, 0.5)]}, marge=1.5, memo={}, cv=CV, R=RA,
+    return dict(T=T, act={"f": acts, "p": [act("servo", 0.01, 1.0, 0.5)]}, marge=1.5, memo={}, cv=CV, R=RA, an=AN,
                 ex=ex or dict(bas=2.0, central=2.0, haut=2.0, iso=3.0), cible=cible or {},
                 struct=dict(par_ensemble={(ENS_TEST, "central"): struct, (ENS_TEST, "haute"): struct_haute},
                             H_S=0.6, charge=0.0),
@@ -105,22 +106,26 @@ class Evaluation(Base):
         r = X.evaluer(ctx([act("a", 0.1, 100.0, 100.0)], mmin={("saut_vertical", 5): 50.0}), ENS_TEST, H, "f", "p", PROFIL)
         self.assertEqual(r["statut"], "infaisable")
 
-    def test_couples_a_la_hauteur_reelle(self):
-        # gros moteurs : le tronc s'allonge ; les couples doivent être lus au-dessus de la hauteur réelle
+    def test_seul_le_tronc_s_allonge(self):
+        # CORRIGÉ le 2026-10-08 (lot 4a septies) : les couples se lisent à la JAMBE réelle, pas à la hauteur réelle ;
+        # la rallonge du tronc soulève le centre de gravité (facteur > 1 sur les couples des jambes). L'ancien
+        # comportement (couples à la hauteur réelle, robot proportionné) est vu échouer : H_couples < grille(H_reel).
         gros = TM.moteur_dims("Ø120 × 60", CV)
         c = ctx([act("a", 0.1, 100.0, 100.0, geo=gros)])
         c["T"] = {(round(h, 2), t, n): v for h in X.EP.HS for (_, t, n), v in T.items()}
         r = X.evaluer(c, ENS_TEST, H, "f", "p", PROFIL)
-        self.assertGreaterEqual(r["H_couples"], r["H_reel"] - 1e-9)
-        self.assertGreater(r["H_couples"], H)
-        self.assertGreaterEqual(r["iterations"], 2)
-        # et un actionneur qui tient à H mais pas à la hauteur réelle devient infaisable
-        T4 = {(round(h, 2), "marche_sol_plat", 0.3): {"knee": dict(pk=[(10.0 * h, 0.0)], c=[], w=[])} for h in X.EP.HS}
-        juste = 1.5 * 10.0 * H * (1.0 + 0.1 * 10 + 0.0) + 0.5               # tient à H, pas au-dessus
-        c2 = ctx([act("a", 0.1, juste, 100.0, geo=gros)])
-        c2["T"] = T4
-        r2 = X.evaluer(c2, ENS_TEST, H, "f", "p", {"marche_sol_plat": 0.3})
-        self.assertEqual(r2["statut"], "infaisable", r2.get("violees"))
+        self.assertGreater(r["rallonge"], 0.0)
+        self.assertAlmostEqual(r["H_reel"], r["H_jambe"] + r["rallonge"])
+        self.assertAlmostEqual(r["H_couples"], X.grille_haut(r["H_jambe"]))
+        self.assertLess(r["H_couples"], X.grille_haut(r["H_reel"]))           # l'ancien comportement : vu échouer
+        self.assertGreater(r["k_tronc"], 1.0)
+
+    def test_facteur_tronc(self):
+        c = dict(R=RA, an=AN)
+        self.assertEqual(X.facteur_tronc(c, 0.6, 0.0), 1.0)
+        z, haut = X.cg_ansur(RA, {k: (v["valeur"] if isinstance(v, dict) else v) for k, v in AN["masses"].items()})
+        self.assertTrue(0.45 < z < 0.65 and 0.5 < haut < 0.8)                  # centre de gravité vers 55 % de H
+        self.assertAlmostEqual(X.facteur_tronc(c, 0.6, 0.1), 1 + haut * 0.1 / (z * 0.6))
 
     def test_place_gros_moteurs_allongent(self):
         gros = TM.moteur_dims("Ø120 × 60", CV)

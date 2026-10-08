@@ -21,7 +21,8 @@ statut: "PROPOSÉ par Claude le 2026-10-07 : architecture et hypothèses à conf
 tension_retenue:
   S: 12
   decide: "Jeremy, 2026-10-08, prompt du lot 4a sexies (fiche 0072)"
-  coupure_V_par_cellule: "NON décidée : variantes 2,5 / 3,0 / 3,2 (lot 4a sexies)"
+  coupure_V_par_cellule: 3.0
+  coupure_decide: "Jeremy, 2026-10-08 (lot 4a septies), ses mots : « Je retiens une coupure à 3,0 V par cellule. » Réglage du BMS, réversible : ligne de journal et index (règle 5), la fiche 0072 n'est pas réécrite."
 
 # ── Chaîne de puissance, dans l'ordre du courant ──────────────────────────
 # Chaque maillon est choisi dans `marche` (le moins cher dont les valeurs LUES
@@ -35,6 +36,26 @@ chaine:
   - {maillon: contacteur,  role: "ouvert par l'arrêt d'urgence MATÉRIEL, indépendant du calculateur", categorie: contacteur}
   - {maillon: precharge,   role: "charge les condensateurs des variateurs avant la fermeture du contacteur (pas d'étincelle ni de pic)", categorie: precharge}
   - {maillon: bus_moteurs, role: "les actionneurs du corps (RobStride), directement à la tension du pack"}
+
+# Variante « chaîne COMPACTE », PROPOSÉE (lot 4a septies, 2026-10-08) : moins de maillons, chacun plus petit.
+# Le BMS à port commun (charge et décharge par les mêmes bornes) accepte la régénération et COUPE lui-même
+# (MOSFET) ; le relais d'arrêt, de petit calibre, est ouvert par l'arrêt d'urgence matériel ; l'interrupteur
+# anti-étincelle remplace sectionneur et précharge. Une catégorie absente du marché retombe sur la suivante.
+chaine_compacte:
+  - {maillon: cellules,       role: "pack Li-ion 12S en 21700"}
+  - {maillon: fusible,        role: "coupe un court-circuit du pack", categorie: [fusible_compact, fusible]}
+  - {maillon: anti_etincelle, role: "mise sous tension sans étincelle, coupure manuelle", categorie: [anti_etincelle, precharge]}
+  - {maillon: bms,            role: "BMS à port commun, coupure intégrée, accepte la régénération", categorie: [bms_port_commun, bms]}
+  - {maillon: relais_arret,   role: "ouvert par l'arrêt d'urgence matériel", categorie: [contacteur_compact, contacteur]}
+  - {maillon: bus_moteurs,    role: "les actionneurs du corps"}
+
+# Règle de choix des maillons (PROPOSÉE, lot 4a septies) : courant RÉEL de la solution (courant de pointe à la
+# coupure) × marge ; parmi les produits vérifiables qui conviennent, le plus PETIT en volume, puis le plus léger,
+# puis le moins cher. Elle s'applique aux deux chaînes.
+choix_maillons:
+  marge_courant: 1.5
+  ordre: [volume, masse, prix]
+  statut: "PROPOSÉ par Claude (2026-10-08) : marge et ordre à confirmer par Jeremy"
 
 # Régénération : au freinage, les moteurs renvoient de l'énergie dans le bus ;
 # si le BMS refuse la charge (pack plein), la tension monte vers la protection
@@ -114,6 +135,21 @@ bornes_proposees:
   idec_xa1e_bv302r:
     masse_g: {valeur: 50, justification: "bouton d'arrêt d'urgence EAO de même fonction : 36 g lus ; +40 %"}
     dimensions_mm: {valeur: "40 x 40 x 60", justification: "montage Ø 16 mm lu ; tête champignon et bloc de contacts, enveloppe majorante"}
+  jk_bd6a20s10p:
+    dimensions_mm: {valeur: "162 x 102 x 20", justification: "même famille JK BD6A ; cotes lues sur le site JK pour le BD6A20S12P (120 A), plus grand ou égal : majorant"}
+  jk_bd6a17s8p:
+    dimensions_mm: {valeur: "162 x 102 x 20", justification: "même famille JK BD6A ; cotes du BD6A20S12P (site JK), majorant"}
+  jk_bd6a17s6p:
+    dimensions_mm: {valeur: "162 x 102 x 20", justification: "même famille JK BD6A ; cotes du BD6A20S12P (site JK), majorant"}
+  jk_bd4a17s4p:
+    dimensions_mm: {valeur: "162 x 102 x 20", justification: "famille JK BD voisine ; cotes du BD6A20S12P (site JK), majorant"}
+  victron_midi_58v_g:
+    masse_g: {valeur: 15, justification: "2 g publiés par le vendeur, douteux pour un fusible à pattes de cuivre ; le MEGA de Littelfuse lu pèse 12 g : 15 g majorant"}
+    dimensions_mm: {valeur: "43 x 12 x 10", justification: "42,3 × 12 mm lus (relevé E) ; épaisseur non lue, 10 mm majorant"}
+  victron_midi_porte_fusible:
+    dimensions_mm: {valeur: "70 x 40 x 35", justification: "porte-fusible MIDI de 24 g lus ; enveloppe majorante pour un fusible de 42 mm à deux goujons et capot"}
+  flipsky_antispark_se_200a:
+    dimensions_mm: {valeur: "40 x 32 x 20", justification: "40 × 32 mm lus (carte seule) ; épaisseur non lue, 20 mm majorant (MOSFET et dissipateur)"}
   robstride_module_decharge:
     masse_g: {valeur: 300, justification: "module seul non pesé (module Realman de même fonction : 66 g lus, résistance comprise) ; ici + une résistance EXTERNE de 10 Ω / 200 W recommandée par la notice : 300 g majorant pour l'ensemble"}
     dimensions_mm: {valeur: "100 x 60 x 40", justification: "hauteur du module 12,1 mm lue ; résistance de 200 W en boîtier aluminium : enveloppe majorante de l'ensemble"}
@@ -123,6 +159,312 @@ bornes_proposees:
 # et inscrite à params/fournisseurs.yaml (marche_pui_<id>, non redistribuable).
 marche:
   sources:
+    marche_pui_g_jk_bd6a20s12p:
+      titre: JK-BD6A20S12P - JK BMS (fiche produit officielle)
+      url: https://www.jkbms.com/product/jk-bd6a20s12p/
+      editeur: Jikong Technology (JK BMS)
+      date: 2026-10-08
+      empreinte: sha256:b5614178f7909d824e5cffecec861ae40cdcdbd838c9764680aa0265748bbd3f
+      octets: 90867
+      conditions: non lues
+      note: Tableau 'Main specifications' ; aucune masse, aucun prix, aucun courant de charge.
+    marche_pui_g_jk_bd6a24s10p:
+      titre: JK-BD6A24S10P - JK BMS (fiche produit officielle)
+      url: https://www.jkbms.com/product/jk-bd6a24s10p/
+      editeur: Jikong Technology (JK BMS)
+      date: 2026-10-08
+      empreinte: sha256:3bb5ba8113367f8f5685cd0c095db51d15b46962b0d1672a885635861da59a47
+      octets: 90343
+      conditions: non lues
+      note: Même gabarit que le BD6A20S12P (162*102*20 mm).
+    marche_pui_g_jk_catalogue:
+      titre: JK BMS - Active balancer BMS (liste)
+      url: https://www.jkbms.com/products/active-balancer-bms/
+      editeur: Jikong Technology (JK BMS)
+      date: 2026-10-08
+      empreinte: sha256:b4286403fef6462b3f23bb4b2b48cdf74ea4e06062c574180cbd12897d069108
+      octets: 98098
+      conditions: non lues
+      note: Le site officiel ne liste ni B1A8S10P (4S-8S, hors 12S) ni la série BD6A17S ; ces derniers sont lus chez
+        NKON.
+    marche_pui_g_nkon_jk_bd6a20s10p:
+      titre: JK Smart Active Balance BMS BD6A20S10PR - (8S - 20S) - 100A (NKON)
+      url: https://www.nkon.nl/en/jk-bms-bd6a20s10p.html
+      editeur: NKON (Pays-Bas)
+      date: 2026-10-08
+      empreinte: sha256:1437a79221ef7f4c306353e8f5c01bd7e97523676d9ed04b5e8f42d5063c40f0
+      octets: 271555
+      conditions: non lues
+      note: 'Champ ''Weight - g'' du distributeur (contenu exact non précisé : livré avec ''Cable set, on-off switch'').
+        Prix TTC et HT affichés.'
+    marche_pui_g_nkon_jk_bd6a17s8p:
+      titre: JK Smart Active Balance BMS BD6A17S8PR - (8S - 17S) - 80A (NKON)
+      url: https://www.nkon.nl/en/jk-bms-bd6a17s8p.html
+      editeur: NKON (Pays-Bas)
+      date: 2026-10-08
+      empreinte: sha256:0dfc3635f6a1e0f9d462c709a64652b206d91e74f9579100c58e72792da4d03e
+      octets: 276597
+      conditions: non lues
+      note: Out of stock le 2026-10-08.
+    marche_pui_g_nkon_jk_bd6a17s6p:
+      titre: JK Smart Active Balance BMS BD6A17S6PR - (8S - 17S) - 60A (NKON)
+      url: https://www.nkon.nl/en/jk-bms-bd6a17s6p.html
+      editeur: NKON (Pays-Bas)
+      date: 2026-10-08
+      empreinte: sha256:7746fe6906e4bc00014ebcd64e127aee5e0eec79a25cf63fa058cf2c22a6632c
+      octets: 275772
+      conditions: non lues
+      note: Out of stock le 2026-10-08.
+    marche_pui_g_nkon_jk_bd4a17s4p:
+      titre: JK Smart Active Balance BMS BD4A17S4PR - (8S - 17S) - 40A (NKON)
+      url: https://www.nkon.nl/en/jk-bms-bd4a17s4p.html
+      editeur: NKON (Pays-Bas)
+      date: 2026-10-08
+      empreinte: sha256:168d42d4c156b4c779ca40ad3b3ccfe7c419f0b735f2d57bcb63cfe7d313e305
+      octets: 272177
+      conditions: non lues
+      note: In stock le 2026-10-08.
+    marche_pui_g_jbd_sp17s005:
+      titre: JBD SP17S005 (10S-17S/20A-120A/LFP&NMC) - boutique officielle JBD
+      url: https://jbdbms.com/products/sp17s005
+      editeur: Jiabaida (JBD)
+      date: 2026-10-08
+      empreinte: sha256:76599bdf55484eec443bad09ebd282bf0dbabc29498dc096a07035b3bcad1a89
+      octets: 1499230
+      conditions: non lues
+      note: Une seule taille affichée (102mm * 65mm *12mm) pour toutes les variantes 20 à 120 A ; prix par variante
+        lus dans le JSON de la page (USD).
+    marche_pui_g_sigmanortec_daly_13s60a:
+      titre: Smart BMS 13S module, Daly, 60A, Bluetooth, 48V (Sigmanortec)
+      url: https://sigmanortec.ro/en/smart-bms-13s-module-daly-60a-bluetooth-48v
+      editeur: Sigmanortec (Roumanie)
+      date: 2026-10-08
+      empreinte: sha256:9c1777059864b95236b04e0a75c652252d7f3654f411688bb4e61fbb532f361b
+      octets: 312809
+      conditions: non lues
+      note: Tableau de caractéristiques complet ; prix 430.83 RON et 356.06 RON (sans TVA) affichés. Le site Daly officiel
+        (dalybms.com, pages K/H/standard téléchargées) ne donne ses cotes qu'en images.
+    marche_pui_g_daly_officiel_k:
+      titre: DALY K series smart BMS 3S-24S 40/60/100A (site officiel)
+      url: https://www.dalybms.com/48v-lifepo4-bms-daly-k-series-smart-bms-3s-to-24s-40a-60a-100a-product/
+      editeur: Dongguan Daly Electronics
+      date: 2026-10-08
+      empreinte: sha256:a109b3c9cc91423a33d26fefb84c564bc2790428e2c77445d1dbf08a3963033c
+      octets: 89864
+      conditions: non lues
+      note: 'Texte : CAN, RS485, double UART. Caractéristiques chiffrées en images seulement : non exploitées.'
+    marche_pui_g_albright_pc100_ds:
+      titre: Albright PC100 Data Sheet
+      url: https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/07/PC100-Data-Sheet.pdf
+      editeur: Albright International (Royaume-Uni)
+      date: 2026-10-08
+      empreinte: sha256:2f8882e75189bc4ea3bb80f163c17e3679518acbce2eeabb859fe7b0dbf7ce88
+      octets: 1291772
+      conditions: non lues
+      note: Cotes lues sur le dessin coté (image extraite du PDF).
+    marche_pui_g_albright_sw60_ds:
+      titre: Albright SW60 Data Sheet
+      url: https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/08/SW60-Data-Sheet.pdf
+      editeur: Albright International (Royaume-Uni)
+      date: 2026-10-08
+      empreinte: sha256:a3dd14da148b9468eb8c3578298743eb18142ee1e5ddfb30981ef1dae7222e0f
+      octets: 835247
+      conditions: non lues
+      note: Cotes lues sur le dessin coté (image extraite du PDF).
+    marche_pui_g_albright_sw80_ds:
+      titre: Albright SW80 Data Sheet
+      url: https://www.albrightinternational.com/wpcms/wp-content/uploads/2020/08/SW80-Data-Sheet.pdf
+      editeur: Albright International (Royaume-Uni)
+      date: 2026-10-08
+      empreinte: sha256:313091d7463cf861328b9d7f51948f52970d5f44f8cf59f35c3503a852064e5c
+      octets: 929981
+      conditions: non lues
+      note: 'Cotes lues sur le dessin coté (image extraite du PDF). La page pdf.directindustry.com (SW80) a renvoyé
+        403 : non téléchargée.'
+    marche_pui_g_gigavac_p115_ds:
+      titre: GIGAVAC P115 MiniTACTOR Spec Sheet Rev B 10/11/18 (copie hébergée par Stealth EV)
+      url: https://stealthev.com/wp-content/uploads/2019/06/P115-Spec-Sheet.pdf
+      editeur: GIGAVAC (Sensata) ; hébergé par Stealth EV
+      date: 2026-10-08
+      empreinte: sha256:0e62ba79415f648563ce92c34d69971760f2f07c3f4f52f4619bfefc6e554205
+      octets: 1159369
+      conditions: non lues
+      note: 'Copie tierce d''une révision 2018. La fiche Sensata courante (sensata.com) a renvoyé 403 : non téléchargée.'
+    marche_pui_g_dccomponents_p115bda:
+      titre: GIGAVAC DC Contactor Relay P115BDA - DC Components Store
+      url: https://dc-components.com/product/gigavac-p115bda/
+      editeur: DC Components Store
+      date: 2026-10-08
+      empreinte: sha256:641cc8b30f1d57a1f12afac6e1c4b6cc0c41dba2d45feacea1afdf7fc08e4b98
+      octets: 167645
+      conditions: non lues
+      note: 'Prix USD hors taxe (valueAddedTaxIncluded false). Cotes de la page en ''cm'' (33.14 x 81.28 x 53.95 cm)
+        : erreur d''unité manifeste du vendeur, non reprises.'
+    marche_pui_g_sensata_p105:
+      titre: Sensata GIGAVAC P105 series
+      url: https://www.sensata.com/products/gigavac-power-contactors-fuses/p-series-minitactor/p105-series
+      editeur: Sensata Technologies
+      date: 2026-10-08
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée (HTTP 403, curl et WebFetch). masterelectronics.com (P105CDA) : 403 aussi.'
+    marche_pui_g_te_lev100:
+      titre: TE Kilovac LEV100 (fiches 4-1618391-x)
+      url: https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1-1773701-1_LEV100&DocType=DS&DocLang=English
+      editeur: TE Connectivity
+      date: 2026-10-08
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée : te.com, Farnell, ibselectronics, zoro (403) ; eicom.ru et szlcsc (délai dépassé).'
+    marche_pui_g_racer_flipsky_se200:
+      titre: Flipsky AntiSpark Switch Smart Enhanced 200A (racer.lt)
+      url: https://racer.lt/item/flipsky-antispark-switch-smart-enhanced-200a-for-electric-skateboard-ebike-scooter-robots-22552.html
+      editeur: racer.lt (Lituanie)
+      date: 2026-10-08
+      empreinte: sha256:3b266c0ae22bf11c14a65063ce2b5db1485fdbacce94d98b27974f2eea7b111c
+      octets: 45229
+      conditions: non lues
+      note: Texte constructeur recopié par le revendeur ; le prix affiché '4,900.00 €' est manifestement erroné (non
+        repris).
+    marche_pui_g_flipsky_pro_v3:
+      titre: Flipsky Antispark Switch Pro V3.0 (ThinkRobotics / flipsky.net)
+      url: https://thinkrobotics.com/products/flipsky-antispark-switch-pro-with-aluminum-pcb-v3-0-280a-for-electric-skateboard-ebike-scooter-robots
+      editeur: ThinkRobotics / Flipsky
+      date: 2026-10-08
+      empreinte: null
+      octets: null
+      conditions: non lues
+      note: 'non téléchargée : HTTP 429 répété (flipsky.net et thinkrobotics, boutiques Shopify) ; ubuy.co.nl et ebay.de
+        403.'
+    marche_pui_g_esurfer_maytech:
+      titre: 300A 20-85V Anti-spark switch (Maytech MTS2009AS) - forum e-surfer
+      url: https://forum.e-surfer.com/t/300a-20-85v-anti-spark-switch/2001
+      editeur: e-surfer.com (forum, Allemagne) ; texte du vendeur Maytech
+      date: 2026-10-08
+      empreinte: sha256:d05cd0179ad61c915143cc64800ff83ffe53c72796af6c05b0809fc70f70d12b
+      octets: 359542
+      conditions: non lues
+      note: Message de forum reprenant la fiche Maytech ; pas une fiche constructeur.
+    marche_pui_g_amass_as120:
+      titre: AMASS AS120 大电流混装防打火连接器 (site officiel)
+      url: https://www.china-amass.com/biao/177.html
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:c139c7792d3870266bd36a295d623dcae7583afb50ac2e7751d9fd1d843d72c4
+      octets: 42212
+      conditions: non lues
+      note: Paramètres en chinois ; dessin en image non téléchargé.
+    marche_pui_g_amass_as150:
+      titre: AMASS AS150 大电流防打火连接器 (site officiel)
+      url: https://www.china-amass.com/biao/178.html
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:0a8e5dea9512f15701fefd5e928c2e630524a1c69c0fa4e4115a83ba7b0319d9
+      octets: 42183
+      conditions: non lues
+      note: Paramètres en chinois.
+    marche_pui_g_amass_as150_dessin:
+      titre: AMASS AS150 - dessin coté (image de la page officielle)
+      url: https://www.china-amass.com/ueditor/php/upload/image/20240423/1713847651833690.png
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:89ed179239216af0799ab8257d1c604ab5f9138f396b23dac026eb11d6db609f
+      octets: 41932
+      conditions: non lues
+      note: 'Deux demi-connecteurs : Ø13,50 x 35,10 et Ø13,50 x 30,20.'
+    marche_pui_g_amass_as150u:
+      titre: AMASS AS150U 大电流混合型防打火连接器 (site officiel)
+      url: https://www.china-amass.com/biao/179.html
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:0d8d0a0c020f042e5e5dddbb1b0b2809b4f387793c8eaff506d7576fe9c9bfe1
+      octets: 43102
+      conditions: non lues
+      note: Paramètres en chinois.
+    marche_pui_g_amass_xt90s:
+      titre: AMASS XT90S 大电流防打火连接器 (site officiel)
+      url: https://www.china-amass.com/biao/300.html
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:6c6c71c973488b18fdbf3b25f7566c7bcbaabf829d85d84a531f9f5883da99b3
+      octets: 41401
+      conditions: non lues
+      note: Paramètres en chinois.
+    marche_pui_g_amass_xt90s_dessin:
+      titre: AMASS XT90S - dessin coté (image de la page officielle)
+      url: https://www.china-amass.com/ueditor/php/upload/image/20240420/1713590439399237.png
+      editeur: Changzhou Amass Electronics
+      date: 2026-10-08
+      empreinte: sha256:6275af381c92a8af35789c10770c83c1438fa3047b3f8032f6db4479d648f367
+      octets: 27071
+      conditions: non lues
+      note: 'Un demi-connecteur : 21,50 x 9,90 x 31,20.'
+    marche_pui_g_littelfuse_mega70v_ds:
+      titre: Littelfuse MEGA High Performance Fuses Rated 70 V-SF51, Fuse Datasheet, rév. 09/07/2023 (copie Bimble Solar)
+      url: https://www.bimblesolar.com/docs/125A%20Littelfuse.pdf
+      editeur: Littelfuse ; hébergé par Bimble Solar (Royaume-Uni)
+      date: 2026-10-08
+      empreinte: sha256:b36f7690755f9fdc33be30d791353af860e5808fc0cd3d3aa38b3351d29e647b
+      octets: 939069
+      conditions: non lues
+      note: 'Copie tierce de la fiche constructeur (littelfuse.com et mouser.com : 403). Texte extrait du PDF ; dessin
+        lu via le texte extrait (ordre des cotes à vérifier sur le PDF).'
+    marche_pui_g_victron_fusibles_ds:
+      titre: Victron - MIDI, MEGA and ANL fuses, and fuse holders (datasheet, copie Offgridtec)
+      url: https://b2b.offgridtec.com/media/product_attachements/Victron_MIDI-MEGA-ANL-Fuses-and-Fuse-Holders_Datasheet.pdf
+      editeur: Victron Energy ; hébergé par Offgridtec (Allemagne)
+      date: 2026-10-08
+      empreinte: sha256:fed28c611bda8d610cfdd536b409a5f60cefd7d06d9a7d3a6e010fa716a5a74c
+      octets: 409991
+      conditions: non lues
+      note: Chute de tension et résistance à froid seulement ; ni masse ni cotes.
+    marche_pui_g_eh_victron_mega125_58:
+      titre: Victron Energy MEGA fuse cartridge 125A/58V (Elektro Hungary)
+      url: https://elektrohungary.com/en/spd/CIP137125010/Victron-Energy-MEGA-fuse-link-125A-58V
+      editeur: Elektro Hungary (Hongrie)
+      date: 2026-10-08
+      empreinte: sha256:c44367ce2cf31fe2aa8c225ab3d88812131bd79ebaf22ecec9f3525f84a9c7ca
+      octets: 796080
+      conditions: non lues
+      note: 'Masse ''Weight: 9 g/db'' du vendeur ; statut TVA du prix non indiqué.'
+    marche_pui_g_eh_victron_midi40_58:
+      titre: Victron Energy MIDI Fuse 40A/58V (Elektro Hungary)
+      url: https://elektrohungary.com/en/spd/CIP133040010/Victron-Energy-MIDI-Fuse-40A-58V
+      editeur: Elektro Hungary (Hongrie)
+      date: 2026-10-08
+      empreinte: sha256:8f02348c167e3150659693bce04cb5cb6f10b276867eea005a4de5d124e05d47
+      octets: 800578
+      conditions: non lues
+      note: 'Masse ''Weight: 2 g/db'' du vendeur, douteuse (à vérifier).'
+    marche_pui_g_eh_victron_midi_holder:
+      titre: Victron Energy MIDI fuse holder CIP000050001 (Elektro Hungary)
+      url: https://elektrohungary.com/en/spd/CIP000050001/Victron-Energy-MIDI-fuse-holder
+      editeur: Elektro Hungary (Hongrie)
+      date: 2026-10-08
+      empreinte: sha256:0578563d582e96b7299813ba92ffc74102e510d7ff1cd73333ebb86b6b1b3bdc
+      octets: 790917
+      conditions: non lues
+      note: Masse du vendeur ; aucune cote.
+    marche_pui_g_eh_victron_mega_holder:
+      titre: Victron Energy MEGA fuse holder CIP000100001 (Elektro Hungary)
+      url: https://elektrohungary.com/en/spd/CIP000100001/Victron-Energy-MEGA-fuse-holder
+      editeur: Elektro Hungary (Hongrie)
+      date: 2026-10-08
+      empreinte: sha256:e31ec068210da6ea60223aee2e0470cb7a8e43a58039036174bef078365ff4d6
+      octets: 799826
+      conditions: non lues
+      note: Masse du vendeur ; aucune cote.
+    marche_pui_g_bluebottle_mrbf:
+      titre: Blue Sea MRBF Terminal Fuse (Bluebottle Marine)
+      url: https://www.bluebottlemarine.com/products/blue-sea-mrbf-terminal-fuse.html
+      editeur: Bluebottle Marine (Australie)
+      date: 2026-10-08
+      empreinte: sha256:10383f93c30b1ef5a0ef574581683047369291fc1424124b5d16ab0d7efe18ce
+      octets: 1316807
+      conditions: non lues
+      note: 'Revendeur australien (AU$). bluesea.com : 403, non téléchargée.'
     marche_pui_rs_depot_arbre:
       titre: RobStride/Product_Information, arborescence du commit 3f0cae4
       url: https://api.github.com/repos/RobStride/Product_Information/git/trees/main?recursive=1
@@ -737,6 +1079,1424 @@ marche:
       conditions: non lues
       note: 'ÉCARTÉ : entrée jusqu''à 50 V (< 54,6 V, 13S pleine charge) ; Pololu renvoie au D42V55Fx (60 V).'
   produits:
+    # ── relevé G (chaîne compacte), 2026-10-08 ──
+    jk_bd6a20s12p:
+      categorie: bms_port_commun
+      nom: JK-BD6A20S12P (BMS à équilibrage actif 0,6 A)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 7S-20S (Li-ion)
+        unite: cellules
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Main specifications
+        note: LiFePO4 8S-20S, LTO 12S-20S
+      courant_continu:
+        valeur: 120
+        unite: A
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Continuous discharge current
+        note: décharge
+      courant_pointe:
+        valeur: 250
+        unite: A
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Peak discharge current
+        note: durée non indiquée
+      port_commun:
+        valeur: oui
+        unite: null
+        source: marche_pui_g_jk_bd6a20s12p
+        page: 'out cableway: same port'
+        note: null
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: marche_pui_g_jk_bd6a20s12p
+        page: null
+        note: non indiqué ; seule la protection de surintensité 'Over current protection 10A-120A adjustable' est lue
+          (sans préciser charge ou décharge)
+      protections:
+        valeur: surcharge, surdécharge, surintensité (10-120 A réglable), court-circuit, 3 sondes de température
+        unite: null
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Main specifications
+        note: MOSFET 0,65 mΩ
+      communication:
+        valeur: Bluetooth (app iOS/Android), RS485/CAN (sur demande), GPS
+        unite: null
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Other communication port
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: non indiquée par JK
+      dimensions_mm:
+        valeur: 162 x 102 x 20
+        unite: mm
+        source: marche_pui_g_jk_bd6a20s12p
+        page: Size
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: aucun revendeur UE trouvé pour ce modèle
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: non vendu chez NKON (qui vend BD6A20S10P)
+    jk_bd6a24s10p:
+      categorie: bms_port_commun
+      nom: JK-BD6A24S10P (BMS à équilibrage actif 0,6 A)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 7S-24S (Li-ion)
+        unite: cellules
+        source: marche_pui_g_jk_bd6a24s10p
+        page: Main Technical Parameters
+        note: LiFePO4 8S-24S, LTO 12S-24S
+      courant_continu:
+        valeur: 100
+        unite: A
+        source: marche_pui_g_jk_bd6a24s10p
+        page: Continuous discharge current
+        note: null
+      courant_pointe:
+        valeur: 200
+        unite: A
+        source: marche_pui_g_jk_bd6a24s10p
+        page: Peak discharge current
+        note: durée non indiquée
+      port_commun:
+        valeur: oui
+        unite: null
+        source: marche_pui_g_jk_bd6a24s10p
+        page: 'out cableway: same port'
+        note: null
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: marche_pui_g_jk_bd6a24s10p
+        page: null
+        note: non indiqué ; 'Over current protection 10A-100A adjustable'
+      protections:
+        valeur: surcharge, surdécharge, surintensité (10-100 A réglable), court-circuit, 3 sondes de température
+        unite: null
+        source: marche_pui_g_jk_bd6a24s10p
+        page: null
+        note: MOSFET 1 mΩ ; -30 à 70 °C
+      communication:
+        valeur: Bluetooth, RS485/CAN (sur demande), GPS
+        unite: null
+        source: marche_pui_g_jk_bd6a24s10p
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 162 x 102 x 20
+        unite: mm
+        source: marche_pui_g_jk_bd6a24s10p
+        page: Size
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    jk_bd6a20s10p:
+      categorie: bms_port_commun
+      nom: JK Smart Active Balance BMS BD6A20S10P(R)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 8S-20S
+        unite: cellules
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Short Description
+        note: Li-ion/LiFePO4/LTO
+      courant_continu:
+        valeur: 100
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Continuous current
+        note: null
+      courant_pointe:
+        valeur: 200
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Maximum current
+        note: durée non indiquée
+      port_commun:
+        valeur: null
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: null
+        note: non indiqué chez NKON ; le site JK n'a pas de page pour ce modèle
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      protections:
+        valeur: surcharge, court-circuit, surdécharge, surintensité, 'anti-failure', surchauffe
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Short Description
+        note: équilibrage 0,6 A
+      communication:
+        valeur: Bluetooth, RS485
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Extra functions
+        note: null
+      masse_g:
+        valeur: 514
+        unite: g
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        page: Weight - g
+        note: 'valeur distributeur ; livré avec ''Cable set, on-off switch'' : on ignore si la masse les inclut'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: non indiquées
+      prix:
+        valeur: 64.95
+        devise: EUR
+        tva_incluse: 0.21
+        vendeur: NKON
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        note: 53.68 EUR hors TVA affiché ; 64.95/53.68 = 1,21
+      disponibilite_ch_ue:
+        valeur: UE (NL), date annoncée 30-10-2026
+        source: marche_pui_g_nkon_jk_bd6a20s10p
+        note: null
+    jk_bd6a17s8p:
+      categorie: bms_port_commun
+      nom: JK Smart Active Balance BMS BD6A17S8P(R)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 8S-17S
+        unite: cellules
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: Short Description
+        note: null
+      courant_continu:
+        valeur: 80
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: Continuous current
+        note: null
+      courant_pointe:
+        valeur: 150
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: Maximum current
+        note: durée non indiquée
+      port_commun:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      protections:
+        valeur: surcharge, court-circuit, surdécharge, surintensité, 'anti-failure', surchauffe
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: null
+        note: équilibrage 0,6 A
+      communication:
+        valeur: Bluetooth, RS485
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: Extra functions
+        note: null
+      masse_g:
+        valeur: 398
+        unite: g
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        page: Weight - g
+        note: 'valeur distributeur (accessoires inclus ou non : inconnu) ; incohérente avec 408 g pour le 60 A'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 49.95
+        devise: EUR
+        tva_incluse: 0.21
+        vendeur: NKON
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        note: prix spécial ; prix normal 59.95 EUR ; HT 41.28 EUR
+      disponibilite_ch_ue:
+        valeur: UE (NL), rupture de stock
+        source: marche_pui_g_nkon_jk_bd6a17s8p
+        note: null
+    jk_bd6a17s6p:
+      categorie: bms_port_commun
+      nom: JK Smart Active Balance BMS BD6A17S6P(R)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 8S-17S
+        unite: cellules
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: Short Description
+        note: null
+      courant_continu:
+        valeur: 60
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: Continuous current
+        note: null
+      courant_pointe:
+        valeur: 100
+        unite: A
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: Maximum current
+        note: durée non indiquée
+      port_commun:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      protections:
+        valeur: surcharge, court-circuit, surdécharge, surintensité, 'anti-failure', surchauffe
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: null
+        note: équilibrage 0,6 A
+      communication:
+        valeur: Bluetooth, RS485
+        unite: null
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: Extra functions
+        note: null
+      masse_g:
+        valeur: 408
+        unite: g
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        page: Weight - g
+        note: 'valeur distributeur, supérieure au 80 A (398 g) : probablement masse d''expédition'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 52.95
+        devise: EUR
+        tva_incluse: 0.21
+        vendeur: NKON
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        note: HT 43.76 EUR
+      disponibilite_ch_ue:
+        valeur: UE (NL), rupture de stock
+        source: marche_pui_g_nkon_jk_bd6a17s6p
+        note: null
+    jk_bd4a17s4p:
+      categorie: bms_port_commun
+      nom: JK Smart Active Balance BMS BD4A17S4P(R)
+      fabricant: Jikong (JK BMS)
+      nombre_s:
+        valeur: 8S-17S
+        unite: cellules
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: Short Description
+        note: null
+      courant_continu:
+        valeur: 40
+        unite: A
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: Continuous current
+        note: null
+      courant_pointe:
+        valeur: 60
+        unite: A
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: Maximum current
+        note: durée non indiquée
+      port_commun:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      protections:
+        valeur: surcharge, court-circuit, surdécharge, surintensité, 'anti-failure', surchauffe
+        unite: null
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: null
+        note: équilibrage 0,4 A
+      communication:
+        valeur: Bluetooth, RS485
+        unite: null
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: Extra functions
+        note: null
+      masse_g:
+        valeur: 318
+        unite: g
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        page: Weight - g
+        note: valeur distributeur
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 42.95
+        devise: EUR
+        tva_incluse: 0.21
+        vendeur: NKON
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        note: HT 35.50 EUR
+      disponibilite_ch_ue:
+        valeur: UE (NL), en stock
+        source: marche_pui_g_nkon_jk_bd4a17s4p
+        note: null
+    jbd_sp17s005:
+      categorie: bms_port_commun
+      nom: JBD SP17S005 smart BMS (variantes NMC 20 à 120 A)
+      fabricant: Jiabaida (JBD)
+      nombre_s:
+        valeur: 10S-17S (identification automatique)
+        unite: cellules
+        source: marche_pui_g_jbd_sp17s005
+        page: Strings
+        note: variantes NMC et LFP
+      courant_continu:
+        valeur: '20 à 120 selon variante (NMC : 20, 40, 50, 60, 80, 100, 120)'
+        unite: A
+        source: marche_pui_g_jbd_sp17s005
+        page: Style (variantes)
+        note: sens (continu, décharge) non précisé
+      courant_pointe:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      port_commun:
+        valeur: null
+        unite: null
+        source: marche_pui_g_jbd_sp17s005
+        page: 'Balance Function: Same Port With Balance'
+        note: 'formule ambiguë (placée sous ''Balance Function'') : port commun non établi'
+      courant_de_charge_max:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      protections:
+        valeur: '''Six Protection Functions'' (non détaillées) ; 1 sonde interne + 2 externes'
+        unite: null
+        source: marche_pui_g_jbd_sp17s005
+        page: null
+        note: équilibrage passif 30-90 mA
+      communication:
+        valeur: Bluetooth + UART ; CAN via convertisseur vendu à part
+        unite: null
+        source: marche_pui_g_jbd_sp17s005
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: champs 'weight' 400/500 du JSON de la page non attribuables à une variante
+      dimensions_mm:
+        valeur: 102 x 65 x 12
+        unite: mm
+        source: marche_pui_g_jbd_sp17s005
+        page: Size
+        note: 'une seule taille affichée pour 20 à 120 A : à confirmer pour les variantes 100/120 A'
+      prix:
+        valeur: 25.80 (60 A), 28.80 (80 A), 31.80 (100 A), 32.80 (120 A)
+        devise: USD
+        tva_incluse: null
+        vendeur: JBD (boutique officielle)
+        source: marche_pui_g_jbd_sp17s005
+        note: prix promotionnels ; livraison en sus
+      disponibilite_ch_ue:
+        valeur: expédition internationale depuis la Chine (boutique JBD)
+        source: marche_pui_g_jbd_sp17s005
+        note: aucun revendeur UE consulté
+    daly_smart_13s_60a_g:
+      categorie: bms_port_commun
+      nom: Daly Smart BMS Li-ion 13S 60A (Bluetooth)
+      fabricant: Dongguan Daly Electronics
+      nombre_s:
+        valeur: 13S (fixe)
+        unite: cellules
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Charging voltage 13S = 54.6V
+        note: NE COUVRE PAS 12S tel quel ; référence 12S Li-ion Daly non trouvée avec fiche lisible
+      courant_continu:
+        valeur: 60
+        unite: A
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Discharge current (A)
+        note: null
+      courant_pointe:
+        valeur: 120
+        unite: A
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Discharge overcurrent protection (A)
+        note: seuil de protection, délai 1,0 ± 0,8 s ; pas une pointe admissible
+      port_commun:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué sur la page
+      courant_de_charge_max:
+        valeur: 60
+        unite: A
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Charging current (A)
+        note: 'protection de surintensité en charge 120 A ; un résultat de recherche (non ouvert) annonçait 30 A en
+          charge pour un Daly 13S 60A : à vérifier, la valeur prudente serait 30 A'
+      protections:
+        valeur: surcharge cellule 4,25 V, surdécharge 2,7 V, surintensité charge/décharge, court-circuit, température
+          -35 à 75 °C
+        unite: null
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: null
+        note: équilibrage passif 100 mA ; résistance circuit principal < 20 mΩ
+      communication:
+        valeur: UART + module Bluetooth
+        unite: null
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: null
+        note: CAN/RS485 sur la série K (site Daly)
+      masse_g:
+        valeur: 184
+        unite: g
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Module weight
+        note: null
+      dimensions_mm:
+        valeur: 123 x 65 x 14
+        unite: mm
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        page: Dimensions
+        note: lu '65 x 123 x 14mm'
+      prix:
+        valeur: 430.83
+        devise: RON
+        tva_incluse: 0.21
+        vendeur: Sigmanortec
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        note: 356.06 RON hors TVA affiché (rapport 1,21)
+      disponibilite_ch_ue:
+        valeur: UE (RO), derniers articles en stock
+        source: marche_pui_g_sigmanortec_daly_13s60a
+        note: null
+    albright_pc100:
+      categorie: contacteur_compact
+      nom: Albright PC100 (contacteur miniature pour circuit imprimé, SPST-NO)
+      fabricant: Albright International
+      courant_continu:
+        valeur: 100
+        unite: A
+        source: marche_pui_g_albright_pc100_ds
+        page: Thermal Current Rating (Ith)
+        note: 'intermittent : 185 A à 30 %, 120 A à 70 %'
+      tension_max:
+        valeur: 48 V DC en coupure / 60 V DC sans coupure ; version PC100B (soufflage) 96 V DC
+        unite: V
+        source: marche_pui_g_albright_pc100_ds
+        page: Maximum Recommended Contact Voltages (Ue)
+        note: '50,4 V pleine charge > 48 V : coupure sous charge hors limite sans version B'
+      bobine:
+        valeur: 6 à 130 V DC (12 V possible) ; 5 à 21 W selon classe de service
+        unite: null
+        source: marche_pui_g_albright_pc100_ds
+        page: Coil Voltage Available / Coil Power Dissipation
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: marche_pui_g_albright_pc100_ds
+        page: † Connections become polarity sensitive
+        note: la fiche dit que soufflage magnétique et suppression de bobine rendent les connexions polarisées ; la
+          version de base n'est pas déclarée bidirectionnelle en toutes lettres
+      masse_g:
+        valeur: 192
+        unite: g
+        source: marche_pui_g_albright_pc100_ds
+        page: Guideline Contactor Weight
+        note: +20 g auxiliaire, +8 g soufflage
+      dimensions_mm:
+        valeur: 84 x 36 x 29
+        unite: mm
+        source: marche_pui_g_albright_pc100_ds
+        page: dessin p.1
+        note: plus picots de 5 à 7 mm sous le corps
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: fabricant au Royaume-Uni
+        source: marche_pui_g_albright_pc100_ds
+        note: revendeur UE non consulté
+    albright_sw60:
+      categorie: contacteur_compact
+      nom: Albright SW60 (contacteur miniature, SPST-NO, goujons M6)
+      fabricant: Albright International
+      courant_continu:
+        valeur: 80
+        unite: A
+        source: marche_pui_g_albright_sw60_ds
+        page: Thermal Current Rating (Ith)
+        note: 'intermittent : 145 A à 30 %, 95 A à 70 %'
+      tension_max:
+        valeur: 48 V DC en coupure / 60 V DC sans coupure ; SW60B 96 / 120 V DC
+        unite: V
+        source: marche_pui_g_albright_sw60_ds
+        page: Maximum Recommended Contact Voltages (Ue)
+        note: null
+      bobine:
+        valeur: 6 à 130 V DC ; 5 à 21 W
+        unite: null
+        source: marche_pui_g_albright_sw60_ds
+        page: null
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: marche_pui_g_albright_sw60_ds
+        page: † Connections become polarity sensitive
+        note: même remarque que PC100 ; option 'BI-DIRECTIONAL' listée sur la page produit pour la suppression de bobine
+      masse_g:
+        valeur: 190
+        unite: g
+        source: marche_pui_g_albright_sw60_ds
+        page: Guideline Contactor Weight
+        note: +20 g auxiliaire, +8 g soufflage
+      dimensions_mm:
+        valeur: 81 x 33 x 37
+        unite: mm
+        source: marche_pui_g_albright_sw60_ds
+        page: dessin
+        note: 81 = longueur hors-tout goujons compris (corps 63)
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: fabricant au Royaume-Uni
+        source: marche_pui_g_albright_sw60_ds
+        note: null
+    albright_sw80_g:
+      categorie: contacteur_compact
+      nom: Albright SW80 (contacteur SPST-NO, goujons M8)
+      fabricant: Albright International
+      courant_continu:
+        valeur: 100 (coupure) / 125 (sans coupure)
+        unite: A
+        source: marche_pui_g_albright_sw80_ds
+        page: Thermal Current Rating (Ith)
+        note: 'intermittent : 185/230 A à 30 %'
+      tension_max:
+        valeur: 48 V DC en coupure / 60 V DC sans coupure ; SW80B 96 V DC
+        unite: V
+        source: marche_pui_g_albright_sw80_ds
+        page: Maximum Recommended Contact Voltages (Ue)
+        note: null
+      bobine:
+        valeur: 6 à 240 V DC ; 7 à 30 W
+        unite: null
+        source: marche_pui_g_albright_sw80_ds
+        page: null
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: marche_pui_g_albright_sw80_ds
+        page: † Connections become polarity sensitive
+        note: même remarque que PC100
+      masse_g:
+        valeur: 350
+        unite: g
+        source: marche_pui_g_albright_sw80_ds
+        page: Guideline Contactor Weight
+        note: +20 g auxiliaire, +50 g soufflage
+      dimensions_mm:
+        valeur: 91 x 50 x 40
+        unite: mm
+        source: marche_pui_g_albright_sw80_ds
+        page: dessin
+        note: 'lecture de dessin : section 50 x 39-40 ; cosse de bobine dépassant de 18 mm sur un côté ; 93 mm avec
+          auxiliaire'
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: fabricant au Royaume-Uni
+        source: marche_pui_g_albright_sw80_ds
+        note: null
+    gigavac_p115bda:
+      categorie: contacteur_compact
+      nom: GIGAVAC P115BDA MiniTACTOR (scellé hermétique, bobine 12 V)
+      fabricant: GIGAVAC (Sensata)
+      courant_continu:
+        valeur: 50
+        unite: A
+        source: marche_pui_g_gigavac_p115_ds
+        page: Continuous Current Carry, Max (8 AWG) @ 25°C
+        note: 25 A à 85 °C ; SOUS la plage 80-150 A visée
+      tension_max:
+        valeur: 1500
+        unite: V DC
+        source: marche_pui_g_gigavac_p115_ds
+        page: Contact Voltage, Operating Max
+        note: null
+      bobine:
+        valeur: 12 V DC nominal, 0,170 A, 70 Ω
+        unite: null
+        source: marche_pui_g_gigavac_p115_ds
+        page: COIL RATINGS
+        note: suppression externe non incluse
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: non indiqué sur la fiche 2018
+      masse_g:
+        valeur: 135
+        unite: g
+        source: marche_pui_g_gigavac_p115_ds
+        page: Weight
+        note: 135 g aussi sur dc-components.com
+      dimensions_mm:
+        valeur: 81,28 x 36,50 x 53,95
+        unite: mm
+        source: marche_pui_g_gigavac_p115_ds
+        page: DIMENSIONS
+        note: 'cotes hors-tout lues dans le texte du dessin (aussi 34,32 et 33,14) : attribution des axes à vérifier
+          sur le PDF'
+      prix:
+        valeur: 58.0
+        devise: USD
+        tva_incluse: false
+        vendeur: DC Components Store (US)
+        source: marche_pui_g_dccomponents_p115bda
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: revendeur UE non consulté (Mouser/Farnell bloqués)
+    gigavac_p105:
+      categorie: contacteur_compact
+      nom: GIGAVAC P105 MiniTACTOR
+      fabricant: GIGAVAC (Sensata)
+      courant_continu:
+        valeur: null
+        unite: A
+        source: marche_pui_g_sensata_p105
+        page: null
+        note: page non téléchargée (403)
+      tension_max:
+        valeur: null
+        unite: V DC
+        source: marche_pui_g_sensata_p105
+        page: null
+        note: null
+      bobine:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    te_kilovac_lev100:
+      categorie: contacteur_compact
+      nom: TE Kilovac LEV100
+      fabricant: TE Connectivity
+      courant_continu:
+        valeur: null
+        unite: A
+        source: marche_pui_g_te_lev100
+        page: null
+        note: fiche non téléchargée
+      tension_max:
+        valeur: null
+        unite: V DC
+        source: marche_pui_g_te_lev100
+        page: null
+        note: null
+      bobine:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    flipsky_antispark_se_200a:
+      categorie: anti_etincelle
+      nom: Flipsky AntiSpark Switch Smart Enhanced 200A (HW V2.2)
+      fabricant: Flipsky
+      courant_continu:
+        valeur: 150
+        unite: A
+        source: marche_pui_g_racer_flipsky_se200
+        page: Spec
+        note: max 200 A
+      tension_max:
+        valeur: 13S (60 V)
+        unite: V
+        source: marche_pui_g_racer_flipsky_se200
+        page: Max voltage
+        note: 12S à 50,4 V dans la plage
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: marche_pui_g_racer_flipsky_se200
+        page: null
+        note: rien sur la régénération ni la recharge par la sortie ; interrupteur côté haut (high side), sans protection
+          court-circuit ni inversion ; capacité de sortie < 6000 µF
+      masse_g:
+        valeur: 50
+        unite: g
+        source: marche_pui_g_racer_flipsky_se200
+        page: 'Product Weight: About 50g'
+        note: '''about'''
+      dimensions_mm:
+        valeur: 40 x 32 (carte seule ; épaisseur non lue)
+        unite: mm
+        source: marche_pui_g_racer_flipsky_se200
+        page: PCB size
+        note: texte tronqué '40mm*32m'
+      prix:
+        valeur: null
+        devise: EUR
+        tva_incluse: null
+        vendeur: racer.lt
+        source: marche_pui_g_racer_flipsky_se200
+        note: prix affiché '4,900.00 €' manifestement erroné
+      disponibilite_ch_ue:
+        valeur: UE (LT) listé
+        source: marche_pui_g_racer_flipsky_se200
+        note: null
+    flipsky_antispark_pro_v3:
+      categorie: anti_etincelle
+      nom: Flipsky Antispark Switch Pro V3.0 (200/280 A)
+      fabricant: Flipsky
+      courant_continu:
+        valeur: null
+        unite: A
+        source: marche_pui_g_flipsky_pro_v3
+        page: null
+        note: pages non téléchargées (429/403)
+      tension_max:
+        valeur: null
+        unite: V
+        source: null
+        page: null
+        note: null
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: 'un extrait de moteur de recherche (non ouvert) cite 42,2 x 33 x 26,6 mm et 80 A continu, 3S-14S : non
+          repris'
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    maytech_mts2009as:
+      categorie: anti_etincelle
+      nom: Maytech MTS2009AS anti-spark switch 300A 20-85V
+      fabricant: Maytech
+      courant_continu:
+        valeur: null
+        unite: A
+        source: marche_pui_g_esurfer_maytech
+        page: null
+        note: seul 'Max Current 300A' est donné
+      tension_max:
+        valeur: 85
+        unite: V
+        source: marche_pui_g_esurfer_maytech
+        page: Max voltage 85V (20S lipo)
+        note: plage 20-85 V
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: marche_pui_g_esurfer_maytech
+        page: null
+        note: 'NMOS côté positif ; ''Suitable for load: three phase motor speed controller'' ; rien sur la recharge
+          par la sortie'
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 97 x 56 x 25
+        unite: mm
+        source: marche_pui_g_esurfer_maytech
+        page: 'Size: about 97x56x25mm'
+        note: '''about'''
+      prix:
+        valeur: 88.9
+        devise: USD
+        tva_incluse: null
+        vendeur: Maytech (prix cité sur le forum)
+        source: marche_pui_g_esurfer_maytech
+        note: date du message non relevée
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    amass_xt90s_g:
+      categorie: anti_etincelle
+      nom: AMASS XT90S (connecteur anti-étincelle)
+      fabricant: Changzhou Amass Electronics
+      courant_continu:
+        valeur: 45
+        unite: A
+        source: marche_pui_g_amass_xt90s
+        page: 额定电流：45A MAX(10AWG,△＜85℃)
+        note: valeur constructeur, plus prudente que les '90A' commerciaux
+      tension_max:
+        valeur: 500
+        unite: V DC
+        source: marche_pui_g_amass_xt90s
+        page: 耐电压
+        note: tenue diélectrique, pas une tension de coupure
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: connecteur passif ; non déclaré
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: 21,5 x 9,9 x 31,2 (un demi-connecteur)
+        unite: mm
+        source: marche_pui_g_amass_xt90s_dessin
+        page: dessin
+        note: null
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    amass_as150_g:
+      categorie: anti_etincelle
+      nom: AMASS AS150 (connecteur unipolaire anti-étincelle, Ø 7 mm)
+      fabricant: Changzhou Amass Electronics
+      courant_continu:
+        valeur: 65
+        unite: A
+        source: marche_pui_g_amass_as150
+        page: 额定电流：65A MAX(8AWG,△＜85℃)
+        note: 'un extrait de recherche (non ouvert) annonçait 150 A : on garde 65 A'
+      tension_max:
+        valeur: 600
+        unite: V DC
+        source: marche_pui_g_amass_as150
+        page: 耐电压
+        note: tenue diélectrique
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: connecteur passif ; non déclaré
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: Ø13,5 x 35,1 (mâle) et Ø13,5 x 30,2 (femelle), par pôle
+        unite: mm
+        source: marche_pui_g_amass_as150_dessin
+        page: dessin
+        note: il faut deux pôles (+ et −)
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    amass_as150u:
+      categorie: anti_etincelle
+      nom: AMASS AS150U (connecteur mixte anti-étincelle, broches de signal)
+      fabricant: Changzhou Amass Electronics
+      courant_continu:
+        valeur: 75
+        unite: A
+        source: marche_pui_g_amass_as150u
+        page: 额定电流：75A MAX(8AWG,△＜85℃)
+        note: broche de signal 1 A
+      tension_max:
+        valeur: 600
+        unite: V DC
+        source: marche_pui_g_amass_as150u
+        page: 耐电压
+        note: tenue diélectrique
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: dessin non téléchargé
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    amass_as120:
+      categorie: anti_etincelle
+      nom: AMASS AS120 (connecteur mixte anti-étincelle)
+      fabricant: Changzhou Amass Electronics
+      courant_continu:
+        valeur: 60
+        unite: A
+        source: marche_pui_g_amass_as120
+        page: 额定电流：60A MAX(8AWG,△＜85℃)
+        note: broche de signal 1 A
+      tension_max:
+        valeur: 600
+        unite: V DC
+        source: marche_pui_g_amass_as120
+        page: 耐电压
+        note: tenue diélectrique
+      bidirectionnel:
+        valeur: null
+        unite: null
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: null
+        unite: g
+        source: null
+        page: null
+        note: null
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: dessin non téléchargé
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: null
+    littelfuse_mega70v_sf51:
+      categorie: fusible_compact
+      nom: Littelfuse MEGA 70 V High Performance SF51 (0998xxx, 60 à 500 A)
+      fabricant: Littelfuse
+      courant_nominal:
+        valeur: 60, 80, 100, 125, 150 A (gamme 60-500 A)
+        unite: A
+        source: marche_pui_g_littelfuse_mega70v_ds
+        page: p.2 Ratings
+        note: '350-500 A : protection court-circuit seulement'
+      tension_max:
+        valeur: 70
+        unite: V DC
+        source: marche_pui_g_littelfuse_mega70v_ds
+        page: p.1
+        note: pouvoir de coupure 2500 A à 70 V DC
+      masse_g:
+        valeur: 12.0
+        unite: g
+        source: marche_pui_g_littelfuse_mega70v_ds
+        page: p.1 Typical Weight per Fuse
+        note: null
+      dimensions_mm:
+        valeur: 68,6 x 19,0 x 16,2
+        unite: mm
+        source: marche_pui_g_littelfuse_mega70v_ds
+        page: p.3 Dimensions
+        note: 'entraxe 50,8, corps 29,2 ; ordre des cotes reconstruit depuis le texte extrait (16,2 et 9,9 collés) :
+          à vérifier sur le PDF'
+      prix:
+        valeur: null
+        devise: null
+        tva_incluse: null
+        vendeur: null
+        source: null
+        note: null
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: fiche hébergée par un revendeur britannique
+    victron_mega_58v_125a:
+      categorie: fusible_compact
+      nom: Victron MEGA-fuse 125A/58V (CIP137125010)
+      fabricant: Victron Energy
+      courant_nominal:
+        valeur: 125
+        unite: A
+        source: marche_pui_g_victron_fusibles_ds
+        page: MEGA fuses 58V
+        note: chute ≈ 90 mV, 0,4 mΩ à froid ; existe aussi en 200, 250, 300 A / 58 V
+      tension_max:
+        valeur: 58
+        unite: V DC
+        source: marche_pui_g_victron_fusibles_ds
+        page: null
+        note: marge faible au-dessus de 50,4 V
+      masse_g:
+        valeur: 9
+        unite: g
+        source: marche_pui_g_eh_victron_mega125_58
+        page: 'Weight: 9 g/db'
+        note: valeur vendeur ; diverge du Littelfuse MEGA 70 V (12,0 g, fiche constructeur)
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 37.34
+        devise: EUR
+        tva_incluse: null
+        vendeur: Elektro Hungary
+        source: marche_pui_g_eh_victron_mega125_58
+        note: prix conseillé 42.25 EUR ; statut TVA non indiqué
+      disponibilite_ch_ue:
+        valeur: UE (HU), en stock
+        source: marche_pui_g_eh_victron_mega125_58
+        note: null
+    victron_midi_58v_g:
+      categorie: fusible_compact
+      nom: Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A)
+      fabricant: Victron Energy
+      courant_nominal:
+        valeur: 30, 40, 50, 60, 100
+        unite: A
+        source: marche_pui_g_victron_fusibles_ds
+        page: MIDI fuses 58V
+        note: '100 A : ≈ 70 mV, 0,45 mΩ'
+      tension_max:
+        valeur: 58
+        unite: V DC
+        source: marche_pui_g_victron_fusibles_ds
+        page: null
+        note: null
+      masse_g:
+        valeur: 2
+        unite: g
+        source: marche_pui_g_eh_victron_midi40_58
+        page: 'Weight: 2 g/db (40 A)'
+        note: 'valeur vendeur douteuse : à vérifier'
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 16.63
+        devise: EUR
+        tva_incluse: null
+        vendeur: Elektro Hungary
+        source: marche_pui_g_eh_victron_midi40_58
+        note: variante 40 A/58 V
+      disponibilite_ch_ue:
+        valeur: UE (HU)
+        source: marche_pui_g_eh_victron_midi40_58
+        note: null
+    bluesea_mrbf:
+      categorie: fusible_compact
+      nom: Blue Sea MRBF terminal fuse (30 à 300 A, se monte sur la borne de batterie)
+      fabricant: Blue Sea Systems
+      courant_nominal:
+        valeur: 30, 40, 50, 60, 75, 80, 90, 100, 125, 150, ... 300
+        unite: A
+        source: marche_pui_g_bluebottle_mrbf
+        page: Amperage
+        note: null
+      tension_max:
+        valeur: 58
+        unite: V DC
+        source: marche_pui_g_bluebottle_mrbf
+        page: Maximum Voltage
+        note: pouvoir de coupure 2000 A à 58 V DC
+      masse_g:
+        valeur: 30
+        unite: g
+        source: marche_pui_g_bluebottle_mrbf
+        page: Weight 0.06lb (0.03 kg)
+        note: arrondi à 10 g près
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: 'un extrait de recherche (non ouvert) cite 27,8 x 23 x 16,3 : non repris'
+      prix:
+        valeur: 29.95
+        devise: AUD
+        tva_incluse: null
+        vendeur: Bluebottle Marine (Australie)
+        source: marche_pui_g_bluebottle_mrbf
+        note: prix de la variante par défaut (30 A probable)
+      disponibilite_ch_ue:
+        valeur: null
+        source: null
+        note: revendeur UE non consulté
+    victron_midi_porte_fusible:
+      categorie: fusible_compact
+      nom: Victron porte-fusible MIDI (CIP000050001)
+      fabricant: Victron Energy
+      courant_nominal:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      tension_max:
+        valeur: null
+        unite: V DC
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: 24
+        unite: g
+        source: marche_pui_g_eh_victron_midi_holder
+        page: 'Weight: 24 g/db'
+        note: valeur vendeur
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 16.63
+        devise: EUR
+        tva_incluse: null
+        vendeur: Elektro Hungary
+        source: marche_pui_g_eh_victron_midi_holder
+        note: null
+      disponibilite_ch_ue:
+        valeur: UE (HU)
+        source: marche_pui_g_eh_victron_midi_holder
+        note: null
+    victron_mega_porte_fusible:
+      categorie: fusible_compact
+      nom: Victron porte-fusible MEGA (CIP000100001)
+      fabricant: Victron Energy
+      courant_nominal:
+        valeur: null
+        unite: A
+        source: null
+        page: null
+        note: null
+      tension_max:
+        valeur: null
+        unite: V DC
+        source: null
+        page: null
+        note: null
+      masse_g:
+        valeur: 110
+        unite: g
+        source: marche_pui_g_eh_victron_mega_holder
+        page: 'Weight: 110 g/db'
+        note: valeur vendeur
+      dimensions_mm:
+        valeur: null
+        unite: mm
+        source: null
+        page: null
+        note: null
+      prix:
+        valeur: 19.08
+        devise: EUR
+        tva_incluse: null
+        vendeur: Elektro Hungary
+        source: marche_pui_g_eh_victron_mega_holder
+        note: null
+      disponibilite_ch_ue:
+        valeur: UE (HU)
+        source: marche_pui_g_eh_victron_mega_holder
+        note: null
     jk_b2a20s20p_hc:
       categorie: bms
       nom: JK Smart Active Balance BMS B2A20S20P-HC
