@@ -258,7 +258,7 @@ package YXOR {
             attribute :>> ia_embarquee = Niveau_ia_embarquee::plus_modele_de_langage_local;
         }
         part def YXOR_Kit :> ModeleYXOR {
-            doc /* modèle décidé (fiche 0073, premier fabriqué) ; capacités et niveaux À DÉFINIR avec Jeremy */
+            doc /* modèle décidé (fiche 0073, premier fabriqué) ; modules successifs, même taille, même squelette et mêmes composants que le Lab, en carton, aux outils du ménage (fiche 0074, Jeremy, 2026-10-08) ; capacités et niveaux des modules PROPOSÉS */
             // capacités À DÉFINIR avec Jeremy
         }
         part def YXOR_Home :> ModeleYXOR {

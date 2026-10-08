@@ -84,6 +84,9 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   appelions YXOR final » (profil `pro` de `params/capacites.yaml`).
   Projet personnel, non commercial et open source ; le Kit est le premier
   fabriqué. Vision : `docs/vision-produit.md` (PROPOSÉ).
+- **Fiche 0074 (Jeremy, 2026-10-08) : le Kit en modules successifs**, mêmes
+  dimensions, taille et composants que le Lab, en carton, aux outils du
+  ménage. Niveaux, carton et colle PROPOSÉS : `docs/kit-yxor.md`.
 - **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la

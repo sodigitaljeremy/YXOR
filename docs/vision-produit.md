@@ -109,15 +109,16 @@ carton y est une **maquette de forme, sans métrologie** (fiche 0060) : il véri
 
 **Questions ouvertes** (à trancher avec Jeremy) :
 
-- **matériau** : carton plume, carton ondulé, carton gris, contreplaqué fin ? quelle épaisseur ? découpe à la
-  main, au cutter guidé, au laser ?
+- **matériau** : un carton, découpé aux outils du ménage (fiche 0074) ; lequel : classement PROPOSÉ dans
+  `docs/kit-yxor.md`, essais dans `docs/protocole-carton.md` ;
 - **solidité** : quelle masse et quel couple le carton tient-il aux liaisons (trous, tenons) ? à mesurer sur
   éprouvette, jamais à supposer ;
 - **servos** : lesquels ? leur couple continu est désormais connu pour les Feetech (fiches lues le 2026-10-07) ;
 - **alimentation** : batterie (laquelle, quel BMS) ou bloc secteur pour un Kit d'atelier ? la fiche 0070
   (batterie) porte sur le Lab et le Pro : s'applique-t-elle au Kit ?
-- **taille** : la même que le Lab (pour partager logiciel et proportions) ou plus petite ?
-- **modules** : quels modules enrichissent le Kit, et dans quel ordre ?
+- **taille** : **la même que le Lab**, décidé par Jeremy le 2026-10-08 (fiche 0074) ;
+- **modules** : **des modules successifs**, décidé par Jeremy le 2026-10-08 (fiche 0074) ; leur découpage
+  (niveaux 0 à 4) est PROPOSÉ, étudié dans `docs/kit-yxor.md`.
 
 ## Open source : les licences à étudier (sans choisir)
 
@@ -147,6 +148,6 @@ reste ouverte (fiche 0010, § 4).
 
 ## Questions que ce document ne tranche pas
 
-Le public de chaque modèle ; les capacités du Kit et du Home ; le matériau du Kit ; les licences ; l'ordre des
+Le public de chaque modèle ; les capacités du Kit et du Home ; le carton précis du Kit ; les licences ; l'ordre des
 modèles après le Kit ; ce que « éco-responsable » exige de mesurable (masse de matière, part recyclable,
 durée de vie, réparabilité notée).

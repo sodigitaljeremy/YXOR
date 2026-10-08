@@ -175,12 +175,15 @@ def engendrer() -> str:
 
 
 def validateur() -> Path | None:
-    """Le binaire OpenSysML (Open-MBEE, Apache-2.0), désigné par la variable YXOR_SYSML ; None s'il est absent.
-    Il n'est PAS dans le dépôt (binaire, règle 4) ni installé hors du dossier de session : le contrôle saute alors,
-    et le dit."""
+    """Le binaire OpenSysML (Open-MBEE, Apache-2.0) : la variable YXOR_SYSML s'il y en a une, sinon celui que
+    scripts/outil_sysml.py télécharge dans exports/ (hors de Git, règle 4), À CONDITION que son empreinte soit
+    la bonne ; None sinon : le contrôle saute alors, et le dit."""
     import os
+    import outil_sysml as OS
     c = os.environ.get("YXOR_SYSML")
-    return Path(c) if c and Path(c).is_file() else None
+    if c:
+        return Path(c) if Path(c).is_file() else None
+    return OS.BINAIRE if OS.verifie() else None
 
 
 def valider(texte: str) -> tuple[int, str] | None:
@@ -207,7 +210,7 @@ def main(argv=None) -> int:
     n_req = txt.count("requirement couple_")
     print(f"  SysML : {len(txt.splitlines())} lignes ; {len(axes())} axes ; {n_req} exigences de couple")
     v = valider(txt)
-    print("  validation OpenSysML : SAUTÉE (variable YXOR_SYSML absente : binaire hors du dépôt)" if v is None
+    print("  validation OpenSysML : SAUTÉE (binaire absent : scripts/outil_sysml.py le télécharge)" if v is None
           else f"  validation OpenSysML : code {v[0]} ({'aucune erreur' if v[0] == 0 else 'ERREURS'})")
     if v and v[0]:
         print(v[1][-2000:])

@@ -264,8 +264,41 @@ profils:
       ia_embarquee: "+ modèle de langage local"   # « IA embarquée avec modèle de langage local »
   # Gamme YXOR (fiche 0073, Jeremy, 2026-10-08) : Kit et Home À DÉFINIR avec Jeremy ; profils VIDES.
   kit:
-    decide: "modèle décidé (fiche 0073, premier fabriqué) ; capacités et niveaux À DÉFINIR avec Jeremy"
+    decide: >-
+      modèle décidé (fiche 0073, premier fabriqué) ; modules successifs, même taille, même squelette et mêmes
+      composants que le Lab, en carton, aux outils du ménage (fiche 0074, Jeremy, 2026-10-08) ; capacités et
+      niveaux des modules PROPOSÉS
     taches: {}
+    # MODULES SUCCESSIFS (fiche 0074 : « tous les niveaux comme modules successifs », Jeremy, 2026-10-08).
+    # Le DÉCOUPAGE est PROPOSÉ (prompt du 2026-10-08) ; les axes sont ceux de params/joints.yaml (règle 3) ;
+    # `motorises` : axes qu'un module motorise (× 2 pour un axe de côté) ; les autres axes du squelette restent
+    # passifs (pivot à friction). `vise` : capacités et niveaux PROPOSÉS, vérifiés par scripts/kit.py.
+    modules:
+      - niveau: 0
+        nom: articulé
+        role: "mannequin passif : poses, proportions, montage, noms d'axes"
+        motorises: []
+        vise: {}
+      - niveau: 1
+        nom: animé
+        role: "tête et bras motorisés par servos à bus"
+        motorises: [neck_yaw, neck_pitch, shoulder_pitch, shoulder_roll, elbow_roll]
+        vise: {tete: 2, gestes_pointage: 0.5}
+      - niveau: 2
+        nom: interactif
+        role: "vision, voix et IA embarquée"
+        motorises: []
+        vise: {ia_embarquee: "+ vision et voix", visage: "écran"}
+      - niveau: 3
+        nom: debout
+        role: "jambes et taille motorisées : tenir debout, puis marcher lentement"
+        motorises: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, waist_yaw]
+        vise: {marche_sol_plat: 0.3}
+      - niveau: 4
+        nom: passage au Lab
+        role: "structure en aluminium et actionneurs RobStride : le Kit devient un YXOR Lab"
+        motorises: []
+        vise: {}
   home:
     decide: "modèle décidé (fiche 0073) ; capacités et niveaux À DÉFINIR avec Jeremy"
     taches: {}

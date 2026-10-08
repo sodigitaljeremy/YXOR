@@ -76,6 +76,18 @@ def controler_profils(cap: dict) -> list[str]:
             for n in niveaux_de(v):
                 if n not in taches[t]["niveaux"]:
                     fautes.append(f"profil {nom} : niveau « {n} » inconnu pour {t} ({taches[t]['niveaux']})")
+    for m in (pr.get("kit") or {}).get("modules") or []:   # modules du Kit (fiche 0074, 2026-10-08)
+        for t, v in (m.get("vise") or {}).items():
+            if t not in taches:
+                fautes.append(f"module {m['niveau']} du kit : tâche « {t} » inconnue")
+            elif v not in taches[t]["niveaux"]:
+                fautes.append(f"module {m['niveau']} du kit : niveau « {v} » inconnu pour {t}")
+        if m.get("motorises"):
+            import marche_composants as MC
+            jo = MC.lire("joints.yaml")
+            noms = {j["nom"] for g in ("jambes", "bras", "taille", "nuque") for j in (jo.get(g) or [])}
+            fautes += [f"module {m['niveau']} du kit : axe « {a} » absent de joints.yaml (règle 3)"
+                       for a in m["motorises"] if a not in noms]
     if "lab" in pr and "pro" in pr:
         lab, fin = pr["lab"].get("taches") or {}, pr["pro"].get("taches") or {}
         fautes += [f"profil lab : {t} absent du pro (le Lab est un sous-ensemble)" for t in lab if t not in fin]

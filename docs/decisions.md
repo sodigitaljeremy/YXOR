@@ -198,6 +198,21 @@ avec qui l'a décidé.
       YXOR Lab, le saut est ramené à 5 cm. »
     - Fiche : [0073](../decisions/0073-gamme-yxor.md), qui complète la
       [0069](../decisions/0069-deux-robots-lab-et-final.md).
+23. **YXOR Kit : modules successifs, mêmes dimensions, taille et
+    composants que le Lab, en carton, aux outils du ménage** (cutter,
+    règle, équerre, éventuellement pistolet à colle). Les niveaux 0 à 4,
+    le carton retenu et la place de la colle restent PROPOSÉS.
+    - Décidée par Jeremy le 2026-10-08 (prompt « Étude de YXOR Kit »).
+      Ses mots : « Je veux tous les niveaux comme modules successifs. » ;
+      « Il est particulièrement judicieux et pertinent d'adopter les mêmes
+      dimensions, taille et composants que pour YXOR Lab, afin que
+      l'investissement initial de l'utilisateur dans les différents
+      éléments soit au maximum réutilisable et exploitable pour le modèle
+      suivant » ; « le carton le mieux adapté, qui répond le mieux à tous
+      les critères, limites et contraintes » ; « le strict minimum : un
+      cutter, une règle, une équerre, voire un pistolet à colle ».
+    - Fiche : [0074](../decisions/0074-kit-modules-successifs.md), qui
+      complète la [0073](../decisions/0073-gamme-yxor.md).
 
 ## B — Conventions confirmées
 

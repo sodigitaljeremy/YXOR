@@ -43,8 +43,10 @@ juste et un fichier faux.
 **Résultat sur `model/yxor.sysml`** : OpenSysML « no errors », code 0 ; implémentation pilote OMG : syntaxe 0,
 sémantique 0, avertissements 0. Le test `tests/test_sysml.py` vérifie que le fichier est à jour, qu'il est
 valide, et qu'une erreur de syntaxe et une référence non résolue faites exprès sont vues. Le binaire n'est pas
-dans le dépôt (règle 4) : il est désigné par la variable `YXOR_SYSML` ; sans elle, la validation **saute et le
-dit**.
+dans le dépôt (règle 4) : `scripts/outil_sysml.py` le télécharge dans `exports/outils/opensysml/` et vérifie ses
+deux empreintes (archive et binaire), outillage décidé par Jeremy le 2026-10-08 (« Oui, télécharge durablement
+OpenSysML dans exports/, hors de Git, avec son empreinte. ») ; la variable `YXOR_SYSML` peut en désigner un autre.
+Absent, ou d'empreinte fausse, la validation **saute et le dit**.
 
 **Limites de la validation** (essais de l'agent) : OpenSysML s'arrête à la première erreur de syntaxe, et n'a pas
 vu une `attribute def` spécialisant une `part def` ; spec42 n'a pas vu un `variant` hors d'une variation ;
@@ -64,8 +66,8 @@ EPL-2.0 selon le README officiel (lu), LGPL-3.0 selon la notice de spec42 : cont
 
 ## Ce qu'il coûte
 
-- **Un outil hors du dépôt** : le binaire OpenSysML (43 Mo) vit dans le dossier de session, effacé entre deux
-  jours ; sans lui, la validation saute.
+- **Un outil hors du dépôt** : le binaire OpenSysML (45 Mo) vit dans `exports/` (hors de Git), téléchargé et
+  vérifié par `scripts/outil_sysml.py` ; sans lui, la validation saute.
 - **Une validation partielle** : syntaxe et noms, pas la satisfaction des exigences ; les calculs (couples,
   masses, explorateur) restent en Python, que SysML ne remplace pas.
 - **Un générateur à maintenir** (environ 200 lignes) : chaque nouvelle donnée de `params/` à montrer demande du
@@ -87,8 +89,6 @@ EPL-2.0 selon le README officiel (lu), LGPL-3.0 selon la notice de spec42 : cont
   ou un outil qui vérifie la satisfaction des contraintes. À ce moment-là : étendre aux interfaces (connecteurs,
   bus, modules interchangeables), qui sont le cœur du « design unique ».
 
-## Question ouverte
+## Question close
 
-Le validateur doit-il vivre durablement quelque part (un script qui le télécharge dans `exports/`, avec son
-empreinte) pour que la validation ne saute plus d'un jour à l'autre ? C'est un choix d'outillage, qui revient à
-Jeremy (fiche 0066, b).
+Le validateur vit durablement dans `exports/`, empreinte vérifiée (Jeremy, 2026-10-08, fiche 0066, b).

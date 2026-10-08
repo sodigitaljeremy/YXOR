@@ -1,0 +1,1409 @@
+# Marché des CARTONS découpables au cutter, pour YXOR Kit — VERSÉ le 2026-10-08
+#
+# Étude d'un agent (prompt « Étude de YXOR Kit », point 2). Chaque valeur vient d'une source
+# TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml (marche_carton_*, sha256, non redistribuable) ;
+# une valeur non lue est null ; le seul calcul est le prix au m² (prix lu ÷ surface du format lu,
+# taux BCE du jour). Aucun achat n'est recommandé (fiche 0066).
+#
+# ⚠ AUCUN carton ondulé vendu au détail ne publie d'ECT, de flexion ni d'éclatement : ils viennent
+#   des QUALITÉS normalisées (`qualites_typiques` : DIN 55468-1 relayée par trois sites qui
+#   divergent, la norme elle-même NON LUE ; WK-10 ; LNE C.27, colonnes reconstruites d'un PDF mal
+#   extrait, à vérifier). Un rattachement produit → qualité est DÉCLARÉ (IGEPA, Jungheinrich) ou
+#   INDICATIF (Modulor). Le classement est dans docs/kit-yxor.md (critères PROPOSÉS).
+# Sites refusant le téléchargement : Jumbo, Hornbach, Bauhaus, Galaxus, Raja, Ratioform, Gerstaecker,
+# Lyreco, Brack, Officeworld ; leurs prix ne sont pas repris.
+meta:
+  date: '2026-10-08'
+  taux_EUR_CHF: 0.9326
+  taux_source: marche_carton_ecb_eurofxref_daily
+  regle: valeur non lue dans une source téléchargée = null ; prix au m² = seul calcul
+  nb_produits: 33
+  nb_qualites_typiques: 18
+  nb_sources: 41
+produits:
+  kapa_line_3mm_modulor:
+    famille: plume
+    nom: Kapa line, cardboard clad, white, 3 mm
+    fabricant: 3A Composites GmbH
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 3
+    masse_surfacique_g_m2: 506
+    ect_kN_m: null
+    flexion:
+      valeur: 4.87
+      unite: N/mm²
+      methode: Biegefestigkeit EN 310 (résistance, pas rigidité)
+    compression:
+      valeur: 0.09
+      unite: MPa
+      methode: Druckspannung bei 10 % Stauchung, EN ISO 844
+    eclatement_kPa: null
+    format_mm:
+    - 500
+    - 700
+    prix:
+      valeur: 5.5
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 14.65
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non mono-matière : âme mousse polyuréthane + couches carton ; « entsorgen gemäß lokaler Gesetzgebung
+      » (fiche 3A)'
+    humidite: mousse sans absorption d'eau ; couches de carton sensibles à l'eau, usage intérieur seulement (fiche
+      3A)
+    cutter: 'oui : « can be grooved or slotted and cut more easily with a cutter » (Modulor) ; « manuell und industriell
+      schneidbar » (fiche 3A)'
+    qualite_typique: null
+    note: 'Ce n''est plus du carton pur : sandwich carton / mousse PUR. Valeurs de la fiche = « typische Richtwerte
+      ». Tolérance d''épaisseur ± 0,6 mm (fiche). prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché
+      x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: masse_surfacique_g_m2, flexion, compression, humidite, recyclable
+      source: marche_carton_modulor_kapa_datenblatt
+    - champ: nom, format_mm, prix, cutter
+      source: marche_carton_modulor_kapa_line
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  kapa_line_5mm_modulor:
+    famille: plume
+    nom: Kapa line, cardboard clad, white, 5 mm
+    fabricant: 3A Composites GmbH
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 5
+    masse_surfacique_g_m2: 582
+    ect_kN_m: null
+    flexion:
+      valeur: 4.27
+      unite: N/mm²
+      methode: Biegefestigkeit EN 310 (résistance, pas rigidité)
+    compression:
+      valeur: 0.17
+      unite: MPa
+      methode: Druckspannung bei 10 % Stauchung, EN ISO 844
+    eclatement_kPa: null
+    format_mm:
+    - 500
+    - 700
+    prix:
+      valeur: 5.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 15.72
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non mono-matière : âme mousse polyuréthane + couches carton ; « entsorgen gemäß lokaler Gesetzgebung
+      » (fiche 3A)'
+    humidite: mousse sans absorption d'eau ; couches de carton sensibles à l'eau, usage intérieur seulement (fiche
+      3A)
+    cutter: 'oui : « can be grooved or slotted and cut more easily with a cutter » (Modulor) ; « manuell und industriell
+      schneidbar » (fiche 3A)'
+    qualite_typique: null
+    note: 'Ce n''est plus du carton pur : sandwich carton / mousse PUR. Valeurs de la fiche = « typische Richtwerte
+      ». Tolérance d''épaisseur ± 0,6 mm (fiche). prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché
+      x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: masse_surfacique_g_m2, flexion, compression, humidite, recyclable
+      source: marche_carton_modulor_kapa_datenblatt
+    - champ: nom, format_mm, prix, cutter
+      source: marche_carton_modulor_kapa_line
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  kapa_line_10mm_modulor:
+    famille: plume
+    nom: Kapa line, cardboard clad, white, 10 mm
+    fabricant: 3A Composites GmbH
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 10
+    masse_surfacique_g_m2: 798
+    ect_kN_m: null
+    flexion:
+      valeur: 2.29
+      unite: N/mm²
+      methode: Biegefestigkeit EN 310 (résistance, pas rigidité)
+    compression:
+      valeur: 0.39
+      unite: MPa
+      methode: Druckspannung bei 10 % Stauchung, EN ISO 844
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 14.5
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 19.32
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non mono-matière : âme mousse polyuréthane + couches carton ; « entsorgen gemäß lokaler Gesetzgebung
+      » (fiche 3A)'
+    humidite: mousse sans absorption d'eau ; couches de carton sensibles à l'eau, usage intérieur seulement (fiche
+      3A)
+    cutter: 'oui : « can be grooved or slotted and cut more easily with a cutter » (Modulor) ; « manuell und industriell
+      schneidbar » (fiche 3A)'
+    qualite_typique: null
+    note: 'Ce n''est plus du carton pur : sandwich carton / mousse PUR. Valeurs de la fiche = « typische Richtwerte
+      ». Tolérance d''épaisseur ± 0,6 mm (fiche). prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché
+      x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: masse_surfacique_g_m2, flexion, compression, humidite, recyclable
+      source: marche_carton_modulor_kapa_datenblatt
+    - champ: nom, format_mm, prix, cutter
+      source: marche_carton_modulor_kapa_line
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  kapa_line_5mm_boesner:
+    famille: plume
+    nom: KAPA Line Leichtstoffplatte 5 mm, 70 x 100 cm
+    fabricant: 3A Composites GmbH
+    vendeur: boesner (Suisse)
+    epaisseur_mm: 5
+    masse_surfacique_g_m2: 582
+    ect_kN_m: null
+    flexion:
+      valeur: 4.27
+      unite: N/mm²
+      methode: Biegefestigkeit EN 310 (fiche 3A, même produit)
+    compression:
+      valeur: 0.17
+      unite: MPa
+      methode: Druckspannung bei 10 % Stauchung, EN ISO 844 (fiche 3A)
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 253.6
+      devise: CHF
+      quantite: PACK24 (24 plaques)
+      par_m2_CHF: 15.1
+    dispo_suisse: oui, boesner.ch (« Online auf Lager »), en lot de 24 seulement pour ce format ; supplément CHF
+      30 au-delà de 1 m
+    recyclable: non mono-matière (âme PUR + carton), voir fiche 3A
+    humidite: couches de carton sensibles à l'eau (fiche 3A)
+    cutter: « lässt sich leicht und schnell Zuschneiden, Dekupieren und Stanzen » (boesner)
+    qualite_typique: null
+    note: Article marqué « RESTPOSTEN » (fin de série) chez boesner le 2026-10-08. Prix TTC (TVA 8,1 %).
+    sources:
+    - champ: nom, format_mm, prix, dispo_suisse, cutter
+      source: marche_carton_boesner_kapa_line_5mm_70x100_p24
+    - champ: masse_surfacique_g_m2, flexion, compression, humidite, recyclable
+      source: marche_carton_modulor_kapa_datenblatt
+  hartschaum_ps_5mm_modulor:
+    famille: plume
+    nom: Hard foam board paper-laminated white, 5 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 5
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 9.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 13.19
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non mono-matière : âme polystyrène + papier couché 150 g/m²'
+    humidite: peut se voiler avec l'humidité ; contre-coller l'autre face recommandé (Modulor) ; solvants dissolvent
+      l'âme PS
+    cutter: 'oui : « can be easily cut with a cutter and grooved or notched » (Modulor)'
+    qualite_typique: null
+    note: 'Ce n''est plus du carton pur : sandwich papier / mousse polystyrène. Fabricant non nommé. Tolérances
+      ± 2 mm (longueur, largeur), ± 1 mm (épaisseur). Aucune valeur mécanique publiée. prix TTC allemand (TVA 19
+      %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, recyclable, humidite, cutter
+      source: marche_carton_modulor_hartschaum_weiss
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  hartschaum_ps_10mm_modulor:
+    famille: plume
+    nom: Hard foam board paper-laminated white, 10 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 10
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 12.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 17.19
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non mono-matière : âme polystyrène + papier couché 150 g/m²'
+    humidite: peut se voiler avec l'humidité ; contre-coller l'autre face recommandé (Modulor) ; solvants dissolvent
+      l'âme PS
+    cutter: 'oui : « can be easily cut with a cutter and grooved or notched » (Modulor)'
+    qualite_typique: null
+    note: 'Ce n''est plus du carton pur : sandwich papier / mousse polystyrène. Fabricant non nommé. Tolérances
+      ± 2 mm (longueur, largeur), ± 1 mm (épaisseur). Aucune valeur mécanique publiée. prix TTC allemand (TVA 19
+      %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, recyclable, humidite, cutter
+      source: marche_carton_modulor_hartschaum_weiss
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  ondule_b_double_face_modulor:
+    famille: ondule_simple
+    nom: Fine corrugated board, double-sided, B flute, 2,5 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 2.5
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 1000
+    - 700
+    prix:
+      valeur: 2.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 3.86
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: null
+    humidite: '« not always one hundred percent flat » : se voile de quelques mm avec l''humidité (Modulor)'
+    cutter: null
+    qualite_typique:
+    - din55468_1_20
+    - din55468_1_30
+    - wk10_1_20_b
+    - lne_ect_1_A
+    note: 'Composition publiée : testliner 150 g/m² blanc (duplex) / cannelure 115 g/m² / testliner 140 g/m² brun
+      ; somme non publiée (non calculée ici, la cannelure consomme plus que son grammage). Aucune qualité DIN déclarée
+      : les qualités typiques citées sont celles d''un B simple cannelure, PAS ce produit. prix TTC allemand (TVA
+      19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, humidite
+      source: marche_carton_modulor_fine_corr
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  ondule_e_micro_double_face_modulor:
+    famille: ondule_simple
+    nom: Micro-corrugated board, double-sided, E flute, 1,5 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 1.5
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 1000
+    - 700
+    prix:
+      valeur: 2.95
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 3.93
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: null
+    humidite: « Not always completely flat; slight curves possible due to changes in humidity » (Modulor)
+    cutter: null
+    qualite_typique: null
+    note: 'Composition brun/brun : kraftliner 125 g/m² / cannelure 100 g/m² / testliner 140 g/m². Les grilles DIN
+      55468-1 ne s''appliquent pas aux cartons composés seulement de cannelures D, E, F, G (note du VCI) : aucune
+      qualité typique rattachée. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, humidite
+      source: marche_carton_modulor_micro_corr_double
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  ondule_e_couleur_marpa_boesner:
+    famille: ondule_simple
+    nom: Marpa Jansen Wellpappe E-Welle, 50 x 70 cm, farbig
+    fabricant: Marpa Jansen
+    vendeur: boesner (Suisse)
+    epaisseur_mm: null
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 500
+    - 700
+    prix:
+      valeur: 3.0
+      devise: CHF
+      quantite: 1 feuille
+      par_m2_CHF: 8.57
+    dispo_suisse: oui, boesner.ch (13 couleurs listées)
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Carton de loisirs créatifs (« zum Collagieren und Gestalten », deux faces colorées). Épaisseur, grammage
+      et construction (simple face ou double face) non publiés. Prix TTC.
+    sources:
+    - champ: nom, format_mm, prix, dispo_suisse
+      source: marche_carton_boesner_wellpappe_e_stk
+  ondule_b_simple_face_rouleau_udobaer:
+    famille: ondule_simple
+    nom: Wellpappe Rolle 1-wellig, 70 m x 2000 mm, braun
+    fabricant: null
+    vendeur: UDO BÄR & Partner AG (Suisse)
+    epaisseur_mm: 2.1
+    masse_surfacique_g_m2: 157
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 2000
+    - 70000
+    prix: null
+    dispo_suisse: oui, udobaer.ch (livraison 3-5 jours ouvrables) ; prix non lisible sans JavaScript
+    recyclable: « recycelbar ja », 100 % de matière recyclée (vendeur)
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: 'Carton ondulé SIMPLE FACE (« 1-lagige B-Welle », une seule couverture) : se plie, n''est pas un panneau.
+      Destiné au calage. Largeurs 400 à 2000 mm. Prix absent de la page téléchargée.'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, dispo_suisse, recyclable
+      source: marche_carton_udobaer_wellpappe_215879
+  ondule_simple_face_opo:
+    famille: ondule_simple
+    nom: Wellkarton 31.031.10
+    fabricant: null
+    vendeur: Opo Oeschger AG (Suisse)
+    epaisseur_mm: null
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm: null
+    prix: null
+    dispo_suisse: oui, opo.ch (catalogue « Verbrauchsmaterialien für Schulen ») ; prix et variantes chargés par
+      JavaScript, non lus
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: '« nur einseitig gedeckt, lässt sich dadurch leicht biegen » : carton simple face, pas un panneau. Aucune
+      cote ni valeur publiée dans la page téléchargée.'
+    sources:
+    - champ: nom, dispo_suisse, note
+      source: marche_carton_opo_wellkarton
+  claycote_b_kraft_bd:
+    famille: ondule_simple
+    nom: Claycote B Flute - Brown (2 Sided)
+    fabricant: Ball & Doggett (fabriqué en Australie)
+    vendeur: Ball & Doggett (AU)
+    epaisseur_mm: 3
+    masse_surfacique_g_m2: 405
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 1240
+    - 2450
+    prix: null
+    dispo_suisse: non (vendeur australien)
+    recyclable: contenu recyclé 78 % (fiche) ; colle amidon de blé
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: 'Faces Kraft Brown / Kraft Brown. Référence de grammage TOTAL d''un carton ondulé réel (rare en Europe),
+      pas un achat possible en Suisse. Le tableau du PDF est extrait par pypdf : correspondance SKU-ligne incertaine,
+      SKU omis. Aucune valeur ECT publiée.'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, recyclable
+      source: marche_carton_ballanddoggett_claycote_flute
+  claycote_c_bd:
+    famille: ondule_simple
+    nom: Claycote Uncoated C Flute
+    fabricant: Ball & Doggett (fabriqué en Australie)
+    vendeur: Ball & Doggett (AU)
+    epaisseur_mm: 3.3
+    masse_surfacique_g_m2: 415
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 2600
+    - 1400
+    prix: null
+    dispo_suisse: non (vendeur australien)
+    recyclable: contenu recyclé 78 % (fiche) ; colle amidon de blé
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: 'Faces Kraft Brown / Recycled Grey. Référence de grammage TOTAL d''un carton ondulé réel (rare en Europe),
+      pas un achat possible en Suisse. Le tableau du PDF est extrait par pypdf : correspondance SKU-ligne incertaine,
+      SKU omis. Aucune valeur ECT publiée.'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, recyclable
+      source: marche_carton_ballanddoggett_claycote_flute
+  claycote_e_blanc_bd:
+    famille: ondule_simple
+    nom: Claycote E Flute White Uncoated (2 Sided)
+    fabricant: Ball & Doggett (fabriqué en Australie)
+    vendeur: Ball & Doggett (AU)
+    epaisseur_mm: 1.5
+    masse_surfacique_g_m2: 476
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 2450
+    - 1240
+    prix: null
+    dispo_suisse: non (vendeur australien)
+    recyclable: contenu recyclé 40 % (fiche) ; colle amidon de blé
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: 'Faces White Top Liner / White Top Liner. Référence de grammage TOTAL d''un carton ondulé réel (rare en
+      Europe), pas un achat possible en Suisse. Le tableau du PDF est extrait par pypdf : correspondance SKU-ligne
+      incertaine, SKU omis. Aucune valeur ECT publiée.'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, recyclable
+      source: marche_carton_ballanddoggett_claycote_flute
+  boite_fefco0201_120b_igepa:
+    famille: ondule_simple
+    nom: Wellpappfaltkarton FEFCO 0201, 400 x 300 x 300 mm, 1.20B
+    fabricant: null
+    vendeur: IGEPA (DE)
+    epaisseur_mm: null
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm: null
+    prix: null
+    dispo_suisse: non établi (vendeur allemand)
+    recyclable: « Recycelbar und umweltschonend », FSC (fiche)
+    humidite: null
+    cutter: null
+    qualite_typique:
+    - din55468_1_20
+    - wk10_1_20_b
+    note: 'Boîte, pas une plaque : représente le carton de récupération courant (qualité DÉCLARÉE 1.20B, B-Welle).
+      Les valeurs de la qualité 1.20 sont dans qualites_typiques (elles divergent selon la source). Prix non publié
+      dans la fiche.'
+    sources:
+    - champ: nom, recyclable, qualite
+      source: marche_carton_igepa_7001716207
+  ondule_bc_double_modulor:
+    famille: ondule_double
+    nom: Double corrugated board, double-sided, BC flute, 6 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 6.0
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 1000
+    - 700
+    prix:
+      valeur: 3.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 5.19
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés) ; aussi 2000 x 1000 mm à 8,90 €
+      (4,45 €/m²)
+    recyclable: null
+    humidite: « not always completely flat ; slight curves ... due to changes in humidity » ; comportement hygroscopique
+      (Modulor)
+    cutter: null
+    qualite_typique:
+    - din55468_2_20
+    - din55468_2_30
+    - wk10_2_20_bc
+    - lne_ect_2_M
+    note: 'Composition publiée : kraftliner 140 g/m² blanc / cannelure 115 g/m² / couche intermédiaire Schrenz 100
+      g/m² / testliner 140 g/m² brun (le nombre de couches de cannelure n''est pas détaillé). Aucune qualité DIN
+      déclarée. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, humidite
+      source: marche_carton_modulor_double_corr
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  zuschnitt_bc_220_igepa:
+    famille: ondule_double
+    nom: Wellpapp-Zuschnitt Doppelwelle 785 x 585 mm, BC, 2.20BC
+    fabricant: null
+    vendeur: IGEPA (DE)
+    epaisseur_mm: null
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 785
+    - 585
+    prix: null
+    dispo_suisse: non établi (vendeur allemand)
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique:
+    - din55468_2_20
+    - wk10_2_20_bc
+    note: Plaque prédécoupée (intercalaire de palette), qualité DÉCLARÉE 2.20BC, brun/brun, Breitbahn. Prix non
+      publié dans la fiche.
+    sources:
+    - champ: nom, format_mm, qualite
+      source: marche_carton_igepa_7001695405
+  boite_230bc_jungheinrich:
+    famille: ondule_double
+    nom: Boîte pliante carton ondulé 2 cannelures 500 x 400 x 400 mm, qualité 2.30 BC
+    fabricant: null
+    vendeur: Jungheinrich PROFISHOP AG (Suisse)
+    epaisseur_mm: null
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm: null
+    prix:
+      valeur: 99.0
+      devise: CHF
+      quantite: 20 boîtes (HT)
+      par_m2_CHF: null
+    dispo_suisse: oui, jungheinrich-profishop.ch (6 jours ouvrables, livraison gratuite dès CHF 250)
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique:
+    - din55468_2_30
+    - wk10_2_30_bc
+    note: Boîte, pas une plaque ; surface de carton par boîte non publiée, donc prix au m² non calculé. Prix HT
+      (CHF 4,95 / boîte).
+    sources:
+    - champ: nom, prix, dispo_suisse, qualite
+      source: marche_carton_jungheinrich_ch_230bc
+  claycote_eb_twin_bd:
+    famille: ondule_double
+    nom: Claycote E/B Flute (Twin Cushion E&B-Flutes)
+    fabricant: Ball & Doggett (fabriqué en Australie)
+    vendeur: Ball & Doggett (AU)
+    epaisseur_mm: 4.5
+    masse_surfacique_g_m2: 826
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 1240
+    - 2450
+    prix: null
+    dispo_suisse: non (vendeur australien)
+    recyclable: contenu recyclé 70 % (fiche)
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Faces couchées blanches (White Clay Coat). Sert de référence de grammage total pour un EB. Aucune valeur
+      ECT publiée.
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, recyclable
+      source: marche_carton_ballanddoggett_claycote_flute
+  graukarton_1mm_modulor:
+    famille: gris_compact
+    nom: Grey paperboard, smooth/rough, 1,0 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 1.0
+    masse_surfacique_g_m2: 700
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 2.9
+      devise: EUR
+      quantite: 1 feuille
+      par_m2_CHF: 3.86
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 100 % papier recyclé (contenu) ; filière de fin de vie non mentionnée
+    humidite: null
+    cutter: null
+    qualite_typique:
+    - europapier_graufeinkarton_700
+    note: 'Grammage « app. 700 g/m² » ; épaisseur réelle à ± 0,2 mm. Une face lissée. Rigidité Taber : voir qualité
+      typique (autre fabricant, même grammage). prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x
+      0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, recyclable
+      source: marche_carton_modulor_grey_smooth_rough
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  graukarton_2mm_modulor:
+    famille: gris_compact
+    nom: Grey cardboard, smooth/smooth, 2.0 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 2.0
+    masse_surfacique_g_m2: 1150
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 750
+    - 1000
+    prix:
+      valeur: 3.9
+      devise: EUR
+      quantite: 1 feuille
+      par_m2_CHF: 4.85
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 100 % papier recyclé (contenu) ; filière non mentionnée
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Contrecollé dès 1,5 mm, lisse deux faces ; épaisseur réelle à ± 0,2 mm ; grammage « app. ». Aucune rigidité
+      publiée. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, recyclable
+      source: marche_carton_modulor_grey_smooth_smooth
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  graukarton_3mm_modulor:
+    famille: gris_compact
+    nom: Grey cardboard, smooth/smooth, 3.0 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 3.0
+    masse_surfacique_g_m2: 1830
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 750
+    - 1000
+    prix:
+      valeur: 5.4
+      devise: EUR
+      quantite: 1 feuille
+      par_m2_CHF: 6.71
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 100 % papier recyclé (contenu) ; filière non mentionnée
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Contrecollé dès 1,5 mm, lisse deux faces ; épaisseur réelle à ± 0,2 mm ; grammage « app. ». Aucune rigidité
+      publiée. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, recyclable
+      source: marche_carton_modulor_grey_smooth_smooth
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  callos_buchbinder_2mm_boesner:
+    famille: gris_compact
+    nom: Callos Buchbinderkarton 2 mm, 80 x 100 cm
+    fabricant: Callos
+    vendeur: boesner (Suisse)
+    epaisseur_mm: 2
+    masse_surfacique_g_m2: 1320
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 800
+    - 1000
+    prix:
+      valeur: 4.6
+      devise: CHF
+      quantite: 1 feuille (CHF 4.10 dès 10)
+      par_m2_CHF: 5.75
+    dispo_suisse: oui, boesner.ch (« Online auf Lager »)
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Carton de reliure (« hohe Festigkeit und Stabilität ... tadellose Planlage ») ; « Oberfläche kann Unebenheiten
+      aufweisen ». Matière (gris recyclé ou autre) non précisée par le vendeur. Prix TTC.
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, dispo_suisse
+      source: marche_carton_boesner_callos_2mm_80x100
+  callos_buchbinder_3mm_boesner:
+    famille: gris_compact
+    nom: Callos Buchbinderkarton 3 mm, 80 x 100 cm
+    fabricant: Callos
+    vendeur: boesner (Suisse)
+    epaisseur_mm: 3
+    masse_surfacique_g_m2: 1890
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 800
+    - 1000
+    prix:
+      valeur: 5.9
+      devise: CHF
+      quantite: 1 feuille (CHF 5.40 dès 10)
+      par_m2_CHF: 7.38
+    dispo_suisse: oui, boesner.ch (« Online auf Lager »)
+    recyclable: null
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Carton de reliure (« hohe Festigkeit und Stabilität ... tadellose Planlage ») ; « Oberfläche kann Unebenheiten
+      aufweisen ». Matière (gris recyclé ou autre) non précisée par le vendeur. Prix TTC.
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, dispo_suisse
+      source: marche_carton_boesner_callos_3mm_80x100
+  graupappe_gpf_europapier:
+    famille: gris_compact
+    nom: Graupappe GPF, 1800 g/m² (2,25 mm)
+    fabricant: null
+    vendeur: Europapier (AT)
+    epaisseur_mm: 2.25
+    masse_surfacique_g_m2: 1800
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 720
+    - 1030
+    prix: null
+    dispo_suisse: non établi (fiche autrichienne)
+    recyclable: « starke Graupappe aus 100 % Altpapier », FSC Recycled
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: 'Fiche de gamme : 500 à 2900 g/m² pour 0,70 à 4,00 mm ; ligne retenue 1800 g/m² = 2,25 mm (2400 g/m² =
+      3,00 mm). À comparer à Modulor 3,0 mm = 1830 g/m² et Callos 3 mm = 1890 g/m² : densités différentes selon
+      le fabricant. Une coquille dans la fiche (« 1,,75 » mm pour 1400 g/m²).'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, recyclable
+      source: marche_carton_europapier_graupappe_2018
+  wabe_honeycomb_brun_20mm_modulor:
+    famille: nid_abeille
+    nom: Honeycomb board paper laminated, HoneyComb, brown, 20 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 20.0
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 750
+    - 1000
+    prix:
+      valeur: 17.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 22.26
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: « can be completely recycled as paper waste after use without further separation » (Modulor) ; âme
+      carton recyclé
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Peaux testliner 200 g/m² ; tolérances ± 2,0 mm (L, l), ± 0,3 mm (épaisseur). Existe en 500 x 700 (8,90
+      €). Aucune masse totale ni valeur mécanique publiée. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m²
+      affiché x 0,9326 (BCE 2026-10-08).
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, recyclable
+      source: marche_carton_modulor_wabe_braun
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  wabe_nonclad_15mm_modulor:
+    famille: nid_abeille
+    nom: Honeycomb Board, Non-Clad, ca. 15 mm
+    fabricant: probablement SWAP (Sachsen) GmbH (même description d'âme, non confirmé par Modulor)
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 15
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 750
+    - 1000
+    prix:
+      valeur: 12.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 16.04
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: null
+    humidite: à stocker « vor jeglicher Feuchtigkeit ... geschützt », humidité matière 7-11 % (fiche SWAP)
+    cutter: null
+    qualite_typique: null
+    note: 'Âme SANS peau (à contre-coler soi-même). Modulor : ondulé brun assemblé, pas 8-9,5 mm, hauteur 4-5,3
+      mm, ca. 57 kg/m³ — identique à la fiche SWAP « classic wave » (57,00 kg/m³ ± 10 %). Masse surfacique non publiée
+      (57 kg/m³ x 15 mm donnerait ~855 g/m² : calcul, non publié). prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix
+      €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix
+      source: marche_carton_modulor_wabe_nonclad
+    - champ: humidite, masse volumique
+      source: marche_carton_swap_sinus_unkasch
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  wabe_noir_5mm_modulor:
+    famille: nid_abeille
+    nom: Honeycomb board, cardboard clad, black, 5 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 5.0
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression:
+      valeur: 6
+      unite: kg/m²
+      methode: « Load capacity up to 6 kg/m² » (vendeur, méthode non précisée)
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 26.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 35.84
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 100 % carton recyclé, FSC, colle à l'eau ; sans plastique (Modulor)
+    humidite: null
+    cutter: 'oui : « Cutting is possible with cutter, circular saw, jigsaw and fretsaw » (Modulor)'
+    qualite_typique: null
+    note: Peaux carton 350 g/m² ; présenté comme alternative sans plastique au Kapa Graph. Le plus cher au m² du
+      relevé. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, compression, prix, recyclable, cutter
+      source: marche_carton_modulor_wabe_schwarz
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  alveolo_brun_15mm_boesner:
+    famille: nid_abeille
+    nom: Alvéolo Pappwabenplatte, braun, 1,5 cm, ca. 50 x 70 cm
+    fabricant: Alvéolo
+    vendeur: boesner (Suisse)
+    epaisseur_mm: 15
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 500
+    - 700
+    prix:
+      valeur: 8.6
+      devise: CHF
+      quantite: 1 plaque
+      par_m2_CHF: 24.57
+    dispo_suisse: oui, boesner.ch (« Online auf Lager ») ; aussi 2,5 et 6 cm, brun ou blanc
+    recyclable: « besteht aus recycelbaren Rohstoffen, die verwendeten Klebstoffe sind wasserbasiert »
+    humidite: null
+    cutter: 'oui : « kann mit dem Cutter in individuelle Formen geschnitten werden »'
+    qualite_typique: null
+    note: Format « ca. » ; seul le 50 x 70 cm est proposé en brun 1,5 cm. Aucune valeur mécanique. Prix TTC. Le
+      seul produit du relevé à la fois suisse, en carton pur et déclaré coupable au cutter, en panneau épais.
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, prix, dispo_suisse
+      source: marche_carton_boesner_alveolo_braun15_55959
+    - champ: recyclable, cutter
+      source: marche_carton_boesner_alveolo_wabe
+  wabenkarton_10mm_igepa:
+    famille: nid_abeille
+    nom: Wabenkarton 1/2 Euroformat 10 mm (Palettenzwischenlage)
+    fabricant: null
+    vendeur: IGEPA (DE)
+    epaisseur_mm: 10
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 800
+    - 600
+    prix: null
+    dispo_suisse: non établi (vendeur allemand)
+    recyclable: FSC (fiche) ; testliner
+    humidite: null
+    cutter: null
+    qualite_typique: null
+    note: Taille de cellule 15 mm ; peaux testliner brun ; « Tragkraft ca. keine » (aucune capacité déclarée). Prix
+      non publié.
+    sources:
+    - champ: nom, epaisseur_mm, format_mm, recyclable
+      source: marche_carton_igepa_7003496544
+  forex_classic_3mm_modulor:
+    famille: autre
+    nom: Forex Classic rigid-PVC foam board, white, 3 mm
+    fabricant: 3A Composites GmbH
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 3
+    masse_surfacique_g_m2: null
+    ect_kN_m: null
+    flexion:
+      valeur: 22
+      unite: MPa
+      methode: Biegefestigkeit EN ISO 178 (1-3 mm) ; module de flexion 1100 MPa
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 500
+    - 1000
+    prix:
+      valeur: 15.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 29.66
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés) ; découpe sur mesure proposée
+    recyclable: 'non : PVC (pas la filière papier)'
+    humidite: absorption d'eau < 1 % en 24 h (EN ISO 62) ; « weather and moisture resistant », usage extérieur
+    cutter: null
+    qualite_typique: null
+    note: 'CE N''EST PLUS DU CARTON (PVC expansé). Masse volumique : 700 kg/m³ nominal pour 1-3 mm (fiche 3A) contre
+      « 0,5-0,7 g/cm³ » (Modulor) : divergence signalée ; 3 mm x 700 kg/m³ = 2100 g/m² serait un calcul, non publié.
+      Le vendeur ne parle pas du cutter (il recommande la scie circulaire carbure) : cutter = null. Température
+      max. 55 °C. prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: flexion, humidite, masse volumique
+      source: marche_carton_forex_classic_datenblatt
+    - champ: nom, format_mm, prix, dispo_suisse, humidite
+      source: marche_carton_modulor_forex_white
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  pp_alveolaire_3mm_modulor:
+    famille: autre
+    nom: Polypropylene multi-wall sheet, white, 450 g/m², ca. 3,0 mm
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 3.0
+    masse_surfacique_g_m2: 450
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 700
+    - 1000
+    prix:
+      valeur: 7.9
+      devise: EUR
+      quantite: 1 plaque
+      par_m2_CHF: 10.53
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: 'non papier : polypropylène (mono-matière plastique)'
+    humidite: usage extérieur court terme (affiches électorales) selon Modulor ; repousse l'eau
+    cutter: couteau cité par la fiche Akyplac (« Cutting (guillotine, die cut, laser, knife, plotter) ») — produit
+      de même grammage, fabricant non confirmé
+    qualite_typique: null
+    note: 'CE N''EST PLUS DU CARTON (type Akylux/Correx). Pas des nervures 4 mm ; nervures en travers sur le 700
+      x 1000, en long sur le 1400 x 1000 (la direction compte pour la rigidité). Fiche Corplex AKYPLAC 3 mm 450
+      g/m² : 3,0 ± 0,2 mm, 450 ± 45 g/m², densité 0,21. Aucune valeur mécanique publiée. prix TTC allemand (TVA
+      19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).'
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix, humidite
+      source: marche_carton_modulor_pp_white
+    - champ: cutter (qualité typique)
+      source: marche_carton_akyplac_450_gb
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+  siebdruckkarton_finnboard_2mm_modulor:
+    famille: autre
+    nom: Serigraphy board, white, 2,0 mm (âme Finnboard)
+    fabricant: null
+    vendeur: Modulor (Berlin)
+    epaisseur_mm: 2.0
+    masse_surfacique_g_m2: 1020
+    ect_kN_m: null
+    flexion: null
+    compression: null
+    eclatement_kPa: null
+    format_mm:
+    - 750
+    - 1000
+    prix:
+      valeur: 8.9
+      devise: EUR
+      quantite: 1 feuille
+      par_m2_CHF: 11.07
+    dispo_suisse: livraison en Suisse par Modulor (frais standard 36,90 € par colis ; facturée au prix net, hors
+      TVA allemande ; TVA suisse et éventuels frais de dédouanement non comptés)
+    recyclable: null
+    humidite: 'Cobb 60 en surface : 40 g/m² (min. 30, max. 60) ; humidité absolue 8,5 % (fiche Modulor)'
+    cutter: null
+    qualite_typique: null
+    note: Carton contrecollé, âme pâte mécanique (Finnboard) choisie pour sa résistance au voilage (Modulor), deux
+      faces couchées blanches. Encore du carton (filière papier probable, non déclarée). Aucune rigidité publiée.
+      prix TTC allemand (TVA 19 %) ; par_m2_CHF = prix €/m² affiché x 0,9326 (BCE 2026-10-08).
+    sources:
+    - champ: nom, epaisseur_mm, masse_surfacique_g_m2, format_mm, prix
+      source: marche_carton_modulor_serigraphy_board
+    - champ: masse_surfacique_g_m2 (± 5 %), humidite
+      source: marche_carton_modulor_datenblatt_siebdruckkarton
+    - champ: dispo_suisse
+      source: marche_carton_modulor_order_shipping
+    - champ: prix.par_m2_CHF (taux)
+      source: marche_carton_ecb_eurofxref_daily
+qualites_typiques:
+  din55468_1_20:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '1.20'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 770
+      ect_kN_m: 4.0
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 850
+      ect_kN_m: 4.0
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 860
+      ect_kN_m: 3.5
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  din55468_1_30:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '1.30'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 1000
+      ect_kN_m: 4.5
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 1100
+      ect_kN_m: 4.5
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 1100
+      ect_kN_m: 4.0
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  din55468_1_40:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '1.40'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 1200
+      ect_kN_m: 5.5
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 1350
+      ect_kN_m: 5.5
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 1400
+      ect_kN_m: 5.0
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  din55468_2_20:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '2.20'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 770
+      ect_kN_m: 6.5
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 850
+      ect_kN_m: 6.5
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 850
+      ect_kN_m: 6.0
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  din55468_2_30:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '2.30'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 1000
+      ect_kN_m: 7.0
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 1100
+      ect_kN_m: 7.0
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 1100
+      ect_kN_m: 6.5
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  din55468_2_40:
+    norme: 'DIN 55468-1 (non lue directement : valeurs relayées par trois sites)'
+    sorte: '2.40'
+    valeurs:
+    - source: marche_carton_horn_qualitaeten
+      eclatement_kPa: 1200
+      ect_kN_m: 8.0
+    - source: marche_carton_vci_kap6_wellpappe
+      eclatement_kPa: 1350
+      ect_kN_m: 8.0
+    - source: marche_carton_atzinger_quality
+      eclatement_kPa: 1400
+      ect_kN_m: 7.6
+    note: Les trois sources DIVERGENT (éditions différentes de la norme, probablement). Selon le VCI, les valeurs
+      ne valent pas pour les cartons faits seulement de cannelures D, E, F, G. Valeurs minimales de spécification,
+      pas des mesures.
+    sources:
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_horn_qualitaeten
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_vci_kap6_wellpappe
+    - champ: eclatement_kPa, ect_kN_m
+      source: marche_carton_atzinger_quality
+  wk10_1_20_b:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 1.20 b
+    ect_kN_m_plage: 3,9 - 5,0
+    eclatement_min_kPa: 800
+    bct_theorique_min_N: 1500
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  wk10_1_30_b:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 1.30 b
+    ect_kN_m_plage: 4,5 - 6,0
+    eclatement_min_kPa: 940
+    bct_theorique_min_N: 1600
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  wk10_1_20_c:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 1.20 c
+    ect_kN_m_plage: 3,9 - 5,0
+    eclatement_min_kPa: 800
+    bct_theorique_min_N: 1800
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  wk10_2_20_bc:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 2.20 bc
+    ect_kN_m_plage: 6,5 - 7,5
+    eclatement_min_kPa: 800
+    bct_theorique_min_N: 3800
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  wk10_2_30_bc:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 2.30 bc
+    ect_kN_m_plage: 7,0 - 8,0
+    eclatement_min_kPa: 1000
+    bct_theorique_min_N: 4100
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  wk10_2_02_eb:
+    norme: Wellpappen-Klassifizierung WK-10 (2010)
+    sorte: 2.02 eb
+    ect_kN_m_plage: 6,0 - 7,3
+    eclatement_min_kPa: 650
+    bct_theorique_min_N: 3200
+    note: Classification d'un groupement de producteurs (pas une norme) ; plage d'ECT et non minimum seul. BCT =
+      boîte de référence non précisée.
+    sources:
+    - champ: ect, eclatement, bct
+      source: marche_carton_wk10
+  lne_ect_1_A:
+    norme: LNE C.27 Rev 12 (2021), mode de classement ECT, simple cannelure
+    classe: 1/A
+    ect_kN_m_min: 3.4
+    eclatement_kPa_min: null
+    epaisseur_mm_min: 2
+    fct_kPa_min: 155
+    note: 'Lecture d''un tableau extrait par pypdf : affectation colonne-valeur reconstruite (épaisseur 2 mm, FCT
+      155 kPa, éclatement « - » pour 1/AA et 1/A). À vérifier sur le PDF.'
+    sources:
+    - champ: ect, eclatement, epaisseur, fct
+      source: marche_carton_lne_c27
+  lne_ect_1_B:
+    norme: LNE C.27 Rev 12 (2021), mode de classement ECT, simple cannelure
+    classe: 1/B
+    ect_kN_m_min: 3.8
+    eclatement_kPa_min: 470
+    epaisseur_mm_min: 2
+    fct_kPa_min: 155
+    note: 'Lecture d''un tableau extrait par pypdf : affectation colonne-valeur reconstruite (épaisseur 2 mm, FCT
+      155 kPa, éclatement « - » pour 1/AA et 1/A). À vérifier sur le PDF.'
+    sources:
+    - champ: ect, eclatement, epaisseur, fct
+      source: marche_carton_lne_c27
+  lne_ect_1_D:
+    norme: LNE C.27 Rev 12 (2021), mode de classement ECT, simple cannelure
+    classe: 1/D
+    ect_kN_m_min: 4.6
+    eclatement_kPa_min: 720
+    epaisseur_mm_min: 2
+    fct_kPa_min: 155
+    note: 'Lecture d''un tableau extrait par pypdf : affectation colonne-valeur reconstruite (épaisseur 2 mm, FCT
+      155 kPa, éclatement « - » pour 1/AA et 1/A). À vérifier sur le PDF.'
+    sources:
+    - champ: ect, eclatement, epaisseur, fct
+      source: marche_carton_lne_c27
+  lne_ect_2_M:
+    norme: LNE C.27 Rev 12 (2021), mode de classement ECT, double cannelure
+    classe: 2/M
+    ect_kN_m_min: 6.2
+    eclatement_kPa_min: 585
+    note: Même réserve de lecture que les classes simple cannelure.
+    sources:
+    - champ: ect, eclatement
+      source: marche_carton_lne_c27
+  europapier_graufeinkarton_700:
+    norme: null
+    sorte: Graufeinkarton GFF 700 g/m²
+    fabricant: Europapier (AT)
+    epaisseur_mm: 1.0
+    masse_surfacique_g_m2: 700
+    flexion:
+    - valeur: 1351
+      unite: mN·m
+      methode: Taber 15°, sens long, DIN 53121
+    - valeur: 469
+      unite: mN·m
+      methode: Taber 15°, sens travers, DIN 53121
+    - valeur: 281.2
+      unite: mN·m
+      methode: L&W 5°, sens long, DIN 53121
+    - valeur: 92.5
+      unite: mN·m
+      methode: L&W 5°, sens travers, DIN 53121
+    note: 'Tolérance ± 15 %. Rigidité presque 3 fois plus forte en sens long qu''en travers : le sens des fibres
+      compte. Seule rigidité en flexion trouvée pour un carton gris ; la gamme s''arrête à 900 g/m² (1,28 mm).'
+    sources:
+    - champ: epaisseur, masse, flexion
+      source: marche_carton_europapier_graufeinkarton_2020
+  epaisseurs_cannelures_bfbi:
+    norme: null
+    sorte: épaisseurs par cannelure
+    epaisseur_mm:
+      E: 1,3 - 1,6
+      B: 2,6 - 3,0
+      C: 3,6 - 4,2
+      EB: 3,8 - 4,3
+      BC: 6,1 - 6,7
+    note: Plages d'un transformateur britannique (Saxon Packaging) ; Modulor annonce 2,5 mm pour son B, sous la
+      plage.
+    sources:
+    - champ: epaisseur
+      source: marche_carton_bfbi_corrugated

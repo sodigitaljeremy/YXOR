@@ -6348,3 +6348,292 @@ fichiers:
     empreinte: sha256:10383f93c30b1ef5a0ef574581683047369291fc1424124b5d16ab0d7efe18ce
     conditions: non lues
     redistribuable: false
+
+  # ── Marché des cartons (YXOR Kit), versé le 2026-10-08 (params/cartons.yaml) ──
+  marche_carton_akyplac_450_gb:
+    source: https://pim.igepa.nl/Plaatmateriaal/Polypropyleen/Akyplac%C2%AE/FT%20Akyplac%20450%20GB%20-%2006.2020.pdf
+    reference: Corplex, fiche technique AKYPLAC 3 mm 450 g/m², 06/2020 (hébergée par Igepa NL)
+    date: 2026-10-08
+    empreinte: sha256:491f95df548f421220d84f085bfbd0d6d3ebbbc8a2c3dd0a4879e22103b2f6fb
+    conditions: non lues
+    redistribuable: false
+  marche_carton_atzinger_quality:
+    source: https://www.atzinger.de/quality-wellpappe
+    reference: Atzinger Verpackung GmbH, « Qualitätssicherung der Wellpappe », tableau des sortes (édition DIN non précisée)
+    date: 2026-10-08
+    empreinte: sha256:f0e05996f58ac915a0f492367c54f679f36dcbd22b177f33113fd7548943b84a
+    conditions: non lues
+    redistribuable: false
+  marche_carton_ballanddoggett_claycote_flute:
+    source: https://ballanddoggett.com.au/wp-content/uploads/2024/06/tech_data_sheet_claycote-flute-range.pdf
+    reference: Ball & Doggett (AU), Technical specification sheet Claycote B/E/E-B/C Flute Range, 07.25
+    date: 2026-10-08
+    empreinte: sha256:449e392036a6ddd25ab8e959774c99478b903650f64139e58b01b999438f14b0
+    conditions: non lues
+    redistribuable: false
+  marche_carton_bfbi_corrugated:
+    source: https://www.bfbi.org.uk/?p=14186
+    reference: BFBi / Saxon Packaging, « What is corrugated board? » (épaisseurs par cannelure)
+    date: 2026-10-08
+    empreinte: sha256:555ebdfc4b71b5d7c8c094bbca227c36b7223cbc7d580343169867ee4a930cb3
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_alveolo_braun15_55959:
+    source: https://www.boesner.ch/pappwabenplatte-27038?group%5B9%5D=55951&group%5B17%5D=55959&group%5B19%5D=221
+    reference: boesner.ch, Alvéolo Pappwabenplatte, variante brun 1,5 cm, ca. 50 x 70
+    date: 2026-10-08
+    empreinte: sha256:828cf32af4bfa9014cd9e92d97b5ed6c5bd01544851aea3bbc09a5fffbcb1ab0
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_alveolo_wabe:
+    source: https://www.boesner.ch/pappwabenplatte-27038
+    reference: boesner.ch, Alvéolo Pappwabenplatte (page produit)
+    date: 2026-10-08
+    empreinte: sha256:e607dda7dcad9024af84a5e74a8eff1d4a6929e07e2e9a9086b790cf534b0a5a
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_callos_2mm_80x100:
+    source: https://www.boesner.ch/buchbinderkarton-modellbaupappe-10544?group%5B9%5D=67679&group%5B17%5D=67675&group%5B19%5D=221
+    reference: boesner.ch, Callos Buchbinderkarton, 1320 g/m², 2 mm, 80 x 100
+    date: 2026-10-08
+    empreinte: sha256:00e821b1354cbee70d2c74558f6b311c0583e036b69c81b100e4d2c9f6985452
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_callos_3mm_80x100:
+    source: https://www.boesner.ch/buchbinderkarton-modellbaupappe-10544?group%5B9%5D=67673&group%5B17%5D=67675&group%5B19%5D=221
+    reference: boesner.ch, Callos Buchbinderkarton, 1890 g/m², 3 mm, 80 x 100
+    date: 2026-10-08
+    empreinte: sha256:be28b5e96603615278c00ff0821484a86a47a11c859e5bcb4eea535850aa20f7
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_kapa_line_5mm_70x100_p24:
+    source: https://www.boesner.ch/line-leichtstoffplatte-16153?group%5B9%5D=2865&group%5B17%5D=229&group%5B19%5D=1835
+    reference: boesner.ch, KAPA Line Leichtstoffplatte, 5 mm, 70 x 100, PACK24 (Restposten)
+    date: 2026-10-08
+    empreinte: sha256:ccc3a0857ad7b240f213ad8ee0b5bb11c0b240d64b7f6db9689e72906aa8e8a8
+    conditions: non lues
+    redistribuable: false
+  marche_carton_boesner_wellpappe_e_stk:
+    source: https://www.boesner.ch/wellpappe-e-welle-19866?group%5B5%5D=5
+    reference: boesner.ch, Marpa Jansen Wellpappe E-Welle 50 x 70 cm, farbig, STK
+    date: 2026-10-08
+    empreinte: sha256:ad5839387e682f95d167cfceb8372b2e096fb1fc25dd4302b1ca27cb015849fa
+    conditions: non lues
+    redistribuable: false
+  marche_carton_ecb_eurofxref_daily:
+    source: https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml
+    reference: BCE, taux de référence quotidien, 2026-10-08 (EUR/CHF 0,9326)
+    date: 2026-10-08
+    empreinte: sha256:6da90670e413a205e55822c9f37b762d26dda9dee7ee5f7bfe18831bbbb79194
+    conditions: non lues
+    redistribuable: false
+  marche_carton_europapier_graufeinkarton_2020:
+    source: https://europapier.at/AT%20Produktdatenbl%C3%A4tter/Karton/Graufeinkarton_2020.pdf
+    reference: Europapier (AT), fiche produit Graufeinkarton (GFF), 2019/2020
+    date: 2026-10-08
+    empreinte: sha256:16fcd5928d9c1d62876e70bd75df2061eb4dc8cdcd7a7442e35cd50d2769bc0c
+    conditions: non lues
+    redistribuable: false
+  marche_carton_europapier_graupappe_2018:
+    source: https://europapier.at/AT%20Produktdatenbl%C3%A4tter/Karton/graupappe_2018.pdf
+    reference: Europapier (AT), fiche produit Graupappe (GPF), 2016/2018
+    date: 2026-10-08
+    empreinte: sha256:e1520ec30b9aa59716e98621e4cdb830461be0ccb25c8a0605f0901cd885e44a
+    conditions: non lues
+    redistribuable: false
+  marche_carton_forex_classic_datenblatt:
+    source: https://cdn.modulor.de/assets/de_forexclassic_technisches_datenblatt.pdf
+    reference: 3A Composites, Technisches Datenblatt FOREX classic, Ausgabe 01/2014
+    date: 2026-10-08
+    empreinte: sha256:97b32c4fc93adce093e314172b58ed2e9173167788bc4329afedd3ff5a02d677
+    conditions: non lues
+    redistribuable: false
+  marche_carton_horn_qualitaeten:
+    source: https://www.horn-verpackung.de/wellpapp-qualitaten
+    reference: Horn Verpackung GmbH, « Wellpapp-Qualitäten » (cite la Sortentabelle DIN 55468-1, Ausgabe 2014)
+    date: 2026-10-08
+    empreinte: sha256:276abc30d8e94b2584aafe5f78e836ce6daeac7f95be1fd24b18ef097b528977
+    conditions: non lues
+    redistribuable: false
+  marche_carton_igepa_7001695405:
+    source: https://www.igepa.de/datasheet/download/7001695405
+    reference: IGEPA, fiche Wellpapp-Zuschnitt Doppelwelle 785 x 585, BC, 2.20BC
+    date: 2026-10-08
+    empreinte: sha256:8c28ff316d841fd69cc6fac3e3d108be128f28e217b339781bfa2266ea24f555
+    conditions: non lues
+    redistribuable: false
+  marche_carton_igepa_7001716207:
+    source: https://www.igepa.de/hansa/datasheet/download/7001716207
+    reference: IGEPA, fiche Wellpappfaltkarton FEFCO 0201 400 x 300 x 300, 1.20B (KWP1 027)
+    date: 2026-10-08
+    empreinte: sha256:be2a4baceb414c89db965b593608d2d2469f235fb4993643406b344513048dcb
+    conditions: non lues
+    redistribuable: false
+  marche_carton_igepa_7003496544:
+    source: https://www.igepa.de/datasheet/download/7003496544
+    reference: IGEPA, fiche Wabenkarton 1/2 Euroformat 10 mm (KXX7678D800X600X10FSC)
+    date: 2026-10-08
+    empreinte: sha256:10b3e24310b58cc1c6771557f857e50a11cf9d0ac6c55fe2f3f081c293da3f73
+    conditions: non lues
+    redistribuable: false
+  marche_carton_jungheinrich_ch_230bc:
+    source: https://www.jungheinrich-profishop.ch/fr/p/-745582-322720
+    reference: Jungheinrich PROFISHOP AG (CH), boîte pliante 2 cannelures 500 x 400 x 400, qualité 2.30 BC
+    date: 2026-10-08
+    empreinte: sha256:85ba1da4eb0b41d60ea998e9df904c29469328d49496c004866111a46a623253
+    conditions: non lues
+    redistribuable: false
+  marche_carton_lne_c27:
+    source: https://www.lne.fr/sites/default/files/bloc-telecharger/reg-lne-emballage-c27-spec_0.pdf
+    reference: LNE, Spécification de classement C.27 Rev 12, décembre 2021 (cartons ondulés simple et double cannelure)
+    date: 2026-10-08
+    empreinte: sha256:fbe7c718b654c7f3ba8d50fda07ea323890ece34a9fcbc60ff4c6d1119ab76ca
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_datenblatt_siebdruckkarton:
+    source: https://cdn.modulor.de/assets/datenblatt_siebdruckkarton.pdf
+    reference: Modulor, Datenblatt Siebdruckpappe (13.11.2009)
+    date: 2026-10-08
+    empreinte: sha256:82b1ec709f2ea40286094e4cff86b30a44f0ab85a1c4ad6a100a1913dc3d2896
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_double_corr:
+    source: https://www.modulor.de/en/double-corrugated-board-double-sided.html
+    reference: modulor.de, Double corrugated board, double-sided (BC)
+    date: 2026-10-08
+    empreinte: sha256:c532c1065ad0583d4b96dde3b068fbdef7f24a2b1b2b6beae79daa6ba6ee4148
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_fine_corr:
+    source: https://www.modulor.de/en/fine-corrugated-board-double-sided.html
+    reference: modulor.de, Fine corrugated board, double-sided (B)
+    date: 2026-10-08
+    empreinte: sha256:81ea9b139b8f3dee8a902543b2816af681b871a59e7f8eb4292029c9e05c1b11
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_forex_white:
+    source: https://www.modulor.de/en/forex-classic-rigid-pvc-foam-board-white-custom-cutting-available.html
+    reference: modulor.de, Forex Classic rigid-PVC foam board, white
+    date: 2026-10-08
+    empreinte: sha256:bbfbd485f1083ba976d9918cd255dd98cb2b92195d74d6d268ee5dc86c904b20
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_grey_smooth_rough:
+    source: https://www.modulor.de/en/grey-paperboard-smooth-rough.html
+    reference: modulor.de, Grey paperboard, smooth/rough
+    date: 2026-10-08
+    empreinte: sha256:eeab691eb80258ac9c60912884aed65b80493139eb519badc648b2df1573da68
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_grey_smooth_smooth:
+    source: https://www.modulor.de/en/grey-cardboard-smooth-smooth.html
+    reference: modulor.de, Grey cardboard, smooth/smooth
+    date: 2026-10-08
+    empreinte: sha256:592087a40d2834f984808fd228f44f61615cf77e3cae6fd3f5ce4415a270d95f
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_hartschaum_weiss:
+    source: https://www.modulor.de/en/hard-foam-board-paper-laminated-white.html
+    reference: modulor.de, Hard foam board paper-laminated white
+    date: 2026-10-08
+    empreinte: sha256:0b85518bc1e44472e898c5fceff56da6d0fbd35d7b323ea0dc067e1dabb6fda5
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_kapa_datenblatt:
+    source: https://cdn.modulor.de/assets/de_kapa_line_technisches_datenblatt_06-2021.pdf
+    reference: 3A Composites, Technisches Datenblatt KAPA line, Version 06/2021 (hébergé par Modulor)
+    date: 2026-10-08
+    empreinte: sha256:706a7723b5ef854c34a2081f0ea86f8f0067cc821ec391254129fb63f2dc4a22
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_kapa_line:
+    source: https://www.modulor.de/en/kapa-line-cardboard-clad-white.html
+    reference: modulor.de, Kapa line, cardboard clad, white
+    date: 2026-10-08
+    empreinte: sha256:7f9c60c00ffdae50dbba6a2db5c3725a19ada3a15fa533a75c089fb2a6afd2c1
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_micro_corr_double:
+    source: https://www.modulor.de/en/micro-corrugated-board-double-sided.html
+    reference: modulor.de, Micro-corrugated board, double-sided (E)
+    date: 2026-10-08
+    empreinte: sha256:1e7aacee060b3ba1abe73de884c843132b28e3d4a57071f15868b79dbf690573
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_order_shipping:
+    source: https://www.modulor.de/en/order-shipping/
+    reference: modulor.de, Order & Shipping (frais par pays, Suisse)
+    date: 2026-10-08
+    empreinte: sha256:767ded54a043c7af7384421c482498f2ee4d711d98385a878644c528c70cc310
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_pp_white:
+    source: https://www.modulor.de/en/polypropylene-multi-wall-sheet-white.html
+    reference: modulor.de, Polypropylene multi-wall sheet, white
+    date: 2026-10-08
+    empreinte: sha256:f464f71aff664c777e8661b464d10b7d4c6cf78ab05a0e59726ccdcc4f8bbf3f
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_serigraphy_board:
+    source: https://www.modulor.de/en/serigraphy-board-white.html
+    reference: modulor.de, Serigraphy board, white (âme Finnboard)
+    date: 2026-10-08
+    empreinte: sha256:5ca5f967b64a3417804bd949d33696b8b6d94705b0d3212e5b27bb47fbf2abd8
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_wabe_braun:
+    source: https://www.modulor.de/en/honeycomb-board-paper-laminated-honeycomb-brown.html
+    reference: modulor.de, Honeycomb board paper laminated, HoneyComb, brown
+    date: 2026-10-08
+    empreinte: sha256:8b60493e754fc1dcfd48dafce36f32b55ca09087708f7986f8543949bee5a52f
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_wabe_nonclad:
+    source: https://www.modulor.de/en/honeycomb-board-non-clad.html
+    reference: modulor.de, Honeycomb Board, Non-Clad
+    date: 2026-10-08
+    empreinte: sha256:9bdbdf53933ab8b7e2e9815ca23b7e35394fbacf3abc94959a74bc08af3da468
+    conditions: non lues
+    redistribuable: false
+  marche_carton_modulor_wabe_schwarz:
+    source: https://www.modulor.de/en/honeycomb-board-cardboard-clad-black.html
+    reference: modulor.de, Honeycomb board, cardboard clad, black
+    date: 2026-10-08
+    empreinte: sha256:50501940f2de758b273329f8488b7f370fa10fadfd639ccaee868a3f57ec0392
+    conditions: non lues
+    redistribuable: false
+  marche_carton_opo_wellkarton:
+    source: https://www.opo.ch/de/wellkarton/p/bp3103110.html
+    reference: opo.ch (Opo Oeschger), Wellkarton 31.031.10
+    date: 2026-10-08
+    empreinte: sha256:dc25e5d254fb334fdeafbfbe7dcdfb20738cb8fbef603ef53687b506b68d9856
+    conditions: non lues
+    redistribuable: false
+  marche_carton_swap_sinus_unkasch:
+    source: https://www.frischeis.at/pim/09%20Tueren/Datenblatter/Swap/Produktdatenblaetter/k1_az_03_spezif-swap-sinus-wabenplatte-unkasch.pdf
+    reference: SWAP (Sachsen) GmbH, Spezifikation SWAP Sinus Wabenplatte unkaschiert, K1_AZ_03 Rev 04, 18.10.2012
+    date: 2026-10-08
+    empreinte: sha256:9c38935ad3cf3119cd074589fe4e031c4a079165808e2adf8e56e034bf60a3c3
+    conditions: non lues
+    redistribuable: false
+  marche_carton_udobaer_wellpappe_215879:
+    source: https://www.udobaer.ch/wellpappe-215879.html
+    reference: udobaer.ch, Wellpappe Rolle 1-wellig 70 m x 2000 mm (A215879)
+    date: 2026-10-08
+    empreinte: sha256:dec2e30a726045d8f7c3054408e43a642963de1c281fb4aa392283d9d8727b9d
+    conditions: non lues
+    redistribuable: false
+  marche_carton_vci_kap6_wellpappe:
+    source: https://www.vci.de/vci/downloads-vci/kapitel-6-wellpappe-stand-oktober-2012.pdf
+    reference: VCI, Handbuch für Verpackungen, Kapitel 6 Wellpappe, Stand Oktober 2012 (extrait de DIN 55468-1)
+    date: 2026-10-08
+    empreinte: sha256:5ce2fa15551a8698b48fb314093b9af1f9ec2144f2319ffc7e9643cacc044c26
+    conditions: non lues
+    redistribuable: false
+  marche_carton_wk10:
+    source: https://www.wk-10.de/
+    reference: Friedrich Bähr GmbH, Wellpappen-Klassifizierung 2010 « WK-10 »
+    date: 2026-10-08
+    empreinte: sha256:36cdf7133f286fd2297ae20fa50cab6c3dd5f65e41ce42ab7ca7de30eea99d41
+    conditions: non lues
+    redistribuable: false

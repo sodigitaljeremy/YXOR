@@ -1,0 +1,87 @@
+# Étude de YXOR Kit — HYPOTHÈSES de calcul, lues par scripts/kit.py
+#
+# Créé le 2026-10-08 (prompt « Étude de YXOR Kit »). Ce qui est DÉCIDÉ est
+# dans la fiche 0074 (Jeremy, 2026-10-08) : modules successifs ; mêmes
+# dimensions, taille et composants que le Lab ; carton ; outils du ménage.
+# TOUT CE QUI SUIT EST PROPOSÉ (Claude), à confirmer par Jeremy. Les modules
+# eux-mêmes sont dans params/capacites.yaml (profils.kit.modules).
+#
+# Aucune cote en dur (règle 1) : les longueurs sont des ratios × H ; les
+# sections viennent du squelette (params/squelette.yaml) ou de
+# l'encombrement d'un servo (quincaillerie, règle 2).
+
+# LE LAB TEL QUE L'EXPLORATEUR LE DONNE AUJOURD'HUI : la meilleure solution RobStride en 12S, 250 Hz, coupure
+# 3,0 V, chaîne compacte (docs/explorateur-lab-2026-10.md, ensemble 27, 2026-10-08). Ce sont des SORTIES d'un
+# calcul de 8 min, RECOPIÉES ici : tests/test_kit.py vérifie qu'elles figurent toujours dans le rapport de
+# l'explorateur, et échoue s'il change. La taille du Lab n'est PAS décidée (fiche 0047 : c'est une sortie).
+lab:
+  source: "docs/explorateur-lab-2026-10.md, § 12S, 250 Hz, coupure 3,0 V, chaîne compacte, ensemble 27"
+  ligne: "| 27 | 0,65 → 0,715 | robstride + dynamixel | 13,6 | ≥ 4 275 | 3 234 | INR-21700-P42A 12S2P, 353 Wh, 2,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) |"
+  H_m: 0.65                  # hauteur de la jambe (les couples se lisent à la jambe réelle)
+  hauteur_reelle_m: 0.715    # seul le tronc s'allonge (électronique), lot 4a septies
+  masse_kg: 13.6
+  cellule: molicel_p42a      # INR-21700-P42A, pack 12S2P
+  petits_axes: dynamixel     # le cou (et les pinces) du Lab : Dynamixel dans cette solution, pas Feetech
+
+structure:
+  # Les coques du Kit sont dimensionnées dès le niveau 0 pour loger les servos du niveau 3 : un module
+  # s'AJOUTE, il ne fait pas refaire la structure (fiche 0074).
+  facteur_renforts: 1.5      # PROPOSÉ : rabats, cloisons, doubles épaisseurs aux pivots (× l'aire des coques)
+  segments_a_servo: [bassin, tronc, cuisse, tibia, bras, avant_bras]   # section ≥ servo + deux parois
+  profondeur_tronc: profondeur_poitrine   # ratio ANSUR (et pas la boîte simplifiée du squelette) : le Lab y loge
+                                          # son électronique (explorateur, place dans le tronc)
+  carton_reference: carton_ondule_double  # la seule matière MESURÉE du projet (mesures.yaml, 2026-09-29)
+  # Le tronc du Kit a la longueur de celui du Lab : tronc_hauteur × H + (hauteur réelle − H) (seul le tronc
+  # s'allonge, lot 4a septies). Même silhouette, même place pour la même électronique.
+
+# Tenir debout (niveau 3), en statique : genoux légèrement fléchis, hanche à l'aplomb de la cheville.
+debout:
+  inclinaison_tibia_deg: 10  # PROPOSÉ ; genou : M·g/2 × tibia·sin α ; hanche : même bras de levier (majorant) ;
+                             # cheville : M·g/2 × moitié du pied (exigences_physiques, levier_cheville_frac)
+
+# Où chaque servo motorisé est porté (pour les couples statiques et la répartition des masses).
+statique:
+  # Bras tendu à l'horizontale : le cas STATIQUE le plus défavorable de l'épaule et du coude.
+  # Tête basculée de 90° : le plus défavorable du cou (bras de levier : cou + demi-tête).
+  bras_horizontal: true
+  tete_basculee_deg: 90
+
+servos:
+  famille: feetech
+  # Option « alignée sur le Lab » : les servos sur un rail 12 V régulé (le rail 12 V du Lab, puissance.yaml,
+  # rails), depuis le pack 12S du Lab. Option « minimale » : servos directement sur un pack 3S.
+  rail_V: 12
+
+alimentation:
+  aligne_lab:
+    description: "pack 12S1P de la cellule du Lab (la moitié de son pack 12S2P), rail 12 V par convertisseur"
+    S: 12
+    P: 1
+    cellule: lab
+    calculateur: "+ vision et voix"   # le niveau 2 ; acheté dès le niveau 1, sans rien remplacer ensuite
+  minimale:
+    description: "pack 3S1P en 21700, servos sur le pack, Raspberry Pi 5 (5 V par convertisseur)"
+    S: 3
+    P: 1
+    cellule: la_plus_legere
+    calculateur_id: rpi5_8gb          # 8 GB : le critère « + vision et voix » (puissance.yaml, niveaux_ia)
+    carte_ia_id: rpi_ai_hat_plus_13   # accélérateur de vision ; voix : sur le processeur (non vérifié)
+
+# Composants du niveau 2 sans marché relevé : ils restent null (prix et masse) et sont DITS.
+interactif_sans_marche: [camera, microphone, haut_parleur, ecran_visage]
+
+# Classement des cartons (point 2 du prompt) : critères PROPOSÉS, à arbitrer par Jeremy. Le meilleur selon
+# ces critères est CALCULÉ par scripts/kit.py (classement_cartons) ; rien n'est décidé.
+cartons:
+  eliminatoires:
+    # « filière papier, mono-matière » : docs/vision-produit.md (PROPOSÉ) « éviter les mélanges de matières
+    # collées » ; un sandwich mousse/carton (Kapa) ou un plastique (Forex, PP) n'y va pas.
+    familles_papier: [ondule_simple, ondule_double, gris_compact, nid_abeille]
+    papier_hors_famille: [siebdruckkarton_finnboard_2mm_modulor]   # carton contrecollé, rangé en « autre »
+    # disponible en Suisse : vendeur suisse ou livraison en Suisse (un champ `dispo_suisse` qui commence par
+    # « non » élimine) ; un ondulé SIMPLE FACE (une face plate seulement) n'est pas un panneau : éliminé.
+    simple_face: [ondule_b_simple_face_rouleau_udobaer, ondule_simple_face_opo]
+  # Rang, dans l'ordre : (1) rigidité en flexion PAR MASSE, approchée par e² / masse surfacique (un panneau
+  # creux ou sandwich : rigidité ∝ e², masse ∝ masse surfacique) — PROXY PROPOSÉ, que les essais du protocole
+  # remplaceront ; (2) masse de la structure du Kit ; (3) prix de la structure.
+  # Un produit sans épaisseur ou sans masse surfacique lue est rangé « à peser » (protocole-carton.md).

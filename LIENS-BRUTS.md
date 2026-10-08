@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `b1eedbf2b587`, le 2026-10-08 ; 268 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `65ec8d57b9fc`, le 2026-10-08 ; 272 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -131,7 +131,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (40)
+## docs/ (41)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -172,6 +172,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodo
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-claude-2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-gemini-2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sources/methodologie-grok-2026-10-06.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/sysml-pilote.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/vision-produit.md
 
 ## journal/ (13)
@@ -189,6 +190,10 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-05.m
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-06.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-07.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-08.md
+
+## model/ (1)
+
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/model/yxor.sysml
 
 ## params/ (22)
 
@@ -227,7 +232,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (35)
+## scripts/ (36)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -262,6 +267,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/simulations_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/source.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/squelette.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/structure_plaques.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/sysml.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/systeme_electrique.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/taille_minimale.py
 
@@ -276,7 +282,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (26)
+## tests/ (27)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -303,6 +309,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_saut.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulations_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_squelette.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_sysml.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_systeme_electrique.py
 
 ## web/ (4)
