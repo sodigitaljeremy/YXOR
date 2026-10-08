@@ -1048,6 +1048,11 @@ def main(argv=None) -> int:
     ap.add_argument("--rendu", action="store_true", help="image de contrôle (MuJoCo, EGL)")
     ap.add_argument("--sans-3d", action="store_true", help="sans le contrôle d'interpénétration (rapide)")
     a = ap.parse_args(argv)
+    # construction Docker (scripts/regenerer.py sur le VPS) : docs/ n'est pas dans l'image et le VPS ne calcule pas
+    # (CLAUDE.md) ; la notice et le contrôle 3D SAUTENT, et le disent (le contrôle 3D tourne en local et aux tests)
+    docker = not NOTICE.parent.exists()
+    if docker:
+        a.sans_3d = True
     g = donnees()
     corps, plaques, piv, ec = construire(g)
     SORTIE.mkdir(parents=True, exist_ok=True)
@@ -1093,13 +1098,15 @@ def main(argv=None) -> int:
     comp = bd.Compound(children=[s for _, s in solides])
     bd.export_step(comp, str(SORTIE / f"{NOM}_assemblage.step"), unit=bd.Unit.MM)
     masse = sum(pl.aire * len(pl.poses) for pl in plaques) * g["sigma"] / 1000.0
-    NOTICE.write_text(notice(g, corps, plaques, piv, ec, n, tuilees, fautes, inter, masse, n_cales), encoding="utf-8")
+    if not docker:
+        NOTICE.write_text(notice(g, corps, plaques, piv, ec, n, tuilees, fautes, inter, masse, n_cales), encoding="utf-8")
     print(f"  {len(plaques)} gabarits, {len(pieces) - n_cales} pièces et {n_cales} cales, {n} feuilles A4"
           + (f" (tuiles : {'; '.join(tuilees)})" if tuilees else ""))
     print(f"  carton {sum(pl.aire * len(pl.poses) for pl in plaques) / 1e6:.2f} m², {masse:.0f} g ; "
           f"hauteur {ec['z_sommet']:.0f} mm")
     print(f"  contrôles 2D : {len(fautes)} faute(s) sur {len(plaques)} gabarits ; 3D : "
-          + ("SAUTÉ (--sans-3d)" if a.sans_3d else f"{len(inter)} interpénétration(s) sur {len(solides)} plaques "
+          + (("SAUTÉ (construction Docker : docs/ absent, pas de calcul sur le VPS)" if docker else "SAUTÉ (--sans-3d)")
+             if a.sans_3d else f"{len(inter)} interpénétration(s) sur {len(solides)} plaques "
              f"et {len(servos)} servos"))
     for x in (fautes + inter)[:25]:
         print("    ✗ " + x)
@@ -1107,7 +1114,7 @@ def main(argv=None) -> int:
         png = RENDU / f"{NOM}.png"
         rendre(solides + servos, png)
         print(f"  -> {png.relative_to(REPO)}")
-    print(f"  -> {NOTICE.relative_to(REPO)}")
+    print(f"  -> {NOTICE.relative_to(REPO)}" if not docker else "  notice SAUTÉE (construction Docker : docs/ absent)")
     return 1 if (fautes or inter) else 0
 
 
