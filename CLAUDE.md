@@ -86,7 +86,11 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   fabriqué. Vision : `docs/vision-produit.md` (PROPOSÉ).
 - **Fiche 0074 (Jeremy, 2026-10-08) : le Kit en modules successifs**, mêmes
   dimensions, taille et composants que le Lab, en carton, aux outils du
-  ménage. Niveaux, carton et colle PROPOSÉS : `docs/kit-yxor.md`.
+  ménage. **Fiche 0075 (Jeremy, 2026-10-08)** : niveaux 0 à 4 (le 3 =
+  debout en Feetech, la marche = le Lab), option progressive (secteur
+  12 V aux niveaux 1-2, batterie au 3 en boîtier ignifuge), recyclage,
+  assemblage B ; **Feetech aux petits axes de toute la gamme**. Taille
+  du Kit GELÉE à 0,65 m en attendant Jeremy : `docs/kit-yxor.md`.
 - **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la

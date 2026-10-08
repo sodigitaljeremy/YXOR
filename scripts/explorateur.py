@@ -564,6 +564,9 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
     inconnues = list(dict.fromkeys(inconnues))
     prix = [c["prix"] for c in choix.values()]
     cout_act = sum(n * choix[a]["prix"] for a, n in axes.items()) if None not in prix else None
+    # part CONNUE (2026-10-08) : avant, un seul prix manquant faisait compter 0 CHF pour TOUS les actionneurs dans la
+    # borne basse ; la solution passait alors pour la moins chère (constaté avec les petits axes en Feetech, fiche 0075)
+    cout_act_connu = sum(n * choix[a]["prix"] for a, n in axes.items() if choix[a]["prix"] is not None)
     cout = cout_act if el is None else (cout_act + el["prix"] if cout_act is not None and el["prix"] is not None else None)
     # borne pessimiste H³ : le même choix tient-il ?
     mc = M[("central", "central")]
@@ -575,6 +578,7 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
     statut = "infaisable" if violees else ("INCONNU" if inconnues else "faisable")
     nc = non_couvertes(axes, ctx["cible"])
     return dict(statut=statut, violees=violees, inconnues=inconnues, choix=choix, M=mc, elec=el, cout_actionneurs=cout_act,
+                cout_actionneurs_connu=cout_act_connu,
                 M_bande=(min(M.values()), max(M.values())), M_iso=M_iso, tient_iso=tient_iso, cout=cout,
                 E=mc * G * ctx["R"]["hauteur_hanche"] * Hr, ncap=len(profil),
                 H_reel=Hr if pl else None, H_couples=Ht, iterations=iterations, place=pl, non_couvertes=nc,
@@ -695,7 +699,8 @@ def cout_borne(x):
     """Coût total si connu ; sinon sa part CONNUE (actionneurs + éléments chiffrés du système électrique) : une borne basse."""
     if x.get("cout") is not None:
         return x["cout"]
-    return (x.get("cout_actionneurs") or 0.0) + ((x.get("elec") or {}).get("prix_connu") or 0.0)
+    return (x.get("cout_actionneurs") if x.get("cout_actionneurs") is not None else x.get("cout_actionneurs_connu") or 0.0) \
+        + ((x.get("elec") or {}).get("prix_connu") or 0.0)
 
 
 def cout_capacites(ctx):
@@ -1107,7 +1112,7 @@ def classement_large(sols, n=5):
     top = classement(pareto(sols))[:n]
     if len(top) < n:
         inc = [x for x in sols if x["statut"] == "INCONNU"]
-        borne = lambda x: x["cout"] if x["cout"] is not None else (x.get("cout_actionneurs") or 0) + ((x.get("elec") or {}).get("prix_connu") or 0)
+        borne = cout_borne
         # les données manquantes du SYSTÈME ÉLECTRIQUE sont communes à toutes les solutions (même chaîne) : on départage
         # par celles qui sont PROPRES à la solution (actionneurs, place), puis par le coût connu
         propres = lambda x: len(set(x["inconnues"]) - set((x.get("elec") or {}).get("inconnues") or []))
@@ -1135,7 +1140,7 @@ def niveaux_elec(ctx, s) -> list[dict]:
 def ligne_elec(s) -> str:
     el = s.get("elec") or {}
     b, c = el.get("batterie"), el.get("calc")
-    cout = f1(s["cout"], 0) if s["cout"] is not None else "≥ " + f1((s.get("cout_actionneurs") or 0) + (el.get("prix_connu") or 0), 0)
+    cout = f1(s["cout"], 0) if s["cout"] is not None else "≥ " + f1(cout_borne(s), 0)
     return (f"| {s['ens']} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {s['fc']} + {s['fp']} | {f1(s['M'])} | {cout} | "
             f"{f1(s.get('cout_actionneurs'), 0)} | "
             + (f"{b['nom']} {b['S']}S{b['P']}P, {f1(b['E'], 0)} Wh, {f1(b['masse'], 2)} kg" if b else "—")

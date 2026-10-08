@@ -611,6 +611,22 @@ roulements:
   "623": { interieur: 3,  exterieur: 10, largeur: 4 }
   "688": { interieur: 8,  exterieur: 16, largeur: 5 }
 
+# Servos à bus des petits axes et du Kit (Feetech, fiche 0075). Ajouté le 2026-10-08 pour les logements du
+# niveau 0 du Kit (parts/kit_niveau0.py). Cotes LUES À L'ŒIL sur le plan coté (image) de la fiche constructeur
+# ST-3215-C018 (2023-7-20, édition A/0, p. 6 ; registre : marche_feetech_pdf_sts3215_c018, empreinte vérifiée
+# le 2026-10-08) : à vérifier au pied à coulisse sur un servo réel. Le STS3250 a la même enveloppe publiée
+# (45,22 × 24,72 × 35, params/actionneurs.yaml) : même logement.
+servos:
+  sts3215:
+    A: 45.23                 # longueur du boîtier (vue de dessus)
+    B: 24.73                 # largeur du boîtier
+    C: 35.0                  # hauteur hors tout du boîtier, sortie non comprise
+    decalage_sortie: 12.5    # axe de sortie à 12,5 mm du milieu de la longueur A, centré sur B
+    saillie_sortie: 3.4      # la cannelure dépasse la face supérieure de 3,4 mm
+    bossage_arriere: 4.1     # bossage sous la face inférieure
+    cannelure: "25 dents, Ø 6 (plan : « 25T », « ø6 ») ; vis de palonnier M3×6"
+    trous_boitier: "non lus : le plan les montre (« B-PA2.0 », « PA3.0X5 » autotaraudeuses) sans les coter"
+
 # Actionneurs — à compléter une fois le modèle retenu et mesuré.
 # Ne rien inventer ici : les cotes viennent de la fiche constructeur.
 actionneurs:

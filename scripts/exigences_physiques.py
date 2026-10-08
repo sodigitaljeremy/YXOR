@@ -229,7 +229,10 @@ def combiner(lignes: list[dict], profil: dict, H: float, M: float) -> dict:
 
 # ─────────────────────────────── familles ───────────────────────────────
 CORPS = ["robstride", "damiao", "steadywin", "cubemars", "myactuator", "hightorque", "encos", "unitree"]
-PETITS = ["feetech", "dynamixel"]
+# Petits axes (cou, pinces) : Feetech pour TOUTE la gamme, décidé par Jeremy le 2026-10-08 (fiche 0075, ses mots :
+# « Les servos Feetech sont la famille des petits axes de toute la gamme. »). Avant : feetech et dynamixel au choix.
+PETITS = ["feetech"]
+PETITS_AVANT_0075 = ["feetech", "dynamixel"]
 
 
 def prix_chf(p, taux, D):

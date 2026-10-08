@@ -213,6 +213,19 @@ avec qui l'a décidé.
       cutter, une règle, une équerre, voire un pistolet à colle ».
     - Fiche : [0074](../decisions/0074-kit-modules-successifs.md), qui
       complète la [0073](../decisions/0073-gamme-yxor.md).
+24. **YXOR Kit progressif ; niveau 3 = debout en Feetech, la marche est le
+    passage au Lab ; recyclage gardé ; assemblage B ; Feetech aux petits
+    axes de TOUTE la gamme** (touche le Lab, le Home et le Pro).
+    - Décidée par Jeremy le 2026-10-08 (réponse écrite, vers 19 h 55).
+      Ses mots : « Pour YXOR Kit : les niveaux 0 à 4 avec le niveau 3
+      limité à tenir debout en Feetech, la marche étant le passage au Lab ;
+      l'option progressive, où chaque composant du Lab n'est acheté qu'au
+      niveau qui en a besoin, avec un bloc secteur 12 V aux niveaux 1 et 2
+      et la batterie au niveau 3 seulement, dans un boîtier ignifuge ; je
+      garde le critère de recyclage ; assemblage B. Les servos Feetech sont
+      la famille des petits axes de toute la gamme. »
+    - Fiche : [0075](../decisions/0075-kit-progressif-feetech-petits-axes.md),
+      qui complète la [0074](../decisions/0074-kit-modules-successifs.md).
 
 ## B — Conventions confirmées
 

@@ -1,0 +1,382 @@
+# Marché pour YXOR Kit (option progressive, fiche 0075) — VERSÉ le 2026-10-08
+#
+# Étude d'un agent : blocs secteur 12 V, contenants ignifuges pour batterie, courants de blocage des servos
+# Feetech. Chaque valeur vient d'une source TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml (marche_kit_*,
+# sha256, non redistribuable) ; une valeur non lue est null. Aucun achat n'est recommandé (fiche 0066).
+# ⚠ Aucun courant de crête chiffré pour les blocs 12 V ; aucun essai indépendant des contenants ignifuges
+#   (affirmations qualitatives des fabricants seulement) ; courants du STS3215 12 V et du STS3250 lus chez
+#   des REVENDEURS (aucune fiche Feetech lue). Sites refusés : Distrelec, Conrad.ch, Digitec/Galaxus, Mouser, RS.
+blocs_12v:
+- nom: Mean Well GST120A12-R7B, adaptateur de table 12 V
+  fabricant: MEAN WELL
+  reference: GST120A12-R7B
+  courant_nominal_A: 8.5
+  puissance_W: 102
+  surcharge: 105 ~ 160 % de la puissance nominale ; mode hiccup, reprise automatique
+  protection: 'surcharge (hiccup), surtension, surtempérature (fiche) ; « Kurzschlussfest: ja », « Überlastschutz:
+    ja » (Reichelt)'
+  boitier: fermé, adaptateur de table ; entrée IEC320-C14 ; aucune borne 230 V exposée (câble secteur C13 à part)
+  connecteur_sortie: 'R7B : DIN 4 broches (équivalent KYCON KPPX-4P) ; -V relié à la terre FG'
+  masse_g: 575
+  dimensions_mm: 167 x 67 x 35
+  prix: 47.09
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: z.Zt. ausverkauft (épuisé le 2026-10-08) ; livraison en CH par Reichelt
+  certification: 'classe d''isolation I (Reichelt : « Isolationsklasse I ») ; UL62368-1, TUV BS EN/EN62368-1, CCC,
+    PSE… (fiche) ; marquage CE non lu'
+  sources:
+  - champ: courant, puissance, surcharge, protection, dimensions, masse, connecteur, normes
+    source: marche_kit_mw_gst120a
+  - champ: prix, TVA, dispo, classe I, court-circuit, connecteur DIN 4-Pin, entrée C14
+    source: marche_kit_rei_gst120a12
+  note: 'Masse divergente : 0,575 kg (fiche Mean Well 2025-03-28) contre 0,62 kg (texte Reichelt). Reichelt titre
+    « 100 W ». La fiche existe aussi en sortie P1M (jack 5,5/2,5) ; la référence vendue par Reichelt est R7B.'
+- nom: Mean Well GST160A12-R7B, adaptateur de table 12 V
+  fabricant: MEAN WELL
+  reference: GST160A12-R7B
+  courant_nominal_A: 11.5
+  puissance_W: 138
+  surcharge: 105 ~ 150 % de la puissance nominale ; hiccup, reprise automatique
+  protection: surcharge (hiccup), surtension, surtempérature (fiche) ; court-circuit et surcharge « ja » (Reichelt)
+  boitier: fermé, adaptateur de table ; entrée IEC320-C14
+  connecteur_sortie: 'R7B : DIN 4 broches ; -V relié à FG'
+  masse_g: 660
+  dimensions_mm: 175 x 72 x 35
+  prix: 58.26
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: versandfertig in 5 - 7 Werktagen
+  certification: classe d'isolation I (Reichelt) ; UL62368-1, TUV BS EN/EN62368-1… (fiche) ; CE non lu
+  sources:
+  - champ: courant, puissance, surcharge, dimensions, masse, isolement I/P-FG
+    source: marche_kit_mw_gst160a
+  - champ: prix, TVA, dispo, classe I, connecteur, protections
+    source: marche_kit_rei_gst160a12
+  note: Reichelt titre « 140 W » ; la fiche donne 138 W pour 12 V.
+- nom: Mean Well GST220A12-R7B, adaptateur de table 12 V
+  fabricant: MEAN WELL
+  reference: GST220A12-R7B
+  courant_nominal_A: 15
+  puissance_W: 180
+  surcharge: 105 ~ 135 % de la puissance nominale ; hiccup, reprise automatique
+  protection: surcharge (hiccup), surtension, surtempérature (fiche) ; court-circuit et surcharge « ja » (Reichelt)
+  boitier: fermé, adaptateur de table ; entrée IEC320-C14
+  connecteur_sortie: 'R7B : DIN 4 broches (KYCON KPPX-4P équiv.) ; -V relié à FG'
+  masse_g: 1100
+  dimensions_mm: 210 x 85 x 46
+  prix: 78.11
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: 'ab Lager, Lieferzeit: 3 - 4 Werktage'
+  certification: classe d'isolation I (Reichelt) ; UL62368-1, TUV BS EN/EN62368-1, CCC, PSE… (fiche 2026-04-03)
+    ; CE non lu
+  sources:
+  - champ: courant, puissance, surcharge, protections, dimensions, masse, connecteur
+    source: marche_kit_mw_gst220a
+  - champ: prix, TVA, dispo, classe I
+    source: marche_kit_rei_gst220a12
+  note: 'Hauteur : 46 mm (fiche et attributs Reichelt) contre 48 mm (texte descriptif Reichelt).'
+- nom: Mean Well LRS-150F-12, alimentation à découpage « enclosed »
+  fabricant: MEAN WELL
+  reference: LRS-150F-12
+  courant_nominal_A: 12.5
+  puissance_W: 150
+  surcharge: 110 ~ 140 % de la puissance nominale ; hiccup, reprise automatique
+  protection: surcharge (hiccup), surtension et surtempérature (coupure, remise sous tension) (fiche) ; court-circuit
+    « ja » (Reichelt)
+  boitier: '« geschlossene Bauform », « Schraubanschlüsse » (Reichelt) : boîtier métallique fermé mais bornier à
+    vis où se raccordent L, N et la terre ; protection des bornes 230 V contre le toucher : non lue (null). Conçu
+    pour être monté dans un appareil, pas posé sur une table.'
+  connecteur_sortie: bornier à vis
+  masse_g: 420
+  dimensions_mm: 159 x 97 x 30
+  prix: 25.35
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: 'ab Lager, Lieferzeit: 3 - 4 Werktage'
+  certification: 'UL62368-1, TUV BS EN/EN62368-1, BS EN/EN60335-1, EN61558-1/-2-16 (fiche) ; classe : null ; CE
+    non lu'
+  sources:
+  - champ: courant, puissance, surcharge, protections, dimensions, masse, normes
+    source: marche_kit_mw_lrs150f
+  - champ: prix, TVA, dispo, bornier à vis, boîtier fermé
+    source: marche_kit_rei_lrs150f12
+  note: 'L''URL Reichelt « -202980 » porte l''article LRS-150F-12 (entrée universelle), pas LRS-150-12 (sélecteur
+    115/230 V). Masse : 420 g (fiche) contre 480 g (Reichelt). Câblage 230 V à faire soi-même : point de sécurité
+    domestique.'
+- nom: Bloc 12 V DC 10 A, adaptateur AC/DC, jack 5,5/2,5 mm
+  fabricant: BTF-Lighting (texte) ; « Hersteller purecrea » (fiche article)
+  reference: null
+  courant_nominal_A: 10
+  puissance_W: 120
+  surcharge: null
+  protection: court-circuit, surcharge, surtempérature (texte vendeur) ; surtension aussi citée dans « Eigenschaften
+    »
+  boitier: fermé, adaptateur ; câble secteur C13 non fourni (entrée C14)
+  connecteur_sortie: jack DC 5,5 x 2,5 mm
+  masse_g: 397
+  dimensions_mm: 190 x 75 x 40
+  prix: 35.9
+  devise: CHF
+  tva_incluse: true
+  vendeur: Bastelgarage (bastelgarage.ch)
+  dispo_ch: Ausverkauft (épuisé le 2026-10-08)
+  certification: 'CE, RoHS, FCC (déclaré par le vendeur) ; classe : null'
+  sources:
+  - champ: tous
+    source: marche_kit_bg_12v10a
+  note: 'Prix TTC : la page affiche aussi « Netto CHF33,21 » (35,90/33,21 = 8,1 % de TVA). Pas de fiche fabricant
+    téléchargée ; fabricant ambigu. Rendement « ca. 80 % », 0–40 °C.'
+- nom: Alimentation à découpage 12 V 30 A 360 W S-360-12
+  fabricant: null
+  reference: S-360-12
+  courant_nominal_A: 30
+  puissance_W: 360
+  surcharge: 105 % - 135 % ; « Shut off ab 135 % (AC ein- und ausschalten zum Neustart) »
+  protection: surcharge, court-circuit sur la sortie DC, protection thermique (vendeur)
+  boitier: 'alimentation à bornier avec ventilateur ; le vendeur avertit : « Arbeiten am 230V Netz ist gefährlich
+    und kann zu tödlichen Unfällen führen » ; bornes 230 V à câbler soi-même ; protection des bornes contre le toucher
+    : null'
+  connecteur_sortie: null
+  masse_g: 807
+  dimensions_mm: 215 x 115 x 50
+  prix: 43.9
+  devise: CHF
+  tva_incluse: true
+  vendeur: Bastelgarage (bastelgarage.ch)
+  dispo_ch: Ausverkauft (épuisé le 2026-10-08)
+  certification: '« CE-Zertifiziert » (vendeur) ; classe : null'
+  sources:
+  - champ: tous
+    source: marche_kit_bg_s360_12
+  note: Fabricant non nommé (générique). Le vendeur dit avoir vérifié le courant nominal sur chaque unité. Connecteur
+    de sortie non décrit (null) ; le bornier n'est pas affirmé par la page. Seul produit ≥ 30 A trouvé avec prix
+    en CH.
+boitiers_ignifuges:
+- nom: LiPo Guard Lipobrandschutztasche XL
+  fabricant: JAMARA
+  reference: 141430 (Jamara) ; LIPO GUARD XL (Reichelt)
+  dimensions_interieures_mm: null
+  dimensions_exterieures_mm: '300 x 230 (« Abmessungen: 30 x 23 cm », sans préciser intérieur ou extérieur)'
+  materiau: null
+  masse_g: null
+  prix: 9.07
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: 'ab Lager, Lieferzeit: 3 - 4 Werktage'
+  affirmations_fabricant: « Schützt vor Brandschäden beim Laden, beim Transport und der Lagerung von LiPo, LiFePo
+    und anderen Akkus » ; aucune température, aucun essai, aucune norme cités
+  essai_independant: null
+  sources:
+  - champ: tous
+    source: marche_kit_rei_lipoguard
+  note: 'Reichelt donne un « Verpackungsgewicht 0.13 kg » (masse emballée, pas la masse du sac : masse_g = null).'
+- nom: FIREBALLS Soft Tresor (Lithium Tresor, inkl. Fireballs 3x 1L)
+  fabricant: 'EXTRON (opérateur UE : Pichler Modellbau GmbH)'
+  reference: X3361 (fabricant) ; EXTRON X3363 (Reichelt)
+  dimensions_interieures_mm: null
+  dimensions_exterieures_mm: 200 x 200 x 200
+  materiau: « aus dem gleichen feuerfesten Material … das auch für die LiPo Schutztaschen » ; « Druckkompensation
+    durch feuerfestes Material mit Kevlargewebe » ; + 3 sachets de 1 L de granulé extincteur Fireballs
+  masse_g: null
+  prix: 29.55
+  devise: CHF
+  tva_incluse: true
+  vendeur: Reichelt (reichelt.com/ch)
+  dispo_ch: 'ab Lager, Lieferzeit: 3 - 4 Werktage'
+  affirmations_fabricant: « die sicherste Methode, LiPo-Akkus zu laden, aufzubewahren und zu transportieren » ;
+    le granulé « umschließt … und erstickt » le feu ; aucune température, aucun essai, aucune norme cités
+  essai_independant: null
+  sources:
+  - champ: tous
+    source: marche_kit_rei_softtresor
+  note: '« Verpackungsgewicht 1.293 kg » (emballé). Le texte dit « Inhalt: 1,00 L » alors que le titre annonce 3
+    x 1 L de granulé : contradiction interne de la page.'
+- nom: Bat-Safe LiPo Battery Safety Charging Box (Standard)
+  fabricant: Bat-Safe
+  reference: RBN-BTS1000
+  dimensions_interieures_mm: '241 x 165 x 102 (« Charging space: 9.5" x 6.5" x 4" », converti à 25,4 mm/pouce)'
+  dimensions_exterieures_mm: '305 x 229 x 178 (« Outer dimensions: 12" x 9" x 7" », converti)'
+  materiau: « insulated double wall steel box » ; pare-flammes (« flame arrestor ») qui filtre fumée et suie ; joint
+    de couvercle « fire-proof »
+  masse_g: 1814
+  prix: 65.99
+  devise: EUR
+  tva_incluse: true
+  vendeur: Motion RC Europe (motionrc.eu, entrepôt UE)
+  dispo_ch: null
+  affirmations_fabricant: « contains fire and intense heat in the event of a battery fire » ; capacité « 2x 6S 5000
+    mAh Lipo » ; aucune température, aucun essai normalisé cités
+  essai_independant: null
+  sources:
+  - champ: tous
+    source: marche_kit_mrc_batsafe
+  note: 'Masse : « Weight: 4lbs » convertie (4 x 453,6 g). « (VAT inc.) » = TVA UE, pas suisse : la livraison en
+    CH, la TVA d''importation et la douane ne sont pas lues (null). Le site du fabricant (batsafe.com) n''a pas
+    répondu.'
+- nom: Lipo-Safe Bag
+  fabricant: null
+  reference: null
+  dimensions_interieures_mm: null
+  dimensions_exterieures_mm: '305 x 203 (« Dimension: 12"x8" », converti)'
+  materiau: doublure intérieure en fibre de verre tissée ignifuge (« woven fire retardant fiberglass material »)
+    ; fermeture velcro
+  masse_g: null
+  prix: 11.49
+  devise: USD
+  tva_incluse: null
+  vendeur: GetFPV (getfpv.com, États-Unis)
+  dispo_ch: null
+  affirmations_fabricant: « helps contain and greatly reduce any fires inside the bag » ; « Burn Test Video » (essai
+    filmé par le vendeur/fabricant, non indépendant) ; capacité « multiple 4s 5200 lipo »
+  essai_independant: null
+  sources:
+  - champ: tous
+    source: marche_kit_getfpv_liposafe
+  note: Prix lu dans le JSON de la page ("price":11.49). Le fabricant n'est pas nommé dans le texte lu.
+- nom: (contexte) état des essais indépendants des sacs LiPo
+  fabricant: null
+  reference: null
+  dimensions_interieures_mm: null
+  dimensions_exterieures_mm: null
+  materiau: null
+  masse_g: null
+  prix: null
+  devise: null
+  tva_incluse: null
+  vendeur: null
+  dispo_ch: null
+  affirmations_fabricant: null
+  essai_independant: 'SlashGear (article grand public) : « even though some brands might claim that their bags have
+    been tested in controlled environments and can handle high heat, independent testing is limited »'
+  sources:
+  - champ: essai_independant
+    source: marche_kit_slashgear_bags
+  note: 'Les présentations du FAA Fire Safety Branch sur les sacs de confinement (Maloney 05-2019, Webster 10-2018
+    sur UL 5800) ont renvoyé HTTP 503 : non lues, aucune valeur tirée.'
+courants_feetech:
+- servo: STS3215 version 7,4 V (C001)
+  mesures:
+  - source: fiche Feetech STS3215, édition A/0, 2020-04-10
+    courant_blocage_A: 2.0
+    tension_blocage_V: 6.0
+    courant_vide_mA: 130
+    tension_vide_V: 6.0
+  - source: fiche Feetech STS3215, édition A/0, 2020-04-10
+    courant_blocage_A: 2.5
+    tension_blocage_V: 7.4
+    courant_vide_mA: 150
+    tension_vide_V: 7.4
+  - source: Waveshare, page produit ST3215-7.4V
+    courant_blocage_A: 2.5
+    tension_blocage_V: null
+    courant_vide_mA: 150
+    tension_vide_V: null
+  - source: Evelta, STS3215 7.4V 19Kg 1/345
+    courant_blocage_A: 2.0
+    tension_blocage_V: 6.0
+    courant_vide_mA: 150
+    tension_vide_V: 6.0
+  - source: Eckstein, STS3215-C001
+    courant_blocage_A: 2.8
+    tension_blocage_V: 7.4
+    courant_vide_mA: 160
+    tension_vide_V: 7.4
+  sources:
+  - champ: blocage et vide 6 V / 7,4 V ; courant au repos 6 mA ; courant nominal 500/650 mA ; Kt 8 kg.cm/A
+    source: marche_kit_ft_sts3215
+  - champ: 'ST3215-7.4V : 2.5A / 150mA ; Kt 7.8 kg.cm/A'
+    source: marche_kit_ws_st3215_prod
+  - champ: 2000mA@6V / 150 mA@6V
+    source: marche_kit_evelta_sts3215_74
+  - champ: 2.8 A @ 7.4 V / Idle Current 160 mA @ 7.4 V
+    source: marche_kit_eck_sts3215_c001
+  note: La fiche Feetech téléchargée ne porte pas le suffixe C001 ; elle décrit le modèle 6–7,4 V (rapport 1/345,
+    19,5 kg.cm @7,4 V), que les revendeurs vendent sous la référence C001. Eckstein diverge (2,8 A, 160 mA « Idle
+    », 21 kg.cm) ; Evelta donne 150 mA à 6 V contre 130 mA dans la fiche. Waveshare ne dit pas la tension de ses
+    courants (tableau en colonnes 12 V / 7,4 V).
+- servo: STS3215 version 12 V (C018)
+  mesures:
+  - source: rcdrone.top, Feetech STS3215 C018
+    courant_blocage_A: 2.7
+    tension_blocage_V: 12
+    courant_vide_mA: 180
+    tension_vide_V: 12
+  - source: Waveshare wiki ST3215 (12 V)
+    courant_blocage_A: 2.7
+    tension_blocage_V: null
+    courant_vide_mA: 200
+    tension_vide_V: null
+  - source: Waveshare page produit ST3215 (12 V)
+    courant_blocage_A: 2.7
+    tension_blocage_V: null
+    courant_vide_mA: 200
+    tension_vide_V: null
+  sources:
+  - champ: Stall Current 2.7 A at 12V ; Running Current (no load) 180 mA at 12V
+    source: marche_kit_rcd_sts3215_c018
+  - champ: Locked-rotor Current 2.7 A ; No load Current 200 mA
+    source: marche_kit_ws_st3215_wiki
+  - champ: LOCKED-ROTOR CURRENT 2.7A ; NO-LOAD CURRENT 200mA ; kt 11 kg.cm/A
+    source: marche_kit_ws_st3215_prod
+  note: 'Aucune fiche Feetech du C018 téléchargée (feetechrc.com injoignable). Le ST3215 de Waveshare (6–12,6 V,
+    30 kg.cm@12V) n''est pas déclaré par la source comme identique au C018 : rapprochement par les caractéristiques
+    seulement. Courant à vide divergent : 180 mA (rcdrone) contre 200 mA (Waveshare).'
+- servo: STS3250 (12 V, 50 kg.cm ; ST-3250-C002)
+  mesures:
+  - source: Evelta, STS3250
+    courant_blocage_A: 4.2
+    tension_blocage_V: 12
+    courant_vide_mA: 280
+    tension_vide_V: 12
+  - source: Evelta, ST-3250-C002
+    courant_blocage_A: 4.2
+    tension_blocage_V: 12
+    courant_vide_mA: 280
+    tension_vide_V: 12
+  sources:
+  - champ: Stall Current 4.2A@12V ; Running Current (at No Load) 280mA@12V
+    source: marche_kit_evelta_sts3250
+  - champ: Stall Current (At Locked) 4.2A ; Running Current 280mA ; Idle 24mA ; Rated Current 1400mA ; Operating
+      Voltage 12V
+    source: marche_kit_evelta_st3250_c002
+  note: 'Un seul revendeur (Evelta, deux pages) ; aucune fiche Feetech téléchargée. Les pages rcdrone, aifitlab
+    et openelab ont renvoyé HTTP 429 (limitation de débit) : non lues.'
+- servo: STS3032 (6 V, 4,5 kg.cm)
+  mesures:
+  - source: fiche Feetech STS3032, édition A/0, 2020-06-08
+    courant_blocage_A: 1.0
+    tension_blocage_V: 4.8
+    courant_vide_mA: 130
+    tension_vide_V: 4.8
+  - source: fiche Feetech STS3032, édition A/0, 2020-06-08
+    courant_blocage_A: 1.2
+    tension_blocage_V: 6.0
+    courant_vide_mA: 150
+    tension_vide_V: 6.0
+  - source: rcdrone.top, STS3032
+    courant_blocage_A: 1.2
+    tension_blocage_V: 6.0
+    courant_vide_mA: 150
+    tension_vide_V: 6.0
+  - source: Eckstein, STS3032
+    courant_blocage_A: 1.2
+    tension_blocage_V: 6.0
+    courant_vide_mA: 150
+    tension_vide_V: 6.0
+  sources:
+  - champ: 1.0A/1.2A ; 130mA/150mA ; repos 6 mA ; nominal 300/400 mA ; tension 4V-7.4V
+    source: marche_kit_ft_sts3032
+  - champ: Stall current 1200mA @6V ; no-load 150mA @6V
+    source: marche_kit_rcd_sts3032
+  - champ: Stall Current 1.2A @6V ; No-load Current 150mA @6V
+    source: marche_kit_eck_sts3032
+  note: 'Le texte extrait du PDF Feetech mélange l''ordre des cellules ; l''appariement 4,8 V / 6 V (1,0 A / 1,2
+    A ; 130 / 150 mA) suit l''ordre des colonnes et concorde avec les revendeurs à 6 V. Plage d''alimentation :
+    « 4V-7.4V » (fiche) contre « 4.8-6V » (revendeurs).'

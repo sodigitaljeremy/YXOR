@@ -1,196 +1,195 @@
-# YXOR Kit : l'étude du 2026-10-08
+# YXOR Kit : l'étude et les plans du niveau 0
 
-**Rédigé le 2026-10-08** (prompt « Étude de YXOR Kit »). Les chiffres viennent de `scripts/kit.py`. Son rapport
-engendré, `docs/kit-etude-2026-10.md`, fait foi : les valeurs citées ici sont celles du 2026-10-08.
+**Rédigé le 2026-10-08, mis à jour le même jour** (prompts « Étude de YXOR Kit », puis « YXOR Kit : décisions et
+plans du niveau 0 »). Les chiffres viennent de deux programmes, dont les rapports engendrés font foi :
+
+- `scripts/kit.py` → `docs/kit-etude-2026-10.md` ;
+- `parts/kit_niveau0.py` → `docs/kit-montage-niveau0.md` et les planches A4.
+
+Les valeurs citées ici sont celles du 2026-10-08.
 
 ## Ce qui est décidé, et ce qui ne l'est pas
 
-**Décidé par Jeremy** le 2026-10-08 (fiche 0074, ses mots dans la fiche) :
+**Décidé par Jeremy** le 2026-10-08, ses mots dans les fiches 0074 et 0075 :
 
-- **des modules successifs** ;
-- **les mêmes dimensions, la même taille et les mêmes composants que le Lab** (philosophie Framework et Fairphone :
-  l'investissement initial doit resservir) ;
+- des **modules successifs** ;
+- les **mêmes dimensions, taille et composants que le Lab** ;
 - **le carton le mieux adapté** ;
-- **des outils du ménage** : cutter, règle, équerre, éventuellement un pistolet à colle.
+- des **outils du ménage** ;
+- les **niveaux 0 à 4**, le niveau 3 étant **limité à tenir debout en Feetech** : la marche est le passage au Lab ;
+- l'**option progressive** : chaque composant du Lab n'est acheté qu'au niveau qui en a besoin. Un **bloc secteur
+  12 V** alimente les niveaux 1 et 2 ; la **batterie** n'arrive qu'au niveau 3, **dans un boîtier ignifuge** ;
+- le **critère de recyclage** est gardé ;
+- l'**assemblage B** ;
+- **Feetech est la famille des petits axes de toute la gamme**.
 
 **PROPOSÉ** :
 
-- les niveaux de modules (`params/capacites.yaml`, `profils.kit.modules`) ;
-- les hypothèses de calcul (`params/kit.yaml`) ;
-- les critères de choix du carton ;
-- les options d'assemblage.
+- les hypothèses de calcul et de dessin (`params/kit.yaml`) ;
+- le carton exact. Les plans sont dessinés en ondulé double de 3,5 mm, comme le demandait le prompt, mais ce
+  n'est pas un choix écrit par Jeremy.
 
-Rien n'est acheté (fiche 0066).
+**À trancher** : la taille du Kit (voir plus bas). Rien n'est acheté (fiche 0066).
 
-## Les modules (PROPOSÉS)
+## Les modules
 
 | Niveau | Module | Ce qu'il ajoute | Axes motorisés |
 | ---: | --- | --- | --- |
-| 0 | articulé | le mannequin passif : poses, proportions, montage, noms d'axes | aucun (26 pivots) |
-| 1 | animé | tête et bras ; calculateur, batterie, bus série | cou (2), épaules (2 × 2), coudes (2) |
+| 0 | articulé | le mannequin passif : poses, proportions, montage, noms d'axes | aucun (pivots vissés) |
+| 1 | animé | tête et bras ; calculateur, bus série, **bloc secteur 12 V** | cou (2), épaules (2 × 2), coudes (2) |
 | 2 | interactif | vision, voix, IA ; visage sur écran | aucun |
-| 3 | debout | jambes et taille : tenir debout, puis marcher lentement (0,3 m/s) | jambes (2 × 5), taille en lacet (1) |
-| 4 | passage au Lab | structure en aluminium et actionneurs RobStride | — |
+| 3 | debout | jambes et taille ; **batterie, sa chaîne, le contenant ignifuge** | jambes (2 × 5), taille en lacet (1) |
+| 4 | passage au Lab | aluminium et RobStride ; c'est là qu'on marche | — |
 
-**Même taille et même squelette que le Lab.** Le Kit reprend le Lab tel que l'explorateur le donne aujourd'hui :
+## Les trois options, niveau par niveau
 
-- jambe à 0,65 m ;
-- 0,715 m de hauteur réelle (le tronc s'allonge pour l'électronique).
+Masse cumulée du robot et coût connu cumulé (CHF HT). Un « ≥ » signale des composants sans masse ou sans prix
+relevés : caméra, micro, haut-parleur, écran, visserie, prix du STS3250.
 
-La taille du Lab n'est pas décidée (fiche 0047). Si elle change, le Kit la suit, et un test le signale
-(`tests/test_kit.py`).
+| Niveau | Progressive (décidée) | Alignée sur le Lab | Minimale |
+| ---: | --- | --- | --- |
+| 0 | 0,48 kg ; 0 | 0,48 kg ; 0 | 0,48 kg ; 0 |
+| 1 | 1,28 kg ; 717 | ≥ 2,41 kg ; 935 | ≥ 1,21 kg ; ≥ 430 |
+| 2 | 1,28 kg (+ le niveau 2) ; 717 (+ le niveau 2) | 2,41 kg ; 935 | 1,21 kg ; ≥ 488 |
+| 3 | ≥ 3,05 kg ; ≥ 1 178 | 3,05 kg ; ≥ 1 125 | 1,82 kg ; 720 |
+| **Part du coût réutilisée au Lab** | **58 à 71 %** | 59 à 74 % | 9 % |
 
-**La structure ne change pas d'un module à l'autre.** Les coques sont dimensionnées dès le niveau 0 pour loger les
-servos du niveau 3 : un module s'ajoute, il ne fait pas refaire la structure.
+- **Progressive** : au niveau 1, le robot ne porte que ses servos et son calculateur. Le bloc reste sur la table.
+  La batterie (12S1P de la cellule du Lab, la P50B, 178 Wh au-dessus de la coupure) arrive au niveau 3. Elle coûte
+  un peu plus au total que l'option alignée : le bloc secteur et le contenant ignifuge s'ajoutent.
+- **Bloc secteur des niveaux 1 et 2** : le pire cas, c'est 8 servos au blocage (8 × 2,7 A = 21,6 A, courant
+  relevé chez des revendeurs) plus le calculateur à son maximum (25 W, 2,1 A). Avec la marge de 1,25 (PROPOSÉE),
+  il faut **29,6 A**.
+  - **Aucun adaptateur de table fermé relevé n'y arrive** : le plus fort, le Mean Well GST220A12, donne 15 A.
+  - Seul un bloc à bornier de 30 A (S-360-12, épuisé) le tient. Il faut alors **raccorder soi-même le 230 V**,
+    ce que le vendeur lui-même présente comme un danger mortel.
+  - Le pire cas suppose les 8 servos bloqués en même temps. Le rabaisser, en limitant le courant des servos ou
+    en admettant moins de servos bloqués à la fois, est une décision à prendre.
+- **Contenant ignifuge** : quatre produits relevés, de 9 CHF (sac Jamara) à 66 EUR (boîte Bat-Safe en acier).
+  **Aucun essai indépendant trouvé** : les fabricants n'affirment rien de chiffré.
 
-## Les chiffres (2026-10-08)
+## Les servos Feetech tiennent-ils ?
 
-**Option « alignée sur le Lab »** :
+- **Niveau 1 : oui.** Un seul modèle, le STS3215 en 12 V, tient chaque axe avec la marge de 1,5.
+- **Niveau 3, tenir debout : oui.** STS3215 à la hanche, au genou et à la taille ; STS3250 à la cheville. Le prix
+  et la vitesse du STS3250 viennent d'une page web dont aucune copie n'a été conservée.
+- **Marcher** : non en Feetech (calcul précédent). C'est le passage au Lab, comme décidé.
 
-- le calculateur du Lab (Seeed reComputer Mini J3011) ;
-- la moitié du pack du Lab (12S1P de sa cellule, la P42A) ;
-- le rail 12 V et la chaîne compacte du Lab ;
-- des servos Feetech au rail 12 V.
+## Ce que coûte au Lab « Feetech aux petits axes »
 
-| Niveau | Masse cumulée | Coût cumulé connu (CHF HT) | Ce qui manque |
-| ---: | ---: | ---: | --- |
-| 0 | 0,48 kg (carton seul) | 0 (carton de récupération) | masse et prix de la visserie |
-| 1 | 2,39 kg | 868 | masse de l'anti-étincelle et du BMS |
-| 2 | 2,39 kg + caméra, micro, haut-parleur, écran | 868 + ces quatre | aucun marché relevé pour eux |
-| 3, debout en Feetech | 3,11 kg | 974 + prix du STS3250 | prix du STS3250 |
-| 3, marche en RobStride | 5,74 kg | 1 634 | — |
+L'explorateur a été relancé avec Feetech seul aux petits axes (cou et pinces). Sa meilleure solution RobStride
+(12S, 250 Hz, chaîne compacte) change ainsi :
 
-Sur 2,39 kg au niveau 1, **la batterie pèse 1,09 kg** (12 cellules) et le calculateur 0,35 kg. Le carton ne pèse
-que 0,48 kg.
-
-**Option « minimale »** (3S, Raspberry Pi 5) : 1,21 kg et 430 CHF au niveau 1, et 1,89 kg et 636 CHF au niveau 3.
-Le coût est connu en partie seulement : le BMS et le fusible 3S sont hors du marché versé. Mais **rien ne resservirait
-au Lab** (0 %).
-
-**Le carton de référence** est le seul carton mesuré du projet : ondulé double de récupération, 649 g/m², 3,5 mm.
-
-## Niveaux 1 et 3 : les servos Feetech tiennent-ils ?
-
-**Niveau 1 (tête et bras) : oui, largement.** Le STS3215 (version 12 V) tient chaque axe, avec la marge de 1,5 :
-
-| Axe | Besoin (N·m) | Origine du besoin |
+| | Avant (Dynamixel libre) | Après (Feetech imposé) |
 | --- | --- | --- |
-| épaule | 0,20 | explorateur |
-| épaule, bras tendu | 0,14 | statique |
-| coude | 0,02 | statique |
-| cou, tête basculée | 0,08 | statique |
+| Hauteur réelle | 0,715 m | **0,850 m** |
+| Masse | 13,6 kg | **18,5 kg** |
+| Coût | ≥ 4 275 CHF | **≥ 4 514 CHF** (le prix du STS3250 du cou manque) |
 
-Le servo annonce 2,94 N·m au blocage et 0,98 N·m en continu. Seule réserve : Feetech ne publie que le couple de
-blocage, pas de couple de pointe.
+**Pourquoi un tel saut pour quatre petits servos.** À 0,65 m, le genou du Lab (RS06) tenait le couple continu à
+**0,07 N·m près** : 11,07 N·m exigés, marge comprise, pour 11,0 publiés. Les Feetech pèsent 55 g, contre 18 g pour
+les Dynamixel ; ces ~150 g de plus suffisent à faire basculer le cas de masse le plus défavorable. L'explorateur
+passe alors à la solution suivante, à 0,85 m.
 
-**Niveau 3, tenir debout : oui.** En statique, genoux légèrement fléchis, chaque axe trouve un Feetech :
+À taille égale, le Feetech est **moins cher** : STS3215 à 21 CHF, contre 28 à 32 CHF pour un Dynamixel. Le coût de
+la contrainte vient donc entièrement de cette marge au genou.
 
-- le STS3215 à la hanche et au genou ;
-- le STS3250 à la cheville. Son prix et sa vitesse viennent d'une page web dont aucune copie n'a été conservée.
+Deux corrections de l'explorateur en sont sorties :
 
-**Niveau 3, marcher à 0,3 m/s : non, en Feetech.** Trois axes ne tiennent pas :
+- **La borne de coût comptait 0 CHF pour tous les actionneurs dès qu'un seul prix manquait.** Elle compte
+  maintenant les prix connus.
+- **Une modification du choix de repli a été essayée puis annulée** : elle changeait aussi les actionneurs du
+  corps.
 
-| Axe | Ce qui manque |
+**Servos du Kit qui resservent au Lab** (calculés à 0,85 m et 18,5 kg) :
+
+| Servo du Kit | Devient au Lab |
 | --- | --- |
-| tangage de hanche | le couple continu : 1,17 × 1,5 = 1,76 N·m, au-delà des 1,57 N·m du plus fort (STS3250) |
-| genou | la vitesse : 13,6 rad/s demandés, 7,9 rad/s pour le STS3250 |
-| cheville | la vitesse : 17,5 rad/s demandés |
+| le STS3215 du lacet de cou | le lacet de cou |
+| deux STS3215 (cou en tangage, une épaule) | les deux pinces |
+| un STS3250 de cheville | le tangage de cou |
 
-**Ce qu'il faudrait : des RobStride RS00**, la famille du Lab, en 12S comme lui. Une fois la masse recalculée
-(chaque RS00 pèse 330 g), il en faut **aux dix axes des jambes**. Le Kit passe alors à 5,74 kg et 1 634 CHF.
+Le STS3215 du tangage de cou ne tiendrait plus à 18,5 kg.
 
-Ces RS00 ne sont pas perdus : le Lab en met aussi (hors du roulis et du tangage de hanche et du genou, fiche
-0067). Combien d'entre eux il reprend reste à vérifier.
+## La taille du Kit : gelée, à trancher
 
-**Ce que le calcul ne sait pas : si le carton porte 5,74 kg.** C'est la question des essais (protocole).
+Le Kit devait suivre la taille du Lab (fiche 0074). Or le Lab vient de passer à 0,85 m.
 
-## Réutilisation Kit → Lab
+- **Les plans et l'étude restent à la taille d'avant** : jambe à 0,65 m, hauteur réelle 0,715 m
+  (`params/kit.yaml`, `kit_taille`).
+- **Suivre le Lab à 0,85 m** agrandirait toutes les pièces d'environ 30 % et porterait le Kit en carton vers
+  1,2 m.
 
-Détail composant par composant : `docs/kit-etude-2026-10.md`. Part du coût **connu** du Kit qui resservirait au Lab :
+C'est à Jeremy de décider.
 
-| Option | Sûr | Si les maillons « à vérifier » coïncident |
-| --- | ---: | ---: |
-| alignée (niveau 3 en Feetech) | 55 % | 71 % |
-| alignée, jambes en RobStride | 33 % | 88 % |
-| minimale | 0 % | 0 % |
+## Les plans du niveau 0
 
-- **Gardés à coup sûr** : le calculateur et les cellules, qui deviennent la moitié du pack 12S2P du Lab.
-  Risque : assembler des cellules d'âges différents.
-- **À vérifier** : la chaîne de puissance (choisie ici sans le courant du Lab, qui peut en exiger une plus grosse),
-  et les RS00 des jambes.
-- **Remplacés** : les servos Feetech. Le Lab met le cou en Dynamixel dans sa meilleure solution, et l'adaptateur
-  série Feetech part avec eux.
-- **Recyclé** : le carton, en filière papier, à condition de ne pas le coller avec un autre matériau.
+`parts/kit_niveau0.py` produit **111 gabarits, soit 178 pièces et 44 cales** (rondelles de carton), sur
+**40 feuilles A4**. Les flancs et les faces du tronc s'impriment en deux feuilles qui se recouvrent. Le tout
+représente 0,78 m² de carton, soit 505 g. Notice pas à pas : `docs/kit-montage-niveau0.md`.
 
-**Ce que cela dit de la décision de Jeremy.** Le principe « mêmes composants » se paie au niveau 1 :
+- **Chaque segment est une boîte** : deux flancs, deux faces en retrait tenonnées dans les flancs, des cloisons ou
+  des couvercles. Aucune pièce n'a d'angle rentrant vif.
+- **Les logements des 19 servos sont prévus dès maintenant.** Chacun se compose d'une fenêtre dans une paroi et
+  d'une plaque à fenêtre intérieure.
+  - Au niveau 0, un bouchon et une plaque de serrage portent le pivot.
+  - Au niveau 1 ou 3, on les retire et on glisse le servo, **sans rien redécouper**. Le contrôle 3D pose les
+    19 servos dans leurs logements et ne trouve aucune collision.
+- **Contrôles** :
+  - en 2D, rayons rentrants, angles vifs et pièces d'un seul tenant ;
+  - en 3D, aucune plaque n'entre dans une autre. Une plaque qui en pénètre une autre signale une erreur de
+    dessin, par exemple un tenon sans sa mortaise.
 
-- 868 CHF et 2,39 kg pour un robot en carton qui bouge les bras ;
-- contre 430 CHF et 1,21 kg en option minimale.
+  Les deux contrôles ont été vus échouer sur des défauts simulés (`tests/test_kit_niveau0.py`). La première
+  version du contrôle 3D ne voyait rien (le résultat d'une intersection était mal lu) : c'est l'essai du défaut
+  simulé qui l'a montré.
+- **Hauteur du Kit : 0,938 m, contre 0,715 m** pour le Lab de référence. Les longueurs entre axes sont celles du
+  Lab ; ce sont les logements de servo en carton qui allongent :
+  - les trois axes de hanche empilés au lieu de se croiser ;
+  - une cheville surélevée pour que le tibia passe au-dessus du pied ;
+  - les couvercles et les cales.
 
-En échange, 55 à 71 % de ce coût resservent au Lab. Aucune des deux options n'est retenue : c'est à Jeremy
-d'arbitrer.
+  Le bassin est aussi plus large (179 mm contre 132) pour loger les deux lacets de hanche.
+- **Rendu de contrôle** : `exports/kit_niveau0/kit_niveau0.png`, régénéré et regardé. La silhouette est
+  cohérente : jambes, hanches, bras pendants, tête sur le cou, servos dans leurs fenêtres.
+
+## Ce qu'il faut réunir
+
+**Pour le niveau 0** (calculé ; liste complète dans la notice) :
+
+- **1,2 m² de carton ondulé double cannelure**, en cartons de déménagement de récupération, plats et secs ;
+- **38 vis M4** (14 × 16 mm, 2 × 20 mm, 22 × 25 mm), **38 écrous M4 à frein** et **76 rondelles larges M4** ;
+- **40 feuilles A4** imprimées à 100 %, de la colle en bâton ou du scotch de peintre ;
+- les outils décidés (cutter et lames neuves, règle métallique, équerre, pistolet à colle), plus un carton martyr
+  et un tournevis cruciforme pour amorcer les trous.
+
+**Pour le protocole d'essai du carton** (`docs/protocole-carton.md`) :
+
+- deux ou trois cartons à comparer, dont le double cannelure de récupération déjà mesuré ;
+- deux piles de livres de même hauteur, et un livre rigide ;
+- des bouteilles d'eau de 0,5 L et de 1,5 L ; prévoir **10 kg au moins** pour l'écrasement ;
+- un sac ou un seau léger, avec une ficelle ;
+- la règle graduée au millimètre, l'équerre, le cutter ;
+- la balance de cuisine.
 
 ## Le carton (étude de marché du 2026-10-08)
 
-Le marché est versé dans `params/cartons.yaml` : 33 produits, 18 qualités normalisées, 41 sources au registre.
-Le classement complet est dans le rapport engendré.
+Inchangé, critères gardés par Jeremy :
 
-**Critères PROPOSÉS** (`params/kit.yaml`, `cartons`) :
+- **premier : l'ondulé double cannelure** ;
+- **la plaque BC de 6 mm de Modulor** est à peser ;
+- **le carton plume reste éliminé** par le critère de recyclage.
 
-1. **Éliminatoires** :
-   - filière papier, mono-matière (le document de vision dit « éviter les mélanges de matières collées ») ;
-   - un panneau, pas un simple face ;
-   - disponible en Suisse.
-2. **Rang** :
-   - d'abord la rigidité en flexion par masse, approchée par e²/σ (épaisseur au carré sur masse surfacique), en
-     attendant les essais ;
-   - puis la masse de la structure ;
-   - puis le prix.
+Détail : `docs/kit-etude-2026-10.md`.
 
-**Résultat selon ces critères :**
+## Assemblage B (décidé)
 
-- **Premier : le carton ondulé double cannelure.** Le seul dont la masse est connue est le carton de récupération
-  mesuré (e²/σ = 0,019). Le carton gris compact de 3 mm vient loin derrière (0,005) et alourdirait la structure à
-  1,35 kg.
-- **La plaque ondulée BC de 6 mm de Modulor** (5,19 CHF/m², livrée en Suisse) est la candidate achetable la plus
-  probable. Sa masse surfacique n'est pas publiée : **elle se pèse** (essai 0 du protocole).
-- **Éliminés par le critère de recyclage** : le carton plume (Kapa, sandwich mousse PUR) serait le plus rigide par
-  masse (e²/σ = 0,043 en 5 mm). Il est éliminé parce qu'il n'est pas mono-matière. Si Jeremy assouplit ce
-  critère, il passe premier.
-- **Nid d'abeille** : épais (15 à 20 mm) et à peser ; aucune valeur mécanique n'est publiée.
-- **Trous** :
-  - aucun carton ondulé vendu au détail ne publie d'ECT ;
-  - la grille DIN 55468-1 n'a pas été lue (trois sites qui divergent) ;
-  - plusieurs grandes enseignes suisses refusent le téléchargement.
-- **Prix** : port non compté (Modulor : 36,90 € par colis), TVA suisse non comptée.
-
-Protocole d'essai : `docs/protocole-carton.md`.
-
-## Assemblage : options à arbitrer par Jeremy
-
-Le document de vision dit « pas de colle structurelle » (PROPOSÉ, non décidé) ; Jeremy cite le pistolet à colle.
-Quelques notions, d'abord :
-
-- un **tenon** est une languette qui entre dans une **encoche** (une fente) de la pièce voisine. Bien ajusté, il
-  positionne et bloque sans colle ;
-- un **pivot** est l'axe d'une articulation. Ici, une vis traversante, serrée entre deux rondelles larges qui
-  répartissent l'effort sur le carton (réglage `cutter_cartonplume_5` : « vis traversante + rondelles larges des
-  deux côtés »).
-
-| Option | Ce qui tient la pièce | La colle | Démontable, recyclable | Ce que ça demande |
-| --- | --- | --- | --- | --- |
-| **A. Sans colle** | tenons et encoches, coques fermées par languettes, pivots vissés | aucune | oui, tout | des encoches à la largeur de l'épaisseur mesurée (saignée nulle au cutter, mesurée le 2026-09-29) ; un essai de tenue des tenons |
-| **B. Colle chaude d'appoint** | comme A | pistolet à colle : poser, fermer une coque, tenir un câble ; **jamais** dans le chemin d'un effort | oui, en arrachant ; la tolérance du recyclage du papier à la colle chaude n'a pas été vérifiée | la même conception que A ; la colle ne fait que faciliter |
-| **C. Colle structurelle** | coques collées en caisson | pistolet ou colle blanche, porteuse | non : une coque collée se casse pour s'ouvrir | une conception plus simple, plus rigide ; contredit la vision et la règle « assemblage démontable » de CLAUDE.md |
-
-- **Pivots, aux trois options** : vis M3 ou M4 traversante (`params/hardware.yaml`), rondelles larges des deux
-  côtés, écrou à frein pour régler la friction du niveau 0 (le mannequin garde sa pose). Un trou dans le carton
-  s'ovalise : une rondelle de carton gris contrecollée autour du trou (option B), ou une douille rapportée, à
-  essayer.
-- **Servos** : vissés par leurs pattes à travers la paroi, rondelles larges, et le palonnier (le disque de sortie
-  du servo) vissé sur le segment suivant.
-- **PROPOSÉ par Claude : l'option B.** Elle garde la conception démontable de A et emploie le pistolet là où il
-  aide vraiment. La décision revient à Jeremy.
+- **Tenons et mortaises** : une languette entre dans une fente de la pièce voisine. Ce sont eux qui tiennent les
+  pièces.
+- **Colle chaude non porteuse seulement** : un point sur un tenon qui dépasse, jamais entre deux pièces qui
+  portent un effort, jamais sur un bouchon ni une plaque de serrage.
+- **Pivots par vis M4 traversante** : rondelles larges des deux côtés, écrou à frein pour régler la friction du
+  mannequin.
 
 ## Le site : ce qu'il publie aujourd'hui, et ce qu'un site du Kit devrait montrer
 
@@ -228,10 +227,9 @@ version périmée. La jambe basse en carton n'est pas publiée.
 
 ## Questions pour Jeremy
 
-1. Les niveaux 0 à 4 tels que proposés ?
-2. L'option « alignée sur le Lab » (868 CHF au niveau 1, 55 à 71 % resservent) ou l'option « minimale »
-   (430 CHF, rien ne ressert) ?
-3. Le niveau 3 : debout seulement, en Feetech, ou marcher, en RobStride (5,74 kg, 1 634 CHF, et la question de la
-   tenue du carton) ?
-4. Les critères du carton, dont le recyclage, qui élimine le carton plume.
-5. L'assemblage : A, B ou C ?
+1. **La taille du Kit** : garder 0,65 m (0,715 m réels), ou suivre le Lab à 0,85 m ?
+2. **La contrainte Feetech au Lab** coûte 0,135 m, 4,9 kg et ≥ 239 CHF, à cause d'une marge de 0,07 N·m au genou.
+   La garder telle quelle, ou revoir la marge au genou après le banc (fiche 0051) ?
+3. **Le bloc secteur** : accepter un bloc à bornier (230 V à raccorder), ou rabaisser le pire cas pour qu'un
+   adaptateur fermé suffise ?
+4. **Le carton des plans** : l'ondulé double de 3,5 mm est-il retenu ?

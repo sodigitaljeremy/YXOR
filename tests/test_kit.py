@@ -19,11 +19,11 @@ import marche_composants as MC  # noqa: E402
 class Kit(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.e, cls.e_min, cls.var, cls.e_rs = K.tout()
+        cls.e, cls.e_min, cls.var, cls.e_pg = K.tout()
         cls.ctx = cls.e["ctx"]
 
     def test_rapport_a_jour(self):
-        self.assertEqual(K.rapport(self.e, self.e_min, self.var, self.e_rs), K.DOC.read_text(encoding="utf-8"),
+        self.assertEqual(K.rapport(self.e, self.e_min, self.var, self.e_pg), K.DOC.read_text(encoding="utf-8"),
                          "relancer : scripts/kit.py --ecrire")
 
     def test_lab_recopie_toujours_vrai(self):
@@ -67,6 +67,19 @@ class Kit(unittest.TestCase):
         prox = [c["proxy"] for c in cl["retenus"]]
         self.assertEqual(prox, sorted(prox, reverse=True))
         self.assertTrue(all(c["sigma"] and c["e"] for c in cl["retenus"]))
+
+    def test_progressive_secteur(self):
+        # fiche 0075 : bloc secteur aux niveaux 1 et 2, batterie au niveau 3 seulement
+        sc = self.e_pg["secteur"]
+        self.assertGreater(sc["I_need"], sc["I_servos"])                      # la marge s'applique
+        n1 = [x for x in self.e_pg["niveaux"][1]["items"]]
+        self.assertFalse(any("12S1P" in x["nom"] for x in n1))                 # pas de batterie au niveau 1
+        self.assertTrue(any("12S1P" in x["nom"] for x in self.e_pg["niveaux"][3]["items"]))
+        self.assertTrue(any(x.get("hors_robot") for x in n1))                  # le bloc, sur la table
+        # défaut simulé : un courant inatteignable ne trouve aucun bloc, et le dit
+        b = K.bloc_secteur(self.ctx, 1000.0, True)
+        self.assertIsNone(b["prix"])
+        self.assertIn("aucun bloc", b["nom"])
 
     def test_debout_et_statique_croissent(self):
         d1, d2 = K.debout(self.ctx, 2.0), K.debout(self.ctx, 4.0)

@@ -11,17 +11,27 @@
 # l'encombrement d'un servo (quincaillerie, règle 2).
 
 # LE LAB TEL QUE L'EXPLORATEUR LE DONNE AUJOURD'HUI : la meilleure solution RobStride en 12S, 250 Hz, coupure
-# 3,0 V, chaîne compacte (docs/explorateur-lab-2026-10.md, ensemble 27, 2026-10-08). Ce sont des SORTIES d'un
-# calcul de 8 min, RECOPIÉES ici : tests/test_kit.py vérifie qu'elles figurent toujours dans le rapport de
-# l'explorateur, et échoue s'il change. La taille du Lab n'est PAS décidée (fiche 0047 : c'est une sortie).
+# 3,0 V, chaîne compacte (docs/explorateur-lab-2026-10.md, ensemble 27), APRÈS la fiche 0075 (Feetech aux petits
+# axes). Ce sont des SORTIES d'un calcul de 8 min, RECOPIÉES ici : tests/test_kit.py vérifie qu'elles figurent
+# toujours dans le rapport de l'explorateur, et échoue s'il change. La taille du Lab n'est PAS décidée (fiche 0047).
 lab:
-  source: "docs/explorateur-lab-2026-10.md, § 12S, 250 Hz, coupure 3,0 V, chaîne compacte, ensemble 27"
-  ligne: "| 27 | 0,65 → 0,715 | robstride + dynamixel | 13,6 | ≥ 4 275 | 3 234 | INR-21700-P42A 12S2P, 353 Wh, 2,18 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) |"
+  source: "docs/explorateur-lab-2026-10.md, § 12S, 250 Hz, coupure 3,0 V, chaîne compacte, ensemble 27 (après la fiche 0075)"
+  ligne: "| 27 | 0,85 → 0,850 | robstride + feetech | 18,5 | ≥ 4 514 | — | INR-21700-P50B 12S2P, 420 Wh, 2,22 kg | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) |"
+  H_m: 0.85
+  hauteur_reelle_m: 0.850
+  masse_kg: 18.5
+  cellule: molicel_p50b      # INR-21700-P50B, pack 12S2P
+  petits_axes: feetech       # fiche 0075
+
+# TAILLE DU KIT : GELÉE, PROPOSÉ (2026-10-08), en attendant Jeremy. Le Kit doit avoir la taille du Lab (fiche 0074),
+# mais la contrainte Feetech (fiche 0075) a fait passer le Lab de 0,715 à 0,850 m : à H = 0,65 m, le genou (RS06)
+# tenait le couple continu à 0,07 N·m près (11,07 exigés, 11,0 publiés, marge 1,5 comprise), et les ~150 g des
+# Feetech (55 g au lieu de 18 g par petit axe) l'ont fait basculer dans le cas de masse le plus défavorable.
+# Les plans du niveau 0 et l'étude restent à la taille d'avant ; Jeremy tranche (suivre le Lab à 0,85 m, ou non).
+kit_taille:
+  source: "meilleure solution du Lab AVANT la fiche 0075 (explorateur du 2026-10-08, petits axes Dynamixel) : 0,65 → 0,715 m, 13,6 kg"
   H_m: 0.65                  # hauteur de la jambe (les couples se lisent à la jambe réelle)
   hauteur_reelle_m: 0.715    # seul le tronc s'allonge (électronique), lot 4a septies
-  masse_kg: 13.6
-  cellule: molicel_p42a      # INR-21700-P42A, pack 12S2P
-  petits_axes: dynamixel     # le cou (et les pinces) du Lab : Dynamixel dans cette solution, pas Feetech
 
 structure:
   # Les coques du Kit sont dimensionnées dès le niveau 0 pour loger les servos du niveau 3 : un module
@@ -67,6 +77,26 @@ alimentation:
     calculateur_id: rpi5_8gb          # 8 GB : le critère « + vision et voix » (puissance.yaml, niveaux_ia)
     carte_ia_id: rpi_ai_hat_plus_13   # accélérateur de vision ; voix : sur le processeur (non vérifié)
 
+  progressive:
+    # DÉCIDÉE par Jeremy (fiche 0075, 2026-10-08) : « chaque composant du Lab n'est acheté qu'au niveau qui en a
+    # besoin, avec un bloc secteur 12 V aux niveaux 1 et 2 et la batterie au niveau 3 seulement, dans un boîtier
+    # ignifuge ». Le dimensionnement ci-dessous est PROPOSÉ.
+    description: "bloc secteur 12 V aux niveaux 1 et 2 ; au niveau 3, pack 12S1P de la cellule du Lab, sa chaîne et son rail 12 V, dans un contenant ignifuge"
+    S: 12
+    P: 1
+    cellule: lab
+    calculateur: "+ vision et voix"
+    secteur_niveaux: [1, 2]
+    batterie_niveau: 3
+    marge_courant_secteur: 1.25        # PROPOSÉ : au-delà du pire cas (tous les servos au blocage + calculateur au max)
+    bloc_ferme: true                   # PROPOSÉ (ménage) : un adaptateur de table fermé, aucune borne 230 V à raccorder
+
+# Courant de blocage par servo (params/kit_marche.yaml, courants_feetech) : quel relevé correspond à quel id.
+courant_blocage_releve:
+  sts3215_c018: "C018"
+  sts3250: "STS3250"
+  sts3215_c001: "C001"
+
 # Composants du niveau 2 sans marché relevé : ils restent null (prix et masse) et sont DITS.
 interactif_sans_marche: [camera, microphone, haut_parleur, ecran_visage]
 
@@ -85,3 +115,29 @@ cartons:
   # creux ou sandwich : rigidité ∝ e², masse ∝ masse surfacique) — PROXY PROPOSÉ, que les essais du protocole
   # remplaceront ; (2) masse de la structure du Kit ; (3) prix de la structure.
   # Un produit sans épaisseur ou sans masse surfacique lue est rangé « à peser » (protocole-carton.md).
+
+# ═════════════════════════════════════════════════════════════════════════
+#  NIVEAU 0 : plans à découper (parts/kit_niveau0.py) — PROPOSÉ
+# ═════════════════════════════════════════════════════════════════════════
+# Décidé (fiche 0075) : assemblage B (tenons et mortaises, colle non porteuse seulement, pivots par vis
+# traversante). Matière : le prompt du 2026-10-08 fait dessiner en carton ondulé double, 3,5 mm (valeur mesurée,
+# réglage cutter_cartonondule_double) ; ce n'est pas un choix écrit par Jeremy.
+# Tout ce qui suit est une HYPOTHÈSE DE DESSIN, à corriger après le premier montage.
+niveau0:
+  reglage: cutter_cartonondule_double
+  servo: sts3215               # hardware.yaml, servos : logements prévus dès le niveau 0
+  vis_pivot: M4                # hardware.yaml, vis
+  jeu_fenetre: 1.0             # mm, ajouté à A et B (découpe à la main, ±0,5 par bord)
+  jeu_mortaise: 0.5            # mm, ajouté à la longueur d'une mortaise
+  tenon_longueur: 12.0         # mm
+  pas_tenons: 45.0             # mm, au plus, entre deux tenons d'un même bord
+  voile_facteur: 2.0           # voile = 2 × épaisseur (bande de matière minimale près d'un bord ou d'une fente)
+  cales_palonnier: 2           # rondelles de carton côté servo : 2 × 3,5 = 7 mm ≈ saillie 3,4 + palonnier
+  jeu_pivot: 1.0               # mm, côté opposé au servo (une rondelle métallique)
+  cale_diametre: 16.0          # mm, rondelles de carton
+  recouvrement_plaque: 6.0     # mm, plaque de serrage intérieure au-delà de la fenêtre (niveau 0)
+  profondeur_plaque_logement: 0.5   # × C : plaque à fenêtre intérieure, à mi-hauteur du servo
+  pied_talon: 0.25             # la cheville au quart de la longueur du pied, depuis le talon
+  recouvrement_tuiles: 10.0    # mm, recouvrement de deux feuilles d'une grande pièce
+  longueurs_vis: [12, 16, 20, 25, 30, 35, 40]   # mm, longueurs courantes du commerce (non vérifiées sur une norme)
+  facteur_chutes: 1.5          # PROPOSÉ : carton à réunir = aire des pièces × 1,5 (chutes, ratés, cartons de récupération irréguliers)

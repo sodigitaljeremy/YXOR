@@ -6637,3 +6637,187 @@ fichiers:
     empreinte: sha256:36cdf7133f286fd2297ae20fa50cab6c3dd5f65e41ce42ab7ca7de30eea99d41
     conditions: non lues
     redistribuable: false
+
+  # ── Marché du Kit progressif (blocs 12 V, contenants ignifuges, courants Feetech), versé le 2026-10-08 ──
+  marche_kit_mw_gst120a:
+    source: https://www.meanwell.com/Upload/PDF/GST120A/GST120A-SPEC.PDF
+    reference: MEAN WELL, GST120A series specification, 2025-03-28
+    date: 2026-10-08
+    empreinte: sha256:6da42020acbaedbbf2ea5933d421c1b56775888e8082f11a873362dd5b6829da
+    conditions: non lues
+    redistribuable: false
+  marche_kit_mw_gst160a:
+    source: https://www.meanwell.com/Upload/PDF/GST160A/GST160A-SPEC.PDF
+    reference: MEAN WELL, GST160A series specification
+    date: 2026-10-08
+    empreinte: sha256:de16ce6f9910201db3c7f8da53af2644dba367b64949291d90376e3cfd7ab709
+    conditions: non lues
+    redistribuable: false
+  marche_kit_mw_gst220a:
+    source: https://www.meanwell.com/Upload/PDF/GST220A/GST220A-SPEC.PDF
+    reference: MEAN WELL, GST220A series specification, 2026-04-03
+    date: 2026-10-08
+    empreinte: sha256:abd35fe1f5ebe3549a8d0fbfc1f0e3c45c252276ae9ab8d811116da436d198cb
+    conditions: non lues
+    redistribuable: false
+  marche_kit_mw_lrs150f:
+    source: https://www.meanwell.com/Upload/PDF/LRS-150F/LRS-150F-SPEC.PDF
+    reference: MEAN WELL, LRS-150F series specification
+    date: 2026-10-08
+    empreinte: sha256:d956a04aed47eb504914fcffa05216790e106594f897302f3269242f0ad4608c
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_gst120a12:
+    source: https://www.reichelt.com/ch/de/shop/produkt/tischnetzteil_100_w_12_v_8_5_a-171063
+    reference: Reichelt CH, article MW GST120A12
+    date: 2026-10-08
+    empreinte: sha256:4dada32c684a96b8c39801d477277990fa873db64879ec28b3e6a63ba12ee82f
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_gst160a12:
+    source: https://www.reichelt.com/ch/de/shop/produkt/tischnetzteil_140_w_12_v_11_5_a-171071
+    reference: Reichelt CH, article MW GST160A12
+    date: 2026-10-08
+    empreinte: sha256:f27659b7afc91219116a6b98811b3115f1d2c12ee95f34fbb759ce1a33cc06dd
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_gst220a12:
+    source: https://www.reichelt.com/ch/de/shop/produkt/tischnetzteil_180_w_12_v_15_a-171076
+    reference: Reichelt CH, article MW GST220A12
+    date: 2026-10-08
+    empreinte: sha256:ce12289a0c5aced43d442003bb7f390a4269c225355ab078f9b8c482276b51b0
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_lrs150f12:
+    source: https://www.reichelt.com/ch/de/shop/produkt/schaltnetzteil_geschlossen_150_w_12_v_12_5_a-202980
+    reference: Reichelt CH, article MW LRS-150F-12
+    date: 2026-10-08
+    empreinte: sha256:b71c030388b73c6bbd4ee2d9d0a7f3167261bbeb7944f412aec3d472519f8c6f
+    conditions: non lues
+    redistribuable: false
+  marche_kit_bg_12v10a:
+    source: https://www.bastelgarage.ch/bauteile/netzteile-strom/12v-dc-10a-netzteil-ac-dc-adapter-5-5mm-2-5mm-stecker
+    reference: Bastelgarage, art. 425242
+    date: 2026-10-08
+    empreinte: sha256:a7c08495b68da6ca76230d7a35839793d6e24de9f0d85f663d7b404ad8690bf5
+    conditions: non lues
+    redistribuable: false
+  marche_kit_bg_s360_12:
+    source: https://www.bastelgarage.ch/bauteile/netzteile-strom/12v-30a-ac-dc-360w-schaltnetzteil-s-360-12
+    reference: Bastelgarage, art. 421766
+    date: 2026-10-08
+    empreinte: sha256:4897afa3d5b05b92a2eb28641167cf21eec6b16a0c176eb7e6f4aa5915e3266c
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_lipoguard:
+    source: https://www.reichelt.com/ch/de/shop/produkt/brandschutzbeutel_fuer_li-polymer-akkus-207644
+    reference: Reichelt CH, LIPO GUARD XL (Jamara 141430)
+    date: 2026-10-08
+    empreinte: sha256:1512e2353a82de92a3be9b5ec65b1b90139e8e6a0488ce0471c47c64190d6461
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rei_softtresor:
+    source: https://www.reichelt.com/ch/de/shop/produkt/lithium_tresor_inkl_fireballs_3x_1l-253651
+    reference: Reichelt CH, EXTRON X3363 (fabricant X3361)
+    date: 2026-10-08
+    empreinte: sha256:9ae52ab8da674142f2f7dfc8ec4305740a389fd02ae68aa4f83975347a41cdd0
+    conditions: non lues
+    redistribuable: false
+  marche_kit_mrc_batsafe:
+    source: https://www.motionrc.eu/products/bat-safe-lipo-battery-safety-charging-box-rbn-bts1000
+    reference: Motion RC EU, Bat-Safe RBN-BTS1000
+    date: 2026-10-08
+    empreinte: sha256:8be1c44de04f2899bd294fa88a261d7f4639a111b1857e5b8b4577c277d2678b
+    conditions: non lues
+    redistribuable: false
+  marche_kit_getfpv_liposafe:
+    source: https://www.getfpv.com/lipo-safe-bag.html
+    reference: GetFPV, Lipo-Safe Bag
+    date: 2026-10-08
+    empreinte: sha256:467914e0d2479a911520a28f8e911bd05c9a898936acec99977b15bb5957d8a4
+    conditions: non lues
+    redistribuable: false
+  marche_kit_slashgear_bags:
+    source: https://www.slashgear.com/2001506/lithium-battery-bags-buying-guide/
+    reference: SlashGear, « Are Lithium Battery Bags Worth It? »
+    date: 2026-10-08
+    empreinte: sha256:02fc6be51f14c40f8deac965356cf6ca0f6de315498d4ab62e610461bd1d80c4
+    conditions: non lues
+    redistribuable: false
+  marche_kit_ft_sts3215:
+    source: https://ecksteinimg.de/Datasheet/Feetech/FT01016.pdf
+    reference: Shenzhen Feetech RC Model Co., STS3215 Product Specification, A/0, 2020-04-10 (hébergée par Eckstein)
+    date: 2026-10-08
+    empreinte: sha256:eeac0fb6b73bf2215974d8f73fb7db0f09d59a59f5affff99aa89fee64948286
+    conditions: non lues
+    redistribuable: false
+  marche_kit_ft_sts3032:
+    source: https://ecksteinimg.de/Datasheet/Feetech/FT01013.pdf
+    reference: Shenzhen Feetech RC Model Co., STS3032 Product Specification, A/0, 2020-06-08 (hébergée par Eckstein)
+    date: 2026-10-08
+    empreinte: sha256:fc777696d2c915786b3dbb327d3fa18264772975377739739ad48e6f0a22f639
+    conditions: non lues
+    redistribuable: false
+  marche_kit_ws_st3215_wiki:
+    source: https://www.waveshare.com/wiki/ST3215_Servo
+    reference: Waveshare wiki, ST3215 Servo
+    date: 2026-10-08
+    empreinte: sha256:43e1b51790b630a5d7967a0ee0a9d3599c5ab5dc0dbc9344567b3828919c4580
+    conditions: non lues
+    redistribuable: false
+  marche_kit_ws_st3215_prod:
+    source: https://www.waveshare.com/st3215-servo.htm
+    reference: Waveshare, page produit ST3215 / ST3215-7.4V
+    date: 2026-10-08
+    empreinte: sha256:48b6cc0e7b6531922eacef67e02bf7753355ccc434366e96fff1f994d9799db2
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rcd_sts3215_c018:
+    source: https://rcdrone.top/products/feetech-sts3215-c018-servo-12v-30kg-high-torque-servo-for-so-arm100-101
+    reference: rcdrone.top, Feetech STS3215 C018
+    date: 2026-10-08
+    empreinte: sha256:23a04b116d1d3df2a2a004848d2a7e7d4e0bc36e21f6d288eda7662089d08a17
+    conditions: non lues
+    redistribuable: false
+  marche_kit_rcd_sts3032:
+    source: https://rcdrone.top/products/feetech-sts3032-servo-motor
+    reference: rcdrone.top, Feetech STS3032
+    date: 2026-10-08
+    empreinte: sha256:a40dd2d7292e1eb555d2ffed192a990002ebf4525e906fe7a7e75b0925d83e16
+    conditions: non lues
+    redistribuable: false
+  marche_kit_evelta_sts3215_74:
+    source: https://evelta.com/st3215-7-4v-19kg-1-345-gear-dual-axis-ttl-string-servo-motor/
+    reference: Evelta, STS3215 7.4V 19Kg
+    date: 2026-10-08
+    empreinte: sha256:aff37757b1aeff13d6659484c6c3d28d81c1782d7153a34f817ca073c4acad1a
+    conditions: non lues
+    redistribuable: false
+  marche_kit_evelta_sts3250:
+    source: https://evelta.com/sts3250-12v-50kg-360deg-magnetic-encoder-double-shaft-ttl-servo/
+    reference: Evelta, STS3250
+    date: 2026-10-08
+    empreinte: sha256:c6e5d250039821cf1e2358409ffec6da4659d2b2a05e1eea3e682291d025c603
+    conditions: non lues
+    redistribuable: false
+  marche_kit_evelta_st3250_c002:
+    source: https://evelta.com/st-3250-c002-12v-50kg-cm-copper-metal-gear-digital-servo-motor/
+    reference: Evelta, ST-3250-C002
+    date: 2026-10-08
+    empreinte: sha256:d46dd1112000917ec2770f80aa4b6ad922414109b25b89bc801c5cbd5b0e1c45
+    conditions: non lues
+    redistribuable: false
+  marche_kit_eck_sts3215_c001:
+    source: https://eckstein-shop.de/Motors?mf=1611
+    reference: Eckstein, STS3215-C001
+    date: 2026-10-08
+    empreinte: sha256:f418d76c7d943f1b328be5ed8146199fb3b59e268082b57cd7bce53180ca5d6a
+    conditions: non lues
+    redistribuable: false
+  marche_kit_eck_sts3032:
+    source: https://eckstein-shop.de/Motors?mf=1580
+    reference: Eckstein, STS3032
+    date: 2026-10-08
+    empreinte: sha256:c1b1240dc8dc06dea5f378aea6710af8e5b9ba99138c8144636597ad9d3e5e27
+    conditions: non lues
+    redistribuable: false

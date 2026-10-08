@@ -270,7 +270,8 @@ profils:
       niveaux des modules PROPOSÉS
     taches: {}
     # MODULES SUCCESSIFS (fiche 0074 : « tous les niveaux comme modules successifs », Jeremy, 2026-10-08).
-    # Le DÉCOUPAGE est PROPOSÉ (prompt du 2026-10-08) ; les axes sont ceux de params/joints.yaml (règle 3) ;
+    # Les niveaux 0 à 4 sont DÉCIDÉS (fiche 0075, Jeremy, 2026-10-08 : « les niveaux 0 à 4 avec le niveau 3 limité
+    # à tenir debout en Feetech, la marche étant le passage au Lab ») ; le détail (axes, `vise`) est PROPOSÉ ; les axes sont ceux de params/joints.yaml (règle 3) ;
     # `motorises` : axes qu'un module motorise (× 2 pour un axe de côté) ; les autres axes du squelette restent
     # passifs (pivot à friction). `vise` : capacités et niveaux PROPOSÉS, vérifiés par scripts/kit.py.
     modules:
@@ -291,9 +292,9 @@ profils:
         vise: {ia_embarquee: "+ vision et voix", visage: "écran"}
       - niveau: 3
         nom: debout
-        role: "jambes et taille motorisées : tenir debout, puis marcher lentement"
+        role: "jambes et taille motorisées : tenir debout, en Feetech ; la marche est le passage au Lab (fiche 0075)"
         motorises: [hip_yaw, hip_roll, hip_pitch, knee, ankle_pitch, waist_yaw]
-        vise: {marche_sol_plat: 0.3}
+        vise: {}
       - niveau: 4
         nom: passage au Lab
         role: "structure en aluminium et actionneurs RobStride : le Kit devient un YXOR Lab"

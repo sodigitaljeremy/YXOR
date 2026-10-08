@@ -2,7 +2,7 @@
 
 **Engendré** par `.venv/bin/python scripts/kit.py --ecrire`. Ne pas éditer à la main. DÉCIDÉ (fiche 0074, Jeremy, 2026-10-08) : modules successifs, mêmes dimensions, taille et composants que le Lab, carton, outils du ménage. **PROPOSÉ** : les niveaux (`params/capacites.yaml`, `profils.kit.modules`) et les hypothèses (`params/kit.yaml`). Rien n'est choisi ni acheté (fiche 0066).
 
-**Le Lab d'aujourd'hui** (docs/explorateur-lab-2026-10.md, § 12S, 250 Hz, coupure 3,0 V, chaîne compacte, ensemble 27) : jambe à H = 0,65 m, hauteur réelle 0,715 m (seul le tronc s'allonge), 13,6 kg. Le Kit prend ce squelette : même silhouette, mêmes longueurs. La taille du Lab n'est pas décidée (fiche 0047 : c'est une sortie de l'explorateur) ; le Kit la suivra. Marge 1,5 sur le couple (fiche 0051).
+**Taille du Kit : GELÉE** (meilleure solution du Lab AVANT la fiche 0075 (explorateur du 2026-10-08, petits axes Dynamixel) : 0,65 → 0,715 m, 13,6 kg) : jambe à H = 0,65 m, hauteur réelle 0,715 m. **Le Lab d'aujourd'hui** (docs/explorateur-lab-2026-10.md, § 12S, 250 Hz, coupure 3,0 V, chaîne compacte, ensemble 27 (après la fiche 0075)) : 0,850 m, 18,5 kg, petits axes en feetech : la contrainte Feetech (fiche 0075) l'a fait grandir ; le Kit le suivra-t-il ? Question à Jeremy (`params/kit.yaml`, `kit_taille`). Marge 1,5 sur le couple (fiche 0051).
 
 ## Structure en carton
 
@@ -61,17 +61,17 @@ Aire de carton du Kit, renforts compris : 0,74 m². Éliminatoires : filière pa
 
 **Éliminés** : kapa_line_3mm_modulor (pas en filière papier mono-matière) ; kapa_line_5mm_modulor (pas en filière papier mono-matière) ; kapa_line_10mm_modulor (pas en filière papier mono-matière) ; kapa_line_5mm_boesner (pas en filière papier mono-matière) ; hartschaum_ps_5mm_modulor (pas en filière papier mono-matière) ; hartschaum_ps_10mm_modulor (pas en filière papier mono-matière) ; ondule_b_simple_face_rouleau_udobaer (simple face : pas un panneau) ; ondule_simple_face_opo (simple face : pas un panneau) ; claycote_b_kraft_bd (pas disponible en Suisse) ; claycote_c_bd (pas disponible en Suisse) ; claycote_e_blanc_bd (pas disponible en Suisse) ; boite_fefco0201_120b_igepa (disponibilité en Suisse non établie) ; zuschnitt_bc_220_igepa (disponibilité en Suisse non établie) ; claycote_eb_twin_bd (pas disponible en Suisse) ; graupappe_gpf_europapier (disponibilité en Suisse non établie) ; wabenkarton_10mm_igepa (disponibilité en Suisse non établie) ; forex_classic_3mm_modulor (pas en filière papier mono-matière) ; pp_alveolaire_3mm_modulor (pas en filière papier mono-matière).
 
-## Modules, masse et coût : option « alignée sur le Lab »
+## Modules, masse et coût : option « progressive » (décidée, fiche 0075)
 
-pack 12S1P de la cellule du Lab (la moitié de son pack 12S2P), rail 12 V par convertisseur. Énergie du pack au-dessus de la coupure : 150 Wh ; calculateur : Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus).
+bloc secteur 12 V aux niveaux 1 et 2 ; au niveau 3, pack 12S1P de la cellule du Lab, sa chaîne et son rail 12 V, dans un contenant ignifuge. Énergie du pack au-dessus de la coupure : 178 Wh ; calculateur : Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus). **Bloc secteur des niveaux 1 et 2** : pire cas = 8 servos au blocage (21,6 A, courants relevés, le plus fort de chaque servo) + calculateur à sa puissance maximale (25 W, 2,1 A), × 1,25 (marge PROPOSÉE) = **29,6 A** → Alimentation à découpage 12 V 30 A 360 W S-360-12 (30 A).
 
 | Niveau | Module | Masse (kg) | Coût (CHF HT) | Inconnues (masse / prix) | Masse cumulée (kg) | Coût cumulé (CHF) |
 | ---: | --- | ---: | ---: | --- | ---: | ---: |
 | 0 | articulé | ≥ 0,48 | ≥ 0 | 1 / 2 | 0,48 | 0 |
-| 1 | animé | ≥ 1,91 | 868 | 2 / 0 | 2,39 | 868 |
-| 2 | interactif | ≥ 0,00 | ≥ 0 | 4 / 4 | 2,39 | 868 |
-| 3 | debout | 0,72 | ≥ 105 | 0 / 3 | 3,11 | 974 |
-| 4 | passage au Lab | 0,00 | 0 | 0 / 0 | 3,11 | 974 |
+| 1 | animé | 0,80 | 717 | 0 / 0 | 1,28 | 717 |
+| 2 | interactif | ≥ 0,00 | ≥ 0 | 4 / 4 | 1,28 | 717 |
+| 3 | debout | ≥ 1,77 | ≥ 461 | 3 / 1 | 3,05 | 1 178 |
+| 4 | passage au Lab | 0,00 | 0 | 0 / 0 | 3,05 | 1 178 |
 
 <details><summary>Composants par niveau</summary>
 
@@ -81,7 +81,52 @@ pack 12S1P de la cellule du Lab (la moitié de son pack 12S2P), rail 12 V par co
 | 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | — | hardware.yaml (masse et prix non relevés) |
 | 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 345 | 499,98 | calculateurs.yaml (même règle que le Lab) |
 | 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 16 | 4,17 | bus.yaml |
-| 1 | 12S1P INR-21700-P42A | 12 | 91 | 2,83 | batteries.yaml ; masse × 1.3 (pack) |
+| 1 | neck_yaw : sts3215_c018 | 1 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 1 | neck_pitch : sts3215_c018 | 1 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 1 | shoulder_pitch : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 1 | shoulder_roll : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 1 | elbow_roll : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 1 | Alimentation à découpage 12 V 30 A 360 W S-360-12 (30 A) | 1 | 0 | 43,90 | kit_marche.yaml ; sur la table, hors du robot ; AUCUN bloc FERMÉ relevé ne tient ce courant : bornier 230 V à raccorder soi-même ; dispo : Ausverkauft (épuisé le 2026-10-08) |
+| 2 | camera (aucun marché relevé) | 1 | — | — | — |
+| 2 | microphone (aucun marché relevé) | 1 | — | — | — |
+| 2 | haut_parleur (aucun marché relevé) | 1 | — | — | — |
+| 2 | ecran_visage (aucun marché relevé) | 1 | — | — | — |
+| 3 | 12S1P INR-21700-P50B | 12 | 92 | 8,44 | batteries.yaml ; masse × 1.3 (pack) |
+| 3 | D42V110F12 (12V, 9A Step-Down Voltage Regulator) | 1 | 15 | 50,04 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
+| 3 | Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A) | 1 | 2 | 15,76 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
+| 3 | Maytech MTS2009AS anti-spark switch 300A 20-85V | 1 | — | 74,20 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
+| 3 | JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) | 1 | — | 21,54 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
+| 3 | LiPo Guard Lipobrandschutztasche XL | 1 | — | 9,07 | kit_marche.yaml (aucun essai indépendant trouvé) |
+| 3 | hip_yaw : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | hip_roll : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | hip_pitch : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | knee : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | ankle_pitch : sts3250 | 2 | 74 | — | actionneurs.yaml (marché feetech) |
+| 3 | waist_yaw : sts3215_c018 | 1 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+
+</details>
+
+## Modules, masse et coût : option « alignée sur le Lab »
+
+pack 12S1P de la cellule du Lab (la moitié de son pack 12S2P), rail 12 V par convertisseur. Énergie du pack au-dessus de la coupure : 178 Wh ; calculateur : Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus).
+
+| Niveau | Module | Masse (kg) | Coût (CHF HT) | Inconnues (masse / prix) | Masse cumulée (kg) | Coût cumulé (CHF) |
+| ---: | --- | ---: | ---: | --- | ---: | ---: |
+| 0 | articulé | ≥ 0,48 | ≥ 0 | 1 / 2 | 0,48 | 0 |
+| 1 | animé | ≥ 1,93 | 935 | 2 / 0 | 2,41 | 935 |
+| 2 | interactif | ≥ 0,00 | ≥ 0 | 4 / 4 | 2,41 | 935 |
+| 3 | debout | 0,64 | ≥ 190 | 0 / 1 | 3,05 | 1 125 |
+| 4 | passage au Lab | 0,00 | 0 | 0 / 0 | 3,05 | 1 125 |
+
+<details><summary>Composants par niveau</summary>
+
+| Niveau | Composant | Nombre | Masse unitaire (g) | Prix unitaire (CHF HT) | Source |
+| ---: | --- | ---: | ---: | ---: | --- |
+| 0 | structure en carton | 1 | 480 | — | carton_ondule_double (mesuré (params/mesures.yaml)) |
+| 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | — | hardware.yaml (masse et prix non relevés) |
+| 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 345 | 499,98 | calculateurs.yaml (même règle que le Lab) |
+| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 16 | 4,17 | bus.yaml |
+| 1 | 12S1P INR-21700-P50B | 12 | 92 | 8,44 | batteries.yaml ; masse × 1.3 (pack) |
 | 1 | D42V110F12 (12V, 9A Step-Down Voltage Regulator) | 1 | 15 | 50,04 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
 | 1 | Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A) | 1 | 2 | 15,76 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
 | 1 | Maytech MTS2009AS anti-spark switch 300A 20-85V | 1 | — | 74,20 | puissance.yaml (courant NON vérifié : celui du Kit n'est pas calculé) |
@@ -95,8 +140,8 @@ pack 12S1P de la cellule du Lab (la moitié de son pack 12S2P), rail 12 V par co
 | 2 | microphone (aucun marché relevé) | 1 | — | — | — |
 | 2 | haut_parleur (aucun marché relevé) | 1 | — | — | — |
 | 2 | ecran_visage (aucun marché relevé) | 1 | — | — | — |
-| 3 | hip_yaw : sts3250 | 2 | 74 | — | actionneurs.yaml (marché feetech) |
-| 3 | hip_roll : sts3250 | 2 | 74 | — | actionneurs.yaml (marché feetech) |
+| 3 | hip_yaw : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | hip_roll : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | hip_pitch : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | knee : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | ankle_pitch : sts3250 | 2 | 74 | — | actionneurs.yaml (marché feetech) |
@@ -113,8 +158,8 @@ pack 3S1P en 21700, servos sur le pack, Raspberry Pi 5 (5 V par convertisseur). 
 | 0 | articulé | ≥ 0,48 | ≥ 0 | 1 / 2 | 0,48 | 0 |
 | 1 | animé | ≥ 0,73 | ≥ 430 | 5 / 3 | 1,21 | 430 |
 | 2 | interactif | ≥ 0,00 | ≥ 58 | 4 / 3 | 1,21 | 488 |
-| 3 | debout | 0,68 | ≥ 147 | 0 / 2 | 1,89 | 636 |
-| 4 | passage au Lab | 0,00 | 0 | 0 / 0 | 1,89 | 636 |
+| 3 | debout | 0,61 | 232 | 0 / 0 | 1,82 | 720 |
+| 4 | passage au Lab | 0,00 | 0 | 0 / 0 | 1,82 | 720 |
 
 <details><summary>Composants par niveau</summary>
 
@@ -139,8 +184,8 @@ pack 3S1P en 21700, servos sur le pack, Raspberry Pi 5 (5 V par convertisseur). 
 | 2 | microphone (aucun marché relevé) | 1 | — | — | — |
 | 2 | haut_parleur (aucun marché relevé) | 1 | — | — | — |
 | 2 | ecran_visage (aucun marché relevé) | 1 | — | — | — |
-| 3 | hip_yaw : servo à choisir | 2 | 74 | — | actionneurs.yaml (marché feetech) |
-| 3 | hip_roll : servo à choisir | 2 | 74 | — | actionneurs.yaml (marché feetech) |
+| 3 | hip_yaw : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
+| 3 | hip_roll : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | hip_pitch : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | knee : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
 | 3 | ankle_pitch : sts3215_c018 | 2 | 55 | 21,07 | actionneurs.yaml (marché feetech) |
@@ -154,112 +199,93 @@ Besoin = maximum de l'explorateur (à la masse du Kit au niveau du module) et du
 
 | Niveau | Axe | Masse M (kg) | Pointe requise (N·m) | Continu requis (N·m) | Vitesse (rad/s) | Origine | Le visé tient ? | Debout tient ? | Servo Feetech | Inconnues |
 | ---: | --- | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- |
-| 1 | neck_yaw | 2,39 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
-| 1 | neck_pitch | 2,39 | 0,025 | 0,080 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 1 | shoulder_pitch | 2,39 | 0,202 | 0,140 | 1,7 | explorateur | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 1 | shoulder_roll | 2,39 | 0,140 | 0,140 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 1 | elbow_roll | 2,39 | 0,018 | 0,018 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 3 | hip_yaw | 3,11 | 1,826 | 0,692 | 4,4 | explorateur | oui | — | sts3250 (4,90 N·m) | prix de sts3250; vitesse de la fiche candidate (actionneurs.yaml, page web sans copie) |
-| 3 | hip_roll | 3,11 | 1,685 | 0,820 | 4,3 | explorateur | oui | — | sts3250 (4,90 N·m) | prix de sts3250; vitesse de la fiche candidate (actionneurs.yaml, page web sans copie) |
-| 3 | hip_pitch | 3,11 | 2,657 | 1,171 | 5,7 | explorateur | **non** | oui | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 3 | knee | 3,11 | 2,834 | 1,253 | 13,6 | explorateur | **non** | oui | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
-| 3 | ankle_pitch | 3,11 | 0,761 | 0,761 | 17,5 | explorateur | **non** | oui | sts3250 (4,90 N·m) | prix de sts3250; vitesse de la fiche candidate (actionneurs.yaml, page web sans copie) |
-| 3 | waist_yaw | 3,11 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
+| 1 | neck_yaw | 2,41 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
+| 1 | neck_pitch | 2,41 | 0,025 | 0,081 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 1 | shoulder_pitch | 2,41 | 0,203 | 0,140 | 1,7 | explorateur | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 1 | shoulder_roll | 2,41 | 0,140 | 0,140 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 1 | elbow_roll | 2,41 | 0,018 | 0,018 | 0,0 | statique | oui | — | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 3 | hip_yaw | 3,05 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
+| 3 | hip_roll | 3,05 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
+| 3 | hip_pitch | 3,05 | 0,383 | 0,383 | 0,0 | aucune tâche ne charge cet axe | oui | oui | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 3 | knee | 3,05 | 0,383 | 0,383 | 0,0 | aucune tâche ne charge cet axe | oui | oui | sts3215_c018 (2,94 N·m) | couple de pointe de sts3215_c018 (seul le blocage est publié) |
+| 3 | ankle_pitch | 3,05 | 0,745 | 0,745 | 0,0 | aucune tâche ne charge cet axe | oui | oui | sts3250 (4,90 N·m) | prix de sts3250; vitesse de la fiche candidate (actionneurs.yaml, page web sans copie) |
+| 3 | waist_yaw | 3,05 | 0,000 | 0,000 | 0,0 | aucune tâche ne charge cet axe | oui | — | sts3215_c018 (2,94 N·m) | — |
 
 « Le visé » : les capacités du module (`vise`), statique compris ; « debout » : le statique seul (tibia incliné de 10°, PROPOSÉ). Quand le visé ne tient pas, le servo indiqué est celui qui tient debout.
 
-**Le visé ne tient pas en Feetech** : hip_pitch, knee, ankle_pitch. Le plus fort Feetech compatible du marché versé est sts3250 (4,90 N·m de pointe, 1,57 N·m en continu, 7,9 rad/s au rail). **Ce qu'il faudrait** (le plus léger RobStride qui passe, en 12S coupé à 3,0 V, comme le Lab) :
+Tous les axes motorisés ont un servo Feetech qui tient (sur ce qui est connu).
 
-| Axe | Pointe × marge (N·m) | Continu × marge (N·m) | Vitesse (rad/s) | RobStride | Masse (g) | Prix (CHF HT) |
-| --- | ---: | ---: | ---: | --- | ---: | ---: |
-| hip_pitch | 3,99 | 1,76 | 5,7 | rs00 | 330 | 74 |
-| knee | 4,25 | 1,88 | 13,6 | rs00 | 330 | 74 |
-| ankle_pitch | 1,14 | 1,14 | 17,5 | rs05 | 191 | 102 |
+## Réutilisation Kit → Lab : option progressive (décidée)
 
-### Niveau 3 qui marche : RobStride là où aucun Feetech ne tient (masse recalculée)
+**Part du coût CONNU du Kit réutilisée dans le Lab : 58 % sûrs, 71 % si les maillons « à vérifier » coïncident** (678 à 839 CHF sur 1 178 CHF ; les composants sans prix ne comptent pas).
 
-| Niveau | Masse cumulée (kg) | Coût cumulé (CHF HT) | Inconnues (masse / prix) |
-| ---: | ---: | ---: | --- |
-| 0 | 0,48 | 0 | 1 / 2 |
-| 1 | 2,39 | 868 | 2 / 0 |
-| 2 | 2,39 | 868 | 4 / 4 |
-| 3 | 5,74 | 1 634 | 0 / 0 |
-| 4 | 5,74 | 1 634 | 0 / 0 |
-
-| Axe | Pointe requise (N·m) | Continu requis (N·m) | Vitesse (rad/s) | Actionneur |
-| --- | ---: | ---: | ---: | --- |
-| hip_yaw | 3,372 | 1,277 | 4,4 | rs00 |
-| hip_roll | 3,111 | 1,514 | 4,3 | rs00 |
-| hip_pitch | 4,906 | 2,162 | 5,7 | rs00 |
-| knee | 5,233 | 2,314 | 13,6 | rs00 |
-| ankle_pitch | 1,404 | 1,404 | 17,5 | rs00 |
-| waist_yaw | 0,000 | 0,000 | 0,0 | sts3215_c018 |
+| Niveau | Composant | Nombre | Prix total (CHF) | Au Lab | Pourquoi |
+| ---: | --- | ---: | ---: | --- | --- |
+| 0 | structure en carton | 1 | — | **recyclé** | le Lab est en aluminium ; carton en filière papier (si sans colle ni ruban) |
+| 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | **gardé en partie** | vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir |
+| 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 500 | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **gardé** | le Lab a aussi des Feetech aux petits axes (fiche 0075) |
+| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **gardé** | devient neck_yaw du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 1 | shoulder_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 1 | elbow_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 1 | Alimentation à découpage 12 V 30 A 360 W S-360-12 (30 A) | 1 | 44 | **hors du Lab** | alimentation d'atelier (le Lab est sur batterie) ; reste utile au banc |
+| 2 | camera (aucun marché relevé) | 1 | — | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 2 | microphone (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
+| 2 | haut_parleur (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
+| 2 | ecran_visage (aucun marché relevé) | 1 | — | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 3 | 12S1P INR-21700-P50B | 12 | 101 | **gardé** | les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents) |
+| 3 | D42V110F12 (12V, 9A Step-Down Voltage Regulator) | 1 | 50 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
+| 3 | Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A) | 1 | 16 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
+| 3 | Maytech MTS2009AS anti-spark switch 300A 20-85V | 1 | 74 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
+| 3 | JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) | 1 | 22 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
+| 3 | LiPo Guard Lipobrandschutztasche XL | 1 | 9 | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 3 | hip_yaw : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | hip_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | hip_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | knee : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | ankle_pitch : sts3250 | 1 | — | **gardé** | devient neck_pitch du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 3 | ankle_pitch : sts3250 | 1 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | waist_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 
 ## Réutilisation Kit → Lab : option alignée
 
-**Part du coût CONNU du Kit réutilisée dans le Lab : 55 % sûrs, 71 % si les maillons « à vérifier » coïncident** (534 à 696 CHF sur 974 CHF ; les composants sans prix ne comptent pas).
+**Part du coût CONNU du Kit réutilisée dans le Lab : 59 % sûrs, 74 % si les maillons « à vérifier » coïncident** (669 à 830 CHF sur 1 125 CHF ; les composants sans prix ne comptent pas).
 
 | Niveau | Composant | Nombre | Prix total (CHF) | Au Lab | Pourquoi |
 | ---: | --- | ---: | ---: | --- | --- |
 | 0 | structure en carton | 1 | — | **recyclé** | le Lab est en aluminium ; carton en filière papier (si sans colle ni ruban) |
 | 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | **gardé en partie** | vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir |
-| 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 500 | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
-| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **remplacé** | adaptateur série Feetech ; le Lab prend des dynamixel (autre adaptateur) |
-| 1 | 12S1P INR-21700-P42A | 12 | 34 | **gardé** | les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents) |
+| 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 500 | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **gardé** | le Lab a aussi des Feetech aux petits axes (fiche 0075) |
+| 1 | 12S1P INR-21700-P50B | 12 | 101 | **gardé** | les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents) |
 | 1 | D42V110F12 (12V, 9A Step-Down Voltage Regulator) | 1 | 50 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
 | 1 | Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A) | 1 | 16 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
 | 1 | Maytech MTS2009AS anti-spark switch 300A 20-85V | 1 | 74 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
 | 1 | JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) | 1 | 22 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
-| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | shoulder_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **gardé** | devient neck_yaw du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 1 | shoulder_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 1 | elbow_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 2 | camera (aucun marché relevé) | 1 | — | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
+| 2 | camera (aucun marché relevé) | 1 | — | **gardé** | le composant du Lab (fiches 0074 et 0075) |
 | 2 | microphone (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
 | 2 | haut_parleur (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
-| 2 | ecran_visage (aucun marché relevé) | 1 | — | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
-| 3 | hip_yaw : sts3250 | 2 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 3 | hip_roll : sts3250 | 2 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 2 | ecran_visage (aucun marché relevé) | 1 | — | **gardé** | le composant du Lab (fiches 0074 et 0075) |
+| 3 | hip_yaw : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | hip_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | hip_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | knee : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 3 | ankle_pitch : sts3250 | 2 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 3 | waist_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-
-## Réutilisation Kit → Lab : option alignée, jambes RobStride là où il le faut
-
-**Part du coût CONNU du Kit réutilisée dans le Lab : 33 % sûrs, 88 % si les maillons « à vérifier » coïncident** (534 à 1 440 CHF sur 1 634 CHF ; les composants sans prix ne comptent pas).
-
-| Niveau | Composant | Nombre | Prix total (CHF) | Au Lab | Pourquoi |
-| ---: | --- | ---: | ---: | --- | --- |
-| 0 | structure en carton | 1 | — | **recyclé** | le Lab est en aluminium ; carton en filière papier (si sans colle ni ruban) |
-| 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | **gardé en partie** | vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir |
-| 1 | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | 1 | 500 | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
-| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **remplacé** | adaptateur série Feetech ; le Lab prend des dynamixel (autre adaptateur) |
-| 1 | 12S1P INR-21700-P42A | 12 | 34 | **gardé** | les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents) |
-| 1 | D42V110F12 (12V, 9A Step-Down Voltage Regulator) | 1 | 50 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
-| 1 | Victron MIDI-fuse 58V (30, 40, 50, 60, 100 A) | 1 | 16 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
-| 1 | Maytech MTS2009AS anti-spark switch 300A 20-85V | 1 | 74 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
-| 1 | JBD SP17S005 smart BMS (variantes NMC 20 à 120 A) | 1 | 22 | **gardé (à vérifier)** | même catégorie que la chaîne du Lab, choisie ici sans le courant : le Lab peut en retenir un autre, plus gros |
-| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | shoulder_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 1 | shoulder_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 1 | elbow_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 2 | camera (aucun marché relevé) | 1 | — | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
-| 2 | microphone (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
-| 2 | haut_parleur (aucun marché relevé) | 1 | — | **gardé (non requis)** | le Lab vise « + vision » ; la voix reste possible |
-| 2 | ecran_visage (aucun marché relevé) | 1 | — | **gardé** | acheté d'emblée comme celui du Lab (fiche 0074) |
-| 3 | hip_yaw : rs00 | 2 | 149 | **gardé (à vérifier)** | actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche et du genou, fiche 0067) |
-| 3 | hip_roll : rs00 | 2 | 149 | **gardé (à vérifier)** | actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche et du genou, fiche 0067) |
-| 3 | hip_pitch : rs00 | 2 | 149 | **gardé (à vérifier)** | actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche et du genou, fiche 0067) |
-| 3 | knee : rs00 | 2 | 149 | **gardé (à vérifier)** | actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche et du genou, fiche 0067) |
-| 3 | ankle_pitch : rs00 | 2 | 149 | **gardé (à vérifier)** | actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche et du genou, fiche 0067) |
+| 3 | ankle_pitch : sts3250 | 1 | — | **gardé** | devient neck_pitch du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 3 | ankle_pitch : sts3250 | 1 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | waist_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 
 ## Réutilisation Kit → Lab : option minimale
 
-**Part du coût CONNU du Kit réutilisée dans le Lab : 0 % sûrs, 0 % si les maillons « à vérifier » coïncident** (0 à 0 CHF sur 636 CHF ; les composants sans prix ne comptent pas).
+**Part du coût CONNU du Kit réutilisée dans le Lab : 9 % sûrs, 9 % si les maillons « à vérifier » coïncident** (67 à 67 CHF sur 720 CHF ; les composants sans prix ne comptent pas).
 
 | Niveau | Composant | Nombre | Prix total (CHF) | Au Lab | Pourquoi |
 | ---: | --- | ---: | ---: | --- | --- |
@@ -267,23 +293,24 @@ Besoin = maximum de l'explorateur (à la masse du Kit au niveau du module) et du
 | 0 | pivots (vis traversante, écrou, rondelles larges) × 26 | 1 | — | **gardé en partie** | vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir |
 | 1 | Raspberry Pi 5 8GB | 1 | 146 | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 1 | Raspberry Pi AI HAT+ 13 TOPS | 1 | 58 | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
-| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **remplacé** | adaptateur série Feetech ; le Lab prend des dynamixel (autre adaptateur) |
+| 1 | Bus Servo Adapter (A) (SKU 25514) | 1 | 4 | **gardé** | le Lab a aussi des Feetech aux petits axes (fiche 0075) |
 | 1 | 3S1P INR21700-50E | 3 | 19 | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 1 | D42V55F5 (5V, 6A Step-Down Voltage Regulator) | 1 | 34 | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 1 | fusible 3S (hors du marché versé, qui vise le 12S) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 1 | anti_etincelle 3S (hors du marché versé, qui vise le 12S) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 1 | bms 3S (hors du marché versé, qui vise le 12S) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
-| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le cou du Lab est en dynamixel dans sa meilleure solution ; gardé s'il passe en Feetech |
-| 1 | shoulder_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 1 | neck_yaw : sts3215_c018 | 1 | 21 | **gardé** | devient neck_yaw du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | neck_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **gardé** | devient gripper du Lab (Feetech, fiche 0075) : le modèle tient le besoin du Lab à 18,5 kg |
+| 1 | shoulder_pitch : sts3215_c018 | 1 | 21 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 1 | shoulder_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 1 | elbow_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 2 | Raspberry Pi AI Camera (pour information) | 1 | 58 | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 2 | microphone (aucun marché relevé) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 2 | haut_parleur (aucun marché relevé) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
 | 2 | ecran_visage (aucun marché relevé) | 1 | — | **recyclé** | option minimale : le Lab prend un autre calculateur et un pack 12S |
-| 3 | hip_yaw : servo à choisir | 2 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
-| 3 | hip_roll : servo à choisir | 2 | — | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | hip_yaw : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
+| 3 | hip_roll : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | hip_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | knee : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |
 | 3 | ankle_pitch : sts3215_c018 | 2 | 42 | **remplacé** | le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté |

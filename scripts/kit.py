@@ -51,7 +51,7 @@ def contexte() -> dict:
     an = lire("anthropometry.yaml")
     kit = lire("kit.yaml")
     return dict(an=an, kit=kit, cap=lire("capacites.yaml"), sq=lire("squelette.yaml"),
-                H=kit["lab"]["H_m"], rallonge=kit["lab"]["hauteur_reelle_m"] - kit["lab"]["H_m"],
+                H=kit["kit_taille"]["H_m"], rallonge=kit["kit_taille"]["hauteur_reelle_m"] - kit["kit_taille"]["H_m"],
                 R={k: v["valeur"] for k, v in an["ratios"].items()},
                 marge=lire("actionneurs.yaml")["dimensionnement"]["marge"],
                 taux=lire("budget.yaml")["taux_de_change"])
@@ -298,7 +298,61 @@ def composants_fixes(ctx, option: str) -> dict:
         if m.get("categorie") and m["maillon"] in ("fusible", "bms", "anti_etincelle"):
             r = SE.composant(comps, m["categorie"], Vin=(var["Vfin"], var["Vmax"]), var=var, ordre=("volume", "masse", "prix"))
             out[m["maillon"]] = _maillon(r, m["role"])
+    if "batterie_niveau" in o:                         # option progressive : la batterie et sa chaîne plus tard
+        for k in ("pack", "convertisseur_12V", "fusible", "bms", "anti_etincelle"):
+            if k in out:
+                out[k]["niveau"] = o["batterie_niveau"]
+        cont = contenant_ignifuge(ctx)
+        cont["niveau"] = o["batterie_niveau"]
+        out["contenant_ignifuge"] = cont
     return dict(items=out, var=var)
+
+
+def courant_blocage(ctx, sid) -> float | None:
+    """Le plus FORT courant de blocage relevé pour ce servo (params/kit_marche.yaml), le plus prudent (fiche 0064)."""
+    cle = ctx["kit"]["courant_blocage_releve"].get(sid)
+    if not cle:
+        return None
+    vals = [m["courant_blocage_A"] for c in lire("kit_marche.yaml")["courants_feetech"] if cle in c["servo"]
+            for m in c["mesures"] if m.get("courant_blocage_A") is not None]
+    return max(vals) if vals else None
+
+
+def bloc_secteur(ctx, I_A: float, ferme: bool) -> dict:
+    """Le moins cher des blocs 12 V relevés qui tient I_A ; fermé d'abord si demandé ; sinon le dire."""
+    import marche_composants as MC
+    blocs = []
+    for b in lire("kit_marche.yaml")["blocs_12v"]:
+        prix = MC.chf(dict(valeur=b.get("prix"), devise=b.get("devise"), tva_incluse=b.get("tva_incluse")), ctx["taux"])
+        blocs.append(dict(b, prix_chf=prix, ferme="fermé" in str(b.get("boitier") or "")))
+    ok = [b for b in blocs if (b["courant_nominal_A"] or 0) >= I_A and b["prix_chf"] is not None]
+    okf = [b for b in ok if b["ferme"]] if ferme else ok
+    note = None
+    if not okf and ok:
+        note = "AUCUN bloc FERMÉ relevé ne tient ce courant : bornier 230 V à raccorder soi-même"
+        okf = ok
+    if not okf:
+        plus = max(blocs, key=lambda b: b["courant_nominal_A"] or 0)
+        return dict(nom=f"aucun bloc relevé ne tient {I_A:.1f} A (le plus fort : {plus['nom']}, {plus['courant_nominal_A']} A)",
+                    n=1, masse=0.0, prix=None, source="kit_marche.yaml", hors_robot=True)
+    b = min(okf, key=lambda b: b["prix_chf"])
+    return dict(nom=b["nom"] + f" ({b['courant_nominal_A']} A)", n=1, masse=0.0, prix=b["prix_chf"],
+                source="kit_marche.yaml ; sur la table, hors du robot" + (f" ; {note}" if note else "")
+                + (f" ; dispo : {str(b.get('dispo_ch'))[:40]}" if b.get("dispo_ch") else ""), hors_robot=True,
+                I_A=b["courant_nominal_A"])
+
+
+def contenant_ignifuge(ctx) -> dict:
+    """Le moins cher des contenants relevés dont le prix est lu ; aucun essai indépendant n'a été trouvé."""
+    import marche_composants as MC
+    c = []
+    for b in lire("kit_marche.yaml")["boitiers_ignifuges"]:
+        prix = MC.chf(dict(valeur=b.get("prix"), devise=b.get("devise"), tva_incluse=b.get("tva_incluse")), ctx["taux"])
+        if prix is not None:
+            c.append(dict(b, prix_chf=prix))
+    b = min(c, key=lambda b: b["prix_chf"])
+    return dict(nom=b["nom"], n=1, masse=(b["masse_g"] / 1000) if b.get("masse_g") else None, prix=b["prix_chf"],
+                source="kit_marche.yaml (aucun essai indépendant trouvé)")
 
 
 def _maillon(r: dict, role: str) -> dict:
@@ -344,7 +398,7 @@ def etude(option: str = "aligne_lab", carton: dict | None = None, robstride_si_b
     carton = carton or carton_reference(ctx)
     fixes = composants_fixes(ctx, option)
     var_servo = (dict(S=0, Vfin=float(ctx["kit"]["servos"]["rail_V"]), Vmax=float(ctx["kit"]["servos"]["rail_V"]))
-                 if option == "aligne_lab" else fixes["var"])
+                 if option in LAB_OPTIONS else fixes["var"])
     ft = feetech(ctx, var_servo)
     D = max(a["D"] for a in ft if a["D"]) / 1000.0
     segs = segments(ctx, carton, D)
@@ -362,8 +416,7 @@ def etude(option: str = "aligne_lab", carton: dict | None = None, robstride_si_b
                                   source=f"{carton['id']} ({carton['source']})"))
                 items.append(dict(nom=f"pivots (vis traversante, écrou, rondelles larges) × {pivots(ctx)}",
                                   n=1, masse=None, prix=None, source="hardware.yaml (masse et prix non relevés)"))
-            if mod["niveau"] == 1:
-                items += list(fixes["items"].values())
+            items += [x for x in fixes["items"].values() if x.get("niveau", 1) == mod["niveau"]]
             if mod["niveau"] == 2:
                 items += list(inter.values())
             n_ax = {ax: (2 if ax in COTES else 1) for ax in mod["motorises"]}
@@ -406,11 +459,27 @@ def etude(option: str = "aligne_lab", carton: dict | None = None, robstride_si_b
         choix = res
         if m_servo == ancien:
             break
+    o = ctx["kit"]["alimentation"][option]
+    secteur = None
+    if "secteur_niveaux" in o:
+        servos = [(ax, r["best"]["id"]) for ax, r in choix.items() if r["niveau"] in o["secteur_niveaux"] and r["best"]]
+        n_ax = sum(2 if ax in COTES else 1 for ax, _ in servos)
+        I_s = sum((2 if ax in COTES else 1) * (courant_blocage(ctx, sid) or 0.0) for ax, sid in servos)
+        manq = [sid for _, sid in servos if courant_blocage(ctx, sid) is None]
+        cal = fixes["items"]["calculateur"]
+        P_cal = next((c["pmax"] for c in __import__("systeme_electrique").options_calculateur() if c["id"] == cal.get("id")), None)
+        I_c = (P_cal or 0.0) / ctx["kit"]["servos"]["rail_V"]
+        I_need = (I_s + I_c) * o["marge_courant_secteur"]
+        bloc = bloc_secteur(ctx, I_need, o.get("bloc_ferme", True))
+        bloc["niveau"] = o["secteur_niveaux"][0]
+        niveaux[o["secteur_niveaux"][0]]["items"].append(bloc)
+        secteur = dict(n_servos=n_ax, I_servos=I_s, I_calc=I_c, marge=o["marge_courant_secteur"], I_need=I_need,
+                       bloc=bloc, manque=manq, P_cal=P_cal)
     # le niveau 3 en servos : sinon, ce qu'il faudrait
     for ax, r in choix.items():
         if not r["tient_vise"]:
             r["alternative"] = choisir(rs, r["need"], ctx["marge"])
-    return dict(ctx=ctx, option=option, carton=carton, segs=segs, niveaux=niveaux, choix=choix,
+    return dict(ctx=ctx, option=option, carton=carton, segs=segs, niveaux=niveaux, choix=choix, secteur=secteur,
                 stat=stat, fixes=fixes, D=D, plus_fort=le_plus_fort(ft), var_servo=var_servo)
 
 
@@ -427,43 +496,93 @@ def bilan(e: dict) -> list[dict]:
 
 
 # ─────────────────────────────── réutilisation ──────────────────────────
+LAB_OPTIONS = ("aligne_lab", "progressive")
+PETITS_LAB = (("neck_pitch", 1), ("neck_yaw", 1), ("gripper", 2))   # les plus exigeants d'abord
+
+
+def affectation_lab(e: dict) -> dict:
+    """Servos du Kit qui deviennent les petits axes du Lab (Feetech, fiche 0075) : pour chaque petit axe du Lab, à sa
+    taille et à sa masse (params/kit.yaml, lab), un servo du Kit dont le MODÈLE tient le besoin (règle de
+    l'explorateur, marge 1,5). Rend {axe du Kit: [axes du Lab]}."""
+    import explorateur as X
+    ctx = e["ctx"]
+    lab = ctx["kit"]["lab"]
+    if lab["petits_axes"] != "feetech":
+        return {}
+    bes = X.besoins(table(), lab["H_m"], X.cible_defaut(ctx["cap"], "lab"), lab["masse_kg"])
+    ft = {a["id"]: a for a in feetech(ctx, dict(S=0, Vfin=12.0, Vmax=12.0))}
+    unites = []                                   # (axe du Kit, id) une entrée par servo
+    for nv in e["niveaux"]:
+        for x in nv["items"]:
+            if x.get("axe") and x.get("famille", "feetech") == "feetech":
+                sid = x["nom"].split(" : ")[1]
+                unites += [(x["axe"], sid)] * x["n"]
+    out = {}
+    for ax_lab, n in PETITS_LAB:
+        need = bes.get(ax_lab, dict(pk=0.0, c=0.0, w=0.0))
+        for _ in range(n):
+            ordre = sorted(range(len(unites)), key=lambda i: unites[i][0] != ax_lab)
+            for i in ordre:
+                a = ft.get(unites[i][1])
+                if a and X.passe(a, need, ctx["marge"]):
+                    out.setdefault(unites[i][0], []).append(ax_lab)
+                    unites.pop(i)
+                    break
+    return out
+
+
 def reutilisation(e: dict) -> list[dict]:
     """Chaque composant du Kit au passage au Lab : gardé, remplacé ou recyclé (règles PROPOSÉES, écrites ici)."""
     sort = []
     lab = e["ctx"]["kit"]["lab"]
-    lab_feetech = {"neck_yaw", "neck_pitch"} if lab["petits_axes"] == "feetech" else set()   # le cou du Lab
+    aff = affectation_lab(e)
     for nv in e["niveaux"]:
-        for x in nv["items"]:
-            nom = x["nom"]
-            if nom.startswith("structure"):
-                s, why = "recyclé", "le Lab est en aluminium ; carton en filière papier (si sans colle ni ruban)"
-            elif nom.startswith("pivots"):
-                s, why = "gardé en partie", "vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir"
-            elif x.get("axe") in lab_feetech:
-                s, why = "gardé", "le Lab met aussi le cou en Feetech (si le même modèle tient au Lab : à vérifier)"
-            elif x.get("axe", "").startswith("neck"):
-                s, why = "remplacé", f"le cou du Lab est en {lab['petits_axes']} dans sa meilleure solution ; gardé s'il passe en Feetech"
-            elif x.get("famille") == "robstride":
-                s, why = "gardé (à vérifier)", ("actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui "
-                                                "lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche "
-                                                "et du genou, fiche 0067)")
-            elif x.get("axe"):
-                s, why = "remplacé", "le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté"
-            elif nom == e["fixes"]["items"]["adaptateur_serie"]["nom"] and lab["petits_axes"] != "feetech":
-                s, why = "remplacé", f"adaptateur série Feetech ; le Lab prend des {lab['petits_axes']} (autre adaptateur)"
-            elif e["option"] == "aligne_lab" and x.get("source", "").startswith("puissance.yaml"):
-                s, why = "gardé (à vérifier)", ("même catégorie que la chaîne du Lab, choisie ici sans le courant : le "
-                                                "Lab peut en retenir un autre, plus gros")
-            elif e["option"] == "aligne_lab":
-                s, why = "gardé", "acheté d'emblée comme celui du Lab (fiche 0074)"
-                if x["nom"].startswith(("microphone", "haut_parleur")):
-                    s, why = "gardé (non requis)", "le Lab vise « + vision » ; la voix reste possible"
-                if "12S1P" in nom:
-                    why = "les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents)"
-            else:
-                s, why = "recyclé", "option minimale : le Lab prend un autre calculateur et un pack 12S"
-            sort.append(dict(nom=nom, n=x["n"], prix=x["prix"], statut=s, pourquoi=why, niveau=nv["mod"]["niveau"]))
+        for x0 in nv["items"]:
+            parts = [x0]
+            if x0.get("axe") in aff and len(aff[x0["axe"]]) < x0["n"]:      # une partie seulement resservira
+                k = len(aff[x0["axe"]])
+                parts = [dict(x0, n=k), dict(x0, n=x0["n"] - k, axe=x0["axe"] + "_reste")]
+            for x in parts:
+                s, why = _statut(e, x, aff, lab)
+                sort.append(dict(nom=x["nom"], n=x["n"], prix=x["prix"], statut=s, pourquoi=why, niveau=nv["mod"]["niveau"]))
     return sort
+
+
+def _statut(e, x, aff, lab):
+    """Statut d'un composant du Kit au passage au Lab (règles PROPOSÉES, écrites ici)."""
+    nom = x["nom"]
+    if nom.startswith("structure"):
+        s, why = "recyclé", "le Lab est en aluminium ; carton en filière papier (si sans colle ni ruban)"
+    elif nom.startswith("pivots"):
+        s, why = "gardé en partie", "vis traversante et écrou : même règle de fixation au Lab ; longueurs à revoir"
+    elif x.get("hors_robot"):
+        s, why = "hors du Lab", "alimentation d'atelier (le Lab est sur batterie) ; reste utile au banc"
+    elif x.get("axe") in aff:
+        s, why = "gardé", (f"devient {', '.join(sorted(set(aff[x['axe']])))} du Lab (Feetech, fiche 0075) : le "
+                           f"modèle tient le besoin du Lab à {f1(lab['masse_kg'])} kg")
+    elif x.get("axe", "").startswith("neck"):
+        s, why = "remplacé", f"le cou du Lab est en {lab['petits_axes']} dans sa meilleure solution ; gardé s'il passe en Feetech"
+    elif x.get("famille") == "robstride":
+        s, why = "gardé (à vérifier)", ("actionneur RobStride, la famille du Lab : il reprend un axe du Lab qui "
+                                        "lui convient (le Lab met des RS00 hors du roulis et du tangage de hanche "
+                                        "et du genou, fiche 0067)")
+    elif x.get("axe"):
+        s, why = "remplacé", "le Lab met cet axe en RobStride ; le servo est revendu ou réaffecté"
+    elif nom == e["fixes"]["items"]["adaptateur_serie"]["nom"]:
+        s, why = (("gardé", "le Lab a aussi des Feetech aux petits axes (fiche 0075)") if lab["petits_axes"] == "feetech"
+                  else ("remplacé", f"adaptateur série Feetech ; le Lab prend des {lab['petits_axes']}"))
+    elif e["option"] in LAB_OPTIONS and x.get("source", "").startswith("puissance.yaml"):
+        s, why = "gardé (à vérifier)", ("même catégorie que la chaîne du Lab, choisie ici sans le courant : le "
+                                        "Lab peut en retenir un autre, plus gros")
+    elif e["option"] in LAB_OPTIONS:
+        s, why = "gardé", "le composant du Lab (fiches 0074 et 0075)"
+        if x["nom"].startswith(("microphone", "haut_parleur")):
+            s, why = "gardé (non requis)", "le Lab vise « + vision » ; la voix reste possible"
+        if "12S1P" in nom:
+            why = "les cellules du Kit sont la moitié du pack 12S2P du Lab (risque : appairer des cellules d'âges différents)"
+    else:
+        s, why = "recyclé", "option minimale : le Lab prend un autre calculateur et un pack 12S"
+    return s, why
 
 
 def part_reutilisee(rows: list[dict], sur: bool = False) -> tuple[float, float]:
@@ -475,7 +594,7 @@ def part_reutilisee(rows: list[dict], sur: bool = False) -> tuple[float, float]:
 
 
 # ─────────────────────────────── rapport ────────────────────────────────
-def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_rs: dict) -> str:
+def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_pg: dict) -> str:
     ctx = e["ctx"]
     H = ctx["H"]
     L = ["# YXOR Kit : modules, masses, couples et réutilisation (2026-10)", "",
@@ -483,11 +602,11 @@ def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_rs: dic
          "Jeremy, 2026-10-08) : modules successifs, mêmes dimensions, taille et composants que le Lab, carton, outils "
          "du ménage. **PROPOSÉ** : les niveaux (`params/capacites.yaml`, `profils.kit.modules`) et les hypothèses "
          "(`params/kit.yaml`). Rien n'est choisi ni acheté (fiche 0066).", "",
-         f"**Le Lab d'aujourd'hui** ({ctx['kit']['lab']['source']}) : jambe à H = {f1(H, 2)} m, hauteur réelle "
-         f"{f1(ctx['kit']['lab']['hauteur_reelle_m'], 3)} m (seul le tronc s'allonge), {f1(ctx['kit']['lab']['masse_kg'])} kg. "
-         "Le Kit prend ce squelette : même silhouette, mêmes longueurs. La taille du Lab n'est pas décidée (fiche "
-         f"0047 : c'est une sortie de l'explorateur) ; le Kit la suivra. Marge {f1(ctx['marge'])} sur le couple "
-         "(fiche 0051).", ""]
+         f"**Taille du Kit : GELÉE** ({ctx['kit']['kit_taille']['source']}) : jambe à H = {f1(H, 2)} m, hauteur réelle "
+         f"{f1(ctx['kit']['kit_taille']['hauteur_reelle_m'], 3)} m. **Le Lab d'aujourd'hui** ({ctx['kit']['lab']['source']}) : "
+         f"{f1(ctx['kit']['lab']['hauteur_reelle_m'], 3)} m, {f1(ctx['kit']['lab']['masse_kg'])} kg, petits axes en "
+         f"{ctx['kit']['lab']['petits_axes']} : la contrainte Feetech (fiche 0075) l'a fait grandir ; le Kit le suivra-t-il ? "
+         f"Question à Jeremy (`params/kit.yaml`, `kit_taille`). Marge {f1(ctx['marge'])} sur le couple (fiche 0051).", ""]
     # structure
     c = e["carton"]
     L += ["## Structure en carton", "",
@@ -519,12 +638,19 @@ def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_rs: dic
           + ", ".join(f"{c['id']} ({f1(c['prix_m2'], 2)} CHF/m²)" for c in cl["a_peser"]) + ".", "",
           "**Éliminés** : " + " ; ".join(f"{c['id']} ({c['pourquoi']})" for c in cl["elimines"]) + "."]
     # niveaux
-    for ee, titre in ((e, "option « alignée sur le Lab »"), (e_min, "option « minimale »")):
+    for ee, titre in ((e_pg, "option « progressive » (décidée, fiche 0075)"), (e, "option « alignée sur le Lab »"),
+                      (e_min, "option « minimale »")):
         o = ctx["kit"]["alimentation"][ee["option"]]
         pk = ee["fixes"]["items"]["pack"]
         cal = ee["fixes"]["items"]["calculateur"]
+        sc = ee.get("secteur")
+        txt_sc = ("" if not sc else
+                  f" **Bloc secteur des niveaux 1 et 2** : pire cas = {sc['n_servos']} servos au blocage "
+                  f"({f1(sc['I_servos'], 1)} A, courants relevés, le plus fort de chaque servo) + calculateur à sa "
+                  f"puissance maximale ({f1(sc['P_cal'], 0)} W, {f1(sc['I_calc'], 1)} A), × {f1(sc['marge'], 2)} "
+                  f"(marge PROPOSÉE) = **{f1(sc['I_need'], 1)} A** → {sc['bloc']['nom']}.")
         L += ["", f"## Modules, masse et coût : {titre}", "", o["description"] + f". Énergie du pack au-dessus de la "
-              f"coupure : {f1(pk['E_Wh'], 0)} Wh ; calculateur : {cal['nom']}.", "",
+              f"coupure : {f1(pk['E_Wh'], 0)} Wh ; calculateur : {cal['nom']}." + txt_sc, "",
               "| Niveau | Module | Masse (kg) | Coût (CHF HT) | Inconnues (masse / prix) | Masse cumulée (kg) | Coût cumulé (CHF) |",
               "| ---: | --- | ---: | ---: | --- | ---: | ---: |"]
         for b in bilan(ee):
@@ -576,21 +702,8 @@ def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_rs: dic
                      f"{f1(a['prix'] if a else None, 0)} |")
     else:
         L.append("Tous les axes motorisés ont un servo Feetech qui tient (sur ce qui est connu).")
-    # niveau 3 qui marche : RobStride là où le Feetech ne tient pas, masse rebouclée
-    L += ["", "### Niveau 3 qui marche : RobStride là où aucun Feetech ne tient (masse recalculée)", "",
-          "| Niveau | Masse cumulée (kg) | Coût cumulé (CHF HT) | Inconnues (masse / prix) |", "| ---: | ---: | ---: | --- |"]
-    for b in bilan(e_rs):
-        L.append(f"| {b['niveau']} | {f1(b['M_cumul'], 2)} | {f1(b['P_cumul'], 0)} | {b['inc_m']} / {b['inc_p']} |")
-    L += ["", "| Axe | Pointe requise (N·m) | Continu requis (N·m) | Vitesse (rad/s) | Actionneur |",
-          "| --- | ---: | ---: | ---: | --- |"]
-    for ax, r in e_rs["choix"].items():
-        if r["niveau"] == 3:
-            b = r["best"]
-            L.append(f"| {ax} | {f1(r['need']['pk'], 3)} | {f1(r['need']['c'], 3)} | {f1(r['need']['w'])} | "
-                     f"{b['id'] if b else '**aucun**'} |")
     # réutilisation
-    for ee, titre in ((e, "option alignée"), (e_rs, "option alignée, jambes RobStride là où il le faut"),
-                      (e_min, "option minimale")):
+    for ee, titre in ((e_pg, "option progressive (décidée)"), (e, "option alignée"), (e_min, "option minimale")):
         rows = reutilisation(ee)
         g, t = part_reutilisee(rows)
         gs, _ = part_reutilisee(rows, sur=True)
@@ -608,25 +721,28 @@ def rapport(e: dict, e_min: dict, variantes: list[tuple[dict, float]], e_rs: dic
 def tout() -> tuple[dict, dict, list, dict]:
     e = etude("aligne_lab")
     e_min = etude("minimale")
-    e_rs = etude("aligne_lab", robstride_si_besoin=True)
+    e_pg = etude("progressive")
     ctx = e["ctx"]
     variantes = [(c, masse_structure(segments(ctx, c, e["D"]))) for c in cartons(ctx)]
-    return e, e_min, variantes, e_rs
+    return e, e_min, variantes, e_pg
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ecrire", action="store_true")
     a = ap.parse_args(argv)
-    e, e_min, var, e_rs = tout()
-    txt = rapport(e, e_min, var, e_rs)
-    for ee in (e, e_min, e_rs):
+    e, e_min, var, e_pg = tout()
+    txt = rapport(e, e_min, var, e_pg)
+    sc = e_pg["secteur"]
+    print(f"  secteur (niveaux 1-2) : {sc['n_servos']} servos × blocage = {sc['I_servos']:.1f} A + calculateur "
+          f"{sc['I_calc']:.1f} A, × {sc['marge']} = {sc['I_need']:.1f} A -> {sc['bloc']['nom']}")
+    for ee in (e_pg, e, e_min):
         print(f"  {ee['option']} :", " ; ".join(f"N{b['niveau']} {f1(b['M_cumul'], 2)} kg {f1(b['P_cumul'], 0)} CHF"
                                               for b in bilan(ee)))
     sans = [ax for ax, r in e["choix"].items() if not r["tient_vise"]]
     deb = [ax for ax, r in e["choix"].items() if not r["tient_debout"]]
     print(f"  visé sans Feetech : {', '.join(sans) or 'aucun'} ; debout sans Feetech : {', '.join(deb) or 'aucun'}")
-    for ee in (e, e_min):
+    for ee in (e_pg, e, e_min):
         g, t = part_reutilisee(reutilisation(ee))
         gs, _ = part_reutilisee(reutilisation(ee), sur=True)
         print(f"  réutilisé au Lab ({ee['option']}) : {f1(100 * gs / t if t else None, 0)} à {f1(100 * g / t if t else None, 0)} %")

@@ -386,6 +386,14 @@ def ecrire_planches_a4(feuilles, chemin, titre, lignes_info):
             for x, y in c[1:]:
                 ops.append(f"{(x+zx0)*MM:.4f} {(y+zy0)*MM:.4f} l")
             ops.append("h S")
+        # flèches (ajout du 2026-10-08, Kit) : polylignes OUVERTES, fines, en gris (sens des cannelures, repères)
+        ops.append("0.5 G 0.3 w")
+        for c in f.get("fleches", []):
+            ops.append(f"{(c[0][0]+zx0)*MM:.4f} {(c[0][1]+zy0)*MM:.4f} m")
+            for x, y in c[1:]:
+                ops.append(f"{(x+zx0)*MM:.4f} {(y+zy0)*MM:.4f} l")
+            ops.append("S")
+        ops.append("0 G")
         ops.append("0.35 w")
         for (x1, y1), (x2, y2) in f.get("croix", []):
             ops.append(f"{(x1+zx0)*MM:.4f} {(y1+zy0)*MM:.4f} m {(x2+zx0)*MM:.4f} {(y2+zy0)*MM:.4f} l S")
@@ -402,7 +410,8 @@ def ecrire_planches_a4(feuilles, chemin, titre, lignes_info):
             ops.append(f"{x*MM:.4f} {y0*MM:.4f} m {x*MM:.4f} {(y0+h)*MM:.4f} l S")
         txt(x0, y0 - 7, "REGLET DE CONTROLE — doit mesurer exactement 100,0 mm ; "
             "sinon reimprimer a 100 %", 7.5)
-        txt(x0, y0 - 14, "Trait plein : couper.  Croix : pointer, puis percer au foret.", 7.5)
+        txt(x0, y0 - 14, "Trait plein : couper.  Croix : pointer, puis percer au foret."
+            + ("  Fleche grise : sens des cannelures." if f.get("fleches") else ""), 7.5)
         txt(MARGE_PLANCHE, A4_H - MARGE_PLANCHE - 6, f"{titre} — feuille {k}/{n}", 12)
         y = A4_H - MARGE_PLANCHE - 15
         for l in lignes_info:

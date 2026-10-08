@@ -17,7 +17,6 @@ Depuis `params/actionneurs.yaml` (`candidats` et `marche`). Pointe : la pointe p
 | Encos (corps) | 20 | 12 – 380 | 3 – 120 | 162 – 3.16e+03 | 522 – 1.98e+03 (20) | oui | oui (oui) | 0 | 0 |
 | Unitree (corps) | 6 | 0.6 – 140 (2 au blocage) | — | 19.5 – 1.74e+03 | 24.2 – 2.5e+03 (6) | non | oui (oui) | 2 | 6 |
 | Feetech (petits axes) | 16 | 0.0686 – 4.9 (15 au blocage) | 0.0157 – 1.57 | 4.8 – 74.5 | 10.3 – 31.3 (5) | non | non (non) | 15 | 0 |
-| ROBOTIS Dynamixel (petits axes) | 16 | 0.215 – 4.1 (14 au blocage) | — | 18 – 102 | 28.4 – 325 (16) | non | non (non) | 14 | 16 |
 
 Familles du corps qui couvrent à la fois le Lab et le final (≥ 60 N·m) : **RobStride, Damiao, SteadyWin, CubeMars, MyActuator, HighTorque, Encos**.
 
