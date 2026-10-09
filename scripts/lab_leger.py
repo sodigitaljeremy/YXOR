@@ -23,6 +23,7 @@ deux), H de 0,35 à 0,65 m (grille des besoins prolongée vers le bas, DANS CE P
 from __future__ import annotations
 
 import argparse
+import math
 import sys
 from pathlib import Path
 
@@ -38,7 +39,7 @@ DOC = REPO / "docs" / "lab-leger-2026-10.md"
 G = 9.80665
 FAMILLES = {"feetech": 3, "dynamixel": 3, "robstride": 12}         # non-cote: S du pack (servos : rail 12 V)
 ROBSTRIDE_PETITS = ("rs05", "edulite05")
-VITESSES = (0.15, 0.3)
+VITESSES = (0.10, 0.15, 0.3)
 MARGES = (1.5, 1.0)          # non-cote: 1,5 = fiche 0051 ; 1,0 = celle des robots qui marchent (contrôle de cohérence,
 #                              docs/dimensionnement-par-actionneur.md) : un REPÈRE, pas une proposition
 
@@ -52,8 +53,9 @@ def avec_015():
         d = lire0(nom)
         if nom == "capacites.yaml":
             n = d["taches"]["marche_sol_plat"]["niveaux"]
-            if 0.15 not in n:
-                n.insert(0, 0.15)
+            for x in (0.15, 0.10):                 # 0,10 ajouté le 2026-10-09 (même raison)
+                if x not in n:
+                    n.insert(0, x)
         return d
     EP.lire = lire
 
@@ -97,9 +99,14 @@ def contexte(fam, struct, v, marge=None):
         ctx["act"]["robstride"] = [a for a in ctx["act"]["robstride"] if a["id"] in ROBSTRIDE_PETITS]
     else:                                        # rail 12 V régulé : plage et vitesse ramenées à 12 V
         rail = dict(S=0, Vfin=12.0, Vmax=12.0, coupure=3.0)
+        cand = lire("actionneurs.yaml")["candidats"]
+
+        def vit(a):                              # STS3250 : vitesse de sa fiche candidate (corrigé le 2026-10-09)
+            s60 = ((cand.get(a["id"]) or {}).get("vitesse_s_par_60deg") or {}).get("valeur")
+            return a["vitesse"] if a["vitesse"] or not s60 else (math.pi / 3) / s60
         ctx["act"][fam] = [dict(a, compat=SE.compatibilite(a["plage_servo"] or a["plage"], rail),
-                                vitesse=a["vitesse"] * SE.facteur_vitesse(a["v_ref"], rail)
-                                if a["vitesse"] and SE.facteur_vitesse(a["v_ref"], rail) else None,
+                                vitesse=vit(a) * SE.facteur_vitesse(a["v_ref"], rail)
+                                if vit(a) and SE.facteur_vitesse(a["v_ref"], rail) else None,
                                 v_ref_inconnue=SE.facteur_vitesse(a["v_ref"], rail) is None)
                            for a in ctx["act"].get(fam, [])]
     return ctx
@@ -111,8 +118,18 @@ def chute(ctx, r) -> float | None:
     return r["M"] * G * z * r["H_reel"] if r.get("H_reel") else None
 
 
+CRITIQUES = ("vitesse à vide de", "tension de référence de la vitesse", "couple continu de")
+
+
+def inconnu_actionneur(r) -> list[str]:
+    """Les données CRITIQUES d'actionneur qui manquent (vitesse, couple continu) : elles donnent INCONNU."""
+    return [x for x in (r or {}).get("inconnues", []) if any(x.startswith(c) for c in CRITIQUES)]
+
+
 def tient(r) -> bool:
-    return r and r["statut"] != "infaisable" and not r.get("non_couvertes")
+    """Règle corrigée le 2026-10-09 : faisable, ou INCONNU seulement par les bornes communes du système électrique ;
+    une donnée critique d'actionneur manquante (vitesse, couple continu) donne INCONNU, jamais « tient »."""
+    return bool(r) and r["statut"] != "infaisable" and not r.get("non_couvertes") and not inconnu_actionneur(r)
 
 
 def explorer_famille(fam, struct, v, marge) -> list[dict]:
@@ -188,7 +205,11 @@ def tout():
             for nom, st in structs.items():
                 for v in VITESSES:
                     sols = explorer_famille(fam, st, v, marge)
-                    res[(marge, fam, nom, v)] = dict(n=len(sols), best=meilleures(sols), raisons=sorted(
+                    inc = [s for s in sols if s["statut"] != "infaisable" and not s.get("non_couvertes")
+                           and inconnu_actionneur(s)]
+                    res[(marge, fam, nom, v)] = dict(n=len(sols), best=meilleures(sols), n_inconnu=len(inc),
+                                                     manque=sorted({x for s in inc for x in inconnu_actionneur(s)})[:3],
+                                                     raisons=sorted(
                         {x.split(" : ")[0] for s in sols for x in s.get("violees", [])})[:4])
     return res, home
 
@@ -224,6 +245,13 @@ def lecture(res, home) -> list[str]:
                                                      f"{f} en {st}, dès H = {f1(s['H'], 2)} m ({f1(s['H_reel'], 3)} m "
                                                      f"réels, {f1(s['M'])} kg, ≥ {f1(s['cout_b'], 0)} CHF, "
                                                      f"{f1(s['E_chute'], 0)} J)" for _, f, st, s in t) + "."))
+    L.append("- **Retiré le 2026-10-09 : « Feetech en carton tient à la marge 1,0 »** (version du 2026-10-08). Ce "
+             "résultat reposait sur la vitesse INCONNUE du STS3250 au catalogue de l'explorateur, et la règle comptait "
+             "INCONNU comme « tient ». Désormais : la vitesse du STS3250 vient de sa fiche candidate (7,9 rad/s), et une "
+             "donnée critique d'actionneur manquante (vitesse, couple continu) donne INCONNU, jamais « tient ».")
+    L.append("- **Les vitesses requises viennent de marches simulées plus rapides que la vitesse étudiée** (section "
+             "« Marcher lentement ») : à 0,10, 0,15 et 0,30 m/s, aucune marche simulée n'existe à cette taille ; la "
+             "règle de l'explorateur prend la plus exigeante des marches au moins aussi rapides (G1, 0,55 m/s).")
     L.append(f"- **Le Lab actuel** (« Home candidat ») : {f1(home.get('H_reel'), 3)} m, {f1(home.get('M'))} kg, "
              f"≥ {f1(home['cout_b'], 0)} CHF, {f1(home['E_chute'], 0)} J à la chute.")
     return L
@@ -236,12 +264,15 @@ def rapport(res, home) -> str:
          "Question de Jeremy (2026-10-08) : « Est-ce que l'étude et ce que nous avions déterminé pour YXOR Lab ne "
          "représente-t-il pas mieux YXOR Home finalement ? Est-ce qu'il n'existerait pas une meilleure version de YXOR "
          "Lab plus optimisée et compatible avec YXOR Kit ? »", "",
-         "Profil : marche sur sol plat 0,15 ou 0,3 m/s, relevé sur le dos et sur le ventre, gestes 0,5 m/s, tête à 2 "
+         "Profil : marche sur sol plat 0,10, 0,15 ou 0,3 m/s, relevé sur le dos et sur le ventre, gestes 0,5 m/s, tête à 2 "
          "axes, IA « + vision », autonomie 20 min (la plus exigeante de 10 et 20). Hors profil : saut, poussée, saisie, "
          "sol irrégulier, pente. Méthode : en tête de `scripts/lab_leger.py`.", "",
          "## En bref", ""] + lecture(res, home) + ["",
          "## La plus petite H où la marche tient, par famille", "",
-         "« Tient » : faisable ou INCONNU (bornes proposées du système électrique), toutes capacités couvertes. Coût : "
+         "« Tient » : faisable, ou INCONNU seulement par les bornes proposées du système électrique (communes à toutes les "
+         "solutions), toutes capacités couvertes ; une donnée critique d'actionneur manquante (vitesse, couple continu) "
+         "donne INCONNU, jamais « tient » (règle du 2026-10-09). Besoins de marche : règle de l'explorateur (voir « Marcher "
+         "lentement »). Coût : "
          "borne basse, CHF HT (prix connus seulement). Énergie de chute : M·g·hauteur du centre de gravité. Part du Kit : "
          "coût connu de l'option progressive (`scripts/kit.py`) qui resservirait.", "",
          "| Marge | Jambes | Structure | Marche (m/s) | H → réelle (m) | Masse (kg) | Coût (CHF) | Chute (J) | Statut | "
@@ -250,8 +281,10 @@ def rapport(res, home) -> str:
     for (marge, fam, st, v), x in res.items():
         b = x["best"]
         if not b:
-            L.append(f"| {f1(marge)} | {fam} | {st} | {f1(v, 2)} | **ne tient à aucune H** de {f1(HS_ETUDE[0], 2)} à "
-                     f"{f1(HS_ETUDE[-1], 2)} m (bloquent : {', '.join(x['raisons']) or '—'}) | — | — | — | — | — | — |")
+            quoi = (f"**INCONNU** ({x['n_inconnu']} solutions : {'; '.join(x['manque'])})" if x["n_inconnu"] else
+                    f"**ne tient à aucune H** de {f1(HS_ETUDE[0], 2)} à {f1(HS_ETUDE[-1], 2)} m (bloquent : "
+                    f"{', '.join(x['raisons']) or '—'})")
+            L.append(f"| {f1(marge)} | {fam} | {st} | {f1(v, 2)} | {quoi} | — | — | — | — | — | — |")
             continue
         s = b["petite"]
         g, t, quoi = part_kit(s)
@@ -268,6 +301,8 @@ def rapport(res, home) -> str:
         jam = sorted({c["id"] for a, c in s["choix"].items() if a in X.JAMBES_TOUTES})
         L.append(f"| {f1(marge)} | {fam} | {st} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {f1(s['M'])} | "
                  f"{'≥ ' if s['cout'] is None else ''}{f1(s['cout_b'], 0)} | {f1(s['E_chute'], 0)} | {', '.join(jam)} |")
+    import marche_lente as ML
+    L += [""] + ML.sections(ML.etude())
     L += ["", "## Le Lab actuel, recalculé comme « Home candidat » (rien n'est changé)", "",
           f"Profil lab, 12S, 250 Hz, chaîne compacte, ensemble 27, H = 0,85 m, petits axes Feetech : **{home['statut']}**, "
           f"{f1(home.get('H_reel'), 3)} m réels, {f1(home.get('M'))} kg, ≥ {f1(home['cout_b'], 0)} CHF, énergie de chute "
