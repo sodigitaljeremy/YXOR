@@ -1,0 +1,1664 @@
+# Marché des servos à bus série avec retour de position, AUTRES que Feetech et Dynamixel — VERSÉ le 2026-10-09
+#
+# Étude d'un agent (question de Jeremy, 2026-10-08 : « Pourquoi choisir du Feetech ? Car ce sont les actionneurs
+# les moins chers du marché ? »). Chaque valeur vient d'une source TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml
+# (marche_servo_*, sha256, non redistribuable) ; une valeur non lue est null ; seule conversion : kgf·cm → N·m
+# (× 0,0980665). Aucun achat recommandé (fiche 0066).
+# ⚠ Boutiques Shopify (hiwonder.com…) lues via le relais r.jina.ai (champ `via` des sources) ; RobotShop et le
+#   wiki Lynxmotion bloqués (fiches Lynxmotion : PDF hébergés par DigiKey) ; aucun prix en CHF ; Waveshare =
+#   Feetech rebaptisé : PROBABLE (bibliothèque « SCServo »), non établi ; couple continu publié seulement par
+#   HerkuleX et Lynxmotion. Feetech et Dynamixel : déjà dans params/actionneurs.yaml.
+modeles:
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: LX-15D
+  couple_blocage:
+    valeur: 17
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 1.667
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.22
+    tension_V: 7.4
+  masse_g: 43
+  cotes_mm:
+  - 44.02
+  - 22.92
+  - 35.12
+  plage_tension_V:
+  - 6
+  - 8.4
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 16.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: '15 kgf·cm à 6 V ; courant de blocage 2,4–3 A. Protocole : licence ouverture via la même fiche.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_lx15d
+  - champ: vitesse_vide
+    source: marche_servo_hw_lx15d
+  - champ: masse_g
+    source: marche_servo_hw_lx15d
+  - champ: cotes_mm
+    source: marche_servo_hw_lx15d
+  - champ: plage_tension_V
+    source: marche_servo_hw_lx15d
+  - champ: bus
+    source: marche_servo_hw_lx15d
+  - champ: prix
+    source: marche_servo_hw_lx15d
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: LX-225
+  couple_blocage:
+    valeur: 25
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 2.452
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.2
+    tension_V: 7.4
+  masse_g: 63
+  cotes_mm:
+  - 40
+  - 20.14
+  - 51.1
+  plage_tension_V:
+  - 6
+  - 8.4
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 17.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: courant de blocage 4 A
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_lx225
+  - champ: vitesse_vide
+    source: marche_servo_hw_lx225
+  - champ: masse_g
+    source: marche_servo_hw_lx225
+  - champ: cotes_mm
+    source: marche_servo_hw_lx225
+  - champ: plage_tension_V
+    source: marche_servo_hw_lx225
+  - champ: bus
+    source: marche_servo_hw_lx225
+  - champ: prix
+    source: marche_servo_hw_lx225
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: LX-824HV
+  couple_blocage:
+    valeur: 17
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 1.667
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.2
+    tension_V: 11.1
+  masse_g: 57
+  cotes_mm:
+  - 40.0
+  - 20.14
+  - 51.1
+  plage_tension_V:
+  - 9
+  - 12.6
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 17.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: courant de blocage 1,7–2 A
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_lx824hv
+  - champ: vitesse_vide
+    source: marche_servo_hw_lx824hv
+  - champ: masse_g
+    source: marche_servo_hw_lx824hv
+  - champ: cotes_mm
+    source: marche_servo_hw_lx824hv
+  - champ: plage_tension_V
+    source: marche_servo_hw_lx824hv
+  - champ: bus
+    source: marche_servo_hw_lx824hv
+  - champ: prix
+    source: marche_servo_hw_lx824hv
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: HTD-35H
+  couple_blocage:
+    valeur: 35
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 3.432
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.18
+    tension_V: 11.1
+  masse_g: 64
+  cotes_mm:
+  - 51.1
+  - 20.14
+  - 40
+  plage_tension_V:
+  - 9
+  - 12.6
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 22.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: 'fiche : « Torque 35kg.cm 11.1V » sans dire blocage ; courant de blocage 3 A'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_htd35h
+  - champ: vitesse_vide
+    source: marche_servo_hw_htd35h
+  - champ: masse_g
+    source: marche_servo_hw_htd35h
+  - champ: cotes_mm
+    source: marche_servo_hw_htd35h
+  - champ: plage_tension_V
+    source: marche_servo_hw_htd35h
+  - champ: bus
+    source: marche_servo_hw_htd35h
+  - champ: prix
+    source: marche_servo_hw_htd35h
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: HTD-45H
+  couple_blocage:
+    valeur: 45
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 4.413
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.18
+    tension_V: 11.1
+  masse_g: 64
+  cotes_mm:
+  - 51.1
+  - 20.14
+  - 40
+  plage_tension_V:
+  - 9
+  - 12.6
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 24.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: '« Locked torque » et « Static maximum torque » valent tous deux 45 kg.cm : aucun couple continu publié
+    ; courant de blocage 3 A'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_htd45h
+  - champ: vitesse_vide
+    source: marche_servo_hw_htd45h
+  - champ: masse_g
+    source: marche_servo_hw_htd45h
+  - champ: cotes_mm
+    source: marche_servo_hw_htd45h
+  - champ: plage_tension_V
+    source: marche_servo_hw_htd45h
+  - champ: bus
+    source: marche_servo_hw_htd45h
+  - champ: prix
+    source: marche_servo_hw_htd45h
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Hiwonder
+  fabricant: Hiwonder (Shenzhen)
+  modele: HTD-85H
+  couple_blocage:
+    valeur: 85
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 8.336
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.2
+    tension_V: 11.1
+  masse_g: 153
+  cotes_mm:
+  - 65.01
+  - 30.0
+  - 62.2
+  plage_tension_V:
+  - 9
+  - 14.8
+  bus: UART série (commande série), 115200 bauds ; demi/full duplex non précisé
+  protocole_licence:
+    documentation_publique: protocole fourni (« Provide bus servo communication protocol », fiche LX-15D) ; Hiwonder
+      le dit « our private serial protocol »
+    sdk_licence: null
+  prix:
+    valeur: 39.99
+    devise: USD
+    tva_incluse: null
+    vendeur: hiwonder.com (boutique, region_country=US)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    note: stock non lisible (gabarit « In stock / Out of stock » ambigu dans le rendu)
+  feetech_rebaptise: null
+  notes: engrenages inox ; courant de blocage 5 A
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_hw_htd85h
+  - champ: vitesse_vide
+    source: marche_servo_hw_htd85h
+  - champ: masse_g
+    source: marche_servo_hw_htd85h
+  - champ: cotes_mm
+    source: marche_servo_hw_htd85h
+  - champ: plage_tension_V
+    source: marche_servo_hw_htd85h
+  - champ: bus
+    source: marche_servo_hw_htd85h
+  - champ: prix
+    source: marche_servo_hw_htd85h
+  - champ: protocole_licence
+    source: marche_servo_hw_lx15d
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: SC09
+  couple_blocage:
+    valeur: 2.3
+    unite_origine: kgf·cm
+    tension_V: 6
+    N_m: 0.226
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.1
+    rpm: 100
+    tension_V: 6
+  masse_g: null
+  cotes_mm:
+  - 23.2
+  - 12.0
+  - 25.5
+  plage_tension_V:
+  - 4
+  - 6
+  bus: TTL, bus série 38400 bps–1 Mbps, 253 servos
+  protocole_licence: &id001
+    documentation_publique: 'oui : manuel du protocole (PDF) et bibliothèque Arduino « SCServo » téléchargeables'
+    sdk_licence: null
+    note: aucun fichier de licence dans ST_Servo.zip (vérifié par grep)
+  prix:
+    valeur: 10.5
+    devise: EUR
+    tva_incluse: true
+    valeur_ht: 8.82
+    vendeur: Botland (botland.store, prix affiché pour l’Allemagne)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: 'Botland : quantité en stock 75 au 2026-10-08'
+  feetech_rebaptise: &id002
+    statut: NON ÉTABLI par une source téléchargée
+    indice: 'la bibliothèque fournie s’appelle SCServo, dossiers SCSCL/STSCL (noms de la bibliothèque Feetech) ;
+      aucune page Waveshare ne cite Feetech (grep vide). Équivalence ST3215 = Feetech STS3215 : probable, à confirmer'
+  notes: 'masse non publiée par Waveshare (Botland : « weight 0.02 kg », nature non précisée)'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_sc09
+  - champ: vitesse_vide
+    source: marche_servo_ws_sc09
+  - champ: cotes_mm
+    source: marche_servo_ws_sc09
+  - champ: plage_tension_V
+    source: marche_servo_ws_sc09
+  - champ: bus
+    source: marche_servo_ws_sc09
+  - champ: prix
+    source: marche_servo_bl_ws_sc09
+  - champ: disponibilite_ch_ue
+    source: marche_servo_bl_ws_sc09
+  - champ: protocole_licence
+    source: marche_servo_ws_protocole
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: SC15
+  couple_blocage:
+    valeur: 17
+    unite_origine: kgf·cm
+    tension_V: 8.4
+    N_m: 1.667
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.16
+    tension_V: 6
+  masse_g: null
+  cotes_mm:
+  - 40.5
+  - 40
+  - 20
+  plage_tension_V:
+  - 4.8
+  - 8.4
+  bus: TTL, 1 Mbps
+  protocole_licence: *id001
+  prix:
+    valeur: 18.9
+    devise: EUR
+    tva_incluse: true
+    valeur_ht: 15.88
+    vendeur: Botland (botland.store, prix affiché pour l’Allemagne)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: 'Botland : quantité en stock 15 au 2026-10-08'
+  feetech_rebaptise: *id002
+  notes: 'CONTRADICTION : le wiki dit 17 kg.cm à 8,4 V ; le tableau Waveshare dit 15 kg.cm « à la tension typique
+    ». 0,18 s/60° à 4,8 V'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_sc15
+  - champ: vitesse_vide
+    source: marche_servo_ws_sc15
+  - champ: cotes_mm
+    source: marche_servo_ws_sc15
+  - champ: plage_tension_V
+    source: marche_servo_ws_sc15
+  - champ: bus
+    source: marche_servo_ws_sc15
+  - champ: prix
+    source: marche_servo_bl_ws_sc15
+  - champ: disponibilite_ch_ue
+    source: marche_servo_bl_ws_sc15
+  - champ: notes
+    source: marche_servo_ws_prod_st3215
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: ST3020
+  couple_blocage:
+    valeur: 25
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 2.452
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.167
+    rpm: 60
+    tension_V: 12
+  masse_g: null
+  cotes_mm:
+  - 40.2
+  - 20.2
+  - 40
+  plage_tension_V:
+  - 6
+  - 14
+  bus: TTL, 38400 bps–1 Mbps ; codeur magnétique 12 bits
+  protocole_licence: *id001
+  prix:
+    valeur: 25.5
+    devise: EUR
+    tva_incluse: true
+    valeur_ht: 21.43
+    vendeur: Botland (botland.store, prix affiché pour l’Allemagne)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: 'Botland : quantité en stock 72 au 2026-10-08'
+  feetech_rebaptise: *id002
+  notes: courant de blocage 2,7 A
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_st3020
+  - champ: vitesse_vide
+    source: marche_servo_ws_st3020
+  - champ: cotes_mm
+    source: marche_servo_ws_st3020
+  - champ: plage_tension_V
+    source: marche_servo_ws_st3020
+  - champ: bus
+    source: marche_servo_ws_st3020
+  - champ: prix
+    source: marche_servo_bl_ws_st3020
+  - champ: disponibilite_ch_ue
+    source: marche_servo_bl_ws_st3020
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: ST3215 (12 V)
+  couple_blocage:
+    valeur: 30
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 2.942
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.222
+    rpm: 45
+    tension_V: 12
+  masse_g: null
+  cotes_mm:
+  - 45.22
+  - 35
+  - 24.72
+  plage_tension_V:
+  - 6
+  - 12.6
+  bus: TTL (tableau Waveshare), 1 Mbps ; codeur magnétique 360°/4096
+  protocole_licence: *id001
+  prix:
+    valeur: 24.0
+    devise: EUR
+    tva_incluse: true
+    valeur_ht: 20.17
+    vendeur: Botland (botland.store, prix affiché pour l’Allemagne)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: 'Botland : quantité en stock 41 au 2026-10-08'
+  feetech_rebaptise: *id002
+  notes: 'Prix fabricant : 21,99 USD (waveshare.com, TVA non précisée). Masse : la fiche Waveshare porte « Weight:
+    0.089 kg » sans dire s’il s’agit du servo ou du colis -> masse_g null. Variante ST3215-7.4V : 19,5 kg.cm, 0,192
+    s/60°, 4,0–7,4 V (même tableau).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_st3215
+  - champ: vitesse_vide
+    source: marche_servo_ws_st3215
+  - champ: cotes_mm
+    source: marche_servo_ws_st3215
+  - champ: plage_tension_V
+    source: marche_servo_ws_st3215
+  - champ: bus
+    source: marche_servo_ws_prod_st3215
+  - champ: notes
+    source: marche_servo_ws_prod_st3215
+  - champ: prix
+    source: marche_servo_bl_ws_st3215
+  - champ: disponibilite_ch_ue
+    source: marche_servo_bl_ws_st3215
+  - champ: feetech_rebaptise
+    source: marche_servo_ws_st_servo
+  - champ: feetech_rebaptise
+    source: marche_servo_ws_st3215_manuel
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: ST3025
+  couple_blocage:
+    valeur: 40
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 3.923
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.117
+    rpm: 85
+    tension_V: 12
+  masse_g: null
+  cotes_mm:
+  - 40
+  - 20
+  - 40
+  plage_tension_V:
+  - 6
+  - 12.6
+  bus: TTL, 38400 bps–1 Mbps
+  protocole_licence: *id001
+  prix:
+    valeur: 94.9
+    devise: EUR
+    tva_incluse: true
+    valeur_ht: 79.75
+    vendeur: Botland (botland.store, prix affiché pour l’Allemagne)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: 'Botland : quantité en stock 0 au 2026-10-08'
+  feetech_rebaptise: *id002
+  notes: 'moteur sans balais ; « Rated Current 1.5A », « KT 9kg.cm/A » publiés mais AUCUN couple nominal publié
+    (le produit KT × I serait un calcul, non fait). Botland : stock 0.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_st3025
+  - champ: vitesse_vide
+    source: marche_servo_ws_st3025
+  - champ: cotes_mm
+    source: marche_servo_ws_st3025
+  - champ: plage_tension_V
+    source: marche_servo_ws_st3025
+  - champ: bus
+    source: marche_servo_ws_st3025
+  - champ: notes
+    source: marche_servo_ws_st3025
+  - champ: prix
+    source: marche_servo_bl_ws_st3025
+  - champ: disponibilite_ch_ue
+    source: marche_servo_bl_ws_st3025
+- famille: Waveshare
+  fabricant: Waveshare
+  modele: RSBL120-24
+  couple_blocage:
+    valeur: 120
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 11.768
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.2
+    tension_V: null
+  masse_g: null
+  cotes_mm: null
+  plage_tension_V:
+  - 9
+  - 24
+  bus: RS-485
+  protocole_licence: *id001
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: *id002
+  notes: 'Seule source : tableau « Product Selection » de la fiche ST3215 (couple « mesuré à la tension typique
+    de chaque servo », tension non donnée). Gamme RSBL : 35, 45, 85 et 120 kg.cm en RS-485.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ws_prod_st3215
+  - champ: vitesse_vide
+    source: marche_servo_ws_prod_st3215
+  - champ: plage_tension_V
+    source: marche_servo_ws_prod_st3215
+  - champ: bus
+    source: marche_servo_ws_prod_st3215
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-3301 ICS
+  couple_blocage:
+    valeur: 6.0
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 0.588
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.14
+    tension_V: 7.4
+  masse_g: 26.4
+  cotes_mm:
+  - 32.5
+  - 26
+  - 26
+  plage_tension_V:
+  - 6
+  - 7.4
+  bus: ICS3.6 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: &id003
+    documentation_publique: 'oui : « コマンドリファレンスが公開されています » (référence de commandes publiée, page ICS3.5)'
+    sdk_licence: null
+  prix:
+    valeur: 4180
+    devise: JPY
+    tva_incluse: true
+    vendeur: Switch Science (Japon)
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    japon: 'Switch Science : 在庫数 0, 売り切れ (épuisé)'
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). 4,9 kgf·cm et 0,16 s/60° à 6 V ; engrenages plastique
+    ; pas de limitation de température ni de courant (« 温度制限、電流制限非対応 »).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs3301
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs3301
+  - champ: masse_g
+    source: marche_servo_kd_krs3301
+  - champ: cotes_mm
+    source: marche_servo_kd_krs3301
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs3301
+  - champ: bus
+    source: marche_servo_kd_krs3301
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+  - champ: prix
+    source: marche_servo_ss_3478
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-3304R2 ICS
+  couple_blocage:
+    valeur: 13.9
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 1.363
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.11
+    tension_V: 7.4
+  masse_g: 33.7
+  cotes_mm:
+  - 32.5
+  - 26
+  - 26
+  plage_tension_V:
+  - 6
+  - 7.4
+  bus: ICS3.6 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: *id003
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). 11,2 kgf·cm à 6 V. Switch Science vend la KRS-3304
+    ICS (même caisse, engrenages, moteur ; seule la version ICS diffère selon ss_6022) à 9 680 JPY TTC.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs3304r2
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs3304r2
+  - champ: masse_g
+    source: marche_servo_kd_krs3304r2
+  - champ: cotes_mm
+    source: marche_servo_kd_krs3304r2
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs3304r2
+  - champ: bus
+    source: marche_servo_kd_krs3304r2
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+  - champ: notes
+    source: marche_servo_ss_6022
+  - champ: notes
+    source: marche_servo_ss_3479
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-2572R2HV ICS
+  couple_blocage:
+    valeur: 25.0
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 2.452
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.13
+    tension_V: 11.1
+  masse_g: 47.7
+  cotes_mm:
+  - 41
+  - 21
+  - 30.5
+  plage_tension_V:
+  - 9
+  - 12
+  bus: ICS3.6 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: *id003
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). courant max 2,5 A ; engrenages métal'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs2572r2hv
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs2572r2hv
+  - champ: masse_g
+    source: marche_servo_kd_krs2572r2hv
+  - champ: cotes_mm
+    source: marche_servo_kd_krs2572r2hv
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs2572r2hv
+  - champ: bus
+    source: marche_servo_kd_krs2572r2hv
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-4034HV ICS
+  couple_blocage:
+    valeur: 41.7
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 4.089
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.17
+    tension_V: 11.1
+  masse_g: 61.2
+  cotes_mm:
+  - 43
+  - 32
+  - 32.6
+  plage_tension_V:
+  - 9
+  - 12
+  bus: ICS3.5 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: *id003
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). masse sans palonnier ; courant max 3,1 A. Catalogue
+    2014 : 43×32×32,5 mm (écart 0,1 mm).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs4034hv
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs4034hv
+  - champ: masse_g
+    source: marche_servo_kd_krs4034hv
+  - champ: cotes_mm
+    source: marche_servo_kd_krs4034hv
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs4034hv
+  - champ: bus
+    source: marche_servo_kd_krs4034hv
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+  - champ: notes
+    source: marche_servo_kondo_2014_en
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-6003R2HV ICS
+  couple_blocage:
+    valeur: 67.0
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 6.57
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.22
+    tension_V: 11.1
+  masse_g: 103
+  cotes_mm:
+  - 51.5
+  - 32
+  - 39.5
+  plage_tension_V:
+  - 9
+  - 12
+  bus: ICS3.6 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: *id003
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    statut: production arrêtée (« 生産を終了しました » ; successeurs KRS-9304HV/9303HV)
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). masse avec palonnier ; courant max 6,1 A'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs6003r2hv
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs6003r2hv
+  - champ: masse_g
+    source: marche_servo_kd_krs6003r2hv
+  - champ: cotes_mm
+    source: marche_servo_kd_krs6003r2hv
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs6003r2hv
+  - champ: bus
+    source: marche_servo_kd_krs6003r2hv
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+- famille: Kondo
+  fabricant: Kondo Kagaku (近藤科学)
+  modele: KRS-9304HV ICS
+  couple_blocage:
+    valeur: 90.9
+    unite_origine: kgf·cm
+    tension_V: 11.1
+    N_m: 8.914
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.23
+    tension_V: 11.1
+  masse_g: 109
+  cotes_mm:
+  - 51.5
+  - 32
+  - 39.5
+  plage_tension_V:
+  - 9
+  - 12
+  bus: ICS3.6 (série ou PWM au choix), niveau TTL, 115200/625000/1250000 bps, chaînage multi-drop
+  protocole_licence: *id003
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Prix fabricant : « オープン » (prix libre, non publié). masse « 本体のみ » ; courant max 6,1 A'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_kd_krs9304hv
+  - champ: vitesse_vide
+    source: marche_servo_kd_krs9304hv
+  - champ: masse_g
+    source: marche_servo_kd_krs9304hv
+  - champ: cotes_mm
+    source: marche_servo_kd_krs9304hv
+  - champ: plage_tension_V
+    source: marche_servo_kd_krs9304hv
+  - champ: bus
+    source: marche_servo_kd_krs9304hv
+  - champ: protocole_licence
+    source: marche_servo_kd_ics35
+- famille: HerkuleX
+  fabricant: Dongbu Robot (HerkuleX)
+  modele: DRS-0101
+  couple_blocage:
+    valeur: 12
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 1.177
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu:
+    valeur: 1.7
+    unite_origine: kgf·cm
+    N_m: 0.167
+    tension_V: 7.4
+    definition: '« Rated Current 450mA @ 7.4V : 1.7kgf.cm » (point nominal du fabricant)'
+  vitesse_vide:
+    s_60deg: 0.166
+    tension_V: 7.4
+  masse_g: 45
+  cotes_mm:
+  - 45
+  - 24.0
+  - 31
+  plage_tension_V:
+  - 7
+  - 12
+  bus: série asynchrone FULL duplex niveau TTL, paquets binaires, multi-drop, 0,67 Mbps
+  protocole_licence: &id004
+    documentation_publique: bibliothèques Arduino et manuel liés depuis le wiki DFRobot
+    sdk_licence: null
+  prix:
+    valeur: 61
+    devise: USD
+    tva_incluse: null
+    vendeur: DFRobot
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    dfrobot: InStock (schema.org)
+  feetech_rebaptise: null
+  notes: 'moteur à balais avec noyau, engrenages plastique 1:266. CONTRADICTION : servodatabase donne 7–9 V.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_herk_0101_dfr
+  - champ: couple_continu
+    source: marche_servo_herk_0101_dfr
+  - champ: vitesse_vide
+    source: marche_servo_herk_0101_dfr
+  - champ: masse_g
+    source: marche_servo_herk_0101_dfr
+  - champ: cotes_mm
+    source: marche_servo_herk_0101_dfr
+  - champ: plage_tension_V
+    source: marche_servo_herk_0101_dfr
+  - champ: bus
+    source: marche_servo_herk_0101_dfr
+  - champ: protocole_licence
+    source: marche_servo_herk_0101_dfr
+  - champ: prix
+    source: marche_servo_dfr_prod_drs0101
+  - champ: disponibilite_ch_ue
+    source: marche_servo_dfr_prod_drs0101
+  - champ: notes
+    source: marche_servo_sdb_herkulex_drs_0101
+- famille: HerkuleX
+  fabricant: Dongbu Robot (HerkuleX)
+  modele: DRS-0201
+  couple_blocage:
+    valeur: 24
+    unite_origine: kgf·cm
+    tension_V: 7.4
+    N_m: 2.354
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu:
+    valeur: 1.7
+    unite_origine: kgf·cm
+    N_m: 0.167
+    tension_V: 7.4
+    definition: '« Rated Current 450mA @ 7.4V : 1.7kg.cm » — ligne IDENTIQUE à la DRS-0101, copie suspecte'
+  vitesse_vide:
+    s_60deg: 0.147
+    tension_V: 7.4
+  masse_g: 60
+  cotes_mm:
+  - 45
+  - 24.0
+  - 31
+  plage_tension_V:
+  - 7
+  - 12
+  bus: série asynchrone FULL duplex niveau TTL, 0,67 Mbps
+  protocole_licence: *id004
+  prix:
+    valeur: 158
+    devise: USD
+    tva_incluse: null
+    vendeur: DFRobot
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    dfrobot: InStock (schema.org)
+  feetech_rebaptise: null
+  notes: moteur sans noyau, engrenages métal 1:266
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_herk_0201_dfr
+  - champ: couple_continu
+    source: marche_servo_herk_0201_dfr
+  - champ: vitesse_vide
+    source: marche_servo_herk_0201_dfr
+  - champ: masse_g
+    source: marche_servo_herk_0201_dfr
+  - champ: cotes_mm
+    source: marche_servo_herk_0201_dfr
+  - champ: plage_tension_V
+    source: marche_servo_herk_0201_dfr
+  - champ: bus
+    source: marche_servo_herk_0201_dfr
+  - champ: prix
+    source: marche_servo_dfr_prod_drs0201
+  - champ: disponibilite_ch_ue
+    source: marche_servo_dfr_prod_drs0201
+- famille: HerkuleX
+  fabricant: Dongbu Robot (HerkuleX)
+  modele: DRS-0401
+  couple_blocage:
+    valeur: 5.1
+    unite_origine: N·m
+    tension_V: 14.8
+    N_m: 5.1
+    conversion: null
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.162
+    tension_V: 14.8
+  masse_g: 123
+  cotes_mm:
+  - 56
+  - 35.0
+  - 38
+  plage_tension_V:
+  - 9.5
+  - 14.8
+  bus: série asynchrone FULL duplex niveau TTL, 1 Mbps
+  protocole_licence: *id004
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue:
+    ch: null
+    ue: null
+    dfrobot: Discontinued (schema.org)
+  feetech_rebaptise: null
+  notes: moteur Faulhaber sans noyau, 1:202 ; « Rated Current 30mA @ 14.8V » (sans couple associé)
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_herk_0401_dfr
+  - champ: vitesse_vide
+    source: marche_servo_herk_0401_dfr
+  - champ: masse_g
+    source: marche_servo_herk_0401_dfr
+  - champ: cotes_mm
+    source: marche_servo_herk_0401_dfr
+  - champ: plage_tension_V
+    source: marche_servo_herk_0401_dfr
+  - champ: bus
+    source: marche_servo_herk_0401_dfr
+  - champ: disponibilite_ch_ue
+    source: marche_servo_dfr_prod_drs0401
+  - champ: disponibilite_ch_ue
+    source: marche_servo_sdb_herkulex_drs_0401
+- famille: HerkuleX
+  fabricant: Dongbu Robot (HerkuleX)
+  modele: DRS-0601
+  couple_blocage:
+    valeur: 77.0
+    unite_origine: kgf·cm
+    tension_V: 14.8
+    N_m: 7.551
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.16
+    tension_V: 14.8
+  masse_g: 123.0
+  cotes_mm:
+  - 55.9
+  - 35.1
+  - 38.1
+  plage_tension_V:
+  - 9.5
+  - 14.8
+  bus: série, 1 Mbps (source secondaire)
+  protocole_licence: *id004
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: SOURCE SECONDAIRE UNIQUEMENT (RobotShop bloqué par Cloudflare). 62,5 kgf·cm à 12 V.
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_sdb_herkulex_drs_0601
+  - champ: vitesse_vide
+    source: marche_servo_sdb_herkulex_drs_0601
+  - champ: masse_g
+    source: marche_servo_sdb_herkulex_drs_0601
+  - champ: cotes_mm
+    source: marche_servo_sdb_herkulex_drs_0601
+  - champ: plage_tension_V
+    source: marche_servo_sdb_herkulex_drs_0601
+  - champ: bus
+    source: marche_servo_sdb_herkulex_drs_0601
+- famille: Lynxmotion LSS
+  fabricant: Lynxmotion (RobotShop)
+  modele: LSS-HS1
+  couple_blocage:
+    valeur: 8
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 0.785
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu:
+    valeur: 1.6
+    unite_origine: kgf·cm
+    N_m: 0.157
+    tension_V: 12
+    definition: « Torque, max dynamic at 12V » (le fabricant le distingue du couple statique max)
+  vitesse_vide:
+    rpm: 100
+    tension_V: 12
+  masse_g: 57.0
+  cotes_mm:
+  - 51.0
+  - 26.0
+  - 38.3
+  plage_tension_V:
+  - 6
+  - 12.6
+  bus: TTL full duplex asynchrone ou PWM RC ; 9600–921600 bps ; Molex 4 broches
+  protocole_licence: &id005
+    documentation_publique: protocole LSS documenté (dérivé du protocole SSC-32)
+    sdk_licence: LGPL-3.0 (LSS_Library_Arduino et LSS_Library_Python, API GitHub)
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'moteur à noyau, 1:146. CONTRADICTION : servodatabase affiche 1,6 kg·cm comme couple (c’est le dynamique).
+    Cotes : source secondaire (dessin coté = image dans la fiche). Prix et disponibilité : RobotShop inaccessible
+    (Cloudflare).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_dk_lss_hs1
+  - champ: couple_continu
+    source: marche_servo_dk_lss_hs1
+  - champ: vitesse_vide
+    source: marche_servo_dk_lss_hs1
+  - champ: masse_g
+    source: marche_servo_dk_lss_hs1
+  - champ: plage_tension_V
+    source: marche_servo_dk_lss_hs1
+  - champ: bus
+    source: marche_servo_dk_lss_hs1
+  - champ: cotes_mm
+    source: marche_servo_sdb_lynxmotion_lss_hs1
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_arduino
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_python
+- famille: Lynxmotion LSS
+  fabricant: Lynxmotion (RobotShop)
+  modele: LSS-ST1
+  couple_blocage:
+    valeur: 14
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 1.373
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu:
+    valeur: 2.8
+    unite_origine: kgf·cm
+    N_m: 0.275
+    tension_V: 12
+    definition: « Torque, max dynamic at 12V » (le fabricant le distingue du couple statique max)
+  vitesse_vide:
+    rpm: 60
+    tension_V: 12
+  masse_g: 57.0
+  cotes_mm:
+  - 51.0
+  - 26.0
+  - 38.3
+  plage_tension_V:
+  - 6
+  - 12.6
+  bus: TTL full duplex asynchrone ou PWM RC ; 9600–921600 bps ; Molex 4 broches
+  protocole_licence: *id005
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'moteur à noyau, 1:253, engrenages cuivre. Plage de température « 45 °C~67 °C » (sic). Cotes : source secondaire
+    (dessin coté = image dans la fiche). Prix et disponibilité : RobotShop inaccessible (Cloudflare).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_dk_lss_st1
+  - champ: couple_continu
+    source: marche_servo_dk_lss_st1
+  - champ: vitesse_vide
+    source: marche_servo_dk_lss_st1
+  - champ: masse_g
+    source: marche_servo_dk_lss_st1
+  - champ: plage_tension_V
+    source: marche_servo_dk_lss_st1
+  - champ: bus
+    source: marche_servo_dk_lss_st1
+  - champ: cotes_mm
+    source: marche_servo_sdb_lynxmotion_lss_st1
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_arduino
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_python
+- famille: Lynxmotion LSS
+  fabricant: Lynxmotion (RobotShop)
+  modele: LSS-HT1
+  couple_blocage:
+    valeur: 29
+    unite_origine: kgf·cm
+    tension_V: 12
+    N_m: 2.844
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu:
+    valeur: 5.8
+    unite_origine: kgf·cm
+    N_m: 0.569
+    tension_V: 12
+    definition: « Torque, max dynamic at 12V » (le fabricant le distingue du couple statique max)
+  vitesse_vide:
+    rpm: 60
+    tension_V: 12
+  masse_g: 63
+  cotes_mm:
+  - 51.0
+  - 26.0
+  - 38.3
+  plage_tension_V:
+  - 6
+  - 12.6
+  bus: TTL full duplex asynchrone ou PWM RC ; 9600–921600 bps ; Molex 4 broches
+  protocole_licence: *id005
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'moteur sans noyau, 1:320. Servodatabase : 80 g (contredit 63 g). Cotes : source secondaire (dessin coté
+    = image dans la fiche). Prix et disponibilité : RobotShop inaccessible (Cloudflare).'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_dk_lss_ht1
+  - champ: couple_continu
+    source: marche_servo_dk_lss_ht1
+  - champ: vitesse_vide
+    source: marche_servo_dk_lss_ht1
+  - champ: masse_g
+    source: marche_servo_dk_lss_ht1
+  - champ: plage_tension_V
+    source: marche_servo_dk_lss_ht1
+  - champ: bus
+    source: marche_servo_dk_lss_ht1
+  - champ: cotes_mm
+    source: marche_servo_sdb_lynxmotion_lss_ht1
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_arduino
+  - champ: protocole_licence
+    source: marche_servo_gh_lss_python
+- famille: Futaba RS (commande)
+  fabricant: Futaba (双葉電子工業)
+  modele: RS204MD
+  couple_blocage:
+    valeur: 2.1
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 0.206
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.19
+    tension_V: null
+  masse_g: 12
+  cotes_mm:
+  - 27.9
+  - 16.0
+  - 23.9
+  plage_tension_V:
+  - 3.7
+  - 6.0
+  bus: TTL demi-duplex / PWM
+  protocole_licence: &id006
+    documentation_publique: manuels d’utilisation téléchargeables sur futaba.co.jp (liens sur chaque fiche)
+    sdk_licence: null
+  prix:
+    valeur: 6500
+    devise: JPY
+    tva_incluse: false
+    vendeur: Futaba, prix catalogue (定価, 税抜)
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Tension de mesure du couple et de la vitesse non indiquée ; nature du couple (blocage ?) non dite. Liste
+    2021 : 5 500 JPY HT.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ft_rs204md
+  - champ: vitesse_vide
+    source: marche_servo_ft_rs204md
+  - champ: masse_g
+    source: marche_servo_ft_rs204md
+  - champ: cotes_mm
+    source: marche_servo_ft_rs204md
+  - champ: plage_tension_V
+    source: marche_servo_ft_rs204md
+  - champ: bus
+    source: marche_servo_ft_rs204md
+  - champ: prix
+    source: marche_servo_ft_rs204md
+  - champ: notes
+    source: marche_servo_ft_liste_prix_2021
+- famille: Futaba RS (commande)
+  fabricant: Futaba (双葉電子工業)
+  modele: RS304MD
+  couple_blocage:
+    valeur: 5.0
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 0.49
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.16
+    tension_V: null
+  masse_g: 21
+  cotes_mm:
+  - 35.8
+  - 19.5
+  - 25.0
+  plage_tension_V:
+  - 4.8
+  - 7.4
+  bus: TTL demi-duplex / PWM
+  protocole_licence: *id006
+  prix:
+    valeur: 5000
+    devise: JPY
+    tva_incluse: false
+    vendeur: Futaba, prix catalogue (定価, 税抜)
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Tension de mesure du couple et de la vitesse non indiquée ; nature du couple (blocage ?) non dite. Liste
+    2021 : 3 800 JPY HT. Fiche : utilisé sur des bipèdes de ~30 cm.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ft_rs304md
+  - champ: vitesse_vide
+    source: marche_servo_ft_rs304md
+  - champ: masse_g
+    source: marche_servo_ft_rs304md
+  - champ: cotes_mm
+    source: marche_servo_ft_rs304md
+  - champ: plage_tension_V
+    source: marche_servo_ft_rs304md
+  - champ: bus
+    source: marche_servo_ft_rs304md
+  - champ: prix
+    source: marche_servo_ft_rs304md
+  - champ: notes
+    source: marche_servo_ft_liste_prix_2021
+- famille: Futaba RS (commande)
+  fabricant: Futaba (双葉電子工業)
+  modele: RS318CD
+  couple_blocage:
+    valeur: 5.5
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 0.539
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.16
+    tension_V: null
+  masse_g: 19
+  cotes_mm:
+  - 35.8
+  - 19.6
+  - 25.0
+  plage_tension_V:
+  - 6.0
+  - 8.4
+  bus: TTL demi-duplex (pas de PWM)
+  protocole_licence: *id006
+  prix:
+    valeur: 3800
+    devise: JPY
+    tva_incluse: false
+    vendeur: Futaba, prix catalogue (定価, 税抜)
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Tension de mesure du couple et de la vitesse non indiquée ; nature du couple (blocage ?) non dite. Liste
+    2021 : 6 500 JPY HT. Même type que le servo du robot Robi 2.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ft_rs318cd
+  - champ: vitesse_vide
+    source: marche_servo_ft_rs318cd
+  - champ: masse_g
+    source: marche_servo_ft_rs318cd
+  - champ: cotes_mm
+    source: marche_servo_ft_rs318cd
+  - champ: plage_tension_V
+    source: marche_servo_ft_rs318cd
+  - champ: bus
+    source: marche_servo_ft_rs318cd
+  - champ: prix
+    source: marche_servo_ft_rs318cd
+  - champ: notes
+    source: marche_servo_ft_liste_prix_2021
+- famille: Futaba RS (commande)
+  fabricant: Futaba (双葉電子工業)
+  modele: RS303MR
+  couple_blocage:
+    valeur: 6.5
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 0.637
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.11
+    tension_V: null
+  masse_g: 28
+  cotes_mm:
+  - 35.8
+  - 19.5
+  - 25.0
+  plage_tension_V:
+  - 4.8
+  - 7.4
+  bus: TTL demi-duplex / PWM (26 servos max en commande)
+  protocole_licence: *id006
+  prix:
+    valeur: 8800
+    devise: JPY
+    tva_incluse: false
+    vendeur: Futaba, prix catalogue (定価, 税抜)
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'Tension de mesure du couple et de la vitesse non indiquée ; nature du couple (blocage ?) non dite. Liste
+    2021 : 6 500 JPY HT.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ft_rs303mr
+  - champ: vitesse_vide
+    source: marche_servo_ft_rs303mr
+  - champ: masse_g
+    source: marche_servo_ft_rs303mr
+  - champ: cotes_mm
+    source: marche_servo_ft_rs303mr
+  - champ: plage_tension_V
+    source: marche_servo_ft_rs303mr
+  - champ: bus
+    source: marche_servo_ft_rs303mr
+  - champ: prix
+    source: marche_servo_ft_rs303mr
+  - champ: notes
+    source: marche_servo_ft_liste_prix_2021
+- famille: Futaba RS (commande)
+  fabricant: Futaba (双葉電子工業)
+  modele: RS305CR
+  couple_blocage:
+    valeur: 7.1
+    unite_origine: kgf·cm
+    tension_V: null
+    N_m: 0.696
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.11
+    tension_V: null
+  masse_g: 28
+  cotes_mm:
+  - 35.8
+  - 19.5
+  - 25.0
+  plage_tension_V:
+  - 7.4
+  - 7.4
+  bus: RS-485 demi-duplex
+  protocole_licence: *id006
+  prix:
+    valeur: 11800
+    devise: JPY
+    tva_incluse: false
+    vendeur: Futaba, prix catalogue (定価, 税抜)
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: Tension de mesure du couple et de la vitesse non indiquée ; nature du couple (blocage ?) non dite. Absent
+    de la liste 2021.
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ft_rs305cr
+  - champ: vitesse_vide
+    source: marche_servo_ft_rs305cr
+  - champ: masse_g
+    source: marche_servo_ft_rs305cr
+  - champ: cotes_mm
+    source: marche_servo_ft_rs305cr
+  - champ: plage_tension_V
+    source: marche_servo_ft_rs305cr
+  - champ: bus
+    source: marche_servo_ft_rs305cr
+  - champ: prix
+    source: marche_servo_ft_rs305cr
+- famille: UBTECH
+  fabricant: UBTECH
+  modele: UBT-12HC (servo de l’Alpha 1S)
+  couple_blocage:
+    valeur: 12
+    unite_origine: kgf·cm
+    tension_V: 8.5
+    N_m: 1.177
+    conversion: × 0,0980665 (kgf·cm → N·m)
+  couple_continu: null
+  vitesse_vide:
+    s_60deg: 0.198
+    tension_V: 8.5
+  masse_g: 42
+  cotes_mm:
+  - 44
+  - 22.5
+  - 29
+  plage_tension_V: null
+  bus: « Serial communication », retour de position
+  protocole_licence: null
+  prix: null
+  prix_chf: null
+  disponibilite_ch_ue: null
+  feetech_rebaptise: null
+  notes: 'SOURCE FAIBLE : spécification recopiée par un utilisateur de forum (2017), sans source fabricant. 8 kg.cm
+    et 0,238 s/60° à 6,5 V ; « operating voltage 7.4V ». Nature du couple non précisée.'
+  sources:
+  - champ: couple_blocage
+    source: marche_servo_ubt_synthiam
+  - champ: vitesse_vide
+    source: marche_servo_ubt_synthiam
+  - champ: masse_g
+    source: marche_servo_ubt_synthiam
+  - champ: cotes_mm
+    source: marche_servo_ubt_synthiam
+  - champ: bus
+    source: marche_servo_ubt_synthiam
+familles:
+- famille: Hiwonder
+  fabricant: Hiwonder (anciennement vendu sous LewanSoul pour la LX-16A)
+  fiabilite:
+  - resume: 'LX-16A (Sawppy, plusieurs années d’usage) : engrenages métal et roulement jugés bons ; mais deux utilisateurs
+      ont vu la tension batterie (~7,4 V) renvoyée sur le 5 V USB (Raspberry Pi détruit), et un servo défaillant
+      a court-circuité la batterie à la masse. Approvisionnement jugé peu fiable. L’auteur abandonne la LX-16A.'
+    source: marche_servo_fia_hw_lx16a_newscrewdriver
+  - resume: 'Avis client LX-15D (hiwonder.com) : sensible aux tensions trop hautes, sans protection ; pas de RS-485.'
+    source: marche_servo_hw_lx15d
+  robots:
+  - nom: Walbi, the Walking Biped
+    lien: https://www.hackster.io/the-inner-geek/walbi-the-walking-biped-8feacd
+    servos: LX-16A (LewanSoul)
+    licence: GPL3+ (copyleft fort)
+    marche: marche par capture et relecture de mouvements, pas par contrôleur
+    source: marche_servo_rob_hw_walbi
+  note: Le lien LX-16A ↔ Hiwonder vient de servodatabase (marche_servo_sdb_hiwonder_lx16a).
+- famille: Waveshare
+  fabricant: Waveshare
+  fiabilite:
+  - resume: 'STS3215 piloté avec la bibliothèque et le manuel ST3215 de Waveshare : après des blocages répétés contre
+      un obstacle, le servo ne bouge plus mais répond encore aux commandes ; une réponse l’attribue à la protection
+      thermique (couple coupé au-delà de 70 °C). Non résolu dans le fil.'
+    source: marche_servo_fia_sts_unbrick
+  robots:
+  - nom: Chien robot 12 DDL (modèle ouvert Waveshare)
+    lien: https://www.waveshare.com/wiki/ST3215_Servo
+    servos: ST3215
+    licence: null
+    marche: 'NON DOCUMENTÉE : la source fournit le modèle et les fichiers, elle ne montre pas de marche'
+    source: marche_servo_ws_st3215
+  feetech_rebaptise: *id002
+- famille: Kondo
+  fabricant: Kondo Kagaku
+  fiabilite: null
+  robots: null
+  note: 'Fabrication japonaise (« Made in Japan » sur chaque fiche). Autre gamme pertinente non relevée : B3M (RS-485).'
+- famille: HerkuleX
+  fabricant: Dongbu Robot
+  fiabilite:
+  - resume: 'Deux DRS-0101 en rotation continue : ~5 % d’écart de vitesse ; un autre utilisateur voit le servo passer
+      en erreur alimenté par l’USB du PC, et plus avec une alimentation dédiée. Pas de défaut matériel établi.'
+    source: marche_servo_fia_herk_arduino
+  robots: null
+  note: 'DRS-0401 arrêtée (DFRobot : Discontinued).'
+- famille: Lynxmotion LSS
+  fabricant: Lynxmotion (RobotShop)
+  fiabilite: null
+  robots:
+  - nom: SES-V2 Hexapod (18 × LSS-ST1) et mechDOG (quadrupède, LSS-ST1)
+    lien: https://www.lynxmotion.com/?p=479
+    servos: LSS-ST1
+    licence: null
+    marche: robots à pattes du fabricant ; ouverture des sources non établie par la page
+    source: marche_servo_rob_lss_lynxmotion_p479
+  note: 'Forum RobotShop (fils de pannes LSS) inaccessible : Cloudflare.'
+- famille: Futaba RS (commande)
+  fabricant: Futaba
+  fiabilite: null
+  robots: null
+  note: 'RS405CB, RS406CB et RS601CR : production arrêtée (titres des pages Futaba).'
+- famille: UBTECH
+  fabricant: UBTECH
+  fiabilite: null
+  robots: null
+  note: Aucune vente au détail ni fiche fabricant trouvée.

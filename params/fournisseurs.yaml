@@ -6821,3 +6821,446 @@ fichiers:
     empreinte: sha256:c1b1240dc8dc06dea5f378aea6710af8e5b9ba99138c8144636597ad9d3e5e27
     conditions: non lues
     redistribuable: false
+
+  # ── Marché des servos à bus (autres familles), versé le 2026-10-09 (params/servos_bus.yaml) ──
+  marche_servo_bl_ws_sc09:
+    source: https://botland.store/servo-continuous-360-operation/23561-sc09-23kg-serial-bus-servo-uart-controlled-servo-waveshare-24440.html
+    reference: Botland (Pologne, livraison UE), fiche produit ; prix TTC et HT dans le JSON de la page (pays DE)
+    date: 2026-10-08
+    empreinte: sha256:0201bfb34babde218764158f243926898e7c7472cf5ca5e692e17612a1206c61
+    conditions: non lues
+    redistribuable: false
+  marche_servo_bl_ws_sc15:
+    source: https://botland.store/servo-continuous-360-operation/21965-sc15-17kg-serial-bus-servo-uart-servo-waveshare-21568-5904422385347.html
+    reference: Botland (Pologne, livraison UE), fiche produit ; prix TTC et HT dans le JSON de la page (pays DE)
+    date: 2026-10-08
+    empreinte: sha256:cf35ae2c0cf4474b7175f8b854036f97585d0357de77a55a61b4de7890634591
+    conditions: non lues
+    redistribuable: false
+  marche_servo_bl_ws_st3020:
+    source: https://botland.store/servo-continuous-360-operation/23726-st3020-25kg-serial-bus-servo-uart-servo-waveshare-24703.html
+    reference: Botland (Pologne, livraison UE), fiche produit ; prix TTC et HT dans le JSON de la page (pays DE)
+    date: 2026-10-08
+    empreinte: sha256:add9ebc41af355458a22182679d58cfaeafe374cc26c99e1887c335f19b8bf67
+    conditions: non lues
+    redistribuable: false
+  marche_servo_bl_ws_st3025:
+    source: https://botland.store/servo-continuous-360-operation/23728-st3025-40kg-serial-bus-servo-uart-servo-waveshare-24702.html
+    reference: Botland (Pologne, livraison UE), fiche produit ; prix TTC et HT dans le JSON de la page (pays DE)
+    date: 2026-10-08
+    empreinte: sha256:cd716fc0fa3d3e6afafdc0e5e478562e5383b77f12bbb7b6dbb71099e15bcf41
+    conditions: non lues
+    redistribuable: false
+  marche_servo_bl_ws_st3215:
+    source: https://botland.store/servo-continuous-360-operation/21963-30kg-serial-bus-servo-servo-with-360-degree-magnetic-encoder-waveshare-22414.html
+    reference: Botland (Pologne, livraison UE), fiche produit ; prix TTC et HT dans le JSON de la page (pays DE)
+    date: 2026-10-08
+    empreinte: sha256:5789fc6e4cace625c63aea794b1c4f9286bd173d6c1604eb2601f81396ae224e
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dfr_prod_drs0101:
+    source: https://www.dfrobot.com/product-963.html
+    reference: DFRobot, fiche produit (prix et disponibilité schema.org)
+    date: 2026-10-08
+    empreinte: sha256:83fb994b51c8dc25232714b1d22e956acb8ae94724c101775f91383316cbe202
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dfr_prod_drs0201:
+    source: https://www.dfrobot.com/product-964.html
+    reference: DFRobot, fiche produit (prix et disponibilité schema.org)
+    date: 2026-10-08
+    empreinte: sha256:de690e5af74d0184dc17e270af4485bcbbefef6ab13986d721a38e9f1f2c99d5
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dfr_prod_drs0401:
+    source: https://www.dfrobot.com/product-967.html
+    reference: DFRobot, fiche produit (prix et disponibilité schema.org)
+    date: 2026-10-08
+    empreinte: sha256:6984dac7dc00fa81a30e867c4f22dd93ccb88aea0f217a2cf3f245beb2f2aa42
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dk_lss_hs1:
+    source: https://media.digikey.com/pdf/Data%20Sheets/RobotShop%20PDFs/RB-LYN-988-Datasheet.pdf
+    reference: Fiche technique RobotShop/Lynxmotion hébergée par DigiKey (PDF)
+    date: 2026-10-08
+    empreinte: sha256:c5afccb650fd8ee906e17ae09fd218ab0fd9894686df5702e371db0bb8f6f155
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dk_lss_ht1:
+    source: https://media.digikey.com/pdf/Data%20Sheets/RobotShop%20PDFs/RB-LYN-990-Datasheet.pdf
+    reference: Fiche technique RobotShop/Lynxmotion hébergée par DigiKey (PDF)
+    date: 2026-10-08
+    empreinte: sha256:67088e9885573882d59d1dce3393fb6d176299e3ea178c64b9c9ed8299cd9d8e
+    conditions: non lues
+    redistribuable: false
+  marche_servo_dk_lss_st1:
+    source: https://media.digikey.com/pdf/Data%20Sheets/RobotShop%20PDFs/RB-LYN-989-Datasheet.pdf
+    reference: Fiche technique RobotShop/Lynxmotion hébergée par DigiKey (PDF)
+    date: 2026-10-08
+    empreinte: sha256:09611c8a4fc32c8682e3a6a9c3f5d2ea57242f3766a1705bfe30b59a74070f9d
+    conditions: non lues
+    redistribuable: false
+  marche_servo_fia_herk_arduino:
+    source: https://forum.arduino.cc/t/herkulex-drs-0101-problem/401590.json
+    reference: Forum Arduino, fil « Herkulex drs 0101 problem » (JSON Discourse)
+    date: 2026-10-08
+    empreinte: sha256:d458cb1939a1a7eeaf2122620720a45d941fb2f8bdbdcc73f8a479ef8b098afd
+    conditions: non lues
+    redistribuable: false
+  marche_servo_fia_hw_lx16a_newscrewdriver:
+    source: https://newscrewdriver.com/2022/07/20/failed-lewansoul-lx-16a-servos/
+    reference: Blog New Screwdriver (Roger Cheng), 2022-07-20, « Failed LewanSoul LX-16A servos », via r.jina.ai (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))
+    date: 2026-10-08
+    empreinte: sha256:68a1fdd1f3bf5dbcc40831633bab4271a14791f9bdd6b94caa0d1cf9133f494c
+    conditions: non lues
+    redistribuable: false
+  marche_servo_fia_sts_unbrick:
+    source: https://forum.arduino.cc/t/how-to-unbrick-sts3215-servo-motor/1413081.json
+    reference: Forum Arduino, fil « How to unbrick STS3215 servo motor? » (JSON Discourse)
+    date: 2026-10-08
+    empreinte: sha256:c1615cf150711c8c616d9a7680c8784f962a6060a72626489aa23ca47fc4c9ed
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_liste_prix_2021:
+    source: https://d21xsz2za2b5mz.cloudfront.net/7016/3109/0412/Futaba_PartsForRobot_20210601.pdf
+    reference: Futaba, liste de prix des pièces robot du 2021-06-01 (PDF)
+    date: 2026-10-08
+    empreinte: sha256:9453f56786c11cae6cf62dc6ecee124dff95072e7af5af6b49bc51f0cf31a046
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_prix:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/parts_and_price
+    reference: Futaba, page « 製品＆価格一覧 »
+    date: 2026-10-08
+    empreinte: sha256:7b4b57fef992e7070dc67e8d24e4ba1e3f933fc35a3c932ac92eb65c2a7a481c
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_rs204md:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/rs204md
+    reference: Futaba, fiche produit officielle servo à commande (japonais)
+    date: 2026-10-08
+    empreinte: sha256:83b9a6f53f0ce4ee06e5c5cd4cfb1c40e09c602f9b1d089e99b98ff457d4c1d8
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_rs303mr:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/rs303mr
+    reference: Futaba, fiche produit officielle servo à commande (japonais)
+    date: 2026-10-08
+    empreinte: sha256:e6b66f65104024455679349c0e4e758859bf7049d967d96623c2339b10d801c8
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_rs304md:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/rs304md
+    reference: Futaba, fiche produit officielle servo à commande (japonais)
+    date: 2026-10-08
+    empreinte: sha256:248e5826ec6b223c2c8e86b086c257fd226d7317980f26e7dbc24929436c5419
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_rs305cr:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/rs305cr
+    reference: Futaba, fiche produit officielle servo à commande (japonais)
+    date: 2026-10-08
+    empreinte: sha256:1da9025e260eab6c60852b7672604de344f49f2a7000a05d40183ce521c816a9
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ft_rs318cd:
+    source: https://www.futaba.co.jp/product/industrial_servo/command_type_servos/rs318cd
+    reference: Futaba, fiche produit officielle servo à commande (japonais)
+    date: 2026-10-08
+    empreinte: sha256:7f96cd6d3063236212fd54337b664b6817e89457883a595af3b2e9c174aa9187
+    conditions: non lues
+    redistribuable: false
+  marche_servo_gh_lss_arduino:
+    source: https://api.github.com/repos/Lynxmotion/LSS_Library_Arduino
+    reference: API GitHub, métadonnées du dépôt Lynxmotion (licence)
+    date: 2026-10-08
+    empreinte: sha256:83585f16b584a8cc7befc411633ba3cba9233df4e34a36cc3f69afc4cce386d4
+    conditions: non lues
+    redistribuable: false
+  marche_servo_gh_lss_python:
+    source: https://api.github.com/repos/Lynxmotion/LSS_Library_Python
+    reference: API GitHub, métadonnées du dépôt Lynxmotion (licence)
+    date: 2026-10-08
+    empreinte: sha256:c078f13dc3340693028d8b8e8feeb992d09531c4ac4f8d26fcf6d8fc5a20e177
+    conditions: non lues
+    redistribuable: false
+  marche_servo_herk_0101_dfr:
+    source: https://wiki.dfrobot.com/ser0032/
+    reference: DFRobot Wiki, fiche HerkuleX
+    date: 2026-10-08
+    empreinte: sha256:0dc49ece57129ea1f69a02be35c8b8d9a0033707cc9fb715bea234fbe71e15a7
+    conditions: non lues
+    redistribuable: false
+  marche_servo_herk_0201_dfr:
+    source: https://wiki.dfrobot.com/Herkulex_DRS-0201_SKU_SER0033
+    reference: DFRobot Wiki, fiche HerkuleX
+    date: 2026-10-08
+    empreinte: sha256:5da9b75d0471c4363800a26f212a76aa433976b52c02fa775e5f8ee1586de077
+    conditions: non lues
+    redistribuable: false
+  marche_servo_herk_0401_dfr:
+    source: https://wiki.dfrobot.com/ser0034/
+    reference: DFRobot Wiki, fiche HerkuleX
+    date: 2026-10-08
+    empreinte: sha256:a37bd5830922b9dbfb6993e43682b0d13b41e3d0edcdbc32136fdf409018915d
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_htd35h:
+    source: https://www.hiwonder.com/products/htd-35h
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:3b3356b58f63aa1f93c8bbbf345a1ded0769107f914050ba6e0612631dd068e2
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_htd45h:
+    source: https://www.hiwonder.com/products/htd-45h
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:162333ca2e07c8019cd15acc1ef914c1d8494bff6ae78d59fad0fab24e9e7267
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_htd85h:
+    source: https://www.hiwonder.com/products/htd-85h
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:ab7b89f87e2682791a6496ca7ac60ac42765c14e59c0cfd974a1b3ae9071408d
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_lx15d:
+    source: https://www.hiwonder.com/products/lx-15d
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:1ef99e07608e21c31410a822720dc8cba27b59f925b3c7402bb9c0da51809d36
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_lx225:
+    source: https://www.hiwonder.com/products/lx-225
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:201ba1918081e5ca11d2a3479ec682b45c64148408ba093303ca061af50aa85c
+    conditions: non lues
+    redistribuable: false
+  marche_servo_hw_lx824hv:
+    source: https://www.hiwonder.com/products/lx-824hv
+    reference: 'Fiche produit Hiwonder (hiwonder.com, boutique US), rendu markdown via r.jina.ai (accès direct refusé : HTTP 429 Shopify) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))'
+    date: 2026-10-08
+    empreinte: sha256:21df9d4f3c26e724788b1d623fb23acea665c5c6fa36e28a4883b46a2627aba5
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_ics35:
+    source: https://kondo-robot.com/faq/ics3-5-explain
+    reference: Kondo, guide technique « ICS3.5解説 »
+    date: 2026-10-08
+    empreinte: sha256:e9e7bf08596a7abf0582d5c48ea010c68fe8ba186d80ff8c8575311e944157d7
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs2572r2hv:
+    source: https://kondo-robot.com/product/03200
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:bc840c3bdfdcd39c0990eeae65f545785d7a2a1e1af894e06476276b69d0b8e9
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs3301:
+    source: https://kondo-robot.com/product/krs-3301-ics
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:9444eae02577dc66acbf36be14af9fa789e38a2340fb6c627b0d8e1b8db2b27b
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs3304r2:
+    source: https://kondo-robot.com/product/krs-3304r2-ics
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:926ffd789b93ec334f4a57841c50f9c211132392d087c33dd9a3bf952bdf6030
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs4034hv:
+    source: https://kondo-robot.com/product/krs-4034hv-ics
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:4416f546d12953ca0ac81eb0936dafd7943c1eae640d0e2c9b0ca0c970d39297
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs6003r2hv:
+    source: https://kondo-robot.com/product/03137
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:bbc05dc5328672d1b6ac870eaeaf33de35d0b869776d28242862132520b73cac
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kd_krs9304hv:
+    source: https://kondo-robot.com/product/03237
+    reference: Kondo Kagaku, fiche produit officielle (japonais)
+    date: 2026-10-08
+    empreinte: sha256:26571878cf87309fb78e7ec682579ac5797980fcea733b97767ae3dc63b6db45
+    conditions: non lues
+    redistribuable: false
+  marche_servo_kondo_2014_en:
+    source: https://kondo-robot.com/w/wp-content/uploads/2014-KONDO-En.pdf
+    reference: Kondo, catalogue 2014 en anglais (PDF)
+    date: 2026-10-08
+    empreinte: sha256:3032221e08c39eebb7efcfeb532ec1fc1064030362b40e029a60c61551596220
+    conditions: non lues
+    redistribuable: false
+  marche_servo_rob_hw_walbi:
+    source: https://www.hackster.io/the-inner-geek/walbi-the-walking-biped-8feacd
+    reference: Hackster.io, « Walbi, the Walking Biped » (The Inner Geek, 2018)
+    date: 2026-10-08
+    empreinte: sha256:a75b90db36aab09e4afb2e496306a2c41f3976772f3783ae91a43e36244afd74
+    conditions: non lues
+    redistribuable: false
+  marche_servo_rob_lss_lynxmotion_p479:
+    source: https://www.lynxmotion.com/?p=479
+    reference: Lynxmotion, page « SES-V2 Legged Robots »
+    date: 2026-10-08
+    empreinte: sha256:b72ce0ee4addd746e76aaf7ea098fc2ff7680482c0bc008e082d4bfad542eb26
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_herkulex_drs_0101:
+    source: https://servodatabase.com/servo/herkulex/drs-0101
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:c1c12f73c74dcf89b530e2f2e76a3fe741fdfcb9b94242fb6bfbf4237220f2a7
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_herkulex_drs_0201:
+    source: https://servodatabase.com/servo/herkulex/drs-0201
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:0dda03e07b7faf23d51d5ee52d604140dcff7bcf47ccdc4e6ad293ee21e3301a
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_herkulex_drs_0401:
+    source: https://servodatabase.com/servo/herkulex/drs-0401
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:58c7dffda26abfa3414fa9be1c500ca4fe431907b86dfa75f7cab09072ec614b
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_herkulex_drs_0601:
+    source: https://servodatabase.com/servo/herkulex/drs-0601
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:efca148371aad09ab8fc22505ae83414b2205d6d38e507fdabb25192110abb93
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_hiwonder_lx16a:
+    source: https://servodatabase.com/servo/hiwonder/lx16a
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:d8af638b4f2575ef1a1eb4e564fc796cb5ed7b5bcee14c70a93ae62835ac5f4a
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_lynxmotion_lss_hs1:
+    source: https://servodatabase.com/servo/lynxmotion/lss-hs1
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:da8ed1d44d3111cbf0879c1f5fd24bbe098421f1abbb9c2aaa6766441cc0a4f3
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_lynxmotion_lss_ht1:
+    source: https://servodatabase.com/servo/lynxmotion/lss-ht1
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:6e093ac8a41f4bc2e4a7191a765c80cc84f2703c99e0b4a2301b94fad1e67a30
+    conditions: non lues
+    redistribuable: false
+  marche_servo_sdb_lynxmotion_lss_st1:
+    source: https://servodatabase.com/servo/lynxmotion/lss-st1
+    reference: servodatabase.com (agrégateur SECONDAIRE ; données partiellement communautaires et « with the help of AI » selon son avertissement)
+    date: 2026-10-08
+    empreinte: sha256:f4c9ac11277f056fc30e1a0eadb34242c0cd1b36e9b2dc1a66f8acbc167504be
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ss_3478:
+    source: https://www.switch-science.com/products/3478
+    reference: Switch Science (Japon), fiche produit, via r.jina.ai (HTTP 429 Shopify en direct) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))
+    date: 2026-10-08
+    empreinte: sha256:a2c76e933e3841182784788419b94ebf56b90d81deb7054fe96394c09b0c3435
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ss_3479:
+    source: https://www.switch-science.com/products/3479
+    reference: Switch Science (Japon), fiche produit, via r.jina.ai (HTTP 429 Shopify en direct) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))
+    date: 2026-10-08
+    empreinte: sha256:e5d115ff313efbd2c8564b3e75b385c592502ddd5ef96492ccb2f8e07d4d5df0
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ss_6022:
+    source: https://www.switch-science.com/products/6022
+    reference: Switch Science (Japon), fiche produit, via r.jina.ai (HTTP 429 Shopify en direct) (via https://r.jina.ai/ (relais de lecture ; le fichier est le rendu markdown du relais, pas le HTML d’origine))
+    date: 2026-10-08
+    empreinte: sha256:3b35fe7a9c953a77b33433201c0b00b4027714978b04bcbcd4e77e31156c5a0c
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ubt_synthiam:
+    source: https://synthiam.com/Community/Questions/Control-UBTech-Alpha-Servos-With-The-Ez-b-V4-3932
+    reference: Forum Synthiam, fil « Control UBTech Alpha Servos With The Ez-b V4 » (spécification recopiée par un utilisateur, 2017)
+    date: 2026-10-08
+    empreinte: sha256:fe3cb8272033f2445f1dd868eb6cb470d7f6323162960ce1d4174c60d94e6a51
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_prod_st3215:
+    source: https://www.waveshare.com/st3215-servo.htm?sku=22414
+    reference: Waveshare, fiche produit ST3215 (tableau « Product Selection » et prix)
+    date: 2026-10-08
+    empreinte: sha256:834e44d23a8132b138d28d402973949671add9ec0e0a26603e4d52d223182109
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_protocole:
+    source: https://files.waveshare.com/upload/2/27/Communication_Protocol_User_Manual-EN%28191218-0923%29.pdf
+    reference: Waveshare, Communication Protocol User Manual EN (191218-0923), PDF
+    date: 2026-10-08
+    empreinte: sha256:3bf67ac6e28ac37e98a083ce1c32201801123b065d01632350c54fd1d184af5a
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_sc09:
+    source: https://www.waveshare.com/wiki/SC09_Servo
+    reference: Waveshare Wiki, page du servo
+    date: 2026-10-08
+    empreinte: sha256:f7770d407e542c20b0160adf67a1d7aad41de549c357ff5255bbb49f5a5b0369
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_sc15:
+    source: https://www.waveshare.com/wiki/SC15_Servo
+    reference: Waveshare Wiki, page du servo
+    date: 2026-10-08
+    empreinte: sha256:4edce6ff81777e84f48d4a30108bcd763d59caf7c8332ada5d29d60a837bd363
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_st3020:
+    source: https://www.waveshare.com/wiki/ST3020_Servo
+    reference: Waveshare Wiki, page du servo
+    date: 2026-10-08
+    empreinte: sha256:d353eb4a66262498d33e9976785d12ca7b05e3ac6d73399a71f52a1d2ce901b2
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_st3025:
+    source: https://www.waveshare.com/wiki/ST3025_Servo
+    reference: Waveshare Wiki, page du servo
+    date: 2026-10-08
+    empreinte: sha256:2d19bc79c420d7573181e5db5716834b7034d4dbbd40445bdaa0af6f4e27fe24
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_st3215:
+    source: https://www.waveshare.com/wiki/ST3215_Servo
+    reference: Waveshare Wiki, page du servo
+    date: 2026-10-08
+    empreinte: sha256:bc8508626cd466d2aaf3e9a53d6f0349af56c29e5b216b51e3cc13df51fe169d
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_st3215_manuel:
+    source: https://files.waveshare.com/upload/f/f4/ST3215_Servo_User_Manual.pdf
+    reference: Waveshare, ST3215 Servo User Manual (PDF)
+    date: 2026-10-08
+    empreinte: sha256:f37f43544e674e5eaf87c5a134f575fb37d207f2269f6e8c60328d9a82918d49
+    conditions: non lues
+    redistribuable: false
+  marche_servo_ws_st_servo:
+    source: https://files.waveshare.com/wiki/ST3215_Servo/ST_Servo.zip
+    reference: Waveshare, archive ST_Servo.zip (bibliothèque Arduino SCServo), lue sans exécution
+    date: 2026-10-08
+    empreinte: sha256:0250d7138a192776e0fa4814065abe941ea245eb908c9650587416352a85b7cb
+    conditions: non lues
+    redistribuable: false

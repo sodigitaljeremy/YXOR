@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `bcea395f7c61`, le 2026-10-08 ; 286 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `34720b3b1603`, le 2026-10-09 ; 289 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -133,7 +133,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (45)
+## docs/ (46)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
@@ -153,6 +153,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/glossaire.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/kit-etude-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/kit-montage-niveau0.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/kit-yxor.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lab-leger-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/lecture-modele.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/loi-masse-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/marche-actionneurs-2026-10.md
@@ -242,7 +243,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (38)
+## scripts/ (39)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -261,6 +262,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/exigences_ph
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/explorateur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstream_limits.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/kit.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/lab_leger.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/loi_masse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_actionneurs.py
@@ -294,7 +296,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (29)
+## tests/ (30)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -311,6 +313,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_explorate
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_jambe_basse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_kit.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_kit_niveau0.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_lab_leger.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_loi_masse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_actionneurs.py
