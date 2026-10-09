@@ -162,8 +162,11 @@ def lire(nom):
 
 
 # ─────────────────────────────── besoins ────────────────────────────────
-def table_besoins(lignes_ep, marches, releve, cap) -> dict:
-    """{(H, tâche, niveau): {axe: {pk: [(a, b)], c: [(a, b)], w: [ω]}}} : les entrées BRUTES, avant le maximum."""
+def table_besoins(lignes_ep, marches, releve, cap, regle="explorateur") -> dict:
+    """{(H, tâche, niveau): {axe: {pk: [(a, b)], c: [(a, b)], w: [ω]}}} : les entrées BRUTES, avant le maximum.
+    `regle` (2026-10-09) : quelles marches simulées servent à une vitesse (marche_lente.selection) ; 'explorateur'
+    (défaut, inchangé) ou 'plus_lente' (PROPOSÉE, NON adoptée : attend une fiche de Jeremy)."""
+    import marche_lente as ML
     T = {}
 
     def ajouter(H, t, niv, art, a, b, kind, w=None):
@@ -178,7 +181,7 @@ def table_besoins(lignes_ep, marches, releve, cap) -> dict:
     frs = {r: e["Fr"] for r, e in marches.items()}
     for v in cap["taches"]["marche_sol_plat"]["niveaux"]:
         for H in EP.HS:
-            couvrants = [r for r, f in frs.items() if f >= v / math.sqrt(G * H) - 1e-9]
+            couvrants = ML.selection(frs, v, H, regle)
             for r in couvrants:
                 for ty, p in marches[r]["profil"].items():
                     ajouter(H, "marche_sol_plat", v, ty, p["pointe"] * G * H, 0.0, "pk", p["omega"] * math.sqrt(G / H))
@@ -365,13 +368,17 @@ def electrique(ctx, S, f_can, etendue, coupure=None, chaine="industrielle") -> d
     ctx["struct"]["charge"] = hyp["imu_cablage_kg"]["valeur"]
     return dict(S=S, var=var, hyp=hyp, pui=pui, f_can=f_can, etendue=etendue, cible=ctx["cible"], chaine=chaine,
                 comps=SE.composants(pui) if (pui.get("marche") or {}).get("produits") else None,
-                Pm=SE.table_puissance(marches, ctx["cap"], EP.HS), P3a=SE.table_pointe_3a(EP.tout()[2]),
+                Pm=SE.table_puissance(marches, ctx["cap"], EP.HS, ctx.get("regle_marche", "explorateur")), P3a=SE.table_pointe_3a(EP.tout()[2]),
                 cells=SE.cellules_21700(), calc=SE.choisir_calculateur(opts, niveau, hyp) if niveau else None,
                 adapt=SE.adaptateurs_can(), serie=SE.adaptateur_serie(), niveau_ia=niveau)
 
 
+REGLE_MARCHE = "explorateur"      # --regle-marche (2026-10-09) ; « plus_lente » : PROPOSÉE, non adoptée
+
+
 def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=True, coupure=None,
-             chaine="industrielle") -> dict:
+             chaine="industrielle", regle_marche=None) -> dict:
+    regle_marche = regle_marche or REGLE_MARCHE
     import simulations_marche as SM
     cap, an, lignes = EP.tout()
     marches, releve, manque = SM.charger()
@@ -382,7 +389,7 @@ def contexte(struct=None, cible=None, profil="lab", S=None, f_can=500, etendue=T
     import taille_minimale as TM
     ctx = dict(cap=cap, an=an, R={k: v["valeur"] for k, v in an["ratios"].items()}, cv=TM.conventions(),
                 cible=cible or cible_defaut(cap, profil), profil=profil,
-                T=table_besoins(lignes, marches, releve, cap), manque=manque,
+                T=table_besoins(lignes, marches, releve, cap, regle_marche), manque=manque, regle_marche=regle_marche,
                 C={H: EP.contraintes(H, cap, an) for H in EP.HS}, ex=ex, decision=lm.get("retenue"),
                 act=par, ecartes=ecartes, fams=fams, struct=struct or structures(),
                 marge=lire("actionneurs.yaml")["dimensionnement"]["marge"],
@@ -484,7 +491,7 @@ def evaluer(ctx, ens, H, fc, fp, profil) -> dict | None:
         if any(a not in axes for a in axes_requis(t, niv)):
             return None
     fam_de = {a: (fp if a in PETITS_AXES else fc) for a in axes}
-    acts = {a: ctx["act"].get(fam_de[a], []) for a in axes}
+    acts = {a: (ctx.get("act_axe") or {}).get(a) or ctx["act"].get(fam_de[a], []) for a in axes}   # act_axe : étude
     violees = [f"{a} : famille {fam_de[a]} vide au catalogue" for a in axes if not acts[a]]
     if violees:
         return dict(statut="infaisable", violees=violees, inconnues=[])
@@ -1190,7 +1197,11 @@ def main(argv=None) -> int:
     ap.add_argument("--profil", default="lab", choices=["lab", "pro"], help="profil de params/capacites.yaml")
     ap.add_argument("--cible", help="capacités voulues, « tâche[=niveau],… » (remplace le profil)")
     ap.add_argument("--sans-electrique", action="store_true", help="méthode de 14 h 05 : sans système électrique")
+    ap.add_argument("--regle-marche", default="explorateur", choices=["explorateur", "plus_lente"],
+                    help="marches simulées retenues pour une vitesse (marche_lente.selection) ; défaut inchangé")
     a = ap.parse_args(argv)
+    global REGLE_MARCHE
+    REGLE_MARCHE = a.regle_marche                 # hérité par les processus (fork) et par contexte()
     t0 = time.time()
     cible = None
     if a.cible:

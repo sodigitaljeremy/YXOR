@@ -36,6 +36,20 @@ JAMBE = ("hip_pitch", "hip_roll", "hip_yaw", "knee", "ankle_pitch")
 EDULITE_CONTINU = 1.8                # non-cote: N·m nominal, consigne du prompt du 2026-10-09 (déjà au catalogue)
 
 
+REGLES = ("explorateur", "plus_lente")
+
+
+def selection(frs: dict, v: float, H: float, regle: str = "explorateur") -> list:
+    """Les marches simulées retenues pour la vitesse v à la hauteur H. `frs` : {nom: nombre de Froude}.
+    'explorateur' : toutes celles au moins aussi rapides (règle par défaut de explorateur.table_besoins) ;
+    'plus_lente' : la plus lente d'entre elles (une borne haute). Liste vide si aucune : null, INCONNU, sans
+    interpolation."""
+    if regle not in REGLES:
+        raise ValueError(f"règle de marche inconnue : {regle}")
+    cs = [r for r, f in frs.items() if f >= v / math.sqrt(G * H) - 1e-9]       # ordre d'origine (sorties identiques)
+    return [min(cs, key=lambda r: frs[r])] if (regle == "plus_lente" and cs) else cs
+
+
 def lire(nom):
     import marche_composants as MC
     return MC.lire(nom)
@@ -61,7 +75,9 @@ def besoins_sim(sim, H=H_LEGER, M=M_LEGER) -> dict:
 
 
 def couvrantes(v, H=H_LEGER) -> list[dict]:
-    return [s for s in marches() if vitesse_equivalente(s, H) >= v - 1e-9]
+    ms = marches()
+    garde = set(selection({s["nom"]: s["Fr"] for s in ms}, v, H, "explorateur"))
+    return [s for s in ms if s["nom"] in garde]
 
 
 def besoins_marche(v, mode, H=H_LEGER, M=M_LEGER) -> dict | None:

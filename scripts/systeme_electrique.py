@@ -60,9 +60,10 @@ def facteur_vitesse(v_ref, var) -> float | None:
 
 
 # ─────────────────────────────── énergie ────────────────────────────────
-def table_puissance(marches: dict, cap: dict, HS) -> dict:
-    """{(H, v): {type: (p_moy*, p_pointe*)}} : marche, le plus exigeant des robots qui couvrent le Froude, niveaux
-    inférieurs compris (même règle que les couples)."""
+def table_puissance(marches: dict, cap: dict, HS, regle="explorateur") -> dict:
+    """{(H, v): {type: (p_moy*, p_pointe*)}} : marche, le plus exigeant des robots retenus (marche_lente.selection,
+    même règle que les couples ; 'explorateur' par défaut), niveaux inférieurs compris."""
+    import marche_lente as ML
     frs = {r: e["Fr"] for r, e in marches.items()}
     niv = cap["taches"]["marche_sol_plat"]["niveaux"]
     out = {}
@@ -70,9 +71,7 @@ def table_puissance(marches: dict, cap: dict, HS) -> dict:
         for i, v in enumerate(niv):
             tab = {}
             for w in niv[:i + 1]:
-                for r, f in frs.items():
-                    if f < w / math.sqrt(G * H) - 1e-9:
-                        continue
+                for r in ML.selection(frs, w, H, regle):
                     for ty, p in marches[r]["profil"].items():
                         pm, pk = p.get("puissance_moy"), p.get("puissance")
                         a, b = tab.get(ty, (0.0, 0.0))

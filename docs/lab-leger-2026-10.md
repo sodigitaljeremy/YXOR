@@ -12,6 +12,7 @@ Profil : marche sur sol plat 0,10, 0,15 ou 0,3 m/s, relevé sur le dos et sur le
 - **Marge 1,0** : aucune famille ne tient la marche entre 0,35 et 0,65 m.
 - **Retiré le 2026-10-09 : « Feetech en carton tient à la marge 1,0 »** (version du 2026-10-08). Ce résultat reposait sur la vitesse INCONNUE du STS3250 au catalogue de l'explorateur, et la règle comptait INCONNU comme « tient ». Désormais : la vitesse du STS3250 vient de sa fiche candidate (7,9 rad/s), et une donnée critique d'actionneur manquante (vitesse, couple continu) donne INCONNU, jamais « tient ».
 - **Les vitesses requises viennent de marches simulées plus rapides que la vitesse étudiée** (section « Marcher lentement ») : à 0,10, 0,15 et 0,30 m/s, aucune marche simulée n'existe à cette taille ; la règle de l'explorateur prend la plus exigeante des marches au moins aussi rapides (G1, 0,55 m/s).
+- **Robot entier avec la règle « plus_lente »** (PROPOSÉE, NON adoptée, section dédiée) : à la marge 1,5, rien ne tient ; à la marge 1,0, seuls A en carton (STS3250 aux jambes) et B en carton (RS05/EduLite05) tiennent.
 - **Le Lab actuel** (« Home candidat ») : 0,850 m, 18,5 kg, ≥ 4 514 CHF, 87 J à la chute.
 
 ## La plus petite H où la marche tient, par famille
@@ -147,6 +148,47 @@ Chaque case : rapport « publié ÷ requis » ; le couple doit atteindre la marg
 | hip_yaw | 1,87, 0,71, 2,3 (marche) | 1,57 / 1,39 / 2,03 | 2,62 / 2,22 / 3,39 | 4,46 / — / 2,25 | 6,30 / — / 2,25 | 4,77 / — / 1,96 | 4,04 / — / 2,82 | 1,52 / 0,80 / 2,70 | 0,37 / — / 4,10 | 0,63 / — / 2,28 | 2,94 / 2,26 / 16,23 | 2,94 / 2,54 / 14,54 |
 | knee | 2,90, 1,28, 14,1 (marche) | 1,01 / 0,76 / 0,33 | 1,69 / 1,22 / 0,56 | 2,87 / — / 0,37 | 4,06 / — / 0,37 | 3,07 / — / 0,32 | 2,60 / — / 0,46 | 0,98 / 0,44 / 0,45 | 0,24 / — / 0,67 | 0,41 / — / 0,37 | 1,90 / 1,25 / 2,67 | 1,90 / 1,40 / 2,39 |
 | ankle_pitch | 1,11, 0,26, 18,2 (autres tâches) | 2,65 / 3,79 / 0,26 | 4,41 / 6,06 / 0,43 | 7,50 / — / 0,29 | 10,58 / — / 0,29 | 8,02 / — / 0,25 | 6,79 / — / 0,36 | 2,56 / 2,20 / 0,35 | 0,63 / — / 0,52 | 1,06 / — / 0,29 | 4,95 / 6,18 / 2,07 | 4,95 / 6,95 / 1,86 |
+
+
+## Robot entier, règle plus_lente
+
+**La règle « plus_lente » n'est PAS adoptée** : elle attend une fiche de décision de Jeremy (elle touche la fiche 0064). L'explorateur garde « explorateur » par défaut (`--regle-marche`, test de non-régression contre le commit cc340fd). Méthode et configurations imposées : en tête de `scripts/lab_leger_entier.py`.
+
+| Config | Structure | Marge | Marche (m/s) | Plus petite H → réelle (m) | Masse (kg) | Coût (CHF) | Chute (J) | Autonomie (min) | Jambes | Axes les plus justes (pointe ÷ requis, continu ÷ requis, vitesse ÷ requise) | Kit réutilisé |
+| --- | --- | ---: | ---: | --- | ---: | ---: | ---: | ---: | --- | --- | ---: |
+| A | carton | 1,5 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | carton | 1,5 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | carton | 1,5 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | carton | 1,0 | 0,100 | 0,45 → 0,826 | 3,5 | ≥ 1 904 | 16 | 59 | sts3250 | knee sts3250 (3,16, 3,94, 1,49); shoulder_pitch sts3215_c018 (14,30, —, 1,92) | 70 % |
+| A | carton | 1,0 | 0,150 | 0,45 → 0,826 | 3,5 | ≥ 1 904 | 16 | 59 | sts3250 | knee sts3250 (3,16, 3,94, 1,49); shoulder_pitch sts3215_c018 (14,30, —, 1,92) | 70 % |
+| A | carton | 1,0 | 0,196 | 0,65 → 0,689 | 3,6 | ≥ 1 904 | 14 | 56 | sts3250 | ankle_pitch sts3250 (1,84, 1,41, 3,25); hip_roll sts3250 (1,85, 1,49, 3,68) | 70 % |
+| A | alu 2 mm évidé | 1,5 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | alu 2 mm évidé | 1,5 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | alu 2 mm évidé | 1,5 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | alu 2 mm évidé | 1,0 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | alu 2 mm évidé | 1,0 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| A | alu 2 mm évidé | 1,0 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,5 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,5 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,5 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,0 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,0 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | alu 2 mm évidé | 1,0 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | carton | 1,5 | 0,100 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | carton | 1,5 | 0,150 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | carton | 1,5 | 0,196 | **ne tient à aucune H** de 0,35 à 0,65 m | — | — | — | — | — | — | — |
+| B | carton | 1,0 | 0,100 | 0,55 → — | 5,5 | ≥ 2 332 | — | 230 | edulite05, rs05 | ankle_pitch edulite05 (1,60, 1,25, 12,82); hip_roll edulite05 (1,61, 1,32, 14,50) | 70 % |
+| B | carton | 1,0 | 0,150 | 0,55 → — | 5,5 | ≥ 2 332 | — | 230 | edulite05, rs05 | ankle_pitch edulite05 (1,60, 1,25, 12,82); hip_roll edulite05 (1,61, 1,32, 14,50) | 70 % |
+| B | carton | 1,0 | 0,196 | 0,65 → — | 5,6 | ≥ 2 353 | — | 221 | edulite05, rs05 | ankle_pitch edulite05 (1,33, 1,04, 13,93); hip_roll edulite05 (1,33, 1,09, 15,76) | 71 % |
+
+Lecture : « — » en hauteur réelle (configuration B) : les cotes de l'EduLite05 ne sont pas publiées, la place (taille minimale géométrique) ne se calcule pas ; l'énergie de chute, qui en dépend, non plus. À 0,196 m/s, la plus petite H est plus grande qu'à 0,15 : sous H ≈ 0,60 m, la marche ToddlerBot mise à l'échelle va moins vite que 0,196 m/s, et la règle passe alors au G1 (0,55 m/s à 0,60 m), bien plus exigeant. Une hauteur réelle très supérieure à H (0,45 → 0,826 m) vient de la place : les servos ne tiennent pas dans les proportions ANSUR d'un robot de 0,45 m, les chaînes s'allongent.
+
+### Ce que la règle changerait ailleurs (documents NON régénérés)
+
+| Profil | Règle « explorateur » (en vigueur) | Règle « plus_lente » |
+| --- | --- | --- |
+| Lab actuel, en « Home candidat » (ensemble 27, RobStride + Feetech, 12S, plus petite H) | H 0,85 → 0,850 m, 18,5 kg, ≥ 4 514 CHF, INCONNU | H 0,85 → 0,850 m, 18,5 kg, ≥ 4 514 CHF, INCONNU |
+| Kit, option progressive | 3,05 kg, 1 178 CHF, servos sts3215_c018, sts3250 | 3,05 kg, 1 178 CHF, servos sts3215_c018, sts3250 |
 
 
 ## Le Lab actuel, recalculé comme « Home candidat » (rien n'est changé)

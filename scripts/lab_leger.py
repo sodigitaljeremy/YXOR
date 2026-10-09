@@ -53,7 +53,7 @@ def avec_015():
         d = lire0(nom)
         if nom == "capacites.yaml":
             n = d["taches"]["marche_sol_plat"]["niveaux"]
-            for x in (0.15, 0.10):                 # 0,10 ajouté le 2026-10-09 (même raison)
+            for x in (0.196, 0.15, 0.10):          # 0,10 et 0,196 (ToddlerBot à 0,60 m) ajoutés le 2026-10-09
                 if x not in n:
                     n.insert(0, x)
         return d
@@ -90,9 +90,10 @@ def structure_alu2() -> dict:
                 tronc={c: s["tronc"]["central"] for c in s["tronc"]})
 
 
-def contexte(fam, struct, v, marge=None):
+def contexte(fam, struct, v, marge=None, regle=None):
     import systeme_electrique as SE
-    ctx = X.contexte(struct=struct, cible=cible(v), S=FAMILLES[fam], f_can=250, coupure=3.0, chaine="compacte")
+    ctx = X.contexte(struct=struct, cible=cible(v), S=FAMILLES[fam], f_can=250, coupure=3.0, chaine="compacte",
+                     regle_marche=regle)
     if marge is not None:
         ctx["marge"] = marge
     if fam == "robstride":
@@ -252,6 +253,8 @@ def lecture(res, home) -> list[str]:
     L.append("- **Les vitesses requises viennent de marches simulées plus rapides que la vitesse étudiée** (section "
              "« Marcher lentement ») : à 0,10, 0,15 et 0,30 m/s, aucune marche simulée n'existe à cette taille ; la "
              "règle de l'explorateur prend la plus exigeante des marches au moins aussi rapides (G1, 0,55 m/s).")
+    L.append("- **Robot entier avec la règle « plus_lente »** (PROPOSÉE, NON adoptée, section dédiée) : à la marge 1,5, "
+             "rien ne tient ; à la marge 1,0, seuls A en carton (STS3250 aux jambes) et B en carton (RS05/EduLite05) tiennent.")
     L.append(f"- **Le Lab actuel** (« Home candidat ») : {f1(home.get('H_reel'), 3)} m, {f1(home.get('M'))} kg, "
              f"≥ {f1(home['cout_b'], 0)} CHF, {f1(home['E_chute'], 0)} J à la chute.")
     return L
@@ -302,7 +305,9 @@ def rapport(res, home) -> str:
         L.append(f"| {f1(marge)} | {fam} | {st} | {f1(s['H'], 2)} → {f1(s['H_reel'], 3)} | {f1(s['M'])} | "
                  f"{'≥ ' if s['cout'] is None else ''}{f1(s['cout_b'], 0)} | {f1(s['E_chute'], 0)} | {', '.join(jam)} |")
     import marche_lente as ML
+    import lab_leger_entier as LE
     L += [""] + ML.sections(ML.etude())
+    L += [""] + LE.sections(LE.etude(), LE.autres_profils_isoles())
     L += ["", "## Le Lab actuel, recalculé comme « Home candidat » (rien n'est changé)", "",
           f"Profil lab, 12S, 250 Hz, chaîne compacte, ensemble 27, H = 0,85 m, petits axes Feetech : **{home['statut']}**, "
           f"{f1(home.get('H_reel'), 3)} m réels, {f1(home.get('M'))} kg, ≥ {f1(home['cout_b'], 0)} CHF, énergie de chute "
