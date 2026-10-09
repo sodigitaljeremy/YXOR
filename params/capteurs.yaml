@@ -1,0 +1,1281 @@
+# CAPTEURS pour YXOR — marché VERSÉ le 2026-10-09 (aucun calcul ne lit encore ce fichier ; aucune décision)
+#
+# Créé le 2026-10-09 : catégories absentes du dépôt (docs/catalogue-composants-yxor.md, § 5). Étude d'un agent :
+# chaque valeur vient d'une source TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml (marche_capt_*, sha256, non
+# redistribuable) ; une valeur non lue est null ; deux sources divergentes : la plus prudente (fiche 0064).
+# Familles : centrales inertielles (BNO085, ICM-42688-P, BMI088, MTi-3), caméras (RealSense D435i, D405, D555 ;
+# OAK-D Lite, OAK-D Pro W ; Camera Module 3), pieds (FSR 402, cellule de charge + HX711), codeurs (AS5600, AS5047P),
+# LiDAR (Mid-360, RPLIDAR C1). Aucun achat recommandé (fiche 0066).
+# ⚠ Suisse : Bastelgarage.ch seul lisible ; Pi-Shop, Conrad, DigiKey.ch (403 Cloudflare), Galaxus (403 Akamai),
+#   Distrelec (captcha), Mouser (refus), ch.rs-online (403) : `revendeurs_ch`. Prix des puces nues null (DigiKey et
+#   Mouser bloqués) ; Mid-360 déclaré « Discontinued » au DJI Store (US).
+produits:
+- nom: BNO085 (puce SiP)
+  famille: imu
+  fabricant: CEVA (logiciel SH-2) ; fabriqué par Bosch Sensortec selon la fiche
+  reference: BNO085 (boîtier LGA 28 broches 3,8 x 5,2 x 1,1 mm)
+  documentation:
+    titre: BNO08X Data Sheet, doc. 1000-3927
+    version: '1.17'
+    date: '2023-07-24'
+  interface:
+  - I2C
+  - SPI
+  - UART-SHTP
+  - UART-RVC
+  masse_g: null
+  consommation:
+    valeur: 46.17
+    unite: mW
+    condition: Gyro rotation vector 1000 Hz ; 7,14 mA sur VDDIO (3 V) + 7,50 mA sur VDD (3,3 V) ; valeur la plus
+      haute du tableau BNO085 (fig. 6-17)
+  prix: null
+  disponibilite:
+    france: null
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_bno085.html
+      note: 'absent (recherche BNO085 : aucun produit)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_bno085
+  - champ: interface
+    via: null
+    source: marche_capt_ds_bno085
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_bno085
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_bno085
+- nom: BNO085 module (Adafruit 9-DOF Orientation IMU Fusion Breakout)
+  famille: imu
+  fabricant: Adafruit (puce CEVA/Bosch)
+  reference: Adafruit 4754
+  documentation:
+    titre: 'fiche de la puce : BNO08X Data Sheet 1000-3927'
+    version: '1.17'
+    date: '2023-07-24'
+  interface:
+  - I2C (STEMMA QT/Qwiic)
+  - SPI
+  - UART-RVC
+  masse_g: 2.5
+  consommation:
+    valeur: 46.17
+    unite: mW
+    condition: valeur de la PUCE seule (fiche BNO08X) ; consommation du régulateur du module non lue
+  prix:
+    valeur: 27.45
+    devise: EUR
+    tva_incluse: true
+    vendeur: BerryBase (DE)
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 29.5
+      devise: USD
+      tva_incluse: false
+      vendeur: Adafruit (US)
+      date: '2026-10-09'
+      en_stock: true
+    note: 'devises différentes : aucune conversion faite (rien d''estimé)'
+  disponibilite:
+    france: null
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: true
+      fichier: sources/eu_berrybase_bno085.html
+      note: « Sofort verfügbar · 88 Stück »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_bno085.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: masse_g
+    via: null
+    source: marche_capt_web_ada_bno085
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_web_ada_bno085
+  - champ: prix
+    via: null
+    source: marche_capt_eu_berrybase_bno085
+  - champ: disponibilite.ue
+    via: null
+    source: marche_capt_eu_berrybase_bno085
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_bno085
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_bno085
+- nom: ICM-42688-P
+  famille: imu
+  fabricant: TDK InvenSense
+  reference: ICM-42688-P (6 axes)
+  documentation:
+    titre: ICM-42688-P Datasheet, DS-000347
+    version: '1.2'
+    date: '2020-04-19'
+    note: copie DigiKey ; la page TDK annonce une version plus récente, non téléchargée (le lien TDK renvoie une
+      page HTML)
+  interface:
+  - I3C
+  - I2C
+  - SPI
+  masse_g: null
+  consommation:
+    valeur: 0.88
+    unite: mA
+    tension_V: 1.8
+    condition: mode Low-Noise 6 axes, typ., VDD = VDDIO = 1,8 V (tableau 3)
+  prix: null
+  disponibilite:
+    france: null
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_icm_42688.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_icm42688p
+  - champ: interface
+    via: null
+    source: marche_capt_ds_icm42688p
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_icm42688p
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_icm_42688
+- nom: BMI088
+  famille: imu
+  fabricant: Bosch Sensortec
+  reference: BMI088 (LGA 16 broches)
+  documentation:
+    titre: BMI088 Data Sheet, BST-BMI088-DS001-13
+    version: '1.3'
+    date: 2018-05
+    note: copie SparkFun ; le site Bosch n'a pas répondu (délai dépassé). Révision plus récente non lue.
+  interface:
+  - SPI
+  - I2C
+  masse_g: null
+  consommation:
+    valeur: 5.15
+    unite: mA
+    tension_V: 3.0
+    condition: 'somme lue : gyroscope 5 mA (mode normal, ODR 1 kHz) + accéléromètre 150 µA (mode normal), typ.,
+      VDD = VDDIO = 3,0 V'
+  prix:
+    valeur: 29.9
+    devise: EUR
+    tva_incluse: true
+    vendeur: BerryBase (DE)
+    date: '2026-10-09'
+    note: module Seeed Grove BMI088, pas la puce ; « Artikel aktuell nicht lieferbar »
+  disponibilite:
+    france: null
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: false
+      fichier: sources/eu_berrybase_bmi088.html
+      note: module Seeed Grove, non livrable
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_bmi088.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_bmi088
+  - champ: interface
+    via: null
+    source: marche_capt_ds_bmi088
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_bmi088
+  - champ: prix
+    via: null
+    source: marche_capt_eu_berrybase_bmi088
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_bmi088
+- nom: MTi-3 AHRS
+  famille: imu
+  fabricant: Movella (Xsens)
+  reference: MTi-3 (MTi 1-series)
+  documentation:
+    titre: MTi-3 leaflet (Xsens)
+    version: null
+    date: 2021-08
+    note: la fiche complète MTi 1-series (mtidocs.movella.com) n'a pas pu être téléchargée (page JavaScript vide)
+  interface:
+  - UART
+  - SPI
+  - I2C
+  masse_g: 0.6
+  consommation:
+    valeur: 44
+    unite: mW
+    tension_V: 3.0
+    condition: typ.
+  prix:
+    valeur: 550.0
+    devise: USD
+    tva_incluse: false
+    vendeur: Movella shop (US)
+    date: '2026-10-09'
+    note: kit de développement MTi-3 AHRS, pas le module seul ; prix du module seul non trouvé
+  disponibilite:
+    france: null
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_mti_3.html
+      note: absent
+    - vendeur: RS Components (ch.rs-online.com)
+      en_stock: null
+      fichier: sources/ch_rs_mti3dk.html
+      note: page refusée (403)
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_mti3_leaflet
+  - champ: interface
+    via: null
+    source: marche_capt_ds_mti3_leaflet
+  - champ: masse_g
+    via: null
+    source: marche_capt_ds_mti3_leaflet
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_mti3_leaflet
+  - champ: prix
+    via: null
+    source: marche_capt_shop_movella_mti3dk
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_mti_3
+- nom: RealSense D435i
+  famille: camera
+  fabricant: RealSense Inc. (ex-Intel RealSense)
+  reference: Depth Camera D435i
+  documentation:
+    titre: RealSense Product Family D400 Series Datasheet, doc. 337029-017
+    version: Revision 023
+    date: 2026-03
+  interface:
+  - USB 3.1 Gen 1 (USB-C)
+  - USB 2.0
+  masse_g: 75
+  masse_note: nominal D43x, ± 10 % (tableau 3-52)
+  consommation:
+    valeur: 700
+    unite: mA
+    tension_V: 5.0
+    condition: courant max de la « Vision Processor D4 Board » alimentée par le VBUS USB (tableau 3-46) ; pas de
+      valeur pour la caméra complète
+  prix:
+    valeur: 538.8
+    devise: EUR
+    tva_incluse: true
+    vendeur: Génération Robots (FR)
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 399.0
+      devise: USD
+      tva_incluse: false
+      vendeur: RealSense store (US)
+      date: '2026-10-09'
+      en_stock: false
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: false
+      fichier: sources/eup_genrob_d435i.html
+      note: « Livraison sous 8 semaines »
+    ue:
+    - vendeur: Génération Robots (FR)
+      en_stock: false
+      fichier: sources/eup_genrob_d435i.html
+      note: « Livraison sous 8 semaines »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_d435i.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_d400
+  - champ: masse_g
+    via: null
+    source: marche_capt_ds_d400
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_d400
+  - champ: interface
+    via: null
+    source: marche_capt_ds_d400
+  - champ: prix
+    via: null
+    source: marche_capt_eup_genrob_d435i
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_shop_rs_d435i
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_d435i
+- nom: RealSense D405
+  famille: camera
+  fabricant: RealSense Inc.
+  reference: Depth Camera D405
+  documentation:
+    titre: RealSense Product Family D400 Series Datasheet, doc. 337029-017
+    version: Revision 023
+    date: 2026-03
+  interface:
+  - USB 3.1 (USB-C)
+  - USB 2
+  masse_g: 58
+  masse_note: nominal, ± 10 % (tableau 3-54)
+  consommation:
+    valeur: 1.55
+    unite: W
+    condition: '« Streaming: 1.55 W (Depth + IR) », page produit ; repos 35 mW ; la fiche D400 donne 700 mA max
+      @ 5 V pour la carte D4'
+  prix:
+    valeur: 414.96
+    devise: EUR
+    tva_incluse: true
+    vendeur: Génération Robots (FR)
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 325.0
+      devise: USD
+      tva_incluse: false
+      vendeur: RealSense store (US)
+      date: '2026-10-09'
+      en_stock: true
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: false
+      fichier: sources/eup_genrob_d405.html
+      note: « Livraison sous 8 semaines »
+    ue:
+    - vendeur: Génération Robots (FR)
+      en_stock: false
+      fichier: sources/eup_genrob_d405.html
+      note: « Livraison sous 8 semaines »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_d405.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_d400
+  - champ: masse_g
+    via: null
+    source: marche_capt_ds_d400
+  - champ: consommation
+    via: null
+    source: marche_capt_web_realsense_d405fam
+  - champ: interface
+    via: null
+    source: marche_capt_web_realsense_d405fam
+  - champ: prix
+    via: null
+    source: marche_capt_eup_genrob_d405
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_shop_rs_d405
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_d405
+- nom: RealSense D555 PoE
+  famille: camera
+  fabricant: RealSense Inc.
+  reference: Depth Camera D555
+  documentation:
+    titre: RealSense Depth Camera D555 Datasheet
+    version: v1.1
+    date: null
+    note: aucune date dans le document ; chemin de l'URL 2025/08
+  interface:
+  - Gigabit Ethernet PoE (IEEE 802.3at)
+  - USB 3 (debug, production, alimentation)
+  masse_g: 337
+  consommation:
+    valeur: 3.5
+    unite: W
+    condition: '« Typical Power » ; injecteur PoE demandé : 802.3at 15 W ou plus'
+  prix:
+    valeur: 720.0
+    devise: EUR
+    tva_incluse: true
+    vendeur: Génération Robots (FR)
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 649.0
+      devise: USD
+      tva_incluse: false
+      vendeur: RealSense store (US)
+      date: '2026-10-09'
+      en_stock: false
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: false
+      fichier: sources/eup_genrob_d555.html
+      note: « Livraison sous 8 semaines »
+    ue:
+    - vendeur: Génération Robots (FR)
+      en_stock: false
+      fichier: sources/eup_genrob_d555.html
+      note: « Livraison sous 8 semaines »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_d555.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_d555
+  - champ: masse_g
+    via: null
+    source: marche_capt_ds_d555
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_d555
+  - champ: interface
+    via: null
+    source: marche_capt_ds_d555
+  - champ: prix
+    via: null
+    source: marche_capt_eup_genrob_d555
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_shop_rs_d555
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_d555
+- nom: OAK-D Lite
+  famille: camera
+  fabricant: Luxonis
+  reference: OAK-D Lite (SKU A00483)
+  documentation:
+    titre: OAK-D Lite Datasheet (depthai-hardware, DM9095)
+    version: null
+    date: 2021-12
+  interface:
+  - USB 3.1 (USB-C)
+  - USB 2
+  masse_g: 61
+  consommation:
+    valeur: 6
+    unite: W
+    tension_V: 5.0
+    condition: « Power consumption requirement » max (min 4, typ 5) ; repos 2,5 W
+  prix:
+    valeur: 269.0
+    devise: USD
+    tva_incluse: null
+    vendeur: Luxonis shop
+    date: '2026-10-09'
+  imu_note: IMU BMI270 ; les exemplaires Kickstarter n'en ont pas (page docs Luxonis)
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: null
+      fichier: sources/eup_genrob_oakdlite.html
+      note: 'l''URL produit renvoie vers une catégorie : absent'
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_oak_d.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_oakdlite
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_oakdlite
+  - champ: interface
+    via: null
+    source: marche_capt_web_oakdlite_docs
+  - champ: masse_g
+    via: null
+    source: marche_capt_shop_lux_oakdlite
+  - champ: prix
+    via: null
+    source: marche_capt_shop_lux_oakdlite
+  - champ: disponibilite.france
+    via: null
+    source: marche_capt_eup_genrob_oakdlite
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_oak_d
+- nom: OAK-D Pro W
+  famille: camera
+  fabricant: Luxonis
+  reference: OAK-D Pro W (SKU A00573)
+  documentation:
+    titre: page docs.luxonis.com « OAK-D Pro W »
+    version: null
+    date: null
+    note: pas de fiche PDF versionnée propre au Pro W téléchargée ; la fiche OAK-D Pro (non W, déc. 2021) donne
+      4/6/7,5 W
+  interface:
+  - USB 2/3 (USB-C)
+  masse_g: 91
+  consommation:
+    valeur: 15
+    unite: W
+    condition: « Pro devices might consume up to 15W » (docs) ; base 2,5-3 W + IA 1 W + stéréo 0,5 W + encodeur
+      0,5 W + projecteur 1 W + LED IR 1 W
+  prix:
+    valeur: 529.0
+    devise: USD
+    tva_incluse: null
+    vendeur: Luxonis shop
+    date: '2026-10-09'
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: null
+      fichier: sources/eu_genrob_oak.html
+      note: absent (seule l'OAK-D W, autre produit, à 766,80 € TTC)
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_oak_d.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: consommation
+    via: null
+    source: marche_capt_web_oakdprow_docs
+  - champ: interface
+    via: null
+    source: marche_capt_web_oakdprow_docs
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_oakdpro
+  - champ: masse_g
+    via: null
+    source: marche_capt_shop_lux_oakdprow
+  - champ: prix
+    via: null
+    source: marche_capt_shop_lux_oakdprow
+  - champ: disponibilite.france
+    via: null
+    source: marche_capt_eu_genrob_oak
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_oak_d
+- nom: Raspberry Pi Camera Module 3 (standard)
+  famille: camera
+  fabricant: Raspberry Pi Ltd
+  reference: Camera Module 3, 12 MP (IMX708)
+  documentation:
+    titre: Raspberry Pi Camera Module 3 product brief
+    version: null
+    date: 2024-06
+  interface:
+  - MIPI CSI-2 (FPC 15 broches 1 mm)
+  - I2C (commande)
+  masse_g: 13
+  masse_note: Bastelgarage ; la fiche n'en donne pas
+  consommation: null
+  prix:
+    valeur: 29.9
+    devise: CHF
+    tva_incluse: true
+    vendeur: Bastelgarage.ch
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 28.9
+      devise: EUR
+      tva_incluse: true
+      vendeur: BerryBase (DE)
+      date: '2026-10-09'
+      en_stock: false
+  disponibilite:
+    france: null
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: false
+      fichier: sources/eup_berrybase_cam3.html
+      note: « Currently not available »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: true
+      fichier: sources/chp_bastel_rpicam3.html
+      note: « Lagernd », art. 423671
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_rpicam3
+  - champ: interface
+    via: null
+    source: marche_capt_ds_rpicam3
+  - champ: masse_g
+    via: null
+    source: marche_capt_chp_bastel_rpicam3
+  - champ: prix
+    via: null
+    source: marche_capt_chp_bastel_rpicam3
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_eup_berrybase_cam3
+- nom: FSR 402
+  famille: pied
+  fabricant: Interlink Electronics
+  reference: FSR 402 (rond, Ø 18,28 mm)
+  documentation:
+    titre: FSR 402 Data Sheet, P/N 94-00011
+    version: Rev. A
+    date: null
+    note: copie SparkFun (nom de fichier 2010-10-26) ; la page Interlink n'a pas répondu
+  interface:
+  - analogique (résistance variable, 2 fils)
+  masse_g: null
+  consommation: null
+  consommation_note: 'capteur passif : dépend du pont diviseur choisi'
+  prix:
+    valeur: 15.2
+    devise: EUR
+    tva_incluse: true
+    vendeur: BerryBase (DE)
+    date: '2026-10-09'
+    note: module Seeed Grove « Runder Druck-Sensor (FSR402) », pas le capteur nu
+  disponibilite:
+    france: null
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: true
+      fichier: sources/eu_berrybase_fsr_402.html
+      note: « Sofort verfügbar · 6 Stück »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_fsr_402.html
+      note: absent (seulement RP-C18.3 / RP-L-170, autres FSR)
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_fsr402
+  - champ: interface
+    via: null
+    source: marche_capt_ds_fsr402
+  - champ: prix
+    via: null
+    source: marche_capt_eu_berrybase_fsr_402
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_fsr_402
+- nom: Cellule de charge + amplificateur HX711
+  famille: pied
+  fabricant: Avia Semiconductor (HX711) ; cellule générique
+  reference: HX711 (CAN 24 bits) ; cellule « 20Kg Load Cell » Bastelgarage art. 421019
+  documentation:
+    titre: HX711 24-Bit ADC for Weigh Scales (Avia)
+    version: null
+    date: null
+    note: aucune révision lisible dans la copie SparkFun ; aucune fiche de cellule de charge téléchargée
+  interface:
+  - série 2 fils propriétaire (PD_SCK / DOUT)
+  masse_g: 2
+  masse_note: module HX711 seul (Bastelgarage) ; masse de la cellule non lue
+  consommation:
+    valeur: 1.5
+    unite: mA
+    condition: « normal operation < 1.5mA » (HX711 ; typ. 1400 µA analogique + 100 µA numérique)
+  prix:
+    valeur: 12.8
+    devise: CHF
+    tva_incluse: true
+    vendeur: Bastelgarage.ch
+    date: '2026-10-09'
+    note: 'somme lue : module HX711 CHF 4,90 + cellule 20 kg CHF 7,90'
+    autres_offres:
+    - valeur: 3.9
+      devise: EUR
+      tva_incluse: true
+      vendeur: BerryBase (DE)
+      date: '2026-10-09'
+      en_stock: true
+      note: module Seeed Grove HX711 seul
+  disponibilite:
+    france: null
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: true
+      fichier: sources/eu_berrybase_hx711.html
+      note: Grove HX711, « Sofort verfügbar · 22 Stück »
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: true
+      fichier: sources/chp_bastel_hx711.html
+      note: HX711 « Lagernd » ; cellule 20 kg « Lagernd »
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_hx711
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_hx711
+  - champ: interface
+    via: null
+    source: marche_capt_ds_hx711
+  - champ: masse_g
+    via: null
+    source: marche_capt_chp_bastel_hx711
+  - champ: prix
+    via: null
+    source: marche_capt_chp_bastel_hx711
+  - champ: prix
+    via: null
+    source: marche_capt_chp_bastel_loadcell20kg
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_eu_berrybase_hx711
+- nom: AS5600
+  famille: codeur
+  fabricant: ams-OSRAM (portefeuille repris par Infineon)
+  reference: AS5600 (12 bits)
+  documentation:
+    titre: AS5600 Position Sensor Datasheet, DS000365
+    version: v1-06
+    date: '2018-06-20'
+    note: document ams-OSRAM hérité, servi par Infineon avec une page d'avertissement
+  interface:
+  - I2C
+  - analogique
+  - PWM
+  masse_g: 3
+  masse_note: 'module Bastelgarage (avec aimant ?) ; la puce : non lue'
+  consommation:
+    valeur: 6.5
+    unite: mA
+    condition: IDD mode NOM (PM = 00, toujours actif) ; colonne typ./max non distinguée à l'extraction texte
+  prix:
+    valeur: 7.9
+    devise: CHF
+    tva_incluse: true
+    vendeur: Bastelgarage.ch
+    date: '2026-10-09'
+    note: module purecrea avec aimant
+  disponibilite:
+    france: null
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: true
+      fichier: sources/chp_bastel_as5600.html
+      note: « Lagernd », art. 424242
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_as5600
+  - champ: interface
+    via: null
+    source: marche_capt_ds_as5600
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_as5600
+  - champ: masse_g
+    via: null
+    source: marche_capt_chp_bastel_as5600
+  - champ: prix
+    via: null
+    source: marche_capt_chp_bastel_as5600
+- nom: AS5047P
+  famille: codeur
+  fabricant: ams-OSRAM (portefeuille repris par Infineon)
+  reference: AS5047P (14 bits)
+  documentation:
+    titre: AS5047P Datasheet, DS000324
+    version: v2-00
+    date: '2021-07-22'
+  interface:
+  - SPI
+  - ABI
+  - UVW
+  - PWM
+  masse_g: null
+  consommation:
+    valeur: 15
+    unite: mA
+    condition: IDD ; colonne typ./max non distinguée à l'extraction texte
+  prix: null
+  disponibilite:
+    france: null
+    ue: null
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_as5047.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_as5047p
+  - champ: interface
+    via: null
+    source: marche_capt_ds_as5047p
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_as5047p
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_as5047
+- nom: Livox Mid-360
+  famille: lidar
+  fabricant: Livox (DJI)
+  reference: MID-360
+  documentation:
+    titre: page « Specs » livoxtech.com
+    version: null
+    date: null
+  interface:
+  - Ethernet 100BASE-TX
+  masse_g: 265
+  consommation:
+    valeur: 6.5
+    unite: W
+    condition: moyenne ; alimentation 9-27 V DC
+  prix:
+    valeur: 979.0
+    devise: USD
+    tva_incluse: false
+    vendeur: DJI Store (US)
+    date: '2026-10-09'
+    note: schema.org « Discontinued » ; « Not available in your country/region »
+    autres_offres:
+    - valeur: 772.95
+      devise: EUR
+      tva_incluse: true
+      vendeur: MyBotShop (DE)
+      date: '2026-10-09'
+      en_stock: null
+      note: 'page titrée « Livox Mid360S » dont le texte décrit le « Mid-360 » : référence ambiguë'
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: null
+      fichier: sources/eu_genrob_livox.html
+      note: absent
+    ue:
+    - vendeur: MyBotShop (DE)
+      en_stock: null
+      fichier: sources/eup_mybotshop_mid360s.html
+      note: Mid360S ; stock non lu
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: null
+      fichier: sources/ch_bastel_mid_360.html
+      note: absent
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: masse_g
+    via: null
+    source: marche_capt_web_mid360_specs
+  - champ: consommation
+    via: null
+    source: marche_capt_web_mid360_specs
+  - champ: interface
+    via: null
+    source: marche_capt_web_mid360_specs
+  - champ: prix
+    via: curl -L --compressed (page servie compressée en brotli)
+    source: marche_capt_shop_dji_mid360
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_eup_mybotshop_mid360s
+  - champ: disponibilite.suisse
+    via: null
+    source: marche_capt_ch_bastel_mid_360
+- nom: Slamtec RPLIDAR C1
+  famille: lidar
+  fabricant: Shanghai Slamtec
+  reference: RPLIDAR C1
+  documentation:
+    titre: RPLIDAR C1 Datasheet (SLAMTEC_rplidar_datasheet_C1)
+    version: rev.1.1
+    date: '2024-03-12'
+  interface:
+  - UART TTL 3,3 V, 460 800 bit/s
+  masse_g: 182
+  masse_note: 'deux sources : 110 g (fiche Slamtec) et 182 g (Bastelgarage, livré avec adaptateur USB et câble)
+    ; la plus haute retenue'
+  consommation:
+    valeur: 260
+    unite: mA
+    tension_V: 5.0
+    condition: max à 10 Hz (typ. 230 mA) ; démarrage 800 mA
+  prix:
+    valeur: 79.9
+    devise: CHF
+    tva_incluse: true
+    vendeur: Bastelgarage.ch
+    date: '2026-10-09'
+    autres_offres:
+    - valeur: 79.99
+      devise: USD
+      tva_incluse: null
+      vendeur: Waveshare
+      date: '2026-10-09'
+      en_stock: null
+  disponibilite:
+    france:
+    - vendeur: Génération Robots
+      en_stock: null
+      fichier: sources/eu_genrob_rplidar_c1.html
+      note: absent (A1M8, A2M12, A3M1, S2, S3 seulement)
+    ue:
+    - vendeur: BerryBase (DE)
+      en_stock: null
+      fichier: sources/eu_berrybase_rplidar_c1.html
+      note: absent (RPLIDAR A1 seulement)
+    suisse:
+    - vendeur: Bastelgarage.ch
+      en_stock: true
+      fichier: sources/chp_bastel_rplidar_c1.html
+      note: « Lagernd », art. 423546
+    - note: 'Pi-Shop.ch, Galaxus, Distrelec.ch, Conrad.ch, DigiKey.ch, Mouser.ch : page refusée (voir revendeurs_ch)'
+  sources:
+  - champ: documentation
+    via: null
+    source: marche_capt_ds_rplidar_c1
+  - champ: masse_g
+    via: null
+    source: marche_capt_ds_rplidar_c1
+  - champ: masse_g
+    via: null
+    source: marche_capt_chp_bastel_rplidar_c1
+  - champ: consommation
+    via: null
+    source: marche_capt_ds_rplidar_c1
+  - champ: interface
+    via: null
+    source: marche_capt_ds_rplidar_c1
+  - champ: prix
+    via: null
+    source: marche_capt_chp_bastel_rplidar_c1
+  - champ: prix.autres_offres
+    via: null
+    source: marche_capt_shop_ws_rplidar_c1
+revendeurs_ch:
+- famille: imu
+  revendeur: Pi-Shop.ch
+  requete: BNO085
+  resultat: page refusée (aucune réponse en 40 s, code 000)
+  url: https://www.pi-shop.ch/catalogsearch/result/?q=BNO085
+  fichier: null
+- famille: camera
+  revendeur: Pi-Shop.ch
+  requete: RealSense
+  resultat: page refusée (HTTP 403, défi Cloudflare « Just a moment »)
+  url: https://www.pi-shop.ch/catalogsearch/result/?q=RealSense
+  fichier: sources/ch_pishop_cam.html
+- famille: pied
+  revendeur: Pi-Shop.ch
+  requete: HX711
+  resultat: page refusée (HTTP 403, défi Cloudflare « Just a moment »)
+  url: https://www.pi-shop.ch/catalogsearch/result/?q=HX711
+  fichier: sources/ch_pishop_pied.html
+- famille: codeur
+  revendeur: Pi-Shop.ch
+  requete: AS5600
+  resultat: page refusée (HTTP 403, défi Cloudflare « Just a moment »)
+  url: https://www.pi-shop.ch/catalogsearch/result/?q=AS5600
+  fichier: sources/ch_pishop_codeur.html
+- famille: lidar
+  revendeur: Pi-Shop.ch
+  requete: RPLIDAR
+  resultat: page refusée (HTTP 403, défi Cloudflare « Just a moment »)
+  url: https://www.pi-shop.ch/catalogsearch/result/?q=RPLIDAR
+  fichier: sources/ch_pishop_lidar.html
+- famille: imu
+  revendeur: Digitec Galaxus
+  requete: BNO085
+  resultat: page refusée (HTTP 403, Akamai « Access Denied »)
+  url: https://www.galaxus.ch/fr/search?q=BNO085
+  fichier: sources/ch_galaxus_imu.html
+- famille: camera
+  revendeur: Digitec Galaxus
+  requete: RealSense
+  resultat: page refusée (HTTP 403, Akamai « Access Denied »)
+  url: https://www.galaxus.ch/fr/search?q=RealSense
+  fichier: sources/ch_galaxus_cam.html
+- famille: pied
+  revendeur: Digitec Galaxus
+  requete: HX711
+  resultat: page refusée (HTTP 403, Akamai « Access Denied »)
+  url: https://www.galaxus.ch/fr/search?q=HX711
+  fichier: sources/ch_galaxus_pied.html
+- famille: codeur
+  revendeur: Digitec Galaxus
+  requete: AS5600
+  resultat: page refusée (HTTP 403, Akamai « Access Denied »)
+  url: https://www.galaxus.ch/fr/search?q=AS5600
+  fichier: sources/ch_galaxus_codeur.html
+- famille: lidar
+  revendeur: Digitec Galaxus
+  requete: RPLIDAR
+  resultat: page refusée (HTTP 403, Akamai « Access Denied »)
+  url: https://www.galaxus.ch/fr/search?q=RPLIDAR
+  fichier: sources/ch_galaxus_lidar.html
+- famille: imu
+  revendeur: Distrelec.ch
+  requete: BNO085
+  resultat: page refusée (aucune réponse en 40 s, code 000)
+  url: https://www.distrelec.ch/fr/search?q=BNO085
+  fichier: null
+- famille: camera
+  revendeur: Distrelec.ch
+  requete: RealSense
+  resultat: page refusée (HTTP 200, captcha Radware)
+  url: https://www.distrelec.ch/fr/search?q=RealSense
+  fichier: sources/ch_distrelec_cam.html
+- famille: pied
+  revendeur: Distrelec.ch
+  requete: HX711
+  resultat: page refusée (HTTP 200, captcha Radware)
+  url: https://www.distrelec.ch/fr/search?q=HX711
+  fichier: sources/ch_distrelec_pied.html
+- famille: codeur
+  revendeur: Distrelec.ch
+  requete: AS5600
+  resultat: page refusée (HTTP 200, captcha Radware)
+  url: https://www.distrelec.ch/fr/search?q=AS5600
+  fichier: sources/ch_distrelec_codeur.html
+- famille: lidar
+  revendeur: Distrelec.ch
+  requete: RPLIDAR
+  resultat: page refusée (HTTP 200, captcha Radware)
+  url: https://www.distrelec.ch/fr/search?q=RPLIDAR
+  fichier: sources/ch_distrelec_lidar.html
+- famille: imu
+  revendeur: Conrad.ch
+  requete: BNO085
+  resultat: page refusée (HTTP 403, défi Cloudflare)
+  url: https://www.conrad.ch/fr/search.html?search=BNO085
+  fichier: sources/ch_conrad_imu.html
+- famille: camera
+  revendeur: Conrad.ch
+  requete: RealSense
+  resultat: page refusée (HTTP 403, défi Cloudflare)
+  url: https://www.conrad.ch/fr/search.html?search=RealSense
+  fichier: sources/ch_conrad_cam.html
+- famille: pied
+  revendeur: Conrad.ch
+  requete: HX711
+  resultat: page refusée (HTTP 403, défi Cloudflare)
+  url: https://www.conrad.ch/fr/search.html?search=HX711
+  fichier: sources/ch_conrad_pied.html
+- famille: codeur
+  revendeur: Conrad.ch
+  requete: AS5600
+  resultat: page refusée (HTTP 403, défi Cloudflare)
+  url: https://www.conrad.ch/fr/search.html?search=AS5600
+  fichier: sources/ch_conrad_codeur.html
+- famille: lidar
+  revendeur: Conrad.ch
+  requete: RPLIDAR
+  resultat: page refusée (HTTP 403, défi Cloudflare)
+  url: https://www.conrad.ch/fr/search.html?search=RPLIDAR
+  fichier: sources/ch_conrad_lidar.html
+- famille: imu
+  revendeur: DigiKey.ch
+  requete: BNO085
+  resultat: 'page refusée (HTTP 403, défi Cloudflare) ; livraison vers la Suisse : non lue'
+  url: https://www.digikey.ch/fr/products/result?keywords=BNO085
+  fichier: sources/ch_digikey_imu.html
+- famille: camera
+  revendeur: DigiKey.ch
+  requete: RealSense
+  resultat: 'page refusée (HTTP 403, défi Cloudflare) ; livraison vers la Suisse : non lue'
+  url: https://www.digikey.ch/fr/products/result?keywords=RealSense
+  fichier: sources/ch_digikey_cam.html
+- famille: pied
+  revendeur: DigiKey.ch
+  requete: HX711
+  resultat: 'page refusée (HTTP 403, défi Cloudflare) ; livraison vers la Suisse : non lue'
+  url: https://www.digikey.ch/fr/products/result?keywords=HX711
+  fichier: sources/ch_digikey_pied.html
+- famille: codeur
+  revendeur: DigiKey.ch
+  requete: AS5600
+  resultat: 'page refusée (HTTP 403, défi Cloudflare) ; livraison vers la Suisse : non lue'
+  url: https://www.digikey.ch/fr/products/result?keywords=AS5600
+  fichier: sources/ch_digikey_codeur.html
+- famille: lidar
+  revendeur: DigiKey.ch
+  requete: RPLIDAR
+  resultat: 'page refusée (HTTP 403, défi Cloudflare) ; livraison vers la Suisse : non lue'
+  url: https://www.digikey.ch/fr/products/result?keywords=RPLIDAR
+  fichier: sources/ch_digikey_lidar.html
+- famille: imu
+  revendeur: Mouser.ch
+  requete: BNO085
+  resultat: 'page refusée (HTTP 200, « Access Denied » anti-robot) ; livraison vers la Suisse : non lue'
+  url: https://www.mouser.ch/c/?q=BNO085
+  fichier: sources/ch_mouser_imu.html
+- famille: camera
+  revendeur: Mouser.ch
+  requete: RealSense
+  resultat: 'page refusée (HTTP 200, « Access Denied » anti-robot) ; livraison vers la Suisse : non lue'
+  url: https://www.mouser.ch/c/?q=RealSense
+  fichier: sources/ch_mouser_cam.html
+- famille: pied
+  revendeur: Mouser.ch
+  requete: HX711
+  resultat: 'page refusée (HTTP 200, « Access Denied » anti-robot) ; livraison vers la Suisse : non lue'
+  url: https://www.mouser.ch/c/?q=HX711
+  fichier: sources/ch_mouser_pied.html
+- famille: codeur
+  revendeur: Mouser.ch
+  requete: AS5600
+  resultat: 'page refusée (HTTP 200, « Access Denied » anti-robot) ; livraison vers la Suisse : non lue'
+  url: https://www.mouser.ch/c/?q=AS5600
+  fichier: sources/ch_mouser_codeur.html
+- famille: lidar
+  revendeur: Mouser.ch
+  requete: RPLIDAR
+  resultat: 'page refusée (HTTP 200, « Access Denied » anti-robot) ; livraison vers la Suisse : non lue'
+  url: https://www.mouser.ch/c/?q=RPLIDAR
+  fichier: sources/ch_mouser_lidar.html
+- famille: imu
+  revendeur: Bastelgarage.ch
+  requete: BNO085
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=BNO085
+  fichier: sources/ch_bastel_bno085.html
+- famille: imu
+  revendeur: Bastelgarage.ch
+  requete: ICM-42688
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=ICM-42688
+  fichier: sources/ch_bastel_icm_42688.html
+- famille: imu
+  revendeur: Bastelgarage.ch
+  requete: BMI088
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=BMI088
+  fichier: sources/ch_bastel_bmi088.html
+- famille: imu
+  revendeur: Bastelgarage.ch
+  requete: MTi-3
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=MTi-3
+  fichier: sources/ch_bastel_mti_3.html
+- famille: camera
+  revendeur: Bastelgarage.ch
+  requete: D435i
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=D435i
+  fichier: sources/ch_bastel_d435i.html
+- famille: camera
+  revendeur: Bastelgarage.ch
+  requete: D405
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=D405
+  fichier: sources/ch_bastel_d405.html
+- famille: camera
+  revendeur: Bastelgarage.ch
+  requete: D555
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=D555
+  fichier: sources/ch_bastel_d555.html
+- famille: camera
+  revendeur: Bastelgarage.ch
+  requete: OAK-D
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=OAK-D
+  fichier: sources/ch_bastel_oak_d.html
+- famille: camera
+  revendeur: Bastelgarage.ch
+  requete: Camera Module 3
+  resultat: 'trouvé : Raspberry Pi Kamera Module 3 12MP, CHF 29,90 TTC, « Lagernd »'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=Camera+Module+3
+  fichier: sources/ch_bastel_camera_module_3.html
+- famille: pied
+  revendeur: Bastelgarage.ch
+  requete: FSR 402
+  resultat: 'absent (autres FSR : RP-C18.3-ST CHF 7,90, RP-C18.3-LT et RP-L-170 CHF 8,90)'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=FSR+402
+  fichier: sources/ch_bastel_fsr_402.html
+- famille: pied
+  revendeur: Bastelgarage.ch
+  requete: HX711
+  resultat: 'trouvé : module HX711 CHF 4,90 TTC, « Lagernd »'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=HX711
+  fichier: sources/ch_bastel_hx711.html
+- famille: pied
+  revendeur: Bastelgarage.ch
+  requete: Wägezelle
+  resultat: 'trouvé : cellules 1/5/20 kg CHF 7,90, 50 kg CHF 4,90 ; 20 kg « Lagernd »'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=Wägezelle
+  fichier: sources/ch_bastel_w__gezelle.html
+- famille: codeur
+  revendeur: Bastelgarage.ch
+  requete: AS5600
+  resultat: 'trouvé : module AS5600 CHF 7,90 TTC, « Lagernd »'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=AS5600
+  fichier: sources/ch_bastel_as5600.html
+- famille: codeur
+  revendeur: Bastelgarage.ch
+  requete: AS5047
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=AS5047
+  fichier: sources/ch_bastel_as5047.html
+- famille: lidar
+  revendeur: Bastelgarage.ch
+  requete: RPLIDAR
+  resultat: 'trouvé : RPLIDAR C1 CHF 79,90 TTC, « Lagernd »'
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=RPLIDAR
+  fichier: sources/ch_bastel_rplidar.html
+- famille: lidar
+  revendeur: Bastelgarage.ch
+  requete: Mid-360
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=Mid-360
+  fichier: sources/ch_bastel_mid_360.html
+- famille: imu
+  revendeur: RS Components (ch.rs-online.com)
+  requete: MTi-3 DK, art. 2614472
+  resultat: page refusée (HTTP 403)
+  url: https://ch.rs-online.com/web/p/sensor-development-tools/2614472
+  fichier: sources/ch_rs_mti3dk.html

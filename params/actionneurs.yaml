@@ -1431,9 +1431,11 @@ collecte_criteres_manquants:
 #  Les équivalents N·m d'un couple publié en kg·cm ne sont PAS déclarés : ils
 #  se calculent dans le script (règle de saisie du haut de ce fichier).
 marche:
-  note: 'Ajouté le 2026-10-05 (phase 1 de la stratégie de la fiche 0069 : cartographie, aucune décision). HORS de `candidats` : aucun calcul existant
-    (k_bas, dimensionnement, grille de S) ne lit ce bloc. Collecte par six agents de Claude Code sur les pages et documents constructeurs ; mêmes
-    règles que `candidats` (null si non lu, la plus prudente de deux valeurs, fiche 0064).'
+  note: 'Ajouté le 2026-10-05 (phase 1 de la stratégie de la fiche 0069 : cartographie, aucune décision). Collecte par six agents de Claude Code
+    sur les pages et documents constructeurs ; mêmes règles que `candidats` (null si non lu, la plus prudente de deux valeurs, fiche 0064).
+    CORRIGÉ le 2026-10-09 : la note disait « HORS de `candidats` : aucun calcul existant (k_bas, dimensionnement, grille de S) ne lit ce bloc ».
+    C''était vrai le 2026-10-05, PÉRIMÉ depuis : l''explorateur (scripts/explorateur.py, catalogue() via marche_actionneurs) lit ce bloc,
+    211 actionneurs de 11 familles, aucun écarté (compté le 2026-10-09) ; k_bas, dimensionnement et la grille de S ne le lisent toujours pas.'
   familles_logicielles:
     robstride:
       nom: RobStride (Beijing Lingzu Shidai / RobStride Dynamics Co., Ltd — 北京灵足时代科技有限公司)
@@ -20430,3 +20432,1357 @@ marche:
         note: null
       famille_logicielle: feetech
       ajoute_le: '2026-10-05'
+
+  releve_2026_10_09:
+    note: 'Relevé du 2026-10-09 (agent ; sources marche_act2_* au registre ; null si non lu ; la plus prudente de
+      deux sources). HORS de `actionneurs`, `complements` et `rattachement` : l''explorateur NE LIT PAS ce bloc (aucun
+      calcul ne change). Feetech STS3215-C044 et C046 (tableau d''un revendeur, aucune fiche Feetech), HL-3950 (bus
+      TTL selon Feetech, RS485 selon Eckstein : à trancher), Dynamixel XM540 et XH540 (couple continu non publié),
+      DYNAMIXEL-Y, mjbots moteus-x1 (+ mj5208), ODrive S1, maxon HEJ 70-48-50 (fiche PROVISOIRE rev. 0.92, aucun prix).
+      qdd100 de mjbots : non lu (HTTP 429). Suisse : seul le XM540-W270-R sur Galaxus.ch (liste de résultats).'
+    produits:
+    - nom: Feetech STS3215-C044
+      fabricant: Feetech (Shenzhen Feetech RC Model Co.)
+      reference: STS3215-C044
+      famille: feetech_sts
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 7.4
+        plage_V: 5-8.4
+        note: 'tension d''essai des performances : 7,4 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 27.4
+        unite_origine: kgf.cm
+        Nm: 2.687
+        tension_V: 7.4
+        conversion: kgf.cm x 0,0980665 -> N.m
+      couple_continu:
+        valeur_origine: 9
+        unite_origine: kgf.cm
+        Nm: 0.8826
+        tension_V: 7.4
+        conversion: kgf.cm x 0,0980665 -> N.m
+        definition_fabricant: « Rated torque » (non defini plus avant par la source ; courant nominal 1200 mA)
+      vitesse_vide:
+        s_par_60deg: 0.116
+        rpm: 86
+        tension_V: 7.4
+      courants_A:
+        vide: 0.42
+        blocage: 3.8
+        nominal: 1.2
+      masse_g:
+        valeur: 55
+        tolerance_g: 1
+        origine: 55 ± 1 g
+      cotes_mm: 45.2 x 24.7 x 35
+      bus: TTL serie half-duplex (8N1), 38 400 bps a 1 Mbps, ID 0-253, connecteur 5264-3P
+      reduction: '191:1'
+      prix:
+        valeur: 24.7
+        devise: EUR
+        tva: TTC (« incl. VAT »)
+        vendeur: OpenELAB (openelab.io, entrepot Munich)
+        date: '2026-10-09'
+        note: 'page : « Regular price 22,94 € Sale price 24,70 € » ; la plus haute retenue ; mention « Pre-order »'
+      disponibilite:
+        france: null
+        ue: 'OpenELAB : stock « [EU] Munich » affiche (precommande sinon depuis la Chine)'
+        suisse: aucun revendeur suisse teste ne l'a (voir revendeurs_ch)
+      documentation:
+        titre: fiche revendeur OpenELAB (aucune fiche Feetech officielle telechargee)
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: couple_continu
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: vitesse_vide
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: tension
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: masse_g
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: cotes_mm
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: bus
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: reduction
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+      - champ: disponibilite
+        via: r.jina.ai
+        source: marche_act2_openelab_c044
+    - nom: Feetech STS3215-C046
+      fabricant: Feetech (Shenzhen Feetech RC Model Co.)
+      reference: STS3215-C046
+      famille: feetech_sts
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 7.4
+        plage_V: 5-8.4
+        note: 'tension d''essai des performances : 7,4 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 14.4
+        unite_origine: kgf.cm
+        Nm: 1.4122
+        tension_V: 7.4
+        conversion: kgf.cm x 0,0980665 -> N.m
+      couple_continu:
+        valeur_origine: 4.8
+        unite_origine: kgf.cm
+        Nm: 0.4707
+        tension_V: 7.4
+        conversion: kgf.cm x 0,0980665 -> N.m
+        definition_fabricant: « Rated torque » (non defini plus avant par la source ; courant nominal 1100 mA)
+      vitesse_vide:
+        s_par_60deg: 0.094
+        rpm: 106
+        tension_V: 7.4
+      courants_A:
+        vide: 0.5
+        blocage: 3.3
+        nominal: 1.1
+      masse_g:
+        valeur: 55
+        tolerance_g: 1
+        origine: 55 ± 1 g
+      cotes_mm: 45.2 x 24.7 x 35
+      bus: TTL serie half-duplex (8N1), 38 400 bps a 1 Mbps, ID 0-253, connecteur 5264-3P
+      reduction: '147:1'
+      prix:
+        valeur: 24.7
+        devise: EUR
+        tva: TTC (« incl. VAT »)
+        vendeur: OpenELAB (openelab.io, entrepot Munich)
+        date: '2026-10-09'
+        note: 'page : « Regular price 22,94 € Sale price 24,70 € » ; la plus haute retenue ; mention « Pre-order »'
+      disponibilite:
+        france: null
+        ue: 'OpenELAB : stock « [EU] Munich » affiche (precommande sinon depuis la Chine)'
+        suisse: aucun revendeur suisse teste ne l'a (voir revendeurs_ch)
+      documentation:
+        titre: fiche revendeur OpenELAB (aucune fiche Feetech officielle telechargee)
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: couple_continu
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: vitesse_vide
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: tension
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: masse_g
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: cotes_mm
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: bus
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: reduction
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+      - champ: disponibilite
+        via: r.jina.ai
+        source: marche_act2_openelab_c046
+    - nom: 'Feetech HL-3950-C001 (fiche fabricant : HLS3950M-C001)'
+      fabricant: Feetech
+      reference: HL-3950-C001 / HLS3950M-C001
+      famille: feetech_hl
+      revision:
+        materielle: edition A/0 de la specification (2024-04-25)
+        firmware: null
+      tension:
+        nominale_V: 12
+        plage_V: 9-12.6
+      couple_pointe:
+        valeur_origine: 50
+        unite_origine: kgf.cm
+        Nm: 4.9033
+        tension_V: 12
+        conversion: kgf.cm x 0,0980665 -> N.m
+        note: 'Eckstein : « Drehmoment (Spitzenwert) 50kg.cm@12V » ; meme valeur que le blocage'
+      couple_blocage:
+        valeur_origine: 50
+        unite_origine: kgf.cm
+        Nm: 4.9033
+        tension_V: 12
+        conversion: kgf.cm x 0,0980665 -> N.m
+        note: 'specification Feetech : Stall Torque (at locked) 50 kg.cm ±10 %'
+      couple_continu:
+        valeur_origine: 12.5
+        unite_origine: kgf.cm
+        Nm: 1.2258
+        tension_V: 12
+        conversion: kgf.cm x 0,0980665 -> N.m
+        definition_fabricant: « Rated Torque » 12,5 kg.cm, courant nominal 600 mA (specification Feetech 5-8, 5-9)
+      vitesse_vide:
+        s_par_60deg: 0.133
+        rpm: 75
+        tension_V: 12
+      courants_A:
+        vide: 0.33
+        blocage: 2.4
+        nominal: 0.6
+        repos: 0.024
+      masse_g:
+        valeur: 74.5
+        tolerance_g: 1
+        origine: 74.5 ± 1 g (specification Feetech) ; 74.5 g (Eckstein) ; « Artikelgewicht 0,07 kg » (Eckstein)
+      cotes_mm: 45.22 x 24.72 x 35
+      bus:
+        valeur: DIVERGENCE
+        specification_feetech: TTL (broche 3 « Signal/TTL », serie half-duplex 8N1, 38 400 bps-1 Mbps)
+        eckstein: « Half-Duplex RS485 Serial-Bus »
+        note: a lever avant tout usage ; la reference fabricant HLS3950M-C001 est TTL
+      reduction: 1/345
+      prix:
+        valeur: 104.26
+        devise: EUR
+        tva: TTC 19 % (DE) ; net 87,61 €
+        vendeur: Eckstein Komponente (eckstein-shop.de)
+        date: '2026-10-09'
+        note: 'page : « Lieferbar, ca. 1-3 Tage » ; contient aussi « Dieser Artikel ist in ihrem Lieferland nicht
+          verfügbar » (pays de livraison non choisi) : livraison Suisse NON etablie'
+      disponibilite:
+        france: null
+        ue: 'Eckstein (DE) : « Lieferbar »'
+        suisse: absent des revendeurs suisses testes
+      documentation:
+        titre: Product Specification HLS3950M-C001
+        version: A/0
+        date: '2024-04-25'
+      sources:
+      - champ: couple_blocage
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: couple_continu
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: tension
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: masse_g
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: bus
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: reduction
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: revision
+        via: null
+        source: marche_act2_feetech_hls3950m_spec
+      - champ: couple_pointe
+        via: null
+        source: marche_act2_eckstein_hl3950
+      - champ: masse_g
+        via: null
+        source: marche_act2_eckstein_hl3950
+      - champ: bus
+        via: null
+        source: marche_act2_eckstein_hl3950
+      - champ: prix
+        via: null
+        source: marche_act2_eckstein_hl3950
+      - champ: disponibilite
+        via: null
+        source: marche_act2_eckstein_hl3950
+    - nom: ROBOTIS DYNAMIXEL XM540-W150-R
+      fabricant: ROBOTIS
+      reference: XM540-W150-R
+      famille: dynamixel_x
+      revision:
+        materielle: null
+        firmware: null
+        note: l'e-Manual cite des fonctions « from firmware V42 / V45 », pas la version livree
+      tension:
+        nominale_V: 12.0
+        plage_V: 10.0-14.8
+        note: 'Recommended : 12.0 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 7.3
+        unite_origine: N.m
+        Nm: 7.3
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          Nm: 6.9
+          courant_A: 4.2
+        - tension_V: 12.0
+          Nm: 7.3
+          courant_A: 4.4
+        - tension_V: 14.8
+          Nm: 8.9
+          courant_A: 5.5
+      couple_continu:
+        valeur: null
+        definition_fabricant: 'non publie : l''e-Manual precise que le couple de blocage differe du couple continu
+          et renvoie a la courbe N-T (graphique, non chiffre)'
+      vitesse_vide:
+        rpm: 53
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          rpm: 50
+        - tension_V: 12.0
+          rpm: 53
+        - tension_V: 14.8
+          rpm: 66
+      masse_g: 165
+      cotes_mm: 33.5 x 58.5 x 44 (W x H x D)
+      bus: RS-485 / TTL multidrop (suffixe -R = RS-485), 9 600 bps a 4.5 Mbps, protocole DYNAMIXEL
+      reduction: 152.3:1
+      prix:
+        valeur: 494.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: 'page : « Checking current price… » puis « Regular price » ; prix lu via r.jina.ai, depend possiblement
+          du pays'
+        suisse: null
+      disponibilite:
+        france: null
+        ue: null
+        suisse: absent des revendeurs suisses testes
+      documentation:
+        titre: ROBOTIS e-Manual XM540-W150-T/R
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_xm540w150
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_xm540w150
+    - nom: ROBOTIS DYNAMIXEL XM540-W270-R
+      fabricant: ROBOTIS
+      reference: XM540-W270-R
+      famille: dynamixel_x
+      revision:
+        materielle: null
+        firmware: null
+        note: l'e-Manual cite des fonctions « from firmware V42 / V45 », pas la version livree
+      tension:
+        nominale_V: 12.0
+        plage_V: 10.0-14.8
+        note: 'Recommended : 12.0 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 10.6
+        unite_origine: N.m
+        Nm: 10.6
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          Nm: 10.0
+          courant_A: 4.2
+        - tension_V: 12.0
+          Nm: 10.6
+          courant_A: 4.4
+        - tension_V: 14.8
+          Nm: 12.9
+          courant_A: 5.5
+      couple_continu:
+        valeur: null
+        definition_fabricant: 'non publie : l''e-Manual precise que le couple de blocage differe du couple continu
+          et renvoie a la courbe N-T (graphique, non chiffre)'
+      vitesse_vide:
+        rpm: 30
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          rpm: 28
+        - tension_V: 12.0
+          rpm: 30
+        - tension_V: 14.8
+          rpm: 37
+      masse_g: 165
+      cotes_mm: 33.5 x 58.5 x 44 (W x H x D)
+      bus: RS-485 / TTL multidrop (suffixe -R = RS-485), 9 600 bps a 4.5 Mbps, protocole DYNAMIXEL
+      reduction: 272.5:1
+      prix:
+        valeur: 494.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: 'page : « Checking current price… » puis « Regular price » ; prix lu via r.jina.ai, depend possiblement
+          du pays'
+        suisse: 'Galaxus.ch : 2 annonces dans la liste de recherche, CHF 772.– et CHF 802.– (fiche produit refusee
+          : captcha)'
+      disponibilite:
+        france: null
+        ue: null
+        suisse: 'Galaxus.ch : 2 annonces dans la liste de recherche, CHF 772.– et CHF 802.– (fiche produit refusee
+          : captcha)'
+      documentation:
+        titre: ROBOTIS e-Manual XM540-W270-T/R
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_xm540w270
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_xm540w270
+      - champ: disponibilite.suisse
+        via: r.jina.ai
+        source: marche_act2_ch_galaxus_XM540
+    - nom: ROBOTIS DYNAMIXEL XH540-W150-R
+      fabricant: ROBOTIS
+      reference: XH540-W150-R
+      famille: dynamixel_x
+      revision:
+        materielle: null
+        firmware: null
+        note: l'e-Manual cite des fonctions « from firmware V42 / V45 », pas la version livree
+      tension:
+        nominale_V: 12.0
+        plage_V: 10.0-14.8
+        note: 'Recommended : 12.0 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 7.1
+        unite_origine: N.m
+        Nm: 7.1
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          Nm: 6.6
+          courant_A: 4.5
+        - tension_V: 12.0
+          Nm: 7.1
+          courant_A: 4.9
+        - tension_V: 14.8
+          Nm: 8.5
+          courant_A: 5.9
+      couple_continu:
+        valeur: null
+        definition_fabricant: 'non publie : l''e-Manual precise que le couple de blocage differe du couple continu
+          et renvoie a la courbe N-T (graphique, non chiffre)'
+      vitesse_vide:
+        rpm: 70
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          rpm: 66
+        - tension_V: 12.0
+          rpm: 70
+        - tension_V: 14.8
+          rpm: 86
+      masse_g: 165
+      cotes_mm: 33.5 x 58.5 x 44 (W x H x D)
+      bus: RS-485 / TTL multidrop (suffixe -R = RS-485), 9 600 bps a 4.5 Mbps, protocole DYNAMIXEL
+      reduction: 152.3:1
+      prix:
+        valeur: 632.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: 'page : « Checking current price… » puis « Regular price » ; prix lu via r.jina.ai, depend possiblement
+          du pays'
+        suisse: null
+      disponibilite:
+        france: null
+        ue: null
+        suisse: absent des revendeurs suisses testes
+      documentation:
+        titre: ROBOTIS e-Manual XH540-W150-T/R
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_xh540w150
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_xh540w150
+    - nom: ROBOTIS DYNAMIXEL XH540-W270-R
+      fabricant: ROBOTIS
+      reference: XH540-W270-R
+      famille: dynamixel_x
+      revision:
+        materielle: null
+        firmware: null
+        note: l'e-Manual cite des fonctions « from firmware V42 / V45 », pas la version livree
+      tension:
+        nominale_V: 12.0
+        plage_V: 10.0-14.8
+        note: 'Recommended : 12.0 V'
+      couple_pointe: null
+      couple_blocage:
+        valeur_origine: 9.9
+        unite_origine: N.m
+        Nm: 9.9
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          Nm: 9.2
+          courant_A: 4.5
+        - tension_V: 12.0
+          Nm: 9.9
+          courant_A: 4.9
+        - tension_V: 14.8
+          Nm: 11.7
+          courant_A: 5.9
+      couple_continu:
+        valeur: null
+        definition_fabricant: 'non publie : l''e-Manual precise que le couple de blocage differe du couple continu
+          et renvoie a la courbe N-T (graphique, non chiffre)'
+      vitesse_vide:
+        rpm: 39
+        tension_V: 12.0
+        toutes_tensions:
+        - tension_V: 11.1
+          rpm: 36
+        - tension_V: 12.0
+          rpm: 39
+        - tension_V: 14.8
+          rpm: 46
+      masse_g: 165
+      cotes_mm: 33.5 x 58.5 x 44 (W x H x D)
+      bus: RS-485 / TTL multidrop (suffixe -R = RS-485), 9 600 bps a 4.5 Mbps, protocole DYNAMIXEL
+      reduction: 272.5:1
+      prix:
+        valeur: 632.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: 'page : « Checking current price… » puis « Regular price » ; prix lu via r.jina.ai, depend possiblement
+          du pays'
+        suisse: null
+      disponibilite:
+        france: null
+        ue: null
+        suisse: absent des revendeurs suisses testes
+      documentation:
+        titre: ROBOTIS e-Manual XH540-W270-T/R
+        version: null
+        date: null
+      sources:
+      - champ: couple_blocage
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_xh540w270
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_xh540w270
+    - nom: ROBOTIS DYNAMIXEL-Y YM070-210-R051-RH
+      fabricant: ROBOTIS
+      reference: YM070-210-R051-RH
+      famille: dynamixel_y
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 24
+        plage_V: null
+      couple_pointe:
+        valeur_origine: 16.3
+        unite_origine: N.m
+        Nm: 16.3
+        definition_fabricant: '« Maximum Torque » : sortie instantanee maximale ; un fonctionnement continu a ce niveau
+          declenche une erreur de surcharge'
+        courant_max_A: 20.8
+      couple_blocage: null
+      couple_continu:
+        valeur_origine: 8.2
+        unite_origine: N.m
+        Nm: 8.2
+        definition_fabricant: « Continuous Torque » (vitesse continue 39.2 rpm, courant continu 11.9 A phase)
+      vitesse_vide:
+        rpm: 111.3
+        tension_V: 24
+      puissance_W: 210
+      masse_g: 790
+      cotes_mm: Ø70 x 71.1
+      bus: RS-485 multidrop, 9 600 bps a 10.5 Mbps, protocole DYNAMIXEL
+      reduction: '51:1'
+      prix:
+        valeur: 2748.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: lu via r.jina.ai
+      disponibilite:
+        france: null
+        ue: null
+        suisse: 'absent de Galaxus (recherche YM070) ; autres revendeurs : voir revendeurs_ch'
+      documentation:
+        titre: ROBOTIS e-Manual YM070-210-R051-RH
+        version: null
+        date: null
+      sources:
+      - champ: couple_pointe
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_ym070r051
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_ym070r051
+    - nom: ROBOTIS DYNAMIXEL-Y YM070-210-R099-RH
+      fabricant: ROBOTIS
+      reference: YM070-210-R099-RH
+      famille: dynamixel_y
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 24
+        plage_V: null
+      couple_pointe:
+        valeur_origine: 31.7
+        unite_origine: N.m
+        Nm: 31.7
+        definition_fabricant: '« Maximum Torque » : sortie instantanee maximale ; un fonctionnement continu a ce niveau
+          declenche une erreur de surcharge'
+        courant_max_A: 20.8
+      couple_blocage: null
+      couple_continu:
+        valeur_origine: 14.6
+        unite_origine: N.m
+        Nm: 14.6
+        definition_fabricant: « Continuous Torque » (vitesse continue 20.2 rpm, courant continu 11.0 A phase)
+      vitesse_vide:
+        rpm: 57.3
+        tension_V: 24
+      puissance_W: 210
+      masse_g: 790
+      cotes_mm: Ø70 x 71.1
+      bus: RS-485 multidrop, 9 600 bps a 10.5 Mbps, protocole DYNAMIXEL
+      reduction: '99:1'
+      prix:
+        valeur: 2748.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: lu via r.jina.ai
+      disponibilite:
+        france: null
+        ue: null
+        suisse: 'absent de Galaxus (recherche YM070) ; autres revendeurs : voir revendeurs_ch'
+      documentation:
+        titre: ROBOTIS e-Manual YM070-210-R099-RH
+        version: null
+        date: null
+      sources:
+      - champ: couple_pointe
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_ym070r099
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_ym070r099
+    - nom: ROBOTIS DYNAMIXEL-Y YM080-230-R099-RH
+      fabricant: ROBOTIS
+      reference: YM080-230-R099-RH
+      famille: dynamixel_y
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 24
+        plage_V: null
+      couple_pointe:
+        valeur_origine: 61.4
+        unite_origine: N.m
+        Nm: 61.4
+        definition_fabricant: '« Maximum Torque » : sortie instantanee maximale ; un fonctionnement continu a ce niveau
+          declenche une erreur de surcharge'
+        courant_max_A: 22.4
+      couple_blocage: null
+      couple_continu:
+        valeur_origine: 26.0
+        unite_origine: N.m
+        Nm: 26.0
+        definition_fabricant: « Continuous Torque » (vitesse continue 20.2 rpm, courant continu 10.7 A phase)
+      vitesse_vide:
+        rpm: 32.2
+        tension_V: 24
+      puissance_W: 230
+      masse_g: 1200
+      cotes_mm: Ø80 x 78.1
+      bus: RS-485 multidrop, 9 600 bps a 10.5 Mbps, protocole DYNAMIXEL
+      reduction: '99:1'
+      prix:
+        valeur: 3070.39
+        devise: $ (signe seul sur robotis.us)
+        tva: null
+        vendeur: ROBOTIS US (robotis.us)
+        date: '2026-10-09'
+        note: lu via r.jina.ai
+      disponibilite:
+        france: null
+        ue: null
+        suisse: 'absent de Galaxus (recherche YM070) ; autres revendeurs : voir revendeurs_ch'
+      documentation:
+        titre: ROBOTIS e-Manual YM080-230-R099-RH
+        version: null
+        date: null
+      sources:
+      - champ: couple_pointe
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: couple_continu
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: tension
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: masse_g
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: bus
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: reduction
+        via: null
+        source: marche_act2_emanual_ym080r099
+      - champ: prix
+        via: r.jina.ai
+        source: marche_act2_robotisus_ym080r099
+    - nom: mjbots moteus-x1 (controleur)
+      fabricant: mjbots Robotic Systems
+      reference: moteus-x1
+      famille: mjbots
+      type: controleur
+      revision:
+        materielle: r1 (fichiers 20250427-moteus-x1-r1 du depot)
+        firmware: firmware/v1.1.2 (derniere version publiee, 2026-08-04 ; firmware commun aux moteus)
+      tension:
+        nominale_V: 24
+        plage_V: 10-54 (<= 12S)
+      courant:
+        crete_phase_A: 120
+        continu_phase_A: 25 sans gestion thermique / 62 avec
+      puissance:
+        crete_electrique: 1.3 kW @ 36 V
+      bus: CAN-FD 5 Mbps (+ RS422, UART, SPI, I2C sur ports auxiliaires)
+      masse_g:
+        valeur: 30
+        origine: 'fiche : « Mass: 23.7g » ; champ « grams » de la variante Shopify : 30 (nature non precisee)'
+        note: la plus haute retenue (regle de prudence)
+      cotes_mm: 56 x 56 x 10
+      prix:
+        valeur: 175.0
+        devise: USD (champ currency de cart.js)
+        tva: null
+        vendeur: mjbots.com
+        date: '2026-10-09'
+      disponibilite:
+        france: null
+        ue: null
+        suisse: aucun revendeur suisse trouve ; livraison directe vers la Suisse non lue
+      documentation:
+        titre: moteus docs/reference (hardware.md, limits.md)
+        version: depot main
+        date: '2026-10-09'
+      accompagnement: 'pas d''actionneur integre vendu avec le x1 sur sa fiche : le devkit associe le moteur mj5208'
+      sources:
+      - champ: tension
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: courant
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: puissance
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: bus
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: masse_g
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: prix
+        via: null
+        source: marche_act2_mjbots_x1
+      - champ: prix.devise
+        via: null
+        source: marche_act2_mjbots_devise
+      - champ: tension
+        via: null
+        source: marche_act2_moteus_hardware
+      - champ: revision.materielle
+        via: null
+        source: marche_act2_moteus_hw_x1_r1
+      - champ: revision.firmware
+        via: null
+        source: marche_act2_moteus_releases
+    - nom: mjbots mj5208 (moteur sans balais, sans reducteur)
+      fabricant: mjbots
+      reference: mj5208
+      famille: mjbots
+      type: moteur
+      revision:
+        materielle: null
+        firmware: null
+      tension: null
+      couple_pointe:
+        valeur_origine: 1.7
+        unite_origine: N.m
+        Nm: 1.7
+      couple_blocage: null
+      couple_continu: null
+      vitesse_vide:
+        rpm_max: 7500
+        kv: 330
+        note: « Maximum RPM », tension non precisee
+      puissance_W:
+        crete: 600
+      masse_g:
+        valeur: 220
+        origine: 'fiche : 193 g avec fils ; champ « grams » de la variante Shopify : 220 (nature non precisee)'
+        note: la plus haute retenue
+      cotes_mm: diametre 63, longueur 25
+      bus: null
+      reduction: aucune (moteur nu)
+      prix:
+        valeur: 74.0
+        devise: USD (champ currency de cart.js)
+        tva: null
+        vendeur: mjbots.com
+        date: '2026-10-09'
+      disponibilite:
+        france: null
+        ue: null
+        suisse: null
+      documentation:
+        titre: fiche produit mjbots mj5208
+        version: null
+        date: null
+      sources:
+      - champ: couple_pointe
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: vitesse_vide
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: puissance_W
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: masse_g
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: prix
+        via: null
+        source: marche_act2_mjbots_mj5208
+      - champ: prix.devise
+        via: null
+        source: marche_act2_mjbots_devise
+      note: 'qdd100 : fiche non lue (HTTP 429 a chaque essai) -> aucune valeur'
+    - nom: ODrive S1 (controleur)
+      fabricant: ODrive Robotics
+      reference: ODS1-ST (bornier) / ODS1 (pastilles)
+      famille: odrive
+      type: controleur
+      revision:
+        materielle: null
+        firmware: null
+      tension:
+        nominale_V: 16-48 (typ.)
+        plage_V: 12-50.5 (max.)
+      courant:
+        continu_A:
+          air_libre: 20
+          avec_plaque_dissipatrice: 40
+          note: 'datasheet, TA 25 °C ; boutique : « 40A Continuous (with heat spreader, recommended) »'
+        crete_A: 40-80 selon la tension DC (courbe)
+      bus:
+        valeur: DIVERGENCE
+        datasheet: CAN baudrate max. 8 Mbit/s (limites firmware)
+        boutique: CAN 2.0B @ 1 Mbps ; CAN-FD 5 Mbit/s experimental ; aussi USB, UART isole, STEP/DIR
+      masse_g:
+        valeur: 55
+        origine: 35 g sans bornier | 55 g avec bornier
+        note: la plus haute retenue
+      cotes_mm: 66 x 50 (perimetre de carte)
+      prix:
+        valeur: 149.0
+        devise: USD
+        tva: null
+        vendeur: odriverobotics.com
+        date: '2026-10-09'
+        note: 'degressif : 147 $ (10), 145 $ (40), 143 $ (100) ; « Shipping calculated at checkout »'
+      disponibilite:
+        france: null
+        ue: null
+        suisse: Suisse listee dans le selecteur de pays de la boutique (devise USD) ; aucun revendeur suisse trouve
+      documentation:
+        titre: ODrive S1 Datasheet
+        version: docs v/latest
+        date: null
+      sources:
+      - champ: tension
+        via: null
+        source: marche_act2_odrive_s1_ds
+      - champ: courant
+        via: null
+        source: marche_act2_odrive_s1_ds
+      - champ: bus
+        via: null
+        source: marche_act2_odrive_s1_ds
+      - champ: courant
+        via: null
+        source: marche_act2_odrive_s1_shop
+      - champ: bus
+        via: null
+        source: marche_act2_odrive_s1_shop
+      - champ: masse_g
+        via: null
+        source: marche_act2_odrive_s1_shop
+      - champ: cotes_mm
+        via: null
+        source: marche_act2_odrive_s1_shop
+      - champ: prix
+        via: null
+        source: marche_act2_odrive_s1_shop
+      - champ: disponibilite
+        via: null
+        source: marche_act2_odrive_s1_shop
+    - nom: maxon High Efficiency Joint HEJ 70-48-50
+      fabricant: maxon
+      reference: HEJ 70-48-50
+      famille: maxon_hej
+      revision:
+        materielle: Preliminary Datasheet rev. 0.92 (Jul. 2025)
+        firmware: null
+      tension:
+        nominale_V: 48
+        plage_V: 30-60 (transitoire max. 67 V)
+      couple_pointe:
+        valeur_origine: 50
+        unite_origine: N.m
+        Nm: 50
+        conditions: 48 V, 25 °C
+        definition_fabricant: « Max. Joint torque, actively controlled & repetitive »
+      couple_blocage: null
+      couple_continu:
+        valeur_origine: 19
+        unite_origine: N.m
+        Nm: 19
+        conditions: 48 V, 25 °C
+        definition_fabricant: '« Nominal joint torque » : tenu indefiniment sans ventilation forcee, actionneur en
+          air libre, vitesse articulaire 2 rad/s'
+      vitesse_vide:
+        valeur: null
+        vitesse_max_rad_s:
+          48V: 22
+          60V: 28
+        note: « Max. Joint velocity », pas une vitesse a vide declaree
+      masse_g: 1050
+      cotes_mm: longueur hors tout ca. 73, diametre hors connecteurs 86.5
+      bus: EtherCAT full duplex 100 Mbit/s, 2 ports (chainage), 1 kHz max.
+      reduction: null
+      courant:
+        continu_entree_A_rms: 6
+      prix:
+        valeur: null
+        note: 'aucun prix publie lu ; fiche : contact robotics@maxongroup.com'
+      disponibilite:
+        france: null
+        ue: null
+        suisse: absent de Galaxus et Conrad.ch ; maxon est une entreprise suisse mais aucune page de vente lue
+        annonce: 'The Robot Report (2024-11-22) : « will begin shipping in early Q2 2025 »'
+      documentation:
+        titre: Preliminary Datasheet HEJ 70-48-50
+        version: rev. 0.92
+        date: 2025-07
+      successeur:
+        reference: HEJ 70-48-60
+        doc: Datasheet rev. 1.2, Jun. 2026
+        couple_max_Nm: 63
+        couple_nominal_Nm: 27
+        vitesse_max_rad_s:
+          48V: 17.8
+          60V: 22
+        masse_g: 1040
+        cotes_mm: ca. 77 x ca. 88
+        note: hors perimetre demande ; la fiche 70-48-50 annoncait « >60 Nm » et « >25 Nm » pour les versions suivantes
+      sources:
+      - champ: couple_pointe
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: couple_continu
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: vitesse_vide
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: tension
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: masse_g
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: cotes_mm
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: bus
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: courant
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: revision
+        via: r.jina.ai
+        source: marche_act2_maxon_hej70_48_50
+      - champ: disponibilite.annonce
+        via: null
+        source: marche_act2_trr_hej70
+      - champ: successeur
+        via: null
+        source: marche_act2_maxon_hej70_48_60
+    revendeurs_ch:
+    - famille: feetech_sts
+      revendeur: Galaxus
+      resultat: absent (STS3215-C044/C046 non listes ; seuls Waveshare ST3215 et DFRobot ST3215, autres produits)
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_STS3215
+    - famille: feetech_sts
+      revendeur: Galaxus
+      resultat: 'absent (recherche « feetech » : FS90R et autres, aucun STS3215-C04x)'
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_feetech
+    - famille: feetech_hl
+      revendeur: Galaxus
+      resultat: absent (resultats Brother HL-...)
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_HL-3950
+    - famille: dynamixel_x
+      revendeur: Galaxus
+      resultat: 'trouve : XM540-W270-R seulement, CHF 772.– et CHF 802.– (liste) ; XM540-W150 absent'
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_XM540
+    - famille: dynamixel_x
+      revendeur: Galaxus
+      resultat: page refusee (captcha « Are you a robot? ») sur la fiche XM540-W270-R
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_xm540_w270_17243696
+    - famille: dynamixel_x
+      revendeur: Galaxus
+      resultat: absent (XH540)
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_XH540
+    - famille: dynamixel_x
+      revendeur: Galaxus
+      resultat: trouve d'autres DYNAMIXEL (XL330, XL430, U2D2), pas de XM/XH540-W150
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_dynamixel
+    - famille: dynamixel_y
+      revendeur: Galaxus
+      resultat: absent (YM070)
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_YM070
+    - famille: mjbots
+      revendeur: Galaxus
+      resultat: 'non concluant : « Suchergebnis konnte nicht geladen werden » (2 essais)'
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_moteus
+    - famille: odrive
+      revendeur: Galaxus
+      resultat: absent
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_odrive
+    - famille: maxon_hej
+      revendeur: Galaxus
+      resultat: absent
+      via: r.jina.ai
+      source: marche_act2_ch_galaxus_maxon_HEJ
+    - famille: feetech_sts
+      revendeur: Conrad.ch
+      resultat: absent (zero resultat)
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_feetech
+    - famille: feetech_sts
+      revendeur: Conrad.ch
+      resultat: absent (zero resultat)
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_STS3215
+    - famille: dynamixel_x
+      revendeur: Conrad.ch
+      resultat: 'absent (4 resultats Robotis : accessoires et servos MBS, pas de DYNAMIXEL X)'
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_dynamixel
+    - famille: dynamixel_x
+      revendeur: Conrad.ch
+      resultat: absent (resultats Robotis MBS-ANT, pas de XM540)
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_XM540
+    - famille: mjbots
+      revendeur: Conrad.ch
+      resultat: 'non concluant : « 302 Ergebnisse » sans titre de produit lisible, aucun moteus identifie'
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_moteus
+    - famille: odrive
+      revendeur: Conrad.ch
+      resultat: absent (zero resultat)
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_odrive
+    - famille: maxon_hej
+      revendeur: Conrad.ch
+      resultat: absent (zero resultat)
+      via: r.jina.ai
+      source: marche_act2_ch_conrad_maxon_HEJ
+    - famille: feetech_sts
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_feetech
+    - famille: dynamixel_x
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_dynamixel
+    - famille: dynamixel_y
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_robotis
+    - famille: mjbots
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_moteus
+    - famille: odrive
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_odrive
+    - famille: maxon_hej
+      revendeur: Bastelgarage.ch
+      resultat: 'absent (« Keine Produkte vorhanden » ; temoin « servo » : resultats presents)'
+      via: null
+      source: marche_act2_ch_bastelgarage_maxon
+    - famille: temoin
+      revendeur: Bastelgarage.ch
+      resultat: 'temoin : la recherche « servo » renvoie des produits (la recherche fonctionne)'
+      via: null
+      source: marche_act2_ch_bastelgarage_servo_temoin
+    - famille: toutes
+      revendeur: Pi-Shop.ch
+      resultat: page refusee (HTTP 403, Cloudflare « Just a moment... », direct et via r.jina.ai)
+      url: https://www.pi-shop.ch/catalogsearch/result/?q=feetech
+      fichier: sources/ch/pishop_feetech.html
+      sha256: bf82e52d40be31d502bccfb249291cc59a786148e04b52fc7ccb326aef6028af
+      via: null
+    - famille: toutes
+      revendeur: Pi-Shop.ch
+      resultat: page refusee (captcha via r.jina.ai)
+      via: r.jina.ai
+      source: marche_act2_ch_pishop_feetech
+    - famille: toutes
+      revendeur: Distrelec.ch
+      resultat: 'page refusee en direct (HTTP 200 mais page captcha Radware) ; via r.jina.ai : liste non rendue, seul
+        un lien fabricant « Dynamixel » visible'
+      via: r.jina.ai
+      source: marche_act2_ch_distrelec_dynamixel
+    - famille: dynamixel_x
+      revendeur: Distrelec.ch
+      resultat: non concluant (page fabricant Dynamixel sans liste rendue)
+      via: r.jina.ai
+      source: marche_act2_ch_distrelec_man_dynamixel
+    - famille: toutes
+      revendeur: DigiKey (digikey.ch)
+      resultat: page refusee (HTTP 403 Cloudflare ; captcha via r.jina.ai) ; livraison Suisse non lue
+      url: https://www.digikey.ch/en/products/result?keywords=XM540-W270-R
+      fichier: sources/ch/digikey_xm540.html
+      sha256: 9ee2334f58c4446ec2061f475b0da30c52b69efed6fb8dad87c4cdeb6599db9b
+      via: null
+    - famille: toutes
+      revendeur: DigiKey (digikey.ch)
+      resultat: page refusee (captcha via r.jina.ai)
+      via: r.jina.ai
+      source: marche_act2_ch_digikey_xm540
+    - famille: toutes
+      revendeur: Mouser (mouser.ch)
+      resultat: page refusee (« Access to this page has been denied », direct et via r.jina.ai) ; livraison Suisse
+        non lue
+      url: https://www.mouser.ch/c/?q=dynamixel
+      fichier: sources/ch/mouser_dynamixel.html
+      sha256: 8d6d47fbaa23b1110f7898c107dcf60da501ed8ae465b0dbb81fe97f1cf40d0b
+      via: null
+    - famille: toutes
+      revendeur: Mouser (mouser.ch)
+      resultat: page refusee (via r.jina.ai)
+      via: r.jina.ai
+      source: marche_act2_ch_mouser_dynamixel

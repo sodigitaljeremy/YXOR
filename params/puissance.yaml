@@ -4667,3 +4667,443 @@ marche:
         valeur: UE (Pologne, Botland) ; stock non lu
         source: marche_pui_dc_botland_d42v55f5
 
+
+
+# ═════════════════════════════════════════════════════════════════════════
+#  CHARGEURS ÉQUILIBREURS 12S — relevé du 2026-10-09 (aucun calcul ne lit ce bloc ; aucune décision)
+# ═════════════════════════════════════════════════════════════════════════
+# Étude d'un agent (sources marche_tr_* au registre ; null si non lu). ⚠ Les chargeurs courants cités en exemple
+# (ISDT K4, SkyRC Q200neo, ToolkitRC M8D/M8DAC/M9/Q6AC) NE font PAS le 12S Li-ion : leur « 12S » est du plomb.
+# Les modèles 12S réels (ISDT X16, A80, B80/B60, CM1620 ; SkyRC PC1500/PC2500/PC3000H/PC3020 ; ToolkitRC M14DAC)
+# sont des chargeurs de gros packs (0,6 à 7 kg, 1 à 3 kW) et AUCUNE fiche lue ne cite le Li-ion (LiPo, LiHV, LiFe
+# seulement) : la charge d'un pack 12S Li-ion n'est pas établie par la fiche. Aucun revendeur suisse trouvé.
+chargeurs_12s:
+  produits:
+  - nom: ISDT X16
+    marque: ISDT
+    douze_s: true
+    cellules: LiFe, LiPo, LiHv, ULiHv 2~16S
+    li_ion_liste: false
+    puissance_w: 1100 W × 2 (@220 V AC) ; 800 W × 2 (@110 V AC) ; parallèle 1800 W
+    entree_secteur_integree: true
+    entree: AC 100~240 V
+    courant_charge_a: 1.0~20.0 A × 2
+    courant_equilibrage: 1.5 A/cellule
+    masse_g: 3500
+    masse_note: « About 3.5kg »
+    prix:
+      valeur: 689.00 USD (isdtshop.com, prix barré 699.99 USD)
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: 'Conrad.fr : absent'
+      ue: null
+      suisse: absent (Galaxus, Conrad.ch, Distrelec, Bastelgarage)
+      boutique_fabricant: 'isdtshop.com : le sélecteur de pays liste France et Suisse (USD) — n''établit pas la
+        livraison'
+    documentation: page produit isdt.co (sans version)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_x16
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_fab_isdtshop_x16
+    - champ: disponibilite.boutique_fabricant
+      via: https://r.jina.ai/
+      source: marche_tr_fab_isdtshop_a80
+  - nom: ISDT A80
+    marque: ISDT
+    douze_s: true
+    cellules: LiPo/LiFe/LiHv/ULiHv (2-16S)
+    li_ion_liste: false
+    puissance_w: 800 W @110 V AC ; 1100 W @220 V AC
+    entree_secteur_integree: true
+    entree: AC 110-240 V
+    courant_charge_a: 0.5-20 A
+    courant_equilibrage: 1.5 A/cellule max
+    masse_g: 2200
+    masse_note: « 2.2 kg »
+    prix:
+      valeur: null
+      note: 'recherche « a80 » sur isdtshop.com : un seul résultat, le B80'
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: null
+      ue: null
+      suisse: 'absent (Conrad.ch, Bastelgarage) ; Galaxus : résultat non chargé (2 essais) ; Distrelec : pas de
+        réponse (1 essai)'
+    documentation: page produit isdt.co (sans version)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_a80
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_fab_isdtshop_a80
+  - nom: ISDT CM1620
+    marque: ISDT
+    douze_s: true
+    cellules: LiHv, LiPo, LiFe 2-16S
+    li_ion_liste: false
+    puissance_w: entrée max 1100 W ; sortie max 1000 W
+    entree_secteur_integree: false
+    entree: DC 11~70 V (alimentation externe)
+    courant_charge_a: 1~20 A
+    courant_equilibrage: null
+    masse_g: 636
+    masse_note: « About 636g »
+    prix:
+      valeur: null
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: null
+      ue: null
+      suisse: 'Galaxus : absent'
+    documentation: page produit isdt.co (sans version)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_cm1620
+    - champ: disponibilite.suisse
+      via: https://r.jina.ai/
+      source: marche_tr_rv_galaxus_isdtcm1620
+  - nom: ISDT B80 / B60
+    marque: ISDT
+    douze_s: true
+    cellules: 'B80 : LiPo 6~18S, LiFe 8~22S ; B60 : LiPo 6~14S, LiFe 6~16S'
+    li_ion_liste: false
+    puissance_w: 3000 W (@220 V AC) les deux
+    entree_secteur_integree: true
+    entree: B80 AC 100~240 V ; B60 AC 110~240 V ; 16 A AC max
+    courant_charge_a: B80 1.0~40.0 A ; B60 1.0~52.0 A
+    courant_equilibrage: 2 A/cellule max
+    masse_g: 3973
+    masse_note: « About 3973g » (les deux)
+    prix:
+      valeur: 645.00 USD (B80, isdtshop.com)
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: null
+      ue: null
+      suisse: null
+    documentation: page produit isdt.co (sans version)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_b80_b60
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_fab_isdtshop_a80
+  - nom: SkyRC PC1500
+    marque: SkyRC
+    douze_s: true
+    cellules: LiPo 12S/14S ; LiHV 12S (valeurs discrètes, pas une plage)
+    li_ion_liste: false
+    puissance_w: 1500 W (AC 220 V) ; 600 W (AC 120 V)
+    entree_secteur_integree: true
+    entree: AC 100-240 V
+    courant_charge_a: 25 A au total pour deux voies (220 V) ; 9 A (120 V)
+    courant_equilibrage: null
+    masse_g: 4200
+    masse_note: '« Weight: 4.2Kg »'
+    prix:
+      valeur: null
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: 'Conrad.fr : absent'
+      ue: null
+      suisse: absent (Galaxus — seul le PC1080w, 6S, CHF 301.45 —, Conrad.ch, Distrelec, Bastelgarage)
+    documentation: PC1500 Instruction Manual V1.0 (2024-10-23), PDF sans texte extractible
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_pc1500
+    - champ: documentation
+      via: null
+      source: marche_tr_skyrc_pc1500_manuel_v1_0
+    - champ: disponibilite.suisse
+      via: https://r.jina.ai/
+      source: marche_tr_rv_galaxus_skyrcpc1500
+  - nom: SkyRC PC2500 / PC3000H / PC3020
+    marque: SkyRC
+    douze_s: true
+    cellules: 'PC2500 : LiPo 12S/14S, LiHV 12S ; PC3000H : LiPo/LiHV 12S/14S ; PC3020 : LiPo/LiHV 12S-22S (-1) ou
+      12S-24S (-2)'
+    li_ion_liste: false
+    puissance_w: PC2500 2500 W ; PC3000H 3000 W ; PC3020 3000 W (à 176-290 V)
+    entree_secteur_integree: true
+    entree: AC 100-240 V
+    courant_charge_a: PC2500 45 A max une voie ; PC3000H 60 A ; PC3020 45 A
+    courant_equilibrage: null
+    masse_g: PC2500 5600 ; PC3000H 6000 ; PC3020 environ 6940
+    prix:
+      valeur: null
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: null
+      ue: null
+      suisse: null
+    documentation: PC2500 Manual V1.3 ; PC3000H Manual 1.0 ; PC3020 manuel V75 (liens lus sur les pages, PDF non
+      téléchargés)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_pc2500
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_pc3000h
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_pc3020
+  - nom: ToolkitRC M14DAC
+    marque: ToolkitRC
+    douze_s: true
+    cellules: LiPo LiHV 6-14S
+    li_ion_liste: false
+    puissance_w: 1250 W × 2 (AC 220 V) ; 2500 W synchrone ; 600 W × 2 (AC 110 V)
+    entree_secteur_integree: true
+    entree: AC 220-240 V @2600 W max ; AC 100-120 V @1300 W max
+    courant_charge_a: 1.0-30.0 A × 2 ; 1.0-50.0 A synchrone
+    courant_equilibrage: 2000 mA max (2-14S)
+    masse_g: 3100
+    masse_note: « Product weight 3100g »
+    prix:
+      valeur: 419.99–434.98 USD (boutique ToolkitRC, fourchette selon variante)
+      ch: []
+      fr_ue: []
+    disponibilite:
+      france: 'Conrad.fr : absent'
+      ue: null
+      suisse: absent (Galaxus — autres ToolkitRC présents —, Conrad.ch, Distrelec, Bastelgarage)
+    documentation: page produit toolkitrc.com (sans version)
+    sources:
+    - champ: specs
+      via: https://r.jina.ai/
+      source: marche_tr_toolkitrc_m14dac
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_fab_toolkitrc_m14dac_store
+    - champ: disponibilite.suisse
+      via: https://r.jina.ai/
+      source: marche_tr_rv_galaxus_m14dac
+  - nom: ISDT K4
+    marque: ISDT
+    douze_s: false
+    cellules: LiFe, LiIon, LiPo 1~8S ; LiHv 1~7S
+    entree_secteur_integree: true
+    entree: AC 100~240 V / DC 10~34 V
+    masse_g: 1230
+    prix:
+      valeur: 203.– CHF (Galaxus)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_k4
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_rv_galaxus_isdtx16
+  - nom: ISDT Q8 Max / T8
+    marque: ISDT
+    douze_s: null
+    cellules: null
+    note: page « qseries » d'isdt.co sans spécification ; T8 non trouvé dans la liste des produits d'isdt.co
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_qseries
+    - champ: liste_produits
+      via: null
+      source: marche_tr_isdt_home
+  - nom: ISDT F400 / P30 / 608AC
+    marque: ISDT
+    douze_s: false
+    cellules: F400 LiPo 1-8S ; P30 LiPo 1~8S ; 608AC LiPo 1-6S (le « 12S » de ces fiches porte sur le plomb Pb)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_f400
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_p30
+    - champ: specs
+      via: null
+      source: marche_tr_isdt_608ac
+  - nom: SkyRC Q200neo
+    marque: SkyRC
+    douze_s: false
+    cellules: LiPo/LiHV/LiFe/LiIon 1-6 cellules (le 12S est le plomb)
+    entree_secteur_integree: true
+    masse_g: 680
+    courant_equilibrage: 800 mA/cellule
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_q200neo
+  - nom: SkyRC D260
+    marque: SkyRC
+    douze_s: null
+    cellules: null
+    note: nombre de cellules non lu sur la page téléchargée
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_d260
+  - nom: SkyRC PC1080 / PC1080neo
+    marque: SkyRC
+    douze_s: false
+    cellules: LiPo 6S (deux voies)
+    prix:
+      valeur: 301.45 CHF (Galaxus, « Pc1080w »)
+    sources:
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_PC1080_Charger
+    - champ: specs
+      via: null
+      source: marche_tr_skyrc_pc1080neo
+    - champ: prix
+      via: https://r.jina.ai/
+      source: marche_tr_rv_galaxus_skyrcpc1500
+  - nom: ToolkitRC M8D / M8DAC / M9 / Q6AC
+    marque: ToolkitRC
+    douze_s: false
+    cellules: M8D 1-8S ; M8DAC 1-8S ; M9 1-8S ; Q6AC 1-6S
+    sources:
+    - champ: specs
+      via: https://r.jina.ai/
+      source: marche_tr_toolkitrc_m8d
+    - champ: specs
+      via: https://r.jina.ai/
+      source: marche_tr_toolkitrc_m8dac
+    - champ: specs
+      via: https://r.jina.ai/
+      source: marche_tr_toolkitrc_m9
+    - champ: specs
+      via: https://r.jina.ai/
+      source: marche_tr_toolkitrc_q6ac
+  revendeurs_ch:
+  - famille: chargeurs/ISDT X16
+    revendeur: Digitec Galaxus (galaxus.ch)
+    resultat: absent (autres ISDT, dont K4 1-8S CHF 203.–)
+    url: https://www.galaxus.ch/fr/search?q=ISDT%20X16
+    fichier: sources/rv_galaxus_isdtx16.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT X16
+    revendeur: Distrelec (distrelec.ch)
+    resultat: absent (résultats PCIe x16 sans rapport)
+    url: https://www.distrelec.ch/search?q=ISDT%20X16
+    fichier: sources/rv_distrelec_isdtx16.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT X16
+    revendeur: Conrad.ch
+    resultat: absent (autres ISDT)
+    url: https://www.conrad.ch/fr/search.html?search=ISDT%20X16
+    fichier: sources/rv_conrad_isdtx16.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT X16
+    revendeur: Bastelgarage.ch
+    resultat: absent
+    url: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20X16
+    fichier: sources/rv_bastel_isdtx16.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT X16
+    revendeur: Pi-Shop.ch
+    resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+    url: https://www.pi-shop.ch/search?sSearch=ISDT%20X16
+    fichier: sources/rv_pishop_isdtx16.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT A80
+    revendeur: Digitec Galaxus (galaxus.ch)
+    resultat: page refusée (200, « Impossible de charger le résultat de la recherche », 2 essais)
+    url: https://www.galaxus.ch/fr/search?q=ISDT%20A80
+    fichier: sources/rv_galaxus_isdta80.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT A80
+    revendeur: Distrelec (distrelec.ch)
+    resultat: page refusée (aucune réponse, code 000)
+    url: https://www.distrelec.ch/search?q=ISDT%20A80
+    fichier: null
+  - famille: chargeurs/ISDT A80
+    revendeur: Conrad.ch
+    resultat: absent (autres ISDT)
+    url: https://www.conrad.ch/fr/search.html?search=ISDT%20A80
+    fichier: sources/rv_conrad_isdta80.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT A80
+    revendeur: Bastelgarage.ch
+    resultat: absent
+    url: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20A80
+    fichier: sources/rv_bastel_isdta80.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ISDT A80
+    revendeur: Pi-Shop.ch
+    resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+    url: https://www.pi-shop.ch/search?sSearch=ISDT%20A80
+    fichier: sources/rv_pishop_isdta80.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/SkyRC PC1500
+    revendeur: Digitec Galaxus (galaxus.ch)
+    resultat: absent (PC1080w 6S CHF 301.45 ; 1er essai non chargé, 2e lu)
+    url: https://www.galaxus.ch/fr/search?q=SkyRC%20PC1500
+    fichier: sources/rv_galaxus_skyrcpc1500.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/SkyRC PC1500
+    revendeur: Distrelec (distrelec.ch)
+    resultat: absent (« We couldn't find any results »)
+    url: https://www.distrelec.ch/search?q=SkyRC%20PC1500
+    fichier: sources/rv_distrelec_skyrcpc1500.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/SkyRC PC1500
+    revendeur: Conrad.ch
+    resultat: 'absent (MC5000, MC3000 ; 1er essai : défi anti-robot)'
+    url: https://www.conrad.ch/fr/search.html?search=SkyRC%20PC1500
+    fichier: sources/rv_conrad_skyrcpc1500.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/SkyRC PC1500
+    revendeur: Bastelgarage.ch
+    resultat: absent
+    url: https://www.bastelgarage.ch/index.php?route=product/search&search=SkyRC%20PC1500
+    fichier: sources/rv_bastel_skyrcpc1500.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/SkyRC PC1500
+    revendeur: Pi-Shop.ch
+    resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+    url: https://www.pi-shop.ch/search?sSearch=SkyRC%20PC1500
+    fichier: sources/rv_pishop_skyrcpc1500.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ToolkitRC M14DAC
+    revendeur: Digitec Galaxus (galaxus.ch)
+    resultat: absent (autres ToolkitRC)
+    url: https://www.galaxus.ch/fr/search?q=ToolkitRC%20M14DAC
+    fichier: sources/rv_galaxus_m14dac.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ToolkitRC M14DAC
+    revendeur: Distrelec (distrelec.ch)
+    resultat: absent (« We couldn't find any results »)
+    url: https://www.distrelec.ch/search?q=ToolkitRC%20M14DAC
+    fichier: sources/rv_distrelec_m14dac.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ToolkitRC M14DAC
+    revendeur: Conrad.ch
+    resultat: absent
+    url: https://www.conrad.ch/fr/search.html?search=ToolkitRC%20M14DAC
+    fichier: sources/rv_conrad_m14dac.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ToolkitRC M14DAC
+    revendeur: Bastelgarage.ch
+    resultat: absent
+    url: https://www.bastelgarage.ch/index.php?route=product/search&search=ToolkitRC%20M14DAC
+    fichier: sources/rv_bastel_m14dac.md
+    via: https://r.jina.ai/
+  - famille: chargeurs/ToolkitRC M14DAC
+    revendeur: Pi-Shop.ch
+    resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+    url: https://www.pi-shop.ch/search?sSearch=ToolkitRC%20M14DAC
+    fichier: sources/rv_pishop_m14dac.md
+    via: https://r.jina.ai/

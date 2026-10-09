@@ -1,0 +1,527 @@
+# MICROCONTRÔLEURS TEMPS RÉEL pour YXOR — marché VERSÉ le 2026-10-09 (aucun calcul ne lit ce fichier ; aucune décision)
+#
+# Créé le 2026-10-09 : catégorie absente du dépôt (docs/catalogue-composants-yxor.md, § 5). Étude d'un agent : chaque
+# valeur vient d'une source TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml (marche_tr_*, sha256, non redistribuable) ;
+# null si non lu ; la plus prudente de deux sources (fiche 0064). Teensy 4.1, NUCLEO-G474RE, ESP32-S3-DevKitC-1,
+# Raspberry Pi Pico 2 : bus CAN natif (contrôleur ; transceiver absent des quatre cartes), prix, disponibilité.
+# ⚠ Prix suisses mêlés HT (Distrelec) et TTC (Galaxus, Conrad, Bastelgarage) : voir chaque entrée. Pi-Shop.ch,
+#   DigiKey et Mouser refusés : la livraison DigiKey/Mouser vers la Suisse n'est pas lue. Aucun achat recommandé.
+temps_reel:
+- nom: PJRC Teensy 4.1
+  puce: NXP i.MX RT1062 (MIMXRT1062DVJ6B)
+  can:
+    type: CAN 2.0 + CAN FD
+    controleurs: 3
+    detail: '« 3 CAN Bus (1 with CAN FD) » ; puce : deux FlexCAN + un FlexCAN avec débit flexible'
+    transceiver_sur_carte: false
+    note_transceiver: « A CAN transceiver chip must be added » (page PJRC)
+  prix:
+    valeur: 61.60 CHF HT (Distrelec, SparkFun DEV-16771, « Available to order »)
+    fabricant: 31.50 USD (SparkFun DEV-16771 ; PJRC renvoie la vente à SparkFun)
+    ch:
+    - Galaxus 49.54 CHF
+    - 'Conrad.ch 43.95 CHF (statut brut : « ccp.availability.soon »)'
+    - Distrelec 61.60 CHF HT (DEV-16771, sur commande) ; 72.61 CHF HT avec connecteurs (DEV-16996, 117 en stock)
+    fr_ue:
+    - 'Conrad.fr 44,99 € (statut brut : « ccp.availability.soon »)'
+    - Berrybase (DE) 31,90 € DEV-16771, « Artikel aktuell nicht lieferbar »
+  disponibilite:
+    france: 'Conrad.fr : référencé'
+    ue: 'Berrybase (DE) : non livrable le 2026-10-09'
+    suisse: 'Galaxus, Conrad.ch, Distrelec : référencé'
+  documentation: page produit PJRC (sans numéro de version) ; fiche NXP IMXRT1060CEC Rev. 0.1, 04/2019
+  masse_g: null
+  sources:
+  - champ: can
+    via: null
+    source: marche_tr_teensy41_pjrc
+  - champ: can.detail
+    via: null
+    source: marche_tr_imxrt1060_ds
+  - champ: documentation
+    via: null
+    source: marche_tr_imxrt1060_ds
+  - champ: prix.fabricant
+    via: null
+    source: marche_tr_ue_sparkfun_teensy41
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_galaxus_teensy
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_conrad_teensy
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_distrelec_teensy
+  - champ: prix.fr_ue
+    via: https://r.jina.ai/
+    source: marche_tr_fr_conrad_teensy
+  - champ: prix.fr_ue
+    via: null
+    source: marche_tr_ue_berrybase_teensy
+- nom: ST NUCLEO-G474RE
+  puce: STM32G474RE
+  can:
+    type: CAN FD
+    controleurs: 3
+    detail: « 3 x FDCAN controller supporting flexible data rate » (DS12288 Rev 6)
+    transceiver_sur_carte: false
+    note_transceiver: UM2505 Rev 7 (mai 2026) ne mentionne aucun CAN hors marquage réglementaire ; la page ST cite
+      un « CAN FD transceiver » parmi les fonctions « specific to some of the boards » (Nucleo-64 en général)
+  prix:
+    valeur: 20.95 CHF (Conrad.ch)
+    ch:
+    - 'Conrad.ch 20.95 CHF (statut brut : « ccp.availability.soon »)'
+    - Distrelec 18.20 CHF HT / 19.674 CHF TTC, « Notify me when in stock »
+    fr_ue:
+    - 'Conrad.fr : référencé, sans prix affiché, « ccp.availability.deliveryUnavailable »'
+  disponibilite:
+    france: 'Conrad.fr : référencé, livraison indisponible'
+    ue: 'Berrybase (DE) : absent ; Reichelt : page refusée'
+    suisse: 'Conrad.ch, Distrelec : référencé'
+  documentation: DS12288 Rev 6 (novembre 2021) ; UM2505 Rev 7 (mai 2026)
+  masse_g: null
+  sources:
+  - champ: can
+    via: https://r.jina.ai/
+    source: marche_tr_stm32g474_ds
+  - champ: can.transceiver_sur_carte
+    via: https://r.jina.ai/
+    source: marche_tr_nucleo64_um2505
+  - champ: can.note_transceiver
+    via: https://r.jina.ai/
+    source: marche_tr_nucleo_g474re_st
+  - champ: documentation
+    via: https://r.jina.ai/
+    source: marche_tr_stm32g474_ds
+  - champ: documentation
+    via: https://r.jina.ai/
+    source: marche_tr_nucleo64_um2505
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_conrad_nucleo
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_distrelec_nucleo
+  - champ: prix.fr_ue
+    via: https://r.jina.ai/
+    source: marche_tr_fr_conrad_nucleo
+- nom: Espressif ESP32-S3-DevKitC-1 (N8R8)
+  puce: ESP32-S3 (module ESP32-S3-WROOM-1)
+  can:
+    type: CAN 2.0 (TWAI)
+    controleurs: 1
+    detail: « TWAI® controller, compatible with ISO 11898-1 (CAN Specification 2.0) » ; pas de CAN FD
+    transceiver_sur_carte: false
+    note_transceiver: le guide utilisateur v1.1 ne contient aucune occurrence de CAN ni de TWAI
+  prix:
+    valeur: 23.45 CHF (Galaxus, N8R8)
+    ch:
+    - Galaxus 23.45 CHF (N8R8)
+    - Conrad.ch 22.95 CHF (N8R8, 50 pièces en stock)
+    fr_ue:
+    - Berrybase (DE) à partir de 20,90 €, « Sofort verfügbar »
+  disponibilite:
+    france: 'Conrad.fr : page refusée (défi anti-robot) ; Kubii : absent'
+    ue: 'Berrybase (DE) : en stock'
+    suisse: 'Galaxus, Conrad.ch : en stock ou référencé'
+  documentation: ESP32-S3 Series Datasheet Version 2.2 ; ESP32-S3-DevKitC-1 user guide v1.1
+  masse_g: null
+  sources:
+  - champ: can
+    via: null
+    source: marche_tr_esp32s3_ds
+  - champ: can.transceiver_sur_carte
+    via: null
+    source: marche_tr_esp32s3_devkitc_doc
+  - champ: documentation
+    via: null
+    source: marche_tr_esp32s3_ds
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_galaxus_esp32s3
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_conrad_esp32s3
+  - champ: prix.fr_ue
+    via: null
+    source: marche_tr_ue_berrybase_esp32s3
+- nom: Raspberry Pi Pico 2
+  puce: RP2350
+  can:
+    type: non
+    controleurs: 0
+    detail: 'périphériques listés : 2 × UART, 2 × I2C, 2 × SPI, 16 × PWM, 3 PIO ; aucun contrôleur CAN (aucune occurrence
+      de « CAN » dans la fiche Pico 2 ni dans les 30 premières pages de la fiche RP2350)'
+    transceiver_sur_carte: false
+    note_transceiver: null
+  prix:
+    valeur: 8.90 CHF (Bastelgarage)
+    fabricant: « Available now from $5 » (page Raspberry Pi)
+    ch:
+    - Bastelgarage 8.90 CHF (HT 8.23)
+    - Conrad.ch 5.70 CHF
+    - Galaxus « CHF 6.35 à partir de 2 pièces » (prix unitaire non lu)
+    fr_ue:
+    - Kubii (FR) 6,96 € (fiche Pico 2/2W/2H/2WH, variante du prix non identifiée)
+    - Berrybase (DE) 5,50 €, « Sofort verfügbar »
+  disponibilite:
+    france: 'Kubii : référencé'
+    ue: 'Berrybase (DE) : en stock'
+    suisse: 'Bastelgarage, Conrad.ch, Galaxus : référencé'
+  documentation: Raspberry Pi Pico 2 Datasheet Release 5, build 03/07/2026 ; RP2350 Datasheet Release 8, build 01/10/2026
+  masse_g: null
+  sources:
+  - champ: can
+    via: null
+    source: marche_tr_pico2_ds
+  - champ: can
+    via: null
+    source: marche_tr_rp2350_ds
+  - champ: documentation
+    via: null
+    source: marche_tr_pico2_ds
+  - champ: documentation
+    via: null
+    source: marche_tr_rp2350_ds
+  - champ: prix.fabricant
+    via: https://r.jina.ai/
+    source: marche_tr_pico2_product
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_bastel_pico2
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_conrad_pico2
+  - champ: prix.ch
+    via: https://r.jina.ai/
+    source: marche_tr_rv_galaxus_pico2
+  - champ: prix.fr_ue
+    via: null
+    source: marche_tr_fr_kubii_pico2
+  - champ: prix.fr_ue
+    via: null
+    source: marche_tr_ue_berrybase_pico2
+revendeurs_ch:
+- famille: temps_reel/Teensy 4.1
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: trouvé — PJRC Teensy 4.1 CHF 49.54
+  url: https://www.galaxus.ch/fr/search?q=teensy%204.1
+  fichier: sources/rv_galaxus_teensy.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Teensy 4.1
+  revendeur: Distrelec (distrelec.ch)
+  resultat: trouvé — DEV-16771 CHF 61.60 HT (sur commande) ; DEV-16996 CHF 72.61 HT (117 en stock)
+  url: https://www.distrelec.ch/search?q=teensy
+  fichier: sources/rv_distrelec_teensy.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Teensy 4.1
+  revendeur: Conrad.ch
+  resultat: trouvé — Teensy 4.1 43.95 CHF (statut brut « ccp.availability.soon »)
+  url: https://www.conrad.ch/fr/search.html?search=teensy%204.1
+  fichier: sources/rv_conrad_teensy.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Teensy 4.1
+  revendeur: Bastelgarage.ch
+  resultat: absent (« There is no product that matches »)
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=teensy%204.1
+  fichier: sources/rv_bastel_teensy.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Teensy 4.1
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=teensy%204.1
+  fichier: sources/rv_pishop_teensy.md
+  via: https://r.jina.ai/
+- famille: temps_reel/NUCLEO-G474RE
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: absent
+  url: https://www.galaxus.ch/fr/search?q=nucleo-g474re
+  fichier: sources/rv_galaxus_nucleo.md
+  via: https://r.jina.ai/
+- famille: temps_reel/NUCLEO-G474RE
+  revendeur: Distrelec (distrelec.ch)
+  resultat: trouvé — CHF 18.20 HT / 19.674 TTC, « Notify me when in stock »
+  url: https://www.distrelec.ch/search?q=nucleo-g474re
+  fichier: sources/rv_distrelec_nucleo.md
+  via: https://r.jina.ai/
+- famille: temps_reel/NUCLEO-G474RE
+  revendeur: Conrad.ch
+  resultat: trouvé — NUCLEO-G474RE 20.95 CHF (statut brut « ccp.availability.soon »)
+  url: https://www.conrad.ch/fr/search.html?search=nucleo-g474re
+  fichier: sources/rv_conrad_nucleo.md
+  via: https://r.jina.ai/
+- famille: temps_reel/NUCLEO-G474RE
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=nucleo-g474re
+  fichier: sources/rv_bastel_nucleo.md
+  via: https://r.jina.ai/
+- famille: temps_reel/NUCLEO-G474RE
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (aucune réponse via r.jina.ai, code 000)
+  url: https://www.pi-shop.ch/search?sSearch=nucleo-g474re
+  fichier: null
+- famille: temps_reel/ESP32-S3-DevKitC-1
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: trouvé — ESP32-S3-DevKitC-1-N8R8 CHF 23.45
+  url: https://www.galaxus.ch/fr/search?q=ESP32-S3-DevKitC-1
+  fichier: sources/rv_galaxus_esp32s3.md
+  via: https://r.jina.ai/
+- famille: temps_reel/ESP32-S3-DevKitC-1
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (« We couldn't find any results »)
+  url: https://www.distrelec.ch/search?q=ESP32-S3-DevKitC-1
+  fichier: sources/rv_distrelec_esp32s3.md
+  via: https://r.jina.ai/
+- famille: temps_reel/ESP32-S3-DevKitC-1
+  revendeur: Conrad.ch
+  resultat: 'trouvé — ESP32-S3-DevKitC-1-N8R8 22.95 CHF, 50 en stock (1er essai : défi anti-robot)'
+  url: https://www.conrad.ch/fr/search.html?search=ESP32-S3-DevKitC-1
+  fichier: sources/rv_conrad_esp32s3.md
+  via: https://r.jina.ai/
+- famille: temps_reel/ESP32-S3-DevKitC-1
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=ESP32-S3-DevKitC-1
+  fichier: sources/rv_bastel_esp32s3.md
+  via: https://r.jina.ai/
+- famille: temps_reel/ESP32-S3-DevKitC-1
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=ESP32-S3-DevKitC-1
+  fichier: sources/rv_pishop_esp32s3.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Pico 2
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: trouvé — Pico 2 « CHF 6.35 à partir de 2 pièces »
+  url: https://www.galaxus.ch/fr/search?q=raspberry%20pi%20pico%202
+  fichier: sources/rv_galaxus_pico2.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Pico 2
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (résultats Raspberry Pi sans Pico 2)
+  url: https://www.distrelec.ch/search?q=raspberry%20pi%20pico%202
+  fichier: sources/rv_distrelec_pico2.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Pico 2
+  revendeur: Conrad.ch
+  resultat: trouvé — Pico 2 5.70 CHF
+  url: https://www.conrad.ch/fr/search.html?search=raspberry%20pi%20pico%202
+  fichier: sources/rv_conrad_pico2.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Pico 2
+  revendeur: Bastelgarage.ch
+  resultat: trouvé — Raspberry Pi Pico 2 CHF 8.90 (HT 8.23)
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=raspberry%20pi%20pico%202
+  fichier: sources/rv_bastel_pico2.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Pico 2
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=raspberry%20pi%20pico%202
+  fichier: sources/rv_pishop_pico2.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT X16
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: absent (autres ISDT, dont K4 1-8S CHF 203.–)
+  url: https://www.galaxus.ch/fr/search?q=ISDT%20X16
+  fichier: sources/rv_galaxus_isdtx16.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT X16
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (résultats PCIe x16 sans rapport)
+  url: https://www.distrelec.ch/search?q=ISDT%20X16
+  fichier: sources/rv_distrelec_isdtx16.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT X16
+  revendeur: Conrad.ch
+  resultat: absent (autres ISDT)
+  url: https://www.conrad.ch/fr/search.html?search=ISDT%20X16
+  fichier: sources/rv_conrad_isdtx16.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT X16
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20X16
+  fichier: sources/rv_bastel_isdtx16.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT X16
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=ISDT%20X16
+  fichier: sources/rv_pishop_isdtx16.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT A80
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: page refusée (200, « Impossible de charger le résultat de la recherche », 2 essais)
+  url: https://www.galaxus.ch/fr/search?q=ISDT%20A80
+  fichier: sources/rv_galaxus_isdta80.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT A80
+  revendeur: Distrelec (distrelec.ch)
+  resultat: page refusée (aucune réponse, code 000)
+  url: https://www.distrelec.ch/search?q=ISDT%20A80
+  fichier: null
+- famille: chargeurs/ISDT A80
+  revendeur: Conrad.ch
+  resultat: absent (autres ISDT)
+  url: https://www.conrad.ch/fr/search.html?search=ISDT%20A80
+  fichier: sources/rv_conrad_isdta80.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT A80
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20A80
+  fichier: sources/rv_bastel_isdta80.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ISDT A80
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=ISDT%20A80
+  fichier: sources/rv_pishop_isdta80.md
+  via: https://r.jina.ai/
+- famille: chargeurs/SkyRC PC1500
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: absent (PC1080w 6S CHF 301.45 ; 1er essai non chargé, 2e lu)
+  url: https://www.galaxus.ch/fr/search?q=SkyRC%20PC1500
+  fichier: sources/rv_galaxus_skyrcpc1500.md
+  via: https://r.jina.ai/
+- famille: chargeurs/SkyRC PC1500
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (« We couldn't find any results »)
+  url: https://www.distrelec.ch/search?q=SkyRC%20PC1500
+  fichier: sources/rv_distrelec_skyrcpc1500.md
+  via: https://r.jina.ai/
+- famille: chargeurs/SkyRC PC1500
+  revendeur: Conrad.ch
+  resultat: 'absent (MC5000, MC3000 ; 1er essai : défi anti-robot)'
+  url: https://www.conrad.ch/fr/search.html?search=SkyRC%20PC1500
+  fichier: sources/rv_conrad_skyrcpc1500.md
+  via: https://r.jina.ai/
+- famille: chargeurs/SkyRC PC1500
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=SkyRC%20PC1500
+  fichier: sources/rv_bastel_skyrcpc1500.md
+  via: https://r.jina.ai/
+- famille: chargeurs/SkyRC PC1500
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=SkyRC%20PC1500
+  fichier: sources/rv_pishop_skyrcpc1500.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ToolkitRC M14DAC
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: absent (autres ToolkitRC)
+  url: https://www.galaxus.ch/fr/search?q=ToolkitRC%20M14DAC
+  fichier: sources/rv_galaxus_m14dac.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ToolkitRC M14DAC
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (« We couldn't find any results »)
+  url: https://www.distrelec.ch/search?q=ToolkitRC%20M14DAC
+  fichier: sources/rv_distrelec_m14dac.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ToolkitRC M14DAC
+  revendeur: Conrad.ch
+  resultat: absent
+  url: https://www.conrad.ch/fr/search.html?search=ToolkitRC%20M14DAC
+  fichier: sources/rv_conrad_m14dac.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ToolkitRC M14DAC
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=ToolkitRC%20M14DAC
+  fichier: sources/rv_bastel_m14dac.md
+  via: https://r.jina.ai/
+- famille: chargeurs/ToolkitRC M14DAC
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=ToolkitRC%20M14DAC
+  fichier: sources/rv_pishop_m14dac.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Digitec Galaxus (galaxus.ch)
+  resultat: absent (seul AI HAT+ 2 Hailo-10H CHF 203.–)
+  url: https://www.galaxus.ch/fr/search?q=hailo-8%20m.2
+  fichier: sources/rv_galaxus_hailo.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Distrelec (distrelec.ch)
+  resultat: absent (résultats sans rapport)
+  url: https://www.distrelec.ch/search?q=hailo-8%20m.2
+  fichier: sources/rv_distrelec_hailo.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Conrad.ch
+  resultat: absent (échelles de la marque Hailo)
+  url: https://www.conrad.ch/fr/search.html?search=hailo-8%20m.2
+  fichier: sources/rv_conrad_hailo.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Bastelgarage.ch
+  resultat: absent
+  url: https://www.bastelgarage.ch/index.php?route=product/search&search=hailo-8%20m.2
+  fichier: sources/rv_bastel_hailo.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Pi-Shop.ch
+  resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+  url: https://www.pi-shop.ch/search?sSearch=hailo-8%20m.2
+  fichier: sources/rv_pishop_hailo.md
+  via: https://r.jina.ai/
+- famille: toutes
+  revendeur: Pi-Shop.ch (accueil)
+  resultat: page refusée (403 en direct ; défi Cloudflare via r.jina.ai)
+  url: https://www.pi-shop.ch/
+  fichier: sources/rv_pishop_home.md
+  via: https://r.jina.ai/
+- famille: toutes
+  revendeur: DigiKey (digikey.ch) — page livraison
+  resultat: 'page refusée (403 en direct ; défi Cloudflare via r.jina.ai) : livraison vers la Suisse NON lue'
+  url: https://www.digikey.ch/fr/help/shipping
+  fichier: sources/rv_dk_shipping_ch.md
+  via: https://r.jina.ai/
+- famille: toutes
+  revendeur: DigiKey (digikey.ch) — direct
+  resultat: page refusée (403)
+  url: https://www.digikey.ch/fr/help/shipping
+  fichier: sources/dk_shipping_ch.html
+  via: null
+- famille: temps_reel/Teensy 4.1
+  revendeur: DigiKey (digikey.ch)
+  resultat: page refusée (403 direct ; défi anti-robot via r.jina.ai)
+  url: https://www.digikey.ch/fr/products/result?keywords=teensy%204.1
+  fichier: sources/rv_digikey_teensy.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: DigiKey (digikey.ch)
+  resultat: page refusée (défi Cloudflare via r.jina.ai)
+  url: https://www.digikey.ch/fr/products/result?keywords=hailo-8%20m.2
+  fichier: sources/rv_dk_hailo.md
+  via: https://r.jina.ai/
+- famille: toutes
+  revendeur: Mouser (mouser.ch) — page livraison
+  resultat: 'page refusée (« Access to this page has been denied ») : livraison vers la Suisse NON lue'
+  url: https://www.mouser.ch/shipping/
+  fichier: sources/mouser_shipping_ch.html
+  via: null
+- famille: toutes
+  revendeur: Mouser (mouser.ch) — page livraison via r.jina.ai
+  resultat: page refusée (page vide, « not yet fully loaded »)
+  url: https://www.mouser.ch/shipping/
+  fichier: sources/rv_mouser_shipping_ch.md
+  via: https://r.jina.ai/
+- famille: temps_reel/Teensy 4.1
+  revendeur: Mouser (mouser.ch)
+  resultat: page refusée (« Access to this page has been denied »)
+  url: https://www.mouser.ch/c/?q=teensy%204.1
+  fichier: sources/rv_mouser_teensy.md
+  via: https://r.jina.ai/
+- famille: hailo/Hailo-8 M.2
+  revendeur: Mouser (mouser.ch)
+  resultat: page refusée (« Access to this page has been denied »)
+  url: https://www.mouser.ch/c/?q=hailo-8
+  fichier: sources/rv_mouser_hailo.md
+  via: https://r.jina.ai/

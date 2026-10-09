@@ -715,6 +715,83 @@ marche:
       fichier: fichiers/cnx_rpi5_review_power.html
       note: 'Secondaire, 2023. Seules lues : valeurs PMIC des journaux sbc-bench (2,6–3,6 W au repos). Le paragraphe
         de synthèse n''a pas été retrouvé dans le texte extrait.'
+    marche_tr_fr_conrad_hailo:
+      titre: page web téléchargée (HTTP 200)
+      url: https://www.conrad.fr/fr/search.html?search=hailo-8
+      editeur: null
+      date: '2026-10-09'
+      fichier: fr_conrad_hailo.md
+      empreinte: 31c640fd4efa229d83cd754dc5e62a87948289c85e6af0b7eb1f715e52578cca
+      octets: null
+      conditions: page publique (lue via https://r.jina.ai/)
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_fr_kubii_hailo:
+      titre: page web téléchargée (HTTP 200)
+      url: https://www.kubii.com/fr/recherche?controller=search&s=hailo
+      editeur: null
+      date: '2026-10-09'
+      fichier: fr_kubii_hailo.md
+      empreinte: c5794cfd74e85e80e215816f4400909aada0e0d358d8cecc1ae38712cfd53245
+      octets: null
+      conditions: page publique (lue via https://r.jina.ai/)
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_hailo8_chip:
+      titre: Hailo, page produit puce Hailo-8
+      url: https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/
+      editeur: null
+      date: '2026-10-09'
+      fichier: hailo8_chip.html
+      empreinte: 4c2a8aadf5f1e0f476ad6789694ec2ffcef8836f56a734f21bc1f28516d75dcd
+      octets: null
+      conditions: page publique
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_hailo8_m2:
+      titre: Hailo, page produit Hailo-8 M.2
+      url: https://hailo.ai/products/ai-accelerators/hailo-8-m2-ai-acceleration-module/
+      editeur: null
+      date: '2026-10-09'
+      fichier: hailo8_m2.html
+      empreinte: 99bbf37bede86b72f3051cd81dd00bc6870adc52d4b5d58771f0e6de612240f0
+      octets: null
+      conditions: page publique
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_hailo8_m2_brief:
+      titre: Hailo-8 M.2 ET product brief (© 3/25)
+      url: https://hailo.ai/files/hailo-8-m-2-et-product-brief-en/
+      editeur: null
+      date: '2026-10-09'
+      fichier: hailo8_m2_brief.pdf
+      empreinte: e8b10a3fb661a834bba05c764b78aa7634eedb0113ee859856958248801aa56b
+      octets: null
+      conditions: page publique
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_ue_berrybase_hailo:
+      titre: page web téléchargée (HTTP 200)
+      url: https://www.berrybase.de/search?search=hailo
+      editeur: null
+      date: '2026-10-09'
+      fichier: ue_berrybase_hailo.html
+      empreinte: 70bc4ce52180417f0a2190a994dd148789f114f69fd3de4e287efe61dfebdfc2
+      octets: null
+      conditions: page publique
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
+    marche_tr_ue_galaxusde_hailo:
+      titre: page web téléchargée (HTTP 200)
+      url: https://www.galaxus.de/de/search?q=hailo-8%20m.2
+      editeur: null
+      date: '2026-10-09'
+      fichier: ue_galaxusde_hailo.md
+      empreinte: 8a01d545ac473f0d663f32282f6c233d3c306385108c335a510080f4bcff4cd8
+      octets: null
+      conditions: page publique (lue via https://r.jina.ai/)
+      primaire: false
+      note: ajouté le 2026-10-09 avec le bloc hailo_m2
   produits:
     # ── ajouté le 2026-10-07 (soir), vérification F ──
     seeed_recomputer_mini_j3011:
@@ -3688,3 +3765,105 @@ verifications_2026_10_07_soir:
         note: null
   complements_non_verses: 'masses des modules Jetson, du Raspberry Pi 5 et des AI HAT+ : NON publiées (fiches NVIDIA
     derrière un compte ; poids d''expédition des distributeurs écartés)'
+
+
+# ═════════════════════════════════════════════════════════════════════════
+#  HAILO-8 M.2 — relevé du 2026-10-09 (hors de `marche` : options_calculateur ne le lit pas ; aucune décision)
+# ═════════════════════════════════════════════════════════════════════════
+# Étude d'un agent (sources marche_tr_* au registre ; null si non lu). 26 TOPS, PCIe Gen 3 (×4 key M ; ×2 B+M, A+E) ;
+# consommation du MODULE non publiée (« typical 2.5 W » pour la puce seule). Aucun revendeur lu ne vend le module
+# M.2 seul (ni CH, ni FR, ni UE) : seulement l'AI HAT+ et des cartes PCIe Delock.
+hailo_m2:
+  produits:
+  - nom: Hailo-8 M.2 AI Acceleration Module
+    tops: 26
+    formats: M.2 key M, key B+M (22×42 mm, extensions 22×60 / 22×80) ; key A+E (22×30 mm)
+    interface_pcie: PCIe Gen-3.0, 4 voies en key M (jusqu'à 32 Gb/s) ; 2 voies en key B+M et A+E (jusqu'à 16 Gb/s)
+    consommation_w: null
+    consommation_note: non publiée pour le module ; la page de la puce Hailo-8 indique « typical power consumption
+      of 2.5W » (puce seule)
+    temperature: -40 °C à 85 °C
+    prix:
+      valeur: null
+      ch: []
+      fr_ue:
+      - 'Galaxus.de : Delock PCIe x4 « Hailo-8 AI Prozessor x1 » 264,03 € et PCIe x8 « x2 » 649,23 € — cartes PCIe,
+        PAS des modules M.2'
+      - 'Berrybase (DE) : Raspberry Pi AI HAT+ 26 TOPS (Hailo-8) 121,90 € — format HAT, pas M.2'
+      - 'Kubii (FR) : AI HAT+ pour Raspberry Pi 5 123,48 € (variante 26 TOPS dans l''URL) — format HAT, pas M.2'
+    disponibilite:
+      france: module M.2 absent (Kubii, Conrad.fr)
+      ue: module M.2 absent (Berrybase, Galaxus.de)
+      suisse: absent (Galaxus, Conrad.ch, Distrelec, Bastelgarage)
+    documentation: Hailo-8 M.2 ET product brief (© 3/25) ; page produit hailo.ai
+    sources:
+    - champ: tops
+      via: null
+      source: marche_tr_hailo8_m2
+    - champ: interface_pcie
+      via: null
+      source: marche_tr_hailo8_m2
+    - champ: interface_pcie
+      via: null
+      source: marche_tr_hailo8_m2_brief
+    - champ: consommation_note
+      via: null
+      source: marche_tr_hailo8_chip
+    - champ: documentation
+      via: null
+      source: marche_tr_hailo8_m2_brief
+    - champ: prix.fr_ue
+      via: https://r.jina.ai/
+      source: marche_tr_ue_galaxusde_hailo
+    - champ: prix.fr_ue
+      via: null
+      source: marche_tr_ue_berrybase_hailo
+    - champ: prix.fr_ue
+      via: https://r.jina.ai/
+      source: marche_tr_fr_kubii_hailo
+    - champ: disponibilite.france
+      via: https://r.jina.ai/
+      source: marche_tr_fr_conrad_hailo
+  revendeurs_ch:
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Digitec Galaxus (galaxus.ch)
+    resultat: absent (seul AI HAT+ 2 Hailo-10H CHF 203.–)
+    url: https://www.galaxus.ch/fr/search?q=hailo-8%20m.2
+    fichier: sources/rv_galaxus_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Distrelec (distrelec.ch)
+    resultat: absent (résultats sans rapport)
+    url: https://www.distrelec.ch/search?q=hailo-8%20m.2
+    fichier: sources/rv_distrelec_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Conrad.ch
+    resultat: absent (échelles de la marque Hailo)
+    url: https://www.conrad.ch/fr/search.html?search=hailo-8%20m.2
+    fichier: sources/rv_conrad_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Bastelgarage.ch
+    resultat: absent
+    url: https://www.bastelgarage.ch/index.php?route=product/search&search=hailo-8%20m.2
+    fichier: sources/rv_bastel_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Pi-Shop.ch
+    resultat: page refusée (403 en direct ; défi Cloudflare « Just a moment » via r.jina.ai)
+    url: https://www.pi-shop.ch/search?sSearch=hailo-8%20m.2
+    fichier: sources/rv_pishop_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: DigiKey (digikey.ch)
+    resultat: page refusée (défi Cloudflare via r.jina.ai)
+    url: https://www.digikey.ch/fr/products/result?keywords=hailo-8%20m.2
+    fichier: sources/rv_dk_hailo.md
+    via: https://r.jina.ai/
+  - famille: hailo/Hailo-8 M.2
+    revendeur: Mouser (mouser.ch)
+    resultat: page refusée (« Access to this page has been denied »)
+    url: https://www.mouser.ch/c/?q=hailo-8
+    fichier: sources/rv_mouser_hailo.md
+    via: https://r.jina.ai/

@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `cc340fd02503`, le 2026-10-09 ; 296 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `2b89f8eb4380`, le 2026-10-09 ; 298 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -246,7 +246,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (41)
+## scripts/ (42)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
@@ -266,6 +266,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/explorateur.
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/import_upstream_limits.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/kit.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/lab_leger.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/lab_leger_entier.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/liens_bruts.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/loi_masse.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/marche_actionneurs.py
@@ -301,7 +302,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (32)
+## tests/ (33)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -328,6 +329,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenanc
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regenerer_index.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_regle_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_saut.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_servos_bus.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_simulateur.py

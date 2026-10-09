@@ -7264,3 +7264,2172 @@ fichiers:
     empreinte: sha256:0250d7138a192776e0fa4814065abe941ea245eb908c9650587416352a85b7cb
     conditions: non lues
     redistribuable: false
+
+  # ── Marché des capteurs (params/capteurs.yaml), versé le 2026-10-09 ──
+  marche_capt_ch_bastel_as5047:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=AS5047
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:b1894d75302626bedf64693dce57575bb0da3c426c9874d48580a293715d317b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_as5600:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=AS5600
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:63473cff72e2c28af3b4b3df20cf4517cb51b251e2a387721077c02cdee1e5ef
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_bmi088:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=BMI088
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:dde3059f3f362a800df7cb3e4dcae3fd779d3cf432a4c2f5b9690c3cf4bed5a7
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_bno085:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=BNO085
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:68eac93ea38e1189dbae6dfb0c028e6c97d3acd4812cfe2bd7571702f1f83978
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_camera_module_3:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Camera+Module+3
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:b703bf7d92dde918c40580b7e8f6c0a893d77eb0a4f7e4d0a79659701de29850
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_d405:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=D405
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:2600405fa4cbee3be5e905a262d2ebbf6d82f8202cca65fd73876a533a7c41d5
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_d435i:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=D435i
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:f14b654797dffd75d86325e4698c6eac1a7d01bf92fa67d9b97442cacbe55e71
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_d555:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=D555
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:50bc4cb9ef7aa63a43db7a680bf2257eca0f0cd3d0f582ed8cefde957c631038
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_fsr_402:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=FSR+402
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:0025c032b4bc788092da506634ab7e0ee2d40ec32a322d357b081b1ad899f086
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_hx711:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=HX711
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:ecf853d39e3bd1be7d9467ae3090b45b4d297e56cfbc20d744b03316cc479f55
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_icm_42688:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=ICM-42688
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:c61e091c6b7628c72bdc2cee9d7b36ca857a42f0d165a846b2b170583f350300
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_mid_360:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Mid-360
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:02ae232e4d1c9ff055013652dede3465ffc19a077dd55ad3614b6eb13cfe0b15
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_mti_3:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=MTi-3
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:c287f8610f5c72b1547ea9e1489d09c92c42b11b42cfc8eba17eac23e077fe87
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_oak_d:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=OAK-D
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:b1b49705b5e651ec687ecb47a5444a76caff88d61eec380e80f986739dcdc539
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_rplidar:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=RPLIDAR
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:3bb928e6feeb3c47f5e3a69c62bc37c0cde2acd549ec5e043407df5efdf24fc1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_bastel_w__gezelle:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Wägezelle
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:7a505d7e6c2c52d7a2a7e98abea3cb23914dec757a365e0f97539079df51317b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_conrad_cam:
+    source: https://www.conrad.ch/fr/search.html?search=RealSense
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:ec9f5da6078e259e432e40ac60cc66df9b91ebf06afb81337141625d1777c6aa
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_conrad_codeur:
+    source: https://www.conrad.ch/fr/search.html?search=AS5600
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:59ac54fcdfea3b42f267aa7b685618c81e4d30636b73deb4145351e50fe9e618
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_conrad_imu:
+    source: https://www.conrad.ch/fr/search.html?search=BNO085
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:8c58f12c1046c5a5071d5f328640d78485c68be4b1f6d6fa788482910fbfeed0
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_conrad_lidar:
+    source: https://www.conrad.ch/fr/search.html?search=RPLIDAR
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:466ae1c8fe39b9c369fbd54423b50c451d50117453cc0464e15b0214cd6f54b2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_conrad_pied:
+    source: https://www.conrad.ch/fr/search.html?search=HX711
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:63a1fbfb21ccf7a2fad1710711aa2b7416579302a824db2db1599bb85d5e187a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_digikey_cam:
+    source: https://www.digikey.ch/fr/products/result?keywords=RealSense
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:7415575d20a3134835f76edc771effe417351959aff7dc809f473d0899fd47a8
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_digikey_codeur:
+    source: https://www.digikey.ch/fr/products/result?keywords=AS5600
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:2036275084ea37eda41a39f1384083aa78bc07c88502daee59bfdfcefaa384d1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_digikey_imu:
+    source: https://www.digikey.ch/fr/products/result?keywords=BNO085
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:f693d76153924af595b2cc908c4abd2344910d4fb25ca1e6c06eb0c21b49c3e4
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_digikey_lidar:
+    source: https://www.digikey.ch/fr/products/result?keywords=RPLIDAR
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:9a554f386d7315a0c904a1526953a01d5c18da75fad0e57e2f672fa2e5182314
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_digikey_pied:
+    source: https://www.digikey.ch/fr/products/result?keywords=HX711
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:0a174fa8dd517b2deb4c2355f6aabb24c9a0b71dbdc065a7065bef9d8c502a6d
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_distrelec_cam:
+    source: https://www.distrelec.ch/fr/search?q=RealSense
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:aa35f6867bf316b0023aa49d25c62ace0f81933d9a138ed3eafcc90c8674bd08
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_distrelec_codeur:
+    source: https://www.distrelec.ch/fr/search?q=AS5600
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:ca23c56c47c7a7fa4547e8c481c38d71c974bd7a779bacb72b192bf11280e62f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_distrelec_lidar:
+    source: https://www.distrelec.ch/fr/search?q=RPLIDAR
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:c8488d68e466977e1c4d590bddb4f4c81550cc2a344e92ac699fbc694da1d8ee
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_distrelec_pied:
+    source: https://www.distrelec.ch/fr/search?q=HX711
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:8f211e3d5b7cc9bbde3b13d411c63a028ed4756b603717d91d79587e271511e6
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_galaxus_cam:
+    source: https://www.galaxus.ch/fr/search?q=RealSense
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:039de0a20330854583648bb1e9fe53adc37876d576bb3ddfbbd63daabaef1c5a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_galaxus_codeur:
+    source: https://www.galaxus.ch/fr/search?q=AS5600
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:3f11962290b13e3492644af4f2dccbd3ee9baef6a769dceabd7c758eef154b98
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_galaxus_imu:
+    source: https://www.galaxus.ch/fr/search?q=BNO085
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:30fe7daf510bb3b2b752998d45472d1bce949cd4b6dcb9fb876b2e7a27c2d91b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_galaxus_lidar:
+    source: https://www.galaxus.ch/fr/search?q=RPLIDAR
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:f46c04ab08026dfc7de245457d8572f2a668edfc470f3df3e4d304188d541ce5
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_galaxus_pied:
+    source: https://www.galaxus.ch/fr/search?q=HX711
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:f20d41c3a596f027f7436b80e45a81e653183bda9e86ab1eee7ab046b4242ee1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_mouser_cam:
+    source: https://www.mouser.ch/c/?q=RealSense
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:d4fef2ea41a158cc641e75bf9de31eae8daf9fec0935e5ca23ed64261f22d21d
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_mouser_codeur:
+    source: https://www.mouser.ch/c/?q=AS5600
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:b3380a771f024b5c52ff4da9ee470d787ed07f19cd6b5bcdb7082b02b01eba25
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_mouser_imu:
+    source: https://www.mouser.ch/c/?q=BNO085
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:f09d7394f56c8c241cccb1b519bdb48a6761fea4846be7d86ec2540e2dde44c8
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_mouser_lidar:
+    source: https://www.mouser.ch/c/?q=RPLIDAR
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:6c628faf48230191ad33167cbeafa4266609c2ae9d36b8fdcac15f762c7e6f84
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_mouser_pied:
+    source: https://www.mouser.ch/c/?q=HX711
+    reference: recherche revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:d62c89434ac7e4e7dbeb046b77d13f24d192eeebad2f63708fd28e03b9a1ad3c
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_pishop_cam:
+    source: https://www.pi-shop.ch/catalogsearch/result/?q=RealSense
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:9c4bf0b76dc762acdac7e7930af5a98c19606abdd9a7f80d6bbd7bf7c1f5d112
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_pishop_codeur:
+    source: https://www.pi-shop.ch/catalogsearch/result/?q=AS5600
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:558aa933748e348bfceac8ff91814a9da791d772d4bd204ea79ea538346bbc17
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_pishop_lidar:
+    source: https://www.pi-shop.ch/catalogsearch/result/?q=RPLIDAR
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:46fe2d1f03a5e695540dea0435e412af761d3297683d1e6cd727d156b692d34b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_pishop_pied:
+    source: https://www.pi-shop.ch/catalogsearch/result/?q=HX711
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:f07004bf47caabf6e0681cb0e5ee25896f959b74a39921410d56cba015024957
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ch_rs_mti3dk:
+    source: https://ch.rs-online.com/web/p/sensor-development-tools/2614472
+    reference: recherche revendeur suisse (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:9e8d47dda60e91847fbb5b0e995e341b7aacfaa499262b4b40aae91c89201c5a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_chp_bastel_as5600:
+    source: https://www.bastelgarage.ch/as5600-magnetischer-12bit-encoder-3-3v
+    reference: page produit revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:231e044be667347aefb7dedb4d703320a88d00b46854d054ef3536aefb7d662e
+    conditions: non lues
+    redistribuable: false
+  marche_capt_chp_bastel_hx711:
+    source: https://www.bastelgarage.ch/load-cell-amplifier-hx711-wiegesensor-24-bit
+    reference: page produit revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:db012f2d1a42dbd2b4b9811594136bbb12558bbd80a160311db9d40d2e71cdc1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_chp_bastel_loadcell20kg:
+    source: https://www.bastelgarage.ch/20kg-load-cell-gewichtssensor
+    reference: page produit revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:ee6a7a35c039af5c104b9da91f5004bfcfb21ed145fed35657a138ee6a06d2a9
+    conditions: non lues
+    redistribuable: false
+  marche_capt_chp_bastel_rpicam3:
+    source: https://www.bastelgarage.ch/raspberry-pi-kamera-module-3-12mp
+    reference: page produit revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:8a6209c7e36910d6b9d61806ff07a328b0daaaad887b625679dce4b08029cbc2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_chp_bastel_rplidar_c1:
+    source: https://www.bastelgarage.ch/rplidar-c1-12m-360-grad-laser-lidar-scanner
+    reference: page produit revendeur suisse
+    date: 2026-10-09
+    empreinte: sha256:c19db1cc40ae42a4606356493c1212457cffafd2f318d61148ecdfa835d698b2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_as5047p:
+    source: https://www.infineon.com/row/public/documents/24/49/infineon-as5047p-datasheet-en.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:8de2e15ef332373c8f78e03cd4bfb9aa520b098b091d04e90ffb9aebb0e14c90
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_as5600:
+    source: https://www.infineon.com/row/public/documents/24/49/infineon-as5600-datasheet-en.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:548490c8a9a6bac0137d360062f98fcba9d7edbf4ee552c99c3e713aea773d7a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_bmi088:
+    source: https://cdn.sparkfun.com/assets/c/c/e/4/7/BMI088_Datasheet.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:5fcd809c87157e78fc36eca2599059d4796a1080543d2d1cdb3a6410d5d62365
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_bno085:
+    source: https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/6531/BNO080_085_Datasheet-3196201.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:866e6082d927c8fab6c1b921e6c36e938a458214ce2ed99a2100bbd69522444f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_d400:
+    source: https://www.realsenseai.com/wp-content/uploads/2026/03/RealSense-D400-Series-Datasheet-Mar-2026.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:96cb5706bd879479bab36648bd3ec67f6338b4616d696dda55007f898182454f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_d555:
+    source: https://realsenseai.com/wp-content/uploads/2025/08/D555-Datasheet-v1.1.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:9e5ee8ecd1fc36c214e4d2b86d375c3d8085f6eec4ad2c86522c8fe78564e761
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_fsr402:
+    source: https://cdn.sparkfun.com/assets/8/a/1/2/0/2010-10-26-DataSheet-FSR402-Layout2.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:86d3fd3b5fcf66ef2be1e943d79734e53742a9ca8a47836b04d408036513eb78
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_hx711:
+    source: https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:6050e88a5e938ff9ac3292bfbc9fea2afa0ca73d1a649d5398ae8de5ab7c017e
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_icm42688p:
+    source: https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/495/ICM-42688-P_DS_Rev1.2.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:4d7c04e3e86f37defe27c20a82b9fcd9d4ddbd3b9d68a525c2d49595d52cf97a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_mti3_leaflet:
+    source: https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/3707/MTi-3.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:d70e716462f36f876f24a8fcb370b664cd65bf6b88c333383b281672d50fd8e8
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_oakdlite:
+    source: https://raw.githubusercontent.com/luxonis/depthai-hardware/master/DM9095_OAK-D-LITE_DepthAI_USB3C/Datasheet/OAK-D-Lite_Datasheet.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:ec1b087017eb633f4484544fbe48c5cd46304a817413aa594f837afd3e697990
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_oakdpro:
+    source: https://raw.githubusercontent.com/luxonis/depthai-hardware/master/DM9098_OAK-D-Pro/Datasheet/OAK-D-Pro_Datasheet.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:46a43f74841631484d1498b9e749ecfa5fc1916d42bcf23e9519616db6f0e0ea
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_rpicam3:
+    source: https://datasheets.raspberrypi.com/camera/camera-module-3-product-brief.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:578efcad6337696a29b9c068815a01d63ddcf7beacf584051d61cf1cddeeaf0a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_ds_rplidar_c1:
+    source: https://cdn.shopify.com/s/files/1/0058/3145/8904/files/SLAMTEC_rplidar_datasheet_C1_v1.1_en.pdf
+    reference: fiche technique
+    date: 2026-10-09
+    empreinte: sha256:4f29f4938c54c53392010d9a5194a2021853534cb387b8b5b7bda083365f5328
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_as5047:
+    source: https://www.berrybase.de/search?search=AS5047
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:16648cb0740c5a5896c94bd3c4e7f43b32eabe464e6de24dbeddbcdc09326541
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_as5600:
+    source: https://www.berrybase.de/search?search=AS5600
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:fcef0cf2b969b64a968cd788394ccd22330ef1f70f1714533680831335a6f5d6
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_bmi088:
+    source: https://www.berrybase.de/search?search=BMI088
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:78991cdd55efecd8f0917e1b36c8c19b020faf9b2793ee34b1ffb047016c90b1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_bno085:
+    source: https://www.berrybase.de/search?search=BNO085
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:ffacd7da3d97aa1ad0bbe3b61684839207447b2dee30f63f59bc7960c0ed664a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_camera_module_3:
+    source: https://www.berrybase.de/search?search=Camera+Module+3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:a779007b131de94f024d07d1eed33858e689eda92f359fbf00e9fd880eb23bb6
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_d405:
+    source: https://www.berrybase.de/search?search=D405
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:4c75cf1310ecf8510a4ae298f7f3df016e249aee42d6eefebf8b037f7edf77a5
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_d555:
+    source: https://www.berrybase.de/search?search=D555
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:fa3df5332dda672f6b4f343754cef4270142b8014588e577bdc0d63c25ad4f40
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_fsr_402:
+    source: https://www.berrybase.de/search?search=FSR+402
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:c47fe932bbda6301e037e9535b4064f6bc684dd168cc59739785e4ab2f26c21f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_hx711:
+    source: https://www.berrybase.de/search?search=HX711
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:8e468169b594ef1bafb5e3c5995c0a30663d4db6ab3ef5ffdd82098b2f715e85
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_icm_42688:
+    source: https://www.berrybase.de/search?search=ICM-42688
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:9e390902a28238b41a83b2ca61c4fbea7fa74b0a4b1bb0c9f3a58492a13ea080
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_mid_360:
+    source: https://www.berrybase.de/search?search=Mid-360
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:0163c0c9d6b78f58f4d04c02acd17c0ca2d548fed4ab7c7fcc3e63c21891368b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_mti_3:
+    source: https://www.berrybase.de/search?search=MTi-3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:865f1fd089f96d89a1a2863bc275a8ce502bad2bccd447a8baab3310ef47e3bf
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_oak_d_lite:
+    source: https://www.berrybase.de/search?search=OAK-D-Lite
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:44828dbe755d0933852a17d65c0fdc34cfb938f3935a6c0efecf93417a670a4a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_oak_d_pro_w:
+    source: https://www.berrybase.de/search?search=OAK-D-Pro-W
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:98432a79f10ab561a65da0eb77d7d67d1732a0b1abdb50a42205288028d61236
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_berrybase_rplidar_c1:
+    source: https://www.berrybase.de/search?search=RPLIDAR+C1
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:c5854055b45c001b87e71ff4df294db8c05465a1562fdd2c7a2aed5309854750
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_as5047:
+    source: https://botland.store/search?s=AS5047
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:9b1c7bf3eefc812ebd207545b98a6ebdfebf1cee5f00ceffa490fee242b14bba
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_as5600:
+    source: https://botland.store/search?s=AS5600
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:92c480baed844194701d36a24d97458c13fe2c20a98adf482f36a54311a3a4c6
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_bmi088:
+    source: https://botland.store/search?s=BMI088
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:9ba68ab1ccfb96529010dd34323410d19cd0d251a426dff46411f2d0c9444947
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_bno085:
+    source: https://botland.store/search?s=BNO085
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:bc8e510f3e42a7e3e8dfb2dc56c63794683d25eb0bd637e912414bd4de9cdee7
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_d435i:
+    source: https://botland.store/search?s=D435i
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:795ea092d9cb4f136609cf5e75b425a6ad0e1337f6b1403bd1808e8a41d981e0
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_fsr_402:
+    source: https://botland.store/search?s=FSR-402
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:e540f91fd46db0faa0e92bcb2e0aaee256da2d8869a6c5a79fd10ea0be16fc7b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_hx711:
+    source: https://botland.store/search?s=HX711
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:3a88bf40e950f76075d96fc47cc27595256cab8afdb06ba743e30614f82be201
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_icm_42688:
+    source: https://botland.store/search?s=ICM-42688
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:f4042a1ab95a44bf429d246ef0ec3c9b64f0c05e70b3273446d42fa668f9d21f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_mid_360:
+    source: https://botland.store/search?s=Mid-360
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:f6fa9b6cae63b1dadb18f69fc3e898d7ce85a5a3197b16a160cd756dc2a00207
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_mti_3:
+    source: https://botland.store/search?s=MTi-3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:916d2ca850c760be827a5c85c71464e9cab6b5aec4aba8f1783fbeac101c75ec
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_oak_d:
+    source: https://botland.store/search?s=OAK-D
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:801de0cdc02585d3d774d5a0d5e95971f68a01d77a58e5c102e4d46e7774c6d0
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_botland_rplidar_c1:
+    source: https://botland.store/search?s=RPLIDAR+C1
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:2e61cce61ef4d719263c6ce75b85765d35aa8be88b5632733885e356c0ef840a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_eckstein_bno085:
+    source: https://eckstein-shop.de/navi.php?qs=BNO085
+    reference: recherche vendeur UE (HTTP 404)
+    date: 2026-10-09
+    empreinte: sha256:c29c72852cf73941a2c109486895b5a0bd10cf7dff43ced0d32fce2ee5c37ee7
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_farnell_ch_bmi088:
+    source: https://ch.farnell.com/search?st=BMI088
+    reference: recherche vendeur UE (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:8a59acd3cf3b6b35f06c18e696d050685eaec7a60a23fee987ab946f28edff1d
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_as5047:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=AS5047
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:24557a0ec13f250094880b1bad6a63a5695a6b5a7c11d12388acc422e06ac07a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_as5600:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=AS5600
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:cca18ab4ce6186fd13e12332a22663216a443f23bd572b0e852ba2d49e4b62a1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_bmi088:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=BMI088
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:9d72d54d61f2c78907684dd54272b73ef6052eb0a823fbd8fd1d83610dab3b06
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_bno085:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=BNO085
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:48a0cef4a6684053fd6639bde70a41ca1780206503d134b497681b84221a9349
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_camera_module_3:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=Camera+Module+3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:308ab7af55fba3b6714329d7d01fbaf723594ff288c6a5d944acc5a0df7f7c7b
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_d405:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=D405
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:5debcbcc961e0cf36987de93b47c349fa524767507fd9114d02eb74a25cf3f7e
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_d435i:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=D435i
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:88c011989fac84249ee3631563034fd30104ad008009bac5363bb9734b4c94d2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_d555:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=D555
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:34d0026928d51d3fd48bcce4fb8e41ea696262573c7e622865fcc535c505ab95
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_fsr_402:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=FSR+402
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:b5dab288599a3ddd215ce168460ba60dba59322e37402127b5a6932f6fc68a60
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_hx711:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=HX711
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:d26a7551565eddf3d4cd1bf8e2cf5ca61c16a9142c2207e255beea5071710e84
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_icm_42688:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=ICM-42688
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:d0df1c5dc1915c163ade64dd40e93015b711bbc74a8f92917f308d47e5ebff25
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_livox:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=Livox
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:db7223e72bd0cd7e6856ca6e9484f8de9bfd8c1ef510e59447d334c7d7a78437
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_mid_360:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=Mid-360
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:a7ed90393e0a812b02b48ddc31817a656d9105e355f5bd301b6eb0ea75ac25dd
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_mti_3:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=MTi-3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:d1df86229c271f06381f8a9a537b6edef6b89c8193d2751a157e30fb864d2761
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_oak:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=OAK-D
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:5caf6dd7dd440f328cd4fec17b751341e9dec3620a735fcae7e50d4a44eaa6e6
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_oak_d_lite:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=OAK-D-Lite
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:bbf955c5b2130c8f435eee745de655049fa9f8aa390c746be9c4a6e4adb69aee
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_oak_d_pro_w:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=OAK-D-Pro-W
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:1ba2b13f4fc6b739f4b9a084ff420dc9d77afe0967c3b1469e318719ef359e6e
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_genrob_rplidar_c1:
+    source: https://www.generationrobots.com/fr/recherche?controller=search&s=RPLIDAR+C1
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:24901fe85d73ea322672a88b0da4ec654bc43914d0710c01e4a72cfccd4918ae
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_gotronic_hx711:
+    source: https://www.gotronic.fr/searchengine.htm?search=HX711
+    reference: recherche vendeur UE (HTTP 404)
+    date: 2026-10-09
+    empreinte: sha256:95aed3a8e2ab86f4e22a3b962451d3978492128c7106b044a0fd3f4fe48e6510
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_kubii_cam3:
+    source: https://www.kubii.com/fr/recherche?controller=search&s=camera+module+3
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:643533601e3dded0492c98cdfae424dfa4bcaa8ad1a4e73d8738a0b74c886227
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_mybotshop_mid360:
+    source: https://www.mybotshop.de/search?sSearch=Mid-360
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:b4f83322c1e9a311ffd608c157ff9098e23ef5a9b10b3baca536fc50a8bde62c
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eu_reichelt_as5600:
+    source: https://www.reichelt.de/fr/fr/index.html?ACTION=446&SEARCH=AS5600
+    reference: recherche vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:fde61264f85b259709eb63440000abf89082ce45b27d1564692c1bb5dd430cf3
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_berrybase_cam3:
+    source: https://www.berrybase.de/en/raspberry-pi-camera-module-3-12mp
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:752cc32a59bb6101e43dd7dabd5fc3189742e5f9dd9c71c03a0e4bd2bec949f9
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_funduino_mid360:
+    source: https://funduinoshop.com/en/robotics/livox-lidar/
+    reference: page produit vendeur UE (HTTP 429)
+    date: 2026-10-09
+    empreinte: sha256:fa2dd01ed96d38758e89e354653c39f366bc7a34e485772c8aa2174b53a465d3
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_genrob_d405:
+    source: https://www.generationrobots.com/fr/403953-intel-realsense-camera-de-profondeur-d405.html
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:633d4eeaa7986a848214a5cc727b02d753bc20a4ea41619e87d1fdd6e54bf1e3
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_genrob_d435i:
+    source: https://www.generationrobots.com/fr/403758-intel-realsense-camera-de-profondeur-d435i.html
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:352543d0b3436403c24fc9e9c417fd23086805ad4b3390183c199ce0c2b001e1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_genrob_d555:
+    source: https://www.generationrobots.com/fr/404387-realsense-camera-de-profondeur-d555.html
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:5eac1887f727b332e972ca61e1cc407ea576ef0c9c5662e293da91d34452f042
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_genrob_oakdlite:
+    source: https://www.generationrobots.com/fr/404060-luxonis-oak-d-lite-camera-auto-focus.html
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:653a53047a97c51b1733c1cb80e674eac643c3127dad5eaa4df1af06a2652d76
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_mybotshop_mid360s:
+    source: https://www.mybotshop.de/Livox-Mid360S_1
+    reference: page produit vendeur UE
+    date: 2026-10-09
+    empreinte: sha256:99211c3afc9c7185deac137a0db5e687bfb05d0c5c44e2a589438f12a62a81e8
+    conditions: non lues
+    redistribuable: false
+  marche_capt_eup_rs_fr_mti3dk:
+    source: https://fr.rs-online.com/web/p/sensor-development-tools/2614472
+    reference: page produit vendeur UE (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:520a1bcc6163b169464a40f1d1ebba41946aa0aa00ea77aa322d72ef8155f1a2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_dji_mid360:
+    source: https://store.dji.com/product/livox-mid-360
+    reference: boutique (fabricant ou vendeur hors UE/CH) (via curl -L --compressed (page servie compressée en brotli))
+    date: 2026-10-09
+    empreinte: sha256:6dcfe84a14913e2911b6025db2b16470bc0d28891f98966aff0b54acf5b0d649
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_lux_oakdlite:
+    source: https://shop.luxonis.com/products/oak-d-lite-1
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:068256ec6cfcacb3244e414c1715bc9e0012d177e9337a0eea3df0964128ad40
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_lux_oakdprow:
+    source: https://shop.luxonis.com/products/oak-d-pro-w
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:fb963a3c5d29c8b68534511ed44a097d152770f81200e87165c4d2dbcc7bcfe5
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_movella_mti3dk:
+    source: https://shop.movella.com/product-lines/sensor-modules/products/mti-3-ahrs-development-kit
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:c2c0e036f6fa7290ba37e9dae98b0c5611483cd67798717719de1bda31132ad9
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_rs_d405:
+    source: https://store.realsenseai.com/buy-realsense-depth-camera-d405.html
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:ebdb95cb44089f9406680259dff6e8dbd38dd5c6aabb4fefec27decd18ad1989
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_rs_d435i:
+    source: https://store.realsenseai.com/buy-intel-realsense-depth-camera-d435i.html
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:9c96da1d0293b9d9946353d67bf0ee1fb67df0aab941e4e7e7c9d5292f8ae263
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_rs_d555:
+    source: https://store.realsenseai.com/buy-realsense-depth-camera-d555.html
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:c0a4e6a9984a47cd446463bd23929d4a61e1a641625cd6e1fe089b6b5e8d57f2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_rs_home:
+    source: https://store.realsenseai.com/
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:c1de6ed09579d8cbe3890944f910d2eb9b53d923058543652f5e7a442b2128c2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_shop_ws_rplidar_c1:
+    source: https://www.waveshare.com/rplidar-c1.htm
+    reference: boutique (fabricant ou vendeur hors UE/CH)
+    date: 2026-10-09
+    empreinte: sha256:77cc1d52cfead94258b86e904d704ed96725cf7907719d83f038105173ede062
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_ada_bno085:
+    source: https://www.adafruit.com/product/4754
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:bb3a879af315ce5f2d598ae719d16341e82522a846956094d1537ff1b256c605
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_icm42688p_p9240:
+    source: https://invensense.tdk.com/?p=9240
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:367f5d135c9d5701fce80fcd36d7ce2474da484602a54e0fe5eacf908add74e1
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_mid360_specs:
+    source: https://www.livoxtech.com/mid-360/specs
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:c561c4b5c608e420131d6a7d38d93c9ad84f15a75f6105863c0ed7b55fcacf83
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_oakdlite_docs:
+    source: https://docs.luxonis.com/hardware/products/OAK-D%20Lite
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:91bb2128c6825e1e3b9da40eab80393c13ed9c8df52749c370de36b71b83279a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_oakdprow_docs:
+    source: https://docs.luxonis.com/hardware/products/OAK-D%20Pro%20W
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:d1cf0149121b16f299bb51529e58828fea497f3d7b0a577455c50561ac7e2bd2
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_realsense_d405fam:
+    source: https://www.realsenseai.com/product-family/d405-series/
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:9ec666e8eafef26c3842816a189bd9ec112fb5209324d128ffe1e08559746e1c
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_realsense_d555:
+    source: https://realsenseai.com/products/d555-poe/
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:4a8a3655217a548d9ac89fb81950cfe7830fe51e443ab1fd71dc433e651a6c4a
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_realsense_products:
+    source: https://realsenseai.com/products/
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:6ee4378832d83e602d0a5045016924cf4d19ed73a837b5c197e8c49e8bfa767f
+    conditions: non lues
+    redistribuable: false
+  marche_capt_web_rplidar_c1:
+    source: https://www.slamtec.com/en/C1
+    reference: page fabricant
+    date: 2026-10-09
+    empreinte: sha256:2dc28093b246991216f6ec6f7cac87634fe18786e967bff9b6ea16dda220a3c5
+    conditions: non lues
+    redistribuable: false
+
+  # ── Marché temps réel, chargeurs 12S, Hailo-8 M.2, versé le 2026-10-09 ──
+  marche_tr_dk_shipping_ch:
+    source: https://www.digikey.ch/fr/help/shipping
+    reference: page web téléchargée (HTTP 403)
+    date: 2026-10-09
+    empreinte: sha256:a11284bc0c509f380afeb693745a266dab7bdf5c117dfb57829104ba3a2d8b13
+    conditions: non lues
+    redistribuable: false
+  marche_tr_esp32s3_devkitc_doc:
+    source: https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html
+    reference: Espressif ESP32-S3-DevKitC-1 user guide v1.1
+    date: 2026-10-09
+    empreinte: sha256:519a5e9f8c8f761b58f3762be90a9f0491f16a007c82d182f392be6a3d14098e
+    conditions: non lues
+    redistribuable: false
+  marche_tr_esp32s3_ds:
+    source: https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf
+    reference: Espressif ESP32-S3 Series Datasheet v2.2
+    date: 2026-10-09
+    empreinte: sha256:2d5a7cb7fd559d8d972bd88db32669c0196d23f22d7afaafb0f63d099b589a3f
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fab_isdtshop_a80:
+    source: https://isdtshop.com/en-cn/search?q=a80
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:56d0e9e1a68c45dfca220f0a0bc2861c8f7bd85b1a68cb79f5cde86883ca8a00
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fab_isdtshop_x16:
+    source: https://isdtshop.com/en-cn/search?q=x16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:eb52579cefc7b3cc37ff921ebcf6148ff6708cdeb0d95f34c25d863d03df3d03
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fab_toolkitrc_m14dac_store:
+    source: https://www.toolkitrc.com/product/m14dac/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:89104c731aab5005dde550239ef0264c9f365a6751438406ad5a7db6df4594b7
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fr_conrad_hailo:
+    source: https://www.conrad.fr/fr/search.html?search=hailo-8
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:31c640fd4efa229d83cd754dc5e62a87948289c85e6af0b7eb1f715e52578cca
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fr_conrad_nucleo:
+    source: https://www.conrad.fr/fr/search.html?search=nucleo-g474re
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:42d43e64442d9037cdb7ba1314d7329e9bbd4fcd252ac3622e5ec5b7fbd382b7
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fr_conrad_teensy:
+    source: https://www.conrad.fr/fr/search.html?search=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:d445bfec1219a4d311152a519ac420a13996722de573374ddb9f001559ac066e
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fr_kubii_hailo:
+    source: https://www.kubii.com/fr/recherche?controller=search&s=hailo
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:c5794cfd74e85e80e215816f4400909aada0e0d358d8cecc1ae38712cfd53245
+    conditions: non lues
+    redistribuable: false
+  marche_tr_fr_kubii_pico2:
+    source: https://www.kubii.com/fr/recherche?controller=search&s=pico+2
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:b994bc4a5572481545817bede54a2189ac4d9dfb5058a44eb179e7b0ec3ed9a9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_hailo8_chip:
+    source: https://hailo.ai/products/ai-accelerators/hailo-8-ai-accelerator/
+    reference: Hailo, page produit puce Hailo-8
+    date: 2026-10-09
+    empreinte: sha256:4c2a8aadf5f1e0f476ad6789694ec2ffcef8836f56a734f21bc1f28516d75dcd
+    conditions: non lues
+    redistribuable: false
+  marche_tr_hailo8_m2:
+    source: https://hailo.ai/products/ai-accelerators/hailo-8-m2-ai-acceleration-module/
+    reference: Hailo, page produit Hailo-8 M.2
+    date: 2026-10-09
+    empreinte: sha256:99bbf37bede86b72f3051cd81dd00bc6870adc52d4b5d58771f0e6de612240f0
+    conditions: non lues
+    redistribuable: false
+  marche_tr_hailo8_m2_brief:
+    source: https://hailo.ai/files/hailo-8-m-2-et-product-brief-en/
+    reference: Hailo-8 M.2 ET product brief (© 3/25)
+    date: 2026-10-09
+    empreinte: sha256:e8b10a3fb661a834bba05c764b78aa7634eedb0113ee859856958248801aa56b
+    conditions: non lues
+    redistribuable: false
+  marche_tr_imxrt1060_ds:
+    source: https://www.pjrc.com/teensy/IMXRT1060CEC_rev0_1.pdf
+    reference: NXP IMXRT1060CEC Rev. 0.1, 04/2019 (copie PJRC)
+    date: 2026-10-09
+    empreinte: sha256:37c145c3feb6099bfd2becdb1fba98490c1328f1b35f6862dfc3bf8780cc9652
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_608ac:
+    source: https://www.isdt.co/608ac.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:16470ec2a096d5a4b77df3290010c475db10a47f79069192d63916b07bf836b3
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_a80:
+    source: https://www.isdt.co/a80.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:fdf3a71ceb1bc73bedd5be7afa9119502218860601713a79f38f0b979759ac46
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_b80_b60:
+    source: https://www.isdt.co/b80-b60.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:775ead0424685f3136432c7a2acbe7071b35343e1c0ad866e8ec9d08be7cd2f6
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_cm1620:
+    source: https://www.isdt.co/cm1620.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:549c2db5cfb92c906f1f91b94f79857c4ae80105b58b5d5c4fb793c4c64f5963
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_f400:
+    source: https://www.isdt.co/f400.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:94335840b7f23db90f1e46c5090dcb90783122bf0d0da9f4e37e719b672f3ee2
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_home:
+    source: https://www.isdt.co/
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:f1beb60311396bd96e36863fe084e04a1d7971ec8e4200e7a2c2308b194a9aba
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_k4:
+    source: https://www.isdt.co/k4.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:c06ebbb48a266ee4b6a3b5ad714b7b194a25e3928227cafc4abc06b5cf7a2b50
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_p30:
+    source: https://www.isdt.co/p30.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:ed276c543e8d78cb247af76e3d8e93db1a9c437c7b1b2fb3c06b045bc214dba4
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_qseries:
+    source: https://www.isdt.co/qseries.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:dde30f93739009ddb1996401e789609744d759740a701674275017da0880c466
+    conditions: non lues
+    redistribuable: false
+  marche_tr_isdt_x16:
+    source: https://www.isdt.co/x16.html?lang=en
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:627e89ef3b6fd24d00a4fe5e1d41d99c8374a6a69301df8d67ef26125fae5450
+    conditions: non lues
+    redistribuable: false
+  marche_tr_mouser_shipping_ch:
+    source: https://www.mouser.ch/shipping/
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:090cd6d695f16fb7df4192830425803d197ee9c9e5305c05e7f1df551ec87499
+    conditions: non lues
+    redistribuable: false
+  marche_tr_nucleo64_um2505:
+    source: https://www.st.com/resource/en/user_manual/um2505-stm32g4-nucleo64-boards-mb1367-stmicroelectronics.pdf
+    reference: ST UM2505 Rev 7, STM32G4 Nucleo-64 (MB1367) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:7a57beafac39507fabf0d9364d57c515c27b5ccc17848abe36d6fb077aeb3c56
+    conditions: non lues
+    redistribuable: false
+  marche_tr_nucleo_g474re_st:
+    source: https://www.st.com/en/evaluation-tools/nucleo-g474re.html
+    reference: ST, page produit NUCLEO-G474RE (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:028b395e96805ca1e6c78373520671ba741b39224a53c40613dc205b6ad1d9d5
+    conditions: non lues
+    redistribuable: false
+  marche_tr_pico2_ds:
+    source: https://datasheets.raspberrypi.com/pico/pico-2-datasheet.pdf
+    reference: Raspberry Pi Pico 2 Datasheet, Release 5
+    date: 2026-10-09
+    empreinte: sha256:cbcfaf881018c686495a2e53c7bd281e7e0a8217d79447d73eda7c8f74b7f675
+    conditions: non lues
+    redistribuable: false
+  marche_tr_pico2_product:
+    source: https://www.raspberrypi.com/products/raspberry-pi-pico-2/
+    reference: Raspberry Pi, page produit Pico 2 (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:74b011bb7e6f07a02b1f58fbc4483882ad8bf9b2497db37b9439bb8557782558
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rp2350_ds:
+    source: https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf
+    reference: RP2350 Datasheet, Release 8
+    date: 2026-10-09
+    empreinte: sha256:a638d6780da919162660691bfa02c6dcf7c2a0b6e9f18e2d7519c80b664a2e39
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_esp32s3:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=ESP32-S3-DevKitC-1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:5d8dd8cc184fa9255c13737eb54342f46e1cc37b17a2716f8e51f3082dc4af72
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_hailo:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:b7037d91394757536684de838106941e12034d00c3d2cdc335a2664a326e90d0
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_isdta80:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20A80
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:3f2ea281d6b93ad2638ec8b25c4b2431057b3fee1faafcb3fa1f05ec05cf403e
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_isdtx16:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=ISDT%20X16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:2d500421ff8b17ff856bba5343d20f998b37aa9704041663472991f2ab6df2cc
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_m14dac:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=ToolkitRC%20M14DAC
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:9980b9a71fca5d225cf64467e32591e3b6ee21c1b343c683ae3b1414be5df373
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_nucleo:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=nucleo-g474re
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:bd13c1cefc1fff67faf3dcafd8b2699b4abdb829d4ac87e34815062d87b6b9a4
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_pico2:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=raspberry%20pi%20pico%202
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:3a649217ae6136cbd0722d8f877dfce269ff9c22c27c973846de670b4aba38dd
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_skyrcpc1500:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=SkyRC%20PC1500
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:68b51412e80d2c01efd14b26d504cab67802d331067c4bdba1131f1e62ffae21
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_bastel_teensy:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:7b1702d37c8faa50d2f57a1b195042a9c3eeb66130746754c96c239453a4583b
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_esp32s3:
+    source: https://www.conrad.ch/fr/search.html?search=ESP32-S3-DevKitC-1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:cc79565dcbc7e10d8025656731a98755cc93a47f4e6849d599d70e7d3bbe7300
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_hailo:
+    source: https://www.conrad.ch/fr/search.html?search=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:98364a2153d128e391924f48ab668e414a792f7997a139bcf3fcd6fe6e09a468
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_isdta80:
+    source: https://www.conrad.ch/fr/search.html?search=ISDT%20A80
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a2158cf756402a7baf334aec28717846173a3842d76114e4b356a4b4bde6f6d6
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_isdtx16:
+    source: https://www.conrad.ch/fr/search.html?search=ISDT%20X16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:2a360173596627af8d789314a207aac38368cd98db990843496a5de441713e16
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_m14dac:
+    source: https://www.conrad.ch/fr/search.html?search=ToolkitRC%20M14DAC
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:055a6b22f0e88eda035e329b0c818ca23c418ec55f7984d818bb075c1c0598da
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_nucleo:
+    source: https://www.conrad.ch/fr/search.html?search=nucleo-g474re
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:b6e4868b361283c047cd9f44e76a479da2ee96ec4c4b4f0fb1fe76cf11371603
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_pico2:
+    source: https://www.conrad.ch/fr/search.html?search=raspberry%20pi%20pico%202
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:01ad4538c197398191530a21c2d30a0cdeb9805ef1d34d7be40503b28629cda8
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_skyrcpc1500:
+    source: https://www.conrad.ch/fr/search.html?search=SkyRC%20PC1500
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:f963efe7bffe9e0e1e94e1cab7b908f9a84fe56bc719ab51bf4e5fe9b4af2096
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_conrad_teensy:
+    source: https://www.conrad.ch/fr/search.html?search=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:30bd7194532bd2393fcf310fa081fac5220cbef129817cf674d39227d2329805
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_digikey_teensy:
+    source: https://www.digikey.ch/fr/products/result?keywords=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:f47c758f3c254b6583209a34b9223bdb6240ecb42e6b42a9273d014ffab25a71
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_esp32s3:
+    source: https://www.distrelec.ch/search?q=ESP32-S3-DevKitC-1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:84a0e00087a0a5043b71e7868db07e848c69005d8ee3002dd938895b50ed095c
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_hailo:
+    source: https://www.distrelec.ch/search?q=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:c9010b15bb2527deb50cda1fea871fde9da48db212d37a15d06af7d7df31fdba
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_isdtx16:
+    source: https://www.distrelec.ch/search?q=ISDT%20X16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:0b643685000b0a6b40c702d72ee71076ff2730d4850dbc78d86f480ecc0015f4
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_m14dac:
+    source: https://www.distrelec.ch/search?q=ToolkitRC%20M14DAC
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:6c75b28fec107d24bb6a4fab1e214b01b9f6c8f4e0dccf3cc8ec91dd4d60d7b9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_nucleo:
+    source: https://www.distrelec.ch/search?q=nucleo-g474re
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:30ba38f5379c3864e4c7157e8c502f9ddcc1e229eb98636929fcbb394c92c73c
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_pico2:
+    source: https://www.distrelec.ch/search?q=raspberry%20pi%20pico%202
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:bd799dce23e50eafcd4246dfec59783cfd5b1d43d9c3ced473f8bc3a9f500155
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_skyrcpc1500:
+    source: https://www.distrelec.ch/search?q=SkyRC%20PC1500
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a2a18072d5a074e63acf0bb2b532ba596747894ddcc69e7dd1b003b73f329e78
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_distrelec_teensy:
+    source: https://www.distrelec.ch/search?q=teensy
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:c130acfe0f2ed8972f1123eed71f4623965d6600628eb237159f1f84401c589d
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_dk_hailo:
+    source: https://www.digikey.ch/fr/products/result?keywords=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:8e2c000c51ad270357e715183954dbf224b9b118425e680e6863658608ef1652
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_dk_shipping_ch:
+    source: https://www.digikey.ch/fr/help/shipping
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a168288589d1538a09b943ae4f5c50123e5f537b6f89677059618924ae3b69c9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_esp32s3:
+    source: https://www.galaxus.ch/fr/search?q=ESP32-S3-DevKitC-1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:32858226f0b0ef42a82dd9f1538f8934b5bf7246afd37eef1a9464c5ae9eb50f
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_hailo:
+    source: https://www.galaxus.ch/fr/search?q=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:178696f5047096aea5871948b402d701824c27461f3899edc1987fe902a683f9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_isdta80:
+    source: https://www.galaxus.ch/fr/search?q=ISDT%20A80
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:80429b194dcbf764e768dc16f69cc5a3b78a57340a54781ab3b0abdd5edab140
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_isdtcm1620:
+    source: https://www.galaxus.ch/fr/search?q=ISDT%20CM1620
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:0b493d83ea84a9c294ed7dbd4c8fd976b750d7a93614f2b6821d2cb580da8170
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_isdtx16:
+    source: https://www.galaxus.ch/fr/search?q=ISDT%20X16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:53bb443b97a15b7e76ddea73033ed8e3faff06cd746bc556939ea92d1809de12
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_m14dac:
+    source: https://www.galaxus.ch/fr/search?q=ToolkitRC%20M14DAC
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:5dfc9064fa5447361c81222e9783cb86dfd27ccf74bf6e730e972315a8220620
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_nucleo:
+    source: https://www.galaxus.ch/fr/search?q=nucleo-g474re
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:0921fe5b7f54de6174f7654779b39195ef4c2bd6f2500c98b3a39428f9d64f33
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_pico2:
+    source: https://www.galaxus.ch/fr/search?q=raspberry%20pi%20pico%202
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a26e0bcd2050b5de52c17433240ae982aa817d84b8f4c98b7c9d43e72cf9f31a
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_skyrcpc1500:
+    source: https://www.galaxus.ch/fr/search?q=SkyRC%20PC1500
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:c9f2d49e3ee97ad1a4187c2cb5526da3834fcb724d8c63f3971d29ba3e5a94eb
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_galaxus_teensy:
+    source: https://www.galaxus.ch/fr/search?q=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:9c6edb43e9ec619f29e4b48937b2dbd6cf1f4fb467b667445816aa8df4a3e3a8
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_mouser_hailo:
+    source: https://www.mouser.ch/c/?q=hailo-8
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:e4f2f8f7118e93f5ff274142ef4a6c9e22825c6ea5decc65f538d3b549d89891
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_mouser_shipping_ch:
+    source: https://www.mouser.ch/shipping/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:6a9eb0e5944822ddeee74ceb41ef7664d15ef5970e0ec59ef4503be33469e9f1
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_mouser_teensy:
+    source: https://www.mouser.ch/c/?q=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:4d42e17b85bd89b403b96b30b91e6774b01e085e48f79567dab8e39dd349dc8f
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_esp32s3:
+    source: https://www.pi-shop.ch/search?sSearch=ESP32-S3-DevKitC-1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:ed58573e83c10a552e5c35d9633a82f1758e8839a3c674f4ba55733a32de27cb
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_hailo:
+    source: https://www.pi-shop.ch/search?sSearch=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:d91d64680235db0e43a5fb52f6987733b50e8bb5b968c6b3ca9a33f7cd91f585
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_home:
+    source: https://www.pi-shop.ch/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:033692ad6628c653ebfd06b91471f7b7d009b62704b47a288a0460e68e9297d2
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_isdta80:
+    source: https://www.pi-shop.ch/search?sSearch=ISDT%20A80
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:f0729345fce0a3fe971eb5e52d9ddb7a93aa9ddd21ea7d363f15068eaed44b21
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_isdtx16:
+    source: https://www.pi-shop.ch/search?sSearch=ISDT%20X16
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:3702c12164a09124b5042d01b3c2a025ef779127444d5793f177525010b50bc8
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_m14dac:
+    source: https://www.pi-shop.ch/search?sSearch=ToolkitRC%20M14DAC
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:1d103f294b90ec888a7c7d8aea6661e62c39d1d0b436bbe3307bf403e3314756
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_pico2:
+    source: https://www.pi-shop.ch/search?sSearch=raspberry%20pi%20pico%202
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:909c5c5ad78e5c00f50df4b139c379b43c604184d3aa0fd157cb34cb3af14415
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_skyrcpc1500:
+    source: https://www.pi-shop.ch/search?sSearch=SkyRC%20PC1500
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:f7fdab6061e66c9b175d5cad01ec2cefbb1769f4a3d42f9560880bf7da342a9d
+    conditions: non lues
+    redistribuable: false
+  marche_tr_rv_pishop_teensy:
+    source: https://www.pi-shop.ch/search?sSearch=teensy%204.1
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:c2f817e4c7f0680dbc2c075681577cf7936655208c5191f90207110611dd77c3
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_PC1080_Charger:
+    source: https://www.skyrc.com/PC1080_Charger
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:2b85bc12dc8f841fdd6d3adec209d022af46d8f0ff549a1c47b02f398fd845b9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_d260:
+    source: https://www.skyrc.com/d260
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:7bee3d1bc188e8b6f37ee87769e91e498d18aaeacb9d23f1f334a697afa80ee6
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc1080neo:
+    source: https://www.skyrc.com/pc1080neo
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:1a0841c5ba35cf63f86bd893f3b928a5765b5a5c51490c744b45be09d84544e5
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc1500:
+    source: https://www.skyrc.com/pc1500
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:72ab057fb9245451f7744925618c2b992e1cb649d8dd501a15cd30a8c6d65c65
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc1500_manuel_v1_0:
+    source: https://www.skyrc.com/files/217/PC1500_Instruction_Manual_EN_V1.0.pdf.pdf
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:26f4062a2190c0d898c4cbabad2e9a23ac6e999d69819f04f997985ff40d6f64
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc2500:
+    source: https://www.skyrc.com/pc2500
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:7c1fa899db79855b0db0bdc103d18dd455b85a0d2a2b30a33ec1645d7496968e
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc3000h:
+    source: https://www.skyrc.com/pc3000h
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:aa38e9b414e0832c211394331e4c2d087b107a84fb9f463e63b5cd3e45a358cc
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_pc3020:
+    source: https://www.skyrc.com/pc3020
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:4b8256f788abf98dd832f791957d1a96c1961d2933b58c5f21feaf353649e0c9
+    conditions: non lues
+    redistribuable: false
+  marche_tr_skyrc_q200neo:
+    source: https://www.skyrc.com/q200neo
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:c2eda2e0d372a8a05a067fc793539942f95d0372e0834930f5b95ff12b59787a
+    conditions: non lues
+    redistribuable: false
+  marche_tr_stm32g474_ds:
+    source: https://www.st.com/resource/en/datasheet/stm32g474re.pdf
+    reference: ST DS12288 Rev 6, STM32G474xB/xC/xE (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a9b4180e999982e6073564059d265eca182c66fd10225631585109b14b455c84
+    conditions: non lues
+    redistribuable: false
+  marche_tr_teensy41_pjrc:
+    source: https://www.pjrc.com/store/teensy41.html
+    reference: PJRC, page produit Teensy 4.1
+    date: 2026-10-09
+    empreinte: sha256:5387bd852ebe480ae742a77a8b08aa3ff5265adc6775ade56cb305fb1733f451
+    conditions: non lues
+    redistribuable: false
+  marche_tr_toolkitrc_m14dac:
+    source: https://www.toolkitrc.com/m14dac/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:5f65323b1e69b407adf7d6eef909deb29554ed13ac4433291b729305faaffa54
+    conditions: non lues
+    redistribuable: false
+  marche_tr_toolkitrc_m8d:
+    source: https://www.toolkitrc.com/m8d/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:802c36ff38558bb3d6b94b941811bf248f30d227f37a8068c3c2ca5a27251f93
+    conditions: non lues
+    redistribuable: false
+  marche_tr_toolkitrc_m8dac:
+    source: https://www.toolkitrc.com/m8dac/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:7f7fd05485e8612a96e1b186b7058179adcf4e6cc6f8be399a42da11971e1cf5
+    conditions: non lues
+    redistribuable: false
+  marche_tr_toolkitrc_m9:
+    source: https://www.toolkitrc.com/m9/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:a2b6d2c86cd6305a27ca3d06884823d64d79037457453e979d345f4f2ac70c89
+    conditions: non lues
+    redistribuable: false
+  marche_tr_toolkitrc_q6ac:
+    source: https://www.toolkitrc.com/q6ac/
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:34116b55f8ef50f4c9c189d32f0fa38133f35fe28af991aeaa66895f4bb72829
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_berrybase_esp32s3:
+    source: https://www.berrybase.de/search?search=esp32-s3-devkitc-1
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:db2c1538ec07349794fff07d6e7e21b32b44b47a48fb8d6b3a8ac0e0fb389a4d
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_berrybase_hailo:
+    source: https://www.berrybase.de/search?search=hailo
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:70bc4ce52180417f0a2190a994dd148789f114f69fd3de4e287efe61dfebdfc2
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_berrybase_pico2:
+    source: https://www.berrybase.de/search?search=pico+2
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:f9b7cca94c5a51f534cae64869942d25e011752bad58211c9da9cc98cefc8834
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_berrybase_teensy:
+    source: https://www.berrybase.de/search?search=teensy+4.1
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:f55336fa7866f6d083dd8bd0d897bea3b04adea8975f5c64bf0b5ea45d02d12f
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_galaxusde_hailo:
+    source: https://www.galaxus.de/de/search?q=hailo-8%20m.2
+    reference: page web téléchargée (HTTP 200) (via https://r.jina.ai/)
+    date: 2026-10-09
+    empreinte: sha256:8a01d545ac473f0d663f32282f6c233d3c306385108c335a510080f4bcff4cd8
+    conditions: non lues
+    redistribuable: false
+  marche_tr_ue_sparkfun_teensy41:
+    source: https://www.sparkfun.com/teensy-4-1.html
+    reference: page web téléchargée (HTTP 200)
+    date: 2026-10-09
+    empreinte: sha256:161d3499a4223dc0a1d196c7010af4c7e3b4673443010e76feab1768f981f7d8
+    conditions: non lues
+    redistribuable: false
+
+  # ── Marché des actionneurs complémentaires (actionneurs.yaml, marche.releve_2026_10_09), versé le 2026-10-09 ──
+  marche_act2_emanual_xm540w150:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xm540-w150/
+    reference: ROBOTIS e-Manual, XM540-W150-T/R, Specifications
+    date: 2026-10-09
+    empreinte: sha256:8cc6aa7179fed1264a07783ffc5322b77f29cd17118192c6e5d2d3f5c43c2a93
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_xm540w270:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xm540-w270/
+    reference: ROBOTIS e-Manual, XM540-W270-T/R, Specifications
+    date: 2026-10-09
+    empreinte: sha256:175d7cf17e96735ee95fecf9833ec141a73fab74fe448d3fdc2739feacb512e2
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_xh540w150:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xh540-w150/
+    reference: ROBOTIS e-Manual, XH540-W150-T/R, Specifications
+    date: 2026-10-09
+    empreinte: sha256:e97f0800cf72330f7c8776d0700cba7e5d64a50b4b434f02c1a2f757ce955e88
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_xh540w270:
+    source: https://emanual.robotis.com/docs/en/dxl/x/xh540-w270/
+    reference: ROBOTIS e-Manual, XH540-W270-T/R, Specifications
+    date: 2026-10-09
+    empreinte: sha256:4685c1f16cfdb7623a9bec767b93a2fa4bccc265e1107633b3dcb867c518f92a
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_dxly:
+    source: https://emanual.robotis.com/docs/en/dxl/y/
+    reference: ROBOTIS e-Manual, DYNAMIXEL-Y, liste des modeles
+    date: 2026-10-09
+    empreinte: sha256:81bb6150d443213193002bccf96ab4825165dcf5654583e0b350b0a8fd40b4c7
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_ym070r051:
+    source: https://emanual.robotis.com/docs/en/dxl/y/ym070-210-r051-rh/
+    reference: ROBOTIS e-Manual, YM070-210-R051-RH, Specifications
+    date: 2026-10-09
+    empreinte: sha256:d486c1f7b4a6525fdaa20ed18f3f551cda72bc2fd44ad84425ebd3d288ccb105
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_ym070r099:
+    source: https://emanual.robotis.com/docs/en/dxl/y/ym070-210-r099-rh/
+    reference: ROBOTIS e-Manual, YM070-210-R099-RH, Specifications
+    date: 2026-10-09
+    empreinte: sha256:97fb5dce35253f97bd4d982ff752c159603b94980f8b68176095414fc0189c61
+    conditions: non lues
+    redistribuable: false
+  marche_act2_emanual_ym080r099:
+    source: https://emanual.robotis.com/docs/en/dxl/y/ym080-230-r099-rh/
+    reference: ROBOTIS e-Manual, YM080-230-R099-RH, Specifications
+    date: 2026-10-09
+    empreinte: sha256:cec9e868e05f0c9dc54137285b141021f9148921b437e03ae58cfe8b41e92b25
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_xm540w150:
+    source: https://www.robotis.us/products/dynamixel-xm540-w150-r
+    reference: ROBOTIS US, fiche boutique XM540-W150-R (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:76a4813d5b89f3264b393d3361d5628dbbfd1e944886cc0942d01ea63e9a2908
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_xm540w270:
+    source: https://www.robotis.us/products/dynamixel-xm540-w270-r
+    reference: ROBOTIS US, fiche boutique XM540-W270-R (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:ed9cd5f61ef18d67b3bc6a7d5f3a0eca810953a8c0eeed6710add4620bf0d127
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_xh540w150:
+    source: https://www.robotis.us/products/dynamixel-xh540-w150-r
+    reference: ROBOTIS US, fiche boutique XH540-W150-R (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:87ffb855bff5e14cd592f11012a05874220a92b8f436d155dfe725c9353c4b94
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_xh540w270:
+    source: https://www.robotis.us/products/dynamixel-xh540-w270-r
+    reference: ROBOTIS US, fiche boutique XH540-W270-R (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:4bc75ba89209fd6cb8d2b81e9c4616a6faa5c26ca007e3f14ad1107fee073178
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_ym070r051:
+    source: https://www.robotis.us/products/ym070-210-r051-rh
+    reference: ROBOTIS US, fiche boutique YM070-210-R051-RH (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:89b2379292c487c7fbc1e4fdff281c5da6d763295a1ee91fdf72c85e9c20c417
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_ym070r099:
+    source: https://www.robotis.us/products/ym070-210-r099-rh
+    reference: ROBOTIS US, fiche boutique YM070-210-R099-RH (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:59d162a805ef2d89976077fb9fd501eeb6a5e8ba042ce44db807157500602e8e
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_ym080r099:
+    source: https://www.robotis.us/products/ym080-230-r099-rh
+    reference: ROBOTIS US, fiche boutique YM080-230-R099-RH (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:aa993c497cbbdd9e9934e30eb16e9e76f47d8caa5646022d6790d70150ff05ac
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_rech540:
+    source: https://www.robotis.us/search?q=540&type=product
+    reference: ROBOTIS US, recherche 540 (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:3d13ed0d100c5ce2617deda69e7c671b80af47ef39f18e919d9e294fde1c1897
+    conditions: non lues
+    redistribuable: false
+  marche_act2_robotisus_rechym:
+    source: https://www.robotis.us/search?q=YM070&type=product
+    reference: ROBOTIS US, recherche YM070 (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:ff875a598e4da2d2ad3d0c55816ec2025347c564e2951f547e59dcd0e8777790
+    conditions: non lues
+    redistribuable: false
+  marche_act2_openelab_c044:
+    source: https://openelab.io/products/feetech-sts3215-c044-servo-7
+    reference: OpenELAB, fiche Feetech STS3215-C044 (tableau Specifications) (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:78755b9fc56f4529b231c1af52ee6741b812a9433ef21e34ac45f4207921a6aa
+    conditions: non lues
+    redistribuable: false
+  marche_act2_openelab_c046:
+    source: https://openelab.io/products/feetech-sts3215-c046-servo
+    reference: OpenELAB, fiche Feetech STS3215-C046 (tableau Specifications) (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:881837205a606ae36dc6123fc2ff97dae30deef6b80d8239c9d0a4793cb6da15
+    conditions: non lues
+    redistribuable: false
+  marche_act2_eckstein_hl3950:
+    source: https://eckstein-shop.de/feetech-hl-3950-c001-servo
+    reference: Eckstein, fiche Feetech HL-3950-C001 (Art.-Nr. FT01021)
+    date: 2026-10-09
+    empreinte: sha256:11ce3a7c31d910ba6cd4ea44958872359099e28d91d7f6d3616b26f7169f2b67
+    conditions: non lues
+    redistribuable: false
+  marche_act2_feetech_hls3950m_spec:
+    source: https://ecksteinimg.de/Datasheet/Feetech/FT01021.pdf
+    reference: Feetech, Product Specification HLS3950M-C001, edition A/0, 2024-04-25 (heberge par Eckstein)
+    date: 2026-10-09
+    empreinte: sha256:25cd3e2cccf3b2d0288a9191744c942c3a6283975d4ec52d7259d1b7c495202d
+    conditions: non lues
+    redistribuable: false
+  marche_act2_mjbots_x1:
+    source: https://mjbots.com/products/moteus-x1.json
+    reference: mjbots, fiche produit moteus-x1 (JSON Shopify)
+    date: 2026-10-09
+    empreinte: sha256:ca8bf3a8c9da29c82b0a11d593c0727b5cfa27cd33d401000ebd74cb9b23ae67
+    conditions: non lues
+    redistribuable: false
+  marche_act2_mjbots_devise:
+    source: https://mjbots.com/cart.js
+    reference: mjbots, panier vide (champ currency)
+    date: 2026-10-09
+    empreinte: sha256:b95b9d96b68091365a787b267fa2fdc12264dfe6c7cde96950fb670ef4ee53ce
+    conditions: non lues
+    redistribuable: false
+  marche_act2_mjbots_mj5208:
+    source: https://mjbots.com/products/mj5208.json
+    reference: mjbots, fiche produit mj5208 (JSON Shopify)
+    date: 2026-10-09
+    empreinte: sha256:b38d1a63e478eb88469bd6da29145336d17ebdc544da15284d433710cbf9ca29
+    conditions: non lues
+    redistribuable: false
+  marche_act2_moteus_hardware:
+    source: https://raw.githubusercontent.com/mjbots/moteus/main/docs/reference/hardware.md
+    reference: moteus docs/reference/hardware.md (Electrical Limits)
+    date: 2026-10-09
+    empreinte: sha256:a341960816fcb0af8b21de9db4025ee12a21dde25298d834340d937e2b95c80d
+    conditions: non lues
+    redistribuable: false
+  marche_act2_moteus_limits:
+    source: https://raw.githubusercontent.com/mjbots/moteus/main/docs/reference/limits.md
+    reference: moteus docs/reference/limits.md
+    date: 2026-10-09
+    empreinte: sha256:ea5cc2699aec3cf2dc91047f90f19ddaded4d5a47ba7339f0a553319f84af44f
+    conditions: non lues
+    redistribuable: false
+  marche_act2_moteus_hw_x1_r1:
+    source: https://api.github.com/repos/mjbots/moteus/contents/hw/x1/r1
+    reference: depot mjbots/moteus, hw/x1/r1 (20250427-moteus-x1-r1)
+    date: 2026-10-09
+    empreinte: sha256:8c76d52cf5139f0500e98a66bcfc0b8d0802fa18fdbfe381fae7cec6e44ed476
+    conditions: non lues
+    redistribuable: false
+  marche_act2_moteus_releases:
+    source: https://api.github.com/repos/mjbots/moteus/releases?per_page=30
+    reference: depot mjbots/moteus, versions publiees
+    date: 2026-10-09
+    empreinte: sha256:de13431a0215f695259033951eea0f9a540077c7327ba829f0adb83429ca4b30
+    conditions: non lues
+    redistribuable: false
+  marche_act2_odrive_s1_ds:
+    source: https://docs.odriverobotics.com/v/latest/hardware/s1-datasheet.html
+    reference: ODrive S1 Datasheet (docs v/latest)
+    date: 2026-10-09
+    empreinte: sha256:353e2442e0b57c91ebe980eddcbf188456a1e40a009335d8bdafd63347bb0579
+    conditions: non lues
+    redistribuable: false
+  marche_act2_odrive_s1_shop:
+    source: https://odriverobotics.com/shop/odrive-s1
+    reference: ODrive Robotics, boutique, ODrive S1
+    date: 2026-10-09
+    empreinte: sha256:0ced7cd80d3228d3ffc44c703a81d617ea49481adbee697e10aa3577f51138f0
+    conditions: non lues
+    redistribuable: false
+  marche_act2_maxon_hej70_48_50:
+    source: https://www.maxongroup.com.cn/assets/public/caas/v1/media/271326/data/918cdb4e2af1177d5e7cd608fa170828/robotics-robotic-joints-hej-70-data-sheet.pdf
+    reference: maxon, Preliminary Datasheet HEJ 70-48-50, Jul. 2025, rev. 0.92 (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:4130be2171ad120cf31c2e09f36cd4a5022b74aa0a42010481be0448f40bd9f7
+    conditions: non lues
+    redistribuable: false
+  marche_act2_maxon_hej70_48_60:
+    source: https://global.maxongroup.com/hubfs/Datasheet_HEJ_70_48_60_rev1.2.pdf?hsLang=en
+    reference: maxon, Datasheet HEJ 70-48-60, Jun. 2026, rev. 1.2, P/N 933846 et 933847
+    date: 2026-10-09
+    empreinte: sha256:3cfa7a0988d148ff12094a5d52ee2e37cd9f50bc6a9bb2db893d351ba0e9819f
+    conditions: non lues
+    redistribuable: false
+  marche_act2_trr_hej70:
+    source: https://www.therobotreport.com/maxon-unveils-high-efficiency-joint-70-actuator-for-dynamic-robots/
+    reference: The Robot Report, 2024-11-22, annonce HEJ 70-48-50
+    date: 2026-10-09
+    empreinte: sha256:966632599025d2ad29ea8ca59add7bf6e46e7d91d3463a116bb11c5be162c261
+    conditions: non lues
+    redistribuable: false
+  marche_act2_galaxus_xm540:
+    source: https://www.galaxus.ch/de/search?q=XM540
+    reference: Galaxus, recherche XM540 (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:5951f1aec8e65b9d0a23d2adbf92b66545f0fbc2608d0065664029ed6f814755
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_STS3215:
+    source: https://www.galaxus.ch/de/search?q=STS3215
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:3e81b8c47de842d97fd75e5f1bbb5fc090b88577dcb4d15a654505b4f736fd70
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_feetech:
+    source: https://www.galaxus.ch/de/search?q=feetech
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:42912fa3644cc3015aae5dd2fed8d4c88214920f5bef0a2353d43fefe6e194f2
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_HL-3950:
+    source: https://www.galaxus.ch/de/search?q=HL-3950
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:fff95cfc1d29597177f6f35c83b0418beba0d2d7a5f57ba4bc91c28c84b2b31c
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_XM540:
+    source: https://www.galaxus.ch/de/search?q=XM540
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:5951f1aec8e65b9d0a23d2adbf92b66545f0fbc2608d0065664029ed6f814755
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_xm540_w270_17243696:
+    source: https://www.galaxus.ch/de/s1/product/robotis-servomotor-dynamixel-xm540-w270-r-dynamixel-robotik-modul-17243696
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:490a824fda5edf52087e2f87a11dac3a86eef26545a31a4daaee91770708c0ea
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_XH540:
+    source: https://www.galaxus.ch/de/search?q=XH540
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:68d11a522da39d0c89f7b99e91d5deb739dcde94b75bd60561144fa0e0879221
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_dynamixel:
+    source: https://www.galaxus.ch/de/search?q=dynamixel
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:0de5ad093aa1e647a29d2399ef41049227582d524e38f2a8fc77f828bde59299
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_YM070:
+    source: https://www.galaxus.ch/de/search?q=YM070
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:b10bec1a8bc3a3b1d453cb74ea9ead6f8a52ed5bcdd2ffe52a49b47e36186776
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_moteus:
+    source: https://www.galaxus.ch/de/search?q=moteus
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:15bf180010ee1fd4d396e68643f4bc497b04fbdfcee611f860c42a8d7cef8091
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_odrive:
+    source: https://www.galaxus.ch/de/search?q=odrive
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:b3d33fa86c16287223817f3864816c8f327ca9763e94dc9f510f5cc1b1d3b582
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_galaxus_maxon_HEJ:
+    source: https://www.galaxus.ch/de/search?q=maxon+HEJ
+    reference: Galaxus, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:53406dfb3ccbe9ad14318802699580d54608ba033b4d73cba51e1c9c0e59c79c
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_feetech:
+    source: https://www.conrad.ch/de/search.html?search=feetech
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:1f7d7781ad22ccc4d53ab3a3247951525b80c075e99450f2879c9ae85095ecc6
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_STS3215:
+    source: https://www.conrad.ch/de/search.html?search=STS3215
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:ba2ccdd45ab0a0bead83733260a24078bceab3ef642b7188f2d2b75ce20b67c1
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_dynamixel:
+    source: https://www.conrad.ch/de/search.html?search=dynamixel
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:2efd257142fd6f970aac6b1bebd4b9beeadf6cadf57e001edfe6096f25a1537e
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_XM540:
+    source: https://www.conrad.ch/de/search.html?search=XM540
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:ca184cb6bf80a9dfb7aa0fbb35101d0161e28515db03012677a62ef8703c72c8
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_moteus:
+    source: https://www.conrad.ch/de/search.html?search=moteus
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:e1e24186ad6523eac0a95cc2eb6c7cb765a309f6a3fa29bdc5d87516d9ff0220
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_odrive:
+    source: https://www.conrad.ch/de/search.html?search=odrive
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:861856cca03ce015f59808fd10f085a7bb6e68dd30b6f53715c187999950ec60
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_conrad_maxon_HEJ:
+    source: https://www.conrad.ch/de/search.html?search=maxon+HEJ
+    reference: Conrad.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:756c5e7e746ec6b811cb9bb6638b3960a5f7b61146dd878d09555b03580c0494
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_feetech:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=feetech
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:1113d63170ad844a8fe990b9fb43bbbcc32d24596e44bb934444dfb3387a350b
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_dynamixel:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=dynamixel
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:20b44ee3914d1311e412515f307342eb7de0d099be84cabae5d8d835692f6eaa
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_robotis:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=robotis
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:1f5ae417110940ce925f9f371acc5aeb93447d7083cc76f7b654a0c012172f84
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_moteus:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=moteus
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:26410b8aafd769596218f23fcf204e7be74b63d4e9d5e640a4ef1fcb37656f4a
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_odrive:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=odrive
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:56c0ec8141958f814121682a87ee6f35d97de9e8f1fbe474ca4ab31f9cdaa15d
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_maxon:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=maxon
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:1e71fe744a02ed6e2b42c3ddab9a2626023f2b141752cca5b65b2bfc44c7608e
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_bastelgarage_servo_temoin:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=servo
+    reference: Bastelgarage.ch, recherche
+    date: 2026-10-09
+    empreinte: sha256:4882a141e48729091c83fbcc1f77b84d8f37b4da490047e76a9b50d60080d2cc
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_pishop_feetech:
+    source: https://www.pi-shop.ch/catalogsearch/result/?q=feetech
+    reference: Pi-Shop.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:8adbaa0d8a3d12ae576251ed61a1656c0f6c725a58b947ed3e7b328090acab3e
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_distrelec_dynamixel:
+    source: https://www.distrelec.ch/search?q=dynamixel
+    reference: Distrelec.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:a723407136a2bf80a127a3e8a2d0758c49d55564253fd7cb0eff3e14aaf8056c
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_distrelec_man_dynamixel:
+    source: https://www.distrelec.ch/en/manufacturer/dynamixel/man_dyx
+    reference: Distrelec.ch, recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:a47782f9724b15d2f51e3b8e88d20c7945da6c70d5b0986596cf9a4089f0a77a
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_digikey_xm540:
+    source: https://www.digikey.ch/en/products/result?keywords=XM540-W270-R
+    reference: DigiKey (digikey.ch), recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:d39be4a3ad9ec7ece87a30afc096e81287433137a77c0f075b8d9e3d65ac54a3
+    conditions: non lues
+    redistribuable: false
+  marche_act2_ch_mouser_dynamixel:
+    source: https://www.mouser.ch/c/?q=dynamixel
+    reference: Mouser (mouser.ch), recherche (via r.jina.ai)
+    date: 2026-10-09
+    empreinte: sha256:ea76e7b7be92160f2a4f6265f9b2aa8736a402ce10d4d7a21c4cb9a4462509ca
+    conditions: non lues
+    redistribuable: false
