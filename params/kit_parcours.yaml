@@ -33,7 +33,7 @@ etapes:
     nom: maquette carton
     but: "le robot entier en carton, passif : poses, proportions, montage, noms d'axes (plans du niveau 0)"
     alimentation: aucune
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, agrafeuse, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, agrafeuse, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "structure:niveau0", n: 1, classe: STRUCTURE, fixation: tenon, role: "gabarits du niveau 0 (parts/kit_niveau0.py)"}
       - {ref: "null:vis M4, écrous à frein, rondelles larges (pivots)", n: 38, classe: DURABLE, fixation: écrou, role: pivots}
@@ -41,11 +41,11 @@ etapes:
     nom: tête de bureau
     but: "deux STS3215 en pan-tilt, une caméra, un adaptateur USB, branchée sur un PC"
     alimentation: secteur 12 V
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "servo:sts3215_c018", n: 2, classe: DURABLE, fixation: vis, role: "cou (lacet, tangage)", axes: [neck_yaw, neck_pitch]}
       - {ref: "bride:sts3215", n: 2, classe: DURABLE, fixation: vis, role: brides du pan-tilt}
-      - {ref: "null:caméra USB (la Camera Module 3 se branche sur un Raspberry Pi, pas sur un PC)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: "null:caméra USB (décidé par Jeremy, fiche 0077 : « Ok pour une caméra USB »)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
       - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: "bus série des servos, USB vers le PC"}
       - {ref: bloc_12v, n: 1, classe: DURABLE, fixation: connecteur, role: alimentation des servos}
       - {ref: "null:vis M2 et M3 (brides, palonniers)", n: 1, classe: DURABLE, fixation: vis, role: visserie}
@@ -54,7 +54,7 @@ etapes:
     nom: tête qui parle
     but: "micro, haut-parleur, Raspberry Pi 5 ; variantes IA « réseau » (le modèle tourne ailleurs) et « locale » (sur le Pi, avec ou sans AI HAT+ 2)"
     alimentation: secteur 12 V
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "servo:sts3215_c018", n: 2, classe: DURABLE, fixation: vis, role: cou, axes: [neck_yaw, neck_pitch]}
       - {ref: "bride:sts3215", n: 2, classe: DURABLE, fixation: vis, role: brides du pan-tilt}
@@ -73,7 +73,7 @@ etapes:
     nom: buste à bras
     but: "la tête sur un buste, deux bras de trois axes (variante : un bras SO-101)"
     alimentation: secteur 12 V
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "servo:sts3215_c018", n: 8, classe: DURABLE, fixation: vis, role: "cou (2), épaules (2 × 2), coudes (2)", axes: [neck_yaw, neck_pitch, shoulder_pitch, shoulder_roll, elbow_roll]}
       - {ref: "bride:sts3215", n: 8, classe: DURABLE, fixation: vis, role: brides}
@@ -91,7 +91,7 @@ etapes:
     nom: base à roues
     but: "le buste sur une base à deux roues motrices (STS3215 en rotation continue), batterie, manette"
     alimentation: batterie de moins de 100 Wh (3S1P de la cellule du Lab) ; variante batterie d'outillage
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "servo:sts3215_c018", n: 10, classe: DURABLE, fixation: vis, role: "buste (8) et roues (2, rotation continue)", axes: [neck_yaw, neck_pitch, shoulder_pitch, shoulder_roll, elbow_roll, roue]}
       - {ref: "bride:sts3215", n: 10, classe: DURABLE, fixation: vis, role: brides}
@@ -113,7 +113,7 @@ etapes:
     nom: jambes
     but: "le robot entier qui tient debout (le niveau « debout » de l'étude du 8 octobre) ; les servos des roues deviennent des servos de jambe"
     alimentation: batterie de moins de 100 Wh (3S1P de la cellule du Lab)
-    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis]
     nomenclature:
       - {ref: "servo:sts3215_c018", n: "kit", classe: DURABLE, fixation: vis, role: "cou, bras, et les axes de jambe que le STS3215 tient"}
       - {ref: "servo:sts3250", n: "kit", classe: DURABLE, fixation: vis, role: "axes de jambe qui demandent le STS3250"}

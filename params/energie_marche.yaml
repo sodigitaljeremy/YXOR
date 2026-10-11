@@ -1,0 +1,1407 @@
+# ÉNERGIE (batterie unique du Kit et du Lab, fiche 0077) et IA PAR LE RÉSEAU — marché VERSÉ le 2026-10-11
+#
+# Étude d'un agent : chaque valeur vient d'une source TÉLÉCHARGÉE, inscrite à params/fournisseurs.yaml (marche_nrj_*,
+# sha256, non redistribuable) ; null si non lu ; la plus prudente de deux valeurs (fiche 0064). `releve` : le relevé
+# brut ; `batteries_outillage`, `usb_c`, `ia_reseau` : les mêmes valeurs, aux noms de champs de
+# scripts/cartographie_modules.py (masse : la plus haute des valeurs lues). Aucun achat recommandé (fiche 0066).
+# ⚠ Courant de décharge maximal : publié par AUCUNE des 8 batteries d'outillage (null) ; protection DeWalt dans
+#   l'outil (démontage de packs US 20V MAX, pas du DCB184 ; done.land dit l'inverse) ; Makita : l'outil coupe (notice
+#   DDF485, communication avec la batterie) ; Bosch : non dit. Aucun convertisseur ≥ 25 A lu couvrant 14-21 V en entrée.
+batteries_outillage:
+- nom: Makita BL1820B
+  energie_Wh: 36
+  masse_g: 500
+  courant_max_A: null
+  prix_chf: 74.55
+  dispo_ch: offres CH sur Toppreise (2 offres lues)
+  securite: 'coupure basse dans : outil (sur signal de la batterie) ; surintensité dans : outil (sur signal de la
+    batterie)'
+- nom: Makita BL1850B
+  energie_Wh: 90
+  masse_g: 654
+  courant_max_A: null
+  prix_chf: 66.0
+  dispo_ch: 20 offres CH (Toppreise, 2026-10-11)
+  securite: 'coupure basse dans : outil (sur signal de la batterie) ; surintensité dans : outil (sur signal de la
+    batterie)'
+- nom: DeWalt DCB183
+  energie_Wh: null
+  masse_g: 350
+  courant_max_A: null
+  prix_chf: 41.6
+  dispo_ch: 12 offres CH (Toppreise)
+  securite: 'coupure basse dans : outil ; surintensité dans : outil'
+- nom: DeWalt DCB184
+  energie_Wh: null
+  masse_g: 620
+  courant_max_A: null
+  prix_chf: 133.24
+  dispo_ch: Distrelec.ch en stock ; 47 offres Toppreise
+  securite: 'coupure basse dans : outil ; surintensité dans : outil'
+- nom: Bosch Professional GBA 18V 2.0Ah
+  energie_Wh: null
+  masse_g: 350
+  courant_max_A: null
+  prix_chf: 72.0
+  dispo_ch: 31 offres CH (Toppreise)
+  securite: 'coupure basse dans : non lu ; surintensité dans : non lu'
+- nom: Bosch Professional GBA 18V 5.0Ah
+  energie_Wh: null
+  masse_g: 620
+  courant_max_A: null
+  prix_chf: 104.0
+  dispo_ch: 32 offres CH (Toppreise)
+  securite: 'coupure basse dans : non lu ; surintensité dans : non lu'
+- nom: Bosch Professional ProCORE18V 4.0Ah
+  energie_Wh: null
+  masse_g: 515
+  courant_max_A: null
+  prix_chf: 116.0
+  dispo_ch: 28 offres CH (Toppreise)
+  securite: 'coupure basse dans : non lu ; surintensité dans : non lu'
+- nom: Bosch Professional ProCORE18V 5.5Ah
+  energie_Wh: null
+  masse_g: null
+  courant_max_A: null
+  prix_chf: null
+  dispo_ch: null
+  securite: 'coupure basse dans : non lu ; surintensité dans : non lu'
+usb_c:
+- nom: Club 3D CAC-1914 (140 W, 1x USB-C, PD 3.1)
+  masse_g: 333
+  courant_12v_A: 3
+  prix_chf: 88.85
+  dispo_ch: Toppreise (7 lignes)
+- nom: Club 3D CAC-1932 (140 W PD 3.1)
+  masse_g: null
+  courant_12v_A: null
+  prix_chf: 50.2
+  dispo_ch: Toppreise (14 lignes)
+- nom: Hama 00200019 (GaN, 3 ports, PD, 5-28 V / 140 W)
+  masse_g: null
+  courant_12v_A: null
+  prix_chf: 38.3
+  dispo_ch: Toppreise
+- nom: Anker Nano Charger 100W (A2679 / B2679 avec câble)
+  masse_g: null
+  courant_12v_A: null
+  prix_chf: 61.25
+  dispo_ch: Toppreise
+ia_reseau:
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: NVIDIA GeForce RTX 3060 12 GB
+  debit_tok_s: 51.3
+  premier_jeton_ms: 882
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: NVIDIA GeForce RTX 3060 8 GB
+  debit_tok_s: 37.0
+  premier_jeton_ms: 1010
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: NVIDIA GeForce RTX 4060 8 GB
+  debit_tok_s: 38.3
+  premier_jeton_ms: 1040
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: NVIDIA GeForce RTX 4060 Ti 16 GB
+  debit_tok_s: 48.3
+  premier_jeton_ms: 619
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: Apple M1 (4P+4E+8GPU) 8 GB
+  debit_tok_s: 14.6
+  premier_jeton_ms: 9640
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: Apple M2 (4P+4E+10GPU) 8 GB
+  debit_tok_s: 19.4
+  premier_jeton_ms: 7890
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B Instruct
+  materiel: Apple M3 (4P+4E+10GPU) 16 GB
+  debit_tok_s: 13.5
+  premier_jeton_ms: 9020
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.2 1B Instruct
+  materiel: NVIDIA GeForce RTX 3060 12 GB
+  debit_tok_s: 185
+  premier_jeton_ms: 232
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.2 1B Instruct
+  materiel: NVIDIA GeForce RTX 4060 8 GB
+  debit_tok_s: 134
+  premier_jeton_ms: 380
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.2 1B Instruct
+  materiel: Apple M1 (4P+4E+8GPU) 8 GB
+  debit_tok_s: 37.9
+  premier_jeton_ms: 2420
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.2 1B Instruct
+  materiel: Apple M2 (4P+4E+10GPU) 8 GB
+  debit_tok_s: 58.7
+  premier_jeton_ms: 1600
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.2 1B Instruct
+  materiel: Apple M3 (4P+4E+10GPU) 16 GB
+  debit_tok_s: 67.1
+  premier_jeton_ms: 1410
+  source: LocalScore
+- tache: LLM
+  modele: Llama 3.1 8B
+  materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+  debit_tok_s: 19.1
+  premier_jeton_ms: null
+  source: MLC
+- tache: LLM
+  modele: Llama 3.2 3B
+  materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+  debit_tok_s: 43.07
+  premier_jeton_ms: null
+  source: MLC
+- tache: LLM
+  modele: Qwen2.5 7B
+  materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+  debit_tok_s: 21.75
+  premier_jeton_ms: null
+  source: MLC
+- tache: LLM
+  modele: Qwen2.5 1.5B
+  materiel: null
+  debit_tok_s: null
+  premier_jeton_ms: null
+  source: null
+releve:
+  batteries_outillage:
+  - marque: Makita
+    modele: BL1820B
+    reference: 197254-9
+    tension_nominale_v: 18
+    capacite_ah: 2.0
+    energie_wh: 36
+    masse_g: 500
+    masse_g_divergence:
+    - 380
+    - 500
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 74.55
+    prix_chf_releves:
+    - 73.79
+    - 74.55
+    prix_note: 'Toppreise : 74.55 (offre « Werkzeugakku + Ladegerät, BL 1820 », catégorie ambiguë) ; 73.79 + 9.95
+      de port. Aucune page produit Toppreise trouvée.'
+    disponibilite_ch: offres CH sur Toppreise (2 offres lues)
+    sources:
+    - champ: tension, capacite, energie_wh, masse 0.38 kg
+      via: direct
+      source: marche_nrj_makita_ch_bl1820b
+    - champ: masse 0.50 kg (liste makita.ch)
+      via: direct
+      source: marche_nrj_makita_ch_akkus
+    - champ: energie 36 Wh, masse 0.38 kg
+      via: direct
+      source: marche_nrj_makita_bl1820b_de
+    - champ: prix_chf
+      via: direct
+      source: marche_nrj_tp_browse_makita_bl1820
+  - marque: Makita
+    modele: BL1850B
+    reference: 197280-8
+    tension_nominale_v: 18
+    capacite_ah: 5.0
+    energie_wh: 90
+    masse_g: 654
+    masse_g_divergence:
+    - 630
+    - 654
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 66.0
+    prix_chf_releves:
+    - 66.0
+    prix_note: 'Toppreise : « ab CHF 66.00 », 20 offres ; seul le prix le plus bas est lisible sans JavaScript (le
+      plus haut : non lu).'
+    disponibilite_ch: 20 offres CH (Toppreise, 2026-10-11)
+    sources:
+    - champ: tension, capacite, energie_wh, masse 0.63 kg
+      via: direct
+      source: marche_nrj_makita_ch_bl1850b
+    - champ: masse 654 g (liste makita.ch)
+      via: direct
+      source: marche_nrj_makita_ch_akkus
+    - champ: energie 90 Wh, masse 0.63 kg
+      via: direct
+      source: marche_nrj_makita_bl1850b_de
+    - champ: prix_chf (minimum), nombre d'offres
+      via: direct
+      source: marche_nrj_tp_makita_bl1850b
+  - marque: DeWalt
+    modele: DCB183
+    reference: DCB183-XJ
+    tension_nominale_v: 18
+    capacite_ah: 2.0
+    energie_wh: null
+    masse_g: 350
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 41.6
+    prix_chf_releves:
+    - 41.6
+    prix_note: 'Toppreise : « ab CHF 41.60 » port compris (38.50 hors port), 12 offres ; le plus haut non lu.'
+    disponibilite_ch: 12 offres CH (Toppreise)
+    sources:
+    - champ: capacite, masse 0.35 kg
+      via: direct
+      source: marche_nrj_dewalt_dcb183_cef
+    - champ: prix_chf (minimum)
+      via: direct
+      source: marche_nrj_tp_dewalt_dcb183
+  - marque: DeWalt
+    modele: DCB184
+    reference: DCB184-XJ
+    tension_nominale_v: 18
+    capacite_ah: 5.0
+    energie_wh: null
+    masse_g: 620
+    masse_brute_emballage_g: 672
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 133.24
+    prix_chf_releves:
+    - 50.1
+    - 133.24
+    prix_note: Distrelec.ch 133.24 TTC (123.26 HT, 1026 en stock) ; Toppreise « ab CHF 50.10 » port compris, 47
+      offres.
+    disponibilite_ch: Distrelec.ch en stock ; 47 offres Toppreise
+    sources:
+    - champ: capacite, masse 0.62 kg, protection surcharge/decharge profonde (texte)
+      via: direct
+      source: marche_nrj_dewalt_dcb184_cef
+    - champ: prix_chf 133.24, masse brute 672 g, stock
+      via: jina
+      source: marche_nrj_dewalt_dcb184_distrelec_ch
+    - champ: prix_chf minimum
+      via: direct
+      source: marche_nrj_tp_dewalt_dcb184
+  - marque: Bosch Professional
+    modele: GBA 18V 2.0Ah
+    reference: 1 600 Z00 036
+    tension_nominale_v: 18
+    capacite_ah: 2.0
+    energie_wh: null
+    masse_g: 350
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 72.0
+    prix_chf_releves:
+    - 36.5
+    - 72.0
+    prix_note: Prix public conseillé Bosch CH 72.00 (PVC avec TAR et TVA) ; Toppreise « ab CHF 36.50 » port compris,
+      31 offres.
+    disponibilite_ch: 31 offres CH (Toppreise)
+    sources:
+    - champ: tension, capacite, masse 0.35 kg, prix conseille
+      via: direct
+      source: marche_nrj_bosch_gba20_ch
+    - champ: prix_chf minimum
+      via: direct
+      source: marche_nrj_tp_bosch_gba20
+  - marque: Bosch Professional
+    modele: GBA 18V 5.0Ah
+    reference: 1 600 A00 2U5
+    tension_nominale_v: 18
+    capacite_ah: 5.0
+    energie_wh: null
+    masse_g: 620
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: 104.0
+    prix_chf_releves:
+    - 51.65
+    - 104.0
+    prix_note: Prix public conseillé Bosch CH 104.00 ; Toppreise « ab CHF 51.65 » port compris, 32 offres.
+    disponibilite_ch: 32 offres CH (Toppreise)
+    sources:
+    - champ: tension, capacite, masse 0.62 kg, prix conseille
+      via: direct
+      source: marche_nrj_bosch_gba18v50_ch
+    - champ: masse 620 g (fiche 2021)
+      via: direct
+      source: marche_nrj_bosch_gba18v50_efo
+    - champ: prix_chf minimum
+      via: direct
+      source: marche_nrj_tp_bosch_gba50
+  - marque: Bosch Professional
+    modele: ProCORE18V 4.0Ah
+    reference: 1 600 A01 6GB
+    tension_nominale_v: 18
+    capacite_ah: 4.0
+    energie_wh: null
+    masse_g: 515
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: '21700'
+    cellules_nombre: 5
+    cellules_note: Lu pour le modèle américain GBA18V40 « CORE18V 4.0 Ah » (une couche de cinq cellules 21700) ;
+      identité avec la référence européenne 1 600 A01 6GB NON vérifiée.
+    prix_chf: 116.0
+    prix_chf_releves:
+    - 59.9
+    - 116.0
+    prix_note: Prix public conseillé Bosch CH 116.00 ; Toppreise « ab CHF 59.90 », 28 offres.
+    disponibilite_ch: 28 offres CH (Toppreise)
+    sources:
+    - champ: tension, capacite, masse 0.515 kg, prix conseille
+      via: direct
+      source: marche_nrj_bosch_procore40_ch
+    - champ: cellules 21700 x5 (modele US GBA18V40)
+      via: direct
+      source: marche_nrj_wwj_bosch_core18v40
+    - champ: prix_chf minimum
+      via: direct
+      source: marche_nrj_tp_bosch_procore40
+  - marque: Bosch Professional
+    modele: ProCORE18V 5.5Ah
+    reference: null
+    tension_nominale_v: null
+    capacite_ah: null
+    energie_wh: null
+    masse_g: null
+    courant_decharge_continu_a: null
+    courant_decharge_pointe_a: null
+    cellules_format: null
+    cellules_nombre: null
+    prix_chf: null
+    disponibilite_ch: null
+    note: 'Non lu : l''URL Bosch CH essayée (1600A02149) servait un autre produit (0,955 kg, L-BOXX) ; fichier écarté.'
+    sources: []
+  protection:
+  - marque: DeWalt
+    coupure_dans: outil
+    surintensite_dans: outil
+    detail: 'Démontage publié (packs 20V MAX 3.0 Ah et 6.0 Ah, marché US) : bornes reliées en permanence aux cellules,
+      aucune coupure en tension basse ni en surintensité dans le pack, « the tool is required to handle all that
+      ». La carte du pack équilibre et porte une thermistance. Le DCB184 européen (18V XR) n''a PAS été démonté
+      dans ces sources.'
+    contradiction: done.land coche « Built-in BMS ✅ » pour « DeWalt XR 18V/20V Max 5Ah », sans dire ce que le BMS
+      coupe. La fiche DCB184 dit « Protection against overheat, overload and deep discharge » sans dire où.
+    sources:
+    - champ: coupure et surintensite dans l'outil (pack 6.0 Ah)
+      via: direct
+      source: marche_nrj_sevarg_dewalt_6ah
+    - champ: bornes reliees en permanence, coupure par l'outil (pack 3.0 Ah)
+      via: direct
+      source: marche_nrj_sevarg_dewalt_3ah
+    - champ: tableau Built-in BMS (contradiction)
+      via: direct
+      source: marche_nrj_doneland_toolbatteries
+    - champ: texte fabricant protection
+      via: direct
+      source: marche_nrj_dewalt_dcb184_cef
+  - marque: Makita
+    coupure_dans: outil (sur signal de la batterie)
+    surintensite_dans: outil (sur signal de la batterie)
+    detail: 'Fabricant : « STAR Protection » = communication batterie-outil en temps réel ; batterie « compatible
+      only with Star Protection tools ». Notice DDF485 : « The tool is equipped with a tool/battery protection system.
+      This system automatically cuts off power to the motor » (surcharge, surchauffe, décharge profonde). Aucun
+      démontage lu ne dit si la batterie possède aussi un interrupteur de puissance interne.'
+    sources:
+    - champ: STAR Protection, compatibilite outils
+      via: jina
+      source: marche_nrj_makita_bl1850b_com
+    - champ: l'outil coupe le moteur
+      via: direct
+      source: marche_nrj_makita_ddf485_manuel
+  - marque: Bosch Professional
+    coupure_dans: null
+    surintensite_dans: null
+    detail: 'Notice GSR 18V-55 : « When the battery is discharged, the power tool is switched off by means of a
+      protective circuit » (ECP). Page ECP : « The tool is shut down if the battery pack is put under excessive
+      load ». L''emplacement du circuit (batterie ou outil) n''est PAS dit : null.'
+    sources:
+    - champ: ECP, arret de l'outil par circuit de protection
+      via: direct
+      source: marche_nrj_bosch_gsr18v55_manuel
+    - champ: ECP surcharge, surchauffe, decharge profonde
+      via: direct
+      source: marche_nrj_bosch_ecp_au
+  adaptateurs:
+  - nom: PartsBuilt adaptateur Makita 18V avec coupure basse (« blinker board »)
+    type: adaptateur bornes vers fils + coupure basse
+    compatible: Makita 18V
+    courant_max_a: 3.5
+    coupure_basse: true
+    seuil_coupure_v: null
+    prix: 24.95
+    devise: USD
+    disponibilite_ch: null
+    origine: US (partsbuilt.com)
+    sources:
+    - champ: courant_max 3.5 A, blinker board, prix
+      via: direct
+      source: marche_nrj_partsbuilt_makita_adapter
+  - nom: PartsBuilt adaptateur « MilWalt » (Milwaukee et DeWalt) avec coupure basse
+    type: adaptateur bornes vers fils + coupure basse
+    compatible: DeWalt 18V/20V, Milwaukee M18
+    courant_max_a: 3.5
+    coupure_basse: true
+    seuil_coupure_v: null
+    prix: 24.95
+    devise: USD
+    disponibilite_ch: null
+    origine: US
+    sources:
+    - champ: courant_max 3.5 A, prix
+      via: direct
+      source: marche_nrj_partsbuilt_milwalt_adapter
+  - nom: PartsBuilt « Blinker Board » 3.5 A (v8), module de coupure basse seul
+    type: module coupure basse
+    compatible: batteries d'outillage
+    courant_max_a: 3.5
+    tension_max_v: 23
+    coupure_basse: true
+    seuil_coupure_v: null
+    prix: 12.95
+    devise: USD
+    disponibilite_ch: null
+    origine: US
+    sources:
+    - champ: courant 3.5 A, prix
+      via: direct
+      source: marche_nrj_partsbuilt_blinker_3a
+  - nom: XH-M609 module de protection de décharge 12-36 V (relais)
+    type: module coupure basse réglable
+    compatible: batterie 12-36 V
+    courant_max_a: 10
+    courant_note: « The onboard relay is typically rated for up to 10A continuous DC current » (FAQ du vendeur,
+      non fabricant).
+    coupure_basse: true
+    seuil_coupure_v: réglable
+    prix: 299
+    devise: INR
+    disponibilite_ch: null
+    origine: Inde (probots.co.in)
+    sources:
+    - champ: relais 10 A, prix
+      via: jina
+      source: marche_nrj_xhm609_probots
+  - nom: Unicraft adaptateur pour batterie Makita 18V
+    type: adaptateur (usage non précisé)
+    compatible: Makita 18V
+    courant_max_a: null
+    coupure_basse: null
+    prix_chf: 8.0
+    prix_chf_port_compris: 17.0
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_adapter_makita
+  - nom: Unicraft adaptateur pour batterie DeWalt 18V
+    type: adaptateur (usage non précisé)
+    compatible: DeWalt 18V
+    courant_max_a: null
+    coupure_basse: null
+    prix_chf: 8.0
+    prix_chf_port_compris: 17.0
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_adapter_dewalt
+  - nom: Unicraft adaptateur pour batterie Bosch Professional 18V
+    type: adaptateur (usage non précisé)
+    compatible: Bosch Professional 18V
+    courant_max_a: null
+    coupure_basse: null
+    prix_chf: 9.0
+    prix_chf_port_compris: 18.0
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_adapter_bosch
+  - nom: Brennenstuhl Akku-Adapter Multi Battery 18V (Makita 1172640064, Milwaukee/DeWalt 1172640066, Bosch Pro
+      1172640063)
+    type: adaptateur pour appareils Brennenstuhl (pas bornes vers fils)
+    compatible: Makita / DeWalt / Bosch Pro 18V
+    courant_max_a: null
+    coupure_basse: null
+    prix_chf: 8.3
+    prix_chf_port_compris: 18.8
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix Makita
+      via: direct
+      source: marche_nrj_tp_browse_adapter_makita
+    - champ: prix DeWalt
+      via: direct
+      source: marche_nrj_tp_browse_adapter_dewalt
+    - champ: prix Bosch
+      via: direct
+      source: marche_nrj_tp_browse_adapter_bosch
+  - nom: MAKBOS Step Down Konverter 18V -> 12V (Makita B0FRF35657 ; DeWalt B0FRFPJMPC)
+    type: adaptateur + abaisseur 12 V
+    compatible: Makita 18V, DeWalt 20V
+    courant_max_a: null
+    coupure_basse: null
+    prix_chf: 84.0
+    disponibilite_ch: Toppreise (vendeur marketplace)
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_powerwheel
+  convertisseurs_12v:
+  - marque: Mean Well
+    modele: SD-500L-12
+    entree_v: 19-72
+    sortie_v: 12
+    courant_a: 40
+    puissance_w: 480
+    rendement_pct: null
+    rendement_note: 'Ligne rendement : 86% 88% 89% 87% … (ordre L-12, L-24, L-48, H-12… supposé) ; non attribué.'
+    masse_g: 1150
+    couvre_14_21v: false
+    couvre_28_42v: true
+    prix_chf: 198.0
+    prix_chf_releves:
+    - 175.95
+    - 198.0
+    disponibilite_ch: Toppreise (3 offres)
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF.'
+    sources:
+    - champ: entree, sortie, courant, masse
+      via: direct
+      source: marche_nrj_meanwell_sd_500_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_sd_500l_12
+  - marque: Mean Well
+    modele: SD-1000L-12
+    entree_v: 19-72
+    sortie_v: 12
+    courant_a: 60
+    puissance_w: 720
+    rendement_pct: null
+    rendement_note: 'Ligne rendement : 84% 88% 90% 85% … ; non attribué.'
+    masse_g: 1940
+    couvre_14_21v: false
+    couvre_28_42v: true
+    prix_chf: 354.0
+    prix_chf_releves:
+    - 315.95
+    - 354.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF.'
+    sources:
+    - champ: entree, sortie, courant, masse
+      via: direct
+      source: marche_nrj_meanwell_sd_1000_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_sd_1000l_12
+  - marque: Mean Well
+    modele: SD-350B-12
+    entree_v: 20-36
+    sortie_v: 12
+    courant_a: 27.5
+    puissance_w: 330
+    rendement_pct: 80
+    rendement_note: 80% (B-12) et 81% (C-12) d'après l'ordre des colonnes.
+    masse_g: 1100
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 119.0
+    prix_chf_releves:
+    - 105.95
+    - 119.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF. Version C : 36-72 V.'
+    sources:
+    - champ: entree, courant, rendement, masse
+      via: direct
+      source: marche_nrj_meanwell_sd_350_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_sd_350b_12
+  - marque: Mean Well
+    modele: DDR-480B-12
+    entree_v: 16.8-33.6 (14.4-16.8 pendant 100 ms)
+    sortie_v: 12
+    courant_a: 33.4
+    courant_pointe_a: 50.1
+    puissance_w: 400.8
+    rendement_pct: null
+    rendement_note: Valeurs 90 à 93 % selon colonnes ; non attribué.
+    masse_g: 1375
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 216.0
+    prix_chf_releves:
+    - 199.95
+    - 216.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF. Coupure entrée B : ON ≥ 16,8 V, OFF ≤ 16,5 V.'
+    sources:
+    - champ: entree, courant, pointe, masse, UVLO
+      via: jina
+      source: marche_nrj_meanwell_ddr_480_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_ddr_480b_12
+  - marque: Mean Well
+    modele: DDR-480C-12
+    entree_v: 33.6-67.2 (28.8-33.6 pendant 100 ms)
+    sortie_v: 12
+    courant_a: 33.4
+    courant_pointe_a: 50.1
+    puissance_w: 400.8
+    rendement_pct: null
+    masse_g: 1375
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 215.0
+    prix_chf_releves:
+    - 187.95
+    - 215.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF. Coupure entrée C : ON ≥ 33,6 V, OFF ≤ 33 V.'
+    sources:
+    - champ: entree, courant, masse
+      via: jina
+      source: marche_nrj_meanwell_ddr_480_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_ddr_480c_12
+  - marque: Mean Well
+    modele: RSD-500B-12
+    entree_v: 16.8-33.6
+    sortie_v: 12
+    courant_a: 35
+    puissance_w: 420
+    rendement_pct: null
+    rendement_note: 92-93 % selon colonnes ; non attribué.
+    masse_g: 1450
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 247.0
+    prix_chf_releves:
+    - 213.95
+    - 247.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF.'
+    sources:
+    - champ: entree, courant, masse
+      via: jina
+      source: marche_nrj_meanwell_rsd_500_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_rsd_500b_12
+  - marque: Mean Well
+    modele: RSD-500C-12
+    entree_v: 33.6-67.2
+    sortie_v: 12
+    courant_a: 35
+    puissance_w: 420
+    rendement_pct: null
+    masse_g: 1450
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 253.0
+    prix_chf_releves:
+    - 213.95
+    - 253.0
+    disponibilite_ch: Toppreise
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF.'
+    sources:
+    - champ: entree, courant, masse
+      via: jina
+      source: marche_nrj_meanwell_rsd_500_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_rsd_500c_12
+  - marque: Mean Well
+    modele: RSD-300B-12 / RSD-300C-12
+    entree_v: 'B : 16.8-31.2 (14.4-33.6 pendant 1 s) ; C : 33.6-62.4 (28.8-67.2 pendant 1 s)'
+    sortie_v: 12
+    courant_a: null
+    courant_note: 'Ligne courant : 42A 25A 42A 12.5A 6.3A / 22.5A 11.3A 5.7A ; attribution B-12 = 22.5 A et C-12
+      = 25 A probable mais non sûre.'
+    rendement_pct: null
+    masse_g: 1190
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: null
+    disponibilite_ch: null
+    note: 'Tableau PDF Mean Well lu par extraction de texte : l''attribution des colonnes (rendement, courant) est
+      déduite de l''ordre des colonnes, à vérifier sur le PDF.'
+    sources:
+    - champ: entree, masse, ligne courant
+      via: direct
+      source: marche_nrj_meanwell_rsd_300_spec
+  - marque: Victron Energy
+    modele: Orion 24/12-40 (ORI241240021, non isolé)
+    entree_v: 18-35
+    sortie_v: 13.2
+    courant_a: 40
+    rendement_pct: null
+    masse_g: null
+    couvre_14_21v: false
+    couvre_28_42v: false
+    prix_chf: 89.2
+    prix_chf_releves:
+    - 72.0
+    - 89.2
+    disponibilite_ch: Toppreise (11 lignes d'offres)
+    note: 'Fiche Victron PDF : tableau non extractible (graphique) ; valeurs lues chez un revendeur canadien (Solacity).'
+    sources:
+    - champ: entree 18-35 V, 13.2 V, 40 A
+      via: jina
+      source: marche_nrj_victron_orion2412_40_solacity
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_orion2412_40
+  - marque: Daygreen
+    modele: null
+    entree_v: null
+    sortie_v: null
+    courant_a: null
+    rendement_pct: null
+    masse_g: null
+    prix_chf: null
+    disponibilite_ch: null
+    note: 'Aucune page lisible (newegg, desertcart bloqués ; Toppreise : aucune offre Daygreen convertisseur).'
+    sources: []
+  - marque: DROK
+    modele: null
+    entree_v: null
+    sortie_v: null
+    courant_a: null
+    rendement_pct: null
+    masse_g: null
+    prix_chf: null
+    disponibilite_ch: null
+    note: Aucune page lue.
+    sources: []
+  - marque: Pololu
+    modele: null
+    entree_v: null
+    sortie_v: null
+    courant_a: null
+    rendement_pct: null
+    masse_g: null
+    prix_chf: null
+    disponibilite_ch: null
+    note: Non lu (aucune page téléchargée).
+    sources: []
+  usb_c:
+  - type: chargeur
+    marque: Club 3D
+    modele: CAC-1914 (140 W, 1x USB-C, PD 3.1)
+    sorties: 5/9/12/15 V ≤ 3 A ; 20 V ≤ 5 A ; 28 V ≤ 5 A ; max 140 W
+    courant_max_12v_a: 3
+    epr_28v: true
+    masse_g: 333
+    prix_chf: 88.85
+    prix_chf_releves:
+    - 60.1
+    - 88.85
+    disponibilite_ch: Toppreise (7 lignes)
+    sources:
+    - champ: sorties, masse 333 g (fiche dite CAC-1914 ; fichier nommé par le vendeur)
+      via: direct
+      source: marche_nrj_club3d_cac1914_spec
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_club3d_cac1914
+  - type: chargeur
+    marque: Club 3D
+    modele: CAC-1932 (140 W PD 3.1)
+    sorties: null
+    courant_max_12v_a: null
+    epr_28v: null
+    prix_chf: 50.2
+    prix_chf_releves:
+    - 33.15
+    - 50.2
+    disponibilite_ch: Toppreise (14 lignes)
+    note: Fiche technique du CAC-1932 non lue (le PDF trouvé décrit le CAC-1914).
+    sources:
+    - champ: prix, designation 140W PD 3.1
+      via: direct
+      source: marche_nrj_tp_browse_club3d_cac1932
+  - type: chargeur
+    marque: Hama
+    modele: 00200019 (GaN, 3 ports, PD, 5-28 V / 140 W)
+    sorties: 5-28 V / 140 W (titre d'offre)
+    courant_max_12v_a: null
+    epr_28v: null
+    prix_chf: 38.3
+    prix_chf_releves:
+    - 36.52
+    - 38.3
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_hama_200019
+  - type: chargeur
+    marque: Anker
+    modele: Nano Charger 100W (A2679 / B2679 avec câble)
+    sorties: 5 V 3 A / 9 V 3 A / 15 V 3 A / 20 V 5 A (aucun niveau 12 V publié)
+    courant_max_12v_a: null
+    epr_28v: false
+    masse_g: null
+    prix_chf: 61.25
+    prix_chf_releves:
+    - 41.95
+    - 61.25
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: sorties
+      via: jina
+      source: marche_nrj_anker_nano100w
+    - champ: sorties (test)
+      via: jina
+      source: marche_nrj_techtest_anker_a2679
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_anker_nano100w
+  - type: declencheur_pd
+    marque: Adafruit
+    modele: 5807 HUSB238 (I2C ou fixe)
+    tensions_v: 5, 9, 12, 15, 18, 20
+    courant_max_a: 5
+    courant_note: « up to 20V at 5A » ; sélection de courant 2-3 A par cavalier
+    epr_28v: false
+    prix: 5.69
+    devise: EUR HT
+    disponibilite: Kiwi Electronics (NL), 2 en stock
+    sources:
+    - champ: tensions, courant, prix
+      via: direct
+      source: marche_nrj_kiwi_adafruit_husb238
+  - type: declencheur_pd
+    marque: Pier42 Design
+    modele: USB-C PD Sink EPR 140 W (-FA01)
+    tensions_v: 5, 12, 20, 28 (9, 15 par modification)
+    courant_max_a: 5
+    epr_28v: true
+    prix: 20.17
+    devise: USD
+    disponibilite: Lectronz ; la page signale une suspension des envois vers l'UE (droit de douane de 3 EUR) ; Suisse
+      non précisée
+    sources:
+    - champ: tensions, courant, prix, envoi
+      via: direct
+      source: marche_nrj_lectronz_pd_sink_epr
+  - type: declencheur_pd_puce
+    marque: WCH
+    modele: CH224A / CH224Q
+    tensions_v: 5-28 (CH224A), 3.3-28 (CH224Q)
+    courant_max_a: null
+    epr_28v: true
+    note: 'Puce, pas une carte : « high-quality triggers for up to 140W/28V » ; limitées à 28 V.'
+    prix: null
+    disponibilite: null
+    sources:
+    - champ: plages de tension
+      via: direct
+      source: marche_nrj_doneland_ch224
+  - type: declencheur_pd
+    marque: Eltichorix
+    modele: 5x USB C PD Trigger Modul 5/9/12/15/20V 100W
+    tensions_v: 5, 9, 12, 15, 20
+    courant_max_a: null
+    epr_28v: false
+    prix_chf: 8.21
+    prix_chf_port_compris: 14.71
+    disponibilite_ch: Toppreise (revendeur allemand, TVA et dédouanement inclus)
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_pd_trigger
+  - type: declencheur_pd
+    marque: Joy-IT
+    modele: DEBO USB-PD 1 à 5
+    tensions_v: null
+    courant_max_a: null
+    epr_28v: null
+    prix_chf: 9.66
+    prix_chf_releves:
+    - 5.17
+    - 9.66
+    disponibilite_ch: Toppreise (revendeur allemand)
+    note: 'Pages produit Joy-IT : redirection vers une page générique, caractéristiques non lues.'
+    sources:
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_pd_trigger
+  packs_21700:
+  - type: bms
+    marque: Keeppower
+    modele: WYY-EBD02-AB (4S PCB/PCM)
+    series: 4
+    courant_continu_a: null
+    surintensite_a: 26 ± 2
+    coupure_basse_v_cellule: 2.70 ± 0.1 (déclenchement) ; 2.30 ± 0.08 (VDD)
+    coupure_reglable: false
+    prix: 4.95
+    devise: EUR TTC
+    disponibilite: akkuteile.de (DE), Suisse dans la liste des pays de livraison
+    sources:
+    - champ: surintensite, seuils, prix, pays
+      via: jina
+      source: marche_nrj_akkuteile_pcb4s_keeppower_26a
+  - type: bms
+    marque: Keeppower
+    modele: XZD-3S1550 (3S PCB/PCM)
+    series: 3
+    courant_continu_a: null
+    surintensite_a: 26 ± 2
+    coupure_basse_v_cellule: 2.70 ± 0.1 (déclenchement) ; 2.30 ± 0.10 (VDD)
+    coupure_reglable: false
+    prix: 4.9
+    devise: EUR TTC
+    disponibilite: akkuteile.de (DE), Suisse dans la liste des pays de livraison
+    sources:
+    - champ: surintensite, seuils, prix, pays
+      via: jina
+      source: marche_nrj_akkuteile_pcb3s_keeppower_26a
+  - type: bms
+    marque: DALY
+    modele: PCM-L04S30 (4S Li-ion 14.8 V)
+    series: 4
+    courant_continu_a: 30
+    courant_pointe_a: null
+    coupure_basse_v_cellule: null
+    coupure_reglable: null
+    prix: null
+    disponibilite: 'TME (catalogue CH/UE) : « 0 in TME stock »'
+    sources:
+    - champ: 4S, 30 A, 14.8 V, stock
+      via: jina
+      source: marche_nrj_tme_daly_katalog
+  - type: bms
+    marque: DALY
+    modele: PCM-L03S45 (3S Li-ion 11.1 V)
+    series: 3
+    courant_continu_a: 45
+    courant_pointe_a: null
+    coupure_basse_v_cellule: null
+    coupure_reglable: null
+    prix: null
+    disponibilite: TME (stock non lu)
+    sources:
+    - champ: 3S, 45 A
+      via: jina
+      source: marche_nrj_tme_daly_katalog
+  - type: bms
+    marque: Accuswiss
+    modele: BMS 4S 14.4V Li-ion / Li-Polymer 34x34x10 mm
+    series: 4
+    courant_continu_a: null
+    coupure_basse_v_cellule: null
+    prix_chf: 26.2
+    prix_chf_port_compris: 29.58
+    disponibilite_ch: Toppreise (Accuswiss)
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_bms4s
+  - type: bms
+    marque: SALUTUYA
+    modele: 3S 11.1/12.6 V 50 A
+    series: 3
+    courant_continu_a: null
+    courant_titre_a: 50
+    prix_chf: 71.0
+    disponibilite_ch: Toppreise (marketplace)
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_bms3s
+  - type: porte_cellules
+    marque: Keeppower
+    modele: Abstandshalter für drei Zellen 21 mm
+    prix: 0.79
+    devise: EUR TTC
+    disponibilite: akkuteile.de, Suisse dans la liste des pays
+    sources:
+    - champ: prix
+      via: jina
+      source: marche_nrj_akkuteile_abstandshalter_21mm_3
+  - type: porte_cellules
+    marque: NKON
+    modele: 2x21700 battery spacer holder
+    prix: 0.5
+    devise: EUR TTC
+    disponibilite: 'nkon.nl : « Out of stock »'
+    sources:
+    - champ: prix, stock
+      via: jina
+      source: marche_nrj_nkon_spacer_2x21700
+  - type: soudeuse_points
+    marque: Kerpu
+    modele: CP02 (portable, batterie 5.0 Ah)
+    prix_chf: 110.0
+    disponibilite_ch: Toppreise
+    note: Courant de soudage non lu.
+    sources:
+    - champ: prix
+      via: direct
+      source: marche_nrj_tp_browse_punktschweiss
+  - type: chargeur
+    marque: Fuyuang
+    modele: 4S 16,8 V 2 A (FY1682000), fiche DC 5,5x2,1
+    series: 4
+    courant_charge_a: 2
+    equilibrage: null
+    prix: 16.35
+    devise: EUR TTC
+    disponibilite: akkuteile.de
+    sources:
+    - champ: courant, prix
+      via: jina
+      source: marche_nrj_akkuteile_lader4s_fuyuang
+  - type: chargeur_equilibreur
+    marque: Haisito
+    modele: HB6 80 W 6 A
+    series: non lu
+    courant_charge_a: 6
+    prix_chf: 106.0
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_balancer_lader
+  - type: chargeur_equilibreur
+    marque: HTRC
+    modele: C150 150 W 10 A
+    series: non lu
+    courant_charge_a: 10
+    prix_chf: 129.0
+    disponibilite_ch: Toppreise
+    sources:
+    - champ: prix, designation
+      via: direct
+      source: marche_nrj_tp_browse_balancer_lader
+  ia_reseau:
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 3060 12 GB
+    debit_jetons_s: 51.3
+    delai_premier_jeton_ms: 882
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 3060 8 GB
+    debit_jetons_s: 37.0
+    delai_premier_jeton_ms: 1010
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 4060 8 GB
+    debit_jetons_s: 38.3
+    delai_premier_jeton_ms: 1040
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 4060 Ti 16 GB
+    debit_jetons_s: 48.3
+    delai_premier_jeton_ms: 619
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M1 (4P+4E+8GPU) 8 GB
+    debit_jetons_s: 14.6
+    delai_premier_jeton_ms: 9640
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M2 (4P+4E+10GPU) 8 GB
+    debit_jetons_s: 19.4
+    delai_premier_jeton_ms: 7890
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M3 (4P+4E+10GPU) 16 GB
+    debit_jetons_s: 13.5
+    delai_premier_jeton_ms: 9020
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model1
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.2 1B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 3060 12 GB
+    debit_jetons_s: 185
+    delai_premier_jeton_ms: 232
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model3
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.2 1B Instruct
+    quantification: Q4_K - Medium
+    materiel: NVIDIA GeForce RTX 4060 8 GB
+    debit_jetons_s: 134
+    delai_premier_jeton_ms: 380
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model3
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.2 1B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M1 (4P+4E+8GPU) 8 GB
+    debit_jetons_s: 37.9
+    delai_premier_jeton_ms: 2420
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model3
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.2 1B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M2 (4P+4E+10GPU) 8 GB
+    debit_jetons_s: 58.7
+    delai_premier_jeton_ms: 1600
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model3
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.2 1B Instruct
+    quantification: Q4_K - Medium
+    materiel: Apple M3 (4P+4E+10GPU) 16 GB
+    debit_jetons_s: 67.1
+    delai_premier_jeton_ms: 1410
+    logiciel: LocalScore
+    date: null
+    note: 'LocalScore (llamafile/llama.cpp) : TTFT moyen sur une suite de prompts de 16 à 4096 jetons ; une ligne
+      par machine soumise.'
+    sources:
+    - champ: debit, TTFT
+      via: direct
+      source: marche_nrj_localscore_model3
+    - champ: methode TTFT
+      via: direct
+      source: marche_nrj_localscore_about
+  - type: debit_llm
+    modele: Llama 3.1 8B
+    quantification: INT4 (MLC)
+    materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+    debit_jetons_s: 19.1
+    debit_divergence:
+    - 19.1
+    - 19.14
+    debit_mode_original: 14.0
+    delai_premier_jeton_ms: null
+    logiciel: MLC
+    date: 2025-01-16 (billet NVIDIA)
+    sources:
+    - champ: debit (Super et original)
+      via: direct
+      source: marche_nrj_nvidia_blog_jetpack62_super
+    - champ: debit (Super, deux decimales)
+      via: jina
+      source: marche_nrj_jetson_ai_lab_benchmarks
+  - type: debit_llm
+    modele: Llama 3.2 3B
+    quantification: INT4 (MLC)
+    materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+    debit_jetons_s: 43.07
+    debit_divergence:
+    - 43.07
+    - 43.1
+    debit_mode_original: 27.7
+    delai_premier_jeton_ms: null
+    logiciel: MLC
+    date: 2025-01-16 (billet NVIDIA)
+    sources:
+    - champ: debit (Super et original)
+      via: direct
+      source: marche_nrj_nvidia_blog_jetpack62_super
+    - champ: debit (Super, deux decimales)
+      via: jina
+      source: marche_nrj_jetson_ai_lab_benchmarks
+  - type: debit_llm
+    modele: Qwen2.5 7B
+    quantification: INT4 (MLC)
+    materiel: Jetson Orin Nano 8GB, mode Super (JetPack 6.2)
+    debit_jetons_s: 21.75
+    debit_divergence:
+    - 21.75
+    - 21.8
+    debit_mode_original: 14.2
+    delai_premier_jeton_ms: null
+    logiciel: MLC
+    date: 2025-01-16 (billet NVIDIA)
+    sources:
+    - champ: debit (Super et original)
+      via: direct
+      source: marche_nrj_nvidia_blog_jetpack62_super
+    - champ: debit (Super, deux decimales)
+      via: jina
+      source: marche_nrj_jetson_ai_lab_benchmarks
+  - type: debit_llm
+    modele: Qwen2.5 1.5B
+    quantification: null
+    materiel: null
+    debit_jetons_s: null
+    delai_premier_jeton_ms: null
+    note: Aucune mesure lue.
+    sources: []
+  - type: latence_wifi
+    reseau: WLAN d'entreprise (campus Tsinghua, THU-WLAN), mesure ping2
+    aller_retour_mediane_ms: 3
+    aller_retour_p90_ms: 20
+    aller_retour_p99_ms: 250
+    note: « WiFi latency » au saut Wi-Fi (appareil-AP), valeurs « about/around ». Pas un réseau domestique.
+    date: 2016 (MobiSys 2016)
+    sources:
+    - champ: mediane, p90, p99
+      via: jina
+      source: marche_nrj_wifiseer_mobisys2016
+  - type: latence_wifi
+    reseau: Wi-Fi domestique
+    aller_retour_mediane_ms: null
+    note: 'Aucune source domestique lue (HAL : page non PDF ; arXiv 2311.05499 : débit, pas de latence).'
+    sources: []

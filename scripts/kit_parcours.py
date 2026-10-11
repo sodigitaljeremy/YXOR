@@ -272,9 +272,7 @@ def rapport(res, fautes) -> str:
     for r in res:
         L += [f"## Étape {r['n']} : {r['nom']}", "", r["but"] + ".", "",
               f"Alimentation : {r['alimentation']}. Outillage (celui du Kit seulement) : {', '.join(r['outillage'])}"
-              + ("" if r["n"] == 0 else " ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du "
-                 "2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), "
-                 "à confirmer par Jeremy") + ".", "",
+              + " (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077)." , "",
               "| Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |",
               "| --- | ---: | --- | --- | ---: | --- |"]
         for i in r["items"]:

@@ -241,6 +241,22 @@ avec qui l'a décidé.
       dans la fiche ; prompt du 2026-10-11).
     - Fiche : [0076](../decisions/0076-cadrage-gamme-kit-parcours-reemploi.md),
       qui remplace en partie la 0074 et la 0075 (tableau dans la fiche).
+26. **Réemploi dans toute la gamme ; une seule batterie pour le Kit et le
+    Lab ; catégories ; tournevis et caméra USB.** Le tournevis s'ajoute à
+    l'outillage du Kit ; caméra USB à l'étape 1 du parcours ; catégories
+    « Initiation » et « Avancé » acceptées, une « Intermédiaire » souhaitée
+    (la répartition des modèles attend Jeremy) ; réemploi maximal, même
+    entre catégories ; une seule batterie pour tous les modèles du Kit et
+    du Lab (laquelle : non décidé).
+    - Décidée par Jeremy le 2026-10-11. Ses mots : « Ok pour le tournevis, tu
+      as raison il est indispensable » ; « Ok pour une caméra USB » ; « Ok pour
+      les catégories Initiation et Avancé, mais du coup maintenant cela me
+      fait bizarre de ne pas proposer une catégorie Intermédiaire » ; « avoir
+      un maximum de réutilisation possible (même entre les différentes
+      catégories si possible) » ; « acheter une seule batterie utilisable pour
+      tous les modèles de YXOR Kit et YXOR Lab ».
+    - Fiche : [0077](../decisions/0077-reemploi-gamme-une-batterie.md), qui
+      complète la [0076](../decisions/0076-cadrage-gamme-kit-parcours-reemploi.md).
 
 ## B — Conventions confirmées
 

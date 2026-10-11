@@ -19,7 +19,7 @@ Marge : couple CONTINU publié du servo ÷ couple statique requis ; la marge de 
 
 le robot entier en carton, passif : poses, proportions, montage, noms d'axes (plans du niveau 0).
 
-Alimentation : aucune. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, agrafeuse, pistolet à colle.
+Alimentation : aucune. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, agrafeuse, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |
@@ -30,13 +30,13 @@ Alimentation : aucune. Outillage (celui du Kit seulement) : cutter, feuille, imp
 
 deux STS3215 en pan-tilt, une caméra, un adaptateur USB, branchée sur un PC.
 
-Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du 2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), à confirmer par Jeremy.
+Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |
 | sts3215_c018 | 2 | DURABLE | vis | 21,07 | actionneurs.yaml |
 | bride métallique pour STS3215 (place de marché, sans marque reconnue) | 2 | DURABLE | vis | 24,09 | kit_parcours_marche.yaml |
-| caméra USB (la Camera Module 3 se branche sur un Raspberry Pi, pas sur un PC) | 1 | DURABLE | vis | — | aucun marché relevé |
+| caméra USB (décidé par Jeremy, fiche 0077 : « Ok pour une caméra USB ») | 1 | DURABLE | vis | — | aucun marché relevé |
 | Bus Servo Adapter (A) (SKU 25514) | 1 | DURABLE | vis | 4,17 | bus.yaml |
 | Mean Well LRS-150F-12, alimentation à découpage « enclosed » (12.5 A) | 1 | DURABLE | connecteur | 25,35 | kit_marche.yaml ; sur la table, hors du robot ; dispo : ab Lager, Lieferzeit: 3 - 4 Werktage |
 | vis M2 et M3 (brides, palonniers) | 1 | DURABLE | vis | — | aucun marché relevé |
@@ -51,7 +51,7 @@ Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuill
 
 micro, haut-parleur, Raspberry Pi 5 ; variantes IA « réseau » (le modèle tourne ailleurs) et « locale » (sur le Pi, avec ou sans AI HAT+ 2).
 
-Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du 2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), à confirmer par Jeremy.
+Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |
@@ -78,7 +78,7 @@ Variante IA « locale » : + Raspberry Pi AI HAT+ 2 (167 CHF HT). Variante « r�
 
 la tête sur un buste, deux bras de trois axes (variante : un bras SO-101).
 
-Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du 2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), à confirmer par Jeremy.
+Alimentation : secteur 12 V. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |
@@ -108,7 +108,7 @@ Variante bras : SO-101 (SO-ARM100 / SO-101) (102 CHF HT, kit_parcours_marche.yam
 
 le buste sur une base à deux roues motrices (STS3215 en rotation continue), batterie, manette.
 
-Alimentation : batterie de moins de 100 Wh (3S1P de la cellule du Lab) ; variante batterie d'outillage. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du 2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), à confirmer par Jeremy.
+Alimentation : batterie de moins de 100 Wh (3S1P de la cellule du Lab) ; variante batterie d'outillage. Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |
@@ -143,7 +143,7 @@ Variante batterie d'outillage : Makita BL1850B 18 V 5,0 Ah LXT (197280-8), 90 Wh
 
 le robot entier qui tient debout (le niveau « debout » de l'étude du 8 octobre) ; les servos des roues deviennent des servos de jambe.
 
-Alimentation : batterie de moins de 100 Wh (3S1P de la cellule du Lab). Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle ; et un tournevis ou une clé pour les vis M2 à M4 : HORS de la liste du 2026-10-09 (« cutter, feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à colle »), à confirmer par Jeremy.
+Alimentation : batterie de moins de 100 Wh (3S1P de la cellule du Lab). Outillage (celui du Kit seulement) : cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle, tournevis (le tournevis : ajouté par Jeremy le 2026-10-11, fiche 0077).
 
 | Composant | Nombre | Classe | Fixation | Prix unitaire (CHF HT) | Source |
 | --- | ---: | --- | --- | ---: | --- |

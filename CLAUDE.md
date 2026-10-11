@@ -100,6 +100,11 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   **réemploi** : tout composant démontable et remontable dans n'importe
   quelle variante du Kit et du Lab ; préconiser sans imposer ; sécurité à
   part, projet sans responsabilité.
+- **Fiche 0077 (Jeremy, 2026-10-11)** : tournevis ajouté à l'outillage du
+  Kit ; caméra USB à l'étape 1 ; catégories Initiation et Avancé (une
+  Intermédiaire souhaitée ; répartition des modèles en attente) ; réemploi
+  maximal, même entre catégories ; **une seule batterie pour tous les
+  modèles du Kit et du Lab** (laquelle : non décidé).
 - **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la

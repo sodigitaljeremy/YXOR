@@ -9708,3 +9708,544 @@ fichiers:
     empreinte: sha256:ea317c6f647fb0007591caf1469a8be3dcb0b89286fcbe0904dedd8728b43793
     conditions: non lues
     redistribuable: false
+
+  # ── Marché énergie et IA par le réseau (params/energie_marche.yaml), versé le 2026-10-09 ──
+  marche_nrj_akkuteile_abstandshalter_21mm_3:
+    source: https://www.akkuteile.de/zubehoer/abstandshalter/abstandshalter-fuer-drei-zellen-21-mm-durchmesser_400209_2466
+    reference: akkuteile_abstandshalter_21mm_3.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:72c56a2ebbe0323be5fde97abb13219a10582fc80a4a32a441b8c957289c0af7
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_akkuteile_lader4s_fuyuang:
+    source: https://www.akkuteile.de/ladegeraete/sonstige-ladegeraete-li-ionen/fuyuang-14-4v-14-8v-16-8v-li-ion-ladegeraet-4s-dc-plug-5-5mm-2-1mm_400614_2360
+    reference: akkuteile_lader4s_fuyuang.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:75a1e7f9e7b26b31fe1de8a2bad0d14cc3695e236fd49a18baef33827db618f0
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_akkuteile_pcb3s_keeppower_26a:
+    source: https://www.akkuteile.de/schutzelektronik/18650/3s-pcb-keeppower-xzd-3s1550-schutzelektronik-26a/a-200505/
+    reference: akkuteile_pcb3s_keeppower_26a.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:7d5fe4ec77d124095b11e1894eb2e226cca5d32e63c311868865c67095ed7aff
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_akkuteile_pcb4s_keeppower_26a:
+    source: https://www.akkuteile.de/4s-pcb-keeppower-wyy-ebd02-ab-schutzelektronik-26a/a-200506/
+    reference: akkuteile_pcb4s_keeppower_26a.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:75fd93cc77b054763fc88fb08590bf57e8b7e08d5288122c9951fd30e0b30070
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_anker_nano100w:
+    source: https://www.anker.com/products/b2679-nano-100w-usb-c-charger
+    reference: anker_nano100w.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:c46162a2c0d3a9bd8b3284988fa66eb98d8347e434e4a07ab2d647273fd23bdf
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_ecp_au:
+    source: https://www.bosch-pt.com/productspecials/professional/li-ion/au/en/ecp/index.htm
+    reference: bosch_ecp_au.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:7b42b220f7a4273bd637a4063f9e13d23bc14fdd8a53299a3f7a02aa55e029e0
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_gba18v50_ch:
+    source: https://www.bosch-professional.com/ch/fr/products/gba-18v-5-0ah-1600A002U5
+    reference: bosch_gba18v50_ch.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:16b3c7af6c0e581ac4a83c5b7be2d142044a7da73701042cdc1d0859ed3c1a9d
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_gba18v50_efo:
+    source: https://efobasen.efo.no/mime_root/1257/1600A002U5.pdf
+    reference: bosch_gba18v50_efo.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:d9301c3680b25f456d87d644ebb1a37af0f038954eb4ea5a14f93cbdfc997c29
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_gba20_ch:
+    source: https://www.bosch-professional.com/ch/fr/products/gba-18v-2-0ah-1600Z00036
+    reference: bosch_gba20_ch.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:475760a8d8c4341084aebf083b82a304411af129d9bc1de91c5cdcd62e39ac3d
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_gsr18v55_manuel:
+    source: https://media.hornbach.nl/hb/ownersmanual/as.26222924.pdf
+    reference: bosch_gsr18v55_manuel.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c677555ad7c113f572313f8042aada4e1ec1cc0ec5d74d2dc014c6f6706b5b6b
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_bosch_procore40_ch:
+    source: https://www.bosch-professional.com/ch/fr/products/procore18v-4-0ah-1600A016GB
+    reference: bosch_procore40_ch.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:43ed0e60f123d8fe239bfe9812b2b533712120327f117f0f6f7adb1f0c5b2c36
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_club3d_cac1914_spec:
+    source: https://campuspoint.de/media/custom/upload/File-1689146836.pdf
+    reference: club3d_cac1914_spec.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:e97fca880f81a2df96527965e19d1d44828ef9c67928ed54eaf725d93385bb06
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_dewalt_dcb183_cef:
+    source: https://assets.cef.co.uk/downloads/pdg/dewalt_dcb183-xj_datasheet/dewalt_dcb183-xj_datasheet.pdf
+    reference: dewalt_dcb183_cef.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0134e5ea81bb33bdaffa97540d5fe9fe53ca57db5961ccd41e68eb70da735fd2
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_dewalt_dcb184_cef:
+    source: https://assets.cef.co.uk/downloads/pdg/dewalt_dcb184-xj_datasheet/dewalt_dcb184-xj_datasheet.pdf
+    reference: dewalt_dcb184_cef.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3a7f514c578348149af69da06161a087224f43beddb7108b862394b124645959
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_dewalt_dcb184_distrelec_ch:
+    source: https://www.distrelec.ch/en/power-tool-battery-18v-5ah-dewalt-dcb184-xj/p/30468367
+    reference: dewalt_dcb184_distrelec_ch.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:6c1fb20fb192f8fe9196ad465f0305e3c2a1a0273fcd814264b6d30daa90c968
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_doneland_ch224:
+    source: https://done.land/components/power/powersupplies/usb/usbtriggers/ch224/
+    reference: doneland_ch224.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3a7be9533260a23f81b05722b7e4dacf1797be7dceb620ba37ab8891d371bac7
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_doneland_toolbatteries:
+    source: https://done.land/components/power/powersupplies/battery/toolbatteries/
+    reference: doneland_toolbatteries.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0c1717f357c064079215aa297b5d36be3386bec1732ad2110a02bcf28cf83698
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_jetson_ai_lab_benchmarks:
+    source: https://jetson-ai-lab.com/benchmarks.html
+    reference: jetson_ai_lab_benchmarks.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:157f32ebf58cc526c4f8caae65afe7f081637a3828014b77158deb42a9e49a17
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_kiwi_adafruit_husb238:
+    source: https://www.kiwi-electronics.com/en/breakout-boards-117/adafruit-usb-type-c-power-delivery-dummy-breakout-i2c-or-fixed-husb238-20023
+    reference: kiwi_adafruit_husb238.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:cafbcc4c099ad1827fd2e7c0700fd5d149ce9315e8b5eaa99b4f566e76f7da99
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_lectronz_pd_sink_epr:
+    source: https://www.lectronz.com/products/usb-c-pd-sink-epr
+    reference: lectronz_pd_sink_epr.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6a6f6aa48ab5ffa3cd996cb620938352e6e044330b6bf560e0ae11b590ff7a37
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_localscore_about:
+    source: https://www.localscore.ai/about
+    reference: LocalScore (Mozilla Builders), résultats publiés (via direct)
+    date: 2026-10-11
+    empreinte: sha256:951020b7cb264a953f93d2c24039e4dd27e8c89f6ad7f2d2b7d107d21b02d9a3
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_localscore_model1:
+    source: https://www.localscore.ai/model/1
+    reference: LocalScore (Mozilla Builders), résultats publiés (via direct)
+    date: 2026-10-11
+    empreinte: sha256:30a28d29ca33d5b4962ddd06c09f0a4907d8ae6763be9adde6544e2472d3e946
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_localscore_model3:
+    source: https://www.localscore.ai/model/3
+    reference: LocalScore (Mozilla Builders), résultats publiés (via direct)
+    date: 2026-10-11
+    empreinte: sha256:505504ecb58a34623b19155a6418f8be90ff98484fd3e5900f591d15f635000e
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_bl1820b_de:
+    source: https://www.makita.de/product/bl1820b.html
+    reference: makita_bl1820b_de.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:58af7169fd28b61b194e1c2597eaaaeade4edd450a1cd27bd0afbcb54968c644
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_bl1850b_com:
+    source: https://www.makitatools.com/products/details/BL1850B
+    reference: makita_bl1850b_com.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:be739594a3e3c1b0abcc9f383f6067dd272571d750cfa9bacb14df5bf86d7681
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_bl1850b_de:
+    source: https://www.makita.de/product/bl1850b.html
+    reference: makita_bl1850b_de.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:46ebcd2dfb16a4db172991c8e06e7495813fdb545448e9a2e94e7833860e207f
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_ch_akkus:
+    source: https://www.makita.ch/produkte/lxt-18v-akkus.html
+    reference: makita_ch_akkus.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8a89b02d172d1ddf0c80b8d8db5bea87d51b516bcc4c53933a761401c8aa50c7
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_ch_bl1820b:
+    source: https://www.makita.ch/produkt/197254-9.html
+    reference: makita_ch_bl1820b.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b9dd1329cda8dc01156a608b2c7da5eb0dcb6dc3a70a6dc3e439fdfd0b4d6871
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_ch_bl1850b:
+    source: https://www.makita.ch/produkt/197280-8.html
+    reference: makita_ch_bl1850b.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3c93589ba4c7af3e9bfaf28803ce7129960899d043f67a7c6bd0878e3e528b4e
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_makita_ddf485_manuel:
+    source: https://www.trovaprezzi.it/manuali/makita_ddf485z.pdf
+    reference: makita_ddf485_manuel.pdf (via direct)
+    date: 2026-10-11
+    empreinte: sha256:f07296d2f6c06e73d0229e9cc91c3d9ce8bb7b08bbc9a81f84e20c35e49b629a
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_ddr_480_spec:
+    source: https://www.meanwell.com/Upload/PDF/DDR-480/DDR-480-SPEC.PDF
+    reference: Mean Well, fiche technique (via jina)
+    date: 2026-10-11
+    empreinte: sha256:603b549153c65f5592a82b526add98f62104cd381905e21ebbedb504d0035879
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_rsd_300_spec:
+    source: https://www.meanwell.com/Upload/PDF/RSD-300/RSD-300-SPEC.PDF
+    reference: Mean Well, fiche technique (via direct)
+    date: 2026-10-11
+    empreinte: sha256:03e0204a6786e3ee04acdba8e1232342bf6d0868b7988f3f80a3d6cb321aad2f
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_rsd_500_spec:
+    source: https://www.meanwell.com/Upload/PDF/RSD-500/RSD-500-SPEC.PDF
+    reference: Mean Well, fiche technique (via jina)
+    date: 2026-10-11
+    empreinte: sha256:a2db1d9b3ee23634a97b0ae0c689cc477ec64d6dc89cdca5f7b90720094b86ac
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_sd_1000_spec:
+    source: https://www.meanwell.com/Upload/PDF/SD-1000/SD-1000-SPEC.PDF
+    reference: Mean Well, fiche technique (via direct)
+    date: 2026-10-11
+    empreinte: sha256:ad920a824da600a36da83b9ed447c1ec299332769f7687bb5764f0c70d69fe6e
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_sd_350_spec:
+    source: https://www.meanwell.com/Upload/PDF/SD-350/SD-350-SPEC.PDF
+    reference: Mean Well, fiche technique (via direct)
+    date: 2026-10-11
+    empreinte: sha256:cde02e05b2053302884a0c768b8c8cadc43ffa7bd95d8c04656126da6723fea7
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_meanwell_sd_500_spec:
+    source: https://www.meanwell.com/Upload/PDF/SD-500/SD-500-SPEC.PDF
+    reference: Mean Well, fiche technique (via direct)
+    date: 2026-10-11
+    empreinte: sha256:4cdc4282b4939f3fb0189278fa76b2c1887dfbcc5666cfff6c320159b0f16afc
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_nkon_spacer_2x21700:
+    source: https://www.nkon.nl/en/2x21700-battery-spacer-holder.html
+    reference: nkon_spacer_2x21700.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:5e595f64389f9f31c202aff1a36a7e2604838c3c17033e27a15bdbc496e553d1
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_nvidia_blog_jetpack62_super:
+    source: https://developer.nvidia.com/blog/nvidia-jetpack-6-2-brings-super-mode-to-nvidia-jetson-orin-nano-and-jetson-orin-nx-modules/
+    reference: nvidia_blog_jetpack62_super.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:89f8ea3c29e8bf6fe7d5e184a8b7ba3b5acb1cdb74c69dff3c812e05a3d0d2dd
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_partsbuilt_blinker_3a:
+    source: https://www.partsbuilt.com/battery-low-voltage-shutoff-blinker-board-3-amp
+    reference: partsbuilt_blinker_3a.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:de1d5057ac0b38aab524f582774fe105d3ac12cd8ba52d087cd1dd723ec77f18
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_partsbuilt_makita_adapter:
+    source: https://partsbuilt.com/makita-18v-battery-adapter
+    reference: partsbuilt_makita_adapter.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b26146c1d6d1173143e5abec0c816bc64ce3d226546f0634feacf0b15b44e63c
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_partsbuilt_milwalt_adapter:
+    source: https://www.partsbuilt.com/battery-adapter-with-low-voltage-protection-milwaukee-dewalt-compatible
+    reference: partsbuilt_milwalt_adapter.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8c0ff5ee24c8ee36f140931c111e1c4e278ee25639d61d866f7dca5f0bb005e6
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_sevarg_dewalt_3ah:
+    source: https://mirror.sevarg.net/2016/09/11/dewalt-20v-max-30ah-battery-pack/
+    reference: Russell Graves (sevarg.net), démontages DeWalt 20V MAX (via direct)
+    date: 2026-10-11
+    empreinte: sha256:cbfdfc8370452cd76e95960e0181c9da1956fe6fc34bbc7d8e81affabca6671d
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_sevarg_dewalt_6ah:
+    source: https://sevarg.net/2017/04/22/dewalt-20v-max-60ah-pack-teardown/
+    reference: Russell Graves (sevarg.net), démontages DeWalt 20V MAX (via direct)
+    date: 2026-10-11
+    empreinte: sha256:f22081defad52ce01e6363caf7fe1db2179f5507ca9bf5393c0817342a645b35
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_techtest_anker_a2679:
+    source: https://techtest.org/anker-a2679-nano-100w-leistungsstarkes-usb-c-ladegeraet-im-kompakten-format/
+    reference: techtest_anker_a2679.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:d35b6c41f0d27a279dc383cf67a39c0f37267e1de2623559f1b740824d984c08
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tme_daly_katalog:
+    source: https://www.tme.eu/ch/en/katalog/p,daly_1435/
+    reference: tme_daly_katalog.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:5c3bf99318790fc0bd99a448cfdac0fab169ec2477e6f72d73d8bb9289128b95
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_bosch_gba20:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/BOSCH-GBA-18-V-2-0Ah-Professional-1600Z00036-p523419
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8f9943e716391ab796d53d3fa957ad1c11ba7a31c7d1909d3bfaff1add69706e
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_bosch_gba50:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/BOSCH-GBA-18-V-5-0-Ah-M-C-Professional-1-600-A00-2U5-p478856
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:36eafb53e29d2f02e9f9934ebd38bbd4ffb996443fa419d7edec8e9d964c426a
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_bosch_procore40:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/BOSCH-ProCORE18V-4-0Ah-Professional-1600A016GB-p565687
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6849bbd6acb857067c8bed8709e0439f87d28ca8f425ae394068c3ee476acfc8
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_ddr_480b_12:
+    source: https://www.toppreise.ch/browse?q=DDR-480B-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:18430c9f734175cd4ebbfeca582279c882b37b71fe67833a856ba3d0e30fd762
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_ddr_480c_12:
+    source: https://www.toppreise.ch/browse?q=DDR-480C-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:d2543d4ecf5bd51ff8118b5a56c926ddd493460fa583952cd8ce663ad959893a
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_rsd_500b_12:
+    source: https://www.toppreise.ch/browse?q=RSD-500B-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:dee63255792b624de7e9c383681992dbb1f17208a99414646d9ff04f379ffe5f
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_rsd_500c_12:
+    source: https://www.toppreise.ch/browse?q=RSD-500C-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0ad613e1ea445a6836026e1694825e1c42a6d6531882868a87bb64e1512408a7
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_sd_1000l_12:
+    source: https://www.toppreise.ch/browse?q=SD-1000L-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:637c7a960132228c16c74fee8973f5907321d946148c5e9da475132120c73096
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_sd_350b_12:
+    source: https://www.toppreise.ch/browse?q=SD-350B-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:14339a8134307660a5805e044aaeaa1d36d41166d680f7b776d0ce0f0c64e9ba
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_sd_500l_12:
+    source: https://www.toppreise.ch/browse?q=SD-500L-12
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:cde12aeea4c6b300e71252175993eecd02b15fdc62bcdbb3b31ff95462c05fad
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_adapter_bosch:
+    source: https://www.toppreise.ch/browse?q=akku+adapter+bosch+18v
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:354ea612df52b47f9d5bfb1653dbce173540c6a7fc3a9611000269658337821d
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_adapter_dewalt:
+    source: https://www.toppreise.ch/browse?q=akku+adapter+dewalt+18v
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:7159cdb08fda9d6a4e7e64bcba4ada75b4c06221adb19d5841bdbf4844dd2801
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_adapter_makita:
+    source: https://www.toppreise.ch/browse?q=akku+adapter+makita+18v
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:01ed197c8800ac14f7dc56947cae7aeebca8a4864d98f2986f22d781fe11b092
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_anker_nano100w:
+    source: https://www.toppreise.ch/browse?q=Anker+Nano+Charger+100W
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5b60f953c4d81e3e17f8b1b2b0edc13d86dedd9551bfa8ea41306be4d4fb5b73
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_balancer_lader:
+    source: https://www.toppreise.ch/browse?q=Balancer+Ladeger%C3%A4t+LiPo
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:1b545ceaea7dba11e1d6237d3f9f24ecb6bc4a0efeee9544a772833252cea462
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_bms3s:
+    source: https://www.toppreise.ch/browse?q=BMS+3S
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0205644b868fc136080e7790dc0d68d5551f0f91c692de6879843620027058a8
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_bms4s:
+    source: https://www.toppreise.ch/browse?q=BMS+4S
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:1aab4153981ac297a154412f427725e4f1dfd1ff9c9653089fa7ad382ab41cf1
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_club3d_cac1914:
+    source: https://www.toppreise.ch/browse?q=CAC-1914
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6b44aec5c3fa1c13dd6d0ac9301f82e672a8499d7970fdb97c0675adbeecfc29
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_club3d_cac1932:
+    source: https://www.toppreise.ch/browse?q=CAC-1932
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:d4fbf5f476d3eb87cef7c9a5e1373632d3c8e0e81be93709ffb54dd689bc13b3
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_hama_200019:
+    source: https://www.toppreise.ch/browse?q=Hama+00200019
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3a80b226027809e831f1f69a4b5d5ef4c91a81967573254e46c46f245f0954bd
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_makita_bl1820:
+    source: https://www.toppreise.ch/browse?q=makita+bl1820
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3b25f692f36f02f9a3af4ff19cdb0a76cd327f7c5dcbbd659089e985fa2d1829
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_orion2412_40:
+    source: https://www.toppreise.ch/browse?q=Orion+24%2F12-40
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c43eb2c4572d6be7ffe39ee922c88a5964dc90ea6bbe810556171c22a2fd85bf
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_pd_trigger:
+    source: https://www.toppreise.ch/browse?q=PD+Trigger
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:d95b9079b6b5fce21839467c1ca245835a0a8c395e418cb039ebe65b8649e510
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_powerwheel:
+    source: https://www.toppreise.ch/browse?q=power+wheel+adapter
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:ecb69e92e28bae479cbd33dddd78866b3a217d474c88a2d0ccb32d6f0f87df09
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_browse_punktschweiss:
+    source: https://www.toppreise.ch/browse?q=Punktschweissger%C3%A4t+Akku
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:a94a71f77de6aee8536834745c45b75877681b9349a3a96f8fbb3089d0e92b78
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_dewalt_dcb183:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/DEWALT-18-0-Volt-2-0-Ah-XR-Li-Ion-Akku-DCB183-p480674
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:4b62084afe27866bc0cb406c0f6c348aca6116e37d4e600a77e567311f94429d
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_dewalt_dcb184:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/DEWALT-18-0-Volt-5-0-Ah-XR-Li-Ion-Akku-DCB184-p480667
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:a869fefaae8698b95799f9c4319ea0363e25b76bb7161e759836c1e8a1b8c21b
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_tp_makita_bl1850b:
+    source: https://www.toppreise.ch/preisvergleich/Zubehoer-fuer-Bohrmaschinen-Schrauber/MAKITA-18-V-5-Ah-Akku-Li-Ion-BL1850B-p523649
+    reference: Toppreise.ch, comparateur de prix suisse, relevé 2026-10-11 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8b38381530c39e41b75d21a5ce133db1e303606486243dd1aa2081363b91caf4
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_victron_orion2412_40_solacity:
+    source: https://www.solacity.com/product/victron-orion-24-12-40
+    reference: victron_orion2412-40_solacity.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:05a514f7fd7006f571f5b1c32a80ba15c3ae087f3cfe9340ab50821419ff7f33
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_wifiseer_mobisys2016:
+    source: https://microsoft.com/en-us/research/wp-content/uploads/2017/01/mobisys_2016b.pdf
+    reference: wifiseer_mobisys2016.pdf.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:68bc1989730259168bea90a3d632121c856b309a6b851f8b48085a6d676a9bbc
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_wwj_bosch_core18v40:
+    source: https://www.woodworkersjournal.com/bosch-core18v-4-0-ah-battery/
+    reference: wwj_bosch_core18v40.html (via direct)
+    date: 2026-10-11
+    empreinte: sha256:89758112836fd0e36049a91f1120b8b6cffdad2fad9d276746c28f546b8fb0ee
+    conditions: non lues
+    redistribuable: false
+  marche_nrj_xhm609_probots:
+    source: https://probots.co.in/xh-m609-dc-12v-36v-battery-over-voltage-discharge-protection-switch-module-charger-lead-acid-lithium-ion.html
+    reference: xhm609_probots.html.jina.md (via jina)
+    date: 2026-10-11
+    empreinte: sha256:429d042eb3ca12979fb0525612b8adbf88d64b0b969f636c5a970897bbd363c3
+    conditions: non lues
+    redistribuable: false
