@@ -1,0 +1,130 @@
+# Parcours guidé du Kit — PROPOSÉ (prompt du 2026-10-11), NON décidé ; lu par scripts/kit_parcours.py
+#
+# Décidé par Jeremy (fiche 0076) : un Kit « construit étape par étape », en « projets guidés » ; réemploi (« monter
+# et démonter chaque composant et les remonter dans n'importe quelles variantes des modèles YXOR Kit et YXOR Lab ») ;
+# préconiser sans imposer ; outillage du Kit. Les ÉTAPES ci-dessous et leurs composants sont PROPOSÉS.
+#
+# Chaque étape décrit le robot ENTIER à cette étape (ce qu'il porte), pas seulement ce qui s'ajoute : le réemploi se
+# calcule en comparant deux étapes. `ref` renvoie à params/ :
+#   servo:<id>        catalogue de l'explorateur (actionneurs.yaml)
+#   calc:<id>         calculateurs.yaml (marche.produits)
+#   capteur:<nom>     capteurs.yaml (produits, nom exact)
+#   cellule:<id>      batteries.yaml (marche.produits) ; `n` cellules en série
+#   batterie:<id>     batteries.yaml (marche.produits)
+#   adaptateur_serie  systeme_electrique.adaptateur_serie (bus.yaml)
+#   dcdc:<V>          puissance.yaml (marche.produits, catégorie dcdc, sortie V)
+#   bloc_12v          kit.bloc_secteur (kit_marche.yaml), dimensionné au pire cas de l'étape
+#   bride:<id>        kit_parcours_marche.yaml (brides relevées le 2026-10-11)
+#   projet:<nom>      kit_parcours_marche.yaml (projets ouverts)
+#   null:<texte>      aucun marché relevé dans le dépôt : prix et masse null, et dit
+# `classe` : DURABLE (servo, électronique, batterie, roulement, visserie, connectique, bride) ou STRUCTURE (plaque
+# recoupable). `fixation` : vis, écrou, insert, clip, connecteur (durables) ; colle ou agrafes seulement entre deux
+# pièces de STRUCTURE (règle de réemploi, vérifiée par tests/test_kit_parcours.py).
+
+regle_reemploi:
+  fixations_durables: [vis, écrou, insert, clip, connecteur]
+  fixations_structure: [colle, agrafes, tenon]
+  # Réemployable dans le Lab (PROPOSÉ ; le Lab est celui de params/kit.yaml, `lab`) : ses petits axes Feetech
+  # (fiche 0075 : cou 2, pinces 2), son adaptateur série, sa cellule ; le reste est dit « à vérifier » ou « non ».
+  lab_feetech_max: 4
+
+etapes:
+  - n: 0
+    nom: maquette carton
+    but: "le robot entier en carton, passif : poses, proportions, montage, noms d'axes (plans du niveau 0)"
+    alimentation: aucune
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, agrafeuse, pistolet à colle]
+    nomenclature:
+      - {ref: "structure:niveau0", n: 1, classe: STRUCTURE, fixation: tenon, role: "gabarits du niveau 0 (parts/kit_niveau0.py)"}
+      - {ref: "null:vis M4, écrous à frein, rondelles larges (pivots)", n: 38, classe: DURABLE, fixation: écrou, role: pivots}
+  - n: 1
+    nom: tête de bureau
+    but: "deux STS3215 en pan-tilt, une caméra, un adaptateur USB, branchée sur un PC"
+    alimentation: secteur 12 V
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    nomenclature:
+      - {ref: "servo:sts3215_c018", n: 2, classe: DURABLE, fixation: vis, role: "cou (lacet, tangage)", axes: [neck_yaw, neck_pitch]}
+      - {ref: "bride:sts3215", n: 2, classe: DURABLE, fixation: vis, role: brides du pan-tilt}
+      - {ref: "null:caméra USB (la Camera Module 3 se branche sur un Raspberry Pi, pas sur un PC)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: "bus série des servos, USB vers le PC"}
+      - {ref: bloc_12v, n: 1, classe: DURABLE, fixation: connecteur, role: alimentation des servos}
+      - {ref: "null:vis M2 et M3 (brides, palonniers)", n: 1, classe: DURABLE, fixation: vis, role: visserie}
+      - {ref: "structure:tete", n: 1, classe: STRUCTURE, fixation: colle, role: coque de la tête}
+  - n: 2
+    nom: tête qui parle
+    but: "micro, haut-parleur, Raspberry Pi 5 ; variantes IA « réseau » (le modèle tourne ailleurs) et « locale » (sur le Pi, avec ou sans AI HAT+ 2)"
+    alimentation: secteur 12 V
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    nomenclature:
+      - {ref: "servo:sts3215_c018", n: 2, classe: DURABLE, fixation: vis, role: cou, axes: [neck_yaw, neck_pitch]}
+      - {ref: "bride:sts3215", n: 2, classe: DURABLE, fixation: vis, role: brides du pan-tilt}
+      - {ref: "capteur:Raspberry Pi Camera Module 3 (standard)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: "calc:rpi5_8gb", n: 1, classe: DURABLE, fixation: vis, role: calculateur}
+      - {ref: "dcdc:5", n: 1, classe: DURABLE, fixation: vis, role: "12 → 5 V du Raspberry Pi"}
+      - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: bus série}
+      - {ref: "null:microphone USB", n: 1, classe: DURABLE, fixation: clip, role: micro}
+      - {ref: "null:haut-parleur et amplificateur", n: 1, classe: DURABLE, fixation: vis, role: haut-parleur}
+      - {ref: bloc_12v, n: 1, classe: DURABLE, fixation: connecteur, role: alimentation}
+      - {ref: "null:vis M2 et M3", n: 1, classe: DURABLE, fixation: vis, role: visserie}
+      - {ref: "structure:tete", n: 1, classe: STRUCTURE, fixation: colle, role: coque de la tête}
+    variante_locale:
+      - {ref: "calc:rpi_ai_hat_plus_2", n: 1, classe: DURABLE, fixation: vis, role: "accélérateur (Hailo-10H)"}
+  - n: 3
+    nom: buste à bras
+    but: "la tête sur un buste, deux bras de trois axes (variante : un bras SO-101)"
+    alimentation: secteur 12 V
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    nomenclature:
+      - {ref: "servo:sts3215_c018", n: 8, classe: DURABLE, fixation: vis, role: "cou (2), épaules (2 × 2), coudes (2)", axes: [neck_yaw, neck_pitch, shoulder_pitch, shoulder_roll, elbow_roll]}
+      - {ref: "bride:sts3215", n: 8, classe: DURABLE, fixation: vis, role: brides}
+      - {ref: "capteur:Raspberry Pi Camera Module 3 (standard)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: "calc:rpi5_8gb", n: 1, classe: DURABLE, fixation: vis, role: calculateur}
+      - {ref: "dcdc:5", n: 1, classe: DURABLE, fixation: vis, role: "12 → 5 V"}
+      - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: bus série}
+      - {ref: "null:microphone USB", n: 1, classe: DURABLE, fixation: clip, role: micro}
+      - {ref: "null:haut-parleur et amplificateur", n: 1, classe: DURABLE, fixation: vis, role: haut-parleur}
+      - {ref: bloc_12v, n: 1, classe: DURABLE, fixation: connecteur, role: alimentation}
+      - {ref: "null:vis M2 et M3", n: 1, classe: DURABLE, fixation: vis, role: visserie}
+      - {ref: "structure:buste", n: 1, classe: STRUCTURE, fixation: colle, role: "tête, tronc, bras (coques carton)"}
+    variante_bras: "projet:SO-101"
+  - n: 4
+    nom: base à roues
+    but: "le buste sur une base à deux roues motrices (STS3215 en rotation continue), batterie, manette"
+    alimentation: batterie de moins de 100 Wh (3S1P de la cellule du Lab) ; variante batterie d'outillage
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    nomenclature:
+      - {ref: "servo:sts3215_c018", n: 10, classe: DURABLE, fixation: vis, role: "buste (8) et roues (2, rotation continue)", axes: [neck_yaw, neck_pitch, shoulder_pitch, shoulder_roll, elbow_roll, roue]}
+      - {ref: "bride:sts3215", n: 10, classe: DURABLE, fixation: vis, role: brides}
+      - {ref: "capteur:Raspberry Pi Camera Module 3 (standard)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: "calc:rpi5_8gb", n: 1, classe: DURABLE, fixation: vis, role: calculateur}
+      - {ref: "dcdc:5", n: 1, classe: DURABLE, fixation: vis, role: "pack → 5 V"}
+      - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: bus série}
+      - {ref: "null:microphone USB", n: 1, classe: DURABLE, fixation: clip, role: micro}
+      - {ref: "null:haut-parleur et amplificateur", n: 1, classe: DURABLE, fixation: vis, role: haut-parleur}
+      - {ref: "cellule:lab", n: 3, classe: DURABLE, fixation: clip, role: "pack 3S1P (porte-cellules à clips)"}
+      - {ref: "null:BMS 3S", n: 1, classe: DURABLE, fixation: vis, role: protection du pack}
+      - {ref: "null:roues motrices et roue folle", n: 3, classe: DURABLE, fixation: vis, role: roues}
+      - {ref: "null:roulements", n: 2, classe: DURABLE, fixation: insert, role: paliers des roues (dimensions dans hardware.yaml)}
+      - {ref: "null:manette sans fil", n: 1, classe: DURABLE, fixation: connecteur, role: commande}
+      - {ref: "null:vis M2 et M3", n: 1, classe: DURABLE, fixation: vis, role: visserie}
+      - {ref: "structure:base", n: 1, classe: STRUCTURE, fixation: colle, role: "buste et plateau de la base (carton)"}
+    variante_batterie: "batterie:makita_bl1850b"
+  - n: 5
+    nom: jambes
+    but: "le robot entier qui tient debout (le niveau « debout » de l'étude du 8 octobre) ; les servos des roues deviennent des servos de jambe"
+    alimentation: batterie de moins de 100 Wh (3S1P de la cellule du Lab)
+    outillage: [cutter, feuille, imprimante, cartons, règle, équerre, pistolet à colle]
+    nomenclature:
+      - {ref: "servo:sts3215_c018", n: "kit", classe: DURABLE, fixation: vis, role: "cou, bras, et les axes de jambe que le STS3215 tient"}
+      - {ref: "servo:sts3250", n: "kit", classe: DURABLE, fixation: vis, role: "axes de jambe qui demandent le STS3250"}
+      - {ref: "bride:sts3215", n: "servos", classe: DURABLE, fixation: vis, role: brides (même enveloppe pour le STS3250)}
+      - {ref: "capteur:Raspberry Pi Camera Module 3 (standard)", n: 1, classe: DURABLE, fixation: vis, role: caméra}
+      - {ref: "calc:rpi5_8gb", n: 1, classe: DURABLE, fixation: vis, role: calculateur}
+      - {ref: "dcdc:5", n: 1, classe: DURABLE, fixation: vis, role: "pack → 5 V"}
+      - {ref: adaptateur_serie, n: 1, classe: DURABLE, fixation: vis, role: bus série}
+      - {ref: "null:microphone USB", n: 1, classe: DURABLE, fixation: clip, role: micro}
+      - {ref: "null:haut-parleur et amplificateur", n: 1, classe: DURABLE, fixation: vis, role: haut-parleur}
+      - {ref: "cellule:lab", n: 3, classe: DURABLE, fixation: clip, role: pack 3S1P}
+      - {ref: "null:BMS 3S", n: 1, classe: DURABLE, fixation: vis, role: protection du pack}
+      - {ref: "null:vis M2, M3 et M4", n: 1, classe: DURABLE, fixation: vis, role: visserie}
+      - {ref: "structure:niveau0", n: 1, classe: STRUCTURE, fixation: tenon, role: "le corps entier (plans du niveau 0)"}

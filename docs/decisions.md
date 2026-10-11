@@ -226,6 +226,21 @@ avec qui l'a décidé.
       la famille des petits axes de toute la gamme. »
     - Fiche : [0075](../decisions/0075-kit-progressif-feetech-petits-axes.md),
       qui complète la [0074](../decisions/0074-kit-modules-successifs.md).
+    - ⚠ Ses **niveaux 0 à 4** sont remplacés par le parcours guidé de la
+      fiche 0076 ; « Feetech aux petits axes » reste.
+25. **Cadrage de la gamme, Kit en parcours guidé, réemploi** : deux familles
+    (Kit et Lab réalisables par tous ; Home et Pro d'un autre niveau),
+    « pas figé », variantes ; budget = sortie des choix matériels ;
+    outillage du Kit seulement (cutter, feuille, imprimante, cartons,
+    agrafeuse, règle, équerre, pistolet à colle ; ni imprimante 3D ni
+    Fablab) ; Lab en 2D (alu ou autres), la 3D à partir du Home ; sécurité
+    à part entière, projet sans responsabilité ; préconiser sans imposer ;
+    Kit étape par étape, projets guidés ; tout composant démontable et
+    remontable dans n'importe quelle variante du Kit et du Lab.
+    - Décidée par Jeremy (ses mots du 2026-10-09 et du 2026-10-11, cités
+      dans la fiche ; prompt du 2026-10-11).
+    - Fiche : [0076](../decisions/0076-cadrage-gamme-kit-parcours-reemploi.md),
+      qui remplace en partie la 0074 et la 0075 (tableau dans la fiche).
 
 ## B — Conventions confirmées
 

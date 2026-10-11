@@ -9433,3 +9433,278 @@ fichiers:
     empreinte: sha256:ea76e7b7be92160f2a4f6265f9b2aa8736a402ce10d4d7a21c4cb9a4462509ca
     conditions: non lues
     redistribuable: false
+
+  # ── Relevé du parcours du Kit (params/kit_parcours_marche.yaml), versé le 2026-10-09 ──
+  marche_parc_ftservo_h:
+    source: https://raw.githubusercontent.com/ftservo/FTServo_Arduino/main/src/SMS_STS.h
+    reference: Feetech, FTServo_Arduino, SMS_STS.h (branche main) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:3267f608ce6123570fd2033526d1749f2783baf3e401757b83028a24b0b76899
+    conditions: non lues
+    redistribuable: false
+  marche_parc_ftservo_cpp:
+    source: https://raw.githubusercontent.com/ftservo/FTServo_Arduino/main/src/SMS_STS.cpp
+    reference: Feetech, FTServo_Arduino, SMS_STS.cpp (via direct)
+    date: 2026-10-11
+    empreinte: sha256:7a4f35218ad38bdca89c5b8adfc844579764449401264b3cffeccf29a6524a48
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lerobot_feetech:
+    source: https://raw.githubusercontent.com/huggingface/lerobot/main/src/lerobot/motors/feetech/feetech.py
+    reference: Hugging Face LeRobot, motors/feetech/feetech.py (main) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0460413cd6a641cede015ac19ac53d2cfe9c343af1bd18ed74e1951229f64ff2
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lerobot_tables:
+    source: https://github.com/huggingface/lerobot/raw/main/src/lerobot/motors/feetech/tables.py
+    reference: LeRobot, motors/feetech/tables.py (via direct)
+    date: 2026-10-11
+    empreinte: sha256:71f7f7beb17169781bd26a33b165ed4c5c3df7b9c477d36860f9d6011eb00428
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lerobot_lekiwi:
+    source: https://github.com/huggingface/lerobot/raw/main/src/lerobot/robots/lekiwi/lekiwi.py
+    reference: LeRobot, robots/lekiwi/lekiwi.py (via direct)
+    date: 2026-10-11
+    empreinte: sha256:faee0ebf63ce09771795d32c4c2510ed75c0108eb1ee6f98426cf91c244a6345
+    conditions: non lues
+    redistribuable: false
+  marche_parc_aifitlab_sts:
+    source: https://aifitlab-wiki.super.site/feetech-servo-motor-docs/feetech-sts-servo-memory-table-analysis
+    reference: AIFITLAB Wiki, FEETECH STS Servo – Memory Table Analysis (source tierce) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:391e741a20c198d1d7f80549671c884bb89c81ddee707a84ab8e5c9b9894d0f6
+    conditions: non lues
+    redistribuable: false
+  marche_parc_waveshare_st3215:
+    source: https://www.waveshare.com/wiki/ST3215_Servo
+    reference: Waveshare Wiki, ST3215 Servo (via direct)
+    date: 2026-10-11
+    empreinte: sha256:595f574e4de05edf3270564e69147e947a9d8e5e4f10d7751994940fb1a5fae9
+    conditions: non lues
+    redistribuable: false
+  marche_parc_eckstein_sts3215:
+    source: https://eckstein-shop.de/feetech/servo-sts3215-C046-7-4v-19kg-0-360-magnetencoder_1
+    reference: Eckstein (DE), fiche FT01022 / ST-3215-C046, 22,35 € TTC 19 % (18,78 € HT) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:625c1c57ba6c862e0b03a7f96395c8c581bbad3c3dc8534c7b1d0ba874ffb69a
+    conditions: non lues
+    redistribuable: false
+  marche_parc_bride_rcmall:
+    source: https://us.amazon.com/RCmall-Aluminum-Bracket-Feetech-Feedback/dp/B0GVLSJ6TG
+    reference: Amazon US, ASIN B0GVLSJ6TG (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:4e5d340fe7f11107da4693accd1f62b899c30cbb44beb01aeb679f41cbda1983
+    conditions: non lues
+    redistribuable: false
+  marche_parc_bride_diymall:
+    source: https://www.amazon.com/DIYmall-STS3215-Magnetic-Encoder-Bracket/dp/B0FGNSRCYT
+    reference: Amazon US, ASIN B0FGNSRCYT (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:08e753fbb058b83e342b30c3a20d31830aa05c6ad5af89234ec179dc705d920c
+    conditions: non lues
+    redistribuable: false
+  marche_parc_bride_zmegturq:
+    source: https://www.amazon.com/S3215-servo-Bracket-Suitable-3215/dp/B0GTYKR1HW
+    reference: Amazon US, ASIN B0GTYKR1HW (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:ddb623981caafed479615eef05323cb5ae9b1642bb34697f05d5d7da0af5e605
+    conditions: non lues
+    redistribuable: false
+  marche_parc_bride_aliexpress:
+    source: https://www.aliexpress.com/w/wholesale-sts3215-bracket.html
+    reference: AliExpress, page de recherche (locale US) (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:c5df58c5014bc8a8d8d0a62eba2acfabd2fce2d37357387ec5791728e54833d9
+    conditions: non lues
+    redistribuable: false
+  marche_parc_so101_licence:
+    source: https://raw.githubusercontent.com/TheRobotStudio/SO-ARM100/main/LICENSE
+    reference: SO-ARM100 LICENSE (Apache-2.0) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    conditions: non lues
+    redistribuable: false
+  marche_parc_so101_readme:
+    source: https://raw.githubusercontent.com/TheRobotStudio/SO-ARM100/main/README.md
+    reference: SO-ARM100 README (via direct)
+    date: 2026-10-11
+    empreinte: sha256:7e9bdd089aab15532f7304e65e748707315aaee359204143e3997ecfc568d01e
+    conditions: non lues
+    redistribuable: false
+  marche_parc_so101_api:
+    source: https://api.github.com/repos/TheRobotStudio/SO-ARM100
+    reference: API GitHub, métadonnées du dépôt (via direct)
+    date: 2026-10-11
+    empreinte: sha256:a7cc012f9670a9f9ed7fb30108f2b57ba4bf8be3ccc82c63d870732b6e1a9b36
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lekiwi_licence:
+    source: https://github.com/SIGRobotics-UIUC/LeKiwi/raw/main/LICENSE.txt
+    reference: LeKiwi LICENSE.txt (Apache-2.0) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lekiwi_bom:
+    source: https://github.com/SIGRobotics-UIUC/LeKiwi/raw/main/BOM.md
+    reference: LeKiwi BOM.md (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6bb91c9cba7b9fe0748be70473d98c7cf85e316239e0570f7614f1a5965082c1
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lekiwi_readme:
+    source: https://raw.githubusercontent.com/SIGRobotics-UIUC/LeKiwi/main/README.md
+    reference: LeKiwi README (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5736581057935f9626b99571cfb55acd3b9bcce0c964b52d5b73948fcf958181
+    conditions: non lues
+    redistribuable: false
+  marche_parc_lekiwi_api:
+    source: https://api.github.com/repos/SIGRobotics-UIUC/LeKiwi
+    reference: API GitHub (via direct)
+    date: 2026-10-11
+    empreinte: sha256:4e41ea27a09bb2f6a3a745cbd9146ec9b501e6861a3b27885f5bd2d0c02940b9
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_licence:
+    source: https://raw.githubusercontent.com/pollen-robotics/reachy_mini/main/LICENSE
+    reference: reachy_mini LICENSE (Apache-2.0) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:1cd66cd7ef50bb247f43d247f7c2a3259a600d951170e778d75c9278e5680f03
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_readme:
+    source: https://raw.githubusercontent.com/pollen-robotics/reachy_mini/main/README.md
+    reference: reachy_mini README (matériel CC BY-SA-NC) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:9d11ffc341acce448974c215d1a69a2b5000de98a92373a129d37ec19b0becd0
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_api:
+    source: https://api.github.com/repos/pollen-robotics/reachy_mini
+    reference: API GitHub (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b01501d2e21f0178958f059938e702a6c9c9ff932a952f5dce560586e2de546c
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_hw:
+    source: https://huggingface.co/docs/reachy_mini/platforms/reachy_mini/hardware
+    reference: Docs HF Reachy Mini, hardware (Wireless) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:eeb069e1a1dcb445eade8ff1a0a92c1a57d4087866f2b18b31ade810a345b74e
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_shop:
+    source: https://www.hf.co/reachy-mini/
+    reference: Page de vente Reachy Mini (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:bf1472b3ac5b9eab2544a8dc71efe18af7e879936ee2da0a22c0a2140309a1af
+    conditions: non lues
+    redistribuable: false
+  marche_parc_reachy_blog:
+    source: https://huggingface.co/blog/reachy-mini
+    reference: Blog HF, 2025-07-09 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c5b7f349c066031877673d8db0ee916ba037caf1bb103a90388211b36ae3d1be
+    conditions: non lues
+    redistribuable: false
+  marche_parc_duck_licence:
+    source: https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/LICENSE
+    reference: Open_Duck_Mini LICENSE, branche v2 (Apache-2.0) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    conditions: non lues
+    redistribuable: false
+  marche_parc_duck_readme:
+    source: https://raw.githubusercontent.com/apirrone/Open_Duck_Mini/v2/README.md
+    reference: Open_Duck_Mini README (v2) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0415ad9a7983b1f0e5ab846f960eadce3cb501e84cfc7a163ae50b0bb22a94e2
+    conditions: non lues
+    redistribuable: false
+  marche_parc_duck_api:
+    source: https://api.github.com/repos/apirrone/Open_Duck_Mini
+    reference: API GitHub (via direct)
+    date: 2026-10-11
+    empreinte: sha256:ea52503965c09076cf121d35f18be11a0b27caa1413937b9d60d2bb4ae59648f
+    conditions: non lues
+    redistribuable: false
+  marche_parc_duck_bom:
+    source: https://docs.google.com/spreadsheets/d/1gq4iWWHEJVgAA_eemkTEsshXqrYlFxXAPwO515KpCJc/export?format=csv
+    reference: Tableur BOM Open Duck Mini v2 (export CSV) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:aca4e86823c006efe3af2d8e17e3d95da10bc41a0d0de887c554ebb443bd84e8
+    conditions: non lues
+    redistribuable: false
+  marche_parc_geerling_html:
+    source: https://www.jeffgeerling.com/blog/2026/raspberry-pi-ai-hat-2/
+    reference: J. Geerling, 2026-01-15 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:42b4aede2be5f51586a198f1e8101b523ce751078f839abbe954aad4bebb695b
+    conditions: non lues
+    redistribuable: false
+  marche_parc_geerling_graphe:
+    source: https://www.jeffgeerling.com/blog/2026/raspberry-pi-ai-hat-2/pi-ai-hat-2-llm-compare-inference.jpg
+    reference: J. Geerling, graphique « LLM Inference performance » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:12ac0b3196bfe0326085ec5ed521c752c9d52860d3336d050708f6ef75c40095
+    conditions: non lues
+    redistribuable: false
+  marche_parc_cnx_hat2:
+    source: https://www.cnx-software.com/2026/01/20/raspberry-pi-ai-hat-2-review-a-40-tops-ai-accelerator-tested-with-computer-vision-llm-and-vlm-workloads/
+    reference: CNX Software, 2026-01-20 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5ef35f8e16ed84fa2efc64397acf31ce92a256de234dbb2a435837f1a9ce7234
+    conditions: non lues
+    redistribuable: false
+  marche_parc_rpi_hat2:
+    source: https://www.raspberrypi.com/news/when-and-why-you-might-need-the-raspberry-pi-ai-hat-plus-2/
+    reference: Raspberry Pi Ltd, actualité AI HAT+ 2 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b0184697c74611cbac7f93d6d3246a305180e74c979e000820a017e8b5844146
+    conditions: non lues
+    redistribuable: false
+  marche_parc_stratosphere:
+    source: https://stratospherelinuxips.readthedocs.io/en/develop/_sources/immune/research_rpi_llm_performance.md.txt
+    reference: Stratosphere Lab, Slips docs, research_rpi_llm_performance (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5719f1f1a8f6e0222400adb7cdd69a00fe6522ae0d2a7c16a88dcec857d2c771
+    conditions: non lues
+    redistribuable: false
+  marche_parc_whispercpp89_p1:
+    source: https://api.github.com/repos/ggml-org/whisper.cpp/issues/89/comments?per_page=100&page=1
+    reference: 'whisper.cpp issue #89, commentaires 1-100 (aucune valeur retenue : Orange Pi 5) (via direct)'
+    date: 2026-10-11
+    empreinte: sha256:9913b4b68bf12e2809a7be0c7f5ce40e090dd6374512aa5e7ca1f211784955d1
+    conditions: non lues
+    redistribuable: false
+  marche_parc_whispercpp89_p2:
+    source: https://api.github.com/repos/ggml-org/whisper.cpp/issues/89/comments?per_page=100&page=2
+    reference: 'whisper.cpp issue #89, commentaire 1791848356 / 1793517539 (nickovs, Pi 5) (via direct)'
+    date: 2026-10-11
+    empreinte: sha256:d38ab8915d46ebbe39caf1ca5fff9ee2a4124701db3ca81c9ccae70e155415e5
+    conditions: non lues
+    redistribuable: false
+  marche_parc_edge_whisper:
+    source: https://api.github.com/repos/ktomanek/edge_whisper/readme
+    reference: ktomanek/edge_whisper README (via direct)
+    date: 2026-10-11
+    empreinte: sha256:54aa5faf61f0672fae66c84a99d9939422f578ebe5940794d42f90fd784ab1e3
+    conditions: non lues
+    redistribuable: false
+  marche_parc_edge_whisper_api:
+    source: https://api.github.com/repos/ktomanek/edge_whisper
+    reference: API GitHub (dépôt créé 2025-10-14) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c1e920b20af87fd6ded07e4d7a531ad0b6a46193d521da291e31ff859d61ec80
+    conditions: non lues
+    redistribuable: false
+  marche_parc_raspberrytips:
+    source: https://raspberry.tips/en/raspberrypi-tutorials/raspberry-pi-ai-hat-2-hailo-10h-40-tops-llm
+    reference: raspberry.tips (affirmations non mesurées) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:ea317c6f647fb0007591caf1469a8be3dcb0b89286fcbe0904dedd8728b43793
+    conditions: non lues
+    redistribuable: false

@@ -36,7 +36,8 @@ class Complements(unittest.TestCase):
         cls.blocs = {"capteurs": lire("capteurs.yaml"), "temps_reel": lire("temps_reel.yaml"),
                      "chargeurs_12s": lire("puissance.yaml")["chargeurs_12s"],
                      "hailo_m2": lire("calculateurs.yaml")["hailo_m2"],
-                     "releve_2026_10_09": lire("actionneurs.yaml")["marche"]["releve_2026_10_09"]}
+                     "releve_2026_10_09": lire("actionneurs.yaml")["marche"]["releve_2026_10_09"],
+                     "kit_parcours_marche": lire("kit_parcours_marche.yaml")}
 
     def test_sources_au_registre(self):
         for nom, b in self.blocs.items():

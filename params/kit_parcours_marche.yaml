@@ -1,0 +1,631 @@
+# Parcours du Kit : relevé de sources du 2026-10-11 (agent ; sources marche_parc_* au registre ; null si non lu ;
+# la plus prudente de deux valeurs, fiche 0064). Lu par scripts/kit_parcours.py. Aucune décision, aucun achat.
+# ⚠ Reachy Mini : matériel en « CC BY-SA-NC » selon son README (non commercial, comme ToddlerBot) ; démonstrations de
+#   marche/roulage NON vérifiées (vidéos non visionnées) ; aucune bride de marque reconnue, aucune cote de bride.
+rotation_continue:
+- servo: Feetech STS3215 (série STS/SMS)
+  existe: true
+  nom_du_mode: 'mode 1 : « Constant speed mode » (恒速模式 / WheelMode dans le SDK Feetech ; VELOCITY dans LeRobot)'
+  registre: Operating_Mode (« 运行模式 »)
+  adresse: 33
+  valeur_rotation_continue: 1
+  autres_valeurs:
+    0: position
+    2: PWM boucle ouverte
+    3: pas à pas (multitour ±7 tours selon le wiki Waveshare)
+  consigne_vitesse:
+    registre: Goal_Velocity / « Operating Speed »
+    adresse: 46
+    unite: 0,732 tr/min par pas (ou 0,0146 tr/min selon le bit 2 de la phase)
+  vitesse_max_en_mode_1: null
+  vitesse_a_vide_publiee:
+    valeur: 0,222 s/60° (45 tr/min) à 12 V
+    variante: ST3215 12 V (Waveshare)
+    autres_lectures:
+    - 0,16 s/60° à 6,0 V (Eckstein, STS3215 7,4 V C046 ; fiche truffée d'erreurs, voir rapport)
+    - réglage max ~3073 pas/s ; 50 pas/s ≈ 0,732 tr/min (wiki Waveshare, carte de commande)
+  position_lue_en_mode_1: true
+  position_lue_detail: 'Present_Position (adr. 56, 0x38) décrit comme « current absolute position », l''exception
+    citée étant le mode 3 (pas à pas) qui renvoie un écart. Bit 4 de la phase : retour d''angle monotour (0) ou
+    pleine plage (1). Le wiki Waveshare liste « Feedback: Position, Load, Speed, Input Voltage » sans restriction
+    de mode. Source tierce (AIFITLAB), pas la notice Feetech d''origine : à confirmer au banc.
+
+    '
+  usage_demontre: 'LeKiwi (LeRobot) : 3 STS3215 de roues réglés en OperatingMode.VELOCITY (lekiwi.py)'
+  sources:
+  - champ: adresse/valeur/nom (SDK officiel)
+    via: direct
+    source: marche_parc_ftservo_h
+  - champ: WheelMode = écrire 1 à l'adresse 33
+    via: direct
+    source: marche_parc_ftservo_cpp
+  - champ: OperatingMode 0-3
+    via: direct
+    source: marche_parc_lerobot_feetech
+  - champ: Operating_Mode (33,1), Goal_Velocity (46,2), Present_Position (56,2), Present_Velocity (58,2), résolution
+      4096
+    via: direct
+    source: marche_parc_lerobot_tables
+  - champ: usage_demontre
+    via: direct
+    source: marche_parc_lerobot_lekiwi
+  - champ: 'table mémoire : description modes, adr. 46 et 56, bits de phase'
+    via: direct
+    source: marche_parc_aifitlab_sts
+  - champ: vitesse à vide 45 tr/min @12V, « motor mode continuous rotation », réglage max ~3073
+    via: direct
+    source: marche_parc_waveshare_st3215
+  - champ: quatre modes 0-3 ; 0,16 s/60° @6 V
+    via: direct
+    source: marche_parc_eckstein_sts3215
+  resume: 'existe : mode 1 « Constant speed » (WheelMode), registre Operating_Mode adresse 33, valeur 1, consigne
+    de vitesse adresse 46 ; vitesse maximale propre au mode 1 NON publiée (null) ; lecture de la position en mode
+    1 : une source tierce seulement (à vérifier au banc)'
+brides:
+- cle: sts3215
+  nom: bride métallique pour STS3215 (place de marché, sans marque reconnue)
+  prix_chf: 24.089394980184938
+  masse_g: null
+  resume: 'aucune bride de marque reconnue (Feetech, Waveshare, Hiwonder, Seeed) ; 4 offres de places de marché
+    US, SANS cotes ni motif de trous ; prix retenu (le plus haut lu pour une bride seule, fiche 0064) : 28,86 USD
+    (AliExpress) ; RCmall 19,99 USD les 2 (aluminium ou plastique : contradiction) ; 90,86 USD écarté (aberrant)
+    ; disponibilité CH/UE inconnue'
+  offres:
+  - nom: RCmall 2 Pack Aluminum Servo Bracket for Feetech STS3215 (Black)
+    marque: RCmall
+    vendeur: RCmall (expédié par Amazon US)
+    materiau: 'aluminium anodisé noir (puces) — CONTRADICTION : la fiche technique dit « Material Plastic »'
+    quantite: 2 brides (puces) — le titre de puce dit « 4-PACK VALUE SET »
+    cotes_mm: null
+    dimension_article_pouces: 2 x 1.5 x 1.8
+    trous: null
+    vis_fournies: « all necessary mounting screws and nuts » (type non précisé)
+    prix:
+      valeur: 19.99
+      devise: USD
+      note: prix typique 19,99 ; affiché 18,99 (-5 %) ; taxe de vente US hors prix
+      tva: non indiquée
+    disponibilite_ch_ue: null
+    sources:
+    - champ: tout
+      via: r.jina.ai
+      source: marche_parc_bride_rcmall
+  - nom: DIYmall STS3215 12V 30KG + Metal Bracket (lot servo + bride)
+    marque: DIYmall
+    vendeur: DIYmall (expédié par Amazon US)
+    materiau: métal (« Metal Bracket »), alliage non précisé
+    cotes_mm: null
+    trous: null
+    vis_fournies: null
+    prix:
+      valeur: 32.99
+      devise: USD
+      note: prix du LOT servo + bride ; bride non vendue seule sur cette page
+      tva: non indiquée
+    disponibilite_ch_ue: null
+    sources:
+    - champ: tout
+      via: r.jina.ai
+      source: marche_parc_bride_diymall
+  - nom: S3215 servo Bracket, Suitable for 3215 12V 7.4V 30KG 19KG (1 Set Bracket)
+    marque: ZMEGTURQ
+    vendeur: 菅汇商贸 (Amazon US, vendeur tiers)
+    materiau: null
+    cotes_mm: null
+    trous: null
+    vis_fournies: null
+    prix:
+      valeur: 90.86
+      devise: USD
+      note: 'prix aberrant pour une bride : à ne pas retenir sans vérification'
+      tva: non indiquée
+    disponibilite_ch_ue: null
+    sources:
+    - champ: tout
+      via: r.jina.ai
+      source: marche_parc_bride_zmegturq
+  - nom: AliExpress, recherche « sts3215 bracket » (≥ 6 annonces, vendeurs non identifiés)
+    marque: null
+    vendeur: null
+    materiau: « Metal » dans plusieurs titres
+    cotes_mm: null
+    trous: null
+    vis_fournies: null
+    prix:
+      valeur: 28.86
+      devise: USD
+      note: 'Prix catalogue le plus haut lu pour une bride seule (annonce 3256811912484375 ; remisé 6,77 « nouveaux
+        clients »). Autres : 8,11 (remisé 1,61) ; 8,41 (1,91) ; 16,48 ; 20,93 (3,46) ; 17,00 (1,83) ; lot de 20
+        brides 27,05. Prix vus depuis la locale US.
+
+        '
+      tva: non indiquée
+    disponibilite_ch_ue: null
+    sources:
+    - champ: titres et prix
+      via: r.jina.ai
+      source: marche_parc_bride_aliexpress
+projets:
+- cle: SO-101
+  nom: SO-101 (SO-ARM100 / SO-101)
+  prix_chf: 101.78311933069132
+  resume: 'SO-101 (TheRobotStudio) : Apache-2.0 (LICENSE lu) ; 12 STS3215 la paire meneur + suiveur (C001, C044,
+    C046) ; 229,88 USD la paire, 121,94 USD le suiveur seul, hors impression 3D ; bras fixe'
+  detail:
+    nom: SO-101 (SO-ARM100 / SO-101)
+    depot: https://github.com/TheRobotStudio/SO-ARM100
+    cree_le: 2024-05-10
+    licence_fichier: Apache License, Version 2.0 (LICENSE)
+    licence_materiel: Apache-2.0 (seul fichier LICENSE du dépôt ; aucune licence matérielle distincte lue dans le
+      README)
+    licence_logiciel: Apache-2.0 (même fichier)
+    servos:
+    - modele: STS3215 7,4 V 1/345 (C001)
+      nombre_paire: 7
+      note: paire meneur + suiveur
+    - modele: STS3215 7,4 V 1/191 (C044)
+      nombre_paire: 2
+    - modele: STS3215 7,4 V 1/147 (C046)
+      nombre_paire: 3
+    - modele: STS3215 7,4 V 1/345 (C001)
+      nombre_suiveur_seul: 6
+    prix_nomenclature:
+      paire:
+        USD: 229.88
+        EUR: 226.3
+      suiveur_seul:
+        USD: 121.94
+        EUR: 124.3
+      note: hors impression 3D ; prix fournisseurs listés dans le README
+    marche_ou_roule: non applicable (bras fixe)
+    sources:
+    - champ: licence
+      via: direct
+      source: marche_parc_so101_licence
+    - champ: cree_le, licence détectée
+      via: direct
+      source: marche_parc_so101_api
+    - champ: servos, prix
+      via: direct
+      source: marche_parc_so101_readme
+- cle: LeKiwi
+  nom: LeKiwi
+  prix_chf: null
+  resume: 'LeKiwi : Apache-2.0 (LICENSE lu) ; 3 STS3215 aux roues (mode rotation continue) + 12 pour les bras ;
+    482 USD publiés ; roulage NON vérifié'
+  detail:
+    nom: LeKiwi
+    depot: https://github.com/SIGRobotics-UIUC/LeKiwi
+    cree_le: 2025-02-04
+    licence_fichier: Apache License, Version 2.0 (LICENSE.txt)
+    licence_materiel: Apache-2.0 (seul fichier de licence)
+    licence_logiciel: Apache-2.0 (dépôt) ; pilote dans LeRobot (licence de LeRobot non relevée ici)
+    servos:
+    - modele: STS3215 / ST3215 12 V (version 12 V) ou STS3215 7,4 V (version 5 V)
+      nombre_base: 3
+      role: roues omni (mode vitesse)
+    - modele: ST3215 12 V
+      nombre_bras: 12
+      note: paire SO-101 meneur + suiveur, version 12 V
+    prix_nomenclature:
+      complet_12V:
+        USD: 482
+        EUR: 545.8
+      complet_5V:
+        USD: 499
+        EUR: 526
+      base_seule_12V:
+        USD: 251.5
+        EUR: 307.8
+      base_seule_5V:
+        USD: 248
+        EUR: 295
+      base_filaire:
+        USD: 184
+        EUR: 235
+      note: « Doesn't include cost of 3D printing »
+    marche_ou_roule: roule par conception (base holonome 3 roues omni, code LeRobot en mode vitesse) ; aucune vidéo/mesure
+      de démonstration lue
+    sources:
+    - champ: licence
+      via: direct
+      source: marche_parc_lekiwi_licence
+    - champ: cree_le
+      via: direct
+      source: marche_parc_lekiwi_api
+    - champ: servos, prix
+      via: direct
+      source: marche_parc_lekiwi_bom
+    - champ: description, propulsion
+      via: direct
+      source: marche_parc_lekiwi_readme
+    - champ: roues en OperatingMode.VELOCITY
+      via: direct
+      source: marche_parc_lerobot_lekiwi
+- cle: Reachy Mini
+  nom: Reachy Mini
+  prix_chf: null
+  resume: 'Reachy Mini (Pollen Robotics) : logiciel Apache-2.0, MATÉRIEL « CC BY-SA-NC » selon le README (non commercial)
+    ; 9 Dynamixel ; 399 / 499 USD'
+  detail:
+    nom: Reachy Mini
+    depot: https://github.com/pollen-robotics/reachy_mini
+    cree_le: 2025-05-13
+    licence_fichier: Apache License, Version 2.0 (LICENSE)
+    licence_logiciel: Apache 2.0
+    licence_materiel: « Creative Commons BY-SA-NC » (README) — NON COMMERCIALE et à partage identique ; version
+      CC non précisée
+    servos:
+    - modele: Dynamixel XC330-M288-PG (sur mesure)
+      nombre: 1
+      role: rotation du corps
+    - modele: Dynamixel XL330-M077-T
+      nombre: 2
+      role: antennes
+    - modele: Dynamixel XL330-M288-T
+      nombre: 6
+      role: plateforme de Stewart (tête)
+    prix_kit:
+      lite:
+        USD: 399
+        note: + taxes + port (blog HF) ; livré DAP
+      wireless:
+        USD: 499
+        note: + taxes + port
+      livraison_ch: 'boutique Pollen : UE/RU et US/Canada ; autres pays via Seeed Studio'
+    marche_ou_roule: non (robot de bureau fixe)
+    sources:
+    - champ: licence logiciel
+      via: direct
+      source: marche_parc_reachy_licence
+    - champ: licence matériel
+      via: direct
+      source: marche_parc_reachy_readme
+    - champ: cree_le
+      via: direct
+      source: marche_parc_reachy_api
+    - champ: servos
+      via: direct
+      source: marche_parc_reachy_hw
+    - champ: prix, livraison
+      via: r.jina.ai
+      source: marche_parc_reachy_shop
+    - champ: prix (concordant), date 2025-07-09
+      via: direct
+      source: marche_parc_reachy_blog
+- cle: Open Duck Mini
+  nom: Open Duck Mini v2
+  prix_chf: null
+  resume: 'Open Duck Mini (apirrone) : Apache-2.0 (LICENSE lu) ; 14 STS3215 ; 398 EUR publiés ; marche NON vérifiée
+    (vidéos non visionnées)'
+  detail:
+    nom: Open Duck Mini v2
+    depot: https://github.com/apirrone/Open_Duck_Mini
+    cree_le: 2024-05-16
+    branche_par_defaut: v2
+    licence_fichier: Apache License, Version 2.0 (LICENSE, branche v2)
+    licence_materiel: Apache-2.0 (seul fichier de licence ; la CAO est sur Onshape, licence propre non lue)
+    licence_logiciel: Apache-2.0
+    servos:
+    - modele: Feetech STS3215 7,4 V (« 19kg.cm »)
+      nombre: 14
+    - modele: servo 9 g (Miuzei)
+      nombre: 2
+      role: expression
+    prix_nomenclature:
+      EUR: 398.1
+      EUR_avec_expression: 432.34
+      note: 'tableur BOM ; README : « should be under $400 »'
+    hauteur_cm: 42
+    marche_ou_roule: 'Marche : vidéos « State of sim2real » publiées dans le README (non visionnées) ; politiques
+      de marche ONNX publiées ; README : « contribute to making the ducks walk nicely ». Démonstration réelle NON
+      vérifiée dans ce relevé.
+
+      '
+    sources:
+    - champ: licence
+      via: direct
+      source: marche_parc_duck_licence
+    - champ: cree_le, branche
+      via: direct
+      source: marche_parc_duck_api
+    - champ: hauteur, BOM < 400 $, marche
+      via: direct
+      source: marche_parc_duck_readme
+    - champ: servos, prix
+      via: direct
+      source: marche_parc_duck_bom
+ia_locale:
+- resume: 'LLM sur Pi 5 8 GB (Geerling) : Qwen2.5 1.5B 11,41 jetons/s (CPU) contre 6,86 (AI HAT+ 2) ; Llama 3.2
+    3B 5,55 contre 2,66 ; premier jeton 2039 ms (CPU) contre 320 ms (HAT, source Raspberry Pi) ; quantification
+    inconnue sauf Q4_K_M (Stratosphere). Voix : whisper.cpp encode 30 s d''audio en 1,1 s (tiny), 2,5 s (base),
+    8,3 s (small), mesure de 2023 ; Vosk, Whisper sur Hailo-10H : null'
+  mesures:
+  - tache: LLM
+    modele: llama3.2:3b
+    quantification: null
+    materiel: Pi 5 8 GB, CPU (ollama)
+    debit_tok_s: 5.55
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: deepseek-r1-distill-qwen:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB, CPU (ollama)
+    debit_tok_s: 10.99
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2.5-coder:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB, CPU (ollama)
+    debit_tok_s: 9.77
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2.5-instruct:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB, CPU (ollama)
+    debit_tok_s: 11.41
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB, CPU (ollama)
+    debit_tok_s: 12.47
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2.5:3b
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 5.2
+    source: Stratosphere Lab (CTU), Slips docs
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: llama3.2:1b-instruct
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 11.22
+    source: Stratosphere Lab (CTU)
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: llama3.2:3b
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 4.69
+    source: Stratosphere Lab (CTU)
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: qwen2.5:1.5b
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 9.97
+    source: Stratosphere Lab (CTU)
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: gemma3:1b
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 11.53
+    source: Stratosphere Lab (CTU)
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: smollm2:1.7b-instruct
+    quantification: Q4_K_M
+    materiel: Pi 5 (RAM non précisée), CPU (ollama)
+    debit_tok_s: 8.23
+    source: Stratosphere Lab (CTU)
+    date: null
+    source_registre: marche_parc_stratosphere
+  - tache: LLM
+    modele: deepseek-r1:1.5b
+    quantification: null
+    materiel: CM5 devkit 4 GB (BCM2712, même SoC que Pi 5), CPU, ollama 0.14.2
+    debit_tok_s: 9.04
+    note: eval rate
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM
+    modele: llama3.2:3b
+    quantification: null (modèles Hailo Model Zoo par défaut)
+    materiel: Pi 5 8 GB + AI HAT+ 2
+    debit_tok_s: 2.658
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: deepseek-r1-distill-qwen:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB + AI HAT+ 2
+    debit_tok_s: 6.851
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2.5-coder:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB + AI HAT+ 2
+    debit_tok_s: 8.127
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2.5-instruct:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB + AI HAT+ 2
+    debit_tok_s: 6.864
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: qwen2:1.5b
+    quantification: null
+    materiel: Pi 5 8 GB + AI HAT+ 2
+    debit_tok_s: 8.25
+    source: Jeff Geerling
+    date: 2026-01-15
+    source_registre: marche_parc_geerling_graphe
+  - tache: LLM
+    modele: deepseek_r1_distill_qwen:1.5b
+    quantification: null
+    materiel: Pi 5 2 GB + AI HAT+ 2 (hailo-ollama)
+    debit_tok_s: 6.72
+    note: eval_count / total_duration (inclut le préremplissage)
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM
+    modele: llama3.2:3b
+    quantification: null
+    materiel: Pi 5 2 GB + AI HAT+ 2
+    debit_tok_s: 2.61
+    note: idem
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM
+    modele: qwen2.5-instruct:1.5b
+    quantification: null
+    materiel: Pi 5 2 GB + AI HAT+ 2
+    debit_tok_s: 6.74
+    note: idem
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM
+    modele: qwen2.5-coder:1.5b
+    quantification: null
+    materiel: Pi 5 2 GB + AI HAT+ 2
+    debit_tok_s: 8.06
+    note: idem
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM
+    modele: qwen2:1.5b
+    quantification: null
+    materiel: Pi 5 2 GB + AI HAT+ 2
+    debit_tok_s: 5.9
+    note: '7 jetons seulement : mesure peu significative'
+    source: CNX Software
+    date: 2026-01-20
+    source_registre: marche_parc_cnx_hat2
+  - tache: LLM, délai du premier jeton (96 jetons de préremplissage)
+    modele: Qwen2.5-1.5B
+    quantification: 4 bits (« 4int »)
+    materiel: Pi 5 CPU (llama.cpp) vs Hailo-10H
+    valeur_ms:
+      pi5_cpu: 2039
+      hailo_10h: 320
+    source: Raspberry Pi Ltd (blog officiel)
+    date: null
+    source_registre: marche_parc_rpi_hat2
+  - tache: STT
+    moteur: whisper.cpp (commit 54c978c, NEON, 4 threads)
+    modele: tiny
+    quantification: null
+    materiel: Pi 5 (RAM non précisée), refroidisseur actif
+    encode_ms: 1106.11
+    decode_ms: 183.67
+    note: bench whisper.cpp = encodage d'une fenêtre de 30 s
+    source: 'nickovs, whisper.cpp issue #89'
+    date: 2023-11-03
+    source_registre: marche_parc_whispercpp89_p2
+  - tache: STT
+    moteur: whisper.cpp 54c978c
+    modele: base
+    quantification: null
+    materiel: Pi 5
+    encode_ms: 2479.82
+    decode_ms: 363.86
+    note: 'valeur la plus lente des deux tableaux de l''auteur, qui inversent base et base.en : 2479.82/346.65 puis
+      2465.12/363.86 ; encodage et décodage les plus lents retenus séparément'
+    source: 'nickovs, issue #89'
+    date: 2023-11-03
+    source_registre: marche_parc_whispercpp89_p2
+  - tache: STT
+    moteur: whisper.cpp 54c978c
+    modele: small
+    quantification: null
+    materiel: Pi 5
+    encode_ms: 8342.25
+    decode_ms: 1119.25
+    note: 'deux tableaux de l''auteur inversent small et small.en (8308.3 / 963.24) ; valeur la plus lente retenue.
+      L''auteur écrit : « on the Pi5 the small model runs in better than real time »'
+    source: 'nickovs, issue #89'
+    date: 2023-11-03
+    source_registre: marche_parc_whispercpp89_p2
+  - tache: STT
+    moteur: whisper.cpp 54c978c
+    modele: medium
+    quantification: null
+    materiel: Pi 5
+    encode_ms: 26468.86
+    decode_ms: 2919.43
+    source: 'nickovs, issue #89'
+    date: 2023-11-03
+    source_registre: marche_parc_whispercpp89_p2
+  - tache: STT
+    moteur: FasterWhisper int8
+    modele: whisper tiny (anglais)
+    quantification: int8
+    materiel: Pi 5 16 GB, CPU seul
+    total_ms_par_clip: 1101
+    note: clips LibriSpeech < 10 s ; durée moyenne non publiée → facteur temps réel non calculable
+    source: ktomanek/edge_whisper
+    date: null
+    source_registre: marche_parc_edge_whisper
+  - tache: STT
+    moteur: ONNX, encodeur 10 s
+    modele: whisper tiny
+    quantification: décodeur int8
+    materiel: Pi 5 16 GB, CPU seul
+    total_ms_par_clip: 226
+    source: ktomanek/edge_whisper
+    date: null
+    source_registre: marche_parc_edge_whisper
+  - tache: STT
+    moteur: encodeur Hailo-8L + décodeur CPU
+    modele: whisper tiny
+    quantification: null
+    materiel: Pi 5 16 GB + AI HAT (Hailo-8L, PAS le 10H)
+    total_ms_par_clip: 131
+    source: ktomanek/edge_whisper
+    date: null
+    source_registre: marche_parc_edge_whisper
+  - tache: STT
+    moteur: Vosk
+    modele: null
+    quantification: null
+    materiel: Pi 5
+    debit: null
+    note: aucune mesure publiée trouvée
+  - tache: STT
+    moteur: Whisper sur AI HAT+ 2 (Hailo-10H)
+    modele: null
+    quantification: null
+    materiel: Pi 5 + AI HAT+ 2
+    debit: null
+    note: le blog Raspberry Pi cite un pipeline « Whisper-class » sans chiffre
+  - tache: LLM
+    nature: affirmation sans protocole
+    modele: Llama 3.2 1B / Qwen 2.5 1.5B
+    materiel: AI HAT+ 2
+    debit_tok_s: ~30–50 / ~20–35 ; CPU Pi 5 « 2–5 »
+    source: raspberry.tips
+    date: null
+    note: 'contredit par Geerling et CNX (mesures) : NE PAS RETENIR'
+    source_registre: marche_parc_raspberrytips

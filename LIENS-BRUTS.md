@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `2b89f8eb4380`, le 2026-10-09 ; 298 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `e44037c964b8`, le 2026-10-11 ; 301 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -204,7 +204,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-09.m
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/model/yxor.sysml
 
-## params/ (26)
+## params/ (28)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
@@ -214,6 +214,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/budget.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/bus.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/calculateurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/capacites.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/capteurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/cartons.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/ckpts.manifest.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/configuration_S.yaml
@@ -231,6 +232,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/references_si
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/servos_bus.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/sources.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/squelette.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/temps_reel.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/upstream_joints.generated.yaml
 
 ## parts/ (6)
@@ -302,7 +304,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (33)
+## tests/ (34)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
@@ -325,6 +327,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_loi_masse
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_actionneurs.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_composants.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marche_lente.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_marches_complements.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_provenance_amont.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_ratios_ansur.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_rayon_min.py

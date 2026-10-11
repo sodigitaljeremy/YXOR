@@ -91,6 +91,15 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   12 V aux niveaux 1-2, batterie au 3 en boîtier ignifuge), recyclage,
   assemblage B ; **Feetech aux petits axes de toute la gamme**. Taille
   du Kit GELÉE à 0,65 m en attendant Jeremy : `docs/kit-yxor.md`.
+- **Fiche 0076 (Jeremy, 2026-10-09 et 11)** : deux familles (Kit et Lab
+  pour tous ; Home et Pro), « pas figé » ; **Kit en parcours guidé**
+  (remplace les niveaux 0-4 de la 0075 ; étapes PROPOSÉES :
+  `docs/kit-parcours-2026-10.md`) ; outillage du Kit seulement (cutter,
+  feuille, imprimante, cartons, agrafeuse, règle, équerre, pistolet à
+  colle ; ni imprimante 3D ni Fablab) ; Lab en 2D, 3D dès le Home ;
+  **réemploi** : tout composant démontable et remontable dans n'importe
+  quelle variante du Kit et du Lab ; préconiser sans imposer ; sécurité à
+  part, projet sans responsabilité.
 - **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la

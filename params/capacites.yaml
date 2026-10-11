@@ -270,6 +270,8 @@ profils:
       niveaux des modules PROPOSÉS
     taches: {}
     # MODULES SUCCESSIFS (fiche 0074 : « tous les niveaux comme modules successifs », Jeremy, 2026-10-08).
+    # ⚠ REMPLACÉS le 2026-10-11 par le parcours guidé de la fiche 0076 (étapes PROPOSÉES : params/kit_parcours.yaml) ;
+    # conservés ici parce que scripts/kit.py (étude du 2026-10-08) les lit. Historique :
     # Les niveaux 0 à 4 sont DÉCIDÉS (fiche 0075, Jeremy, 2026-10-08 : « les niveaux 0 à 4 avec le niveau 3 limité
     # à tenir debout en Feetech, la marche étant le passage au Lab ») ; le détail (axes, `vise`) est PROPOSÉ ; les axes sont ceux de params/joints.yaml (règle 3) ;
     # `motorises` : axes qu'un module motorise (× 2 pour un axe de côté) ; les autres axes du squelette restent
