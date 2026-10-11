@@ -1,0 +1,575 @@
+# Batterie unique 3S Li-ion (21700) : relevé de marché du 2026-10-11 (agent ; prompt « vérifier la batterie 3S comme
+# batterie unique »). Valeurs lues dans les sources téléchargées (registre : params/fournisseurs.yaml, ids marche_3s_*),
+# sinon null ; rien d'estimé ; pages de revendeurs : données non fiables, non mesurées. AUCUNE recommandation d'achat
+# (fiche 0066). Lu par scripts/cartographie_modules.py (section « batterie unique 3S »).
+reference_comparaison:
+  pack_3s_plein_V: 12.6
+  courants_contact_A:
+  - 23.7
+  - 13.2
+  note: valeurs fournies par la demande, non recalculees ici.
+tension_servos:
+- modele: Feetech STS3215 12 V
+  reference: ST-3215-C018
+  plage_publiee_V:
+  - min: 4
+    max: 14
+    ou: 'OpenELAB : « Input voltage range 4-14 V » ; FAQ : « The datasheet lists 4-14 V input »'
+  - min: 4
+    max: 14
+    ou: 'AIFitLab : tableau « Operating Voltage Range » colonne 12 V : 4-14V'
+  - min: 6
+    max: 12.6
+    ou: 'Waveshare ST3215 (30 kg.cm@12V) : « Input Voltage: 6-12.6V », « it can directly supply power with the 2s
+      or 3s lithium battery »'
+  - min: 6
+    max: 12.6
+    ou: 'Waveshare page produit : OPERATING VOLTAGE 6 ~ 12.6 V (variante 30 kg.cm@12V)'
+  valeur_max_V: 12.6
+  regle_valeur: plus prudente (tension admissible la plus basse) entre 14 et 12,6
+  variante_voisine:
+    reference: ST3215-C047
+    plage_V: 4- 14V
+    note: fiche Comet, variante bras « leader » SO-ARM101, pas la C018
+  tension_absolue_max_V: null
+  protection_surtension:
+    existe: true
+    detail: Registre 14 (0x0E) « Maximum Input Voltage », unite 0,1 V, lecture/ecriture, valeur initiale « – » (non
+      publiee) ; registre 15 « Minimum Input Voltage » initial 40 (4,0 V). Condition de decharge (unload) BIT0 =
+      protection de tension.
+    seuil_C018_V: null
+    analogie_7v4: 'Version 7,4 V (fiche STS3215 traduite) : protection si > 7,4 V ou < 4 V, seuil personnalisable.
+      Non transposable a la C018.'
+  comparaison_12v6: 12,6 V = borne haute de la plage Waveshare (marge nulle) ; sous 14 V (OpenELAB, AIFitLab). Seuil
+    du registre 14 de la C018 inconnu.
+  sources:
+  - champ: plage_publiee_V
+    via: r.jina.ai
+    source: marche_3s_openelab_sts3215
+  - champ: plage_publiee_V
+    via: r.jina.ai
+    source: marche_3s_aifitlab_sts3215
+  - champ: plage_publiee_V
+    via: direct
+    source: marche_3s_waveshare_st3215_wiki
+  - champ: plage_publiee_V
+    via: direct
+    source: marche_3s_waveshare_st3215_prod
+  - champ: variante_voisine
+    via: direct
+    source: marche_3s_comet_c047
+  - champ: protection_surtension
+    via: direct
+    source: marche_3s_aifitlab_memtable
+  - champ: analogie_7v4
+    via: direct
+    source: marche_3s_coreel_sts3215_74
+- modele: Feetech STS3250 12 V
+  reference: ST-3250-C002
+  plage_publiee_V:
+  - min: 6
+    max: 12
+    ou: 'OpenELAB : « Listed operating voltage 6-12 V » ; FAQ : « The original C002 listing specifies 6-12 V »'
+  - min: 6
+    max: 12
+    ou: 'AIFitLab : « Operating Voltage Range 6-12V »'
+  - min: 6
+    max: 12
+    ou: 'Evelta : « Operating Voltage: 6V-12V » (le meme fichier porte aussi un champ structure « Operating Voltage:
+      6V »)'
+  valeur_max_V: 12
+  tension_absolue_max_V: null
+  protection_surtension:
+    existe: meme table memoire STS (registre 14), non specifique au STS3250 dans la source
+    seuil_C002_V: null
+  comparaison_12v6: 12,6 V depasse de 0,6 V la borne haute publiee (12 V) par les trois sources lues.
+  prix_ue:
+    valeur: 75.85
+    devise: EUR
+    ou: OpenELAB (DE), precommande ; prix barre 70,24 EUR sur la meme page
+  sources:
+  - champ: plage_publiee_V
+    via: r.jina.ai
+    source: marche_3s_openelab_sts3250
+  - champ: plage_publiee_V
+    via: r.jina.ai
+    source: marche_3s_aifitlab_sts3250
+  - champ: plage_publiee_V
+    via: direct
+    source: marche_3s_evelta_sts3250
+  - champ: prix_ue
+    via: r.jina.ai
+    source: marche_3s_openelab_sts3250
+bms_3s:
+- nom: TRU COMPONENTS TC-13125656
+  marque: TRU COMPONENTS (marque Conrad)
+  zone: CH
+  vendeur: Conrad.ch
+  courant_continu_decharge_A: 20
+  courant_continu_charge_A: 10
+  courant_crete_A: null
+  tension_charge_V: 12,6 - 13,0
+  seuils:
+    surcharge_V_cellule: null
+    sous_tension_V_cellule: null
+    surintensite_A: null
+  prix:
+    valeur: 4.4
+    devise: CHF
+  disponibilite: 249 Stueck, livraison annoncee jeu. 15 oct.
+  atteint_30A: false
+  note: « bei schlechter Waermeableitung sollte der Ladestrom verringert werden ». Seul BMS 3S trouve en Suisse.
+  sources:
+  - champ: courant_continu_decharge_A
+    via: r.jina.ai
+    source: marche_3s_conrad_tru3s20a
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_conrad_tru3s20a
+  - champ: disponibilite
+    via: r.jina.ai
+    source: marche_3s_conrad_rech_bms
+- nom: Keeppower XZD-3S1550 (PCB 3S, 4 MOS)
+  marque: Keeppower (puce Seiko selon le vendeur)
+  zone: UE (DE), livre en Suisse
+  vendeur: akkuteile.de
+  courant_continu_decharge_A: null
+  courant_crete_A: null
+  surintensite_A: 26 ± 2
+  seuils:
+    surcharge_V_cellule: 4,275 ± 0,05
+    liberation_surcharge_V: 4,075 ± 0,05
+    decharge_profonde_V: 2,30 ± 0,10
+    declenchement_sous_decharge_V: 2,70 ± 0,1
+  resistance_pcb_max_mohm: 40
+  prix:
+    valeur: 4.9
+    devise: EUR
+  disponibilite: InStock (JSON-LD)
+  atteint_30A: false
+  note: 'Indice non verifie : un moteur de recherche annonce ce PCB sur Galaxus.ch a 19,98 CHF ; page Galaxus bloquee
+    (403), valeur non retenue.'
+  sources:
+  - champ: seuils
+    via: direct
+    source: marche_3s_akkuteile_xzd3s1550
+  - champ: surintensite_A
+    via: direct
+    source: marche_3s_akkuteile_xzd3s1550
+  - champ: prix
+    via: direct
+    source: marche_3s_akkuteile_xzd3s1550
+- nom: BMS module 3S 40A 12.6V (Enhanced), generique
+  marque: null
+  zone: UE (RO)
+  vendeur: Sigmanortec
+  courant_continu_decharge_A: 40
+  condition: « with good heat dissipation » ; le vendeur recommande de ne pas depasser 50 % des valeurs en continu
+  courant_continu_charge_A: 10
+  courant_crete_A: null
+  seuils:
+    surcharge_V_cellule: null
+    sous_tension_V_cellule: null
+    surintensite_A: null
+  prix:
+    valeur: 9.3
+    devise: RON
+    ht: 7.69
+  disponibilite: InStock
+  atteint_30A: 40 A annonce ; 20 A si l'on applique la recommandation de 50 % du vendeur
+  sources:
+  - champ: courant_continu_decharge_A
+    via: direct
+    source: marche_3s_sigmanortec_40a
+  - champ: prix
+    via: direct
+    source: marche_3s_sigmanortec_40a
+- nom: BMS module 3S 40A with balance, generique
+  marque: null
+  zone: UE (RO)
+  vendeur: Sigmanortec
+  courant_continu_decharge_A: 40
+  courant_continu_charge_A: 10
+  courant_crete_A: null
+  seuils:
+    surcharge_V_cellule: null
+    sous_tension_V_cellule: null
+    surintensite_A: null
+  prix:
+    valeur: 9.34
+    devise: RON
+    ht: 7.72
+  disponibilite: OutOfStock
+  atteint_30A: idem ci-dessus
+  sources:
+  - champ: courant_continu_decharge_A
+    via: direct
+    source: marche_3s_sigmanortec_40a_bal
+  - champ: prix
+    via: direct
+    source: marche_3s_sigmanortec_40a_bal
+- nom: BMS module 3S 60A with balance, generique
+  marque: null
+  zone: UE (RO)
+  vendeur: Sigmanortec
+  courant_max_decharge_A: 60
+  courant_continu_charge_A: 10
+  courant_crete_A: null
+  seuils:
+    surcharge_V_cellule: null
+    sous_tension_V_cellule: null
+    surintensite_A: null
+  prix:
+    valeur: 12.52
+    devise: RON
+    ht: 10.35
+  disponibilite: OutOfStock
+  sources:
+  - champ: courant_max_decharge_A
+    via: direct
+    source: marche_3s_sigmanortec_60a_bal
+  - champ: prix
+    via: direct
+    source: marche_3s_sigmanortec_60a_bal
+- nom: HW-552 3S 40A (notice generique)
+  marque: null
+  zone: hors UE (AU), notice seulement
+  vendeur: Phipps Electronics
+  courant_continu_decharge_A: 40
+  courant_max_travail_A: 60
+  courant_continu_charge_A: 20
+  seuils:
+    surcharge_V_pack: 12.8
+    liberation_surcharge_V_pack: 12.3
+    surdecharge_V_cellule: 2.4
+    liberation_surdecharge_V_cellule: 3.0
+    surintensite_A: 125
+  prix: null
+  note: Meme format 41 x 55 mm que les modules Sigmanortec ; identite des cartes NON etablie.
+  sources:
+  - champ: seuils
+    via: direct
+    source: marche_3s_phipps_hw552
+  - champ: courant_continu_decharge_A
+    via: direct
+    source: marche_3s_phipps_hw552
+- nom: Daly Li-ion 3S 12V 30A Common Port (materiel)
+  marque: DALY
+  zone: hors UE (IN)
+  vendeur: Robu.in
+  courant_continu_decharge_A: 30
+  courant_charge_A: 30
+  courant_crete_A: null
+  seuils:
+    surcharge_V_cellule: 4,25 ± 0,05
+    liberation_surcharge_V: 4,15 ± 0,05
+    surdecharge_V_cellule: 2,7 ± 0,1
+    liberation_surdecharge_V: 2,8 ± 0,1
+  masse_g: 166
+  prix:
+    valeur: 2499
+    devise: INR
+  disponibilite: Out of Stock
+  atteint_30A: true
+  note: Aucune page DALY lisible dans l'UE ou en Suisse (eBay.de bloque).
+  sources:
+  - champ: seuils
+    via: r.jina.ai
+    source: marche_3s_robu_daly30a
+  - champ: courant_continu_decharge_A
+    via: r.jina.ai
+    source: marche_3s_robu_daly30a
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_robu_daly30a
+- nom: JK Smart Active Balance BMS B2A8S30P (3S-8S)
+  marque: JIKONG (JK)
+  zone: UE (NL)
+  vendeur: NKON
+  courant_continu_decharge_A: 300
+  courant_crete_A: 600
+  equilibrage_actif_A: 2
+  seuils:
+    surcharge_V_cellule: null
+    sous_tension_V_cellule: null
+  masse_g: 570
+  prix:
+    valeur: 89.95
+    devise: EUR
+    ht: 74.34
+  disponibilite: Out of stock
+  atteint_30A: true
+  sources:
+  - champ: courant_continu_decharge_A
+    via: r.jina.ai
+    source: marche_3s_nkon_jk_b2a8s30p
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_nkon_jk_b2a8s30p
+packs_3s:
+- nom: Auline 21700 4800 mAh 3S1P 11,1 V XT60
+  zone: hors UE (UK)
+  vendeur: Unmanned Tech
+  cellules: 21700 (marque non indiquee)
+  capacite_mAh: 4800
+  bms: null
+  protection_publiee: « integriertes Unterspannungssystem » / alarme de sous-tension (LED, buzzer) ; pas de BMS
+    decrit
+  courant_continu_A: ~10
+  connecteur: XT60
+  masse_g: ~220
+  prix:
+    valeur: 19.95
+    devise: GBP
+  note: 'Seul pack 3S en 21700 trouve en ligne en Europe ; hors UE et sans BMS publie : ne remplit pas le critere.'
+  sources:
+  - champ: capacite_mAh
+    via: direct
+    source: marche_3s_unmanned_auline
+  - champ: protection_publiee
+    via: direct
+    source: marche_3s_unmanned_auline
+  - champ: prix
+    via: direct
+    source: marche_3s_unmanned_auline
+- nom: Keeppower 3S1P 18650 3500 mAh 10,8 V avec BMS
+  zone: UE (DE), livre en Suisse
+  vendeur: akkuteile.de
+  cellules: 3 x Samsung 18650-35E (18650, PAS 21700)
+  capacite_mAh: 3500
+  bms: PCB/BMS Seiko 3S, 7 A
+  courant_continu_A: 7
+  connecteur: cable, +, -
+  masse_g: 146 ± 1
+  prix:
+    valeur: 17.9
+    devise: EUR
+  note: hors critere 21700, donne pour comparaison (courant 7 A).
+  sources:
+  - champ: bms
+    via: direct
+    source: marche_3s_akkuteile_kp3s1p
+  - champ: prix
+    via: direct
+    source: marche_3s_akkuteile_kp3s1p
+- nom: ANSMANN Li-ion battery pack 10,8 V / 3350 mAh / 3S1P
+  zone: UE (DE)
+  vendeur: shop.ansmann.de
+  cellules: 18650 (« conventional Li 18650 standard cells »), PAS 21700
+  capacite_mAh: 3350
+  energie_Wh: 36.18
+  bms: « electronic protection circuit (BMS) »
+  courant_continu_A: 5
+  connecteur: cable de 12 cm, extremites libres
+  masse_g: 154
+  homologations: UN 3480 38.3, IEC 62133-2:2017
+  prix:
+    valeur: 64.99
+    devise: EUR
+  note: hors critere 21700, donne pour comparaison (courant 5 A).
+  sources:
+  - champ: bms
+    via: direct
+    source: marche_3s_ansmann_3s1p
+  - champ: prix
+    via: direct
+    source: marche_3s_ansmann_3s1p
+porte_cellules:
+- nom: Keystone 1121-1124 (20700/21700 cell holders)
+  zone: fabricant (US) ; distributeurs Farnell/Mouser/Digikey (pages bloquees)
+  courant_par_contact_A: null
+  resistance_contact_mohm: null
+  contacts: acier inoxydable 0,30 mm, etamage nickel (THM) ; dore flash (SMT)
+  prix: null
+  note: aucune intensite admissible publiee dans la fiche.
+  sources:
+  - champ: contacts
+    via: direct
+    source: marche_3s_keystone_k75p30
+- nom: Electrokit Batterihallare 21700 1x clip for PCB
+  zone: UE (SE)
+  vendeur: Electrokit
+  reference: art. 41035480
+  courant_par_contact_A: null
+  resistance_contact_mohm: null
+  prix:
+    valeur: 8
+    devise: SEK
+    ttc: true
+  disponibilite: Lagervara, 44 st.
+  note: fiche technique (PDF) = image, aucun texte extractible ; valeur non lue.
+  sources:
+  - champ: prix
+    via: direct
+    source: marche_3s_electrokit_clip
+  - champ: courant_par_contact_A
+    via: direct
+    source: marche_3s_electrokit_ds
+- nom: Jiatel 21700 battery holders (gamme)
+  zone: fabricant (CN), pas de revendeur UE identifie
+  courant_par_contact_A: 10
+  courant_publie: « high-drain (10A-20A+) applications » ; borne basse retenue
+  resistance_contact_mohm: <= 30
+  prix: null
+  sources:
+  - champ: courant_publie
+    via: direct
+    source: marche_3s_jiatel_holders
+  - champ: resistance_contact_mohm
+    via: direct
+    source: marche_3s_jiatel_holders
+- nom: Support d'essai 21700 (montage d'essai)
+  zone: hors UE (US)
+  vendeur: Associated Environmental Systems
+  courant_par_contact_A: 10
+  courant_publie: '« 10 amps continuous » ; « Max Current: 10 Amps » ; contacts dores'
+  resistance_contact_mohm: null
+  prix: null
+  note: support de laboratoire, pas un porte-cellules embarque.
+  sources:
+  - champ: courant_publie
+    via: direct
+    source: marche_3s_aes_holder
+- nom: Probots 4x21700 SMD holder (FAQ revendeur)
+  zone: hors UE (IN)
+  courant_par_contact_A: 5
+  courant_publie: « typically support 5A to 10A of continuous current per slot » ; borne basse retenue
+  resistance_contact_mohm: null
+  prix: null
+  sources:
+  - champ: courant_publie
+    via: r.jina.ai
+    source: marche_3s_probots_4x
+chargeurs_3s:
+- nom: 12.6V 2A Lithium Batterieladegeraet 5.5/2.1 (Waveshare 29567)
+  zone: CH
+  vendeur: Bastelgarage
+  tension_sortie_V: 12,6 ± 0,2
+  courant_A: 2
+  connecteur: jack 5,5/2,1 mm
+  certification: null
+  prix:
+    valeur: 17.9
+    devise: CHF
+    ht: 16.56
+  disponibilite: Lagernd
+  note: « darf niemals direkt an Lithium-Akkus ohne integrierte Ladeelektronik oder Balancer angeschlossen werden
+    ».
+  sources:
+  - champ: courant_A
+    via: r.jina.ai
+    source: marche_3s_bg_chargeur
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_bg_chargeur
+- nom: Fuyuang (Enerpower) EP-FY1261000 / 1262000 / 1263000
+  zone: UE (DE), livre en Suisse
+  vendeur: akkuteile.de
+  tension_sortie_V: 12,6 ± 0,2
+  courant_A:
+  - 1
+  - 2
+  - 3
+  connecteur: DC 5,5/2,1 mm
+  certification: UL CUL GS BS CE SAA EK PSE (liste du vendeur)
+  prix:
+    valeur: 10.9
+    devise: EUR
+    note: prix unique de la page ; variante non precisee
+  disponibilite: InStock (JSON-LD)
+  sources:
+  - champ: certification
+    via: direct
+    source: marche_3s_akkuteile_fuyuang
+  - champ: prix
+    via: direct
+    source: marche_3s_akkuteile_fuyuang
+blocs_12v:
+- nom: 12V DC 10A Netzteil AC/DC-Adapter (BTF-Lighting)
+  zone: CH
+  vendeur: Bastelgarage
+  courant_A: 10
+  puissance_W: 120
+  connecteur: 5,5/2,5 mm (compatible 5,5/2,1 selon vendeur)
+  entree: cordon C13 non fourni
+  classe_isolation: null
+  certification: CE, RoHS, FCC
+  prix:
+    valeur: 35.9
+    devise: CHF
+  disponibilite: Ausverkauft
+  sources:
+  - champ: courant_A
+    via: r.jina.ai
+    source: marche_3s_bg_bloc10a
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_bg_bloc10a
+- nom: MEAN WELL GST120A12-R7B
+  zone: CH
+  vendeur: Conrad.ch
+  courant_A: 8.5
+  puissance_W: 102
+  connecteur: DIN mini 4 broches (R7B)
+  entree: IEC320-C14 ; « -V connected to AC FG » (fiche MEAN WELL)
+  classe_isolation: null
+  certification: UL62368-1, EN62368-1 (fiche MEAN WELL) ; RoHS (Conrad)
+  prix:
+    valeur: 43.95
+    devise: CHF
+  disponibilite: Bald verfuegbar
+  sources:
+  - champ: courant_A
+    via: r.jina.ai
+    source: marche_3s_conrad_gst120a12
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_conrad_gst120a12
+  - champ: entree
+    via: direct
+    source: marche_3s_meanwell_gst120a
+  - champ: certification
+    via: direct
+    source: marche_3s_meanwell_gst120a
+- nom: HN Power HNP120M-120
+  zone: CH
+  vendeur: Conrad.ch
+  courant_A: 8
+  puissance_W: 120
+  connecteur: null
+  classe_isolation: null
+  boitier: « Geschlossenes Gehaeuse », « Ueberlast- und kurzschlussfest »
+  prix:
+    valeur: 57.95
+    devise: CHF
+    promo: 51.95
+  disponibilite: 11 Stueck
+  sources:
+  - champ: courant_A
+    via: r.jina.ai
+    source: marche_3s_conrad_hnpower
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_conrad_hnpower
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_conrad_rech_netzteil
+- nom: Protek PMP120-12-B1-S
+  zone: CH
+  vendeur: Conrad.ch
+  courant_A: 8
+  puissance_W: 120
+  connecteur: jack 5,5/2,1 mm, + au centre, cable 1,2 m
+  classe_isolation: null
+  note: « Nur fuer die Medizintechnik zugelassen » ; interrupteur secteur ; livre sans cordon secteur
+  prix:
+    valeur: 99.95
+    devise: CHF
+  disponibilite: 3 Stueck (solange Vorrat)
+  sources:
+  - champ: courant_A
+    via: r.jina.ai
+    source: marche_3s_conrad_protek
+  - champ: prix
+    via: r.jina.ai
+    source: marche_3s_conrad_protek

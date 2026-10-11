@@ -1,7 +1,7 @@
 # Liens bruts du dépôt YXOR
 
 Engendré par `scripts/liens_bruts.py` (appelé par `scripts/regenerer.py`).
-Liste établie au commit `6d886061f1ff`, le 2026-10-11 ; 308 fichiers suivis. Les liens visent `main`, donc l'état courant.
+Liste établie au commit `c7c7306853da`, le 2026-10-11 ; 313 fichiers suivis. Les liens visent `main`, donc l'état courant.
 
 ---
 
@@ -54,7 +54,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/archive/tests/test_t
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/bom/.gitkeep
 
-## decisions/ (77)
+## decisions/ (78)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0065-s-robstride-rs00.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0066-regle-d-achat.md
@@ -68,6 +68,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0073-gamme
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0074-kit-modules-successifs.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0075-kit-progressif-feetech-petits-axes.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0076-cadrage-gamme-kit-parcours-reemploi.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/0077-reemploi-gamme-une-batterie.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0001-base-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0002-pin-toddlerbot.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0003-poids-politiques-toddlerbot.md
@@ -134,10 +135,11 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/00
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/0064-valeur-la-plus-prudente.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/decisions/archive/index.md
 
-## docs/ (48)
+## docs/ (49)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cadrage.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/capacites-niveaux.md
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/cartographie-modules-2026-10.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-actionneurs.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/choix-interfaces.md
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/docs/criteres-manquants.md
@@ -207,7 +209,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/journal/2026-10-11.m
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/model/yxor.sysml
 
-## params/ (30)
+## params/ (31)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/actionneurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/anthropometry.yaml
@@ -221,6 +223,7 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/capteurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/cartons.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/ckpts.manifest.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/configuration_S.yaml
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/energie_marche.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/exigences_S.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/fournisseurs.yaml
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/params/hardware.yaml
@@ -253,11 +256,12 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/parts/semelle_appren
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/robot/.gitkeep
 
-## scripts/ (43)
+## scripts/ (44)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/analyser_marche.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/apercu_svg.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/capacites.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/cartographie_modules.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/check_cad_toolchain.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/choix_actionneurs.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/scripts/ckpts_backup.py
@@ -310,9 +314,10 @@ https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/replay_
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/upstream/toddlerbot_fixes.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/sim/view.py
 
-## tests/ (35)
+## tests/ (36)
 
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_capacites.py
+https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_cartographie_modules.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_charge_utile.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_configuration_S.py
 https://raw.githubusercontent.com/sodigitaljeremy/YXOR/main/tests/test_construction_deterministe.py

@@ -105,6 +105,8 @@ La vision et la méthode sont dans `docs/cadrage.md`.
   Intermédiaire souhaitée ; répartition des modèles en attente) ; réemploi
   maximal, même entre catégories ; **une seule batterie pour tous les
   modèles du Kit et du Lab** (laquelle : non décidé).
+- **Fiche 0078 (Jeremy, 2026-10-11)** : quatre catégories, Kit →
+  Initiation, Lab → Intermédiaire, Home → Avancé, Pro → Professionnelle.
 - **Tailles Banc, S, M, L, XL ; premier robot : S** (fiche 0048, remplacée par la 0069).
   `params/anthropometry.yaml` porte les tailles, et plus les paliers
   P1/P2/P3 (fiche 0055). **`H: 0,56` est la taille de ToddlerBot**, la

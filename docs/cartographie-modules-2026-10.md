@@ -1,6 +1,6 @@
 # Cartographie des achats de la gamme par modules (2026-10)
 
-**Engendré** par `.venv/bin/python scripts/cartographie_modules.py --ecrire`. Décidé (fiche 0077, Jeremy) : réemploi maximal, même entre catégories ; une seule batterie pour tous les modèles du Kit et du Lab. **Tout le reste est PROPOSÉ**, dont le rattachement des modèles aux catégories (« Initiation = Kit, Intermédiaire = Lab, Avancé = Home et Pro » : en attente de Jeremy). Méthode : en tête du script.
+**Engendré** par `.venv/bin/python scripts/cartographie_modules.py --ecrire`. Décidé (fiche 0077, Jeremy) : réemploi maximal, même entre catégories ; une seule batterie pour tous les modèles du Kit et du Lab ; (fiche 0078) quatre catégories, Kit → Initiation, Lab → Intermédiaire, Home → Avancé, Pro → Professionnelle. **Tout le reste est PROPOSÉ.** Méthode : en tête du script.
 
 ## Matrice des modules par modèle (option préconisée)
 
@@ -16,7 +16,7 @@
 | Home candidat | Avancé | 2 × rs00, 2 × rs05, 2 × sts3215_c001, rs05, scs0009_c013, sts3250 | 2 × rs00, 2 × rs03, 2 × rs04, 2 × rs06, 2 × rs10p | 24 × INR-21700-P50B (pack 12S2P), D42V110F12 (12V, 9A Step-Down Voltage Regulator), D42V110F6 (6V, 11A Step-Down Voltage | Seeed reComputer Mini J3011 (Orin Nano 8 GB inclus) | — | caméra (non comptée par l'explorateur) | Bus Servo Adapter (A) (SKU 25514), PCAN-USB (IPEH-002021) / PCAN-USB opto-decoupled (IPEH-002022) | visserie, connectique | plaques d'aluminium (Home : 3D, fiche 0076) |
 
 **Écarts à l'objectif de réemploi (calculés)** :
-- cellules des modèles du Kit et du Lab : Kit 4 (base à roues) : INR-21700-P50B ; Kit 5 (jambes) : INR-21700-P50B ; Lab roulant (PROPOSÉ) : INR-21700-P50B ; Lab bipède A : molicel_p42a → **plusieurs cellules** : l'explorateur choisit pour le Lab bipède A la cellule la plus légère qui suffit, pas celle du Kit ; la batterie unique demande d'imposer la même (le Lab A tient avec le pack 3S1P du Kit, tableau plus bas, à la marge 1,0).
+- cellules des modèles du Kit et du Lab : Kit 4 (base à roues) : molicel_p50b ; Kit 5 (jambes) : molicel_p50b ; Lab roulant (PROPOSÉ) : molicel_p50b ; Lab bipède A : molicel_p42a → **plusieurs cellules** : l'explorateur choisit pour le Lab bipède A la cellule la plus légère qui suffit, pas celle du Kit ; la batterie unique demande d'imposer la même (le Lab A tient avec le pack 3S1P du Kit, tableau plus bas, à la marge 1,0).
 - calculateur : Kit 2 (tête qui parle) : Raspberry Pi 5 8GB ; Kit 3 (buste à bras) : Raspberry Pi 5 8GB ; Kit 4 (base à roues) : Raspberry Pi 5 8GB ; Kit 5 (jambes) : Raspberry Pi 5 8GB ; Lab roulant (PROPOSÉ) : Raspberry Pi 5 8GB ; Lab bipède A : seeed_recomputer_mini_j3011 ; Home candidat : seeed_recomputer_mini_j3011 → le Lab bipède A et le Home prennent un Jetson (choix de l'explorateur : le moins cher qui est vérifiable) ; le Pi 5 du Kit n'y est pas réemployé, sauf comme contrôleur du corps (hypothèse plus bas).
 
 ## Coûts et réemploi, en parcourant Kit → Lab → Home
@@ -29,10 +29,10 @@
 | Kit 4 (base à roues) | 691 | 575 | 83 % | 0 | 116 | 760 | 7 |
 | Kit 5 (jambes) | 1 055 | 838 | 79 % | 0 | 217 | 977 | 5 |
 | Lab roulant (PROPOSÉ) | 691 | 691 | 100 % | 691 | 0 | 977 | 7 |
-| Lab bipède A | 1 904 | 316 | 17 % | 316 | 1 588 | 2 564 | 8 |
-| Home candidat | 4 514 | 912 | 20 % | 912 | 3 602 | 6 167 | 6 |
+| Lab bipède A | 1 904 | 320 | 17 % | 320 | 1 584 | 2 560 | 8 |
+| Home candidat | 4 514 | 937 | 21 % | 937 | 3 577 | 6 137 | 6 |
 
-« Entre catégories » : la part déjà payée dont le produit a été acheté dans une AUTRE catégorie (proposition de catégories en attente). Le Lab bipède A ne tient qu'en carton à la marge 1,0 (lab-leger) : la nomenclature est la sienne.
+« Entre catégories » : la part déjà payée dont le produit a été acheté dans une AUTRE catégorie (catégories de la fiche 0078). Le Lab bipède A ne tient qu'en carton à la marge 1,0 (lab-leger) : la nomenclature est la sienne.
 
 ## Module énergie : la batterie unique du Kit et du Lab (sous 100 Wh)
 
@@ -133,4 +133,99 @@ Coût ajouté : Raspberry Pi 5 8 GB 146 CHF (déjà payé si il vient du Kit) + 
 | Qwen2.5 7B | Jetson Orin Nano 8GB, mode Super (JetPack 6.2) | 21,75 | — | MLC |
 
 Coût sur le robot : réseau 0 CHF (l'ordinateur existe) ; Pi 5 seul 146 CHF ; Pi 5 + AI HAT+ 2 313 CHF ; Jetson Orin Nano Super (kit) 333 CHF. Le délai par le réseau ajoute l'aller-retour Wi-Fi : médiane d'environ 3 ms, 90e centile d'environ 20 ms, mesurés sur un réseau de campus (WiFiSeer, 2016, energie_marche.yaml) ; aucune mesure en réseau domestique relevée. Sur un ordinateur avec une carte graphique grand public, un modèle de 8 milliards de paramètres répond 3 à 10 fois plus vite que sur le Pi 5 (un modèle 2 à 5 fois plus petit) ; un Mac M1 à M3 de 8 à 16 GB attend 8 à 10 s avant le premier jeton sur ce modèle de 8 milliards (LocalScore).
+
+## Le Lab bipède A aligné sur le Kit (prompt du 2026-10-11 ; PROPOSÉ)
+
+Imposés : la cellule du Kit (Molicel P50B, pack 3S1P), un Raspberry Pi 5 à la place du Jetson, l'IA par le réseau. Structure : **carton** seulement ; le contreplaqué n'est pas relevé (masse surfacique null), il n'est donc pas évalué. Marche à 0,196 m/s (celle de ToddlerBot ramenée à 0,60 m).
+
+| Marge | Tient ? | H (m) | H réelle (m) | Masse (kg) | Coût de l'explorateur (CHF, borne basse) | Statut | Pack |
+| --- | --- | ---: | ---: | ---: | ---: | --- | --- |
+| 1,5 | **oui** | 0,65 | 0,650 | 3,23 | 1 476 | INCONNU | 3S1P |
+| 1,0 | **oui** | 0,65 | 0,650 | 3,23 | 1 476 | INCONNU | 3S1P |
+
+**Statut INCONNU** : une donnée critique d'un actionneur manque (la vitesse du STS3250 n'est pas publiée) ; « tient » veut dire ici qu'aucune contrainte calculable n'est violée.
+
+**Nomenclature corrigée : 722 CHF de durables** (borne basse, 7 durables sans prix, dont les STS3250), contre le coût de l'explorateur ci-dessus. L'explorateur garde la chaîne de puissance du 12S (BMS Orion Jr 2, anti-étincelle 300 A, contacteur, absorbeur, rail 6 V) et deux cartes CAN ; en 3S direct sur des Feetech à bus série, elles sont sans objet. Retirées ; gardés : les cellules, le 5 V du Pi 5, le fusible et son porte-fusible, l'arrêt d'urgence ; ajouté : le moins cher des BMS 3S relevés qui tient 23,7 A en continu prudent, avec un prix lu (section suivante ; il est en rupture de stock).
+
+⚠ **Tension** : en 3S direct, le pack plein (12,6 V) dépasse la plage publiée des STS3250 (6 à 12 V) que le Lab A porte à la locomotion ; « tient » ci-dessus ne le vérifie pas (section suivante).
+
+**Ce que le profil perd sans Jetson** : le profil `lab` demande « IA embarquée commande + vision » (Jeremy, 2026-10-07). Le Pi 5 seul ne fait à bord que la **commande** ; la vision et le langage passent par le réseau (ordinateur de l'utilisateur) : le robot en dépend, avec l'aller-retour Wi-Fi en plus. La vision locale sur le Pi 5 (ou avec l'AI HAT+ 2) n'est pas relevée. Puissance du Pi 5 comptée : 25 W, borne haute (son alimentation 5 V 5 A) ; sa masse n'est pas publiée.
+
+### Réemploi et investissement cumulé : chaîne initiale et chaîne alignée
+
+| Modèle | Chaîne initiale : réemploi | Investissement cumulé | Chaîne alignée : réemploi | Investissement cumulé |
+| --- | ---: | ---: | ---: | ---: |
+| Kit 1 (tête de bureau) | 0 % | 120 | 0 % | 120 |
+| Kit 2 (tête qui parle) | 36 % | 329 | 36 % | 329 |
+| Kit 3 (buste à bras) | 49 % | 644 | 49 % | 644 |
+| Kit 4 (base à roues) | 83 % | 760 | 83 % | 760 |
+| Kit 5 (jambes) | 79 % | 977 | 79 % | 977 |
+| Lab roulant (PROPOSÉ) | 100 % | 977 | 100 % | 977 |
+| Lab bipède A → aligné | 17 % | 2 560 | 77 % | 1 145 |
+| Home candidat | 21 % | 6 137 | 2 % | 5 578 |
+
+Les deux chaînes : Kit 1 à 5 → Lab roulant → Lab bipède A (initial ou aligné) → Home candidat. Un même produit n'est payé qu'une fois (au plus grand nombre possédé) ; prix manquants comptés 0 (borne basse).
+
+## Batterie unique 3S Li-ion, en direct sur le rail des servos (relevé du 2026-10-11 ; PROPOSÉ)
+
+Relevé : `params/batterie3s_marche.yaml` (46 sources, ids `marche_3s_*`). Pack 3S plein : **12,6 V**. Courants à tenir : **23,7 A** (pire cas de l'étape 3 du Kit) et **13,2 A** (pointe du Lab A).
+
+### Tension maximale des servos
+
+| Servo | Plages publiées (V) | Valeur prudente (V) | Face à un pack plein |
+| --- | --- | ---: | --- |
+| Feetech STS3215 12 V (ST-3215-C018) | 4 à 14,0 ; 6 à 12,6 | 12,6 | marge nulle |
+| Feetech STS3250 12 V (ST-3250-C002) | 6 à 12,0 | 12,0 | **dépassée de 0,6 V** |
+
+Tension absolue maximale : publiée par aucune source (null). Une protection existe (registre « Maximum Input Voltage » de la table mémoire STS, mise hors couple), mais son seuil d'usine n'est pas publié pour les versions 12 V. Les chargeurs 3S relevés annoncent 12,6 ± 0,2 V, soit **jusqu'à 12,8 V** si le robot reste alimenté pendant la charge.
+
+### BMS 3S
+
+| BMS | Zone | Courant continu prudent (A) | ≥ 23,7 A | ≥ 13,2 A | Prix (CHF) | Stock |
+| --- | --- | ---: | --- | --- | ---: | --- |
+| TRU COMPONENTS TC-13125656 | CH | 20,0 | **non** | oui | 4,40 | 249 Stueck, livraison annoncee jeu. 15 oct. |
+| Keeppower XZD-3S1550 (PCB 3S, 4 MOS) | UE (DE), livre en Suisse | — (déclenchement 26 ± 2 A) | — | — | 4,64 | InStock (JSON-LD) |
+| BMS module 3S 40A 12.6V (Enhanced), generique | UE (RO) | 20,0 | **non** | oui | — | InStock |
+| BMS module 3S 40A with balance, generique | UE (RO) | 20,0 | **non** | oui | — | OutOfStock |
+| BMS module 3S 60A with balance, generique | UE (RO) | — | — | — | — | OutOfStock |
+| HW-552 3S 40A (notice generique) | hors UE (AU), notice seulement | 40,0 | oui | oui | — | — |
+| Daly Li-ion 3S 12V 30A Common Port (materiel) | hors UE (IN) | 30,0 | oui | oui | — | Out of Stock |
+| JK Smart Active Balance BMS B2A8S30P (3S-8S) | UE (NL) | 300,0 | oui | oui | 85,25 | Out of stock |
+
+Courant prudent : la moitié de l'annoncé pour la gamme dont le vendeur recommande de ne pas dépasser 50 % en continu ; un seuil de déclenchement (Keeppower, 26 ± 2 A) n'est pas un courant continu. Prix TTC convertis (null si la devise n'a pas de taux au budget).
+
+### Packs 3S déjà assemblés
+
+- Auline 21700 4800 mAh 3S1P 11,1 V XT60 (hors UE (UK)) : cellules 21700 (marque non indiquee) ; BMS : aucun décrit ; courant ~10 A ; — CHF.
+- Keeppower 3S1P 18650 3500 mAh 10,8 V avec BMS (UE (DE), livre en Suisse) : cellules 3 x Samsung 18650-35E (18650, PAS 21700) ; BMS : PCB/BMS Seiko 3S, 7 A ; courant 7 A ; 16,97 CHF.
+- ANSMANN Li-ion battery pack 10,8 V / 3350 mAh / 3S1P (UE (DE)) : cellules 18650 (« conventional Li 18650 standard cells »), PAS 21700 ; BMS : « electronic protection circuit (BMS) » ; courant 5 A ; 61,60 CHF.
+
+→ **Aucun pack 3S en 21700 avec BMS** relevé en Suisse ni dans l'UE ; ceux qui ont un BMS sont en 18650 et donnent 5 à 7 A, sous 13,2 A.
+
+### Porte-cellules 21700 sans soudure
+
+| Porte-cellules | Zone | Courant par contact (A) | ≥ 23,7 A | ≥ 13,2 A |
+| --- | --- | ---: | --- | --- |
+| Keystone 1121-1124 (20700/21700 cell holders) | fabricant (US) ; distributeurs Farnell/Mouser/Digikey (pages bloquees) | — | — | — |
+| Electrokit Batterihallare 21700 1x clip for PCB | UE (SE) | — | — | — |
+| Jiatel 21700 battery holders (gamme) | fabricant (CN), pas de revendeur UE identifie | 10,0 | **non** | **non** |
+| Support d'essai 21700 (montage d'essai) | hors UE (US) | 10,0 | **non** | **non** |
+| Probots 4x21700 SMD holder (FAQ revendeur) | hors UE (IN) | 5,0 | **non** | **non** |
+
+### Chargeur 3S et bloc 12 V fermé (étapes 1 et 2 : 5,4 et 7,5 A)
+
+- chargeur 12.6V 2A Lithium Batterieladegeraet 5.5/2.1 (Waveshare 29567) (CH, Bastelgarage) : 12,6 ± 0,2 V, 2 A, 17,90 CHF, certification non indiquée, Lagernd.
+- chargeur Fuyuang (Enerpower) EP-FY1261000 / 1262000 / 1263000 (UE (DE), livre en Suisse, akkuteile.de) : 12,6 ± 0,2 V, [1, 2, 3] A, 10,33 CHF, certification UL CUL GS BS CE SAA EK PSE (liste du vendeur), InStock (JSON-LD).
+- bloc 12V DC 10A Netzteil AC/DC-Adapter (BTF-Lighting) (CH, Bastelgarage) : 10,0 A (5,4 A : oui ; 7,5 A : oui), 35,90 CHF, classe d'isolation non écrite, Ausverkauft.
+- bloc MEAN WELL GST120A12-R7B (CH, Conrad.ch) : 8,5 A (5,4 A : oui ; 7,5 A : oui), 43,95 CHF, classe d'isolation non écrite, Bald verfuegbar.
+- bloc HN Power HNP120M-120 (CH, Conrad.ch) : 8,0 A (5,4 A : oui ; 7,5 A : oui), 57,95 CHF, classe d'isolation non écrite, 11 Stueck.
+- bloc Protek PMP120-12-B1-S (CH, Conrad.ch) : 8,0 A (5,4 A : oui ; 7,5 A : oui), 99,95 CHF, classe d'isolation non écrite, 3 Stueck (solange Vorrat).
+
+### Bilan, comparé aux batteries d'outillage 18 V (lot précédent)
+
+- **Outillage 18 V** : courant non publié, protection dans l'OUTIL (rien ne coupe une fois branchée au robot), aucun convertisseur 14-21 V → 12 V de 25 A ou plus relevé.
+- **3S Li-ion en direct** : pas de convertisseur, mais **le pack plein (12,6 V) dépasse la plage publiée du STS3250 (6 à 12 V)** et laisse une marge nulle au STS3215 C018 (valeur prudente 12,6 V) ; ni l'une ni l'autre n'est levée par une source.
+- **Sans soudure** : non démontré ; aucun porte-cellules ne publie 13,2 A par contact (10 A au mieux), et aucun pack 21700 assemblé avec BMS n'est relevé en Suisse ou dans l'UE.
+- **BMS** : en Suisse, un seul (20 A, sous 23,7 A) ; au-dessus, seulement des BMS en rupture ou hors UE.
+- **En Suisse** : chargeur 12,6 V 2 A et blocs 12 V fermés de 8 à 10 A (Bastelgarage, Conrad.ch) disponibles ; Galaxus et Digitec n'ont pas pu être lus (accès bloqué).
 

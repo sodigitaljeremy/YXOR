@@ -39,3 +39,9 @@ variantes ; l'objectif de réemploi maximal oriente chaque choix de composant de
 - **La batterie elle-même** (outillage 18 V, pack maison en 21700, autre) : comparée dans
   `docs/cartographie-modules-2026-10.md`, non choisie. Aucun achat (fiche 0066).
 - Les étapes du parcours, hors la caméra USB de l'étape 1 (toujours PROPOSÉES).
+
+## Suite (2026-10-11)
+
+La répartition « en attente » est **tranchée par la fiche 0078** (Jeremy, 2026-10-11) : Kit → Initiation, Lab →
+Intermédiaire, Home → Avancé, Pro → Professionnelle. Cette fiche-ci n'est pas réécrite : seule cette note renvoie à
+la suivante.

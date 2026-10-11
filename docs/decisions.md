@@ -257,6 +257,14 @@ avec qui l'a décidé.
       tous les modèles de YXOR Kit et YXOR Lab ».
     - Fiche : [0077](../decisions/0077-reemploi-gamme-une-batterie.md), qui
       complète la [0076](../decisions/0076-cadrage-gamme-kit-parcours-reemploi.md).
+    - ⚠ La répartition des modèles en catégories est tranchée par la 0078.
+27. **Quatre catégories : Kit → Initiation, Lab → Intermédiaire, Home →
+    Avancé, Pro → Professionnelle.**
+    - Décidée par Jeremy le 2026-10-11. Ses mots : « faire 4 catégories :
+      Initiation, Intermédiaire, Avancé et Professionnelle, comme ça chaque
+      gamme de Robot YXOR aura sa propre catégorie ».
+    - Fiche : [0078](../decisions/0078-quatre-categories.md), qui complète la
+      [0077](../decisions/0077-reemploi-gamme-une-batterie.md).
 
 ## B — Conventions confirmées
 

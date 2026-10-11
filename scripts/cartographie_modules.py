@@ -14,7 +14,7 @@ Modèles, dans l'ordre du parcours :
   · Lab bipède A : scripts/lab_leger_entier.py, configuration A (jambes STS3250, autres axes STS3215, rail 12 V),
     marche à 0,196 m/s, marge 1,0, plus petite H qui tient (carton ; en aluminium, A ne tient pas : dit) ;
   · Home candidat : le Lab actuel (ensemble 27, RobStride + Feetech, 12S, H = 0,85 m), recalculé sans rien changer.
-Catégories (proposition EN ATTENTE de Jeremy, fiche 0077) : Initiation = Kit, Intermédiaire = Lab, Avancé = Home.
+Catégories (DÉCIDÉ par Jeremy, fiche 0078) : Kit → Initiation, Lab → Intermédiaire, Home → Avancé, Pro → Professionnelle.
 Réemploi : un produit (même identifiant) déjà possédé à un modèle précédent n'est pas racheté ; « déjà payé » = son
 prix × le nombre déjà possédé (le plus grand nombre possédé jusque-là). Coûts en borne basse (prix connus, CHF HT).
 """
@@ -31,7 +31,7 @@ DOC = REPO / "docs" / "cartographie-modules-2026-10.md"
 MODULES = ("petits axes", "locomotion", "énergie", "cerveau", "IA", "capteurs", "bus", "visserie et connectique",
            "structure")
 JAMBE = ("hip_yaw", "hip_roll", "hip_pitch", "knee", "ankle_pitch", "ankle_roll")
-CATEGORIE = {"Kit": "Initiation", "Lab": "Intermédiaire", "Home": "Avancé"}   # PROPOSÉ, en attente (fiche 0077)
+CATEGORIE = {"Kit": "Initiation", "Lab": "Intermédiaire", "Home": "Avancé", "Pro": "Professionnelle"}   # fiche 0078
 
 
 def lire(nom):
@@ -149,6 +149,47 @@ def lab_bipede_a():
     return ctx, None, None
 
 
+def aligner(ctx):
+    """Le Lab bipède A ALIGNÉ sur le Kit (prompt du 2026-10-11) : cellule du Kit (P50B), Raspberry Pi 5 à la place du
+    Jetson, IA par le réseau (embarqué : « commande seule »). Puissance du Pi 5 : 25 W, la capacité de son alimentation
+    5 V 5 A (calculateurs.yaml), une BORNE HAUTE faute de consommation publiée."""
+    import systeme_electrique as SE
+    el = ctx["elec"]
+    cel = lire("kit.yaml")["lab"]["cellule"]
+    el["cells"] = [c for c in el["cells"] if c["id"] == cel]
+    pi = next(o for o in SE.options_calculateur() if o["id"] == "rpi5_8gb")
+    pi = dict(pi, pmax=pi["pmax"] or 25.0)
+    el["calc"] = dict(best=pi, inconnues=["masse du Raspberry Pi 5 (non publiée)"], n=1)
+    ctx["cible"] = dict(ctx["cible"], ia_embarquee="commande seule")
+    return ctx
+
+
+def lab_bipede_a_aligne():
+    """Le Lab A aligné, aux marges 1,5 et 1,0, en carton (aucun relevé du contreplaqué : masse surfacique null)."""
+    import lab_leger_entier as LE
+    import lab_leger as LL
+    import explorateur as X
+    LL.avec_015()
+    ctx_alu = X.contexte(struct=None, cible=LL.cible(0.3), S=None)
+    _, fam, _, st = next(c for c in LE.configs(ctx_alu) if c[0] == "A" and c[2] == "carton")
+    out = {}
+    for marge in (1.5, 1.0):
+        ctx = aligner(LE.contexte(fam, st, 0.196, marge))
+        best, raisons = None, set()
+        for H in LL.HS_ETUDE:
+            for ens in X.ENSEMBLES:
+                r = X.evaluer(ctx, ens, H, fam, "feetech", ctx["cible"])
+                if r and LL.tient(r):
+                    best = dict(r, ens=ens, H=H)
+                    break
+                if r:
+                    raisons |= {v.split(" : ")[0] for v in r.get("violees", [])}
+            if best:
+                break
+        out[marge] = dict(r=best, raisons=sorted(raisons))
+    return out
+
+
 def home_candidat(S=12):
     import explorateur as X
     ctx = X.contexte(profil="lab", S=S, f_can=250, coupure=3.0, chaine="compacte")
@@ -185,6 +226,20 @@ def _items(quoi):
         _, r = home_candidat()
         return items_solution(r, 27) + [dict(nom="plaques d'aluminium (Home : 3D, fiche 0076)", produit="alu_home", n=1,
                                               prix=None, classe="STRUCTURE", module="structure")]
+    if quoi == "lab_a_aligne":
+        res = lab_bipede_a_aligne()
+        r = res[1.0]["r"] or res[1.5]["r"]
+        if r is None:
+            return dict(items=[], res={str(k): dict(tient=False, raisons=v["raisons"]) for k, v in res.items()})
+        its = items_solution(r, r["ens"]) + [dict(nom="IA par le réseau (ordinateur de l'utilisateur)", produit=None, n=1,
+                                                   prix=0.0, classe="DURABLE", module="IA"),
+                                              dict(nom="carton", produit="carton", n=1, prix=0.0, classe="STRUCTURE",
+                                                   module="structure")]
+        import lab_leger as LL
+        return dict(items=its, res={str(k): (dict(tient=True, H=v["r"]["H"], H_reel=v["r"]["H_reel"], M=v["r"]["M"],
+                                                   cout=__import__("explorateur").cout_borne(v["r"]), statut=v["r"]["statut"],
+                                                   P=(v["r"]["elec"].get("batterie") or {}).get("P"))
+                                              if v["r"] else dict(tient=False, raisons=v["raisons"])) for k, v in res.items()})
     _, r, ens = lab_bipede_a()
     return items_solution(r, ens) + [dict(nom="carton (A ne tient qu'en carton ; en aluminium 2 mm, non)", produit="carton",
                                           n=1, prix=0.0, classe="STRUCTURE", module="structure")]
@@ -195,6 +250,11 @@ def parcourir(ms) -> list[dict]:
     possede, cat_de = {}, {}
     invest = 0.0
     out = []
+    # une même pièce porte, côté Kit, son NOM (kit_parcours) et, côté explorateur, son IDENTIFIANT : on ramène le nom à
+    # l'identifiant (le Pi 5, la cellule, le 5 V et l'adaptateur n'étaient pas reconnus avant le 2026-10-11)
+    alias = {str(i["nom"]).split(" (pack ")[0]: i["produit"] for m in ms if m["gamme"] != "Kit" for i in m["items"]
+             if i.get("produit") and i["nom"] != i["produit"]}
+    ms = [dict(m, items=[dict(i, produit=alias.get(i.get("produit"), i.get("produit"))) for i in m["items"]]) for m in ms]
     for m in ms:
         dur = [i for i in m["items"] if i["classe"] == "DURABLE"]
         tot = sum((i["prix"] or 0.0) * i["n"] for i in dur)
@@ -362,9 +422,9 @@ def ia_comparaison() -> list[dict]:
 def rapport(par, energie, recheck, h36, pi5, ia) -> str:
     L = ["# Cartographie des achats de la gamme par modules (2026-10)", "",
          "**Engendré** par `.venv/bin/python scripts/cartographie_modules.py --ecrire`. Décidé (fiche 0077, Jeremy) : "
-         "réemploi maximal, même entre catégories ; une seule batterie pour tous les modèles du Kit et du Lab. "
-         "**Tout le reste est PROPOSÉ**, dont le rattachement des modèles aux catégories (« Initiation = Kit, "
-         "Intermédiaire = Lab, Avancé = Home et Pro » : en attente de Jeremy). Méthode : en tête du script.", "",
+         "réemploi maximal, même entre catégories ; une seule batterie pour tous les modèles du Kit et du Lab ; (fiche "
+         "0078) quatre catégories, Kit → Initiation, Lab → Intermédiaire, Home → Avancé, Pro → Professionnelle. "
+         "**Tout le reste est PROPOSÉ.** Méthode : en tête du script.", "",
          "## Matrice des modules par modèle (option préconisée)", "",
          "| Modèle | Catégorie | " + " | ".join(MODULES) + " |", "| --- | --- | " + " | ".join("---" for _ in MODULES) + " |"]
     for p in par:
@@ -395,7 +455,7 @@ def rapport(par, energie, recheck, h36, pi5, ia) -> str:
                  f"{f1(100 * p['deja'] / p['total'] if p['total'] else None, 0)} % | {f1(p['entre_cat'], 0)} | "
                  f"{f1(p['neuf'], 0)} | {f1(p['invest'], 0)} | {p['inconnus']} |")
     L += ["", "« Entre catégories » : la part déjà payée dont le produit a été acheté dans une AUTRE catégorie "
-          "(proposition de catégories en attente). Le Lab bipède A ne tient qu'en carton à la marge 1,0 (lab-leger) : "
+          "(catégories de la fiche 0078). Le Lab bipède A ne tient qu'en carton à la marge 1,0 (lab-leger) : "
           "la nomenclature est la sienne.", "",
           "## Module énergie : la batterie unique du Kit et du Lab (sous 100 Wh)", "",
           "| Option | Produit | Énergie (Wh) | Masse (g) | Courant max (A) | Coût (CHF) | Suisse | Outillage | Sécurité |",
@@ -463,12 +523,18 @@ def rapport(par, energie, recheck, h36, pi5, ia) -> str:
 
 
 def tout():
-    par = parcourir(modeles())
+    ms = modeles()
+    par = parcourir(ms)
     energie = options_energie()
     bat = [e for e in energie if e["masse_g"] and not e["famille"].startswith("c)")]          # des batteries seulement
     recheck = _recheck_isole([e["masse_g"] for e in bat])
     recheck["noms"] = [e["nom"] for e in bat]
-    return par, energie, recheck, _home_36v_isole(), pi5_dans_home(), ia_comparaison()
+    ms_a, x = modeles_alignes(ms)
+    return par, energie, recheck, _home_36v_isole(), pi5_dans_home(), ia_comparaison(), parcourir(ms_a), x
+
+
+def document(t) -> str:
+    return rapport(*t[:6]) + "\n".join(rapport_aligne(t[0], t[6], t[7]) + rapport_3s(t[2]["I"])) + "\n"
 
 
 def main(argv=None) -> int:
@@ -476,12 +542,192 @@ def main(argv=None) -> int:
     ap.add_argument("--ecrire", action="store_true")
     a = ap.parse_args(argv)
     t = tout()
-    for p in t[0]:
+    for p in t[0] + [q for q in t[6] if "aligné" in q["nom"]]:
         print(f"  {p['nom']} : {p['total']:.0f} CHF, déjà payé {p['deja']:.0f}, neuf {p['neuf']:.0f}, cumul {p['invest']:.0f}")
     if a.ecrire:
-        DOC.write_text(rapport(*t), encoding="utf-8")
+        DOC.write_text(document(t), encoding="utf-8")
         print(f"  -> {DOC.relative_to(REPO)}")
     return 0
+
+
+
+# ─────────────────────────────── Lab A aligné : nomenclature corrigée ───
+def bms_3s_tous() -> list[dict]:
+    """Les BMS 3S relevés (batterie3s_marche.yaml) : courant continu PRUDENT (la moitié de l'annoncé quand le vendeur
+    recommande de ne pas dépasser 50 % en continu ; une surintensité de déclenchement n'est pas un courant continu),
+    prix en CHF HT (null si la devise n'a pas de taux au budget)."""
+    import marche_composants as MC
+    taux = lire("budget.yaml")["taux_de_change"]
+    out = []
+    bs = lire("batterie3s_marche.yaml").get("bms_3s") or []
+    v50 = {b.get("vendeur") for b in bs if "50 %" in str(b.get("condition") or "")}   # la recommandation vaut pour sa gamme
+    for b in bs:
+        I = MC.num(b.get("courant_continu_decharge_A"))
+        if I is not None and b.get("vendeur") in v50:
+            I = I / 2
+        pr = b.get("prix") or {}
+        prix = MC.chf(dict(valeur=pr.get("valeur"), devise=pr.get("devise")), taux) if pr else None
+        out.append(dict(nom=b["nom"], produit="bms3s:" + b["nom"], I=I, prix=prix, zone=b.get("zone"),
+                        stock=b.get("disponibilite"), declenchement=b.get("surintensite_A")))
+    return out
+
+
+def bms_3s(I_min: float) -> dict:
+    """Le moins cher des BMS 3S relevés dont le courant continu prudent atteint I_min, et dont le prix est lu."""
+    c = [b for b in bms_3s_tous() if b["I"] and b["I"] >= I_min and b["prix"]]
+    return min(c, key=lambda b: b["prix"]) if c else dict(nom=f"BMS 3S ≥ {I_min:g} A (aucun relevé avec prix)",
+                                                           produit=None, prix=None)
+
+
+I_UNIQUE = 23.7      # A : pire cas de l'étape 3 du Kit (8 servos au blocage + Pi 5) ; la batterie unique doit le donner
+GARDE_3S = {"victron_midi_58v_g", "victron_midi_porte_fusible", "idec_xa1e_bv302r", "pololu_d42v55f5"}
+
+
+def corriger_aligne(items) -> list[dict]:
+    """La nomenclature du Lab A aligné, corrigée : l'explorateur y met la chaîne du 12S (BMS Orion, contacteur,
+    anti-étincelle 300 A) et des cartes CAN ; ici tous les servos sont des Feetech sur bus série, en 3S direct : on garde
+    les cellules, le 5 V du Pi 5, le fusible et son porte-fusible, l'arrêt d'urgence ; on ajoute un BMS 3S de 30 A ou plus."""
+    garde = []
+    for i in items:
+        nom = str(i["nom"])
+        if i["module"] == "bus" and ("CAN" in nom or "can" in str(i.get("produit"))):
+            continue                                    # bus série seulement
+        if i["module"] == "énergie" and i.get("produit") not in GARDE_3S and "21700" not in nom:
+            continue                                    # chaîne du 12S, rail 6 V : sans objet en 3S direct
+        garde.append(i)
+    b = bms_3s(I_UNIQUE)
+    garde.append(dict(nom=b["nom"], produit=b["produit"], n=1, prix=b["prix"], classe="DURABLE", module="énergie"))
+    return garde
+
+
+def modeles_alignes(ms=None) -> tuple[list[dict], dict]:
+    ms = [m for m in (ms or modeles()) if m["nom"] != "Lab bipède A"]
+    x = _isole_dict("lab_a_aligne")
+    its = corriger_aligne(x["items"]) if x["items"] else []
+    i_lab = next(k for k, m in enumerate(ms) if m["nom"] == "Home candidat")
+    ms.insert(i_lab, dict(nom="Lab bipède A aligné", gamme="Lab", items=its))
+    return ms, x
+
+
+def _isole_dict(quoi):
+    import json
+    import subprocess
+    code = ("import sys, json; sys.path.insert(0, 'scripts'); import cartographie_modules as C; "
+            f"print(json.dumps(C._items('{quoi}'), default=str))")
+    out = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True, check=True).stdout
+    return json.loads(out.strip().splitlines()[-1])
+
+
+def rapport_aligne(par0, par_a, x) -> list[str]:
+    """Le Lab bipède A aligné sur le Kit (prompt du 2026-10-11) : résultat aux deux marges, nomenclature corrigée,
+    réemploi et investissement cumulé, comparés à la chaîne initiale."""
+    lab_a = next(p for p in par_a if p["nom"] == "Lab bipède A aligné")
+    L = ["## Le Lab bipède A aligné sur le Kit (prompt du 2026-10-11 ; PROPOSÉ)", "",
+         "Imposés : la cellule du Kit (Molicel P50B, pack 3S1P), un Raspberry Pi 5 à la place du Jetson, l'IA par le réseau. "
+         "Structure : **carton** seulement ; le contreplaqué n'est pas relevé (masse surfacique null), il n'est donc pas "
+         "évalué. Marche à 0,196 m/s (celle de ToddlerBot ramenée à 0,60 m).", "",
+         "| Marge | Tient ? | H (m) | H réelle (m) | Masse (kg) | Coût de l'explorateur (CHF, borne basse) | Statut | Pack |",
+         "| --- | --- | ---: | ---: | ---: | ---: | --- | --- |"]
+    for k, v in sorted(x["res"].items(), reverse=True):
+        if v["tient"]:
+            L.append(f"| {k.replace('.', ',')} | **oui** | {f1(v['H'], 2)} | {f1(v['H_reel'], 3)} | {f1(v['M'], 2)} | "
+                     f"{f1(v['cout'], 0)} | {v['statut']} | 3S{v['P']}P |")
+        else:
+            L.append(f"| {k.replace('.', ',')} | non ({'; '.join(v['raisons'])}) | — | — | — | — | — | — |")
+    sans = sum(1 for i in lab_a["items"] if i["classe"] == "DURABLE" and i["prix"] is None)
+    L += ["", f"**Statut INCONNU** : une donnée critique d'un actionneur manque (la vitesse du STS3250 n'est pas publiée) ; "
+          "« tient » veut dire ici qu'aucune contrainte calculable n'est violée.", "",
+          f"**Nomenclature corrigée : {f1(lab_a['total'], 0)} CHF de durables** (borne basse, {sans} durables sans prix, dont "
+          "les STS3250), contre le coût de l'explorateur ci-dessus. L'explorateur garde la chaîne de puissance du 12S "
+          "(BMS Orion Jr 2, anti-étincelle 300 A, contacteur, absorbeur, rail 6 V) et deux cartes CAN ; en 3S direct sur des "
+          "Feetech à bus série, elles sont sans objet. Retirées ; gardés : les cellules, le 5 V du Pi 5, le fusible et son "
+          f"porte-fusible, l'arrêt d'urgence ; ajouté : le moins cher des BMS 3S relevés qui tient {f1(I_UNIQUE)} A en continu "
+          "prudent, avec un prix lu (section suivante ; il est en rupture de stock).", "",
+          "⚠ **Tension** : en 3S direct, le pack plein (12,6 V) dépasse la plage publiée des STS3250 (6 à 12 V) que le Lab A "
+          "porte à la locomotion ; « tient » ci-dessus ne le vérifie pas (section suivante).", "",
+          "**Ce que le profil perd sans Jetson** : le profil `lab` demande « IA embarquée commande + vision » (Jeremy, "
+          "2026-10-07). Le Pi 5 seul ne fait à bord que la **commande** ; la vision et le langage passent par le réseau "
+          "(ordinateur de l'utilisateur) : le robot en dépend, avec l'aller-retour Wi-Fi en plus. La vision locale sur le "
+          "Pi 5 (ou avec l'AI HAT+ 2) n'est pas relevée. Puissance du Pi 5 comptée : 25 W, borne haute (son alimentation "
+          "5 V 5 A) ; sa masse n'est pas publiée.", "",
+          "### Réemploi et investissement cumulé : chaîne initiale et chaîne alignée", "",
+          "| Modèle | Chaîne initiale : réemploi | Investissement cumulé | Chaîne alignée : réemploi | Investissement cumulé |",
+          "| --- | ---: | ---: | ---: | ---: |"]
+    a_par_nom = {p["nom"]: p for p in par_a}
+    for p in par0:
+        q = a_par_nom.get(p["nom"]) or (a_par_nom.get("Lab bipède A aligné") if p["nom"] == "Lab bipède A" else None)
+        nom = p["nom"] + (" → aligné" if p["nom"] == "Lab bipède A" else "")
+        pc = lambda z: f1(100 * z["deja"] / z["total"] if z["total"] else None, 0)
+        L.append(f"| {nom} | {pc(p)} % | {f1(p['invest'], 0)} | {pc(q) + ' %' if q else '—'} | "
+                 f"{f1(q['invest'], 0) if q else '—'} |")
+    L += ["", "Les deux chaînes : Kit 1 à 5 → Lab roulant → Lab bipède A (initial ou aligné) → Home candidat. Un même "
+          "produit n'est payé qu'une fois (au plus grand nombre possédé) ; prix manquants comptés 0 (borne basse).", ""]
+    return L
+
+
+def rapport_3s(I_lab) -> list[str]:
+    """La batterie unique 3S Li-ion en direct sur le rail des servos (prompt du 2026-10-11), sur le relevé
+    params/batterie3s_marche.yaml : tension des servos, BMS, packs, porte-cellules, chargeur, bloc 12 V."""
+    import marche_composants as MC
+    d = lire("batterie3s_marche.yaml")
+    V = d["reference_comparaison"]["pack_3s_plein_V"]
+    taux = lire("budget.yaml")["taux_de_change"]
+    prix = lambda b: f1(MC.chf(dict(valeur=(b.get("prix") or {}).get("valeur"), devise=(b.get("prix") or {}).get("devise")),
+                               taux) if b.get("prix") else None, 2)
+    ok = lambda I, seuil: "—" if I is None else ("oui" if I >= seuil else "**non**")
+    L = ["## Batterie unique 3S Li-ion, en direct sur le rail des servos (relevé du 2026-10-11 ; PROPOSÉ)", "",
+         f"Relevé : `params/batterie3s_marche.yaml` (46 sources, ids `marche_3s_*`). Pack 3S plein : **{f1(V)} V**. "
+         f"Courants à tenir : **{f1(I_UNIQUE)} A** (pire cas de l'étape 3 du Kit) et **{f1(I_lab)} A** (pointe du Lab A).", "",
+         "### Tension maximale des servos", "", "| Servo | Plages publiées (V) | Valeur prudente (V) | Face à un pack plein |",
+         "| --- | --- | ---: | --- |"]
+    for t in d["tension_servos"]:
+        pl = sorted({f"{f1(x['min'], 0)} à {f1(x['max'])}" for x in t["plage_publiee_V"]})
+        vm = t["valeur_max_V"]
+        verdict = (f"**dépassée de {f1(V - vm)} V**" if V > vm else "marge nulle" if V == vm else f"marge {f1(vm - V)} V")
+        L.append(f"| {t['modele']} ({t['reference']}) | {' ; '.join(pl)} | {f1(vm)} | {verdict} |")
+    L += ["", "Tension absolue maximale : publiée par aucune source (null). Une protection existe (registre « Maximum Input "
+          "Voltage » de la table mémoire STS, mise hors couple), mais son seuil d'usine n'est pas publié pour les versions "
+          "12 V. Les chargeurs 3S relevés annoncent 12,6 ± 0,2 V, soit **jusqu'à 12,8 V** si le robot reste alimenté "
+          "pendant la charge.", "",
+          "### BMS 3S", "", f"| BMS | Zone | Courant continu prudent (A) | ≥ {f1(I_UNIQUE)} A | ≥ {f1(I_lab)} A | Prix (CHF) | Stock |",
+          "| --- | --- | ---: | --- | --- | ---: | --- |"]
+    for b in bms_3s_tous():
+        I = b["I"]
+        L.append(f"| {b['nom']} | {b['zone']} | {f1(I) if I is not None else '— (déclenchement ' + str(b['declenchement']) + ' A)' if b['declenchement'] else '—'} | "
+                 f"{ok(I, I_UNIQUE)} | {ok(I, I_lab)} | {f1(b['prix'], 2)} | {b['stock'] or '—'} |")
+    L += ["", "Courant prudent : la moitié de l'annoncé pour la gamme dont le vendeur recommande de ne pas dépasser 50 % en "
+          "continu ; un seuil de déclenchement (Keeppower, 26 ± 2 A) n'est pas un courant continu. Prix TTC convertis "
+          "(null si la devise n'a pas de taux au budget).", "",
+          "### Packs 3S déjà assemblés", ""]
+    for k in d["packs_3s"]:
+        L.append(f"- {k['nom']} ({k['zone']}) : cellules {k['cellules']} ; BMS : {k.get('bms') or 'aucun décrit'} ; "
+                 f"courant {k.get('courant_continu_A') or '—'} A ; {prix(k)} CHF.")
+    L += ["", "→ **Aucun pack 3S en 21700 avec BMS** relevé en Suisse ni dans l'UE ; ceux qui ont un BMS sont en 18650 et "
+          f"donnent 5 à 7 A, sous {f1(I_lab)} A.", "", "### Porte-cellules 21700 sans soudure", "",
+          f"| Porte-cellules | Zone | Courant par contact (A) | ≥ {f1(I_UNIQUE)} A | ≥ {f1(I_lab)} A |", "| --- | --- | ---: | --- | --- |"]
+    for c in d["porte_cellules"]:
+        I = MC.num(c.get("courant_par_contact_A"))
+        L.append(f"| {c['nom']} | {c['zone']} | {f1(I)} | {ok(I, I_UNIQUE)} | {ok(I, I_lab)} |")
+    L += ["", "### Chargeur 3S et bloc 12 V fermé (étapes 1 et 2 : 5,4 et 7,5 A)", ""]
+    for c in d["chargeurs_3s"]:
+        L.append(f"- chargeur {c['nom']} ({c['zone']}, {c['vendeur']}) : {c['tension_sortie_V']} V, {c['courant_A']} A, "
+                 f"{prix(c)} CHF, certification {c.get('certification') or 'non indiquée'}, {c.get('disponibilite')}.")
+    for c in d["blocs_12v"]:
+        I = MC.num(c.get("courant_A"))
+        L.append(f"- bloc {c['nom']} ({c['zone']}, {c['vendeur']}) : {f1(I)} A (5,4 A : {ok(I, 5.4)} ; 7,5 A : {ok(I, 7.5)}), "
+                 f"{prix(c)} CHF, classe d'isolation {c.get('classe_isolation') or 'non écrite'}, {c.get('disponibilite')}.")
+    L += ["", "### Bilan, comparé aux batteries d'outillage 18 V (lot précédent)", "",
+          "- **Outillage 18 V** : courant non publié, protection dans l'OUTIL (rien ne coupe une fois branchée au robot), "
+          "aucun convertisseur 14-21 V → 12 V de 25 A ou plus relevé.",
+          "- **3S Li-ion en direct** : pas de convertisseur, mais **le pack plein (12,6 V) dépasse la plage publiée du "
+          "STS3250 (6 à 12 V)** et laisse une marge nulle au STS3215 C018 (valeur prudente 12,6 V) ; ni l'une ni l'autre "
+          "n'est levée par une source.",
+          f"- **Sans soudure** : non démontré ; aucun porte-cellules ne publie {f1(I_lab)} A par contact (10 A au mieux), et "
+          "aucun pack 21700 assemblé avec BMS n'est relevé en Suisse ou dans l'UE.",
+          f"- **BMS** : en Suisse, un seul (20 A, sous {f1(I_UNIQUE)} A) ; au-dessus, seulement des BMS en rupture ou hors UE.",
+          "- **En Suisse** : chargeur 12,6 V 2 A et blocs 12 V fermés de 8 à 10 A (Bastelgarage, Conrad.ch) disponibles ; "
+          "Galaxus et Digitec n'ont pas pu être lus (accès bloqué).", ""]
+    return L
 
 
 if __name__ == "__main__":

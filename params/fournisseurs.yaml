@@ -10249,3 +10249,327 @@ fichiers:
     empreinte: sha256:429d042eb3ca12979fb0525612b8adbf88d64b0b969f636c5a970897bbd363c3
     conditions: non lues
     redistribuable: false
+
+  # ── Batterie unique 3S (relevé), versé le 2026-10-11 ──
+  marche_3s_openelab_sts3215:
+    source: https://openelab.com/products/feetech-sts3215-c018-servo-12v
+    reference: OpenELAB, fiche produit Feetech STS3215-C018 12V (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:80b0f76cb70da0d669466463eaf21d98f09803793bfa16836fe95b94688fde03
+    conditions: non lues
+    redistribuable: false
+  marche_3s_openelab_sts3250:
+    source: https://openelab.io/products/feetech-sts3250-c002-servo-12v
+    reference: OpenELAB (DE), fiche produit Feetech STS3250-C002 12V (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:c8d75f204775340fa44767f6032682270f42250fe1fbd67b3b1cd67f1556a86e
+    conditions: non lues
+    redistribuable: false
+  marche_3s_aifitlab_sts3215:
+    source: https://aifitlab.com/products/feetech-sts3215-servo-motor
+    reference: AIFitLab, fiche FEETECH STS3215 (variantes C018/C001/C044/C046) (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:d088c3711f434a15145554c8af81e3e0f34d9199e6683bb3c8698734327a1855
+    conditions: non lues
+    redistribuable: false
+  marche_3s_aifitlab_sts3250:
+    source: https://aifitlab.com/collections/feetech/products/feetech-sts3250-servo-motor
+    reference: AIFitLab, fiche FEETECH STS3250 (C001/C002) (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:4d1d5db77d9f4ee3ed9fae6dae1ace5dc8a92f07f009bb925e7779077436c143
+    conditions: non lues
+    redistribuable: false
+  marche_3s_aifitlab_memtable:
+    source: https://aifitlab-wiki.super.site/feetech-servo-motor-docs/feetech-sts-servo-memory-table-analysis
+    reference: AIFitLab wiki, table memoire servo STS (registres 14/15, protections) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:391e741a20c198d1d7f80549671c884bb89c81ddee707a84ab8e5c9b9894d0f6
+    conditions: non lues
+    redistribuable: false
+  marche_3s_waveshare_st3215_wiki:
+    source: https://www.waveshare.com/wiki/ST3215_Servo
+    reference: Waveshare wiki ST3215 Servo (30 kg.cm @ 12 V) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:47caaba9810ce8df3960a6d93a9662dd46d17c6fe4b10eaddc1aaa466e9e667b
+    conditions: non lues
+    redistribuable: false
+  marche_3s_waveshare_st3215_prod:
+    source: https://www.waveshare.com/st3215-servo.htm
+    reference: Waveshare, page produit ST3215 (variantes 30 kg.cm@12V / 7,4 V) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c6e01f15dd3f914fdf1178a2b238d6b79c9471cc8404eb8c8fadc2bc8ceec0b1
+    conditions: non lues
+    redistribuable: false
+  marche_3s_evelta_sts3250:
+    source: https://evelta.com/st-3250-c002-12v-50kg-cm-copper-metal-gear-digital-servo-motor/
+    reference: Evelta (Inde), ST-3250-C002 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:d921bd88dd6926a412dcf71c2fe174d4715950f7b4c22451b5d459450b253c2f
+    conditions: non lues
+    redistribuable: false
+  marche_3s_comet_c047:
+    source: https://store.comet.bg/download-file.php?id=31780
+    reference: Fiche « Industrial product datasheet » Feetech ST3215-C047 12V (variante, pas C018) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8de621513bfdf7cc56f25b4ede95b1cb740fe657410c7faa06924802a632cb00
+    conditions: non lues
+    redistribuable: false
+  marche_3s_coreel_sts3215_74:
+    source: https://core-electronics.com.au/attachments/uploads/sts3215-smart-servo-datasheet-translated.pdf
+    reference: Specification Feetech STS3215 version 7,4 V traduite (Core Electronics) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6647638660ae4d5a5e8fc7ab02c2b1a8890613b1666590908881c636f6bc2ace
+    conditions: non lues
+    redistribuable: false
+  marche_3s_akkuteile_xzd3s1550:
+    source: https://www.akkuteile.de/en/3s-pcb-keeppower-xzd-3s1550-protection-electronics_200505_1411
+    reference: akkuteile.de, 3S PCB Keeppower XZD-3S1550 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8c3b96105c931e06881a8a1123a4684e952f5cb266bcfa4cbe909d7153b90e7a
+    conditions: non lues
+    redistribuable: false
+  marche_3s_sigmanortec_40a:
+    source: https://sigmanortec.ro/en/bms-module-3s-40a-126v
+    reference: Sigmanortec (RO), BMS module 3S 40A 12.6V (Enhanced) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:cdd4d80b44632ab3197b288a9c80a1642b4c2843973e2059e0d97ca7e11a52d6
+    conditions: non lues
+    redistribuable: false
+  marche_3s_sigmanortec_40a_bal:
+    source: https://sigmanortec.ro/en/bms-module-3s-40a-126v-with-balance
+    reference: Sigmanortec (RO), BMS module 3S 40A with balance (via direct)
+    date: 2026-10-11
+    empreinte: sha256:a2e10592fdb3dd7ae444da24357c0dba540c872c3c3e562470941d8292bb858e
+    conditions: non lues
+    redistribuable: false
+  marche_3s_sigmanortec_60a_bal:
+    source: https://sigmanortec.ro/en/bms-module-3s-60a-126v-with-balance
+    reference: Sigmanortec (RO), BMS module 3S 60A with balance (via direct)
+    date: 2026-10-11
+    empreinte: sha256:ddbb05d9c30607919bf515a6b0d789e2e2eb0d8946d35891b8a0d5f2c191fb24
+    conditions: non lues
+    redistribuable: false
+  marche_3s_phipps_hw552:
+    source: https://www.phippselectronics.com/wp-content/uploads/2024/11/3S-4S-18650-40A-60A-Li-Ion-BMS-Board.pdf
+    reference: Phipps Electronics (AU), notice BMS 3S/4S 40A 60A (HW-552) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5e72e43915eb11d155330a8251b5a910bcad27f4abbb685c8b91c22c8ea5b3e6
+    conditions: non lues
+    redistribuable: false
+  marche_3s_robu_daly30a:
+    source: https://robu.in/product/li-ion-smart-bms-3s-11-1v-30a/
+    reference: Robu.in (Inde), Daly Li-ion 3S 12V 30A Common Port (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:a748dfbd85f280df1f0ebb7595ac7514481442ab931ad8987d28c448ff4182ab
+    conditions: non lues
+    redistribuable: false
+  marche_3s_nkon_jk_b2a8s30p:
+    source: https://www.nkon.nl/en/jk-smart-active-balance-bms-b2a8s30p-3s-8s-300a-lifepo4-li-ion.html
+    reference: NKON (NL), JK Smart BMS B2A8S30P 3S-8S (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:a04c3fe6e7ba4e0344d71d023236d53169d15b8165653d3fcbe2026088f577f9
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_tru3s20a:
+    source: https://www.conrad.ch/de/p/tru-components-tc-13125656-batterie-managementsystem-3281414.html
+    reference: Conrad.ch, TRU COMPONENTS TC-13125656 (3S 20 A) (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:a233faed6ac18d87eb7de48a57301bc2fa8b96cae5456d447cee9455842db6b4
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_rech_bms:
+    source: https://www.conrad.ch/de/search.html?search=BMS%20Li-Ion
+    reference: Conrad.ch, recherche « BMS Li-Ion » (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:adf38f3fa2f48888895d1ef68d7337f505cfb6b245562ffa5bf1d7bf348c8448
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_bms:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=BMS
+    reference: Bastelgarage, recherche « BMS » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:82488853e2d5cdc7a18761d89670e80b7d6436bf38716b11ec74c2bcb34767a2
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_schutz:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Schutzschaltung
+    reference: Bastelgarage, recherche « Schutzschaltung » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:e0c3010ac4bc926ec09d4423f484dde0ad1bab8167941b5e79d82abc4e146f78
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_21700:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=21700
+    reference: Bastelgarage, recherche « 21700 » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b188ab9e383323b555d42425c93062cdc254848939b63556e1d428b4a22a7448
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_halter:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Batteriehalter
+    reference: Bastelgarage, recherche « Batteriehalter » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:2958bf0b38236d1022714e6032d729f244bb50a11b4c5c20b70086c2417822bb
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_akkupack:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Akkupack
+    reference: Bastelgarage, recherche « Akkupack » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:c88902a8dbd5fdab62374223f9247d695bc95cfbe1a895441c703ebf02d8e7c5
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_126:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=12.6V
+    reference: Bastelgarage, recherche « 12.6V » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b767949f74136bf9c4dc52236e0dc7c0c8e425df8750ae5c19fcfc3623fc6bd1
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_rech_netzteil:
+    source: https://www.bastelgarage.ch/index.php?route=product/search&search=Netzteil%2012V
+    reference: Bastelgarage, recherche « Netzteil 12V » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:afa721f3261f3b5360363aafd0c6f5d4534a19b0fa1577ca3a2a807fcd4751c2
+    conditions: non lues
+    redistribuable: false
+  marche_3s_berrybase_rech_21700:
+    source: https://www.berrybase.ch/search?search=21700
+    reference: BerryBase.ch, recherche « 21700 » (via direct)
+    date: 2026-10-11
+    empreinte: sha256:0081179b925d4e73d108b778b6e2f741a4f2f7ae7b7679d3a07ff45862f7a57f
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_rech_21700:
+    source: https://www.conrad.ch/de/search.html?search=Batteriehalter%2021700
+    reference: Conrad.ch, recherche « Batteriehalter 21700 » (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:695a5b87173f58f7cfa3909a546fc1fa30e750eb58acacca7ce3dd741b194c25
+    conditions: non lues
+    redistribuable: false
+  marche_3s_akkuteile_kp3s1p:
+    source: https://www.akkuteile.de/en/keeppower-3s1p-18650-3500mah-10-8v-li-ion-battery-with-bms-protection-with-cable-connection_12102_3360
+    reference: akkuteile.de, Keeppower 3S1P 18650 3500 mAh 10,8 V avec BMS (via direct)
+    date: 2026-10-11
+    empreinte: sha256:b756a85363781b80640656a6032ed1572d276c1add42d9439bb4b8eef2cdbf82
+    conditions: non lues
+    redistribuable: false
+  marche_3s_ansmann_3s1p:
+    source: https://shop.ansmann.de/en/lithium-ion-battery-pack-10-8-v-3350-mah-3s1p
+    reference: ANSMANN shop, Li-ion battery pack 10,8 V / 3350 mAh / 3S1P (via direct)
+    date: 2026-10-11
+    empreinte: sha256:13c102c493c3e78f3486e6f95bf03b1be24d1e8ecfcc301dd1bd0309d850ebbc
+    conditions: non lues
+    redistribuable: false
+  marche_3s_unmanned_auline:
+    source: https://www.unmannedtechshop.co.uk/de/products/auline-21700-4800mah-3s1p-11-1v-xt60-led-buzzer
+    reference: Unmanned Tech (UK), Auline 21700 4800 mAh 3S1P XT60 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:82012c60e26eb3a59a72bb13101dbb1d8c029b853706bfe384c919fc60f964f5
+    conditions: non lues
+    redistribuable: false
+  marche_3s_keystone_k75p30:
+    source: https://www.keyelco.com/userAssets/file/K75p30.pdf
+    reference: Keystone, fiche « 20700 & 21700 cell holders » (cat. 1121-1124) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:65eae926a73f0c30db4e8f3e3d84d6d8e3e58f725aa5c4009b2eb94cc982791b
+    conditions: non lues
+    redistribuable: false
+  marche_3s_electrokit_clip:
+    source: https://www.electrokit.com/batterihallare-21700-1x-clip-for-pcb
+    reference: Electrokit (SE), Batterihallare 21700 1x clip for PCB, art. 41035480 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:8fd4d10246091ab528a59416988b2557274657b8641f61454d41782d453edeba
+    conditions: non lues
+    redistribuable: false
+  marche_3s_electrokit_ds:
+    source: https://www.electrokit.com/upload/quick/1d/e7/c98b_41035480.pdf
+    reference: Electrokit, fiche technique art. 41035480 (image, texte non extractible) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:abceca603056f5e19d3e2f22040abee9c5c45c3edbd7af7a4ccb08c080dd5846
+    conditions: non lues
+    redistribuable: false
+  marche_3s_aes_holder:
+    source: https://www.associatedenvironmentalsystems.com/fixtures-specs/cylindrical-%2021700-%20holder
+    reference: Associated Environmental Systems (US), support d'essai 21700 (via direct)
+    date: 2026-10-11
+    empreinte: sha256:215e1a4a2f285de69c728388dba503a8c1b5cd87c67c4d1081267086320d62c5
+    conditions: non lues
+    redistribuable: false
+  marche_3s_jiatel_holders:
+    source: https://www.jiatelcn.com/products/battery-holder/cylindrical-battery-holders/21700-battery-holders/
+    reference: Jiatel (CN), page fabricant 21700 battery holders (via direct)
+    date: 2026-10-11
+    empreinte: sha256:541cbbbabe1ac7ac981c88fca98cf69a25e32ab222230335eff847bc9f06165c
+    conditions: non lues
+    redistribuable: false
+  marche_3s_probots_4x:
+    source: https://probots.co.in/4-x-21700-cell-lithium-ion-battery-holder-smt-smd-socket.html
+    reference: Probots (Inde), 4x21700 holder SMD, FAQ (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:206b712cf0616f28456b1a0caf9c326624f5a8aeb83687fb17ece52188a1efcb
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_chargeur:
+    source: https://www.bastelgarage.ch/12-6v-2a-lithium-batterieladegerat-5-5mm-2-1mm-stecker
+    reference: Bastelgarage, 12.6V 2A Lithium Batterieladegeraet (Waveshare 29567) (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:57f228d2cad13207d6e1034ed1ffbf17888cab554d9872c014a5ef639113af89
+    conditions: non lues
+    redistribuable: false
+  marche_3s_akkuteile_fuyuang:
+    source: https://www.akkuteile.de/en/fuyuang-10-8v-11-1v-12-6v-li-ion-charger-3s-dc-plug-5-5mm-2-1mm_400615_2362
+    reference: akkuteile.de, Fuyuang (Enerpower) 12,6 V Li-ion charger 3S (via direct)
+    date: 2026-10-11
+    empreinte: sha256:5ac17daa27356c249053c92fac2e62d8188ceb48e290adeb5f3af3ee5afb2051
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_bloc10a:
+    source: https://www.bastelgarage.ch/12v-dc-10a-netzteil-ac-dc-adapter-5-5mm-2-5mm-stecker
+    reference: Bastelgarage, 12V DC 10A Netzteil 5.5/2.5 (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:0d57b261cda9b3ee937193aaf77b01eee630626e8d2a8fb36975f0ef959d1d3e
+    conditions: non lues
+    redistribuable: false
+  marche_3s_bg_bloc5a:
+    source: https://www.bastelgarage.ch/12v-dc-5a-netzteil-ac-dc-adapter-5-5mm-2-1mm-stecker
+    reference: Bastelgarage, 12V DC 5A Netzteil DFRobot FIT1021 (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:14eb7e726fe7fb58e8e2c07dc5e184e5dc13d050371ed5f43561e6192ca7fd45
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_rech_netzteil:
+    source: https://www.conrad.ch/de/search.html?search=Tischnetzteil%2012V%208A
+    reference: Conrad.ch, recherche « Tischnetzteil 12V 8A » (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:f481acd179793f80bd3cc1f3c1b9e318a59dc3dafc572b06d04b3a7d0f39598b
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_gst120a12:
+    source: https://www.conrad.ch/de/p/mean-well-gst120a12-r7b-tischnetzteil-festspannung-12-v-dc-8-5-a-102-w-1439243.html
+    reference: Conrad.ch, MEAN WELL GST120A12-R7B (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:d8b08ffe6bc7817dfed9f2814a7eebe6d726d3626f00b754e19bd9244cdf3893
+    conditions: non lues
+    redistribuable: false
+  marche_3s_meanwell_gst120a:
+    source: https://www.meanwell.com/Upload/PDF/GST120A/GST120A-SPEC.PDF
+    reference: MEAN WELL, specification GST120A (2025-03-28) (via direct)
+    date: 2026-10-11
+    empreinte: sha256:6da42020acbaedbbf2ea5933d421c1b56775888e8082f11a873362dd5b6829da
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_protek:
+    source: https://www.conrad.ch/de/p/protek-pmp120-12-b1-s-tischnetzteil-festspannung-12-v-dc-8000-ma-120-w-511897.html
+    reference: Conrad.ch, Protek PMP120-12-B1-S (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:1f81660fec11a3437e7e275f7374dcae08e364d3fae2e6951dfb1b7f1589dae2
+    conditions: non lues
+    redistribuable: false
+  marche_3s_conrad_hnpower:
+    source: https://www.conrad.ch/de/p/hn-power-hnp120m-120-ac-dc-tisch-und-steckernetzteil-12-v-dc-8-a-120-w-2813764.html
+    reference: Conrad.ch, HN Power HNP120M-120 (via r.jina.ai)
+    date: 2026-10-11
+    empreinte: sha256:138b9221b0ceff60ea10c3dc0388b13aa736bd950cb0c966a7ed9dabb583d44a
+    conditions: non lues
+    redistribuable: false
